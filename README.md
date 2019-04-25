@@ -1,11 +1,16 @@
+<img src="docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+
 # Umbraco Contentment
 
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
-![A shoebox of Umbraco happiness.](docs/assets/img/logo.png)
 
-### Credits
+## License
 
-The package logo uses the following icons from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/):
+Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com/), [Umbrella Inc](https://umbrellainc.co.uk), and [other contributors](https://github.com/leekelleher/umbraco-contentment/graphs/contributors).
 
-- [Shoebox](https://thenounproject.com/term/shoebox/79857/) by [Jordynn Alexander](https://thenounproject.com/jordynn2/)
+All source code is licensed under the [Mozilla Public License](LICENSE.md).
+
+## Acknowledgements
+
+The package logo uses the [Shoebox](https://thenounproject.com/term/shoebox/79857/) (by [Jordynn Alexander](https://thenounproject.com/jordynn2/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
