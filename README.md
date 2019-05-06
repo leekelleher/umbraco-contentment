@@ -5,6 +5,16 @@
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
 
+## What's on offer?
+
+### Data Editors
+
+> Data Editors appear to be the new v8 term for combining what was previously v6/v7 Property Editors and Parameter Editors
+
+- Checkbox
+- Macro Picker
+- Render Macro
+
 ## License
 
 Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com/), [Umbrella Inc](https://umbrellainc.co.uk), and [other contributors](https://github.com/leekelleher/umbraco-contentment/graphs/contributors).
