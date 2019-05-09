@@ -11,7 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = "display",
+        Group = "Display",
         Icon = "icon-settings-alt")]
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
     public class RenderMacroDataEditor: DataEditor

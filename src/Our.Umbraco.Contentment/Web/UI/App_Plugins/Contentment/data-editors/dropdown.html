@@ -1,0 +1,7 @@
+﻿<div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.Dropdown.Controller as vm">
+    <select class=" umb-dropdown"
+            ng-model="model.value"
+            ng-options="item.value as item.label disable when item.disabled for item in vm.items">
+        <option></option>
+    </select>
+</div>

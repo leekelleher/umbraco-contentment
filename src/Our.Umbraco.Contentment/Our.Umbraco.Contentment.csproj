@@ -260,7 +260,10 @@
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
-    <Compile Include="DataEditors\ConfigurationFieldExtentions.cs" />
+    <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\Dropdown\DropdownDataEditor.cs" />
+    <Compile Include="DataEditors\EntityPicker\EntityPickerDataEditor.cs" />
+    <Compile Include="DataEditors\EntityPicker\EntityPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataValueEditor.cs" />
@@ -268,15 +271,18 @@
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataValueEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ValueConverters\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\entity-picker.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\entity-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\render-macro.html" />

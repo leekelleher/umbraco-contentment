@@ -1,4 +1,7 @@
-﻿using Umbraco.Core.PropertyEditors;
+﻿using System.Collections.Generic;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Web.Models.ContentEditing;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -7,9 +10,19 @@ namespace Our.Umbraco.Contentment.DataEditors
         public MacroPickerConfigurationEditor()
             : base()
         {
-            Fields
-                .AddHideLabel()
-                .AddMaxItems();
+            Fields.Add(
+                "allowedMacros",
+                "Allowed Macros",
+                "Restrict the macros that can be picked.",
+                IOHelper.ResolveUrl(EntityPickerDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationEditors.EntityType, nameof(UmbracoEntityTypes.Macro) },
+                    { "semisupportedTypes", new[]{ nameof(UmbracoEntityTypes.Macro) } }
+                });
+            Fields.AddMaxItems();
+            Fields.AddDisableSorting();
+            Fields.AddHideLabel();
         }
     }
 }

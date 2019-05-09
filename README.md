@@ -12,6 +12,8 @@
 > Data Editors appear to be the new v8 term for combining what was previously v6/v7 Property Editors and Parameter Editors
 
 - Checkbox
+- Dropdown
+- Entity Picker
 - Macro Picker
 - Render Macro
 

@@ -3,9 +3,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal static class ConfigurationFieldExtentions
+    internal static class ConfigurationFieldExtensions
     {
-        public static List<ConfigurationField> Add(
+        public static void Add(
             this List<ConfigurationField> fields,
             string key,
             string name,
@@ -21,25 +21,32 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = view,
                 Config = config,
             });
-
-            return fields;
         }
 
-        public static List<ConfigurationField> AddHideLabel(this List<ConfigurationField> fields)
+        public static void AddDisableSorting(this List<ConfigurationField> fields)
         {
-            return fields.Add(
+            fields.Add(
+                Constants.Conventions.ConfigurationEditors.DisableSorting,
+                "Disable sorting?",
+                "Select to disable sorting of the items.",
+                "boolean");
+        }
+
+        public static void AddHideLabel(this List<ConfigurationField> fields)
+        {
+            fields.Add(
                 Constants.Conventions.ConfigurationEditors.HideLabel,
                 "Hide label?",
                 "Select to hide the label and have the editor take up the full width of the panel.",
                 "boolean");
         }
 
-        public static List<ConfigurationField> AddMaxItems(this List<ConfigurationField> fields)
+        public static void AddMaxItems(this List<ConfigurationField> fields)
         {
-            return fields.Add(
+            fields.Add(
                 Constants.Conventions.ConfigurationEditors.MaxItems,
                 "Max items",
-                "Enter the number for the maximum items allowed. Use '0' for an unlimited amount.",
+                "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
                 "number");
         }
     }

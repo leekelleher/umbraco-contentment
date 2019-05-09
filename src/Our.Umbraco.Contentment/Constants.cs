@@ -6,11 +6,15 @@
         {
             internal static class ConfigurationEditors
             {
-                internal const string HideLabel = "hideLabel";
+                public const string DisableSorting = "disableSorting";
 
-                internal const string MaxItems = "maxItems";
+                public const string EntityType = "entityType";
 
-                internal const string ShowInline = "showInline";
+                public const string HideLabel = "hideLabel";
+
+                public const string MaxItems = "maxItems";
+
+                public const string ShowInline = "showInline";
             }
         }
     }

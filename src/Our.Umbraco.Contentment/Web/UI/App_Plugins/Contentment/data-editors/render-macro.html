@@ -1,3 +1,10 @@
 ﻿<div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.RenderMacro.Controller as vm">
-    <div ng-bind-html="vm.html | safe_html"></div>
+    <div class="umb-rte row-fluid span8" ng-if="vm.loading">
+        <umb-load-indicator></umb-load-indicator>
+    </div>
+    <div ng-bind-html="vm.html | safe_html" ng-if="!vm.loading && vm.html"></div>
+    <div class="umb-contentpicker__min-max-help" ng-if="!vm.loading && vm.error">
+        <h5>{{vm.error.title}}</h5>
+        <p>{{vm.error.message}}<p>
+    </div>
 </div>

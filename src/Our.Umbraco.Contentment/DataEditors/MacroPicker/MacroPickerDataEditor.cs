@@ -11,7 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "picker",
+        Group = "Picker",
         Icon = "icon-settings-alt")]
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
     public class MacroPickerDataEditor : DataEditor
