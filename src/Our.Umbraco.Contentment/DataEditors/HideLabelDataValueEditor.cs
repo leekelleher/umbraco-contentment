@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Editors;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class MacroPickerDataValueEditor : DataValueEditor
+    public class HideLabelDataValueEditor : DataValueEditor
     {
-        public MacroPickerDataValueEditor(DataEditorAttribute attribute)
+        public HideLabelDataValueEditor(DataEditorAttribute attribute)
             : base(attribute)
         { }
 

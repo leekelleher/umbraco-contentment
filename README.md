@@ -15,6 +15,7 @@
 - Dropdown
 - Entity Picker
 - Macro Picker
+- Notes
 - Render Macro
 
 ## License

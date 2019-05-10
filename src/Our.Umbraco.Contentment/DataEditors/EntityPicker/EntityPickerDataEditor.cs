@@ -26,5 +26,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         { }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new EntityPickerConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

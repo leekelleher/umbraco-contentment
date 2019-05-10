@@ -29,6 +29,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new MacroPickerConfigurationEditor();
 
-        protected override IDataValueEditor CreateValueEditor() => new MacroPickerDataValueEditor(Attribute);
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }
