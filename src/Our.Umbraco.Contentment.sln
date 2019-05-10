@@ -8,14 +8,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4F87338-D989-4C50-BF8E-EF4AF179B459}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		..\LICENSE.md = ..\LICENSE.md
-		PostBuildEvents.bat = PostBuildEvents.bat
-		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84-5180-4489-B642-E3453B51330F}"
 	ProjectSection(SolutionItems) = preProject
 		PostBuildEvents.bat = PostBuildEvents.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\CODE_OF_CONDUCT.md = ..\.github\CODE_OF_CONDUCT.md
+		..\.github\CONTRIBUTING.md = ..\.github\CONTRIBUTING.md
+		..\.github\ISSUE_TEMPLATE.md = ..\.github\ISSUE_TEMPLATE.md
+		..\.github\LICENSE.md = ..\.github\LICENSE.md
+		..\.github\PULL_REQUEST_TEMPLATE.md = ..\.github\PULL_REQUEST_TEMPLATE.md
+		..\.github\README.md = ..\.github\README.md
 	EndProjectSection
 EndProject
 Global
@@ -34,6 +41,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5297EC84-5180-4489-B642-E3453B51330F} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8F86B45-B473-45E7-85C7-863A10E21554}
