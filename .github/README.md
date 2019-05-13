@@ -16,6 +16,7 @@ Some data-editors may be innovative, others may be a reimagining of existing dat
 > These can be used as either Property Editors or Parameter Editors.
 
 - Checkbox
+- Data Table
 - Dropdown
 - Entity Picker
 - Macro Picker
@@ -28,7 +29,7 @@ Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com), [Umbrella Inc](ht
 
 All source code is licensed under the [Mozilla Public License](LICENSE.md).
 
-#### Note
+#### A note about licensing
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, but I no longer feel MIT reflects my spirit of encouraging open source collaboration.
 The key difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
@@ -38,6 +39,7 @@ _More give, less take._
 You will still have the same freedoms to use the source code however you would like to do so.
 
 For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
+
 
 ### Acknowledgements
 

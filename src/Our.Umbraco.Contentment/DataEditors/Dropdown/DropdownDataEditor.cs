@@ -7,7 +7,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue | EditorType.MacroParameter,
+        EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.String,
@@ -25,6 +25,8 @@ namespace Our.Umbraco.Contentment.DataEditors
             : base(logger)
         { }
 
-        // TODO: Add a prevalue editor for adding label/value/disabled items [LK]
+        protected override IConfigurationEditor CreateConfigurationEditor() => new DropdownConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

@@ -5,7 +5,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue | EditorType.MacroParameter,
+        EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,

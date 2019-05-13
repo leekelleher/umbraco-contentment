@@ -23,7 +23,7 @@
             vm.allowEdit = true;
             vm.allowRemove = true;
             vm.published = true;
-            vm.sortable = (config.disableSorting !== 1 && config.disableSorting !== "1") && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {
                 axis: "y",

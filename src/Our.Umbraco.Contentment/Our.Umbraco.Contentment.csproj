@@ -261,6 +261,8 @@
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
+    <Compile Include="DataEditors\Dropdown\DropdownConfigurationEditor.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownDataEditor.cs" />
     <Compile Include="DataEditors\EntityPicker\EntityPickerDataEditor.cs" />
     <Compile Include="DataEditors\EntityPicker\EntityPickerConfigurationEditor.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="DataEditors\HideLabelDataValueEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesDataEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroConfigurationEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -287,6 +290,8 @@
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\entity-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-table.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-table.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\render-macro.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\render-macro.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox.html" />

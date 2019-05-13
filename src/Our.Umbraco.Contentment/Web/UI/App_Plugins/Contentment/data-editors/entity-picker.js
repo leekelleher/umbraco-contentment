@@ -2,11 +2,20 @@
     "$scope",
     "entityResource",
     "editorService",
-    function ($scope, entityResource, editorService) {
+    "versionHelper",
+    function ($scope, entityResource, editorService, versionHelper) {
 
         //console.log("model", $scope.model);
 
-        var defaultConfig = { entityType: "DocumentType", maxItems: 0, allowDuplicates: 0, disableSorting: 0, supportedTypes: [], semisupportedTypes: [], unsupportedTypes: [] };
+        var defaultConfig = {
+            entityType: "DocumentType",
+            maxItems: 0,
+            allowDuplicates: 0,
+            disableSorting: 0,
+            supportedTypes: [],
+            semisupportedTypes: [],
+            unsupportedTypes: []
+        };
         var config = angular.merge({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -36,7 +45,7 @@
             vm.allowEdit = true;
             vm.allowRemove = true;
             vm.published = true;
-            vm.sortable = (config.disableSorting !== 1 && config.disableSorting !== "1") && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {
                 axis: "y",
@@ -98,7 +107,7 @@
 
             }
 
-            if (config.entityType === "MemberType" && !vm.error && compareCurrentUmbracoVersion("8.1", { zeroExtend: true }) < 0) {
+            if (config.entityType === "MemberType" && !vm.error && versionHelper.versionCompare(Umbraco.Sys.ServerVariables.application.version, "8.1", { zeroExtend: true }) < 0) {
                 vm.error = {
                     title: "Bug with Member Type configuration",
                     message: "Unfortunately there is an existing bug in Umbraco that will return the <b>Media Types</b> instead of the Member Types.<br><a href='https://github.com/umbraco/Umbraco-CMS/pull/5432' target='_blank'>This bug has been reported and a patch submitted.</a>"
@@ -190,61 +199,6 @@
             }
 
             setDirty();
-        };
-
-        function compareCurrentUmbracoVersion(v, options) {
-            return compareVersions(Umbraco.Sys.ServerVariables.application.version, v, options);
-        };
-
-        function compareVersions(v1, v2, options) {
-
-            var lexicographical = options && options.lexicographical,
-                zeroExtend = options && options.zeroExtend,
-                v1parts = v1.split("."),
-                v2parts = v2.split(".");
-
-            function isValidPart(x) {
-                return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-            }
-
-            if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-                return NaN;
-            }
-
-            if (zeroExtend) {
-                while (v1parts.length < v2parts.length) {
-                    v1parts.push("0");
-                }
-                while (v2parts.length < v1parts.length) {
-                    v2parts.push("0");
-                }
-            }
-
-            if (!lexicographical) {
-                v1parts = v1parts.map(Number);
-                v2parts = v2parts.map(Number);
-            }
-
-            for (var i = 0; i < v1parts.length; ++i) {
-                if (v2parts.length === i) {
-                    return 1;
-                }
-
-                if (v1parts[i] === v2parts[i]) {
-                    continue;
-                } else if (v1parts[i] > v2parts[i]) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-
-            if (v1parts.length !== v2parts.length) {
-                return -1;
-            }
-
-            return 0;
-
         };
 
         function ensureIcons(entities) {
