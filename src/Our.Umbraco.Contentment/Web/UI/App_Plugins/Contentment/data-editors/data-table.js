@@ -27,10 +27,14 @@
                 vm.items.push(fields);
             });
 
-            vm.style = { "max-width": Object.toBoolean(config.restrictWidth) ? "66.6%" : "100%" };
+            vm.styleTable = { "max-width": Object.toBoolean(config.restrictWidth) ? "66.6%" : "100%" };
+            vm.styleButton = Object.toBoolean(config.restrictWidth) ? {} : { "max-width": "100%" };
+
             vm.usePrevalueEditors = Object.toBoolean(config.usePrevalueEditors) ? true : null;
+
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems;
             vm.allowRemove = true;
+
             vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {

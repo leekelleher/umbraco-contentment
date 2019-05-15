@@ -32,7 +32,7 @@ Some data-editors may be innovative, others may be a reimagining of existing dat
 
 Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com), [Umbrella Inc](https://umbrellainc.co.uk), and [other contributors](https://github.com/leekelleher/umbraco-contentment/graphs/contributors).
 
-All source code is licensed under the [Mozilla Public License](LICENSE.md).
+All source code is licensed under the [Mozilla Public License](../LICENSE.md).
 
 #### A note about licensing
 
