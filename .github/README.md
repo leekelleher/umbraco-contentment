@@ -2,29 +2,37 @@
 
 ## Umbraco Contentment
 
-> contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
+> contentment /kənˈtɛntm(ə)nt/ - a shoebox of happiness and satisfaction
 
-This is a collection of Umbraco components that I use on my own Umbraco v8 implementation projects.
+### What is it?
 
-Some data-editors may be innovative, others may be a reimagining of existing data-editors, features and community packages.
+This is a collection of Umbraco components that I have developed for use on my own Umbraco v8 implementation projects.
+
+Some components may be innovative, others may be a reimagining of existing components, data-editors, features and other community packages.
+
 
 #### What's on offer?
 
+Let's open the shoebox and take a look inside...
+
 ##### Data Editors
 
-> Data Editors appear to be the new v8 term for combining what was previously v6/v7 Property Editors and Parameter Editors.
-> These can be used as either Property Editors or Parameter Editors.
+_What the heck is a Data Editor?_
 
-###### Property Editors (all of these can be configured to be used as Parameter Editors)
+> Data Editors is the Umbraco v8 term for combining what was previously called **Property Editors** and **Parameter Editors** in Umbraco v6/v7.
+> The difference between the two are that Property Editors can be configured (using a Data Type) and Parameter Editors have a default (or zero) configuration.
 
-- Checkbox
-- Dropdown
-- Entity Picker
-- Macro Picker
-- Notes
-- Render Macro
+###### Property Editors
 
-###### Configuration Editors (formerly known as Parameter Editors)
+- [Checkbox](../docs/data-editors/checkbox.md)
+- [Dropdown](../docs/data-editors/dropdown.md)
+- [Macro Picker](../docs/data-editors/macro-picker.md)
+- [Notes](../docs/data-editors/notes.md)
+- [Render Macro](../docs/data-editors/render-macro.md)
+- [Umbraco Entity Picker](../docs/data-editors/umb-entity-picker.md)
+
+All of these can be configured to be used as Parameter Editors.
+
 
 - Data Table
 
@@ -37,11 +45,11 @@ All source code is licensed under the [Mozilla Public License](../LICENSE.md).
 #### A note about licensing
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, but I no longer feel MIT reflects my spirit of encouraging open source collaboration.
-The key difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
+The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
 
 _More give, less take._
 
-You will still have the same freedoms to use the source code however you would like to do so.
+You will still have the same freedoms to use the source code however you like.
 
 For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
