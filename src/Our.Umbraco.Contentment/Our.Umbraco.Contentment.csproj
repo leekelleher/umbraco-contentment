@@ -262,12 +262,15 @@
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownValueConverter.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownConfigurationEditor.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownDataEditor.cs" />
     <Compile Include="DataEditors\EntityPicker\EntityPickerDataEditor.cs" />
     <Compile Include="DataEditors\EntityPicker\EntityPickerConfigurationEditor.cs" />
+    <Compile Include="DataEditors\EntityPicker\EntityPickerModel.cs" />
     <Compile Include="DataEditors\EntityPicker\EntityPickerValueConverter.cs" />
+    <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerConfigurationEditor.cs" />

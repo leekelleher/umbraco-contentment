@@ -1,15 +1,25 @@
 ﻿angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", function ($scope) {
 
+    var defaultConfig = { showInline: 0 };
+    var config = angular.merge({}, defaultConfig, $scope.model.config);
+
     var vm = this;
-    vm.alias = $scope.model.alias;
-    vm.true = 1;
-    vm.false = 0;
 
-    if ($scope.model.config.showInline === 1 || $scope.model.config.showInline === "1") {
-        vm.showInline = true;
-        vm.label = $scope.model.label;
-        vm.description = $scope.model.description;
-    }
+    function init() {
 
-    $scope.model.value = ($scope.model.value === 1 || $scope.model.value === "1") ? vm.true : vm.false;
+        vm.alias = $scope.model.alias;
+        vm.true = 1;
+        vm.false = 0;
+
+        if (Object.toBoolean(config.showInline)) {
+            vm.showInline = true;
+            vm.label = $scope.model.label;
+            vm.description = $scope.model.description;
+        }
+
+        $scope.model.value = Object.toBoolean($scope.model.value) ? vm.true : vm.false;
+
+    };
+
+    init();
 });

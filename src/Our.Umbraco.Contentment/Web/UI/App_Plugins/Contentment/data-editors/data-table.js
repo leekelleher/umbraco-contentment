@@ -4,7 +4,7 @@
 
         //console.log("model", $scope.model);
 
-        var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, usePrevalueEditors: 1 };
+        var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
         var config = angular.merge({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -27,6 +27,7 @@
                 vm.items.push(fields);
             });
 
+            vm.style = { "max-width": Object.toBoolean(config.restrictWidth) ? "66.6%" : "100%" };
             vm.usePrevalueEditors = Object.toBoolean(config.usePrevalueEditors) ? true : null;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems;
             vm.allowRemove = true;

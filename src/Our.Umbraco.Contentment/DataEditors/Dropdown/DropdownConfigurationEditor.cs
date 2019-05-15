@@ -33,7 +33,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             };
 
             Fields.Add(
-                "items",
+                Constants.Conventions.ConfigurationEditors.Items,
                 "Options",
                 "Configure the option items for the dropdown list.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
@@ -42,6 +42,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { "fields", listFields },
                     { Constants.Conventions.ConfigurationEditors.MaxItems, "0" },
                     { Constants.Conventions.ConfigurationEditors.DisableSorting, "0" },
+                    { "restrictWidth", "1" },
                     { "usePrevalueEditors", "0" }
                 });
             Fields.AddHideLabel();

@@ -21,7 +21,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             if (source is string value)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<MacroTemp>>(value);
+                return JsonConvert.DeserializeObject<IEnumerable<MacroPickerModel>>(value);
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
@@ -29,27 +29,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public override object ConvertIntermediateToObject(IPublishedElement owner, PublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
         {
-            if (inter is IEnumerable<MacroTemp> items)
+            if (inter is IEnumerable<MacroPickerModel> items)
             {
                 return items.Select(x => new PartialViewMacroModel(default, default, x.Alias, x.Name, x.Parameters)).ToList();
             }
 
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
-        }
-
-        private class MacroTemp
-        {
-            [JsonProperty("udi")]
-            public string Udi { get; set; }
-
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            [JsonProperty("alias")]
-            public string Alias { get; set; }
-
-            [JsonProperty("params")]
-            public Dictionary<string, object> Parameters { get; set; }
         }
     }
 }

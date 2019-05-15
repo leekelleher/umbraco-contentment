@@ -117,22 +117,24 @@ namespace Our.Umbraco.Contentment.DataEditors
                         return _services.MediaService.GetByIds(model.Items.Select(x => x.Guid));
 
                     case UmbracoEntityTypes.MediaType:
-                        // TODO:
-                        // NOTE: Can't use `MediaTypeService.GetAll`, as it only accepts `int[]` IDs.
-                        return _services.EntityService.GetAll(UmbracoObjectTypes.MediaType, model.Items.Select(x => x.Guid).ToArray());
+                        {
+                            var ids = model.Items.Select(_idkMap.GetIdForUdi).Where(x => x.Success).Select(x => x.Result).ToArray();
+                            return _services.MediaTypeService.GetAll(ids);
+                        }
 
                     case UmbracoEntityTypes.Member:
-                        // TODO:
-                        // NOTE: Can't use `MemberService.GetAllMembers`, as it only accepts `int[]` IDs.
-                        return _services.EntityService.GetAll(UmbracoObjectTypes.Member, model.Items.Select(x => x.Guid).ToArray());
+                        {
+                            var ids = model.Items.Select(_idkMap.GetIdForUdi).Where(x => x.Success).Select(x => x.Result).ToArray();
+                            return _services.MemberService.GetAllMembers(ids);
+                        }
 
                     case UmbracoEntityTypes.MemberType:
-                        // TODO:
-                        // NOTE: Can't use `MemberTypeService.GetAll`, as it only accepts `int[]` IDs.
-                        return _services.EntityService.GetAll(UmbracoObjectTypes.MemberType, model.Items.Select(x => x.Guid).ToArray());
+                        {
+                            var ids = model.Items.Select(_idkMap.GetIdForUdi).Where(x => x.Success).Select(x => x.Result).ToArray();
+                            return _services.MemberTypeService.GetAll(ids);
+                        }
 
                     case UmbracoEntityTypes.Template:
-                        // TODO:
                         // NOTE: Can't use `FileService.GetTemplates`, as it only accepts `string[]` aliases.
                         return _services.EntityService.GetAll(UmbracoObjectTypes.Template, model.Items.Select(x => x.Guid).ToArray());
 
@@ -150,15 +152,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
-        }
-
-        private class EntityPickerModel
-        {
-            [JsonProperty(Constants.Conventions.ConfigurationEditors.EntityType)]
-            public UmbracoEntityTypes EntityType { get; set; }
-
-            [JsonProperty("items")]
-            public GuidUdi[] Items { get; set; }
         }
     }
 }

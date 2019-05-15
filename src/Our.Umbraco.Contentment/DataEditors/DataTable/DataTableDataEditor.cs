@@ -10,9 +10,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
-        ValueType = ValueTypes.String,
+        ValueType = ValueTypes.Json,
         Group = "Lists",
-        Icon = "icon-bulleted-list")]
+        Icon = "icon-bulleted-list",
+        IsDeprecated = true // NOTE: IsWorkInProgress
+        )]
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
     public class DataTableDataEditor : DataEditor
     {

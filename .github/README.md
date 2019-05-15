@@ -15,13 +15,18 @@ Some data-editors may be innovative, others may be a reimagining of existing dat
 > Data Editors appear to be the new v8 term for combining what was previously v6/v7 Property Editors and Parameter Editors.
 > These can be used as either Property Editors or Parameter Editors.
 
+###### Property Editors (all of these can be configured to be used as Parameter Editors)
+
 - Checkbox
-- Data Table
 - Dropdown
 - Entity Picker
 - Macro Picker
 - Notes
 - Render Macro
+
+###### Configuration Editors (formerly known as Parameter Editors)
+
+- Data Table
 
 ### License
 

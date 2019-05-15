@@ -1,5 +1,5 @@
 ﻿<div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.DataTable.Controller as vm">
-    <table class="table" ng-show="vm.items.length > 0" style="max-width: 66.6%;">
+    <table class="table" ng-show="vm.items.length > 0" ng-style="vm.style">
         <thead>
             <tr>
                 <th ng-if="vm.sortable"></th>
@@ -9,13 +9,13 @@
         </thead>
         <tbody ui-sortable="vm.sortableOptions" ng-model="vm.items">
             <tr ng-repeat="item in vm.items">
-                <td ng-if="vm.sortable">
+                <td ng-if="vm.sortable" style="vertical-align: top;">
                     <i class="icon icon-navigation handle"></i>
                 </td>
-                <td ng-repeat="field in item">
+                <td ng-repeat="field in item" style="vertical-align: top;">
                     <umb-property-editor model="field" is-pre-value="{{vm.usePrevalueEditors}}"></umb-property-editor>
                 </td>
-                <td style="text-align: right;">
+                <td style="text-align: right;vertical-align: top;">
                     <div ng-if="vm.allowRemove" style="position:relative;">
                         <i class="icon-trash" ng-click="vm.showPrompt(item)"></i>
                         <umb-confirm-action ng-if="item.prompt"

@@ -39,7 +39,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.Add(
                 "notes",
                 "Notes",
-                "Enter the notes for the content editor.", // TODO: Make description friendlier [LK]
+                "Enter the notes to be displayed for the content editor.",
                  IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 new Dictionary<string, object> { { "editor", editor } });
             Fields.AddHideLabel();

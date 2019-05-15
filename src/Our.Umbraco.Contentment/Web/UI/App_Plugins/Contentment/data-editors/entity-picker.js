@@ -12,7 +12,7 @@
             maxItems: 0,
             allowDuplicates: 0,
             disableSorting: 0,
-            supportedTypes: [],
+            supportedTypes: ["DocumentType"],
             semisupportedTypes: [],
             unsupportedTypes: []
         };

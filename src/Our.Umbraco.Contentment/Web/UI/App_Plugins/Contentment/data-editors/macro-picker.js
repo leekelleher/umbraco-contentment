@@ -4,7 +4,7 @@
     "editorService",
     function ($scope, entityResource, editorService) {
 
-        //console.log("model", $scope.model);
+        //console.log("macroPicker.model", $scope.model);
 
         var defaultConfig = { allowedMacros: { entityType: "Macro", items: [] }, maxItems: 0, disableSorting: 0 };
         var config = angular.merge({}, defaultConfig, $scope.model.config);
