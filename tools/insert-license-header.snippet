@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>Mozilla Public License Header</Title>
+    <Author>Lee Kelleher</Author>
+    <Shortcut>mpl</Shortcut>
+    <Description>Code snippet to insert the MPL header.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal Editable="true">
+        <ID>year</ID>
+        <Default>2019</Default>
+      </Literal>
+      <Literal Editable="true">
+        <ID>author</ID>
+        <Default>Lee Kelleher, Umbrella Inc and other contributors</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="CSharp" Kind="any">
+      <![CDATA[/* Copyright © $year$ $author$.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+$end$]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>
