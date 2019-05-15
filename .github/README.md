@@ -34,7 +34,6 @@ _What the heck is a Data Editor?_
 All of these can be configured to be used as Parameter Editors.
 
 
-- Data Table
 
 ### License
 
