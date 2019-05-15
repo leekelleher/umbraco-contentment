@@ -18,7 +18,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.String,
         Group = "Lists",
         Icon = "icon-indent")]
+#if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+#endif
     public class DropdownDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.Dropdown";

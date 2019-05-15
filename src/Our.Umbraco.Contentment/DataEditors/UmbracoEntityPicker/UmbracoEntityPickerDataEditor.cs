@@ -18,7 +18,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = "Picker",
         Icon = "icon-science")]
+#if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+#endif
     public class UmbracoEntityPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.UmbracoEntityPicker";

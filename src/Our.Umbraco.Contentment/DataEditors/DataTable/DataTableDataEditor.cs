@@ -20,7 +20,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         Icon = "icon-bulleted-list",
         IsDeprecated = true // NOTE: IsWorkInProgress
         )]
+#if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+#endif
     public class DataTableDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.DataTable";

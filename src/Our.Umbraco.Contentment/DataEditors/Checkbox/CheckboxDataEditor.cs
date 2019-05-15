@@ -18,7 +18,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Integer,
         Group = "Common",
         Icon = "icon-checkbox")]
+#if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+#endif
     public class CheckboxDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.Checkbox";

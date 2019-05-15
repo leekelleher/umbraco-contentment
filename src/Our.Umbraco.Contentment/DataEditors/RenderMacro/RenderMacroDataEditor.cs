@@ -18,7 +18,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Integer,
         Group = "Display",
         Icon = "icon-settings-alt")]
+#if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+#endif
     public class RenderMacroDataEditor: DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.RenderMacro";

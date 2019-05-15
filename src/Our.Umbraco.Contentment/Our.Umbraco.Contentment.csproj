@@ -288,9 +288,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.html" />
