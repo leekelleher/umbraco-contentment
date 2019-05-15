@@ -1,4 +1,9 @@
-﻿<div class="umb-property-editor umb-boolean" ng-controller="Our.Umbraco.Contentment.DataEditors.Checkbox.Controller as vm">
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="umb-property-editor umb-boolean" ng-controller="Our.Umbraco.Contentment.DataEditors.Checkbox.Controller as vm">
     <input type="checkbox" id="{{vm.alias}}" ng-model="model.value" ng-true-value="{{vm.true}}" ng-false-value="{{vm.false}}" />
     <label for="{{vm.alias}}" title="{{vm.label}}" ng-if="vm.showInline" style="margin: 1px auto 0 3px; width: 90%;">
         <strong ng-bind-html="vm.label"></strong>

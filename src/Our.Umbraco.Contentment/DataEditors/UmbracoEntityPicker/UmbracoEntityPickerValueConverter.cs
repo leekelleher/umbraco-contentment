@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -12,19 +17,19 @@ using Umbraco.Web.Models.ContentEditing;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class EntityPickerValueConverter : PropertyValueConverterBase
+    public class UmbracoEntityPickerValueConverter : PropertyValueConverterBase
     {
         private readonly IdkMap _idkMap;
         private readonly ServiceContext _services;
 
-        public EntityPickerValueConverter(ServiceContext services, IdkMap idkMap)
+        public UmbracoEntityPickerValueConverter(ServiceContext services, IdkMap idkMap)
             : base()
         {
             _services = services;
             _idkMap = idkMap;
         }
 
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(EntityPickerDataEditor.DataEditorAlias);
+        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(UmbracoEntityPickerDataEditor.DataEditorAlias);
 
         public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
@@ -83,7 +88,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             if (source is string value)
             {
-                return JsonConvert.DeserializeObject<EntityPickerModel>(value);
+                return JsonConvert.DeserializeObject<UmbracoEntityPickerModel>(value);
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
@@ -91,7 +96,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public override object ConvertIntermediateToObject(IPublishedElement owner, PublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
         {
-            if (inter is EntityPickerModel model)
+            if (inter is UmbracoEntityPickerModel model)
             {
                 switch (model.EntityType)
                 {

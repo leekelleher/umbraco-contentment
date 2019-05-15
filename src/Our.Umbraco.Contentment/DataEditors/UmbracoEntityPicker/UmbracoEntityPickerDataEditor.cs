@@ -16,23 +16,21 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-bulleted-list",
-        IsDeprecated = true // NOTE: IsWorkInProgress
-        )]
+        Group = "Picker",
+        Icon = "icon-science")]
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-    public class DataTableDataEditor : DataEditor
+    public class UmbracoEntityPickerDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.DataTable";
-        internal const string DataEditorName = "[Contentment] Data Table";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/data-table.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/data-table.js";
+        internal const string DataEditorAlias = "Our.Umbraco.Contentment.UmbracoEntityPicker";
+        internal const string DataEditorName = "[Contentment] Umbraco Entity Picker";
+        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/umb-entity-picker.html";
+        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/umb-entity-picker.js";
 
-        public DataTableDataEditor(ILogger logger)
+        public UmbracoEntityPickerDataEditor(ILogger logger)
             : base(logger)
         { }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DataTableConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new UmbracoEntityPickerConfigurationEditor();
 
         protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }

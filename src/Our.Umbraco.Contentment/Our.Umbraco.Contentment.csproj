@@ -266,10 +266,10 @@
     <Compile Include="DataEditors\Dropdown\DropdownValueConverter.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownConfigurationEditor.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownDataEditor.cs" />
-    <Compile Include="DataEditors\EntityPicker\EntityPickerDataEditor.cs" />
-    <Compile Include="DataEditors\EntityPicker\EntityPickerConfigurationEditor.cs" />
-    <Compile Include="DataEditors\EntityPicker\EntityPickerModel.cs" />
-    <Compile Include="DataEditors\EntityPicker\EntityPickerValueConverter.cs" />
+    <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerDataEditor.cs" />
+    <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerConfigurationEditor.cs" />
+    <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerModel.cs" />
+    <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerValueConverter.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
@@ -294,8 +294,8 @@
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\entity-picker.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\entity-picker.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\umb-entity-picker.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\umb-entity-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-table.html" />

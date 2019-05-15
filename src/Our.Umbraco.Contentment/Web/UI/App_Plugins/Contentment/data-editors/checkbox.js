@@ -1,4 +1,9 @@
-﻿angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", function ($scope) {
+﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", function ($scope) {
 
     var defaultConfig = { showInline: 0 };
     var config = angular.merge({}, defaultConfig, $scope.model.config);
