@@ -50,7 +50,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             fields.Add(
                 Constants.Conventions.ConfigurationEditors.MaxItems,
-                "Max items",
+                "Maximum items",
                 "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
                 "number");
         }
