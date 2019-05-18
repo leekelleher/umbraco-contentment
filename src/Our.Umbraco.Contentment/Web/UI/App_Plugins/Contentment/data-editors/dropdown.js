@@ -9,10 +9,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdo
 
         //console.log("model", $scope.model);
 
-        var defaultConfig = { items: [] };
-        var config = angular.merge({}, defaultConfig, $scope.model.config);
+        var defaultConfig = { items: [], allowEmpty: 1 };
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
+        vm.allowEmpty = Object.toBoolean(config.allowEmpty); // TODO: Review the naming of `allowEmpty` [LK]
 
         function init() {
             $scope.model.value = $scope.model.value || "";

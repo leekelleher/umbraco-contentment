@@ -6,7 +6,7 @@
 angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", function ($scope) {
 
     var defaultConfig = { showInline: 0 };
-    var config = angular.merge({}, defaultConfig, $scope.model.config);
+    var config = angular.extend({}, defaultConfig, $scope.model.config);
 
     var vm = this;
 

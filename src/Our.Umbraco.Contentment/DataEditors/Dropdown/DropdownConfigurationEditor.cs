@@ -45,10 +45,10 @@ namespace Our.Umbraco.Contentment.DataEditors
                 new Dictionary<string, object>()
                 {
                     { "fields", listFields },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, "0" },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, "0" },
-                    { "restrictWidth", "1" },
-                    { "usePrevalueEditors", "0" }
+                    { Constants.Conventions.ConfigurationEditors.MaxItems, 0 },
+                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.False },
+                    { "restrictWidth", Constants.Values.True },
+                    { "usePrevalueEditors", Constants.Values.False }
                 });
             Fields.AddHideLabel();
         }

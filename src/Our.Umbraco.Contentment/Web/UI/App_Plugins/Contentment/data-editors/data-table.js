@@ -7,10 +7,10 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.DataTa
     "$scope",
     function ($scope) {
 
-        //console.log("model", $scope.model);
+        //console.log("datatable.model", $scope.model);
 
         var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
-        var config = angular.merge({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 

@@ -21,7 +21,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Umbrac
             semisupportedTypes: [],
             unsupportedTypes: []
         };
-        var config = angular.merge({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
@@ -132,7 +132,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Umbrac
                 ensureIcons(availableItems);
 
                 var entityPicker = {
-                    view: "itempicker",
                     title: "Choose " + config.entityType + "...",
                     availableItems: availableItems,
                     submit: function (model) {

@@ -24,5 +24,12 @@ namespace Our.Umbraco.Contentment
                 public const string ShowInline = "showInline";
             }
         }
+
+        internal static class Values
+        {
+            public const string True = "1";
+
+            public const string False = "0";
+        }
     }
 }

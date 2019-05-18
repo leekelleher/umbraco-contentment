@@ -260,7 +260,17 @@
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
+    <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\ManualProviderConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\EnumProviderConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\JsonProviderConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\XmlProviderConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\SqlProviderConfigurationEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataProviders\IDataProvider.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
     <Compile Include="DataEditors\Dropdown\DropdownValueConverter.cs" />
@@ -293,6 +303,11 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.overlay.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-list.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-list.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown.html" />

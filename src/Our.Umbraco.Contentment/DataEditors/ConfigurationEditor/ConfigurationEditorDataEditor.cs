@@ -16,26 +16,22 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-item-arrangement",
+        Group = "Picker",
+        Icon = "icon-settings-alt",
         IsDeprecated = true // NOTE: IsWorkInProgress
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
-    public class DataTableDataEditor : DataEditor
+    public class ConfigurationEditorDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.DataTable";
-        internal const string DataEditorName = "[Contentment] Data Table";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/data-table.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/data-table.js";
+        internal const string DataEditorAlias = "Our.Umbraco.Contentment.ConfigurationEditor";
+        internal const string DataEditorName = "[Contentment] Configuration Editor";
+        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.html";
+        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.js";
 
-        public DataTableDataEditor(ILogger logger)
+        public ConfigurationEditorDataEditor(ILogger logger)
             : base(logger)
         { }
-
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DataTableConfigurationEditor();
-
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

@@ -12,7 +12,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.MacroP
         //console.log("macroPicker.model", $scope.model);
 
         var defaultConfig = { allowedMacros: { entityType: "Macro", items: [] }, maxItems: 0, disableSorting: 0 };
-        var config = angular.merge({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
         var allowedMacros = [];
