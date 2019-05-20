@@ -20,11 +20,89 @@ namespace Our.Umbraco.Contentment.DataEditors
         public DataListConfigurationEditor()
             : base()
         {
-            var dataSources = TypeFinder
-                .FindClassesOfType<IDataProvider>()
+            var dataSources = GetDataSources();
+            var listTypes = GetListTypes();
+
+            Fields.Add(
+                "dataSource",
+                "Data Source",
+                "Select and configure the data source.",
+                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationEditors.Items, dataSources },
+                    { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
+                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
+                    { "overlaySize", "large" },
+#if DEBUG
+                    { "debug", Constants.Values.True },
+#endif
+                });
+            Fields.Add(
+                "listType",
+                "List Type",
+                "Select and configure the type of data list.",
+                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationEditors.Items, listTypes },
+                    { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
+                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
+                    { "overlaySize", "large" },
+#if DEBUG
+                    { "debug", Constants.Values.True },
+#endif
+                });
+            Fields.AddHideLabel();
+        }
+
+        public override IDictionary<string, object> ToValueEditor(object configuration)
+        {
+            var config = base.ToValueEditor(configuration);
+
+            if (config.TryGetValue("dataSource", out var dataSource) && dataSource is JArray array && array.Count > 0)
+            {
+                // TODO: Review this, make it bulletproof
+
+                var item = array[0];
+                var type = TypeFinder.GetTypeByName(item["type"].ToString());
+                if (type != null)
+                {
+                    var source = item["value"].ToObject(type) as IDataListSource;
+                    var options = source?.GetItems() ?? new Dictionary<string, string>();
+
+                    config.Add("items", options.Select(x => new { label = x.Value, value = x.Key }));
+                }
+
+                config.Remove("dataSource");
+            }
+
+            if (config.ContainsKey("listType"))
+            {
+                config.Remove("listType");
+            }
+
+            return config;
+        }
+
+        private ConfigurationEditorModel[] GetDataSources()
+        {
+            return GetConfigurationEditors<IDataListSource>();
+        }
+
+        private ConfigurationEditorModel[] GetListTypes()
+        {
+            return GetConfigurationEditors<IDataListType>();
+        }
+
+        private ConfigurationEditorModel[] GetConfigurationEditors<TConfigurationEditor>()
+            where TConfigurationEditor : class, IConfigurationEditorItem
+        {
+            return TypeFinder
+                .FindClassesOfType<TConfigurationEditor>()
                 .Select(t =>
                 {
-                    var provider = Activator.CreateInstance(t) as IDataProvider;
+                    var provider = Activator.CreateInstance(t) as TConfigurationEditor;
 
                     var fields = t
                         .GetProperties()
@@ -49,78 +127,16 @@ namespace Our.Umbraco.Contentment.DataEditors
                             };
                         });
 
-                    return new
+                    return new ConfigurationEditorModel
                     {
-                        type = t.GetFullNameWithAssembly(),
-                        name = provider?.Name ?? t.Name.SplitPascalCasing(),
-                        description = provider?.Description,
-                        icon = provider?.Icon ?? "icon-science",
-                        fields
+                        Type = t.GetFullNameWithAssembly(),
+                        Name = provider?.Name ?? t.Name.SplitPascalCasing(),
+                        Description = provider?.Description,
+                        Icon = provider?.Icon ?? "icon-science",
+                        Fields = fields
                     };
                 })
                 .ToArray();
-
-            Fields.Add(
-                "dataSource",
-                "Data Source",
-                "Select and configure the data source provider.",
-                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
-                {
-                    { Constants.Conventions.ConfigurationEditors.Items, dataSources },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.False }
-                });
-
-            var listTypes = new[]
-            {
-                new { label = "Checkbox List", value = "checkboxlist" },
-                new { label = "Dropdown List", value = IOHelper.ResolveUrl(DropdownDataEditor.DataEditorViewPath) },
-                new { label = "Radio Button List", value = "radiobuttons" },
-            };
-
-            Fields.Add(
-                "listType",
-                "List Type",
-                "[Add a friendly description]",
-                IOHelper.ResolveUrl(DropdownDataEditor.DataEditorViewPath),
-                new Dictionary<string, object> {
-                     { "allowEmpty", 0 },
-                    { Constants.Conventions.ConfigurationEditors.Items, listTypes }
-                });
-
-            Fields.AddHideLabel();
-        }
-
-        public override IDictionary<string, object> ToValueEditor(object configuration)
-        {
-            var config = base.ToValueEditor(configuration);
-
-            // TODO: If it's an Umbraco control, then we need to manipulate the "items", so that they are in `{ "key", "value" }` format
-            // listType
-            // NOTE: [LK] I got up to here. I am populating umbraco editors (checkboxlist, radiobuttonlist) with the data, but the format isn't quite right.
-            // I wonder whether having a dropdown for "listType", we make it selectable/configurable, like the "dataSource"?
-
-            if (config.TryGetValue("dataSource", out var dataSource) && dataSource is JArray array && array.Count > 0)
-            {
-                // TODO: Check whether to do this here, or in the ValueEditor class?
-
-                // TODO: Review this, make it bulletproof
-
-                var item = array[0];
-                var type = TypeFinder.GetTypeByName(item["type"].ToString());
-                if (type != null)
-                {
-                    var provider = item["value"].ToObject(type) as IDataProvider;
-                    var options = provider?.GetItems() ?? new Dictionary<string, string>();
-
-                    config.Add("items", options.Select(x => new { label = x.Value, value = x.Key }));
-                }
-
-                config.Remove("dataSource");
-            }
-
-            return config;
         }
     }
 }

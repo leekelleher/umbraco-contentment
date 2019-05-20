@@ -13,7 +13,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class EnumProviderConfigurationEditor : IDataProvider
+    internal class EnumDataListSource : IDataListSource
     {
         public string Name => "Enum";
 
@@ -24,12 +24,20 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(EnumTypeConfigurationField))]
         public string EnumType { get; set; }
 
+        [ConfigurationField("sortAlphabetically", "Sort Alphabetically", "boolean", Description = "Select to sort the enum in alphabetical order. The default order is defined by the enum itself.")]
+        public string SortAlphabetically { get; set; } // TODO: I had this as a `bool`, but JSON.NET can't deserialize the string "1" to a bool. Look at making a converter.
+
         public Dictionary<string, string> GetItems()
         {
             // TODO: Review this, make it bulletproof
 
             var type = TypeFinder.GetTypeByName(EnumType);
             var names = Enum.GetNames(type);
+
+            if (SortAlphabetically.TryConvertTo<bool>().Result)
+            {
+                Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
+            }
 
             return names.ToDictionary(x => x, x => x.SplitPascalCasing());
         }
@@ -43,17 +51,17 @@ namespace Our.Umbraco.Contentment.DataEditors
                     typeof(global::Umbraco.Core.Persistence.DatabaseModelDefinitions.Direction),
                     typeof(global::Umbraco.Core.Logging.LogLevel),
                     typeof(global::Umbraco.Web.Models.ContentEditing.UmbracoEntityTypes),
-                };
+                }.Select(x => new { label = x.Name.SplitPascalCasing(), value = x.GetFullNameWithAssembly() });
 
                 Key = "enumType";
                 Name = "Enum";
                 // TODO: Figure out how to develop this editor type.
                 Description = "TODO: This field will become an assembly/type discovery editor, to locate the enum.";
-                View = IOHelper.ResolveUrl(DropdownDataEditor.DataEditorViewPath);
+                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "allowEmpty", 0 },
-                    { "items", items.Select(x => new { label = x.Name.SplitPascalCasing(), value = x.GetFullNameWithAssembly() }) }
+                    { "allowEmpty", Constants.Values.False },
+                    { Constants.Conventions.ConfigurationEditors.Items, items }
                 };
             }
         }

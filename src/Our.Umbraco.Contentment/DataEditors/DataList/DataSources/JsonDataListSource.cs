@@ -4,10 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class JsonProviderConfigurationEditor : IDataProvider
+    internal class JsonDataListSource : IDataListSource
     {
         public string Name => "JSON";
 
@@ -15,10 +16,18 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
-        // TODO: Implement the XML data provider. [LK]
+        // TODO: Implement the JSON data provider. [LK]
+
+        [ConfigurationField("jsonUrl", "URL", "textstring", Description = "Enter the URL of the JSON data source.")]
+        public string JsonUrl { get; set; }
 
         public Dictionary<string, string> GetItems()
         {
+            if (string.IsNullOrWhiteSpace(JsonUrl) == false)
+            {
+                // TODO: Try something like... http://country.io/names.json
+            }
+
             return null;
         }
     }

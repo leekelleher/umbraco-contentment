@@ -45,7 +45,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 {
                     Key = "view",
                     Name = "Editor",
-                    View = IOHelper.ResolveUrl(DropdownDataEditor.DataEditorViewPath),
+                    View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>
                     {
                         { Constants.Conventions.ConfigurationEditors.Items, paramEditors }

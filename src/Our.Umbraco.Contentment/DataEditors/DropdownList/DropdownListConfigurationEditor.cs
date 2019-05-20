@@ -9,9 +9,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class DropdownConfigurationEditor : ConfigurationEditor
+    public class DropdownListConfigurationEditor : ConfigurationEditor
     {
-        public DropdownConfigurationEditor()
+        public DropdownListConfigurationEditor()
             : base()
         {
             var listFields = new[]
@@ -28,13 +28,13 @@ namespace Our.Umbraco.Contentment.DataEditors
                     Name = "Value",
                     View = "textbox"
                 },
-                new ConfigurationField
-                {
-                    Key = "enabled",
-                    Name = "Enabled",
-                    View = "boolean",
-                    Config = new Dictionary<string, object> { { "default", "1" } }
-                },
+                //new ConfigurationField
+                //{
+                //    Key = "enabled",
+                //    Name = "Enabled",
+                //    View = "boolean",
+                //    Config = new Dictionary<string, object> { { "default", Constants.Values.True } }
+                //},
             };
 
             Fields.Add(

@@ -4,7 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core;
+using Newtonsoft.Json.Linq;
+using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
@@ -22,9 +23,33 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 base.Configuration = value;
 
-                if (value is Dictionary<string, object> config && config.ContainsKey("listType"))
+                // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
+                // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values. [LK]
+                if (value is Dictionary<string, object> config &&
+                    config.ContainsKey("listType") &&
+                    config.TryGetValue("listType", out var listType) &&
+                    listType is JArray array &&
+                    array.Count > 0)
                 {
-                    View = config["listType"].TryConvertTo<string>().Result;
+                    // TODO: Review this, make it bulletproof
+
+                    var item = array[0];
+                    var type = TypeFinder.GetTypeByName(item["type"].ToString());
+                    if (type != null)
+                    {
+                        var val = item["value"] as JObject;
+                        var obj = val.ToObject(type) as IDataListType;
+
+                        View = obj.View;
+
+                        foreach (var prop in val)
+                        {
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
+                        }
+                    }
                 }
             }
         }

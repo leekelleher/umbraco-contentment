@@ -22,6 +22,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
+    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorOverlayJsPath)]
 #endif
     public class ConfigurationEditorDataEditor : DataEditor
     {
@@ -29,6 +30,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Configuration Editor";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.js";
+        internal const string DataEditorOverlayViewPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html";
+        internal const string DataEditorOverlayJsPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.overlay.js";
 
         public ConfigurationEditorDataEditor(ILogger logger)
             : base(logger)

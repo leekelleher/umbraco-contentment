@@ -4,13 +4,12 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.ConfigurationEditor.Controller as vm">
-
     <div ui-sortable="vm.sortableOptions" ng-model="model.value">
         <umb-node-preview ng-repeat="item in model.value"
                           icon="item.icon"
                           name="item.name"
                           published="vm.published"
-                          description="item.type"
+                          description=""
                           sortable="vm.sortable"
                           allow-remove="vm.allowRemove"
                           allow-edit="vm.allowEdit"
@@ -22,9 +21,8 @@
         <localize key="general_add">Add</localize>
     </a>
 
-    <details style="margin-top:20px;" class="span8">
+    <details style="margin-top:20px;" class="span8" ng-if="vm.debug">
         <summary>Debug</summary>
-        <pre><xmp>{{model | json}}</xmp></pre>
+        <pre><xml>{{model | json}}</xml></pre>
     </details>
-
 </div>

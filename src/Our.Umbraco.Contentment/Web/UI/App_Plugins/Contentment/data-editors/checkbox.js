@@ -3,28 +3,33 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", function ($scope) {
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkbox.Controller", [
+    "$scope",
+    function ($scope) {
 
-    var defaultConfig = { showInline: 0 };
-    var config = angular.extend({}, defaultConfig, $scope.model.config);
+        //console.log("checkbox.model", $scope.model);
 
-    var vm = this;
+        var defaultConfig = { showInline: 0, defaultValue: 0 }; // TODO: Implement the `defaultValue` [LK]
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
 
-    function init() {
+        var vm = this;
 
-        vm.alias = $scope.model.alias;
-        vm.true = 1;
-        vm.false = 0;
+        function init() {
 
-        if (Object.toBoolean(config.showInline)) {
-            vm.showInline = true;
-            vm.label = $scope.model.label;
-            vm.description = $scope.model.description;
-        }
+            vm.alias = $scope.model.alias;
+            vm.true = 1;
+            vm.false = 0;
 
-        $scope.model.value = Object.toBoolean($scope.model.value) ? vm.true : vm.false;
+            if (Object.toBoolean(config.showInline)) {
+                vm.showInline = true;
+                vm.label = $scope.model.label;
+                vm.description = $scope.model.description;
+            }
 
-    };
+            $scope.model.value = Object.toBoolean($scope.model.value) ? vm.true : vm.false;
 
-    init();
-});
+        };
+
+        init();
+    }
+]);

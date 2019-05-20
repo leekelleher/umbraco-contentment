@@ -11,6 +11,8 @@ namespace Our.Umbraco.Contentment
         {
             internal static class ConfigurationEditors
             {
+                public const string DefaultValue = "defaultValue";
+
                 public const string DisableSorting = "disableSorting";
 
                 public const string EntityType = "entityType";

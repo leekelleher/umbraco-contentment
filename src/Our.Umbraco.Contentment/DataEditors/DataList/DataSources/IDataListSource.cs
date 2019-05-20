@@ -2,14 +2,8 @@
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public interface IDataProvider
+    public interface IDataListSource : IConfigurationEditorItem
     {
-        string Name { get; }
-
-        string Description { get; }
-
-        string Icon { get; }
-
         Dictionary<string, string> GetItems();
     }
 }

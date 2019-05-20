@@ -14,12 +14,13 @@
         </umb-editor-header>
 
         <umb-editor-container>
-            <umb-box>
-                <umb-box-content class="block-form">
 
-                    <div ng-if="vm.mode == 'select'">
 
-                        <ul class="umb-actions umb-actions-child" ng-if="vm.items.length > 0">
+            <div ng-if="vm.mode == 'select'">
+
+                <umb-box ng-if="vm.items.length > 0">
+                    <umb-box-content class="block-form">
+                        <ul class="umb-actions umb-actions-child">
                             <li class="umb-action" ng-repeat="item in vm.items | orderBy:'name':false">
                                 <a class="umb-action-link" ng-click="vm.select(item)">
                                     <i class="large icon {{item.icon}}"></i>
@@ -30,31 +31,33 @@
                                 </a>
                             </li>
                         </ul>
+                    </umb-box-content>
+                </umb-box>
 
-                        <umb-empty-state ng-if="vm.items.length == 0" position="center">
-                            There are no items available to insert
-                        </umb-empty-state>
+                <umb-empty-state ng-if="vm.items.length == 0" position="center">
+                    There are no items available to insert
+                </umb-empty-state>
 
-                    </div>
+            </div>
 
-                    <div ng-if="vm.mode == 'edit'">
+            <div ng-if="vm.mode == 'edit'">
 
-                        <div ng-if="vm.editor.fields.length > 0">
-                            <ng-form class="form-horizontal" name="configurationEditorForm" novalidate val-form-manager>
-                                <umb-property property="field" ng-repeat="field in vm.editor.fields">
-                                    <umb-property-editor model="field" is-pre-value="true"></umb-property-editor>
-                                </umb-property>
-                            </ng-form>
-                        </div>
+                <umb-box ng-if="vm.editor.fields.length > 0">
+                    <umb-box-content class="block-form">
+                        <ng-form class="form-horizontal" name="configurationEditorForm" novalidate val-form-manager>
+                            <umb-property property="field" ng-repeat="field in vm.editor.fields">
+                                <umb-property-editor model="field" is-pre-value="true"></umb-property-editor>
+                            </umb-property>
+                        </ng-form>
+                    </umb-box-content>
+                </umb-box>
 
-                        <umb-empty-state ng-if="vm.editor.fields.length == 0" position="center">
-                            There are no parameters for this item
-                        </umb-empty-state>
+                <umb-empty-state ng-if="vm.editor.fields.length == 0" position="center">
+                    There are no parameters for this item
+                </umb-empty-state>
 
-                    </div>
+            </div>
 
-                </umb-box-content>
-            </umb-box>
         </umb-editor-container>
 
         <umb-editor-footer>
@@ -67,7 +70,7 @@
                 </umb-button>
                 <umb-button type="button"
                             button-style="success"
-                            label-key="general_submit"
+                            label-key="bulk_done"
                             action="vm.save(vm.editor)">
                 </umb-button>
             </umb-editor-footer-content-right>

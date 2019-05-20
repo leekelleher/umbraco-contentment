@@ -3,20 +3,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdown.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.DropdownList.Controller", [
     "$scope",
     function ($scope) {
 
-        //console.log("model", $scope.model);
+        console.log("dropdownlist.model", $scope.model);
 
-        var defaultConfig = { items: [], allowEmpty: 1 };
+        var defaultConfig = { items: [], allowEmpty: 1, defaultValue: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
-        vm.allowEmpty = Object.toBoolean(config.allowEmpty); // TODO: Review the naming of `allowEmpty` [LK]
 
         function init() {
-            $scope.model.value = $scope.model.value || "";
+            $scope.model.value = $scope.model.value || config.defaultValue;
+
+            if (_.isArray($scope.model.value)) {
+                $scope.model.value = _.first($scope.model.value);
+            }
 
             _.each(config.items, function (item) {
                 if (item.hasOwnProperty("enabled")) {
@@ -26,6 +29,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdo
             });
 
             vm.items = config.items;
+
+            vm.allowEmpty = Object.toBoolean(config.allowEmpty); // TODO: Review the naming of `allowEmpty` [LK]
         };
 
         init();

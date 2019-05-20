@@ -41,7 +41,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Constants.Conventions.ConfigurationEditors.EntityType,
                 "Entity Type",
                 "Select the entity type to use.<br><br>Unsupported entity types have been disabled.",
-                IOHelper.ResolveUrl("~/App_Plugins/Contentment/data-editors/dropdown.html"),
+                IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>() { { Constants.Conventions.ConfigurationEditors.Items, items } });
             Fields.AddMaxItems();
             Fields.Add(

@@ -25,9 +25,14 @@ _What the heck is a Data Editor?_
 ###### Property Editors
 
 - [Checkbox](../docs/data-editors/checkbox.md)
+- Checkbox List
+- Configuration Editor
+- Data List
+- Data Table
 - [Dropdown](../docs/data-editors/dropdown.md)
 - [Macro Picker](../docs/data-editors/macro-picker.md)
 - [Notes](../docs/data-editors/notes.md)
+- Radio Button List
 - [Render Macro](../docs/data-editors/render-macro.md)
 - [Umbraco Entity Picker](../docs/data-editors/umb-entity-picker.md)
 

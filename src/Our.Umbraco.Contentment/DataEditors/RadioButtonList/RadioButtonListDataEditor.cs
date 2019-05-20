@@ -15,25 +15,23 @@ namespace Our.Umbraco.Contentment.DataEditors
         EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
-        ValueType = ValueTypes.String,
+        ValueType = ValueTypes.Json,
         Group = "Lists",
-        Icon = "icon-indent")]
+        Icon = "icon-target",
+        IsDeprecated = true // NOTE: IsWorkInProgress
+        )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
-    public class DropdownDataEditor : DataEditor
+    public class RadioButtonListDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.Dropdown";
-        internal const string DataEditorName = "[Contentment] Dropdown";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/dropdown.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/dropdown.js";
+        internal const string DataEditorAlias = "Our.Umbraco.Contentment.RadioButtonList";
+        internal const string DataEditorName = "[Contentment] Radio Button List";
+        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.html";
+        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.js";
 
-        public DropdownDataEditor(ILogger logger)
+        public RadioButtonListDataEditor(ILogger logger)
             : base(logger)
         { }
-
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DropdownConfigurationEditor();
-
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

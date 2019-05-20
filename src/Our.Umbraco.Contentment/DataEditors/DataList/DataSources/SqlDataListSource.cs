@@ -12,7 +12,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class SqlProviderConfigurationEditor : IDataProvider
+    internal class SqlDataListSource : IDataListSource
     {
         public string Name => "SQL";
 
@@ -20,7 +20,10 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
-        [ConfigurationField("query", "SQL Query", "views/propertyeditors/textarea/textarea.html", Description = "Enter the SQL query.<br><br>You must return `label` and `value` columns names.")]
+        [ConfigurationField(typeof(NotesConfigurationField))]
+        public string Notes { get; set; }
+
+        [ConfigurationField("query", "SQL Query", "views/propertyeditors/textarea/textarea.html", Description = "Enter the SQL query.")]
         public string Query { get; set; }
 
         [ConfigurationField(typeof(ConnectionStringConfigurationField))]
@@ -53,7 +56,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Key = "connString";
                 Name = "Connection String";
                 Description = "Enter the connection string.";
-                View = IOHelper.ResolveUrl(DropdownDataEditor.DataEditorViewPath);
+                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
                     { "allowEmpty", 0 },
@@ -62,6 +65,27 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
         }
 
+        class NotesConfigurationField : ConfigurationField
+        {
+            public NotesConfigurationField()
+            {
+                var html = @"<p class='alert alert-warning'><strong>A note about your SQL query.</strong><br>
+Your SQL query should be designed to return 2 columns, these will be used as label/value pairs in the data list.<br>
+If more columns are returned, then only the first 2 columns will be used.</p>";
+
+                Key = "note";
+                Name = "Note";
+                View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
+                Config = new Dictionary<string, object>
+                {
+                    { "notes", html }
+                };
+                HideLabel = true;
+            }
+        }
+
+        // TODO: I'm not happy about using this temp class to deserialize the SQL data,
+        // Look at alternatives, so we can remove this class.
         class LabelValueModel
         {
             public string label { get; set; }
