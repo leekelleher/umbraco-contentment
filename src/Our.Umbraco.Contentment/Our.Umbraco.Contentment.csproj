@@ -261,6 +261,8 @@
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
+    <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
+    <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
@@ -312,6 +314,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.js" />
@@ -320,6 +323,7 @@
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_debug.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown-list.js" />

@@ -26,6 +26,7 @@ _What the heck is a Data Editor?_
 
 - [Checkbox](../docs/data-editors/checkbox.md)
 - Checkbox List
+- Code Editor (ACE)
 - Configuration Editor
 - Data List
 - Data Table

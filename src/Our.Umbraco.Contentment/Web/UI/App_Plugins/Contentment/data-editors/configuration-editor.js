@@ -8,7 +8,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
     "editorService",
     function ($scope, editorService) {
 
-        //console.log("config-editor.model", $scope.model);
+        // console.log("config-editor.model", $scope.model);
 
         var defaultConfig = { items: [], maxItems: 0, disableSorting: 0, overlaySize: "large", debug: 0 };
         var config = angular.extend({}, defaultConfig, $scope.model.config);

@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(NotesConfigurationField))]
         public string Notes { get; set; }
 
-        [ConfigurationField("query", "SQL Query", "views/propertyeditors/textarea/textarea.html", Description = "Enter the SQL query.")]
+        [ConfigurationField(typeof(QueryConfigurationField))]
         public string Query { get; set; }
 
         [ConfigurationField(typeof(ConnectionStringConfigurationField))]
@@ -84,8 +85,24 @@ If more columns are returned, then only the first 2 columns will be used.</p>";
             }
         }
 
+        class QueryConfigurationField : ConfigurationField
+        {
+            public QueryConfigurationField()
+            {
+                Key = "query";
+                Name = "SQL Query";
+                Description = "Enter the SQL query.";
+                View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath);
+                Config = new Dictionary<string, object>
+                {
+                    { "mode", "sql" }, // TODO: SQL mode doesn't exist, bah! [LK]
+                };
+            }
+        }
+
         // TODO: I'm not happy about using this temp class to deserialize the SQL data,
         // Look at alternatives, so we can remove this class.
+        // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
         class LabelValueModel
         {
             public string label { get; set; }
