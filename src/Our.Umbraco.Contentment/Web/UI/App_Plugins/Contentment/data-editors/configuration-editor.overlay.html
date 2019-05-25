@@ -15,13 +15,23 @@
 
         <umb-editor-container>
 
-
             <div ng-if="vm.mode == 'select'">
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content class="block-form">
+                        <div class="form-search" ng-if="vm.enableSearch">
+                            <i class="icon-search"></i>
+                            <input type="text"
+                                   style="width: 100%"
+                                   ng-model="vm.searchTerm"
+                                   class="umb-search-field search-query input-block-level"
+                                   localize="placeholder"
+                                   placeholder="@placeholders_filter"
+                                   umb-auto-focus
+                                   no-dirty-check />
+                        </div>
                         <ul class="umb-actions umb-actions-child">
-                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:'name':false">
+                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:'name' | filter:vm.searchTerm">
                                 <a class="umb-action-link" ng-click="vm.select(item)">
                                     <i class="large icon {{item.icon}}"></i>
                                     <span class="menu-label">

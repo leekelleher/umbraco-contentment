@@ -38,6 +38,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { "debug", Constants.Values.True },
 #endif
                 });
+
+            // TODO: Matt suggests to rename to "Control Type", or "View Type"?
             Fields.Add(
                 "listType",
                 "List Type",
@@ -87,56 +89,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         private ConfigurationEditorModel[] GetDataSources()
         {
-            return GetConfigurationEditors<IDataListSource>();
+            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListSource>();
         }
 
         private ConfigurationEditorModel[] GetListTypes()
         {
-            return GetConfigurationEditors<IDataListType>();
-        }
-
-        private ConfigurationEditorModel[] GetConfigurationEditors<TConfigurationEditor>()
-            where TConfigurationEditor : class, IConfigurationEditorItem
-        {
-            return TypeFinder
-                .FindClassesOfType<TConfigurationEditor>()
-                .Select(t =>
-                {
-                    var provider = Activator.CreateInstance(t) as TConfigurationEditor;
-
-                    var fields = t
-                        .GetProperties()
-                        .Where(x => Attribute.IsDefined(x, typeof(ConfigurationFieldAttribute)))
-                        .Select(x =>
-                        {
-                            var attr = x.GetCustomAttribute<ConfigurationFieldAttribute>(false);
-                            if (attr?.Type != null)
-                            {
-                                return Activator.CreateInstance(attr.Type) as ConfigurationField;
-                            }
-
-                            return new ConfigurationField
-                            {
-                                Key = attr?.Key ?? x.Name,
-                                Name = attr?.Name ?? x.Name,
-                                PropertyName = x.Name,
-                                PropertyType = x.PropertyType,
-                                Description = attr?.Description,
-                                HideLabel = attr?.HideLabel ?? false,
-                                View = attr?.View
-                            };
-                        });
-
-                    return new ConfigurationEditorModel
-                    {
-                        Type = t.GetFullNameWithAssembly(),
-                        Name = provider?.Name ?? t.Name.SplitPascalCasing(),
-                        Description = provider?.Description,
-                        Icon = provider?.Icon ?? "icon-science",
-                        Fields = fields
-                    };
-                })
-                .ToArray();
+            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListType>();
         }
     }
 }

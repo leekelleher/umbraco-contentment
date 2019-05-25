@@ -18,7 +18,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = "Picker",
         Icon = "icon-settings-alt",
-        IsDeprecated = true // NOTE: IsWorkInProgress
+        IsDeprecated = false // NOTE: IsWorkInProgress
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
@@ -36,5 +36,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public ConfigurationEditorDataEditor(ILogger logger)
             : base(logger)
         { }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new ConfigurationEditorConfigurationEditor();
     }
 }

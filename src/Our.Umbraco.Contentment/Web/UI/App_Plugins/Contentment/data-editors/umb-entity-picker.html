@@ -30,7 +30,7 @@
             <h5>{{vm.error.title}}</h5>
             <p ng-bind-html="vm.error.message"></p>
             <div class="row-fluid" ng-if="vm.error.json">
-                <pre class="span8"><xmp>{{vm.error.json | json}}</xmp></pre>
+                <pre class="span8">{{vm.error.json | json}}</pre>
             </div>
             <p ng-if="vm.error.clear"><a href="" ng-click="vm.clear($event)" prevent-default><b>{{vm.error.clear}}</b></a></p>
         </div>

@@ -36,32 +36,43 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             if (string.IsNullOrWhiteSpace(XmlUrl) == false)
             {
-                using (var client = new WebClient())
+                try
                 {
-                    var response = client.DownloadString(XmlUrl);
-                    if (string.IsNullOrWhiteSpace(response) == false)
+                    // TODO: Abstract this to a base class, share it with the JSON provider.
+                    // Make it handle both local and remote paths.
+
+                    using (var client = new WebClient())
                     {
-                        var doc = new XmlDocument();
-                        doc.LoadXml(response);
-
-                        if (string.IsNullOrWhiteSpace(ItemsXPath) == false)
+                        var response = client.DownloadString(XmlUrl);
+                        if (string.IsNullOrWhiteSpace(response) == false)
                         {
-                            var labelXPath = string.IsNullOrWhiteSpace(LabelXPath) == false ? LabelXPath : "text()";
-                            var valueXPath = string.IsNullOrWhiteSpace(ValueXPath) == false ? ValueXPath : "text()";
+                            var doc = new XmlDocument();
+                            doc.LoadXml(response);
 
-                            var nodes = doc.SelectNodes(ItemsXPath);
-                            foreach (XmlNode node in nodes)
+                            if (string.IsNullOrWhiteSpace(ItemsXPath) == false)
                             {
-                                var label = node.SelectSingleNode(labelXPath);
-                                var value = node.SelectSingleNode(valueXPath);
+                                var labelXPath = string.IsNullOrWhiteSpace(LabelXPath) == false ? LabelXPath : "text()";
+                                var valueXPath = string.IsNullOrWhiteSpace(ValueXPath) == false ? ValueXPath : "text()";
 
-                                if (value != null && label != null && items.ContainsKey(value.Value) == false)
+                                var nodes = doc.SelectNodes(ItemsXPath);
+                                foreach (XmlNode node in nodes)
                                 {
-                                    items.Add(value.Value, label.Value);
+                                    var label = node.SelectSingleNode(labelXPath);
+                                    var value = node.SelectSingleNode(valueXPath);
+
+                                    if (value != null && label != null && items.ContainsKey(value.Value) == false)
+                                    {
+                                        items.Add(value.Value, label.Value);
+                                    }
                                 }
                             }
                         }
                     }
+                }
+                catch (WebException)
+                {
+                    // TODO: How to best handle this exception? [LK]
+                    // Dumping it to the error log file feels careless.
                 }
             }
 

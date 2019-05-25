@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
 
         //console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { items: [], overlaySize: "large" };
+        var defaultConfig = { items: [], overlaySize: "large", enableSearch: 0 };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -24,6 +24,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
                 vm.title = "Select...";
                 vm.mode = "select";
                 vm.items = config.items;
+                vm.enableSearch = Object.toBoolean(config.enableSearch);
 
             } else {
                 vm.title = "Configure";

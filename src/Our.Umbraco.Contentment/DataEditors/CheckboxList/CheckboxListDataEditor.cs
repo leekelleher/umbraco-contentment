@@ -15,7 +15,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
-        ValueType = ValueTypes.Json, // TODO: JSON or String (CSV)?
+        ValueType = ValueTypes.Json,
         Group = "Lists",
         Icon = "icon-bulleted-list",
         IsDeprecated = true // NOTE: IsWorkInProgress
