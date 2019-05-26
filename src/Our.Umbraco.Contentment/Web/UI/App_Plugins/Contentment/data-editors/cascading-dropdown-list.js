@@ -18,7 +18,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cascad
 
         function init() {
 
-            $scope.model.value = $scope.model.value || [];
+            $scope.model.value = $scope.model.value || [{}];
 
             vm.dropdowns = [];
 

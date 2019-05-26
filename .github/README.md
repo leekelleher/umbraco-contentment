@@ -24,6 +24,7 @@ _What the heck is a Data Editor?_
 
 ###### Property Editors
 
+- Cascading Dropdown List
 - [Checkbox](../docs/data-editors/checkbox.md)
 - Checkbox List
 - Code Editor (ACE)
