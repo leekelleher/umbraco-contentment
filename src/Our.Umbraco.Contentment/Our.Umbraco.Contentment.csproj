@@ -279,10 +279,10 @@
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\ListTypes\CheckboxListDataListType.cs" />
-    <Compile Include="DataEditors\DataList\ListTypes\RadioButtonListDataListType.cs" />
-    <Compile Include="DataEditors\DataList\ListTypes\DropdownDataListType.cs" />
-    <Compile Include="DataEditors\DataList\ListTypes\IDataListType.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\CheckboxListDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\RadioButtonListDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\DropdownDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListValueConverter.cs" />

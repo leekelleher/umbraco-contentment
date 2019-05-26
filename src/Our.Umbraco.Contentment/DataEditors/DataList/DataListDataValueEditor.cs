@@ -28,9 +28,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
                 // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values. [LK]
                 if (value is Dictionary<string, object> config &&
-                    config.ContainsKey("listType") &&
-                    config.TryGetValue("listType", out var listType) &&
-                    listType is JArray array &&
+                    config.ContainsKey("listEditor") &&
+                    config.TryGetValue("listEditor", out var listEditor) &&
+                    listEditor is JArray array &&
                     array.Count > 0)
                 {
                     // TODO: Review this, make it bulletproof
@@ -46,7 +46,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                         });
 
                         var val = item["value"] as JObject;
-                        var obj = val.ToObject(type, serializer) as IDataListType;
+                        var obj = val.ToObject(type, serializer) as IDataListEditor;
 
                         View = obj.View;
 

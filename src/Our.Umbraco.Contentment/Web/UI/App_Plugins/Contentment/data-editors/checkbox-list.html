@@ -6,11 +6,8 @@
 <div class="umb-property-editor umb-checkboxlist" ng-controller="Our.Umbraco.Contentment.DataEditors.CheckboxList.Controller as vm">
     <ul class="unstyled checkbox no-indent" ng-class="vm.layout">
         <li ng-repeat="item in vm.items">
-            <label class="checkbox">
-                <input type="checkbox"
-                       value="{{item.value}}"
-                       ng-model="item.checked"
-                       ng-change="vm.changed(item)" />
+            <label>
+                <input type="checkbox" ng-change="vm.changed(item)" ng-model="item.checked" value="{{item.value}}" />
                 <span ng-bind-html="item.label | safe_html"></span>
             </label>
         </li>

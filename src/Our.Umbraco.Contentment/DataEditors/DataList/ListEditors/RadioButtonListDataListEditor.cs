@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class RadioButtonListDataListType : IDataListType
+    internal class RadioButtonListDataListEditor : IDataListEditor
     {
         public string Name => "Radio Button List";
 

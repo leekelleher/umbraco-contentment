@@ -20,11 +20,11 @@ namespace Our.Umbraco.Contentment.DataEditors
             : base()
         {
             var dataSources = GetDataSources();
-            var listTypes = GetListTypes();
+            var listEditors = GetListEditors();
 
             Fields.Add(
                 "dataSource",
-                "Data Source",
+                "Data source",
                 "Select and configure the data source.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
@@ -35,15 +35,14 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { "overlaySize", "large" },
                 });
 
-            // TODO: Matt suggests to rename to "Control Type", or "View Type"?
             Fields.Add(
-                "listType",
-                "List Type",
-                "Select and configure the type of data list.",
+                "listEditor",
+                "List editor",
+                "Select and configure the type of editor for the data list.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, listTypes },
+                    { Constants.Conventions.ConfigurationEditors.Items, listEditors },
                     { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
                     { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
                     { "overlaySize", "large" },
@@ -78,9 +77,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 config.Remove("dataSource");
             }
 
-            if (config.ContainsKey("listType"))
+            if (config.ContainsKey("listEditor"))
             {
-                config.Remove("listType");
+                config.Remove("listEditor");
             }
 
             return config;
@@ -91,9 +90,9 @@ namespace Our.Umbraco.Contentment.DataEditors
             return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListSource>();
         }
 
-        private ConfigurationEditorModel[] GetListTypes()
+        private ConfigurationEditorModel[] GetListEditors()
         {
-            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListType>();
+            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListEditor>();
         }
     }
 }

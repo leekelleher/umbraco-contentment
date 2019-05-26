@@ -5,7 +5,7 @@
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public interface IDataListType : IConfigurationEditorItem
+    public interface IDataListEditor : IConfigurationEditorItem
     {
         string View { get; }
     }

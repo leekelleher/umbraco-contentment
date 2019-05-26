@@ -7,7 +7,7 @@ using Umbraco.Core.IO;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class CheckboxListDataListType : IDataListType
+    internal class CheckboxListDataListEditor : IDataListEditor
     {
         public string Name => "Checkbox List";
 
