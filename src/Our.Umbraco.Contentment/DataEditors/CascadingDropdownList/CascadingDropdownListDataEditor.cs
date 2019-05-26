@@ -17,20 +17,20 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = "Lists",
-        Icon = "icon-target",
-        IsDeprecated = true // NOTE: IsWorkInProgress [LK]
+        Icon = "icon-indent",
+        IsDeprecated = false // NOTE: IsWorkInProgress [LK]
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
-    public class RadioButtonListDataEditor : DataEditor
+    public class CascadingDropdownListDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.RadioButtonList";
-        internal const string DataEditorName = "[Contentment] Radio Button List";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.js";
+        internal const string DataEditorAlias = "Our.Umbraco.Contentment.CascadingDropdownList";
+        internal const string DataEditorName = "[Contentment] Cascading Dropdown List";
+        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.html";
+        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.js";
 
-        public RadioButtonListDataEditor(ILogger logger)
+        public CascadingDropdownListDataEditor(ILogger logger)
             : base(logger)
         { }
     }

@@ -257,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
+    <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
@@ -316,6 +318,8 @@
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.overlay.js" />

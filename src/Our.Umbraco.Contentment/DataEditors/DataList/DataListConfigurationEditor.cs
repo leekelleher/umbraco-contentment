@@ -3,15 +3,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Serialization;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -34,9 +33,6 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
                     { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
                     { "overlaySize", "large" },
-#if DEBUG
-                    { "debug", Constants.Values.True },
-#endif
                 });
 
             // TODO: Matt suggests to rename to "Control Type", or "View Type"?
@@ -51,9 +47,6 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
                     { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
                     { "overlaySize", "large" },
-#if DEBUG
-                    { "debug", Constants.Values.True },
-#endif
                 });
             Fields.AddHideLabel();
         }
@@ -70,7 +63,13 @@ namespace Our.Umbraco.Contentment.DataEditors
                 var type = TypeFinder.GetTypeByName(item["type"].ToString());
                 if (type != null)
                 {
-                    var source = item["value"].ToObject(type) as IDataListSource;
+                    var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                    {
+                        ContractResolver = new ConfigurationFieldContractResolver(),
+                        Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
+                    });
+
+                    var source = item["value"].ToObject(type, serializer) as IDataListSource;
                     var options = source?.GetItems() ?? new Dictionary<string, string>();
 
                     config.Add("items", options.Select(x => new { label = x.Value, value = x.Key }));

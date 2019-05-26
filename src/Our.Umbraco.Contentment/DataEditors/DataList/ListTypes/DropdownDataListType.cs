@@ -20,7 +20,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string View => IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
 
         [ConfigurationField(typeof(AllowEmptyConfigurationField))]
-        public string AllowEmpty { get; set; } // TODO: I had this as a `bool`, but JSON.NET can't deserialize the string "1" to a bool. Look at making a converter.
+        public bool AllowEmpty { get; set; }
 
         class AllowEmptyConfigurationField : ConfigurationField
         {

@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdo
     "$scope",
     function ($scope) {
 
-        console.log("dropdownlist.model", $scope.model);
+        //console.log("dropdown-list.model", $scope.model);
 
         var defaultConfig = { items: [], allowEmpty: 1, defaultValue: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);

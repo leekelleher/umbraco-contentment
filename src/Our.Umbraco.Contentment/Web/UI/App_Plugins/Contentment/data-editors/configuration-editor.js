@@ -10,13 +10,12 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
 
         // console.log("config-editor.model", $scope.model);
 
-        var defaultConfig = { items: [], maxItems: 0, disableSorting: 0, overlaySize: "large", debug: 0 };
+        var defaultConfig = { items: [], maxItems: 0, disableSorting: 0, overlaySize: "large" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
-            vm.debug = Object.toBoolean(config.debug);
 
             $scope.model.value = $scope.model.value || [];
 
@@ -89,7 +88,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                     items: angular.copy(config.items),
                     overlaySize: config.overlaySize
                 },
-                value: $scope.model.value[$index],
+                value: angular.copy($scope.model.value[$index]),
                 submit: function (model) {
 
                     $scope.model.value[$index] = model;

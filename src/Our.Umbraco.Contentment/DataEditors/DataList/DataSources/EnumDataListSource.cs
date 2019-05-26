@@ -6,10 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Web.Editors;
+using Umbraco.Web.Mvc;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -22,19 +25,21 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Icon => "icon-indent";
 
         [ConfigurationField(typeof(EnumTypeConfigurationField))]
-        public string EnumType { get; set; }
+        public string[] EnumType { get; set; }
 
         [ConfigurationField("sortAlphabetically", "Sort Alphabetically", "boolean", Description = "Select to sort the enum in alphabetical order. The default order is defined by the enum itself.")]
-        public string SortAlphabetically { get; set; } // TODO: I had this as a `bool`, but JSON.NET can't deserialize the string "1" to a bool. Look at making a converter.
+        public bool SortAlphabetically { get; set; }
 
         public Dictionary<string, string> GetItems()
         {
             // TODO: Review this, make it bulletproof
 
-            var type = TypeFinder.GetTypeByName(EnumType);
-            var names = Enum.GetNames(type);
+            // TODO: What to do if the enum no longer exists? (for whatever reason?) [LK]
+            var assembly = Assembly.Load(EnumType[0]);
+            var enumType = assembly.GetType(EnumType[1]);
+            var names = Enum.GetNames(enumType);
 
-            if (SortAlphabetically.TryConvertTo<bool>().Result)
+            if (SortAlphabetically)
             {
                 Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
             }
@@ -46,24 +51,64 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             public EnumTypeConfigurationField()
             {
-                var items = new[]
+                var apis = new[]
                 {
-                    typeof(global::Umbraco.Core.Persistence.DatabaseModelDefinitions.Direction),
-                    typeof(global::Umbraco.Core.Logging.LogLevel),
-                    typeof(global::Umbraco.Web.Models.ContentEditing.UmbracoEntityTypes),
-                }.Select(x => new { label = x.Name.SplitPascalCasing(), value = x.GetFullNameWithAssembly() });
+                    "backoffice/Contentment/EnumDataListSourceApi/GetAssemblies",
+                    "backoffice/Contentment/EnumDataListSourceApi/GetEnums?assembly={0}",
+                };
 
                 Key = "enumType";
                 Name = "Enum";
-                // TODO: Figure out how to develop this editor type.
-                Description = "TODO: This field will become an assembly/type discovery editor, to locate the enum.";
-                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
+                Description = "Select the enum from an assembly type.";
+                View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "allowEmpty", Constants.Values.False },
-                    { Constants.Conventions.ConfigurationEditors.Items, items }
+                    { "apis", apis },
+                    // TODO: We can send down the initial options (assemblies) along with the config, save on an extra HTTP request. [LK]
+                    //{ "options", Array.Empty<object>() }
                 };
             }
+        }
+    }
+
+    [PluginController("Contentment")]
+    public class EnumDataListSourceApiController : UmbracoAuthorizedJsonController
+    {
+        public IEnumerable<object> GetAssemblies()
+        {
+            var options = new SortedDictionary<string, string>();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            if (assemblies?.Length > 0)
+            {
+                foreach (var assembly in assemblies)
+                {
+                    if (options.ContainsKey(assembly.FullName) || assembly.IsDynamic || assembly.ExportedTypes?.Any(x => x.IsEnum) == false)
+                        continue;
+
+                    if (assembly.FullName.StartsWith("App_Code") && options.ContainsKey("App_Code") == false)
+                    {
+                        options.Add("App_Code", "App_Code");
+                    }
+                    else
+                    {
+                        var assemblyName = assembly.GetName();
+                        options.Add(assemblyName.FullName, assemblyName.Name);
+                    }
+                }
+            }
+
+            return options.Select(x => new { label = x.Value, value = x.Key });
+        }
+
+        public IEnumerable<object> GetEnums(string assembly)
+        {
+            return Assembly
+                .Load(assembly)
+                .GetTypes()
+                .Where(x => x.IsEnum)
+                .Select(x => new { label = x.Name.SplitPascalCasing(), value = x.FullName })
+                .OrderBy(x => x.label);
         }
     }
 }

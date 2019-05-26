@@ -1,0 +1,22 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.CascadingDropdownList.Controller as vm">
+
+    <div class="umb-rte row-fluid span8" ng-if="vm.loading">
+        <umb-load-indicator></umb-load-indicator>
+    </div>
+
+    <div ng-show="!vm.loading">
+        <span ng-repeat="dropdown in vm.dropdowns">
+            <select class="umb-dropdown"
+                    ng-model="model.value[$index]"
+                    ng-options="item.value as item.label disable when item.disabled for item in dropdown.options"
+                    ng-required="true"
+                    ng-change="vm.change($index)"></select>
+        </span>
+    </div>
+
+</div>

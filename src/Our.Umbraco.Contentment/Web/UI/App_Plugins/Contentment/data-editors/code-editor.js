@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.CodeEd
     "$scope",
     function ($scope) {
 
-        console.log("code-editor.model", $scope.model);
+        //console.log("code-editor.model", $scope.model);
 
         var defaultConfig = {
             showGutter: 1,

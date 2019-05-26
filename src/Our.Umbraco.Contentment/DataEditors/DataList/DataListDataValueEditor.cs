@@ -4,9 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Serialization;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -37,8 +39,14 @@ namespace Our.Umbraco.Contentment.DataEditors
                     var type = TypeFinder.GetTypeByName(item["type"].ToString());
                     if (type != null)
                     {
+                        var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                        {
+                            ContractResolver = new ConfigurationFieldContractResolver(),
+                            Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
+                        });
+
                         var val = item["value"] as JObject;
-                        var obj = val.ToObject(type) as IDataListType;
+                        var obj = val.ToObject(type, serializer) as IDataListType;
 
                         View = obj.View;
 

@@ -18,7 +18,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = "Picker",
         Icon = "icon-settings-alt",
-        IsDeprecated = false // NOTE: IsWorkInProgress
+        IsDeprecated = false // NOTE: IsWorkInProgress [LK]
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]

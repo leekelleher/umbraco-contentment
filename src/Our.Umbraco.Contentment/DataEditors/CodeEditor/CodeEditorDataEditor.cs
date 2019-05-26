@@ -18,7 +18,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Text,
         Group = "Code",
         Icon = "icon-code",
-        IsDeprecated = false // IsWorkInProgress [LK]
+        IsDeprecated = false // NOTE: IsWorkInProgress [LK]
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]

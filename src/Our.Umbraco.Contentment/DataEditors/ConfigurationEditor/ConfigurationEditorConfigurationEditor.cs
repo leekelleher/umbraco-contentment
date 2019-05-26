@@ -58,7 +58,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.AddMaxItems();
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
-            Fields.Add("debug", "View debug data?", "", "boolean");
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
