@@ -7,7 +7,7 @@
     <select id="{{model.alias}}"
             class="umb-dropdown"
             ng-model="model.value"
-            ng-options="item.value as item.label disable when item.disabled for item in vm.items">
+            ng-options="item.value as item.name disable when item.disabled for item in vm.items">
         <option ng-if="vm.allowEmpty"></option>
     </select>
 </div>

@@ -19,6 +19,13 @@ namespace Our.Umbraco.Contentment.DataEditors
         public DataListConfigurationEditor()
             : base()
         {
+            var defaultConfigEditorConfig = new Dictionary<string, object>
+            {
+                { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
+                { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
+                { "overlaySize", "large" },
+            };
+
             var dataSources = GetDataSources();
             var listEditors = GetListEditors();
 
@@ -27,12 +34,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 "Data source",
                 "Select and configure the data source.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+                new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, dataSources },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
-                    { "overlaySize", "large" },
+                    { Constants.Conventions.ConfigurationEditors.Items, dataSources }
                 });
 
             Fields.Add(
@@ -40,13 +44,11 @@ namespace Our.Umbraco.Contentment.DataEditors
                 "List editor",
                 "Select and configure the type of editor for the data list.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+                new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, listEditors },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
-                    { "overlaySize", "large" },
+                    { Constants.Conventions.ConfigurationEditors.Items, listEditors }
                 });
+
             Fields.AddHideLabel();
         }
 
@@ -71,7 +73,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
                     var options = source?.GetItems() ?? new Dictionary<string, string>();
 
-                    config.Add("items", options.Select(x => new { label = x.Value, value = x.Key }));
+                    config.Add("items", options.Select(x => new { name = x.Value, value = x.Key }));
                 }
 
                 config.Remove("dataSource");
@@ -85,12 +87,12 @@ namespace Our.Umbraco.Contentment.DataEditors
             return config;
         }
 
-        private ConfigurationEditorModel[] GetDataSources()
+        private IEnumerable<ConfigurationEditorModel> GetDataSources()
         {
             return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListSource>();
         }
 
-        private ConfigurationEditorModel[] GetListEditors()
+        private IEnumerable<ConfigurationEditorModel> GetListEditors()
         {
             return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListEditor>();
         }

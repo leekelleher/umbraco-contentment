@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         public string Name => "Dropdown List";
 
-        public string Description => "[Add a friendly description]";
+        public string Description => "Select a single value from a dropdown select list.";
 
         public string Icon => "icon-list";
 

@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.RadioB
     "$scope",
     function ($scope) {
 
-        //console.log("radiobuttonlist.model", $scope.model);
+        // console.log("radiobuttonlist.model", $scope.model);
 
         var defaultConfig = { items: [], orientation: "vertical", defaultValue: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);

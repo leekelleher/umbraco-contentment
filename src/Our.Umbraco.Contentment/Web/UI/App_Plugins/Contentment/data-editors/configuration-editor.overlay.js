@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
 
         //console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { items: [], overlaySize: "large", enableSearch: 0 };
+        var defaultConfig = { items: [], overlaySize: "large", enableFilter: 0 };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -21,13 +21,13 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
 
             if (_.isEmpty(vm.selectedItem.type)) {
 
-                vm.title = "Select...";
+                vm.title = "Select..."; // TODO: Make this title friendlier! What are we selecting? Could we have a description too? [LK]
                 vm.mode = "select";
                 vm.items = config.items;
-                vm.enableSearch = Object.toBoolean(config.enableSearch);
+                vm.enableFilter = Object.toBoolean(config.enableFilter);
 
             } else {
-                vm.title = "Configure";
+                vm.title = "Configure"; // TODO: Make this title friendlier! What are we configuring? Could we have a description too? [LK]
                 vm.mode = "edit";
 
                 vm.editor = _.find(config.items, function (x) {

@@ -23,7 +23,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Notes { get; set; }
 
         [ConfigurationField(typeof(ItemsConfigurationField))]
-        public IEnumerable<LabelValueModel> Items { get; set; }
+        public IEnumerable<NameValueModel> Items { get; set; }
 
         public Dictionary<string, string> GetItems()
         {
@@ -32,7 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             return Items?
                 .DistinctBy(x => x.value)
-                .ToDictionary(x => x.value, x => x.label);
+                .ToDictionary(x => x.value, x => x.name);
         }
 
         class NotesConfigurationField : ConfigurationField
@@ -62,8 +62,8 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
                 {
                     new ConfigurationField
                     {
-                        Key = "label",
-                        Name = "Label",
+                        Key = "name",
+                        Name = "Name",
                         View = "textstring"
                     },
                     new ConfigurationField
@@ -90,9 +90,9 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
         }
 
         // TODO: Review if we need to separate out this object-model?
-        public class LabelValueModel
+        public class NameValueModel
         {
-            public string label { get; set; }
+            public string name { get; set; }
             public string value { get; set; }
         }
     }

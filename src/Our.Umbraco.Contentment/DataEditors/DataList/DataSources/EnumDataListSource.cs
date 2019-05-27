@@ -98,7 +98,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
             }
 
-            return options.Select(x => new { label = x.Value, value = x.Key });
+            return options.Select(x => new { name = x.Value, value = x.Key });
         }
 
         public IEnumerable<object> GetEnums(string assembly)
@@ -107,8 +107,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 .Load(assembly)
                 .GetTypes()
                 .Where(x => x.IsEnum)
-                .Select(x => new { label = x.Name.SplitPascalCasing(), value = x.FullName })
-                .OrderBy(x => x.label);
+                .Select(x => new { name = x.Name.SplitPascalCasing(), value = x.FullName })
+                .OrderBy(x => x.name);
         }
     }
 }

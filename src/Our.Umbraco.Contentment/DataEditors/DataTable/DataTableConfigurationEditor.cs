@@ -22,9 +22,9 @@ namespace Our.Umbraco.Contentment.DataEditors
             // NOTE: Excluded these ParameterEditors, as they don't fully support zero-config.
             var exclusions = new[] { "contentpicker", "mediapicker", "entitypicker" };
             var paramEditors = Current.ParameterEditors
-                .Select(x => new { label = x.Name, value = x.GetValueEditor().View })
+                .Select(x => new { name = x.Name, value = x.GetValueEditor().View })
                 .Where(x => exclusions.Contains(x.value) == false)
-                .OrderBy(x => x.label)
+                .OrderBy(x => x.name)
                 .ToList();
 
             var listFields = new[]
@@ -37,7 +37,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 },
                 new ConfigurationField
                 {
-                    Key = "label",
+                    Key = "name",
                     Name = "Name",
                     View = "textbox"
                 },

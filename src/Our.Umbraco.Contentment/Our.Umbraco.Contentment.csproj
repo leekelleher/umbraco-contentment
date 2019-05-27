@@ -262,6 +262,7 @@
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
+    <Compile Include="DataEditors\Checkbox\Checkbox-Constants.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\DataEditors-Constants.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\CheckboxListDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\ItemPickerDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\RadioButtonListDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\DropdownDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\IDataListEditor.cs" />
@@ -288,7 +291,13 @@
     <Compile Include="DataEditors\DropdownList\DropdownListValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
+    <Compile Include="DataEditors\IconPicker\IconPickerDataEditor.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPickerConfigurationEditor.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPickerDataEditor.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPickerModel.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPicker-Constants.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataEditor.cs" />
+    <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPicker-Constants.cs" />
     <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerDataEditor.cs" />
     <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\UmbracoEntityPicker\UmbracoEntityPickerModel.cs" />
@@ -316,10 +325,13 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.overlay.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.overlay.js" />
@@ -328,6 +340,8 @@
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_debug.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown-list.js" />

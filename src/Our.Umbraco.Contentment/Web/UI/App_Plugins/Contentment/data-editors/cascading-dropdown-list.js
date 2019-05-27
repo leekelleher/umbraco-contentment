@@ -78,6 +78,14 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cascad
                     vm.loading = false;
                 });
             }
+
+            setDirty();
+        };
+
+        function setDirty() {
+            if ($scope.propertyForm) {
+                $scope.propertyForm.$setDirty();
+            }
         };
 
         init();

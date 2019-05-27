@@ -3,21 +3,20 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ConfigurationEditor.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPicker.Controller", [
     "$scope",
     "editorService",
     function ($scope, editorService) {
 
-        // console.log("config-editor.model", $scope.model);
+        // console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
             items: [],
             maxItems: 0,
+            allowDuplicates: 0,
+            enableFilter: 1,
             disableSorting: 0,
-            allowEdit: 1,
-            allowRemove: 1,
-            enableFilter: 0,
-            overlaySize: "large"
+            defaultIcon: "icon-science"
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -27,16 +26,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
 
             $scope.model.value = $scope.model.value || [];
 
-            // Ensure that the existing value is an array.
-            if (_.isArray($scope.model.value) === false) {
-                $scope.model.value = [$scope.model.value];
-            }
-
-            // TODO: If there are no available items, then show a messaging saying so. [LK]
-
+            vm.items = [];
+            vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
-            vm.allowEdit = Object.toBoolean(config.allowEdit);
-            vm.allowRemove = Object.toBoolean(config.allowRemove);
+            vm.allowEdit = false;
+            vm.allowRemove = true;
             vm.published = true;
             vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
@@ -49,29 +43,50 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                 scroll: true,
                 tolerance: "pointer",
                 stop: function (e, ui) {
+                    $scope.model.value = _.map(vm.items, function (x) { return x.value });
                     setDirty();
                 }
             };
 
             vm.add = add;
-            vm.edit = edit;
             vm.remove = remove;
 
+            if ($scope.model.value.length > 0 && config.items.length > 0) {
+
+                _.each($scope.model.value, function (v) {
+                    var item = _.find(config.items, function (x) { return x.value === v });
+                    if (item) {
+                        vm.items.push(angular.copy(item));
+                    } else {
+                        console.log("orphaned value", v);
+                    }
+                });
+
+                ensureIcons(vm.items);
+            }
         };
 
         function add($event) {
-            var configPicker = {
-                view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
+
+            var availableItems = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
+                return _.find(vm.items, function (y) { return x.name === y.name; });
+            });
+
+            ensureIcons(availableItems);
+
+            var itemPicker = {
+                title: "Choose...",
+                // TODO: NOTE: I've copied over the "itempicker.html" from Umbraco v8.0.2, as it has `orderBy:'name'` hardcoded, and I need it display the items as provided.
+                // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html#L28
+                // PR will be submitted.
+                view: "/App_Plugins/Contentment/data-editors/item-picker.overlay.html",
                 size: "small",
-                config: {
-                    items: angular.copy(config.items),
-                    enableFilter: Object.toBoolean(config.enableFilter),
-                    overlaySize: config.overlaySize,
-                },
-                value: {},
+                availableItems: availableItems,
+                filter: Object.toBoolean(config.enableFilter),
                 submit: function (model) {
 
-                    $scope.model.value.push(model);
+                    vm.items.push(angular.copy(model.selectedItem))
+                    $scope.model.value.push(model.selectedItem.value);
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
@@ -86,35 +101,13 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                 }
             };
 
-            editorService.open(configPicker);
-        };
+            editorService.open(itemPicker);
 
-        function edit($index, item) {
-            var configPicker = {
-                view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
-                size: config.overlaySize,
-                config: {
-                    items: angular.copy(config.items),
-                    overlaySize: config.overlaySize
-                },
-                value: angular.copy($scope.model.value[$index]),
-                submit: function (model) {
-
-                    $scope.model.value[$index] = model;
-
-                    setDirty();
-
-                    editorService.close();
-                },
-                close: function () {
-                    editorService.close();
-                }
-            };
-
-            editorService.open(configPicker);
         };
 
         function remove($index) {
+
+            vm.items.splice($index, 1);
             $scope.model.value.splice($index, 1);
 
             if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
@@ -123,6 +116,14 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
 
             setDirty();
         };
+
+        function ensureIcons(items) {
+            _.each(items, function (x) {
+                if (x.hasOwnProperty("icon") === false) {
+                    x.icon = config.defaultIcon;
+                }
+            });
+        }
 
         function setDirty() {
             if ($scope.propertyForm) {

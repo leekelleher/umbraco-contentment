@@ -33,13 +33,13 @@ namespace Our.Umbraco.Contentment.DataEditors
                         if (filename.StartsWith("mode-"))
                         {
                             var mode = filename.Replace("mode-", string.Empty).ToLower();
-                            modes.Add(new { label = mode.ToFirstUpper(), value = mode });
+                            modes.Add(new { name = mode.ToFirstUpper(), value = mode });
                         }
 
                         if (filename.StartsWith("theme-"))
                         {
                             var theme = filename.Replace("theme-", string.Empty).ToLower();
-                            themes.Add(new { label = theme.ToFirstUpper(), value = theme });
+                            themes.Add(new { name = theme.ToFirstUpper(), value = theme });
                         }
                     }
 

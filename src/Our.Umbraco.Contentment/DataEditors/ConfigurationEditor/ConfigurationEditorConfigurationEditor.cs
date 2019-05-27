@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
@@ -20,35 +19,47 @@ namespace Our.Umbraco.Contentment.DataEditors
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
+            var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true);
+            var items = new List<ItemPickerModel>();
+            foreach (var configEditor in configEditors)
+            {
+                items.Add(new ItemPickerModel
+                {
+                    Name = configEditor.Name,
+                    Icon = configEditor.Icon,
+                    Value = configEditor.Type
+                });
+            }
+
             Fields.Add(
                 Constants.Conventions.ConfigurationEditors.Items,
                 "Items",
-                "[Add a friendly description]", // TODO: Add a friendly description. [LK]
-                "views/propertyeditors/multipletextbox/multipletextbox.html",
+                "Select the configuration editors to use.",
+                IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { "min", "0" },
-                    { "max", "0" },
+                    { Constants.Conventions.ConfigurationEditors.Items, items },
+                    { "allowDuplicates", Constants.Values.False }
                 });
 
             Fields.Add(
-                "enableSearch",
+                "enableFilter",
                 "Enable search filter?",
-                "[Add a friendly description]", // TODO: Add a friendly description [LK]
+                "Select to enable the search filter in the overlay selection panel.",
                 "boolean");
 
             Fields.Add(
                 "overlaySize",
                 "Overlay size",
-                "[Add a friendly description]", // TODO: Add a friendly description. [LK]
+                "Select the size of the overlay editing panel. By default this is set to 'large'. However if the configuration editor fields require a smaller panel, select 'small'.",
                 IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
                     {
                         Constants.Conventions.ConfigurationEditors.Items, new[]
                         {
-                            new { label = "Small", value = "small" },
-                            new { label = "Large", value = "large" }
+                            new { name = "Small", value = "small" },
+                            new { name = "Large", value = "large" }
                         }
                     },
                     { Constants.Conventions.ConfigurationEditors.DefaultValue, "large" },
@@ -64,71 +75,96 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue("items", out var items) && items is JArray array && array.Count > 0)
+            if (config.TryGetValue(Constants.Conventions.ConfigurationEditors.Items, out var items) && items is JArray array && array.Count > 0)
             {
-                var types = array
-                    .Select(x => x["value"].ToString())
-                    .Select(TypeFinder.GetTypeByName)
-                    .WhereNotNull();
+                var types = new List<Type>();
 
-                var editors = GetConfigurationEditors<IConfigurationEditorItem>(types);
+                foreach (var item in array)
+                {
+                    var type = TypeFinder.GetTypeByName(item.Value<string>());
+                    if (type != null)
+                    {
+                        types.Add(type);
+                    }
+                }
 
-                config["items"] = editors;
+                config["items"] = GetConfigurationEditors<IConfigurationEditorItem>(types);
             }
 
             return config;
         }
 
-        private static ConfigurationEditorModel[] GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types)
+        // TODO: Review if these methods should be in a "Service" or other class? Feels odd them being in here. [LK]
+        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types, bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
             if (types == null)
-                return null;
+                return Array.Empty<ConfigurationEditorModel>();
 
-            return types.Select(t =>
-               {
-                   var provider = Activator.CreateInstance(t) as TConfigurationEditor;
+            var models = new List<ConfigurationEditorModel>();
 
-                   var fields = t
-                       .GetProperties()
-                       .Where(x => Attribute.IsDefined(x, typeof(ConfigurationFieldAttribute)))
-                       .Select(x =>
-                       {
-                           var attr = x.GetCustomAttribute<ConfigurationFieldAttribute>(false);
-                           if (attr?.Type != null)
-                           {
-                               return Activator.CreateInstance(attr.Type) as ConfigurationField;
-                           }
+            foreach (var type in types)
+            {
+                var provider = Activator.CreateInstance(type) as TConfigurationEditor;
+                if (provider == null)
+                    continue;
 
-                           return new ConfigurationField
-                           {
-                               Key = attr?.Key ?? x.Name,
-                               Name = attr?.Name ?? x.Name,
-                               PropertyName = x.Name,
-                               PropertyType = x.PropertyType,
-                               Description = attr?.Description,
-                               HideLabel = attr?.HideLabel ?? false,
-                               View = attr?.View
-                           };
-                       });
+                var fields = new List<ConfigurationField>();
 
-                   return new ConfigurationEditorModel
-                   {
-                       Type = t.GetFullNameWithAssembly(),
-                       Name = provider?.Name ?? t.Name.SplitPascalCasing(),
-                       Description = provider?.Description,
-                       Icon = provider?.Icon ?? "icon-science",
-                       Fields = fields
-                   };
-               })
-               .ToArray();
+                if (ignoreFields == false)
+                {
+                    var properties = type.GetProperties();
+
+                    foreach (var property in properties)
+                    {
+                        if (Attribute.IsDefined(property, typeof(ConfigurationFieldAttribute)) == false)
+                            continue;
+
+                        var attr = property.GetCustomAttribute<ConfigurationFieldAttribute>(false);
+                        if (attr == null)
+                            continue;
+
+                        if (attr.Type != null)
+                        {
+                            var field = Activator.CreateInstance(attr.Type) as ConfigurationField;
+                            if (field != null)
+                            {
+                                fields.Add(field);
+                            }
+                        }
+                        else
+                        {
+                            fields.Add(new ConfigurationField
+                            {
+                                Key = attr.Key ?? property.Name,
+                                Name = attr.Name ?? property.Name,
+                                PropertyName = property.Name,
+                                PropertyType = property.PropertyType,
+                                Description = attr.Description,
+                                HideLabel = attr.HideLabel,
+                                View = attr.View
+                            });
+                        }
+                    }
+                }
+
+                models.Add(new ConfigurationEditorModel
+                {
+                    Type = type.GetFullNameWithAssembly(),
+                    Name = provider.Name ?? type.Name.SplitPascalCasing(),
+                    Description = provider.Description,
+                    Icon = provider.Icon ?? "icon-science",
+                    Fields = fields
+                });
+            }
+
+            return models;
         }
 
-        internal static ConfigurationEditorModel[] GetConfigurationEditors<TConfigurationEditor>()
+        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
-            var types = TypeFinder.FindClassesOfType<TConfigurationEditor>();
-            return GetConfigurationEditors<TConfigurationEditor>(types);
+            return GetConfigurationEditors<TConfigurationEditor>(TypeFinder.FindClassesOfType<TConfigurationEditor>(), ignoreFields);
         }
     }
 }

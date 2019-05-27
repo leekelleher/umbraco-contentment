@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         public string Name => "Radio Button List";
 
-        public string Description => "[Add a friendly description]";
+        public string Description => "Select a single value from a list of radio buttons";
 
         public string Icon => "icon-target";
 
@@ -28,8 +28,8 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 var items = new[]
                 {
-                    new { label = "Horizontal", value = "horizontal" },
-                    new { label = "Vertical", value = "vertical" }
+                    new { name = "Horizontal", value = "horizontal" },
+                    new { name = "Vertical", value = "vertical" }
                 };
 
                 Key = "orientation";

@@ -32,14 +32,19 @@ namespace Our.Umbraco.Contentment.DataEditors
         public Dictionary<string, string> GetItems()
         {
             // TODO: Review this, make it bulletproof
+            // TODO: Look to do a better way of querying the db.
+            //// https://github.com/schotime/NPoco/blob/ec4d3d7808c8ce413b2d61f756d6d7277039c98d/src/NPoco/Database.cs
+            //using (var cmd = database.CreateCommand(null, System.Data.CommandType.Text, sql))
+            //{
+            //}
 
             using (var database = new NPoco.Database(ConnectionString))
             {
-                // SELECT macroAlias AS [value], macroName AS [label] FROM cmsMacro ORDER BY [label];
-                var sql = Query.Replace("\r", "").Replace("\n", " ");
-                var items = database.Fetch<LabelValueModel>(sql);
+                // SELECT macroAlias AS [value], macroName AS [name] FROM cmsMacro ORDER BY [label];
+                var sql = Query.Replace("\r", "").Replace("\n", " ").Replace("\t", " ");
+                var items = database.Fetch<NameValueModel>(sql);
 
-                return items.ToDictionary(x => x.value, x => x.label);
+                return items.ToDictionary(x => x.value, x => x.name);
             }
         }
 
@@ -60,7 +65,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { "allowEmpty", 0 },
-                    { "items", connectionStrings.Select(x => new { label = x, value = x }) }
+                    { "items", connectionStrings.Select(x => new { name = x, value = x }) }
                 };
             }
         }
@@ -70,7 +75,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             public NotesConfigurationField()
             {
                 var html = @"<p class='alert alert-warning'><strong>A note about your SQL query.</strong><br>
-Your SQL query should be designed to return 2 columns, these will be used as label/value pairs in the data list.<br>
+Your SQL query should be designed to return 2 columns, these will be used as name/value pairs in the data list.<br>
 If more columns are returned, then only the first 2 columns will be used.</p>";
 
                 Key = "note";
@@ -102,9 +107,9 @@ If more columns are returned, then only the first 2 columns will be used.</p>";
         // TODO: I'm not happy about using this temp class to deserialize the SQL data,
         // Look at alternatives, so we can remove this class.
         // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
-        class LabelValueModel
+        class NameValueModel
         {
-            public string label { get; set; }
+            public string name { get; set; }
             public string value { get; set; }
         }
     }

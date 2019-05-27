@@ -27,8 +27,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("valueXPath", "Value XPath", "textstring", Description = "Enter the XPath expression to select the value (key) from the item (XML node select from above).")]
         public string ValueXPath { get; set; }
 
-        [ConfigurationField("labelXPath", "Label XPath", "textstring", Description = "Enter the XPath expression to select the label from the item (XML node select from above).")]
-        public string LabelXPath { get; set; }
+        [ConfigurationField("nameXPath", "Name XPath", "textstring", Description = "Enter the XPath expression to select the name from the item (XML node select from above).")]
+        public string NameXPath { get; set; }
 
         public Dictionary<string, string> GetItems()
         {
@@ -51,18 +51,18 @@ namespace Our.Umbraco.Contentment.DataEditors
 
                             if (string.IsNullOrWhiteSpace(ItemsXPath) == false)
                             {
-                                var labelXPath = string.IsNullOrWhiteSpace(LabelXPath) == false ? LabelXPath : "text()";
+                                var nameXPath = string.IsNullOrWhiteSpace(NameXPath) == false ? NameXPath : "text()";
                                 var valueXPath = string.IsNullOrWhiteSpace(ValueXPath) == false ? ValueXPath : "text()";
 
                                 var nodes = doc.SelectNodes(ItemsXPath);
                                 foreach (XmlNode node in nodes)
                                 {
-                                    var label = node.SelectSingleNode(labelXPath);
+                                    var name = node.SelectSingleNode(nameXPath);
                                     var value = node.SelectSingleNode(valueXPath);
 
-                                    if (value != null && label != null && items.ContainsKey(value.Value) == false)
+                                    if (value != null && name != null && items.ContainsKey(value.Value) == false)
                                     {
-                                        items.Add(value.Value, label.Value);
+                                        items.Add(value.Value, name.Value);
                                     }
                                 }
                             }

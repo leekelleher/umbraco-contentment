@@ -34,7 +34,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.MacroP
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
-                disabled: !vm.sortable,
+                disabled: vm.sortable === false,
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",

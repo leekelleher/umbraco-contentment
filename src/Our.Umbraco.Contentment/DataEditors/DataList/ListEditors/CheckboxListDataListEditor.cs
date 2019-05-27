@@ -11,7 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         public string Name => "Checkbox List";
 
-        public string Description => "[Add a friendly description]";
+        public string Description => "Select multiple values from a list of checkboxes.";
 
         public string Icon => "icon-bulleted-list";
 

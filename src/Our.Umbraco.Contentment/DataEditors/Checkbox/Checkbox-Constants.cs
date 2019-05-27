@@ -6,5 +6,13 @@
 namespace Our.Umbraco.Contentment
 {
     internal static partial class Constants
-    { }
+    {
+        internal static partial class Conventions
+        {
+            internal static partial class ConfigurationEditors
+            {
+                public const string ShowInline = "showInline";
+            }
+        }
+    }
 }

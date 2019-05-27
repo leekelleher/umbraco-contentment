@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.DataTa
     "$scope",
     function ($scope) {
 
-        //console.log("datatable.model", $scope.model);
+        // console.log("datatable.model", $scope.model);
 
         var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
@@ -46,7 +46,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.DataTa
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
-                disabled: !vm.sortable,
+                disabled: vm.sortable === false,
                 forcePlaceholderSize: true,
                 handle: ".handle",
                 helper: function (e, ui) {

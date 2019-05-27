@@ -9,13 +9,19 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class DropdownListConfigurationEditor : ConfigurationEditor
+    public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
-        public DropdownListConfigurationEditor()
+        public ItemPickerConfigurationEditor()
             : base()
         {
             var listFields = new[]
             {
+                 new ConfigurationField
+                {
+                    Key = "icon",
+                    Name = "Icon",
+                    View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath)
+                },
                 new ConfigurationField
                 {
                     Key = "name",
@@ -28,19 +34,12 @@ namespace Our.Umbraco.Contentment.DataEditors
                     Name = "Value",
                     View = "textbox"
                 },
-                //new ConfigurationField
-                //{
-                //    Key = "enabled",
-                //    Name = "Enabled",
-                //    View = "boolean",
-                //    Config = new Dictionary<string, object> { { "default", Constants.Values.True } }
-                //},
             };
 
             Fields.Add(
                 Constants.Conventions.ConfigurationEditors.Items,
-                "Options",
-                "Configure the option items for the dropdown list.",
+                "Items",
+                "Configure the items for the item picker.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
@@ -50,6 +49,13 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { "restrictWidth", Constants.Values.True },
                     { "usePrevalueEditors", Constants.Values.False }
                 });
+            Fields.AddMaxItems();
+            Fields.Add(
+                "allowDuplicates",
+                "Allow duplicates?",
+                "Select to allow the editor to select duplicate entities.",
+                "boolean");
+            Fields.AddDisableSorting();
             Fields.AddHideLabel();
         }
     }

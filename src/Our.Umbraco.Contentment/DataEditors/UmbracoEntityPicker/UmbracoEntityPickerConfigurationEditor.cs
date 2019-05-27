@@ -35,7 +35,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             var items = Enum
                 .GetNames(typeof(UmbracoEntityTypes))
                 .OrderBy(x => x)
-                .Select(x => new { value = x, label = x.SplitPascalCasing(), disabled = _unsupportedEntityTypes.Contains(x) });
+                .Select(x => new { value = x, name = x.SplitPascalCasing(), disabled = _unsupportedEntityTypes.Contains(x) });
 
             Fields.Add(
                 Constants.Conventions.ConfigurationEditors.EntityType,

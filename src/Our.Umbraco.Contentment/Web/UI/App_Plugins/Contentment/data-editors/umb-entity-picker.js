@@ -56,7 +56,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Umbrac
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
-                disabled: !vm.sortable,
+                disabled: vm.sortable === false,
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
@@ -125,9 +125,9 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Umbrac
         function add($event) {
             entityResource.getAll(config.entityType).then(function (data) {
 
-                var availableItems = config.allowDuplicates === "1" || config.allowDuplicates === 1
-                    ? data
-                    : _.reject(data, function (x) { return _.find(vm.items, function (y) { return x.id === y.id; }); });
+                var availableItems = Object.toBoolean(config.allowDuplicates) ? data : _.reject(data, function (x) {
+                    return _.find(vm.items, function (y) { return x.id === y.id; });
+                });
 
                 ensureIcons(availableItems);
 
@@ -166,9 +166,9 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Umbrac
         function edit($index, item) {
             entityResource.getAll(config.entityType).then(function (data) {
 
-                var availableItems = config.allowDuplicates === "1" || config.allowDuplicates === 1
-                    ? data
-                    : _.reject(data, function (x) { return _.find(vm.items, function (y) { return x.id === y.id; }); });
+                var availableItems = Object.toBoolean(config.allowDuplicates) ? data : _.reject(data, function (x) {
+                    return _.find(vm.items, function (y) { return x.id === y.id; });
+                });
 
                 ensureIcons(availableItems);
 
