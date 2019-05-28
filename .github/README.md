@@ -32,6 +32,7 @@ _What the heck is a Data Editor?_
 - Data List
 - Data Table
 - [Dropdown](../docs/data-editors/dropdown.md)
+- Icon Picker
 - Item Picker
 - [Macro Picker](../docs/data-editors/macro-picker.md)
 - [Notes](../docs/data-editors/notes.md)

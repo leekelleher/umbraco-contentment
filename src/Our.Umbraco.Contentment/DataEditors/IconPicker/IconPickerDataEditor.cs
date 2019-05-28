@@ -17,9 +17,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.String,
         Group = "Picker",
-        Icon = "icon-icon",
-        IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-        )]
+        Icon = "icon-circle-dotted")]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -33,5 +31,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         public IconPickerDataEditor(ILogger logger)
             : base(logger)
         { }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new IconPickerConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

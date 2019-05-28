@@ -4,13 +4,7 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="umb-property-editor" ng-controller="Our.Umbraco.Contentment.DataEditors.IconPicker.Controller as vm">
-
-    <!--
-        old: umb-panel-header-icon
-        -placeholder = border: 1px dashed #d8d7d9;
-    -->
-    <a class="-placeholder" title="{{model.value}}" href="" ng-click="vm.pick()">
+    <a class="umb-panel-header-icon -placeholder" title="{{model.value}}" href="" ng-click="vm.pick()">
         <i class="icon {{model.value}}"></i>
     </a>
-
 </div>

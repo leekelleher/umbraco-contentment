@@ -8,45 +8,28 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.IconPi
     "editorService",
     function ($scope, editorService) {
 
-        console.log("icon-picker.model", $scope.model);
+        // console.log("icon-picker.model", $scope.model);
 
-        var defaultConfig = {};
+        var defaultConfig = { defaultIcon: "icon-document" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
-
+            $scope.model.value = $scope.model.value || config.defaultIcon;
             vm.pick = pick;
-
         };
 
         function pick() {
 
-            // TODO: You got up to here! [LK]
-            // Next bit is to set the size/style of the preview box thing
+            var parts = $scope.model.value.split(" ");
+
             var iconPicker = {
-                icon: $scope.model.value.split(' ')[0],
-                color: $scope.model.value.split(' ')[1],
+                icon: parts[0],
+                color: parts[1],
                 submit: function (model) {
-
-                    console.log("pick.submit", model);
-
-                    if (model.icon) {
-
-                        if (model.color) {
-
-                            $scope.model.value = model.icon + " " + model.color;
-
-                        } else {
-
-                            $scope.model.value = model.icon;
-
-                        }
-
-                        setDirty();
-                    }
-
+                    $scope.model.value = [model.icon, model.color].filter(s => s).join(" ");
+                    setDirty();
                     editorService.close();
                 },
                 close: function () {

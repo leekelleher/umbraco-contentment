@@ -292,6 +292,7 @@
     <Compile Include="DataEditors\DropdownList\DropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerDataEditor.cs" />
+    <Compile Include="DataEditors\IconPicker\IconPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerModel.cs" />
