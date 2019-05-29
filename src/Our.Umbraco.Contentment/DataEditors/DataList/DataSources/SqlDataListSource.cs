@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -40,26 +39,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             using (var database = new NPoco.Database(ConnectionString))
             {
-                // SELECT macroAlias AS [value], macroName AS [name] FROM cmsMacro ORDER BY [label];
+                // SELECT macroAlias AS [value], macroName AS [name] FROM cmsMacro ORDER BY [name];
                 var sql = Query.Replace("\r", "").Replace("\n", " ").Replace("\t", " ");
-                var items = database.Fetch<NameValueModel>(sql);
 
-                return items.Select(x => new DataListItemModel
-                {
-                    Icon = this.Icon,
-                    Name = x.name,
-                    Value = x.value
-                });
+                // TODO: I'm not happy about using this temp class to deserialize the SQL data,
+                // Look at alternatives, so we can remove this class.
+                // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
+                var items = database.Fetch<DataListItemModel>(sql);
+
+                return items;
             }
-        }
-
-        // TODO: I'm not happy about using this temp class to deserialize the SQL data,
-        // Look at alternatives, so we can remove this class.
-        // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
-        class NameValueModel
-        {
-            public string name { get; set; }
-            public string value { get; set; }
         }
 
         class ConnectionStringConfigurationField : ConfigurationField

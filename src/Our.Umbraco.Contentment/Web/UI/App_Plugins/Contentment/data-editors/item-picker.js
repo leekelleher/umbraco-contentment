@@ -58,7 +58,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
                     if (item) {
                         vm.items.push(angular.copy(item));
                     } else {
-                        console.log("orphaned value", v);
+                        console.log("orphaned value", v); // TODO: What to do about orphaned values? [LK]
                     }
                 });
 

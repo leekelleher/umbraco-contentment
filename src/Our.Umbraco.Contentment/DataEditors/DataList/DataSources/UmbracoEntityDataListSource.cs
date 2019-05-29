@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
@@ -22,7 +21,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             { nameof(UmbracoEntityTypes.DataType), UmbracoObjectTypes.DataType },
             { nameof(UmbracoEntityTypes.Document), UmbracoObjectTypes.DocumentType },
-            { nameof(UmbracoEntityTypes.DocumentType), UmbracoObjectTypes.DataType },
+            { nameof(UmbracoEntityTypes.DocumentType), UmbracoObjectTypes.DocumentType },
             { nameof(UmbracoEntityTypes.Media), UmbracoObjectTypes.Media },
             { nameof(UmbracoEntityTypes.MediaType), UmbracoObjectTypes.MediaType },
             { nameof(UmbracoEntityTypes.Member), UmbracoObjectTypes.Member },
@@ -37,6 +36,11 @@ namespace Our.Umbraco.Contentment.DataEditors
             { nameof(UmbracoEntityTypes.Member), UmbracoIcons.Member },
             { nameof(UmbracoEntityTypes.MemberType), UmbracoIcons.MemberType },
         };
+
+        public UmbracoEntityDataListSource()
+        {
+            // TODO: Can we pass in the IEntityService? How to do DI? [LK]
+        }
 
         public string Name => "Umbraco Entity";
 
@@ -67,20 +71,15 @@ namespace Our.Umbraco.Contentment.DataEditors
             return null;
         }
 
-        // TODO: Review if we need a Notes at the top saying which entityTypes are supported and not.
-
         class EntityTypeConfigurationField : ConfigurationField
         {
             public EntityTypeConfigurationField()
             {
-                var items = Enum
-                    .GetNames(typeof(UmbracoEntityTypes))
-                    .OrderBy(x => x)
-                    .Select(x => new { value = x, name = x.SplitPascalCasing(), disabled = SupportedEntityTypes.ContainsKey(x) == false });
+                var items = SupportedEntityTypes.Keys.Select(x => new DataListItemModel { Name = x.SplitPascalCasing(), Value = x });
 
-                Key = Constants.Conventions.ConfigurationEditors.EntityType;
+                Key = "entityType";
                 Name = "Entity Type";
-                Description = "Select the entity type to use.<br><br>Unsupported entity types have been disabled.";
+                Description = "Select the entity type to use.<br><br>Unsupported entity types have been hidden from the list.";
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {

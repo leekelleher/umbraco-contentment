@@ -4,8 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using System.Linq;
-using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -24,20 +22,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Notes { get; set; }
 
         [ConfigurationField(typeof(ItemsConfigurationField))]
-        public IEnumerable<NameValueModel> Items { get; set; }
+        public IEnumerable<DataListItemModel> Items { get; set; }
 
         public IEnumerable<DataListItemModel> GetItems()
         {
-            // TODO: Review this, make it bulletproof.
-
-            return Items?
-                .DistinctBy(x => x.value)
-                .Select(x => new DataListItemModel
-                {
-                    Icon = this.Icon,
-                    Name = x.name,
-                    Value = x.value
-                });
+            return Items;
         }
 
         class NotesConfigurationField : ConfigurationField
@@ -92,13 +81,6 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
                     { "usePrevalueEditors", Constants.Values.True }
                 };
             }
-        }
-
-        // TODO: Review if we need to separate out this object-model?
-        public class NameValueModel
-        {
-            public string name { get; set; }
-            public string value { get; set; }
         }
     }
 }
