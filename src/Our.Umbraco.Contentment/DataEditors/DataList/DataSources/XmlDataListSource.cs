@@ -30,9 +30,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("nameXPath", "Name XPath", "textstring", Description = "Enter the XPath expression to select the name from the item (XML node select from above).")]
         public string NameXPath { get; set; }
 
-        public Dictionary<string, string> GetItems()
+        public IEnumerable<DataListItemModel> GetItems()
         {
-            var items = new Dictionary<string, string>();
+            var items = new List<DataListItemModel>();
 
             if (string.IsNullOrWhiteSpace(XmlUrl) == false)
             {
@@ -60,9 +60,14 @@ namespace Our.Umbraco.Contentment.DataEditors
                                     var name = node.SelectSingleNode(nameXPath);
                                     var value = node.SelectSingleNode(valueXPath);
 
-                                    if (value != null && name != null && items.ContainsKey(value.Value) == false)
+                                    if (value != null && name != null)
                                     {
-                                        items.Add(value.Value, name.Value);
+                                        items.Add(new DataListItemModel
+                                        {
+                                            Icon = this.Icon,
+                                            Name = name.Value,
+                                            Value = value.Value
+                                        });
                                     }
                                 }
                             }

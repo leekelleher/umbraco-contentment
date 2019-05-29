@@ -28,6 +28,7 @@
 
 [Add a couple of use cases for this editor.]
 
+- Umbraco Entity Picker
 - Use the [`System.DayOfWeek`](https://docs.microsoft.com/en-us/dotnet/api/system.dayofweek) enum with a checkbox list to display the days of the week.
   This could be used to specify business opening days.
 - Country Picker - use XML datasource, show example using `https://madskristensen.net/posts/files/countries.xml`

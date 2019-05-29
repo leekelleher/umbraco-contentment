@@ -9,13 +9,12 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.MacroP
     "editorService",
     function ($scope, entityResource, editorService) {
 
-        //console.log("macroPicker.model", $scope.model);
+        // console.log("macro-picker.model", $scope.model);
 
-        var defaultConfig = { allowedMacros: { entityType: "Macro", items: [] }, maxItems: 0, disableSorting: 0 };
+        var defaultConfig = { availableMacros: [], maxItems: 0, disableSorting: 0 };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
-        var allowedMacros = [];
 
         function init() {
 
@@ -47,26 +46,12 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.MacroP
             vm.edit = edit;
             vm.remove = remove;
 
-            if (config.allowedMacros.items.length > 0) {
-                // NOTE: Can't use `entityResource.getByIds` as Macros aren't supported there.
-                // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web/Editors/EntityController.cs#L742-L744
-                // So we have to get all of them and filter.
-                entityResource.getAll(config.allowedMacros.entityType).then(function (data) {
-                    _.each(config.allowedMacros.items, function (udi) {
-                        var entity = _.find(data, function (item) { return item.udi === udi });
-                        if (entity) {
-                            allowedMacros.push(entity.alias);
-                        }
-                    });
-                });
-            }
-
             vm.loading = false;
         };
 
         function add($event) {
             var macroPicker = {
-                dialogData: { richTextEditor: false, macroData: { macroAlias: "" }, allowedMacros: allowedMacros },
+                dialogData: { richTextEditor: false, macroData: { macroAlias: "" }, allowedMacros: config.availableMacros },
                 submit: function (model) {
 
                     $scope.model.value.push({
@@ -94,7 +79,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.MacroP
 
         function edit($index, item) {
             var macroPicker = {
-                dialogData: { richTextEditor: false, macroData: { macroAlias: item.alias, macroParamsDictionary: item.params }, allowedMacros: allowedMacros },
+                dialogData: { richTextEditor: false, macroData: { macroAlias: item.alias, macroParamsDictionary: item.params }, allowedMacros: config.availableMacros },
                 submit: function (model) {
                     $scope.model.value[$index] = {
                         udi: model.selectedMacro.udi,

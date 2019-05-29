@@ -30,7 +30,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("sortAlphabetically", "Sort Alphabetically", "boolean", Description = "Select to sort the enum in alphabetical order. The default order is defined by the enum itself.")]
         public bool SortAlphabetically { get; set; }
 
-        public Dictionary<string, string> GetItems()
+        public IEnumerable<DataListItemModel> GetItems()
         {
             // TODO: Review this, make it bulletproof
 
@@ -44,7 +44,12 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
             }
 
-            return names.ToDictionary(x => x, x => x.SplitPascalCasing());
+            return names.Select(x => new DataListItemModel {
+                Icon = this.Icon,
+                Name = x.SplitPascalCasing(),
+                Value = x
+            });
+            //.ToDictionary(x => x, x => x.SplitPascalCasing());
         }
 
         class EnumTypeConfigurationField : ConfigurationField

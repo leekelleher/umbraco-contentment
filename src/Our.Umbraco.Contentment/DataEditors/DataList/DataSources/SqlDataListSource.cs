@@ -29,7 +29,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(ConnectionStringConfigurationField))]
         public string ConnectionString { get; set; }
 
-        public Dictionary<string, string> GetItems()
+        public IEnumerable<DataListItemModel> GetItems()
         {
             // TODO: Review this, make it bulletproof
             // TODO: Look to do a better way of querying the db.
@@ -44,8 +44,22 @@ namespace Our.Umbraco.Contentment.DataEditors
                 var sql = Query.Replace("\r", "").Replace("\n", " ").Replace("\t", " ");
                 var items = database.Fetch<NameValueModel>(sql);
 
-                return items.ToDictionary(x => x.value, x => x.name);
+                return items.Select(x => new DataListItemModel
+                {
+                    Icon = this.Icon,
+                    Name = x.name,
+                    Value = x.value
+                });
             }
+        }
+
+        // TODO: I'm not happy about using this temp class to deserialize the SQL data,
+        // Look at alternatives, so we can remove this class.
+        // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
+        class NameValueModel
+        {
+            public string name { get; set; }
+            public string value { get; set; }
         }
 
         class ConnectionStringConfigurationField : ConfigurationField
@@ -102,15 +116,6 @@ If more columns are returned, then only the first 2 columns will be used.</p>";
                     { "mode", "sql" }, // TODO: SQL mode doesn't exist, bah! [LK]
                 };
             }
-        }
-
-        // TODO: I'm not happy about using this temp class to deserialize the SQL data,
-        // Look at alternatives, so we can remove this class.
-        // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
-        class NameValueModel
-        {
-            public string name { get; set; }
-            public string value { get; set; }
         }
     }
 }

@@ -7,6 +7,7 @@ using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Web.PropertyEditors;
+using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -17,7 +18,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
         Group = "Display",
-        Icon = "icon-settings-alt")]
+        Icon = UmbracoIcons.Macro)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif

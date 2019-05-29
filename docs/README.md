@@ -22,7 +22,6 @@ Here is the documentation for the Contentment property editors...
 - [Notes](../docs/data-editors/notes.md)
 - [Radio Button List](../docs/data-editors/radio-button-list.md)
 - [Render Macro](../docs/data-editors/render-macro.md)
-- [Umbraco Entity Picker](../docs/data-editors/umb-entity-picker.md)
 
 
 > _[Work In Progress]_

@@ -7,7 +7,6 @@
     <div class="umb-rte row-fluid span8" ng-if="vm.loading">
         <umb-load-indicator></umb-load-indicator>
     </div>
-
     <div ng-if="!vm.loading">
         <div ui-sortable="vm.sortableOptions" ng-model="model.value">
             <umb-node-preview ng-repeat="item in model.value"

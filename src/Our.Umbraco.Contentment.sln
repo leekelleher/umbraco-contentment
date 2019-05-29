@@ -52,7 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Editors", "Data Editor
 		..\docs\data-editors\notes.md = ..\docs\data-editors\notes.md
 		..\docs\data-editors\radio-button-list.md = ..\docs\data-editors\radio-button-list.md
 		..\docs\data-editors\render-macro.md = ..\docs\data-editors\render-macro.md
-		..\docs\data-editors\umb-entity-picker.md = ..\docs\data-editors\umb-entity-picker.md
 	EndProjectSection
 EndProject
 Global

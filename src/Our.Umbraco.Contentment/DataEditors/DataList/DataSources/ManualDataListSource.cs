@@ -11,6 +11,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
+    // TODO: Rethink this. Current thought is to deprecate it. We shouldn't need to manually create it. [LK]
     internal class ManualDataListSource : IDataListSource
     {
         public string Name => "Manual";
@@ -25,14 +26,18 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(ItemsConfigurationField))]
         public IEnumerable<NameValueModel> Items { get; set; }
 
-        public Dictionary<string, string> GetItems()
+        public IEnumerable<DataListItemModel> GetItems()
         {
             // TODO: Review this, make it bulletproof.
-            // TODO: Need to avoid the "An item with the same key has already been added" error.
 
             return Items?
                 .DistinctBy(x => x.value)
-                .ToDictionary(x => x.value, x => x.name);
+                .Select(x => new DataListItemModel
+                {
+                    Icon = this.Icon,
+                    Name = x.name,
+                    Value = x.value
+                });
         }
 
         class NotesConfigurationField : ConfigurationField

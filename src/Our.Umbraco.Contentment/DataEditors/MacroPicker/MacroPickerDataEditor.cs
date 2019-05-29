@@ -6,7 +6,9 @@
 using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
 using Umbraco.Web.PropertyEditors;
+using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -17,7 +19,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = "Picker",
-        Icon = "icon-settings-alt")]
+        Icon = UmbracoIcons.Macro)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -28,13 +30,15 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/macro-picker.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/macro-picker.js";
 
-        public MacroPickerDataEditor(ILogger logger)
+        private readonly IMacroService _macroService;
+
+        public MacroPickerDataEditor(ILogger logger, IMacroService macroService)
             : base(logger)
         {
-            DefaultConfiguration.Add(Constants.Conventions.ConfigurationEditors.MaxItems, 0);
+            _macroService = macroService;
         }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new MacroPickerConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new MacroPickerConfigurationEditor(_macroService);
 
         protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }

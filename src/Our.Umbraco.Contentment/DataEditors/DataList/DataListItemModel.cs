@@ -7,13 +7,16 @@ using Newtonsoft.Json;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class ItemPickerModel
+    public class DataListItemModel
     {
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+
+        [JsonProperty("icon", NullValueHandling = NullValueHandling.Ignore)]
+        public string Icon { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("icon")]
-        public string Icon { get; set; }
 
         [JsonProperty("value")]
         public string Value { get; set; }

@@ -71,9 +71,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                     });
 
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
-                    var options = source?.GetItems() ?? new Dictionary<string, string>();
+                    var options = source?.GetItems() ?? Enumerable.Empty<DataListItemModel>();
 
-                    config.Add("items", options.Select(x => new { name = x.Value, value = x.Key }));
+                    config.Add("items", options);
                 }
 
                 config.Remove("dataSource");

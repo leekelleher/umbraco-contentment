@@ -20,13 +20,14 @@ namespace Our.Umbraco.Contentment.DataEditors
             : base()
         {
             var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true);
-            var items = new List<ItemPickerModel>();
+            var items = new List<DataListItemModel>();
             foreach (var configEditor in configEditors)
             {
-                items.Add(new ItemPickerModel
+                items.Add(new DataListItemModel
                 {
-                    Name = configEditor.Name,
                     Icon = configEditor.Icon,
+                    Name = configEditor.Name,
+                    Description = configEditor.Description,
                     Value = configEditor.Type
                 });
             }

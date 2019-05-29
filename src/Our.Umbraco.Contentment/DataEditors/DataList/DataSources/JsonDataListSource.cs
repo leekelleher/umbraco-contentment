@@ -21,7 +21,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("jsonUrl", "URL", "textstring", Description = "Enter the URL of the JSON data source.")]
         public string JsonUrl { get; set; }
 
-        public Dictionary<string, string> GetItems()
+        public IEnumerable<DataListItemModel> GetItems()
         {
             if (string.IsNullOrWhiteSpace(JsonUrl) == false)
             {
