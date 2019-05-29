@@ -2,7 +2,7 @@
 
 ## Umbraco Contentment
 
-### Data Table
+### Code Editor
 
 [A single paragraph introduction for the data editor.]
 

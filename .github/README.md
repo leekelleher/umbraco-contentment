@@ -6,7 +6,7 @@
 
 ### What is it?
 
-This is a collection of Umbraco components that I have developed for use on my own Umbraco v8 implementation projects.
+This is a collection of Umbraco components that I have developed for use on my own **Umbraco v8** implementation projects.
 
 Some components may be innovative, others may be a reimagining of existing components, data-editors, features and other community packages.
 
@@ -24,23 +24,22 @@ _What the heck is a Data Editor?_
 
 ###### Property Editors
 
-- Cascading Dropdown List
+- [Cascading Dropdown List](../docs/data-editors/cascading-dropdown-list.md)
 - [Checkbox](../docs/data-editors/checkbox.md)
-- Checkbox List
-- Code Editor (ACE)
-- Configuration Editor
-- Data List
-- Data Table
-- [Dropdown](../docs/data-editors/dropdown.md)
-- Icon Picker
-- Item Picker
+- [Checkbox List](../docs/data-editors/checkbox-list.md)
+- [Code Editor](../docs/data-editors/code-editor.md)
+- [Configuration Editor](../docs/data-editors/configuration-editor.md)
+- [Data List](../docs/data-editors/data-list.md)
+- [Data Table](../docs/data-editors/data-table.md)
+- [Dropdown List](../docs/data-editors/dropdown-list.md)
+- [Icon Picker](../docs/data-editors/icon-picker.md)
+- [Item Picker](../docs/data-editors/item-picker.md)
 - [Macro Picker](../docs/data-editors/macro-picker.md)
 - [Notes](../docs/data-editors/notes.md)
-- Radio Button List
+- [Radio Button List](../docs/data-editors/radio-button-list.md)
 - [Render Macro](../docs/data-editors/render-macro.md)
 - [Umbraco Entity Picker](../docs/data-editors/umb-entity-picker.md)
 
-All of these can be configured to be used as Parameter Editors.
 
 
 

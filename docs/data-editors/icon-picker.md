@@ -2,7 +2,7 @@
 
 ## Umbraco Contentment
 
-### Data Table
+### Icon Picker
 
 [A single paragraph introduction for the data editor.]
 

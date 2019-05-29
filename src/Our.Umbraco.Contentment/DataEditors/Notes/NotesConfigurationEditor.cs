@@ -19,14 +19,15 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 maxImageSize = 500,
                 mode = "classic",
-                stylesheets = Array.Empty<string>(),
+                stylesheets = false,
                 toolbar = new[]
                 {
                     "ace",
                     "undo",
                     "redo",
                     "cut",
-                    //"styleselect", // TODO: We could write up a custom stylesheet to populate the Formats menu with Headings, etc? [LK]
+                    "styleselect",
+                    "removeformat",
                     "bold",
                     "italic",
                     "alignleft",

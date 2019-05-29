@@ -4,3 +4,36 @@
 
 ### Notes
 
+The Notes property editor is used to makes use of the rich-text editor to display instructional messages for content editors.
+
+> This property editor has taken inspiration from the community package, [uEditorNotes](https://our.umbraco.com/packages/backoffice-extensions/ueditornotes/) by Marc Goodson (and its predecessor [uComponents Notes](http://ucomponents.github.io/data-types/notes/) by Matt Brailsford).
+> If you are looking for further configuration options, _such as making the notes collapsible or displayed within a sliding panel_, then I'd heartily recommend using the [uEditorNotes](https://our.umbraco.com/packages/backoffice-extensions/ueditornotes/) package!
+
+
+### How to configure the editor?
+
+Once you have created a new Data Type and selected the "[Contentment] Notes" option, you will see the following configuration fields.
+
+![Configuration Editor for Notes](notes--configuration-editor.png)
+
+The main field is "**Notes**", here you can enter any instructional messages using the rich-text editor.
+
+Also, there is an option to hide the label on the property itself. Selecting this option will enable the notes to be displayed in full width of the content property panel.
+
+
+### How to use the editor?
+
+Once you have added the configured Data Type to your Document Type, the notes will be displayed on the content page's property panel.
+
+
+### How to get the value?
+
+This property editor is read-only and does not store any value against the property.
+
+
+### Further reading
+
+If you are interesting in making your Umbraco back-office super friendly? Here are some articles for further inspiration...
+
+- [Friendly Backoffice](https://24days.in/umbraco-cms/2016/friendly-backoffice/) - Janae Cram's 24 Days In Umbraco article.
+- [10 tips to make your editor love you](https://www.perplex.nl/10-tips) - Fedosja van der Lee's presentation from CodeGarden 19.

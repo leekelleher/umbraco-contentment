@@ -2,7 +2,7 @@
 
 ## Umbraco Contentment
 
-### Data Table
+### Radio Button List
 
 [A single paragraph introduction for the data editor.]
 

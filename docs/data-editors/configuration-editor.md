@@ -2,7 +2,7 @@
 
 ## Umbraco Contentment
 
-### Data Table
+### Configuration Editor
 
 [A single paragraph introduction for the data editor.]
 
@@ -22,6 +22,14 @@
 [A few sentences about how to get the value + value converter / models builder info]
 
 [Include a code sample.]
+
+
+### Use cases
+
+[Add a couple of use cases for this editor.]
+
+- API credentials.
+- An alternative to Macro Picker.
 
 
 ### How to configure as a Parameter Editor

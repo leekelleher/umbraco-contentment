@@ -33,11 +33,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{56F1FA82
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{9C956438-0434-40DD-BBA0-7F837E8FF1C8}"
 	ProjectSection(SolutionItems) = preProject
+		..\docs\README.md = ..\docs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Editors", "Data Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\data-editors\cascading-dropdown-list.md = ..\docs\data-editors\cascading-dropdown-list.md
+		..\docs\data-editors\checkbox-list.md = ..\docs\data-editors\checkbox-list.md
 		..\docs\data-editors\checkbox.md = ..\docs\data-editors\checkbox.md
+		..\docs\data-editors\code-editor.md = ..\docs\data-editors\code-editor.md
+		..\docs\data-editors\configuration-editor.md = ..\docs\data-editors\configuration-editor.md
+		..\docs\data-editors\data-list.md = ..\docs\data-editors\data-list.md
 		..\docs\data-editors\data-table.md = ..\docs\data-editors\data-table.md
-		..\docs\data-editors\dropdown.md = ..\docs\data-editors\dropdown.md
+		..\docs\data-editors\dropdown-list.md = ..\docs\data-editors\dropdown-list.md
+		..\docs\data-editors\icon-picker.md = ..\docs\data-editors\icon-picker.md
+		..\docs\data-editors\item-picker.md = ..\docs\data-editors\item-picker.md
 		..\docs\data-editors\macro-picker.md = ..\docs\data-editors\macro-picker.md
 		..\docs\data-editors\notes.md = ..\docs\data-editors\notes.md
+		..\docs\data-editors\radio-button-list.md = ..\docs\data-editors\radio-button-list.md
 		..\docs\data-editors\render-macro.md = ..\docs\data-editors\render-macro.md
 		..\docs\data-editors\umb-entity-picker.md = ..\docs\data-editors\umb-entity-picker.md
 	EndProjectSection
@@ -61,6 +74,7 @@ Global
 		{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 		{56F1FA82-1108-4C75-A122-D58D759D61E2} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 		{9C956438-0434-40DD-BBA0-7F837E8FF1C8} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F} = {9C956438-0434-40DD-BBA0-7F837E8FF1C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8F86B45-B473-45E7-85C7-863A10E21554}
