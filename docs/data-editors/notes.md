@@ -4,9 +4,10 @@
 
 ### Notes
 
-The Notes property editor is used to makes use of the rich-text editor to display instructional messages for content editors.
+Notes is a property editor that can be used to display rich-text instructional messages for content editors.
 
 > This property editor has taken inspiration from the community package, [uEditorNotes](https://our.umbraco.com/packages/backoffice-extensions/ueditornotes/) by Marc Goodson (and its predecessor [uComponents Notes](http://ucomponents.github.io/data-types/notes/) by Matt Brailsford).
+> 
 > If you are looking for further configuration options, _such as making the notes collapsible or displayed within a sliding panel_, then I'd heartily recommend using the [uEditorNotes](https://our.umbraco.com/packages/backoffice-extensions/ueditornotes/) package!
 
 
