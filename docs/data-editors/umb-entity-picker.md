@@ -1,4 +1,4 @@
-<img src="file:///../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
 
 ## Umbraco Contentment
 
@@ -11,7 +11,7 @@ Umbraco Entity Picker is a property editor that lets you select one or more enti
 
 Once you have created a new Data Type and selected the "[Contentment] Umbraco Entity Picker" option, you will see the following configuration fields.
 
-![Configuration Editor for Umbraco Entity Picker](file:///umb-entity-picker--configuration-editor.png)
+![Configuration Editor for Umbraco Entity Picker](umb-entity-picker--configuration-editor.png)
 
 The main field is "**Entity Type**", from here you can select the entity type that you'd like to pick entities from.
 
@@ -28,7 +28,7 @@ Using the entity picker should feel familiar, as it reuses Umbraco's content pic
 
 To pick an entity, press the "Add" link to open the picker's overlay panel. This will display a list of entities which you can select from. You can also filter the items using the search box at the top of the panel.
 
-![Configuration Editor for Umbraco Entity Picker](file:///umb-entity-picker--property-editor.png)
+![Configuration Editor for Umbraco Entity Picker](umb-entity-picker--property-editor.png)
 
 Once you have selected items, you will be able to sort by dragging the entities into the desired order.
 
