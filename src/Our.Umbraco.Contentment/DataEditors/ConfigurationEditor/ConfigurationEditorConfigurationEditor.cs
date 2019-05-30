@@ -82,6 +82,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
                 foreach (var item in array)
                 {
+                    // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
                     var type = TypeFinder.GetTypeByName(item.Value<string>());
                     if (type != null)
                     {
@@ -165,6 +166,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
+            // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
             return GetConfigurationEditors<TConfigurationEditor>(TypeFinder.FindClassesOfType<TConfigurationEditor>(), ignoreFields);
         }
     }

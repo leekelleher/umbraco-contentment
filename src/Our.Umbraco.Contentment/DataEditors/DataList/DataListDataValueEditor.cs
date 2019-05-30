@@ -36,6 +36,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     // TODO: Review this, make it bulletproof
 
                     var item = array[0];
+                    // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
                     var type = TypeFinder.GetTypeByName(item["type"].ToString());
                     if (type != null)
                     {

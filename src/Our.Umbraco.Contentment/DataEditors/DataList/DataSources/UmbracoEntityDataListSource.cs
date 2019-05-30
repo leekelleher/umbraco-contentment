@@ -10,6 +10,7 @@ using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
 using Umbraco.Web.Models.ContentEditing;
 using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
@@ -37,9 +38,17 @@ namespace Our.Umbraco.Contentment.DataEditors
             { nameof(UmbracoEntityTypes.MemberType), UmbracoIcons.MemberType },
         };
 
+        private readonly IEntityService _entityService;
+
         public UmbracoEntityDataListSource()
+            : this(Current.Services.EntityService)
         {
-            // TODO: Can we pass in the IEntityService? How to do DI? [LK]
+            // TODO: Can we pass in the IEntityService? How to do DI with JSON.NET deserialization? [LK]
+        }
+
+        public UmbracoEntityDataListSource(IEntityService entityService)
+        {
+            _entityService = entityService;
         }
 
         public string Name => "Umbraco Entity";
@@ -57,7 +66,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 var icon = EntityTypeIcons.ContainsKey(EntityType) ? EntityTypeIcons[EntityType] : this.Icon;
 
-                return Current.Services.EntityService
+                return _entityService
                     .GetAll(objectType)
                     .OrderBy(x => x.Name)
                     .Select(x => new DataListItemModel

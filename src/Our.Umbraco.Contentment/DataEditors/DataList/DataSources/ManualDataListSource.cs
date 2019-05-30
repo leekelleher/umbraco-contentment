@@ -4,19 +4,24 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    // TODO: Rethink this. Current thought is to deprecate it. We shouldn't need to manually create it. [LK]
+#if !DEBUG
+    // TODO: Rethink if this data source is necessary. [LK]
+    [HideFromTypeFinder]
+#endif
     internal class ManualDataListSource : IDataListSource
     {
         public string Name => "Manual";
 
         public string Description => "Manually configure the items for the data source.";
 
-        public string Icon => "icon-autofill";
+        public string Icon => UmbracoIcons.DataType;
 
         [ConfigurationField(typeof(NotesConfigurationField))]
         public string Notes { get; set; }

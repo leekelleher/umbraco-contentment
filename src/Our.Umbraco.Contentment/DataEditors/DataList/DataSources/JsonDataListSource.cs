@@ -4,10 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
+#if !DEBUG
+    // TODO: IsWorkInProgress - Under development.
+    [HideFromTypeFinder]
+#endif
     internal class JsonDataListSource : IDataListSource
     {
         public string Name => "JSON";

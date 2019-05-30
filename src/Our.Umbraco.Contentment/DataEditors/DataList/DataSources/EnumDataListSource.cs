@@ -16,6 +16,10 @@ using Umbraco.Web.Mvc;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
+#if !DEBUG
+    // TODO: IsWorkInProgress - Under development.
+    [HideFromTypeFinder]
+#endif
     internal class EnumDataListSource : IDataListSource
     {
         public string Name => "Enum";
@@ -44,12 +48,12 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
             }
 
-            return names.Select(x => new DataListItemModel {
+            return names.Select(x => new DataListItemModel
+            {
                 Icon = this.Icon,
                 Name = x.SplitPascalCasing(),
                 Value = x
             });
-            //.ToDictionary(x => x, x => x.SplitPascalCasing());
         }
 
         class EnumTypeConfigurationField : ConfigurationField
@@ -68,9 +72,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "apis", apis },
-                    // TODO: We can send down the initial options (assemblies) along with the config, save on an extra HTTP request. [LK]
-                    //{ "options", Array.Empty<object>() }
+                    { "apis", apis }
                 };
             }
         }

@@ -61,11 +61,14 @@ namespace Our.Umbraco.Contentment.DataEditors
                 // TODO: Review this, make it bulletproof
 
                 var item = array[0];
+                // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
                 var type = TypeFinder.GetTypeByName(item["type"].ToString());
                 if (type != null)
                 {
                     var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                     {
+                        // TODO: How to do DI when deserializing? (I want to inject IEntityService into UmbracoEntityDataListSource) [LK]
+                        // https://www.newtonsoft.com/json/help/html/DeserializeWithDependencyInjection.htm
                         ContractResolver = new ConfigurationFieldContractResolver(),
                         Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
                     });

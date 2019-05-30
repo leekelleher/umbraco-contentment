@@ -11,6 +11,10 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
+#if !DEBUG
+    // TODO: IsWorkInProgress - Under development.
+    [HideFromTypeFinder]
+#endif
     internal class SqlDataListSource : IDataListSource
     {
         public string Name => "SQL";

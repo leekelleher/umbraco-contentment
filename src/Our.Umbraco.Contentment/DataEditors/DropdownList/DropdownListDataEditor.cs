@@ -17,7 +17,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.String,
         Group = "Lists",
-        Icon = "icon-indent")]
+        Icon = "icon-indent"
+#if !DEBUG
+        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
+#endif
+        )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif

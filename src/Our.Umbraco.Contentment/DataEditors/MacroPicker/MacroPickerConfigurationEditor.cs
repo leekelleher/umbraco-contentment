@@ -34,7 +34,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             Fields.Add(
                 "allowedMacros",
-                "Allowed Macros",
+                "Allowed macros",
                 "Restrict the macros that can be picked.",
                 IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>

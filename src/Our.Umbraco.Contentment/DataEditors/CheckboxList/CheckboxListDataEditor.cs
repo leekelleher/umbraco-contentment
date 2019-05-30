@@ -17,8 +17,10 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = "Lists",
-        Icon = "icon-bulleted-list",
-        IsDeprecated = false // NOTE: IsWorkInProgress [LK]
+        Icon = "icon-bulleted-list"
+#if !DEBUG
+        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
+#endif
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]

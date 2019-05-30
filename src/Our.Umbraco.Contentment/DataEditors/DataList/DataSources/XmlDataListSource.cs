@@ -6,10 +6,15 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Xml;
+using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
+#if !DEBUG
+    // TODO: IsWorkInProgress - Under development.
+    [HideFromTypeFinder]
+#endif
     internal class XmlDataListSource : IDataListSource
     {
         public string Name => "XML";
@@ -38,8 +43,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 try
                 {
-                    // TODO: Abstract this to a base class, share it with the JSON provider.
-                    // Make it handle both local and remote paths.
+                    // TODO: Abstract this to a base class, share it with the JSON provider. Make it handle both local and remote paths. [LK]
 
                     using (var client = new WebClient())
                     {

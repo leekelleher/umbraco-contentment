@@ -17,8 +17,10 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = "Lists",
-        Icon = "icon-item-arrangement",
-        IsDeprecated = true // NOTE: IsWorkInProgress [LK]
+        Icon = "icon-item-arrangement"
+#if !DEBUG
+        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
+#endif
         )]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]

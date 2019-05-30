@@ -47,7 +47,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     {
                         Fields.Add(
                             "mode",
-                            "Programming Language Mode",
+                            "Programming language mode",
                             "Select the programming language mode. By default, 'JavaScript' mode will be used.",
                             IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                             new Dictionary<string, object>
@@ -75,8 +75,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
             }
 
-            Fields.Add("fontSize", "Font Size", "Set the font size. The value must be a valid CSS font-size. The default value is '14px'.", "textstring");
-            Fields.Add("useWrapMode", "Word Wrapping", "Select to enable word wrapping.", "boolean");
+            Fields.Add("fontSize", "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is '14px'.", "textstring");
+            Fields.Add("useWrapMode", "Word wrapping", "Select to enable word wrapping.", "boolean");
 
             // TODO: Hidden the advanced options (for now), need to review. [LK]
             //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean"); // TODO: Tempted to reverse the logic here, then use ToValueEditor to negate it? [LK]

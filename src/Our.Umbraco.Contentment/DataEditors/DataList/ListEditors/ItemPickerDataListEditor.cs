@@ -31,7 +31,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Key = "defaultIcon";
                 Name = "Default Icon";
                 Description = "Select the default icon.";
-                View = "textstring"; // TODO: Make an Icon Picker! Sorry Marc! [LK]
+                View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath);
             }
         }
     }
