@@ -71,8 +71,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "allowEmpty", 0 },
-                    { "items", connectionStrings.Select(x => new { name = x, value = x }) }
+                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) }
                 };
             }
         }
@@ -85,12 +85,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 Your SQL query should be designed to return 2 columns, these will be used as name/value pairs in the data list.<br>
 If more columns are returned, then only the first 2 columns will be used.</p>";
 
-                Key = "note";
-                Name = "Note";
+                Key = NotesConfigurationEditor.Notes;
+                Name = nameof(NotesConfigurationEditor.Notes);
                 View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "notes", html }
+                    { NotesConfigurationEditor.Notes, html }
                 };
                 HideLabel = true;
             }

@@ -259,10 +259,10 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />
+    <Compile Include="DataEditors\CheckboxList\CheckboxListConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
-    <Compile Include="DataEditors\Checkbox\Checkbox-Constants.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
@@ -297,7 +297,7 @@
     <Compile Include="DataEditors\ItemPicker\ItemPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListItemModel.cs" />
-    <Compile Include="DataEditors\ItemPicker\ItemPicker-Constants.cs" />
+    <Compile Include="DataEditors\RadioButtonList\RadioButtonListConfigurationEditor.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />

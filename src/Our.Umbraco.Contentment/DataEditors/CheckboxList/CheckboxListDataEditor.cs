@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-bulleted-list"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group = Constants.Conventions.PropertyGroups.Lists,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -31,9 +31,12 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Checkbox List";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/checkbox-list.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/checkbox-list.js";
+        internal const string DataEditorIcon = "icon-bulleted-list";
 
         public CheckboxListDataEditor(ILogger logger)
             : base(logger)
         { }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new CheckboxListConfigurationEditor();
     }
 }

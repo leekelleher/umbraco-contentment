@@ -83,6 +83,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         class EntityTypeConfigurationField : ConfigurationField
         {
             public EntityTypeConfigurationField()
+                : base()
             {
                 var items = SupportedEntityTypes.Keys.Select(x => new DataListItemModel { Name = x.SplitPascalCasing(), Value = x });
 
@@ -92,7 +93,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, items }
+                    { DropdownListConfigurationEditor.Items, items }
                 };
             }
         }

@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-target"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group = Constants.Conventions.PropertyGroups.Lists,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -31,9 +31,12 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Radio Button List";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/radio-button-list.js";
+        internal const string DataEditorIcon = "icon-target";
 
         public RadioButtonListDataEditor(ILogger logger)
             : base(logger)
         { }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new RadioButtonListConfigurationEditor();
     }
 }

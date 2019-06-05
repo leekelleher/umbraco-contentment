@@ -17,6 +17,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class MacroPickerConfigurationEditor : ConfigurationEditor
     {
+        public const string AllowedMacros = "allowedMacros";
+        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
+
         private readonly IMacroService _macroService;
 
         public MacroPickerConfigurationEditor(IMacroService macroService)
@@ -33,13 +38,13 @@ namespace Our.Umbraco.Contentment.DataEditors
             });
 
             Fields.Add(
-                "allowedMacros",
+                AllowedMacros,
                 "Allowed macros",
                 "Restrict the macros that can be picked.",
                 IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, macros }
+                    { ItemPickerConfigurationEditor.Items, macros }
                 });
 
             Fields.AddMaxItems();
@@ -51,7 +56,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue("allowedMacros", out var tmp1) && tmp1 is JArray array)
+            if (config.TryGetValue(AllowedMacros, out var tmp1) && tmp1 is JArray array)
             {
                 var ids = new List<Guid>();
                 foreach (var token in array)
@@ -70,7 +75,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 // TODO: Commented this out, until after the MacroService bug is fixed.
                 //config.Add("availableMacros", _macroService.GetAll(ids).Select(x => x.Alias));
                 config.Add("availableMacros", _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
-                config.Remove("allowedMacros");
+                config.Remove(AllowedMacros);
             }
 
             return config;

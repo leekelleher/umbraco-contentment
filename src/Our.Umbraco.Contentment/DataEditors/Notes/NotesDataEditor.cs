@@ -14,13 +14,14 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = "Display",
-        Icon = "icon-readonly")]
+        Group = Constants.Conventions.PropertyGroups.Display,
+        Icon = DataEditorIcon)]
     public class NotesDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.Notes";
         internal const string DataEditorName = "[Contentment] Notes";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/notes.html";
+        internal const string DataEditorIcon = "icon-readonly";
 
         public NotesDataEditor(ILogger logger)
             : base(logger)

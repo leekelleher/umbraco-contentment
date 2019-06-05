@@ -11,18 +11,30 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class IconPickerConfigurationEditor : ConfigurationEditor
     {
+        public const string DefaultIcon = "defaultIcon";
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+
         public IconPickerConfigurationEditor()
             : base()
         {
-            Fields.Add(
-                "defaultIcon",
-                "Default icon",
-                "Select an icon to be displayed as the default icon, (for when no icon has been selected).",
-                IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
-                new Dictionary<string, object> {
-                    { "defaultIcon", "icon-document" }
-                });
+            Fields.Add(new DefaultIconConfigurationField());
             Fields.AddHideLabel();
+        }
+
+        internal class DefaultIconConfigurationField : ConfigurationField
+        {
+            public DefaultIconConfigurationField()
+                : base()
+            {
+                Key = DefaultIcon;
+                Name = "Default icon";
+                Description = "Select an icon to be displayed as the default icon, (for when no icon has been selected).";
+                View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath);
+                Config = new Dictionary<string, object>
+                {
+                    { DefaultIcon, "icon-document" }
+                };
+            }
         }
     }
 }

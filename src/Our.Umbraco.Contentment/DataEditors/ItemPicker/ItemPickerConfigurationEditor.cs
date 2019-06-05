@@ -11,6 +11,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
+        public const string AllowDuplicates = "allowDuplicates";
+        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+
         public ItemPickerConfigurationEditor()
             : base()
         {
@@ -37,26 +42,35 @@ namespace Our.Umbraco.Contentment.DataEditors
             };
 
             Fields.Add(
-                Constants.Conventions.ConfigurationEditors.Items,
-                "Items",
+                Items,
+                nameof(Items),
                 "Configure the items for the item picker.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
-                    { "fields", listFields },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 0 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.False },
-                    { "restrictWidth", Constants.Values.True },
-                    { "usePrevalueEditors", Constants.Values.False }
+                    { DataTableConfigurationEditor.FieldItems, listFields },
+                    { DataTableConfigurationEditor.MaxItems, 0 },
+                    { DataTableConfigurationEditor.DisableSorting, Constants.Values.False },
+                    { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
+                    { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
+
             Fields.AddMaxItems();
-            Fields.Add(
-                "allowDuplicates",
-                "Allow duplicates?",
-                "Select to allow the editor to select duplicate entities.",
-                "boolean");
+            Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
+        }
+
+        internal class AllowDuplicatesConfigurationField : ConfigurationField
+        {
+            public AllowDuplicatesConfigurationField()
+                : base()
+            {
+                Key = AllowDuplicates;
+                Name = "Allow duplicates?";
+                Description = "Select to allow the editor to select duplicate items.";
+                View = "boolean";
+            }
         }
     }
 }

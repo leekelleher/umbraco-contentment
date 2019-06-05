@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-item-arrangement"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group = Constants.Conventions.PropertyGroups.Lists,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -31,6 +31,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Data Table";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/data-table.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/data-table.js";
+        internal const string DataEditorIcon = "icon-item-arrangement";
 
         public DataTableDataEditor(ILogger logger)
             : base(logger)

@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Description => "Select multiple values from a list of checkboxes.";
 
-        public string Icon => "icon-bulleted-list";
+        public string Icon => CheckboxListDataEditor.DataEditorIcon;
 
         public string View => IOHelper.ResolveUrl(CheckboxListDataEditor.DataEditorViewPath);
     }

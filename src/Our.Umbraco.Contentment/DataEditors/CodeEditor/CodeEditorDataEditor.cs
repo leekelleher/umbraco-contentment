@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Text,
-        Group = "Code",
-        Icon = "icon-code"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group = Constants.Conventions.PropertyGroups.Code,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -31,6 +31,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Code Editor";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/code-editor.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/code-editor.js";
+        internal const string DataEditorIcon = "icon-code";
 
         public CodeEditorDataEditor(ILogger logger)
             : base(logger)

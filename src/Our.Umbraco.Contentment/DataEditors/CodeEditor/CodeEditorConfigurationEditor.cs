@@ -13,6 +13,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CodeEditorConfigurationEditor : ConfigurationEditor
     {
+        public const string FontSize = "fontSize";
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Mode = "mode";
+        public const string Theme = "theme";
+        public const string UseWrapMode = "useWrapMode";
+
         public CodeEditorConfigurationEditor()
             : base()
         {
@@ -46,37 +52,37 @@ namespace Our.Umbraco.Contentment.DataEditors
                     if (modes.Count > 0)
                     {
                         Fields.Add(
-                            "mode",
+                            Mode,
                             "Programming language mode",
                             "Select the programming language mode. By default, 'JavaScript' mode will be used.",
                             IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                             new Dictionary<string, object>
                             {
-                            { "allowEmpty", Constants.Values.False },
-                            { Constants.Conventions.ConfigurationEditors.Items, modes },
-                            { Constants.Conventions.ConfigurationEditors.DefaultValue, "javascript" }
+                                { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                                { DropdownListConfigurationEditor.Items, modes },
+                                { DropdownListConfigurationEditor.DefaultValue, "javascript" }
                             });
                     }
 
                     if (themes.Count > 0)
                     {
                         Fields.Add(
-                       "theme",
-                       "Theme",
-                       "Set the theme for the code editor. By default, 'Chrome' will be used.",
-                       IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
-                       new Dictionary<string, object>
-                       {
-                            { "allowEmpty", Constants.Values.False },
-                            { Constants.Conventions.ConfigurationEditors.Items, themes },
-                            { Constants.Conventions.ConfigurationEditors.DefaultValue, "chrome" }
-                       });
+                            Theme,
+                            nameof(Theme),
+                            "Set the theme for the code editor. By default, 'Chrome' will be used.",
+                            IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                            new Dictionary<string, object>
+                            {
+                                { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                                { DropdownListConfigurationEditor.Items, themes },
+                                { DropdownListConfigurationEditor.DefaultValue, "chrome" }
+                            });
                     }
                 }
             }
 
-            Fields.Add("fontSize", "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is '14px'.", "textstring");
-            Fields.Add("useWrapMode", "Word wrapping", "Select to enable word wrapping.", "boolean");
+            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is '14px'.", "textstring");
+            Fields.Add(UseWrapMode, "Word wrapping", "Select to enable word wrapping.", "boolean");
 
             // TODO: Hidden the advanced options (for now), need to review. [LK]
             //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean"); // TODO: Tempted to reverse the logic here, then use ToValueEditor to negate it? [LK]
@@ -102,9 +108,9 @@ namespace Our.Umbraco.Contentment.DataEditors
             //    config["firstLineNumber"] = 1;
             //}
 
-            if (config.ContainsKey("fontSize") == false)
+            if (config.ContainsKey(FontSize) == false)
             {
-                config["fontSize"] = "14px";
+                config[FontSize] = "14px";
             }
 
             return config;

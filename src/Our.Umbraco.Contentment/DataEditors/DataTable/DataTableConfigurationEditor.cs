@@ -13,6 +13,13 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class DataTableConfigurationEditor : ConfigurationEditor
     {
+        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
+        public const string FieldItems = "fields";
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
+        public const string RestrictWidth = "restrictWidth";
+        public const string UsePrevalueEditors = "usePrevalueEditors";
+
         public DataTableConfigurationEditor()
             : base()
         {
@@ -48,31 +55,35 @@ namespace Our.Umbraco.Contentment.DataEditors
                     View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>
                     {
-                        { Constants.Conventions.ConfigurationEditors.Items, paramEditors }
+                        { DropdownListConfigurationEditor.Items, paramEditors }
                     }
                 },
             };
 
             Fields.Add(
-                "fields",
-                "Fields",
+                FieldItems,
+                nameof(Fields),
                 "Configure the editor fields for the data table.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
-                    { "fields", listFields },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 0 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.False },
-                    { "restrictWidth", "1" },
-                    { "usePrevalueEditors", "0" }
+                    { FieldItems, listFields },
+                    { MaxItems, 0 },
+                    { DisableSorting, Constants.Values.False },
+                    { RestrictWidth, Constants.Values.True },
+                    { UsePrevalueEditors, Constants.Values.False }
                 });
+
             Fields.AddMaxItems();
+
             Fields.Add(
-                "restrictWidth",
+                RestrictWidth,
                 "Restrict width?",
                 "Select to restrict the width of the data table. This will attempt to make the table to be the same width as the 'Add' button.",
                 "boolean");
+
             Fields.AddHideLabel();
+
             Fields.AddDisableSorting();
         }
 
@@ -80,7 +91,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            config.Add("usePrevalueEditors", "0");
+            config.Add(UsePrevalueEditors, Constants.Values.False);
 
             return config;
         }

@@ -15,30 +15,14 @@ Some components may be innovative, others may be a reimagining of existing compo
 
 Let's open the shoebox and take a look inside...
 
-##### Data Editors
+##### Property Editors
 
-_What the heck is a Data Editor?_
-
-> Data Editors is the Umbraco v8 term for combining what was previously called **Property Editors** and **Parameter Editors** in Umbraco v6/v7.
-> The difference between the two are that Property Editors can be configured (using a Data Type) and Parameter Editors have a default (or zero) configuration.
-
-###### Property Editors
-
-- [Cascading Dropdown List](../docs/data-editors/cascading-dropdown-list.md)
 - [Checkbox](../docs/data-editors/checkbox.md)
-- [Checkbox List](../docs/data-editors/checkbox-list.md)
-- [Code Editor](../docs/data-editors/code-editor.md)
-- [Configuration Editor](../docs/data-editors/configuration-editor.md)
 - [Data List](../docs/data-editors/data-list.md)
-- [Data Table](../docs/data-editors/data-table.md)
-- [Dropdown List](../docs/data-editors/dropdown-list.md)
 - [Icon Picker](../docs/data-editors/icon-picker.md)
-- [Item Picker](../docs/data-editors/item-picker.md)
 - [Macro Picker](../docs/data-editors/macro-picker.md)
 - [Notes](../docs/data-editors/notes.md)
-- [Radio Button List](../docs/data-editors/radio-button-list.md)
 - [Render Macro](../docs/data-editors/render-macro.md)
-- [Umbraco Entity Picker](../docs/data-editors/umb-entity-picker.md)
 
 
 

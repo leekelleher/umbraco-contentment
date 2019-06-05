@@ -11,15 +11,19 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class RenderMacroConfigurationEditor : ConfigurationEditor
     {
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Macro = "macro";
+
         public RenderMacroConfigurationEditor()
             : base()
         {
             Fields.Add(
-                "macro",
-                "Macro",
+                Macro,
+                nameof(Macro),
                 "Select and configure the macro to be displayed.",
                 IOHelper.ResolveUrl(MacroPickerDataEditor.DataEditorViewPath),
-                new Dictionary<string, object> { { Constants.Conventions.ConfigurationEditors.MaxItems, 1 } });
+                new Dictionary<string, object> { { MacroPickerConfigurationEditor.MaxItems, 1 } });
+
             Fields.AddHideLabel();
         }
     }

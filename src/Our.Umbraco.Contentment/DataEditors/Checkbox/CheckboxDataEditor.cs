@@ -12,12 +12,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue | EditorType.MacroParameter,
+        EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = "Common",
-        Icon = "icon-checkbox")]
+        Group = Constants.Conventions.PropertyGroups.Common,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -27,6 +27,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Checkbox";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/checkbox.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/checkbox.js";
+        internal const string DataEditorIcon = "icon-checkbox";
 
         public CheckboxDataEditor(ILogger logger)
             : base(logger)

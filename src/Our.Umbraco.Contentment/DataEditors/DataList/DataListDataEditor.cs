@@ -14,13 +14,14 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-bulleted-list")]
+        Group = Constants.Conventions.PropertyGroups.Lists,
+        Icon = DataEditorIcon)]
     public class DataListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.DataList";
         internal const string DataEditorName = "[Contentment] Data List";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/_debug.html";
+        internal const string DataEditorIcon = "icon-bulleted-list";
 
         public DataListDataEditor(ILogger logger)
             : base(logger)

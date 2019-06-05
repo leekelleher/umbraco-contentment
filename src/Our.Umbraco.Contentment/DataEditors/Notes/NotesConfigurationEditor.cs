@@ -12,6 +12,9 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class NotesConfigurationEditor : ConfigurationEditor
     {
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Notes = "notes";
+
         public NotesConfigurationEditor()
             : base()
         {
@@ -43,11 +46,12 @@ namespace Our.Umbraco.Contentment.DataEditors
             };
 
             Fields.Add(
-                "notes",
-                "Notes",
+                Notes,
+                nameof(Notes),
                 "Enter the notes to be displayed for the content editor.",
                  IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 new Dictionary<string, object> { { "editor", editor } });
+
             Fields.AddHideLabel();
         }
     }

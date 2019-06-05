@@ -17,8 +17,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = "Display",
-        Icon = UmbracoIcons.Macro)]
+        Group = Constants.Conventions.PropertyGroups.Display,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -28,6 +28,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Render Macro";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/render-macro.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/render-macro.js";
+        internal const string DataEditorIcon = UmbracoIcons.Macro;
 
         public RenderMacroDataEditor(ILogger logger)
             : base(logger)

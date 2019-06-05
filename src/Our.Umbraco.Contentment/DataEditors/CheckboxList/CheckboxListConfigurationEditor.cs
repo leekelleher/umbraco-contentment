@@ -9,14 +9,14 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class DropdownListConfigurationEditor : ConfigurationEditor
+    public class CheckboxListConfigurationEditor : ConfigurationEditor
     {
-        public const string AllowEmpty = "allowEmpty";
         public const string Items = Constants.Conventions.ConfigurationEditors.Items;
         public const string DefaultValue = Constants.Conventions.ConfigurationEditors.DefaultValue;
         public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Orientation = RadioButtonListConfigurationEditor.Orientation;
 
-        public DropdownListConfigurationEditor()
+        public CheckboxListConfigurationEditor()
             : base()
         {
             var listFields = new[]
@@ -32,20 +32,13 @@ namespace Our.Umbraco.Contentment.DataEditors
                     Key = "value",
                     Name = "Value",
                     View = "textbox"
-                },
-                //new ConfigurationField
-                //{
-                //    Key = "enabled",
-                //    Name = "Enabled",
-                //    View = "boolean",
-                //    Config = new Dictionary<string, object> { { "default", Constants.Values.True } }
-                //},
+                }
             };
 
             Fields.Add(
                 Items,
                 "Options",
-                "Configure the option items for the dropdown list.",
+                "Configure the option items for the checkbox list.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
@@ -56,25 +49,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
-            Fields.Add(new AllowEmptyConfigurationField());
+            Fields.Add(new RadioButtonListConfigurationEditor.OrientationConfigurationField());
 
             Fields.AddHideLabel();
-        }
-
-        internal class AllowEmptyConfigurationField : ConfigurationField
-        {
-            public AllowEmptyConfigurationField()
-                : base()
-            {
-                Key = AllowEmpty;
-                Name = "Allow Empty";
-                Description = "Enable to allow an empty option at the top of the dropdown list.";
-                View = "views/propertyeditors/boolean/boolean.html";
-                Config = new Dictionary<string, object>
-                {
-                    { "default", Constants.Values.True }
-                };
-            }
         }
     }
 }

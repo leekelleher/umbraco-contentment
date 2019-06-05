@@ -13,14 +13,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Picker",
-        Icon = UmbracoIcons.Macro,
-        IsDeprecated = false // NOTE: IsWorkInProgress [LK]
-        )]
+        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorOverlayJsPath)]
@@ -33,6 +35,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.js";
         internal const string DataEditorOverlayViewPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html";
         internal const string DataEditorOverlayJsPath = "~/App_Plugins/Contentment/data-editors/configuration-editor.overlay.js";
+        internal const string DataEditorIcon = UmbracoIcons.Macro;
 
         public ConfigurationEditorDataEditor(ILogger logger)
             : base(logger)

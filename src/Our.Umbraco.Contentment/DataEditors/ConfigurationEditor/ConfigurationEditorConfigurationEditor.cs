@@ -16,6 +16,13 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
+        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
+        public const string EnableFilter = "enableFilter";
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
+        public const string OverlaySize = "overlaySize";
+
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
@@ -33,50 +40,60 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             Fields.Add(
-                Constants.Conventions.ConfigurationEditors.Items,
-                "Items",
+                Items,
+                nameof(Items),
                 "Select the configuration editors to use.",
                 IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, items },
-                    { "allowDuplicates", Constants.Values.False }
+                    { ItemPickerConfigurationEditor.Items, items },
+                    { ItemPickerConfigurationEditor.AllowDuplicates, Constants.Values.False }
                 });
 
             Fields.Add(
-                "enableFilter",
+                EnableFilter,
                 "Enable search filter?",
                 "Select to enable the search filter in the overlay selection panel.",
                 "boolean");
 
-            Fields.Add(
-                "overlaySize",
-                "Overlay size",
-                "Select the size of the overlay editing panel. By default this is set to 'large'. However if the configuration editor fields require a smaller panel, select 'small'.",
-                IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
-                {
-                    {
-                        Constants.Conventions.ConfigurationEditors.Items, new[]
-                        {
-                            new { name = "Small", value = "small" },
-                            new { name = "Large", value = "large" }
-                        }
-                    },
-                    { Constants.Conventions.ConfigurationEditors.DefaultValue, "large" },
-                    { "orientation", "horizontal" }
-                });
-
+            Fields.Add(new OverlaySizeConfigurationField());
             Fields.AddMaxItems();
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
+        }
+
+        internal class OverlaySizeConfigurationField : ConfigurationField
+        {
+            public const string Small = "small";
+            public const string Large = "large";
+
+            public OverlaySizeConfigurationField()
+                : base()
+            {
+                var items = new[]
+                {
+                    new { name = nameof(Small), value = Small },
+                    new { name = nameof(Large), value = Large }
+                };
+
+                Key = OverlaySize;
+                Name = "Overlay size";
+                Description = "Select the size of the overlay editing panel. By default this is set to 'large'. However if the configuration editor fields require a smaller panel, select 'small'.";
+                View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
+                Config = new Dictionary<string, object>
+                {
+                    { RadioButtonListConfigurationEditor.Orientation, RadioButtonListConfigurationEditor.OrientationConfigurationField.Horizontal },
+                    { RadioButtonListConfigurationEditor.Items, items },
+                    { RadioButtonListConfigurationEditor.DefaultValue, Large }
+                };
+            }
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue(Constants.Conventions.ConfigurationEditors.Items, out var items) && items is JArray array && array.Count > 0)
+            if (config.TryGetValue(Items, out var items) && items is JArray array && array.Count > 0)
             {
                 var types = new List<Type>();
 
@@ -90,7 +107,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     }
                 }
 
-                config["items"] = GetConfigurationEditors<IConfigurationEditorItem>(types);
+                config[Items] = GetConfigurationEditors<IConfigurationEditorItem>(types);
             }
 
             return config;

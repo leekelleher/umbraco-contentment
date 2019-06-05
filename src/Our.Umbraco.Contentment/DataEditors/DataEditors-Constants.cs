@@ -11,9 +11,28 @@ namespace Our.Umbraco.Contentment
         {
             internal static partial class ConfigurationEditors
             {
-                public const string DefaultValue = "defaultValue";
+                internal const string DefaultValue = "defaultValue";
 
-                public const string HideLabel = "hideLabel";
+                internal const string HideLabel = "hideLabel";
+
+                internal const string DisableSorting = "disableSorting";
+
+                internal const string Items = "items";
+
+                internal const string MaxItems = "maxItems";
+            }
+
+            internal static partial class PropertyGroups
+            {
+                public const string Code = "Code";
+
+                public const string Common = "Common";
+
+                public const string Display = "Display";
+
+                public const string Lists = "Lists";
+
+                public const string Pickers = "Pickers";
             }
         }
 

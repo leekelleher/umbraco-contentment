@@ -18,8 +18,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Picker",
-        Icon = UmbracoIcons.Macro)]
+        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -29,6 +29,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Macro Picker";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/macro-picker.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/macro-picker.js";
+        internal const string DataEditorIcon = UmbracoIcons.Macro;
 
         private readonly IMacroService _macroService;
 

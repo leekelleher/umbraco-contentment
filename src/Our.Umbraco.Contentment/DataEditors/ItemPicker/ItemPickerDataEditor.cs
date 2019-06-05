@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Picker",
-        Icon = "icon-hand-pointer"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -32,6 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/item-picker.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/item-picker.js";
         internal const string DataEditorOverlayViewPath = "~/App_Plugins/Contentment/data-editors/item-picker.overlay.html";
+        internal const string DataEditorIcon = "icon-hand-pointer";
 
         public ItemPickerDataEditor(ILogger logger)
             : base(logger)

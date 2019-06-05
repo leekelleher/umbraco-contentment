@@ -16,37 +16,42 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class DataListConfigurationEditor : ConfigurationEditor
     {
+        public const string DataSource = "dataSource";
+        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+        public const string ListEditor = "listEditor";
+
         public DataListConfigurationEditor()
             : base()
         {
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
-                { Constants.Conventions.ConfigurationEditors.MaxItems, 1 },
-                { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.True },
-                { "overlaySize", "large" },
+                { ConfigurationEditorConfigurationEditor.MaxItems, 1 },
+                { ConfigurationEditorConfigurationEditor.DisableSorting, Constants.Values.True },
+                { ConfigurationEditorConfigurationEditor.OverlaySize, ConfigurationEditorConfigurationEditor.OverlaySizeConfigurationField.Large },
             };
 
             var dataSources = GetDataSources();
             var listEditors = GetListEditors();
 
             Fields.Add(
-                "dataSource",
+                DataSource,
                 "Data source",
                 "Select and configure the data source.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, dataSources }
+                    { ConfigurationEditorConfigurationEditor.Items, dataSources }
                 });
 
             Fields.Add(
-                "listEditor",
+                ListEditor,
                 "List editor",
                 "Select and configure the type of editor for the data list.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { Constants.Conventions.ConfigurationEditors.Items, listEditors }
+                    { ConfigurationEditorConfigurationEditor.Items, listEditors }
                 });
 
             Fields.AddHideLabel();
@@ -56,7 +61,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue("dataSource", out var dataSource) && dataSource is JArray array && array.Count > 0)
+            if (config.TryGetValue(DataSource, out var dataSource) && dataSource is JArray array && array.Count > 0)
             {
                 // TODO: Review this, make it bulletproof
 
@@ -76,15 +81,15 @@ namespace Our.Umbraco.Contentment.DataEditors
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
                     var options = source?.GetItems() ?? Enumerable.Empty<DataListItemModel>();
 
-                    config.Add("items", options);
+                    config.Add(Items, options);
                 }
 
-                config.Remove("dataSource");
+                config.Remove(DataSource);
             }
 
-            if (config.ContainsKey("listEditor"))
+            if (config.ContainsKey(ListEditor))
             {
-                config.Remove("listEditor");
+                config.Remove(ListEditor);
             }
 
             return config;

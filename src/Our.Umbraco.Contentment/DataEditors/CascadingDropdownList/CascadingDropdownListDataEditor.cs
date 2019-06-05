@@ -12,16 +12,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
+#if DEBUG
+        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = "Lists",
-        Icon = "icon-indent"
-#if !DEBUG
-        ,IsDeprecated = true // NOTE: IsWorkInProgress [LK]
-#endif
-        )]
+        Group =  Constants.Conventions.PropertyGroups.Lists,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -31,6 +31,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Cascading Dropdown List";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.js";
+        internal const string DataEditorIcon = "icon-indent";
 
         public CascadingDropdownListDataEditor(ILogger logger)
             : base(logger)

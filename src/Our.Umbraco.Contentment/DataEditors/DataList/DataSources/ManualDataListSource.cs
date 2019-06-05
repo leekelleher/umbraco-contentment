@@ -42,12 +42,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 If you intend to use this Data List exclusively with a checkbox, dropdown or radiobutton list type, then you may want to consider not using a Data List editor.<br>
 Data List has an overhead <i>(albeit a small overhead)</i> when processing the data source. From a performance perspective it would be better to use a specific Checkbox List, Dropdown List or Radiobutton List editor.</p>";
 
-                Key = "note";
-                Name = "Note";
+                Key = NotesConfigurationEditor.Notes;
+                Name = nameof(NotesConfigurationEditor.Notes);
                 View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "notes", html }
+                    { NotesConfigurationEditor.Notes, html }
                 };
                 HideLabel = true;
             }
@@ -56,6 +56,7 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
         class ItemsConfigurationField : ConfigurationField
         {
             public ItemsConfigurationField()
+                : base()
             {
                 var listFields = new[]
                 {
@@ -79,11 +80,11 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
                 View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
-                    { "fields", listFields },
-                    { Constants.Conventions.ConfigurationEditors.MaxItems, 0 },
-                    { Constants.Conventions.ConfigurationEditors.DisableSorting, Constants.Values.False },
-                    { "restrictWidth", Constants.Values.True },
-                    { "usePrevalueEditors", Constants.Values.True }
+                    { DataTableConfigurationEditor.FieldItems, listFields },
+                    { DataTableConfigurationEditor.MaxItems, 0 },
+                    { DataTableConfigurationEditor.DisableSorting, Constants.Values.False },
+                    { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
+                    { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.True }
                 };
             }
         }

@@ -14,25 +14,14 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Description => "Select multiple values from an Umbraco style overlay.";
 
-        public string Icon => "icon-hand-pointer";
+        public string Icon => ItemPickerDataEditor.DataEditorIcon;
 
         public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
 
-        [ConfigurationField(typeof(DefaultIconConfigurationField))]
+        [ConfigurationField(typeof(IconPickerConfigurationEditor.DefaultIconConfigurationField))]
         public string DefaultIcon { get; set; }
 
-        [ConfigurationField("allowDuplicates", "Allow duplicates?", "boolean", Description = "Select to allow the editor to select duplicate items.")]
+        [ConfigurationField(typeof(ItemPickerConfigurationEditor.AllowDuplicatesConfigurationField))]
         public bool AllowDuplicates { get; set; }
-
-        class DefaultIconConfigurationField : ConfigurationField
-        {
-            public DefaultIconConfigurationField()
-            {
-                Key = "defaultIcon";
-                Name = "Default Icon";
-                Description = "Select the default icon.";
-                View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath);
-            }
-        }
     }
 }

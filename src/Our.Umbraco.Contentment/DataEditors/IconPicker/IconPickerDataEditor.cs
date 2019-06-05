@@ -16,8 +16,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.String,
-        Group = "Picker",
-        Icon = "icon-circle-dotted")]
+        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Icon = DataEditorIcon)]
 #if DEBUG
     [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
 #endif
@@ -27,6 +27,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal const string DataEditorName = "[Contentment] Icon Picker";
         internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/icon-picker.html";
         internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/icon-picker.js";
+        internal const string DataEditorIcon = "icon-circle-dotted";
 
         public IconPickerDataEditor(ILogger logger)
             : base(logger)
