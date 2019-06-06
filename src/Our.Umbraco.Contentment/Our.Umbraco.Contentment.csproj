@@ -296,7 +296,7 @@
     <Compile Include="DataEditors\IconPicker\IconPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataEditor.cs" />
-    <Compile Include="DataEditors\DataList\DataListItemModel.cs" />
+    <Compile Include="DataEditors\DataList\DataListItem.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListConfigurationEditor.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
@@ -339,6 +339,7 @@
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_empty.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_debug.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown-list.js" />

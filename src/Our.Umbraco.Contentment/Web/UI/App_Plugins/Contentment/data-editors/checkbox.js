@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
 
         //console.log("checkbox.model", $scope.model);
 
-        var defaultConfig = { showInline: 0, defaultValue: 0 }; // TODO: Implement the `defaultValue` [LK]
+        var defaultConfig = { showInline: 0, defaultValue: 0 }; // TODO: [LK:2019-06-06] Implement the `defaultValue`.
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;

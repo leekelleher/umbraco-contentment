@@ -21,16 +21,17 @@ namespace Our.Umbraco.Contentment.DataEditors
         public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
         public const string Items = Constants.Conventions.ConfigurationEditors.Items;
         public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
+        public const string OrderBy = "orderBy";
         public const string OverlaySize = "overlaySize";
 
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
             var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true);
-            var items = new List<DataListItemModel>();
+            var items = new List<DataListItem>();
             foreach (var configEditor in configEditors)
             {
-                items.Add(new DataListItemModel
+                items.Add(new DataListItem
                 {
                     Icon = configEditor.Icon,
                     Name = configEditor.Name,
@@ -99,7 +100,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 
                 foreach (var item in array)
                 {
-                    // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
                     var type = TypeFinder.GetTypeByName(item.Value<string>());
                     if (type != null)
                     {
@@ -108,6 +108,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
 
                 config[Items] = GetConfigurationEditors<IConfigurationEditorItem>(types);
+                config[OrderBy] = string.Empty;
             }
 
             return config;
@@ -183,8 +184,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
-            // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
-            return GetConfigurationEditors<TConfigurationEditor>(TypeFinder.FindClassesOfType<TConfigurationEditor>(), ignoreFields);
+            // TODO: [LK:2019-06-06] Replace `Current.TypeLoader` using DI.
+            return GetConfigurationEditors<TConfigurationEditor>(Current.TypeLoader.GetTypes<TConfigurationEditor>(), ignoreFields);
         }
     }
 }

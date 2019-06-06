@@ -42,9 +42,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public UmbracoEntityDataListSource()
             : this(Current.Services.EntityService)
-        {
-            // TODO: Can we pass in the IEntityService? How to do DI with JSON.NET deserialization? [LK]
-        }
+        { }
 
         public UmbracoEntityDataListSource(IEntityService entityService)
         {
@@ -60,7 +58,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(EntityTypeConfigurationField))]
         public string EntityType { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
             if (SupportedEntityTypes.TryGetValue(EntityType, out var objectType))
             {
@@ -69,7 +67,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 return _entityService
                     .GetAll(objectType)
                     .OrderBy(x => x.Name)
-                    .Select(x => new DataListItemModel
+                    .Select(x => new DataListItem
                     {
                         Icon = icon,
                         Name = x.Name,
@@ -85,7 +83,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             public EntityTypeConfigurationField()
                 : base()
             {
-                var items = SupportedEntityTypes.Keys.Select(x => new DataListItemModel { Name = x.SplitPascalCasing(), Value = x });
+                var items = SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x });
 
                 Key = "entityType";
                 Name = "Entity Type";

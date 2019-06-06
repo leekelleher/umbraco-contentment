@@ -20,7 +20,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         internal const string DataEditorAlias = "Our.Umbraco.Contentment.DataList";
         internal const string DataEditorName = "[Contentment] Data List";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/_debug.html";
+        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/_empty.html";
         internal const string DataEditorIcon = "icon-bulleted-list";
 
         public DataListDataEditor(ILogger logger)

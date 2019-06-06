@@ -27,6 +27,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             $scope.model.value = $scope.model.value || [];
 
             vm.items = [];
+            vm.orphaned = []; // TODO: What to do about the orphaned items? [LK]
             vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
@@ -52,13 +53,12 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             vm.remove = remove;
 
             if ($scope.model.value.length > 0 && config.items.length > 0) {
-
                 _.each($scope.model.value, function (v) {
                     var item = _.find(config.items, function (x) { return x.value === v });
                     if (item) {
                         vm.items.push(angular.copy(item));
                     } else {
-                        console.log("orphaned value", v); // TODO: What to do about orphaned values? [LK]
+                        vm.orphaned.push(v); //console.log("orphaned value", v); // TODO: What to do about orphaned values? [LK]
                     }
                 });
 

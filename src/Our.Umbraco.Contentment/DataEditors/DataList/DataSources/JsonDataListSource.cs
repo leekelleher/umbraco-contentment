@@ -21,16 +21,16 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
-        // TODO: Implement the JSON data provider. [LK]
+        // TODO: [LK:2019-06-06] Implement the JSON data provider.
 
         [ConfigurationField("jsonUrl", "URL", "textstring", Description = "Enter the URL of the JSON data source.")]
         public string JsonUrl { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
             if (string.IsNullOrWhiteSpace(JsonUrl) == false)
             {
-                // TODO: Try something like... http://country.io/names.json
+                // Try something like... http://country.io/names.json
             }
 
             return null;

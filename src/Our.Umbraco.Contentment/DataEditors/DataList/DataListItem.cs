@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class DataListItemModel
+    public class DataListItem
     {
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }

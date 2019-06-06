@@ -31,7 +31,7 @@
                                    no-dirty-check />
                         </div>
                         <ul class="umb-actions umb-actions-child">
-                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:'name' | filter:vm.searchTerm">
+                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
                                 <a class="umb-action-link" ng-click="vm.select(item)">
                                     <i class="large icon {{item.icon}}"></i>
                                     <span class="menu-label">

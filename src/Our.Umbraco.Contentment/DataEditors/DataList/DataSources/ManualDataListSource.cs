@@ -27,9 +27,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Notes { get; set; }
 
         [ConfigurationField(typeof(ItemsConfigurationField))]
-        public IEnumerable<DataListItemModel> Items { get; set; }
+        public IEnumerable<DataListItem> Items { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
             return Items;
         }

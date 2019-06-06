@@ -63,23 +63,22 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             if (config.TryGetValue(DataSource, out var dataSource) && dataSource is JArray array && array.Count > 0)
             {
-                // TODO: Review this, make it bulletproof
-
                 var item = array[0];
-                // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
-                var type = TypeFinder.GetTypeByName(item["type"].ToString());
+
+                // NOTE: Using `TypeFinder` here, as `TypeLoader` doesn't expose the `GetTypeByName` method. [LK:2019-06-06]
+                var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
                 if (type != null)
                 {
                     var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                     {
-                        // TODO: How to do DI when deserializing? (I want to inject IEntityService into UmbracoEntityDataListSource) [LK]
+                        // TODO: [LK:2019-06-06] How to do DI when deserializing? (I want to inject IEntityService into UmbracoEntityDataListSource)
                         // https://www.newtonsoft.com/json/help/html/DeserializeWithDependencyInjection.htm
                         ContractResolver = new ConfigurationFieldContractResolver(),
                         Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
                     });
 
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
-                    var options = source?.GetItems() ?? Enumerable.Empty<DataListItemModel>();
+                    var options = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
 
                     config.Add(Items, options);
                 }

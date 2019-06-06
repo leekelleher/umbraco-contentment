@@ -10,14 +10,14 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
 
         //console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { items: [], overlaySize: "large", enableFilter: 0 };
+        var defaultConfig = { items: [], overlaySize: "large", enableFilter: 0, orderBy: "name" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
 
-            vm.selectedItem = $scope.model.value || { type: "", name: "", icon: "", value: {} };
+            vm.selectedItem = $scope.model.value || { udi: "", name: "", icon: "", value: {} };
 
             if (_.isEmpty(vm.selectedItem.type)) {
 
@@ -25,6 +25,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
                 vm.mode = "select";
                 vm.items = config.items;
                 vm.enableFilter = Object.toBoolean(config.enableFilter);
+                vm.orderBy = config.orderBy;
 
             } else {
                 vm.title = "Configure"; // TODO: Make this title friendlier! What are we configuring? Could we have a description too? [LK]

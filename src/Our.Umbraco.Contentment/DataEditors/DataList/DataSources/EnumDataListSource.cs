@@ -34,13 +34,18 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("sortAlphabetically", "Sort Alphabetically", "boolean", Description = "Select to sort the enum in alphabetical order. The default order is defined by the enum itself.")]
         public bool SortAlphabetically { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
-            // TODO: Review this, make it bulletproof
+            // TODO: [LK:2019-06-06] Review what the exception points might be.
 
-            // TODO: What to do if the enum no longer exists? (for whatever reason?) [LK]
             var assembly = Assembly.Load(EnumType[0]);
+            if (assembly == null)
+                return Enumerable.Empty<DataListItem>();
+
             var enumType = assembly.GetType(EnumType[1]);
+            if (enumType == null)
+                return Enumerable.Empty<DataListItem>();
+
             var names = Enum.GetNames(enumType);
 
             if (SortAlphabetically)
@@ -48,7 +53,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
             }
 
-            return names.Select(x => new DataListItemModel
+            return names.Select(x => new DataListItem
             {
                 Icon = this.Icon,
                 Name = x.SplitPascalCasing(),
@@ -78,6 +83,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         }
     }
 
+    // TODO: [LK:2019-06-06] Review where to put this controller. Better namespace?
     [PluginController("Contentment")]
     public class EnumDataListSourceApiController : UmbracoAuthorizedJsonController
     {

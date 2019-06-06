@@ -23,7 +23,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public DataTableConfigurationEditor()
             : base()
         {
-            // TODO: Need to decide how to set the fields, would it be from a DocType, Macro, a POCO, or manually (or offer all options?) [LK:2019-05-15]
+            // TODO: [LK:2019-06-06] Need to decide how to set the fields, would it be from a DocType, Macro, a POCO, or manually (or offer all options?) [LK:2019-05-15]
             // As a work-in-progress, here is a prototype of the manual approach...
 
             // NOTE: Excluded these ParameterEditors, as they don't fully support zero-config.

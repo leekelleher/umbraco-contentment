@@ -33,11 +33,10 @@ namespace Our.Umbraco.Contentment.DataEditors
                     listEditor is JArray array &&
                     array.Count > 0)
                 {
-                    // TODO: Review this, make it bulletproof
-
                     var item = array[0];
-                    // TODO: I should try to use `TypeLoader` here. I'm unsure how do to DI here. [LK]
-                    var type = TypeFinder.GetTypeByName(item["type"].ToString());
+
+                    // NOTE: Using `TypeFinder` here, as `TypeLoader` doesn't expose the `GetTypeByName` method. [LK:2019-06-06]
+                    var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
                     if (type != null)
                     {
                         var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings

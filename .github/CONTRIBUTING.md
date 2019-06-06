@@ -8,5 +8,5 @@ This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md).
 6. Push it
 7. Pull-request it
 
-> The above is respectively taken from the [Clearwater framework repository](https://github.com/clearwater-rb/clearwater/blob/master/README.md#contributing).
+> The above is respectively taken from the [Clearwater framework repository](https://github.com/clearwater-rb/clearwater/blob/master/README.md#contributing).<br>
 > Kudos to [Jamie Gaskins](https://github.com/jgaskins) for framing the guidelines so succinctly.

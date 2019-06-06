@@ -32,10 +32,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(ConnectionStringConfigurationField))]
         public string ConnectionString { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
-            // TODO: Review this, make it bulletproof
-            // TODO: Look to do a better way of querying the db.
+            // TODO: [LK:2019-06-06] Look to do a better way of querying the db.
             //// https://github.com/schotime/NPoco/blob/ec4d3d7808c8ce413b2d61f756d6d7277039c98d/src/NPoco/Database.cs
             //using (var cmd = database.CreateCommand(null, System.Data.CommandType.Text, sql))
             //{
@@ -46,10 +45,10 @@ namespace Our.Umbraco.Contentment.DataEditors
                 // SELECT macroAlias AS [value], macroName AS [name] FROM cmsMacro ORDER BY [name];
                 var sql = Query.Replace("\r", "").Replace("\n", " ").Replace("\t", " ");
 
-                // TODO: I'm not happy about using this temp class to deserialize the SQL data,
+                // I'm not happy about using this class to deserialize the SQL data,
                 // Look at alternatives, so we can remove this class.
-                // Maybe we will end up using classic ADO type queries, to give us more control? [LK]
-                var items = database.Fetch<DataListItemModel>(sql);
+                // Maybe we will end up using classic ADO type queries, to give us more control?
+                var items = database.Fetch<DataListItem>(sql);
 
                 return items;
             }
@@ -106,7 +105,8 @@ If more columns are returned, then only the first 2 columns will be used.</p>";
                 View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "mode", "sql" }, // TODO: SQL mode doesn't exist, bah! [LK]
+                    // NOTE: [LK:2019-06-06] I'd like to set the mode to "sql", but that doesn't ship with Umbraco.
+                    { "mode", "javascript" },
                 };
             }
         }

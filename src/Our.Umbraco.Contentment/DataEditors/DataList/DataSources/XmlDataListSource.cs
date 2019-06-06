@@ -35,15 +35,15 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField("nameXPath", "Name XPath", "textstring", Description = "Enter the XPath expression to select the name from the item (XML node select from above).")]
         public string NameXPath { get; set; }
 
-        public IEnumerable<DataListItemModel> GetItems()
+        public IEnumerable<DataListItem> GetItems()
         {
-            var items = new List<DataListItemModel>();
+            var items = new List<DataListItem>();
 
             if (string.IsNullOrWhiteSpace(XmlUrl) == false)
             {
                 try
                 {
-                    // TODO: Abstract this to a base class, share it with the JSON provider. Make it handle both local and remote paths. [LK]
+                    // TODO: [LK:2019-06-06] Abstract this to a base class, share it with the JSON provider. Make it handle both local and remote paths. [LK]
 
                     using (var client = new WebClient())
                     {
@@ -66,7 +66,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
                                     if (value != null && name != null)
                                     {
-                                        items.Add(new DataListItemModel
+                                        items.Add(new DataListItem
                                         {
                                             Icon = this.Icon,
                                             Name = name.Value,
@@ -80,7 +80,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
                 catch (WebException)
                 {
-                    // TODO: How to best handle this exception? [LK]
+                    // TODO: [LK:2019-06-06] How to best handle this exception? [LK]
                     // Dumping it to the error log file feels careless.
                 }
             }

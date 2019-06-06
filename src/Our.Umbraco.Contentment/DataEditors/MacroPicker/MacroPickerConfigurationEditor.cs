@@ -29,7 +29,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             _macroService = macroService;
 
-            var macros = macroService.GetAll().Select(x => new DataListItemModel
+            var macros = macroService.GetAll().Select(x => new DataListItem
             {
                 Icon = UmbracoIcons.Macro,
                 Name = x.Name,
@@ -67,12 +67,12 @@ namespace Our.Umbraco.Contentment.DataEditors
                     }
                 }
 
-                // TODO: Urgh! Send a PR to fix this Umbraco bug with `MacroService.GetAll`. [LK]
+                // TODO: [LK:2019-06-06] Urgh! Send a PR to fix this Umbraco bug with `MacroService.GetAll`.
                 //System.InvalidOperationException: Cannot run a repository without an ambient scope.
                 //   at Umbraco.Core.Persistence.Repositories.Implement.RepositoryBase`2.get_AmbientScope()
                 //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.GetBaseQuery()
                 //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.Get(Guid id)
-                // TODO: Commented this out, until after the MacroService bug is fixed.
+                // TODO: [LK:2019-06-06] Commented this out, until after the MacroService bug is fixed.
                 //config.Add("availableMacros", _macroService.GetAll(ids).Select(x => x.Alias));
                 config.Add("availableMacros", _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
                 config.Remove(AllowedMacros);

@@ -17,6 +17,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             allowEdit: 1,
             allowRemove: 1,
             enableFilter: 0,
+            orderBy: "name",
             overlaySize: "large"
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
@@ -27,12 +28,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
 
             $scope.model.value = $scope.model.value || [];
 
-            // Ensure that the existing value is an array.
             if (_.isArray($scope.model.value) === false) {
                 $scope.model.value = [$scope.model.value];
             }
 
-            // TODO: If there are no available items, then show a messaging saying so. [LK]
+            // TODO: [LK:2019-06-06] If there are no available items, then show a messaging saying so. [LK]
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = Object.toBoolean(config.allowEdit);
@@ -67,6 +67,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                     items: angular.copy(config.items),
                     enableFilter: Object.toBoolean(config.enableFilter),
                     overlaySize: config.overlaySize,
+                    orderBy: config.orderBy,
                 },
                 value: {},
                 submit: function (model) {
@@ -94,8 +95,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                 view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
                 size: config.overlaySize,
                 config: {
+                    // TODO: If we're editing, why do we need to send all the items over? [LK]
                     items: angular.copy(config.items),
-                    overlaySize: config.overlaySize
+                    enableFilter: Object.toBoolean(config.enableFilter),
+                    overlaySize: config.overlaySize,
+                    orderBy: config.orderBy,
                 },
                 value: angular.copy($scope.model.value[$index]),
                 submit: function (model) {
