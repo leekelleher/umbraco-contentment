@@ -32,6 +32,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
         {
             { nameof(UmbracoEntityTypes.DataType), UmbracoIcons.DataType },
+            // TODO: [LK:2019-06-07] `Constants.Icons.ContentType` uses the wrong icon name.
+            // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/Constants-Icons.cs#L18
+            // TODO: [LK:2019-06-07] Patch supplied to Umbraco: https://github.com/umbraco/Umbraco-CMS/pull/5618
             { nameof(UmbracoEntityTypes.DocumentType), "icon-item-arrangement" },
             { nameof(UmbracoEntityTypes.MediaType), "icon-thumbnails" },
             { nameof(UmbracoEntityTypes.Member), UmbracoIcons.Member },

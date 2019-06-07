@@ -273,7 +273,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
-    <Compile Include="DataEditors\DataEditors-Constants.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
