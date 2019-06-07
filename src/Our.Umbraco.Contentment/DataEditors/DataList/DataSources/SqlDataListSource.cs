@@ -80,16 +80,15 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             public NotesConfigurationField()
             {
-                var html = @"<p class='alert alert-warning'><strong>A note about your SQL query.</strong><br>
-Your SQL query should be designed to return 2 columns, these will be used as name/value pairs in the data list.<br>
-If more columns are returned, then only the first 2 columns will be used.</p>";
-
                 Key = NotesConfigurationEditor.Notes;
                 Name = nameof(NotesConfigurationEditor.Notes);
                 View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { NotesConfigurationEditor.Notes, html }
+                    // TODO: [LK:2019-06-07] Revise the SQL notes. We'll probably do 4 columns, anything that can serialize with a `DataListItem`.
+                    { NotesConfigurationEditor.Notes, @"<p class=""alert alert-success""><strong>A note about your SQL query.</strong><br>
+Your SQL query should be designed to return 2 columns, these will be used as name/value pairs in the data list.<br>
+If more columns are returned, then only the first 2 columns will be used.</p>" }
                 };
                 HideLabel = true;
             }
@@ -99,14 +98,18 @@ If more columns are returned, then only the first 2 columns will be used.</p>";
         {
             public QueryConfigurationField()
             {
+                // NOTE: Umbraco doesn't ship with SQL mode, so we check if its been added manually, otherwise defautls to Razor.
+                var mode = System.IO.File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sql.js"))
+                    ? "sql"
+                    : "razor";
+
                 Key = "query";
                 Name = "SQL Query";
                 Description = "Enter the SQL query.";
                 View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    // NOTE: [LK:2019-06-06] I'd like to set the mode to "sql", but that doesn't ship with Umbraco.
-                    { "mode", "javascript" },
+                    { CodeEditorConfigurationEditor.Mode, mode },
                 };
             }
         }

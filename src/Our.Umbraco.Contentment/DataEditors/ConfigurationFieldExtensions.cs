@@ -54,5 +54,20 @@ namespace Our.Umbraco.Contentment.DataEditors
                 "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
                 "number");
         }
+
+        public static void AddNotes(this List<ConfigurationField> fields, string notes, bool hideLabel = true)
+        {
+            fields.Add(new ConfigurationField
+            {
+                Key = NotesConfigurationEditor.Notes,
+                Name = nameof(NotesConfigurationEditor.Notes),
+                View = NotesDataEditor.DataEditorViewPath,
+                Config = new Dictionary<string, object>
+                {
+                    { NotesConfigurationEditor.Notes, notes }
+                },
+                HideLabel = hideLabel
+            });
+        }
     }
 }

@@ -114,7 +114,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             return config;
         }
 
-        // TODO: Review if these methods should be in a "Service" or other class? Feels odd them being in here. [LK]
+        // TODO: [LK:2019-06-07] Review if these methods should be in a "Service" or other class? Feels odd them being in here.
         private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types, bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {

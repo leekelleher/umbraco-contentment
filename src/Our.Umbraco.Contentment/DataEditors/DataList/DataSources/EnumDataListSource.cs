@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
+using Umbraco.Web;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
@@ -36,17 +38,20 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems()
         {
-            // TODO: [LK:2019-06-06] Review what the exception points might be.
-
-            var assembly = Assembly.Load(EnumType[0]);
+            var assembly = default(Assembly);
+            try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (assembly == null)
                 return Enumerable.Empty<DataListItem>();
 
-            var enumType = assembly.GetType(EnumType[1]);
+            var enumType = default(Type);
+            try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (enumType == null)
                 return Enumerable.Empty<DataListItem>();
 
-            var names = Enum.GetNames(enumType);
+            var names = default(string[]);
+            try { names = Enum.GetNames(enumType); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
+            if (names == null)
+                return Enumerable.Empty<DataListItem>();
 
             if (SortAlphabetically)
             {
@@ -55,7 +60,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             return names.Select(x => new DataListItem
             {
-                Icon = this.Icon,
                 Name = x.SplitPascalCasing(),
                 Value = x
             });

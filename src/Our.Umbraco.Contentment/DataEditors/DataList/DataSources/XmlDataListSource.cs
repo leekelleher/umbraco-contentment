@@ -43,7 +43,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 try
                 {
-                    // TODO: [LK:2019-06-06] Abstract this to a base class, share it with the JSON provider. Make it handle both local and remote paths. [LK]
+                    // TODO: [LK:2019-06-06] Maybe abstract this to a base class, share it with the JSON provider. Make it handle both local and remote paths. [LK]
 
                     using (var client = new WebClient())
                     {
