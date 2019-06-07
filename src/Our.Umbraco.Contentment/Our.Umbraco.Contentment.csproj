@@ -257,6 +257,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataEditors\ByteSize\ByteSizeDataEditor.cs" />
+    <Compile Include="DataEditors\ByteSize\ByteSizeConfigurationEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListConfigurationEditor.cs" />
@@ -322,6 +324,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\byte-size.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.js" />
