@@ -44,7 +44,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.CodeEd
                 disableSearch: Object.toBoolean(config.disableSearch),
                 theme: config.theme,
                 mode: config.mode,
-                firstLineNumber: config.fontSize,
+                firstLineNumber: config.firstLineNumber,
                 advanced: {
                     fontSize: config.fontSize,
                     enableSnippets: Object.toBoolean(config.enableSnippets),

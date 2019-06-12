@@ -45,7 +45,7 @@
                 </umb-box>
 
                 <umb-empty-state ng-if="vm.items.length == 0" position="center">
-                    There are no items available to insert
+                    There are no items available to insert.
                 </umb-empty-state>
 
             </div>
@@ -63,7 +63,7 @@
                 </umb-box>
 
                 <umb-empty-state ng-if="vm.editor.fields.length == 0" position="center">
-                    There are no parameters for this item
+                    There are no parameters for this item.
                 </umb-empty-state>
 
             </div>
@@ -78,7 +78,8 @@
                             label-key="general_close"
                             action="vm.close()">
                 </umb-button>
-                <umb-button type="button"
+                <umb-button ng-if="vm.save"
+                            type="button"
                             button-style="success"
                             label-key="bulk_done"
                             action="vm.save(vm.editor)">

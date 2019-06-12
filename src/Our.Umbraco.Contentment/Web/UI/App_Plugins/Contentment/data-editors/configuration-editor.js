@@ -56,7 +56,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             vm.add = add;
             vm.edit = edit;
             vm.remove = remove;
-
         };
 
         function add($event) {
@@ -64,6 +63,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                 view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
                 size: "small",
                 config: {
+                    mode: "select",
                     items: angular.copy(config.items),
                     enableFilter: Object.toBoolean(config.enableFilter),
                     overlaySize: config.overlaySize,
@@ -91,23 +91,27 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
         };
 
         function edit($index, item) {
+
+            var editor = _.find(config.items, function (x) {
+                return x.type === item.type;
+            });
+
+            if (!editor) {
+                // TODO: What to do if we don't find the config? [LK]
+                console.log("Unable to find error:", item.type)
+            }
+
             var configPicker = {
                 view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
                 size: config.overlaySize,
                 config: {
-                    // TODO: If we're editing, why do we need to send all the items over? [LK]
-                    items: angular.copy(config.items),
-                    enableFilter: Object.toBoolean(config.enableFilter),
-                    overlaySize: config.overlaySize,
-                    orderBy: config.orderBy,
+                    mode: "edit",
+                    editor: editor,
                 },
-                value: angular.copy($scope.model.value[$index]),
+                value: item,
                 submit: function (model) {
-
                     $scope.model.value[$index] = model;
-
                     setDirty();
-
                     editorService.close();
                 },
                 close: function () {

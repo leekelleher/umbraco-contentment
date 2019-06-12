@@ -15,6 +15,7 @@ using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
+using Umbraco.Web.WebApi;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -88,7 +89,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     }
 
     // TODO: [LK:2019-06-06] Review where to put this controller. Better namespace?
-    [PluginController("Contentment")]
+    [PluginController("Contentment"), IsBackOffice]
     public class EnumDataListSourceApiController : UmbracoAuthorizedJsonController
     {
         public IEnumerable<object> GetAssemblies()

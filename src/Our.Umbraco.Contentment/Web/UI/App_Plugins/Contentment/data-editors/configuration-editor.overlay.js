@@ -8,67 +8,63 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
     "formHelper",
     function ($scope, formHelper) {
 
-        //console.log("config-editor-overlay.model", $scope.model);
+        // console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { items: [], overlaySize: "large", enableFilter: 0, orderBy: "name" };
+        var defaultConfig = { mode: "select", items: [], editor: null, overlaySize: "large", enableFilter: 0, orderBy: "name" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
 
-            vm.selectedItem = $scope.model.value || { udi: "", name: "", icon: "", value: {} };
+            vm.mode = config.mode;
 
-            if (_.isEmpty(vm.selectedItem.type)) {
+            if (vm.mode === "select") {
 
-                vm.title = "Select..."; // TODO: Make this title friendlier! What are we selecting? Could we have a description too? [LK]
-                vm.mode = "select";
+                vm.title = "Select...";
                 vm.items = config.items;
                 vm.enableFilter = Object.toBoolean(config.enableFilter);
                 vm.orderBy = config.orderBy;
+                vm.select = select;
 
-            } else {
-                vm.title = "Configure"; // TODO: Make this title friendlier! What are we configuring? Could we have a description too? [LK]
-                vm.mode = "edit";
+            } else if (vm.mode === "edit" && config.editor) {
 
-                vm.editor = _.find(config.items, function (x) {
-                    return x.type === vm.selectedItem.type;
-                });
+                var item = $scope.model.value || { type: "", name: "", icon: "", value: {} };
+                edit(config.editor, item);
 
-                if (!vm.editor) {
-                    // TODO: What to do if we don't find the config? [LK]
-                    console.log("Unable to find error:", vm.selectedItem.type)
-                }
-
-                if (vm.editor.fields.length > 0) {
-                    _.each(vm.editor.fields, function (x) {
-                        x.alias = x.key;
-                        x.value = vm.selectedItem.value[x.key];
-                    });
-                }
             }
 
             vm.close = close;
-            vm.save = save;
-            vm.select = select;
-
         };
 
-        function select(item) {
+        function edit(editor, item) {
 
-            if (item.fields.length == 0) {
-
-                // If there are no fields, then we can save & close the overlay
-                save(item);
-
-            } else {
-
-                vm.title = item.name;
-                vm.mode = "edit";
-                // TODO: Check if we already know the size of the overlay, then we can check if it's different before we set it. [LK]
+            if ($scope.model.size !== config.overlaySize) {
                 $scope.model.size = config.overlaySize;
-                vm.editor = item;
+            }
 
+            vm.title = "Configure " + editor.name;
+            // TODO: we could add the icon and description?!
+
+            vm.editor = angular.copy(editor);
+
+            if (vm.editor.fields.length > 0) {
+                _.each(vm.editor.fields, function (x) {
+                    x.alias = x.key;
+                    x.value = item.value[x.key];
+                });
+            }
+
+            vm.save = save;
+        };
+
+        function select(editor) {
+            // If there are no fields, then we can save & close the overlay
+            if (editor.fields.length == 0) {
+                save(editor);
+            } else {
+                vm.mode = "edit";
+                edit(editor, { value: {} });
             }
         };
 
@@ -79,6 +75,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
         };
 
         function save(item) {
+
+            // TODO: Check if the Save button is displaying on the 'select' mode.
 
             // TODO: Not sure if we need to use `formHelper.submitForm` here? e.g. `formHelper.submitForm({ scope: $scope, formCtrl: this.configurationEditorForm })`
             // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
