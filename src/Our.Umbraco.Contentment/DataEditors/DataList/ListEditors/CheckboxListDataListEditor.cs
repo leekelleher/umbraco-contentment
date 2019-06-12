@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -16,5 +17,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Icon => CheckboxListDataEditor.DataEditorIcon;
 
         public string View => IOHelper.ResolveUrl(CheckboxListDataEditor.DataEditorViewPath);
+
+        [ConfigurationField(typeof(CheckboxListConfigurationEditor.CheckAllConfigurationField))]
+        public bool CheckAll { get; set; }
+
+        [ConfigurationField(typeof(RadioButtonListConfigurationEditor.OrientationConfigurationField))]
+        public string Orientation { get; set; }
     }
 }

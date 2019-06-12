@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
 
         //console.log("checkboxlist.model", $scope.model);
 
-        var defaultConfig = { items: [], orientation: "vertical", defaultValue: [] };
+        var defaultConfig = { items: [], checkAll: false, orientation: "vertical", defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -28,20 +28,45 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
             });
 
             vm.layout = config.orientation === "horizontal" ? "inline" : "";
-
             vm.changed = changed;
+
+            vm.toggleAll = config.checkAll;
+            if (vm.toggleAll) {
+                vm.toggle = toggle;
+                vm.toggleChecked = _.every(vm.items, function (item) {
+                    return item.checked;
+                });
+            }
         };
 
         function changed(item) {
+
+            vm.toggleChecked = _.every(vm.items, function (item) {
+                return item.checked;
+            });
+
             $scope.model.value = [];
 
-            _.each(vm.items, function (item) {
-                if (item.checked) {
-                    $scope.model.value.push(item.value);
+            _.each(vm.items, function (x) {
+                if (x.checked) {
+                    $scope.model.value.push(x.value);
                 }
             });
 
             setDirty()
+        };
+
+        function toggle() {
+            $scope.model.value = [];
+
+            _.each(vm.items, function (item) {
+
+                item.checked = vm.toggleChecked;
+
+                if (item.checked) {
+                    $scope.model.value.push(item.value);
+                }
+            });
         };
 
         function setDirty() {

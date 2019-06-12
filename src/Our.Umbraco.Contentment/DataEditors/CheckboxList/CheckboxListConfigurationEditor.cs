@@ -11,6 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CheckboxListConfigurationEditor : ConfigurationEditor
     {
+        public const string CheckAll = "checkAll";
         public const string Items = Constants.Conventions.ConfigurationEditors.Items;
         public const string DefaultValue = Constants.Conventions.ConfigurationEditors.DefaultValue;
         public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
@@ -52,6 +53,18 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.Add(new RadioButtonListConfigurationEditor.OrientationConfigurationField());
 
             Fields.AddHideLabel();
+        }
+
+        internal class CheckAllConfigurationField : ConfigurationField
+        {
+            public CheckAllConfigurationField()
+                : base()
+            {
+                Key = CheckAll;
+                Name = "Check All?";
+                Description = "Include a toggle button to select or deselect all the options?";
+                View = "boolean";
+            }
         }
     }
 }
