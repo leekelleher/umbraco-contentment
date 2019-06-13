@@ -72,7 +72,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 //   at Umbraco.Core.Persistence.Repositories.Implement.RepositoryBase`2.get_AmbientScope()
                 //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.GetBaseQuery()
                 //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.Get(Guid id)
-                // TODO: [LK:2019-06-06] Commented this out, until after the MacroService bug is fixed.
+                // TODO: [LK:2019-06-13] MacroService bug (in v8.0.2). Once the above is fixed, then uncomment the line below.
                 //config.Add("availableMacros", _macroService.GetAll(ids).Select(x => x.Alias));
                 config.Add("availableMacros", _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
                 config.Remove(AllowedMacros);

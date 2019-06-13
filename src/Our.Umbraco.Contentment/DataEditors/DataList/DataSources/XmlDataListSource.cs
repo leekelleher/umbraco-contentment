@@ -6,14 +6,13 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Xml;
-using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
 #if !DEBUG
     // TODO: IsWorkInProgress - Under development.
-    [HideFromTypeFinder]
+    [global::Umbraco.Core.Composing.HideFromTypeFinder]
 #endif
     internal class XmlDataListSource : IDataListSource
     {

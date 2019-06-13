@@ -27,7 +27,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             $scope.model.value = $scope.model.value || [];
 
             vm.items = [];
-            vm.orphaned = []; // TODO: What to do about the orphaned items? [LK]
+            vm.orphaned = []; // [LK:2019-06-13] TODO: What to do about the orphaned items? [LK]
             vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
@@ -58,7 +58,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
                     if (item) {
                         vm.items.push(angular.copy(item));
                     } else {
-                        vm.orphaned.push(v); //console.log("orphaned value", v); // TODO: What to do about orphaned values? [LK]
+                        vm.orphaned.push(v); //console.log("orphaned value", v); // TODO: [LK:2019-06-13] What to do about orphaned values? [LK]
                     }
                 });
 
@@ -76,10 +76,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
 
             var itemPicker = {
                 title: "Choose...",
-                // TODO: NOTE: I've copied over the "itempicker.html" from Umbraco v8.0.2, as it has `orderBy:'name'` hardcoded, and I need it display the items as provided.
+                // TODO: [LK:2019-06-13] NOTE: I've copied over the "itempicker.html" from Umbraco v8.0.2, as it has `orderBy:'name'` hardcoded, and I need it display the items as provided.
                 // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html#L28
                 // PR will be submitted.
-                view: "/App_Plugins/Contentment/data-editors/item-picker.overlay.html",
+                // TODO: [LK:2019-06-13] Not happy with this being hard-coded, try passing in via config.
+                view: "/App_Plugins/Contentment/editors/item-picker.overlay.html",
                 size: "small",
                 availableItems: availableItems,
                 filter: Object.toBoolean(config.enableFilter),

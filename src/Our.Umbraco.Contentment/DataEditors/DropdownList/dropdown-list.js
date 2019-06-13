@@ -30,7 +30,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdo
 
             vm.items = config.items;
 
-            vm.allowEmpty = Object.toBoolean(config.allowEmpty); // TODO: Review the naming of `allowEmpty` [LK]
+            vm.allowEmpty = Object.toBoolean(config.allowEmpty);
         };
 
         init();

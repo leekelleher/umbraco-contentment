@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -22,19 +20,17 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group =  Constants.Conventions.PropertyGroups.Lists,
         Icon = DataEditorIcon)]
-#if DEBUG
-    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-#endif
     public class CascadingDropdownListDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.CascadingDropdownList";
-        internal const string DataEditorName = "[Contentment] Cascading Dropdown List";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/cascading-dropdown-list.js";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CascadingDropdownList";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Cascading Dropdown List";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "cascading-dropdown-list.html";
         internal const string DataEditorIcon = "icon-indent";
 
         public CascadingDropdownListDataEditor(ILogger logger)
             : base(logger)
         { }
+
+        // TODO: [LK:2019-06-13] When we add a ConfigurationEditor class, add the field "apis" + const string
     }
 }

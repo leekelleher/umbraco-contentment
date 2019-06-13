@@ -50,6 +50,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
+            Fields.Add(new CheckAllConfigurationField());
+
             Fields.Add(new RadioButtonListConfigurationEditor.OrientationConfigurationField());
 
             Fields.AddHideLabel();
@@ -61,7 +63,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 : base()
             {
                 Key = CheckAll;
-                Name = "Check All?";
+                Name = "Check all?";
                 Description = "Include a toggle button to select or deselect all the options?";
                 View = "boolean";
             }

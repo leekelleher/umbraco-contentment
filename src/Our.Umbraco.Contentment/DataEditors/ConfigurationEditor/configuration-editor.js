@@ -18,7 +18,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             allowRemove: 1,
             enableFilter: 0,
             orderBy: "name",
-            overlaySize: "large"
+            overlaySize: "large",
+            overlayView: "",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -31,8 +32,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             if (_.isArray($scope.model.value) === false) {
                 $scope.model.value = [$scope.model.value];
             }
-
-            // TODO: [LK:2019-06-06] If there are no available items, then show a messaging saying so. [LK]
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = Object.toBoolean(config.allowEdit);
@@ -60,7 +59,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
 
         function add($event) {
             var configPicker = {
-                view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
+                view: config.overlayView,
                 size: "small",
                 config: {
                     mode: "select",
@@ -97,12 +96,12 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             });
 
             if (!editor) {
-                // TODO: What to do if we don't find the config? [LK]
+                // TODO: [LK:2019-06-13] What to do if we don't find the config? [LK]
                 console.log("Unable to find error:", item.type)
             }
 
             var configPicker = {
-                view: "/App_Plugins/Contentment/data-editors/configuration-editor.overlay.html",
+                view: config.overlayView,
                 size: config.overlaySize,
                 config: {
                     mode: "edit",

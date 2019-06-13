@@ -6,7 +6,7 @@
 angular.module("umbraco.filters").filter("formatBytes", function () {
     // Credit goes to the contributors of this StackOverflow answer:
     // https://stackoverflow.com/a/18650828/12787
-    return function (bytes, decimals = 2) {
+    return function (bytes, decimals) {
         if (bytes === 0) return "0 Bytes";
 
         const k = 1024;

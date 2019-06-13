@@ -23,6 +23,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
         public const string OrderBy = "orderBy";
         public const string OverlaySize = "overlaySize";
+        public const string OverlayView = "overlayView";
 
         public ConfigurationEditorConfigurationEditor()
             : base()
@@ -53,7 +54,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             Fields.Add(
                 EnableFilter,
-                "Enable search filter?",
+                "Enable filter?",
                 "Select to enable the search filter in the overlay selection panel.",
                 "boolean");
 
@@ -109,6 +110,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 
                 config[Items] = GetConfigurationEditors<IConfigurationEditorItem>(types);
                 config[OrderBy] = string.Empty;
+            }
+
+            if (config.ContainsKey(OverlayView) == false)
+            {
+                config.Add(OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath));
             }
 
             return config;

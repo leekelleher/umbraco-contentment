@@ -29,6 +29,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 { ConfigurationEditorConfigurationEditor.MaxItems, 1 },
                 { ConfigurationEditorConfigurationEditor.DisableSorting, Constants.Values.True },
                 { ConfigurationEditorConfigurationEditor.OverlaySize, ConfigurationEditorConfigurationEditor.OverlaySizeConfigurationField.Large },
+                { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) }
             };
 
             var dataSources = GetDataSources();

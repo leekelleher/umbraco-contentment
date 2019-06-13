@@ -21,3 +21,9 @@ XCOPY /S /Y "%2%3.pdb" "%WEBSITE_PATH%\bin\"
 
 REM Copy package front-end files assets
 XCOPY /S /Y "%4Web\UI\*.*" "%WEBSITE_PATH%"
+
+REM Copy property-editor HTML files
+FOR /R "%4DataEditors\" %%f IN (*.html) DO COPY "%%f" "%WEBSITE_PATH%\App_Plugins\Contentment\editors\" /Y
+
+REM Concatenate all the property-editor JS files into a single file
+FOR /R "%4DataEditors\" %%f IN (*.js) DO TYPE "%%f" >> "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.js"

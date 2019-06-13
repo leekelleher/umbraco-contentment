@@ -272,7 +272,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
-    <Compile Include="DataEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\_\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
@@ -304,7 +304,7 @@
     <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerConfigurationEditor.cs" />
-    <Compile Include="DataEditors\HideLabelDataValueEditor.cs" />
+    <Compile Include="DataEditors\_\HideLabelDataValueEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesDataEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
@@ -314,46 +314,49 @@
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
+    <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\byte-size.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\icon-picker.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\cascading-dropdown-list.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.overlay.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\radio-button-list.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.overlay.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.overlay.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\configuration-editor.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox-list.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\code-editor.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\item-picker.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_empty.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\_debug.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\notes.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown-list.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\dropdown-list.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\macro-picker.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-table.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\data-table.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\render-macro.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\render-macro.js" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox.html" />
-    <Content Include="Web\UI\App_Plugins\Contentment\data-editors\checkbox.js" />
+    <Content Include="DataEditors\ByteSize\byte-size.js" />
+    <Content Include="DataEditors\IconPicker\icon-picker.html" />
+    <Content Include="DataEditors\IconPicker\icon-picker.js" />
+    <Content Include="DataEditors\CodeEditor\code-editor.js" />
+    <Content Include="DataEditors\CheckboxList\checkbox-list.html" />
+    <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.html" />
+    <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
+    <Content Include="DataEditors\ItemPicker\item-picker.overlay.html" />
+    <Content Include="DataEditors\RadioButtonList\radio-button-list.html" />
+    <Content Include="DataEditors\RadioButtonList\radio-button-list.js" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.js" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.html" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.html" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.js" />
+    <Content Include="DataEditors\CheckboxList\checkbox-list.js" />
+    <Content Include="DataEditors\CodeEditor\code-editor.html" />
+    <Content Include="DataEditors\ItemPicker\item-picker.html" />
+    <Content Include="DataEditors\ItemPicker\item-picker.js" />
+    <Content Include="DataEditors\_\_empty.html" />
+    <Content Include="DataEditors\_\_debug.html" />
+    <Content Include="DataEditors\Notes\notes.html" />
+    <Content Include="DataEditors\DropdownList\dropdown-list.js" />
+    <Content Include="DataEditors\DropdownList\dropdown-list.html" />
+    <Content Include="DataEditors\MacroPicker\macro-picker.html" />
+    <Content Include="DataEditors\MacroPicker\macro-picker.js" />
+    <Content Include="DataEditors\DataTable\data-table.html" />
+    <Content Include="DataEditors\DataTable\data-table.js" />
+    <Content Include="DataEditors\RenderMacro\render-macro.html" />
+    <Content Include="DataEditors\RenderMacro\render-macro.js" />
+    <Content Include="DataEditors\Checkbox\checkbox.html" />
+    <Content Include="DataEditors\Checkbox\checkbox.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />

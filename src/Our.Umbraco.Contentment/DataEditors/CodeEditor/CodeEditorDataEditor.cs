@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -22,15 +20,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Text,
         Group = Constants.Conventions.PropertyGroups.Code,
         Icon = DataEditorIcon)]
-#if DEBUG
-    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-#endif
     public class CodeEditorDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.CodeEditor";
-        internal const string DataEditorName = "[Contentment] Code Editor";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/code-editor.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/code-editor.js";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CodeEditor";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Code Editor";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "code-editor.html";
         internal const string DataEditorIcon = "icon-code";
 
         public CodeEditorDataEditor(ILogger logger)

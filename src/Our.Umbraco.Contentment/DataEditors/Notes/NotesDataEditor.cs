@@ -18,9 +18,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         Icon = DataEditorIcon)]
     public class NotesDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.Notes";
-        internal const string DataEditorName = "[Contentment] Notes";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/notes.html";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Notes";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Notes";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "notes.html";
         internal const string DataEditorIcon = "icon-readonly";
 
         public NotesDataEditor(ILogger logger)

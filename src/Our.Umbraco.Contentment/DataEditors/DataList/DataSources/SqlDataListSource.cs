@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
 #if !DEBUG
     // TODO: IsWorkInProgress - Under development.
-    [HideFromTypeFinder]
+    [global::Umbraco.Core.Composing.HideFromTypeFinder]
 #endif
     internal class SqlDataListSource : IDataListSource
     {

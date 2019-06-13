@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -22,15 +20,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.String,
         Group = Constants.Conventions.PropertyGroups.Lists,
         Icon = DataEditorIcon)]
-#if DEBUG
-    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-#endif
     public class DropdownListDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.DropdownList";
-        internal const string DataEditorName = "[Contentment] Dropdown List";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/dropdown-list.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/dropdown-list.js";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DropdownList";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Dropdown List";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
         internal const string DataEditorIcon = "icon-indent";
 
         public DropdownListDataEditor(ILogger logger)

@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.PropertyEditors;
 using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
@@ -19,15 +17,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Integer,
         Group = Constants.Conventions.PropertyGroups.Display,
         Icon = DataEditorIcon)]
-#if DEBUG
-    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-#endif
-    public class RenderMacroDataEditor: DataEditor
+    public class RenderMacroDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.RenderMacro";
-        internal const string DataEditorName = "[Contentment] Render Macro";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/render-macro.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/render-macro.js";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Render Macro";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "render-macro.html";
         internal const string DataEditorIcon = UmbracoIcons.Macro;
 
         public RenderMacroDataEditor(ILogger logger)

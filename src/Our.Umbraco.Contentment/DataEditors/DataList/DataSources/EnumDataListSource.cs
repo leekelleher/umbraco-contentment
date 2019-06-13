@@ -8,21 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
-using Umbraco.Core.Logging;
-using Umbraco.Web;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-#if !DEBUG
-    // TODO: IsWorkInProgress - Under development.
-    [HideFromTypeFinder]
-#endif
     internal class EnumDataListSource : IDataListSource
     {
         public string Name => "Enum";
@@ -34,7 +26,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(EnumTypeConfigurationField))]
         public string[] EnumType { get; set; }
 
-        [ConfigurationField("sortAlphabetically", "Sort Alphabetically", "boolean", Description = "Select to sort the enum in alphabetical order. The default order is defined by the enum itself.")]
+        [ConfigurationField(typeof(SortAlphabeticallyConfigurationField))]
         public bool SortAlphabetically { get; set; }
 
         public IEnumerable<DataListItem> GetItems()
@@ -72,8 +64,8 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 var apis = new[]
                 {
-                    "backoffice/Contentment/EnumDataListSourceApi/GetAssemblies",
-                    "backoffice/Contentment/EnumDataListSourceApi/GetEnums?assembly={0}",
+                    EnumDataSourceApiController.GetAssembliesUrl,
+                    EnumDataSourceApiController.GetEnumsUrl,
                 };
 
                 Key = "enumType";
@@ -86,47 +78,16 @@ namespace Our.Umbraco.Contentment.DataEditors
                 };
             }
         }
-    }
 
-    // TODO: [LK:2019-06-06] Review where to put this controller. Better namespace?
-    [PluginController("Contentment"), IsBackOffice]
-    public class EnumDataListSourceApiController : UmbracoAuthorizedJsonController
-    {
-        public IEnumerable<object> GetAssemblies()
+        class SortAlphabeticallyConfigurationField : ConfigurationField
         {
-            var options = new SortedDictionary<string, string>();
-
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            if (assemblies?.Length > 0)
+            public SortAlphabeticallyConfigurationField()
             {
-                foreach (var assembly in assemblies)
-                {
-                    if (options.ContainsKey(assembly.FullName) || assembly.IsDynamic || assembly.ExportedTypes?.Any(x => x.IsEnum) == false)
-                        continue;
-
-                    if (assembly.FullName.StartsWith("App_Code") && options.ContainsKey("App_Code") == false)
-                    {
-                        options.Add("App_Code", "App_Code");
-                    }
-                    else
-                    {
-                        var assemblyName = assembly.GetName();
-                        options.Add(assemblyName.FullName, assemblyName.Name);
-                    }
-                }
+                Key = "sortAlphabetically";
+                Name = "Sort Alphabetically";
+                Description = "Select to sort the enum in alphabetical order.<br>By default, the order is defined by the enum itself.";
+                View = "boolean";
             }
-
-            return options.Select(x => new { name = x.Value, value = x.Key });
-        }
-
-        public IEnumerable<object> GetEnums(string assembly)
-        {
-            return Assembly
-                .Load(assembly)
-                .GetTypes()
-                .Where(x => x.IsEnum)
-                .Select(x => new { name = x.Name.SplitPascalCasing(), value = x.FullName })
-                .OrderBy(x => x.name);
         }
     }
 }

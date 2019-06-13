@@ -7,6 +7,23 @@ namespace Our.Umbraco.Contentment
 {
     internal static partial class Constants
     {
+        internal static partial class Internals
+        {
+            internal const string ProjectName = "Contentment";
+
+            internal const string ProjectNamespace = "Our.Umbraco.Contentment";
+
+            internal const string DataEditorNamePrefix = "[" + ProjectName + "] ";
+
+            internal const string DataEditorAliasPrefix = ProjectNamespace + ".";
+
+            internal const string EditorsPathRoot = PackagePathRoot + "editors/";
+
+            internal const string PackagePathRoot = "~/App_Plugins/" + ProjectName + "/";
+
+            internal const string PluginControllerName = ProjectName;
+        }
+
         internal static partial class Conventions
         {
             internal static partial class ConfigurationEditors

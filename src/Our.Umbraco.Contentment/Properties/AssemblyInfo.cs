@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using Our.Umbraco.Contentment;
 
-[assembly: AssemblyTitle("Our.Umbraco.Contentment")]
+[assembly: AssemblyTitle(Constants.Internals.ProjectNamespace)]
 [assembly: AssemblyDescription("Umbraco Contentment - a shoebox of happiness")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Umbrella Inc Ltd")]
-[assembly: AssemblyProduct("Our.Umbraco.Contentment")]
+[assembly: AssemblyProduct(Constants.Internals.ProjectNamespace)]
 [assembly: AssemblyCopyright("Copyright \xa9 2019 Lee Kelleher")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

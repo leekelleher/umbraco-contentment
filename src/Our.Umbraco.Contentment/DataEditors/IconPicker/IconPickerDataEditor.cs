@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using ClientDependency.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Web.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -18,15 +16,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.String,
         Group = Constants.Conventions.PropertyGroups.Pickers,
         Icon = DataEditorIcon)]
-#if DEBUG
-    [PropertyEditorAsset(ClientDependencyType.Javascript, DataEditorJsPath)]
-#endif
     public class IconPickerDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = "Our.Umbraco.Contentment.IconPicker";
-        internal const string DataEditorName = "[Contentment] Icon Picker";
-        internal const string DataEditorViewPath = "~/App_Plugins/Contentment/data-editors/icon-picker.html";
-        internal const string DataEditorJsPath = "~/App_Plugins/Contentment/data-editors/icon-picker.js";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "IconPicker";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Icon Picker";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "icon-picker.html";
         internal const string DataEditorIcon = "icon-circle-dotted";
 
         public IconPickerDataEditor(ILogger logger)
