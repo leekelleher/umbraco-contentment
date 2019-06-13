@@ -54,28 +54,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
         }
 
-        class ConnectionStringConfigurationField : ConfigurationField
-        {
-            public ConnectionStringConfigurationField()
-            {
-                var connectionStrings = new List<string>();
-                foreach (ConnectionStringSettings connString in ConfigurationManager.ConnectionStrings)
-                {
-                    connectionStrings.Add(connString.Name);
-                }
-
-                Key = "connString";
-                Name = "Connection String";
-                Description = "Enter the connection string.";
-                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
-                Config = new Dictionary<string, object>
-                {
-                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) }
-                };
-            }
-        }
-
         class NotesConfigurationField : ConfigurationField
         {
             public NotesConfigurationField()
@@ -110,6 +88,28 @@ If more columns are returned, then only the first 2 columns will be used.</p>" }
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, mode },
+                };
+            }
+        }
+
+        class ConnectionStringConfigurationField : ConfigurationField
+        {
+            public ConnectionStringConfigurationField()
+            {
+                var connectionStrings = new List<string>();
+                foreach (ConnectionStringSettings connString in ConfigurationManager.ConnectionStrings)
+                {
+                    connectionStrings.Add(connString.Name);
+                }
+
+                Key = "connString";
+                Name = "Connection String";
+                Description = "Enter the connection string.";
+                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
+                Config = new Dictionary<string, object>
+                {
+                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) }
                 };
             }
         }
