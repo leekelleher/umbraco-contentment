@@ -26,6 +26,6 @@
 
 ### How to configure as a Parameter Editor
 
-[Add a coulple of sentences on how to configure this editor as a Parameter Editor.]
+[Add a couple of sentences on how to configure this editor as a Parameter Editor.]
 
 [Include a code snippet.]
