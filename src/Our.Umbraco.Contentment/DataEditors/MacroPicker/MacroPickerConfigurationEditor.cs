@@ -44,7 +44,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { ItemPickerConfigurationEditor.Items, macros }
+                    { ItemPickerConfigurationEditor.Items, macros },
+                    { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) }
                 });
 
             Fields.AddMaxItems();

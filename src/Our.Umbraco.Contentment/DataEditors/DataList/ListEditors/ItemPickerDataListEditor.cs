@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -15,6 +16,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         public string Description => "Select multiple values from an Umbraco style overlay.";
 
         public string Icon => ItemPickerDataEditor.DataEditorIcon;
+
+        public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
+        {
+            { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) }
+        };
 
         public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
 

@@ -15,6 +15,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
         public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
         public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+        public const string OverlayView = "overlayView";
 
         public ItemPickerConfigurationEditor()
             : base()
@@ -59,6 +60,18 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
+        }
+
+        public override IDictionary<string, object> ToValueEditor(object configuration)
+        {
+            var config = base.ToValueEditor(configuration);
+
+            if (config.ContainsKey(OverlayView) == false)
+            {
+                config.Add(OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath));
+            }
+
+            return config;
         }
 
         internal class AllowDuplicatesConfigurationField : ConfigurationField

@@ -16,7 +16,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             allowDuplicates: 0,
             enableFilter: 1,
             disableSorting: 0,
-            defaultIcon: "icon-science"
+            defaultIcon: "icon-science",
+            overlayView: "",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -79,8 +80,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
                 // TODO: [LK:2019-06-13] NOTE: I've copied over the "itempicker.html" from Umbraco v8.0.2, as it has `orderBy:'name'` hardcoded, and I need it display the items as provided.
                 // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html#L28
                 // PR will be submitted.
-                // TODO: [LK:2019-06-13] Not happy with this being hard-coded, try passing in via config.
-                view: "/App_Plugins/Contentment/editors/item-picker.overlay.html",
+                view: config.overlayView,
                 size: "small",
                 availableItems: availableItems,
                 filter: Object.toBoolean(config.enableFilter),

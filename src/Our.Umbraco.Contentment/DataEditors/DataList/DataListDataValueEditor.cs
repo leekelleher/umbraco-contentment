@@ -57,6 +57,17 @@ namespace Our.Umbraco.Contentment.DataEditors
                                 config.Add(prop.Key, prop.Value);
                             }
                         }
+
+                        if (obj.DefaultConfig != null)
+                        {
+                            foreach (var prop in obj.DefaultConfig)
+                            {
+                                if (config.ContainsKey(prop.Key) == false)
+                                {
+                                    config.Add(prop.Key, prop.Value);
+                                }
+                            }
+                        }
                     }
                 }
             }
