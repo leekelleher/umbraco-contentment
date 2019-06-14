@@ -260,6 +260,7 @@
     <Compile Include="DataEditors\ByteSize\ByteSizeDataEditor.cs" />
     <Compile Include="DataEditors\ByteSize\ByteSizeConfigurationEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
+    <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />

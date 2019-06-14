@@ -31,6 +31,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             : base(logger)
         { }
 
-        // TODO: [LK:2019-06-13] When we add a ConfigurationEditor class, add the field "apis" + const string
+        protected override IConfigurationEditor CreateConfigurationEditor() => new CascadingDropdownListConfigurationEditor();
     }
 }
