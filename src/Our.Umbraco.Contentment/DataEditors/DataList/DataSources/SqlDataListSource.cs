@@ -5,16 +5,16 @@
 
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Linq;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-#if !DEBUG
-    // TODO: IsWorkInProgress - Under development.
-    [global::Umbraco.Core.Composing.HideFromTypeFinder]
-#endif
     internal class SqlDataListSource : IDataListSource
     {
         public string Name => "SQL";
@@ -34,23 +34,61 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems()
         {
-            // TODO: [LK:2019-06-06] Look to do a better way of querying the db.
-            //// https://github.com/schotime/NPoco/blob/ec4d3d7808c8ce413b2d61f756d6d7277039c98d/src/NPoco/Database.cs
-            //using (var cmd = database.CreateCommand(null, System.Data.CommandType.Text, sql))
-            //{
-            //}
+            var items = new List<DataListItem>();
 
-            using (var database = new NPoco.Database(ConnectionString))
-            {
-                // SELECT macroAlias AS [value], macroName AS [name] FROM cmsMacro ORDER BY [name];
-                var sql = Query.Replace("\r", "").Replace("\n", " ").Replace("\t", " ");
-
-                // I'm not happy about using this class to deserialize the SQL data,
-                // Look at alternatives, so we can remove this class.
-                // Maybe we will end up using classic ADO type queries, to give us more control?
-                var items = database.Fetch<DataListItem>(sql);
-
+            if (string.IsNullOrWhiteSpace(Query) || string.IsNullOrWhiteSpace(ConnectionString))
                 return items;
+
+            var query = Query.Replace("\r", string.Empty).Replace("\n", " ").Replace("\t", " ");
+            var settings = ConfigurationManager.ConnectionStrings[ConnectionString];
+
+            if (settings == null)
+                return items;
+
+            // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
+            if (settings.ProviderName.InvariantEquals("System.Data.SqlServerCe.4.0"))
+            {
+                items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
+            }
+            else
+            {
+                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
+            }
+
+            return items;
+        }
+
+        private IEnumerable<DataListItem> GetSqlItems<TConnection, TCommand>(string query, string connectionString)
+            where TConnection : DbConnection, new()
+            where TCommand : DbCommand, new()
+        {
+            using (var connection = new TConnection() { ConnectionString = connectionString })
+            using (var command = new TCommand() { Connection = connection, CommandText = query })
+            {
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.FieldCount > 0)
+                        {
+                            var item = new DataListItem
+                            {
+                                Name = reader[0].ToString()
+                            };
+
+                            item.Value = reader.FieldCount > 1 ? reader[1].ToString() : item.Name;
+
+                            if (reader.FieldCount > 2)
+                                item.Description = reader[2].ToString();
+
+                            if (reader.FieldCount > 3)
+                                item.Icon = reader[3].ToString();
+
+                            yield return item;
+                        }
+                    }
+                }
             }
         }
 
@@ -63,10 +101,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    // TODO: [LK:2019-06-07] Revise the SQL notes. We'll probably do 4 columns, anything that can serialize with a `DataListItem`.
                     { NotesConfigurationEditor.Notes, @"<p class=""alert alert-success""><strong>A note about your SQL query.</strong><br>
-Your SQL query should be designed to return 2 columns, these will be used as name/value pairs in the data list.<br>
-If more columns are returned, then only the first 2 columns will be used.</p>" }
+Your SQL query should be designed to a minimum of 2 columns, (and a maximum of 4 columns). These will be used to populate a List Editor item.<br>
+The columns will be mapped in the following order: <strong>1. Name (label)</strong>, <strong>2. Value</strong>, <em>then optionally, 3. Description and 4. Icon</em>.</p>" }
                 };
                 HideLabel = true;
             }
