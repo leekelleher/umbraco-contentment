@@ -8,7 +8,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
     "editorService",
     function ($scope, editorService) {
 
-        // console.log("item-picker.model", $scope.model);
+        //console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
             items: [],
@@ -28,7 +28,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             $scope.model.value = $scope.model.value || [];
 
             vm.items = [];
-            vm.orphaned = []; // [LK:2019-06-13] TODO: What to do about the orphaned items? [LK]
             vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
@@ -54,14 +53,20 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             vm.remove = remove;
 
             if ($scope.model.value.length > 0 && config.items.length > 0) {
+                var orphaned = [];
+
                 _.each($scope.model.value, function (v) {
                     var item = _.find(config.items, function (x) { return x.value === v });
                     if (item) {
                         vm.items.push(angular.copy(item));
                     } else {
-                        vm.orphaned.push(v); //console.log("orphaned value", v); // TODO: [LK:2019-06-13] What to do about orphaned values? [LK]
+                        orphaned.push(v);
                     }
                 });
+
+                if (orphaned.length > 0) {
+                    $scope.model.value = _.difference($scope.model.value, orphaned);
+                }
 
                 ensureIcons(vm.items);
             }

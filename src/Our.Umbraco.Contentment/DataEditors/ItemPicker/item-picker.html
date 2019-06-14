@@ -19,8 +19,4 @@
     <a class="umb-node-preview-add" href="" ng-click="vm.add($event)" ng-if="vm.allowAdd" prevent-default>
         <localize key="general_add">Add</localize>
     </a>
-    <details ng-if="vm.orphaned.length > 0" style="margin-top: 20px;">
-        <summary>Orphaned</summary>
-        <pre>{{vm.orphaned | json}}</pre>
-    </details>
 </div>

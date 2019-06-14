@@ -44,7 +44,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 },
                 new ConfigurationField
                 {
-                    Key = "name",
+                    Key = "label",
                     Name = "Name",
                     View = "textbox"
                 },

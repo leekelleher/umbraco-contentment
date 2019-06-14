@@ -95,11 +95,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                 return x.type === item.type;
             });
 
-            if (!editor) {
-                // TODO: [LK:2019-06-13] What to do if we don't find the config? [LK]
-                console.log("Unable to find error:", item.type)
-            }
-
             var configPicker = {
                 view: config.overlayView,
                 size: config.overlaySize,

@@ -18,10 +18,11 @@ namespace Our.Umbraco.Contentment.DataEditors
         public CascadingDropdownListConfigurationEditor()
             : base()
         {
+            // TODO: [LK:2019-06-14] APIs description might be better using Notes.
             Fields.Add(
                 APIs,
                 nameof(APIs),
-                "[Add friendly description]", // TODO: [LK:2019-06-14] Add friendly description
+                "Enter the URL for each API call that will populate each dropdown.<br><br>To pass the value of the previous dropdown, you can add the parameter with an index value, e.g. '{0}' for the first value, '{1}' for the second value, and so forth.",
                 IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/multipletextbox/multipletextbox.html"),
                 new Dictionary<string, object>
                 {

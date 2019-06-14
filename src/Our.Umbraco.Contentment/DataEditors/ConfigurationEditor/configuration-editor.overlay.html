@@ -19,12 +19,11 @@
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content class="block-form">
-                        <div class="form-search" ng-if="vm.enableSearch" style="margin-bottom: 15px;">
+                        <div class="form-search" ng-if="vm.enableFilter" style="margin-bottom: 15px;">
                             <i class="icon-search"></i>
                             <input type="text"
-                                   style="width: 100%"
                                    ng-model="vm.searchTerm"
-                                   class="umb-search-field search-query input-block-level"
+                                   class="umb-search-field search-query input-block-level -full-width-input"
                                    localize="placeholder"
                                    placeholder="@placeholders_filter"
                                    umb-auto-focus
@@ -51,6 +50,10 @@
             </div>
 
             <div ng-if="vm.mode == 'edit'">
+
+                <umb-empty-state ng-if="!!vm.editor" position="center">
+                    Unable to find the editor for this value.
+                </umb-empty-state>
 
                 <umb-box ng-if="vm.editor.fields.length > 0">
                     <umb-box-content class="block-form">
