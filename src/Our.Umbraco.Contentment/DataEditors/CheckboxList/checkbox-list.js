@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
     "$scope",
     function ($scope) {
 
-        console.log("checkboxlist.model", $scope.model);
+        // console.log("checkboxlist.model", $scope.model);
 
         var defaultConfig = { items: [], checkAll: 0, orientation: "vertical", defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);

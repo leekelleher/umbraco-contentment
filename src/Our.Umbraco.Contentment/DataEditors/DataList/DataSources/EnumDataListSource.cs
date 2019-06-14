@@ -74,7 +74,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { "apis", apis }
+                    { CascadingDropdownListConfigurationEditor.APIs, apis }
                 };
             }
         }
