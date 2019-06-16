@@ -26,19 +26,6 @@ namespace Our.Umbraco.Contentment
 
         internal static partial class Conventions
         {
-            internal static partial class ConfigurationEditors
-            {
-                internal const string DefaultValue = "defaultValue";
-
-                internal const string HideLabel = "hideLabel";
-
-                internal const string DisableSorting = "disableSorting";
-
-                internal const string Items = "items";
-
-                internal const string MaxItems = "maxItems";
-            }
-
             internal static partial class PropertyGroups
             {
                 public const string Code = "Code";

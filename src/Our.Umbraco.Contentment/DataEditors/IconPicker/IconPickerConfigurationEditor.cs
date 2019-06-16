@@ -11,11 +11,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class IconPickerConfigurationEditor : ConfigurationEditor
     {
-        public const string DefaultIcon = "defaultIcon";
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-
         public IconPickerConfigurationEditor()
-            : base()
+    : base()
         {
             Fields.Add(new DefaultIconConfigurationField());
             Fields.AddHideLabel();
@@ -23,6 +20,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         internal class DefaultIconConfigurationField : ConfigurationField
         {
+            public const string DefaultIcon = "defaultIcon";
+
             public DefaultIconConfigurationField()
                 : base()
             {

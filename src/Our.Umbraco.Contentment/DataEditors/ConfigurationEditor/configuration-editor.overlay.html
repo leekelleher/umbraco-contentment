@@ -51,7 +51,7 @@
 
             <div ng-if="vm.mode == 'edit'">
 
-                <umb-empty-state ng-if="!!vm.editor" position="center">
+                <umb-empty-state ng-if="vm.editor === undefined" position="center">
                     Unable to find the editor for this value.
                 </umb-empty-state>
 

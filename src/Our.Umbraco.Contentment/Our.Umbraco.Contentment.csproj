@@ -273,6 +273,8 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
+    <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
@@ -313,6 +315,10 @@
     <Compile Include="DataEditors\RenderMacro\RenderMacroValueConverter.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroConfigurationEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
+    <Compile Include="DataEditors\_\HideLabelConfigurationField.cs" />
+    <Compile Include="DataEditors\_\DisableSortingConfigurationField.cs" />
+    <Compile Include="DataEditors\_\MaxItemsConfigurationField.cs" />
+    <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />

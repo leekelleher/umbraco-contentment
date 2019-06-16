@@ -18,9 +18,6 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class MacroPickerConfigurationEditor : ConfigurationEditor
     {
         public const string AllowedMacros = "allowedMacros";
-        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
 
         private readonly IMacroService _macroService;
 

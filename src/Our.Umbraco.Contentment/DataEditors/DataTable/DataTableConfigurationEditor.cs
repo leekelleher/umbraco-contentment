@@ -13,10 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class DataTableConfigurationEditor : ConfigurationEditor
     {
-        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
         public const string FieldItems = "fields";
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
         public const string RestrictWidth = "restrictWidth";
         public const string UsePrevalueEditors = "usePrevalueEditors";
 
@@ -68,8 +65,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 new Dictionary<string, object>()
                 {
                     { FieldItems, listFields },
-                    { MaxItems, 0 },
-                    { DisableSorting, Constants.Values.False },
+                    { MaxItemsConfigurationField.MaxItems, 0 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.False },
                     { RestrictWidth, Constants.Values.True },
                     { UsePrevalueEditors, Constants.Values.False }
                 });

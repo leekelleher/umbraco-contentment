@@ -17,8 +17,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class DataListConfigurationEditor : ConfigurationEditor
     {
         public const string DataSource = "dataSource";
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+        public const string Items = "items";
         public const string ListEditor = "listEditor";
 
         public DataListConfigurationEditor()
@@ -26,8 +25,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
-                { ConfigurationEditorConfigurationEditor.MaxItems, 1 },
-                { ConfigurationEditorConfigurationEditor.DisableSorting, Constants.Values.True },
+                { MaxItemsConfigurationField.MaxItems, 1 },
+                { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                 { ConfigurationEditorConfigurationEditor.OverlaySize, ConfigurationEditorConfigurationEditor.OverlaySizeConfigurationField.Large },
                 { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) }
             };

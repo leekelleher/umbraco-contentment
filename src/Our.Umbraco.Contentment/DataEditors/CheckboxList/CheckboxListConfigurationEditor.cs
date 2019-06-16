@@ -11,11 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CheckboxListConfigurationEditor : ConfigurationEditor
     {
-        public const string CheckAll = "checkAll";
-        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
-        public const string DefaultValue = Constants.Conventions.ConfigurationEditors.DefaultValue;
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string Orientation = RadioButtonListConfigurationEditor.Orientation;
+        public const string Items = "items";
 
         public CheckboxListConfigurationEditor()
             : base()
@@ -44,21 +40,23 @@ namespace Our.Umbraco.Contentment.DataEditors
                 new Dictionary<string, object>()
                 {
                     { DataTableConfigurationEditor.FieldItems, listFields },
-                    { DataTableConfigurationEditor.MaxItems, 0 },
-                    { DataTableConfigurationEditor.DisableSorting, Constants.Values.False },
+                    { MaxItemsConfigurationField.MaxItems, 0 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.False },
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
             Fields.Add(new CheckAllConfigurationField());
 
-            Fields.Add(new RadioButtonListConfigurationEditor.OrientationConfigurationField());
+            Fields.Add(new OrientationConfigurationField());
 
             Fields.AddHideLabel();
         }
 
         internal class CheckAllConfigurationField : ConfigurationField
         {
+            public const string CheckAll = "checkAll";
+
             public CheckAllConfigurationField()
                 : base()
             {

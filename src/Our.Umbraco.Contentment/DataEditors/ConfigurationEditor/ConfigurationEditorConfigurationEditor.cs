@@ -16,11 +16,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
-        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
         public const string EnableFilter = "enableFilter";
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
-        public const string MaxItems = Constants.Conventions.ConfigurationEditors.MaxItems;
+        public const string Items = "items";
         public const string OrderBy = "orderBy";
         public const string OverlaySize = "overlaySize";
         public const string OverlayView = "overlayView";
@@ -85,7 +82,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { RadioButtonListConfigurationEditor.Orientation, RadioButtonListConfigurationEditor.OrientationConfigurationField.Horizontal },
+                    { OrientationConfigurationField.Orientation, OrientationConfigurationField.Horizontal },
                     { RadioButtonListConfigurationEditor.Items, items },
                     { RadioButtonListConfigurationEditor.DefaultValue, Large }
                 };

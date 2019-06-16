@@ -24,7 +24,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(CheckboxListConfigurationEditor.CheckAllConfigurationField))]
         public bool CheckAll { get; set; }
 
-        [ConfigurationField(typeof(RadioButtonListConfigurationEditor.OrientationConfigurationField))]
+        [ConfigurationField(typeof(OrientationConfigurationField))]
         public string Orientation { get; set; }
     }
 }

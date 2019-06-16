@@ -12,8 +12,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class NotesConfigurationEditor : ConfigurationEditor
     {
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string Notes = "notes";
+        public const string Notes = NotesConfigurationField.Notes;
 
         public NotesConfigurationEditor()
             : base()

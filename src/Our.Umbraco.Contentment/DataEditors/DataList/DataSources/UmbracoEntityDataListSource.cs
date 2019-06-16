@@ -83,18 +83,21 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         class EntityTypeConfigurationField : ConfigurationField
         {
+            public const string EntityType = "entityType";
+
             public EntityTypeConfigurationField()
                 : base()
             {
                 var items = SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x });
 
-                Key = "entityType";
-                Name = "Entity Type";
+                Key = EntityType;
+                Name = "Entity type";
                 Description = "Select the entity type to use.<br><br>Unsupported entity types have been hidden from the list.";
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
-                    { DropdownListConfigurationEditor.Items, items }
+                    { DropdownListConfigurationEditor.Items, items },
+                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False }
                 };
             }
         }

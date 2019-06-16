@@ -27,7 +27,13 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(IconPickerConfigurationEditor.DefaultIconConfigurationField))]
         public string DefaultIcon { get; set; }
 
+        [ConfigurationField(typeof(MaxItemsConfigurationField))]
+        public int MaxItems { get; set; }
+
         [ConfigurationField(typeof(ItemPickerConfigurationEditor.AllowDuplicatesConfigurationField))]
         public bool AllowDuplicates { get; set; }
+
+        [ConfigurationField(typeof(DisableSortingConfigurationField))]
+        public bool DisableSorting { get; set; }
     }
 }

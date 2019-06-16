@@ -14,7 +14,6 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class CodeEditorConfigurationEditor : ConfigurationEditor
     {
         public const string FontSize = "fontSize";
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
         public const string Mode = "mode";
         public const string Theme = "theme";
         public const string UseWrapMode = "useWrapMode";

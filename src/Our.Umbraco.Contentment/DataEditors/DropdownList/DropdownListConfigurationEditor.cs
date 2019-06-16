@@ -12,9 +12,9 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class DropdownListConfigurationEditor : ConfigurationEditor
     {
         public const string AllowEmpty = "allowEmpty";
-        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
-        public const string DefaultValue = Constants.Conventions.ConfigurationEditors.DefaultValue;
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
+        public const string Items = "items";
+        // TODO: [LK:2019-06-16] Implement "DefaultValue"
+        public const string DefaultValue = "defaultValue";
 
         public DropdownListConfigurationEditor()
             : base()
@@ -50,8 +50,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 new Dictionary<string, object>()
                 {
                     { DataTableConfigurationEditor.FieldItems, listFields },
-                    { DataTableConfigurationEditor.MaxItems, 0 },
-                    { DataTableConfigurationEditor.DisableSorting, Constants.Values.False },
+                    { MaxItemsConfigurationField.MaxItems, 0 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.False },
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });

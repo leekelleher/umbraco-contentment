@@ -23,7 +23,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
-        [ConfigurationField(typeof(NotesConfigurationField))]
+        [ConfigurationField(typeof(SqlNotesConfigurationField))]
         public string Notes { get; set; }
 
         [ConfigurationField(typeof(QueryConfigurationField))]
@@ -92,25 +92,19 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
         }
 
-        class NotesConfigurationField : ConfigurationField
+        class SqlNotesConfigurationField : NotesConfigurationField
         {
-            public NotesConfigurationField()
-            {
-                Key = NotesConfigurationEditor.Notes;
-                Name = nameof(NotesConfigurationEditor.Notes);
-                View = IOHelper.ResolveUrl(NotesDataEditor.DataEditorViewPath);
-                Config = new Dictionary<string, object>
-                {
-                    { NotesConfigurationEditor.Notes, @"<p class=""alert alert-success""><strong>A note about your SQL query.</strong><br>
+            public SqlNotesConfigurationField()
+                : base(@"<p class=""alert alert-success""><strong>A note about your SQL query.</strong><br>
 Your SQL query should be designed to a minimum of 2 columns, (and a maximum of 4 columns). These will be used to populate a List Editor item.<br>
-The columns will be mapped in the following order: <strong>1. Name (label)</strong>, <strong>2. Value</strong>, <em>then optionally, 3. Description and 4. Icon</em>.</p>" }
-                };
-                HideLabel = true;
-            }
+The columns will be mapped in the following order: <strong>1. Name (label)</strong>, <strong>2. Value</strong>, <em>then optionally, 3. Description and 4. Icon</em>.</p>", true)
+            { }
         }
 
         class QueryConfigurationField : ConfigurationField
         {
+            public const string Query = "query";
+
             public QueryConfigurationField()
             {
                 // NOTE: Umbraco doesn't ship with SQL mode, so we check if its been added manually, otherwise defautls to Razor.
@@ -118,9 +112,9 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
                     ? "sql"
                     : "razor";
 
-                Key = "query";
-                Name = "SQL Query";
-                Description = "Enter the SQL query.";
+                Key = Query;
+                Name = "SQL query";
+                Description = "Enter your SQL query.";
                 View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
@@ -131,6 +125,8 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
 
         class ConnectionStringConfigurationField : ConfigurationField
         {
+            public const string ConnectionString = "connectionString";
+
             public ConnectionStringConfigurationField()
             {
                 var connectionStrings = new List<string>();
@@ -139,14 +135,14 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
                     connectionStrings.Add(connString.Name);
                 }
 
-                Key = "connString";
-                Name = "Connection String";
+                Key = ConnectionString;
+                Name = "Connection string";
                 Description = "Enter the connection string.";
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) }
+                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) },
+                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False }
                 };
             }
         }

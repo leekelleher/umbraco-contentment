@@ -60,6 +60,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         class EnumTypeConfigurationField : ConfigurationField
         {
+            public const string Enum = "enumType";
+
             public EnumTypeConfigurationField()
             {
                 var apis = new[]
@@ -68,8 +70,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     EnumDataSourceApiController.GetEnumsUrl,
                 };
 
-                Key = "enumType";
-                Name = "Enum";
+                Key = Enum;
+                Name = nameof(Enum);
                 Description = "Select the enum from an assembly type.";
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
@@ -81,10 +83,12 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         class SortAlphabeticallyConfigurationField : ConfigurationField
         {
+            public const string SortAlphabetically = "sortAlphabetically";
+
             public SortAlphabeticallyConfigurationField()
             {
-                Key = "sortAlphabetically";
-                Name = "Sort Alphabetically";
+                Key = SortAlphabetically;
+                Name = "Sort alphabetically";
                 Description = "Select to sort the enum in alphabetical order.<br>By default, the order is defined by the enum itself.";
                 View = "boolean";
             }

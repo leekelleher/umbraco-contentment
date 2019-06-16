@@ -12,9 +12,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
         public const string AllowDuplicates = "allowDuplicates";
-        public const string DisableSorting = Constants.Conventions.ConfigurationEditors.DisableSorting;
-        public const string HideLabel = Constants.Conventions.ConfigurationEditors.HideLabel;
-        public const string Items = Constants.Conventions.ConfigurationEditors.Items;
+        public const string Items = "items";
         public const string OverlayView = "overlayView";
 
         public ItemPickerConfigurationEditor()
@@ -50,8 +48,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 new Dictionary<string, object>()
                 {
                     { DataTableConfigurationEditor.FieldItems, listFields },
-                    { DataTableConfigurationEditor.MaxItems, 0 },
-                    { DataTableConfigurationEditor.DisableSorting, Constants.Values.False },
+                    { MaxItemsConfigurationField.MaxItems, 0 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.False },
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });

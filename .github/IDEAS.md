@@ -10,4 +10,7 @@
   For a list for boolean toggles + title/descriptions
   https://github.com/umbraco/Umbraco-CMS/pull/5096 - but it's not available until UMB v8.1
 
+- Hide Label
+  A property-editor wrapper that can add a "Hide Label" field. Apart from that, everything else is invisible.
+
 -
