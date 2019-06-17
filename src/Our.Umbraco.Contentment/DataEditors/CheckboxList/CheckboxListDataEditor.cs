@@ -32,5 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         { }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new CheckboxListConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

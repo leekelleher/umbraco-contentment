@@ -21,7 +21,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string View => IOHelper.ResolveUrl(CheckboxListDataEditor.DataEditorViewPath);
 
-        [ConfigurationField(typeof(CheckboxListConfigurationEditor.CheckAllConfigurationField))]
+        [ConfigurationField(typeof(CheckAllConfigurationField))]
         public bool CheckAll { get; set; }
 
         [ConfigurationField(typeof(OrientationConfigurationField))]

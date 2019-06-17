@@ -10,22 +10,14 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     internal static partial class ConfigurationFieldExtensions
     {
-        public static void Add(
-            this List<ConfigurationField> fields,
-            string key,
-            string name,
-            string description,
-            string view,
-            IDictionary<string, object> config = null)
+        public static void AddDisableSorting(this List<ConfigurationField> fields)
         {
-            fields.Add(new ConfigurationField
-            {
-                Key = key,
-                Name = name,
-                Description = description,
-                View = view,
-                Config = config,
-            });
+            fields.Add(new DisableSortingConfigurationField());
+        }
+
+        public static void AddMaxItems(this List<ConfigurationField> fields)
+        {
+            fields.Add(new MaxItemsConfigurationField());
         }
     }
 }

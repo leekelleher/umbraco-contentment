@@ -26,7 +26,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             Key = ListType;
             Name = "List type";
-            Description = "[Add a friendly description]"; // TODO: [LK:2019-06-17] Add a friendly description.
+            Description = "Select the style of list to be displayed in the overlay.<br><br>Grid displays as a card based layout, (3 cards per row), whereas List will display as a menu of single items.";
             View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {

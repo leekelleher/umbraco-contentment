@@ -34,6 +34,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.ItemPicke
         };
 
         function select(item) {
+            // TODO: [LK:2019-06-17] Explore what would be involved in making this multiple selection.
             $scope.model.selectedItem = item;
             submit($scope.model);
         };

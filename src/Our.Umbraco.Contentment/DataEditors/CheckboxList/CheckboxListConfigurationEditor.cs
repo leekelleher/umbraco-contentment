@@ -47,24 +47,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 });
 
             Fields.Add(new CheckAllConfigurationField());
-
             Fields.Add(new OrientationConfigurationField());
-
             Fields.AddHideLabel();
-        }
-
-        internal class CheckAllConfigurationField : ConfigurationField
-        {
-            public const string CheckAll = "checkAll";
-
-            public CheckAllConfigurationField()
-                : base()
-            {
-                Key = CheckAll;
-                Name = "Check all?";
-                Description = "Include a toggle button to select or deselect all the options?";
-                View = "boolean";
-            }
         }
     }
 }

@@ -32,5 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         { }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new RadioButtonListConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }
