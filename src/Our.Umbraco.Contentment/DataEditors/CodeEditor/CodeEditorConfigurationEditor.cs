@@ -61,7 +61,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                             IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                             new Dictionary<string, object>
                             {
-                                { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                                { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                                 { DropdownListConfigurationEditor.Items, modes },
                                 { DropdownListConfigurationEditor.DefaultValue, "razor" }
                             });
@@ -76,7 +76,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                             IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
                             new Dictionary<string, object>
                             {
-                                { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
+                                { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                                 { DropdownListConfigurationEditor.Items, themes },
                                 { DropdownListConfigurationEditor.DefaultValue, "chrome" }
                             });

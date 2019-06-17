@@ -11,9 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class DropdownListConfigurationEditor : ConfigurationEditor
     {
-        public const string AllowEmpty = "allowEmpty";
         public const string Items = "items";
-        // TODO: [LK:2019-06-16] Implement "DefaultValue"
         public const string DefaultValue = "defaultValue";
 
         public DropdownListConfigurationEditor()
@@ -57,24 +55,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 });
 
             Fields.Add(new AllowEmptyConfigurationField());
-
             Fields.AddHideLabel();
-        }
-
-        internal class AllowEmptyConfigurationField : ConfigurationField
-        {
-            public AllowEmptyConfigurationField()
-                : base()
-            {
-                Key = AllowEmpty;
-                Name = "Allow Empty";
-                Description = "Enable to allow an empty option at the top of the dropdown list.";
-                View = "views/propertyeditors/boolean/boolean.html";
-                Config = new Dictionary<string, object>
-                {
-                    { "default", Constants.Values.True }
-                };
-            }
         }
     }
 }

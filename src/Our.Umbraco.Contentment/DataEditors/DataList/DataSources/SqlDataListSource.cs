@@ -141,8 +141,8 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
+                    { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                     { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) },
-                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False }
                 };
             }
         }

@@ -30,7 +30,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(MaxItemsConfigurationField))]
         public int MaxItems { get; set; }
 
-        [ConfigurationField(typeof(ItemPickerConfigurationEditor.AllowDuplicatesConfigurationField))]
+        [ConfigurationField(typeof(AllowDuplicatesConfigurationField))]
         public bool AllowDuplicates { get; set; }
 
         [ConfigurationField(typeof(DisableSortingConfigurationField))]

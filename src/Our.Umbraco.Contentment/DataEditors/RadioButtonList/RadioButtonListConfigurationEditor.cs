@@ -12,7 +12,6 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class RadioButtonListConfigurationEditor : ConfigurationEditor
     {
         public const string Items = "items";
-        // TODO: [LK:2019-06-16] Implement "DefaultValue"
         public const string DefaultValue = "defaultValue";
 
         public RadioButtonListConfigurationEditor()

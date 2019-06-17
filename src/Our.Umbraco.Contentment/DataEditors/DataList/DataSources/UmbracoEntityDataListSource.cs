@@ -96,8 +96,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
+                    { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                     { DropdownListConfigurationEditor.Items, items },
-                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False }
                 };
             }
         }

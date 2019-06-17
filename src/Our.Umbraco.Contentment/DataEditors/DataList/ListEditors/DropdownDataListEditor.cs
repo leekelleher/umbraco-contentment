@@ -21,7 +21,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string View => IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
 
-        [ConfigurationField(typeof(DropdownListConfigurationEditor.AllowEmptyConfigurationField))]
+        [ConfigurationField(typeof(AllowEmptyConfigurationField))]
         public bool AllowEmpty { get; set; }
     }
 }

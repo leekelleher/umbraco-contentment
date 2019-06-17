@@ -11,7 +11,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
-        public const string AllowDuplicates = "allowDuplicates";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
 
@@ -70,18 +69,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return config;
-        }
-
-        internal class AllowDuplicatesConfigurationField : ConfigurationField
-        {
-            public AllowDuplicatesConfigurationField()
-                : base()
-            {
-                Key = AllowDuplicates;
-                Name = "Allow duplicates?";
-                Description = "Select to allow the editor to select duplicate items.";
-                View = "boolean";
-            }
         }
     }
 }

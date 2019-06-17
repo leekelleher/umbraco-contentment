@@ -273,6 +273,8 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
+    <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
+    <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
     <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFieldExtensions.cs" />
