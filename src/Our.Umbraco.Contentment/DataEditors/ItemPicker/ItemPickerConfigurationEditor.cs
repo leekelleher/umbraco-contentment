@@ -53,6 +53,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
+            Fields.Add(new ItemPickerTypeConfigurationField());
             Fields.AddMaxItems();
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.AddDisableSorting();

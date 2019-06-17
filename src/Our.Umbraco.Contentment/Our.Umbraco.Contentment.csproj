@@ -320,6 +320,7 @@
     <Compile Include="DataEditors\_\HideLabelConfigurationField.cs" />
     <Compile Include="DataEditors\_\DisableSortingConfigurationField.cs" />
     <Compile Include="DataEditors\_\MaxItemsConfigurationField.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPickerTypeConfigurationField.cs" />
     <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
@@ -334,6 +335,7 @@
     <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="DataEditors\ByteSize\byte-size.js" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />

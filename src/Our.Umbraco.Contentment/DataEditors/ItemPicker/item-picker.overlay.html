@@ -3,11 +3,11 @@
    - https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html
    - Modified under the permissions of the MIT License. -->
 
-<div ng-controller="Umbraco.Editors.ItemPicker as vm">
+<div ng-controller="Our.Umbraco.Contentment.Overlays.ItemPicker.Controller as vm">
 
     <umb-editor-view>
 
-        <umb-editor-header name="model.title"
+        <umb-editor-header name="vm.title"
                            name-locked="true"
                            hide-alias="true"
                            hide-icon="true"
@@ -17,10 +17,11 @@
         <umb-editor-container>
             <umb-box>
                 <umb-box-content>
-                    <div class="form-search" ng-hide="model.filter === false" style="margin-bottom: 15px;">
+
+                    <div class="form-search" ng-if="vm.enableFilter" style="margin-bottom: 15px;">
                         <i class="icon-search"></i>
                         <input type="text"
-                               ng-model="searchTerm"
+                               ng-model="vm.searchTerm"
                                class="umb-search-field search-query input-block-level -full-width-input"
                                localize="placeholder"
                                placeholder="@placeholders_filter"
@@ -28,16 +29,29 @@
                                no-dirty-check />
                     </div>
 
-                    <ul class="umb-card-grid">
-                        <li ng-repeat="availableItem in model.availableItems | compareArrays:model.selectedItems:'alias' | orderBy:model.orderBy | filter:searchTerm"
-                            ng-click="vm.selectItem(availableItem)"
+                    <ul class="umb-card-grid" ng-if="vm.listType === 'grid'">
+                        <li ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm"
+                            ng-click="vm.select(item)"
                             class="-three-in-row">
-                            <a class="umb-card-grid-item" href="" title="{{ availableItem.name }}">
-                                <i class="{{ availableItem.icon }}"></i>
-                                {{ availableItem.name }}
+                            <a class="umb-card-grid-item" href="" title="{{item.name}}">
+                                <i class="{{item.icon}}"></i>
+                                {{item.name}}
                             </a>
                         </li>
                     </ul>
+
+                    <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
+                        <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
+                            <a class="umb-action-link" ng-click="vm.select(item)">
+                                <i class="large icon {{item.icon}}"></i>
+                                <span class="menu-label">
+                                    {{item.name}}
+                                    <small>{{item.description}}</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
                 </umb-box-content>
             </umb-box>
         </umb-editor-container>

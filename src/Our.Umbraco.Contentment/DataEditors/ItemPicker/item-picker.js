@@ -11,12 +11,13 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
         //console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
+            allowDuplicates: 0,
+            defaultIcon: "icon-science",
+            disableSorting: 0,
+            enableFilter: 1,
             items: [],
             maxItems: 0,
-            allowDuplicates: 0,
-            enableFilter: 1,
-            disableSorting: 0,
-            defaultIcon: "icon-science",
+            listType: "grid",
             overlayView: "",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
@@ -74,21 +75,21 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
 
         function add($event) {
 
-            var availableItems = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
+            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
                 return _.find(vm.items, function (y) { return x.name === y.name; });
             });
 
-            ensureIcons(availableItems);
+            ensureIcons(items);
 
             var itemPicker = {
-                title: "Choose...",
-                // TODO: [LK:2019-06-13] NOTE: I've copied over the "itempicker.html" from Umbraco v8.0.2, as it has `orderBy:'name'` hardcoded, and I need it display the items as provided.
-                // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html#L28
-                // PR will be submitted.
+                config: {
+                    title: "Choose...",
+                    enableFilter: Object.toBoolean(config.enableFilter),
+                    items: items,
+                    listType: config.listType,
+                },
                 view: config.overlayView,
                 size: "small",
-                availableItems: availableItems,
-                filter: Object.toBoolean(config.enableFilter),
                 submit: function (model) {
 
                     vm.items.push(angular.copy(model.selectedItem))

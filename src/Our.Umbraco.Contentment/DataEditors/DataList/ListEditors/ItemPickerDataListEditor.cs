@@ -27,6 +27,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(IconPickerConfigurationEditor.DefaultIconConfigurationField))]
         public string DefaultIcon { get; set; }
 
+        [ConfigurationField(typeof(ItemPickerTypeConfigurationField))]
+        public string ListType { get; set; }
+
         [ConfigurationField(typeof(MaxItemsConfigurationField))]
         public int MaxItems { get; set; }
 

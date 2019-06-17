@@ -45,8 +45,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { ItemPickerConfigurationEditor.Items, items },
                     { AllowDuplicatesConfigurationField.AllowDuplicates, Constants.Values.False },
+                    { ItemPickerConfigurationEditor.Items, items },
+                    { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) }
                 });
 
