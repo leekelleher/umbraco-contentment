@@ -30,6 +30,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new RenderMacroConfigurationEditor();
 
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
+        protected override IDataValueEditor CreateValueEditor() => new ReadOnlyDataValueEditor(Attribute);
     }
 }

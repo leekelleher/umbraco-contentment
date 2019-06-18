@@ -279,6 +279,7 @@
     <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
     <Compile Include="DataEditors\ItemPicker\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\_\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
