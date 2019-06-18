@@ -9,6 +9,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cascad
     "$http",
     function ($scope, $q, $http) {
 
+        if (_.has($scope.model, "contentTypeId")) {
+            // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
+            return;
+        }
+
         // console.log("cascading-dropdown-list.model", $scope.model);
 
         var defaultConfig = { apis: [], options: [] };

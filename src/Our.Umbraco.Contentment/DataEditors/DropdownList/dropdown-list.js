@@ -23,9 +23,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Dropdo
 
             _.each(config.items, function (item) {
                 if (item.hasOwnProperty("enabled")) {
-                    item.disabled = item.enabled === "0" || item.enabled === 0;
+                    item.disabled = Object.toBoolean(item.enabled);
                 }
-                return item;
             });
 
             vm.items = config.items;
