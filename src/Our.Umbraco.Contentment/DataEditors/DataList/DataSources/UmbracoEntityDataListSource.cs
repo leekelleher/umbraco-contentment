@@ -12,7 +12,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Web.Models.ContentEditing;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
+using UmbracoConstants = Umbraco.Core.Constants;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -31,14 +31,14 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
         {
-            { nameof(UmbracoEntityTypes.DataType), UmbracoIcons.DataType },
+            { nameof(UmbracoEntityTypes.DataType), UmbracoConstants.Icons.DataType },
             // TODO: [LK:2019-06-07] `Constants.Icons.ContentType` uses the wrong icon name.
             // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/Constants-Icons.cs#L18
             // TODO: [LK:2019-06-07] Patch supplied to Umbraco: https://github.com/umbraco/Umbraco-CMS/pull/5618
             { nameof(UmbracoEntityTypes.DocumentType), "icon-item-arrangement" },
             { nameof(UmbracoEntityTypes.MediaType), "icon-thumbnails" },
-            { nameof(UmbracoEntityTypes.Member), UmbracoIcons.Member },
-            { nameof(UmbracoEntityTypes.MemberType), UmbracoIcons.MemberType },
+            { nameof(UmbracoEntityTypes.Member),  UmbracoConstants.Icons.Member },
+            { nameof(UmbracoEntityTypes.MemberType),  UmbracoConstants.Icons.MemberType },
         };
 
         private readonly IEntityService _entityService;
@@ -74,7 +74,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     {
                         Icon = icon,
                         Name = x.Name,
-                        Value = new GuidUdi(EntityType, x.Key).ToString(),
+                        Value = Udi.Create(UmbracoConstants.UdiEntityType.FromUmbracoObjectType(objectType), x.Key).ToString(),
                     });
             }
 
