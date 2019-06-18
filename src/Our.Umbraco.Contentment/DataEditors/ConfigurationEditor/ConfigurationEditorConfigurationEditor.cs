@@ -25,7 +25,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
-            var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true);
+            var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true);
             var items = new List<DataListItem>();
             foreach (var configEditor in configEditors)
             {
@@ -120,7 +120,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         }
 
         // TODO: [LK:2019-06-07] Review if these methods should be in a "Service" or other class? Feels odd them being in here.
-        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types, bool ignoreFields = false)
+        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types, bool onlyPublic = false, bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
             if (types == null)
@@ -130,6 +130,9 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             foreach (var type in types)
             {
+                if (onlyPublic && type.IsPublic == false)
+                    continue;
+
                 var provider = Activator.CreateInstance(type) as TConfigurationEditor;
                 if (provider == null)
                     continue;
@@ -186,11 +189,11 @@ namespace Our.Umbraco.Contentment.DataEditors
             return models;
         }
 
-        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool ignoreFields = false)
+        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool onlyPublic = false, bool ignoreFields = false)
             where TConfigurationEditor : class, IConfigurationEditorItem
         {
             // TODO: [LK:2019-06-06] Replace `Current.TypeLoader` using DI.
-            return GetConfigurationEditors<TConfigurationEditor>(Current.TypeLoader.GetTypes<TConfigurationEditor>(), ignoreFields);
+            return GetConfigurationEditors<TConfigurationEditor>(Current.TypeLoader.GetTypes<TConfigurationEditor>(), onlyPublic, ignoreFields);
         }
     }
 }
