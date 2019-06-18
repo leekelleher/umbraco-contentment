@@ -11,6 +11,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
+        public const string DefaultIcon = "defaultIcon";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
 
