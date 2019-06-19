@@ -349,6 +349,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
+    <Content Include="DataEditors\_\_json-editor.html" />
+    <Content Include="DataEditors\_\_dev-mode.html" />
+    <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="DataEditors\ByteSize\byte-size.js" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />

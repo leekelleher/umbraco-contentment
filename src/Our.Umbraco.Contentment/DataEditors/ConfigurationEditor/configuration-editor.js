@@ -20,6 +20,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             orderBy: "name",
             overlaySize: "large",
             overlayView: "",
+            enableDevMode: 0,
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -51,6 +52,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
                     setDirty();
                 }
             };
+
+            vm.enableDevMode = Object.toBoolean(config.enableDevMode);
 
             vm.add = add;
             vm.edit = edit;

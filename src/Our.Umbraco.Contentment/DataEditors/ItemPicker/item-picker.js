@@ -19,6 +19,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             maxItems: 0,
             listType: "grid",
             overlayView: "",
+            enableDevMode: 0,
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -28,7 +29,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
 
             $scope.model.value = $scope.model.value || [];
 
-            vm.items = [];
             vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
@@ -50,27 +50,13 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
                 }
             };
 
+            vm.enableDevMode = Object.toBoolean(config.enableDevMode);
+
             vm.add = add;
+            vm.bind = bind;
             vm.remove = remove;
 
-            if ($scope.model.value.length > 0 && config.items.length > 0) {
-                var orphaned = [];
-
-                _.each($scope.model.value, function (v) {
-                    var item = _.find(config.items, function (x) { return x.value === v });
-                    if (item) {
-                        vm.items.push(angular.copy(item));
-                    } else {
-                        orphaned.push(v);
-                    }
-                });
-
-                if (orphaned.length > 0) {
-                    $scope.model.value = _.difference($scope.model.value, orphaned);
-                }
-
-                ensureIcons(vm.items);
-            }
+            bind();
         };
 
         function add($event) {
@@ -110,6 +96,30 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
 
             editorService.open(itemPicker);
 
+        };
+
+        function bind() {
+
+            vm.items = [];
+
+            if ($scope.model.value.length > 0 && config.items.length > 0) {
+                var orphaned = [];
+
+                _.each($scope.model.value, function (v) {
+                    var item = _.find(config.items, function (x) { return x.value === v });
+                    if (item) {
+                        vm.items.push(angular.copy(item));
+                    } else {
+                        orphaned.push(v);
+                    }
+                });
+
+                if (orphaned.length > 0) {
+                    $scope.model.value = _.difference($scope.model.value, orphaned);
+                }
+
+                ensureIcons(vm.items);
+            }
         };
 
         function remove($index) {
