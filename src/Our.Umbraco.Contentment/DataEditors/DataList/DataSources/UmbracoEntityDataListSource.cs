@@ -40,6 +40,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         private readonly IEntityService _entityService;
 
+        // TODO: [LK:2019-06-30] Once we figure out how to DI with deserialized JSON, I can remove this constructor.
         public UmbracoEntityDataListSource()
             : this(Current.Services.EntityService)
         { }

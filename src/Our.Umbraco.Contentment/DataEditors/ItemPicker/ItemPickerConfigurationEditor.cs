@@ -12,6 +12,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
         public const string DefaultIcon = "defaultIcon";
+        public const string EnableDevMode = "enableDevMode";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
 
@@ -59,6 +60,11 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
+            Fields.Add(
+                EnableDevMode,
+                "Enable developer mode?",
+                "Select to enable add the ability to edit the raw JSON data for the editor value.",
+                "boolean");
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
