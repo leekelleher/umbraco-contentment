@@ -59,7 +59,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             bind();
         };
 
-        function add($event) {
+        function add() {
 
             var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
                 return _.find(vm.items, function (y) { return x.name === y.name; });
