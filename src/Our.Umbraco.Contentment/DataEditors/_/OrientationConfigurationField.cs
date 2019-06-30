@@ -20,8 +20,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var items = new[]
             {
-                new { name = nameof(Horizontal), value = Horizontal },
-                new { name = nameof(Vertical), value = Vertical }
+                new DataListItem { Name = nameof(Horizontal), Value = Horizontal },
+                new DataListItem { Name = nameof(Vertical), Value = Vertical }
             };
 
             Key = Orientation;
@@ -30,7 +30,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
-                { Orientation, Horizontal },
+                { Orientation, Vertical },
                 { RadioButtonListConfigurationEditor.Items, items },
                 { RadioButtonListConfigurationEditor.DefaultValue, Vertical }
             };

@@ -16,6 +16,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
+        public const string EnableDevMode = "enableDevMode";
         public const string EnableFilter = "enableFilter";
         public const string Items = "items";
         public const string OrderBy = "orderBy";
@@ -48,7 +49,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { AllowDuplicatesConfigurationField.AllowDuplicates, Constants.Values.False },
                     { ItemPickerConfigurationEditor.Items, items },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
-                    { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) }
+                    { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
+                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.True },
                 });
 
             Fields.Add(
@@ -83,7 +85,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { OrientationConfigurationField.Orientation, OrientationConfigurationField.Horizontal },
+                    { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
                     { RadioButtonListConfigurationEditor.Items, items },
                     { RadioButtonListConfigurationEditor.DefaultValue, Large }
                 };

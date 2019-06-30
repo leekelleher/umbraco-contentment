@@ -20,19 +20,19 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             var items = new[]
             {
-                new { name = nameof(Grid), value = Grid },
-                new { name = nameof(List), value = List }
+                new DataListItem { Name = nameof(Grid), Value = Grid, Description = "Grid displays as a card based layout, (3 cards per row)." },
+                new DataListItem { Name = nameof(List), Value = List, Description = "List will display as a menu of single items." }
             };
 
             Key = ListType;
             Name = "List type";
-            Description = "Select the style of list to be displayed in the overlay.<br><br>Grid displays as a card based layout, (3 cards per row), whereas List will display as a menu of single items.";
-            View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
+            Description = "Select the style of list to be displayed in the overlay.";
+            View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
-                { AllowEmptyConfigurationField.AllowEmpty,  Constants.Values.False },
-                { DropdownListConfigurationEditor.Items, items },
-                { DropdownListConfigurationEditor.DefaultValue, Grid }
+                { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
+                { RadioButtonListConfigurationEditor.Items, items },
+                { RadioButtonListConfigurationEditor.DefaultValue, Grid }
             };
         }
     }

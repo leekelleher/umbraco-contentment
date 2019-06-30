@@ -21,18 +21,18 @@ namespace Our.Umbraco.Contentment.DataEditors
             Fields.Add(
                 Kilo,
                 "Kilobytes?",
-                "How many bytes are there in a Kilobyte?<br>Kilobyte (1000), kibibyte (1024), you decide.",
-                IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                "How many bytes do you prefer in your kilobyte?",
+                IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, new[]
+                    { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
+                    { RadioButtonListConfigurationEditor.Items, new[]
                         {
-                            new DataListItem { Name = "1000 Bytes", Value = "1000" },
-                            new DataListItem { Name = "1024 Bytes", Value = "1024" },
+                            new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong>." },
+                            new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong>. Today, this is known as a kibibyte." },
                         }
                     },
-                    { DropdownListConfigurationEditor.DefaultValue, "1024" },
+                    { RadioButtonListConfigurationEditor.DefaultValue, "1024" },
                 });
 
             Fields.Add(
