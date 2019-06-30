@@ -12,13 +12,13 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ByteSizeValueConverter : PropertyValueConverterBase
     {
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ByteSizeDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ByteSizeDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
-        public override Type GetPropertyValueType(PublishedPropertyType propertyType) => typeof(long);
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(long);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, PublishedPropertyType propertyType, object source, bool preview)
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
         {
             return source is string value && long.TryParse(value, out var inter)
                 ? inter

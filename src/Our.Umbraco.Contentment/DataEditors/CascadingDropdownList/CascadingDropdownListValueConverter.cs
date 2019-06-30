@@ -14,13 +14,13 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CascadingDropdownListValueConverter : PropertyValueConverterBase
     {
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CascadingDropdownListDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CascadingDropdownListDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
-        public override Type GetPropertyValueType(PublishedPropertyType propertyType) => typeof(IEnumerable<string>);
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<string>);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, PublishedPropertyType propertyType, object source, bool preview)
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
         {
             if (source is string value)
             {

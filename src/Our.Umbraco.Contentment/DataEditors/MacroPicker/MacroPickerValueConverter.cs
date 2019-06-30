@@ -16,13 +16,13 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class MacroPickerValueConverter : PropertyValueConverterBase
     {
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(MacroPickerDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(MacroPickerDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
-        public override Type GetPropertyValueType(PublishedPropertyType propertyType) => typeof(IEnumerable<PartialViewMacroModel>);
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<PartialViewMacroModel>);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, PublishedPropertyType propertyType, object source, bool preview)
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
         {
             if (source is string value)
             {
@@ -32,7 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, PublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
         {
             if (inter is IEnumerable<MacroPickerModel> items)
             {

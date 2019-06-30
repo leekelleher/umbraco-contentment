@@ -12,10 +12,10 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CodeEditorValueConverter : PropertyValueConverterBase
     {
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CodeEditorDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CodeEditorDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
-        public override Type GetPropertyValueType(PublishedPropertyType propertyType) => typeof(string);
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(string);
     }
 }

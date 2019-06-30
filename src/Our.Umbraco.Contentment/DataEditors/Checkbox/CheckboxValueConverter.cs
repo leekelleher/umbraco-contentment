@@ -12,10 +12,10 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class CheckboxValueConverter : PropertyValueConverterBase
     {
-        public override bool IsConverter(PublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CheckboxDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CheckboxDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(PublishedPropertyType propertyType) => PropertyCacheLevel.Element;
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
-        public override Type GetPropertyValueType(PublishedPropertyType propertyType) => typeof(bool);
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(bool);
     }
 }
