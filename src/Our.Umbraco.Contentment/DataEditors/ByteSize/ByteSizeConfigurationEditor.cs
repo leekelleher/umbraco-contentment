@@ -55,9 +55,6 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             if (config.ContainsKey(Filter) == false)
             {
-                // NOTE: Unfortunately this wont work with v8.0.2, as the ReadOnlyValueController is expecting an array object.
-                // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/propertyeditors/readonlyvalue/readonlyvalue.controller.js#L18-L22
-                // TODO: [LK:2019-06-07] Patch supplied to Umbraco: https://github.com/umbraco/Umbraco-CMS/pull/5615
                 config.Add(Filter, "formatBytes");
 
                 if (config.ContainsKey(Format) == false && config.ContainsKey(Kilo) && config.ContainsKey(Decimals))

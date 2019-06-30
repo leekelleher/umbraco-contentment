@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -31,9 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    // TODO: [LK:2019-06-17] If/when PR #5618 is merged accepted, we can use `Icons.DefaultIcon`.
-                    // https://github.com/umbraco/Umbraco-CMS/pull/5618
-                    { DefaultIcon, "icon-document" }
+                    { DefaultIcon, UmbIcons.DefaultIcon }
                 };
             }
         }
