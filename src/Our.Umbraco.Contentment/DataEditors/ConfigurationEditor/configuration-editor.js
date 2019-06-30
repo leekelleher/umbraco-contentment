@@ -58,6 +58,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             vm.add = add;
             vm.edit = edit;
             vm.remove = remove;
+            vm.validate = validate;
         };
 
         function add($event) {
@@ -127,6 +128,15 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Config
             }
 
             setDirty();
+        };
+
+        function validate() {
+            // TODO: [LK:2019-06-30] Need to remove any extra items.
+            if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+                vm.allowAdd = false;
+            } else {
+                vm.allowAdd = true;
+            }
         };
 
         function setDirty() {
