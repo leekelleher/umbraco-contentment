@@ -3,7 +3,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="umb-property-editor umb-contentpicker" ng-controller="Our.Umbraco.Contentment.DataEditors.ItemPicker.Controller as vm">
+<div class="umb-contentpicker" ng-controller="Our.Umbraco.Contentment.DataEditors.ItemPicker.Controller as vm">
     <div ui-sortable="vm.sortableOptions" ng-model="vm.items">
         <umb-node-preview ng-repeat="item in vm.items"
                           icon="item.icon || vm.icon"

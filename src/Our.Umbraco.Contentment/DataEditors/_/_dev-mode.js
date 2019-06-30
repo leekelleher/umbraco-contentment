@@ -15,7 +15,7 @@ angular.module("umbraco.directives").directive("contentmentDevMode", [
             link: function (scope, element, attrs, ngModelCtrl) {
                 scope.open = function () {
                     editorService.open({
-                        title: "Edit...",
+                        title: "Edit JSON value...",
                         value: angular.toJson(ngModelCtrl.$modelValue, true),
                         ace: {
                             showGutter: true,

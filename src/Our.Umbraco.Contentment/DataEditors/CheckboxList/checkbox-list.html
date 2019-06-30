@@ -3,8 +3,8 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="umb-property-editor umb-checkboxlist" ng-controller="Our.Umbraco.Contentment.DataEditors.CheckboxList.Controller as vm">
-    <ul class="unstyled checkbox no-indent" ng-if="vm.toggleAll">
+<div class="umb-checkboxlist" ng-controller="Our.Umbraco.Contentment.DataEditors.CheckboxList.Controller as vm">
+    <ul class="unstyled checkbox no-indent" ng-class="vm.layout" ng-if="vm.toggleAll">
         <li>
             <label>
                 <input type="checkbox" ng-change="vm.toggle()" ng-model="vm.toggleChecked" />
@@ -12,6 +12,7 @@
             </label>
         </li>
     </ul>
+    <div></div>
     <ul class="unstyled checkbox no-indent" ng-class="vm.layout">
         <li ng-repeat="item in vm.items">
             <label>
