@@ -9,4 +9,7 @@
 - Hide Label
   A property-editor wrapper that can add a "Hide Label" field. Apart from that, everything else is invisible.
 
+- Textbox
+  Customizable textbox, Placeholder text, Default value, Prefix / suffix (input groups), Char limit, Hide label, Html5 types, Data list
+
 -
