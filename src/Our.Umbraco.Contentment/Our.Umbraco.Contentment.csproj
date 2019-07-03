@@ -291,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\ToggleGroupDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
     <Compile Include="DataEditors\ByteSize\ByteSizeDataEditor.cs" />
@@ -323,6 +324,8 @@
     <Compile Include="DataEditors\ItemPicker\ItemPickerValueConverter.cs" />
     <Compile Include="DataEditors\ItemPicker\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
+    <Compile Include="DataEditors\ToggleGroup\ToggleGroupConfigurationEditor.cs" />
+    <Compile Include="DataEditors\ToggleGroup\ToggleGroupDataEditor.cs" />
     <Compile Include="DataEditors\_\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListValueConverter.cs" />
@@ -390,6 +393,8 @@
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
+    <Content Include="DataEditors\ToggleGroup\toggle-group.js" />
+    <Content Include="DataEditors\ToggleGroup\toggle-group.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />

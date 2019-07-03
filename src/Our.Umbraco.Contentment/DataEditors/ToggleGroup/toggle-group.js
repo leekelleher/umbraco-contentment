@@ -3,13 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.CheckboxList.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ToggleGroup.Controller", [
     "$scope",
     function ($scope) {
 
-        // console.log("checkboxlist.model", $scope.model);
+        // console.log("toggle-group.model", $scope.model);
 
-        var defaultConfig = { items: [], checkAll: 0, orientation: "vertical", defaultValue: [] };
+        var defaultConfig = { items: [], defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -27,44 +27,16 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
                 item.checked = _.contains($scope.model.value, item.value);
             });
 
-            vm.layout = config.orientation === "horizontal" ? "inline" : "";
             vm.changed = changed;
-
-            vm.toggleAll = Object.toBoolean(config.checkAll);
-            if (vm.toggleAll) {
-                vm.toggle = toggle;
-                vm.toggleChecked = _.every(vm.items, function (item) {
-                    return item.checked;
-                });
-            }
         };
 
         function changed(item) {
-
-            vm.toggleChecked = _.every(vm.items, function (item) {
-                return item.checked;
-            });
 
             $scope.model.value = [];
 
             _.each(vm.items, function (x) {
                 if (x.checked) {
                     $scope.model.value.push(x.value);
-                }
-            });
-
-            setDirty();
-        };
-
-        function toggle() {
-            $scope.model.value = [];
-
-            _.each(vm.items, function (item) {
-
-                item.checked = vm.toggleChecked;
-
-                if (item.checked) {
-                    $scope.model.value.push(item.value);
                 }
             });
 

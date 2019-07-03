@@ -9,12 +9,12 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class CheckboxListConfigurationEditor : ConfigurationEditor
+    public class ToggleGroupConfigurationEditor : ConfigurationEditor
     {
         public const string Items = "items";
         public const string DefaultValue = "defaultValue";
 
-        public CheckboxListConfigurationEditor()
+        public ToggleGroupConfigurationEditor()
             : base()
         {
             var listFields = new[]
@@ -23,6 +23,12 @@ namespace Our.Umbraco.Contentment.DataEditors
                 {
                     Key = "name",
                     Name = "Name",
+                    View = "textbox"
+                },
+                new ConfigurationField
+                {
+                    Key = "description",
+                    Name = "Description",
                     View = "textbox"
                 },
                 new ConfigurationField
@@ -47,8 +53,6 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
-            Fields.Add(new CheckAllConfigurationField());
-            Fields.Add(new OrientationConfigurationField());
             Fields.AddHideLabel();
         }
     }
