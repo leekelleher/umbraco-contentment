@@ -25,5 +25,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         [JsonProperty("fields")]
         public IEnumerable<ConfigurationField> Fields { get; set; }
+
+        [JsonProperty("defaultValues", NullValueHandling = NullValueHandling.Ignore)]
+        public Dictionary<string, object> DefaultValues { get; set; }
+
+        [JsonProperty("nameTemplate", NullValueHandling = NullValueHandling.Ignore)]
+        public string NameTemplate { get; set; }
     }
 }

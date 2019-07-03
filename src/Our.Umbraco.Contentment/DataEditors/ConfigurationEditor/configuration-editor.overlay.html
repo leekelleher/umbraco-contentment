@@ -3,7 +3,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div ng-controller="Our.Umbraco.Contentment.Overlays.ConfigurationEditor.Controller as vm">
+<div class="contentment" ng-controller="Our.Umbraco.Contentment.Overlays.ConfigurationEditor.Controller as vm">
     <umb-editor-view>
 
         <umb-editor-header name="vm.title"
@@ -19,7 +19,7 @@
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content class="block-form">
-                        <div class="form-search" ng-if="vm.enableFilter" style="margin-bottom: 15px;">
+                        <div class="form-search" ng-if="vm.enableFilter">
                             <i class="icon-search"></i>
                             <input type="text"
                                    ng-model="vm.searchTerm"

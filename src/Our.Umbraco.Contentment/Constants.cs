@@ -37,6 +37,8 @@ namespace Our.Umbraco.Contentment
                 public const string Lists = "Lists";
 
                 public const string Pickers = "Pickers";
+
+                public const string RichContent = "Rich Content";
             }
         }
 

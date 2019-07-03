@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Blocks.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Elements.Controller", [
     "$scope",
     "editorService",
     function ($scope, editorService) {
@@ -13,9 +13,14 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Blocks
             return;
         }
 
-        console.log("blocks.model", $scope.model);
+        console.log("elements.model", $scope.model);
 
-        var defaultConfig = { items: [], maxItems: 0 };
+        var defaultConfig = {
+            items: [],
+            maxItems: 0,
+            disableSorting: 0,
+            overlayView: "",
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -26,32 +31,15 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Blocks
 
             $scope.model.value = $scope.model.value || [];
 
-            $scope.model.value = [{
-                contentTypeName: "Hero",
-                name: "Block 1"
-            }, {
-                contentTypeName: "Hero",
-                name: "Block 2"
-            }];
+            $scope.model.value = config.items;
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
-            vm.allowEdit = false;
-            vm.allowRemove = true;
 
             vm.sortableOptions = {
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
                 disabled: true,
-                //forcePlaceholderSize: true,
-                //handle: ".handle",
-                //helper: function (e, ui) {
-                //    ui.children().each(function () {
-                //        $(this).width($(this).width());
-                //    });
-                //    return ui.clone();
-                //},
-                //items: "> li",
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",

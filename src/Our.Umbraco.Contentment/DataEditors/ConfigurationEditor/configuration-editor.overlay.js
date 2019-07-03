@@ -5,12 +5,13 @@
 
 angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.ConfigurationEditor.Controller", [
     "$scope",
+    "$interpolate",
     "formHelper",
-    function ($scope, formHelper) {
+    function ($scope, $interpolate, formHelper) {
 
         // console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { mode: "select", items: [], editor: null, overlaySize: "large", enableFilter: 0, orderBy: "name" };
+        var defaultConfig = { mode: "select", items: [], editor: null, overlaySize: "large", enableFilter: false, orderBy: "name" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -23,7 +24,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
 
                 vm.title = "Select...";
                 vm.items = config.items;
-                vm.enableFilter = Object.toBoolean(config.enableFilter);
+                vm.enableFilter = config.enableFilter;
                 vm.orderBy = config.orderBy;
                 vm.select = select;
 
@@ -61,8 +62,9 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
             if (editor.fields.length == 0) {
                 save(editor);
             } else {
+                console.log("edit", editor);
                 vm.mode = "edit";
-                edit(editor, { value: {} });
+                edit(editor, { value: editor.defaultValues || {} });
             }
         };
 
@@ -88,6 +90,17 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
             _.each(item.fields, function (x) {
                 obj.value[x.key] = x.value;
             });
+
+            // TODO: [LK:2019-07-01] Review if this should happen here, or in the add/edit functions of 'umb-node-preview'?
+            if (_.has(item, "nameTemplate") && item.nameTemplate) {
+                var nameExp = $interpolate(item.nameTemplate);
+                if (nameExp) {
+                    var newName = nameExp(obj.value);
+                    if (newName && (newName = $.trim(newName)) && obj.name !== newName) {
+                        obj.name = newName;
+                    }
+                }
+            }
 
             if ($scope.model.submit) {
                 $scope.model.submit(obj);

@@ -110,7 +110,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
 
                 config[Items] = GetConfigurationEditors<IConfigurationEditorItem>(types);
-                config[OrderBy] = string.Empty;
+                config[OrderBy] = string.Empty; // TODO: [LK:2019-07-01] Why is this empty? Do we need it?
             }
 
             if (config.ContainsKey(OverlayView) == false)

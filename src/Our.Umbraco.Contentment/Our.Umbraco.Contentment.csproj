@@ -291,8 +291,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="DataEditors\Blocks\BlocksDataEditor.cs" />
-    <Compile Include="DataEditors\Blocks\BlocksConfigurationEditor.cs" />
+    <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
+    <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
     <Compile Include="DataEditors\ByteSize\ByteSizeDataEditor.cs" />
     <Compile Include="DataEditors\ByteSize\ByteSizeConfigurationEditor.cs" />
     <Compile Include="DataEditors\ByteSize\ByteSizeValueConverter.cs" />
@@ -384,9 +384,10 @@
     <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataEditors\Blocks\blocks.css" />
-    <Content Include="DataEditors\Blocks\blocks.html" />
-    <Content Include="DataEditors\Blocks\blocks.js" />
+    <Content Include="DataEditors\Elements\elements.css" />
+    <Content Include="DataEditors\Elements\elements.html" />
+    <Content Include="DataEditors\Elements\elements.js" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
     <Content Include="DataEditors\_\_json-editor.html" />
