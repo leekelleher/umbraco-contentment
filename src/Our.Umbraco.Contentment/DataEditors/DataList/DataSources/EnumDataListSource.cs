@@ -41,6 +41,10 @@ namespace Our.Umbraco.Contentment.DataEditors
             if (enumType == null)
                 return Enumerable.Empty<DataListItem>();
 
+            // TODO: [LK:2019-07-03] Investigate if we'd like to support the `Description` attribute? Then we could set the description field.
+            // https://www.codementor.io/cerkit/giving-an-enum-a-string-value-using-the-description-attribute-6b4fwdle0
+            // But then this raises a question about whether to check for `DisplayNameAttribute` too?
+
             var names = default(string[]);
             try { names = Enum.GetNames(enumType); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (names == null)

@@ -26,13 +26,15 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             _macroService = macroService;
 
-            var macros = macroService.GetAll().Select(x => new DataListItem
-            {
-                Icon = UmbracoIcons.Macro,
-                Name = x.Name,
-                Description = x.Alias,
-                Value = x.GetUdi().ToString()
-            });
+            var macros = macroService
+                .GetAll()
+                .Select(x => new DataListItem
+                {
+                    Icon = UmbracoIcons.Macro,
+                    Name = x.Name,
+                    Description = x.Alias,
+                    Value = x.GetUdi().ToString()
+                });
 
             Fields.Add(
                 AllowedMacros,
