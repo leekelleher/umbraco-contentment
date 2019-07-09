@@ -62,7 +62,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
             if (editor.fields.length == 0) {
                 save(editor);
             } else {
-                console.log("edit", editor);
                 vm.mode = "edit";
                 edit(editor, { value: editor.defaultValues || {} });
             }

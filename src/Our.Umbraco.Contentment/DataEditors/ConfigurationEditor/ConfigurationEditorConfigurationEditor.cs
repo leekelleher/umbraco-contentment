@@ -50,7 +50,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { ItemPickerConfigurationEditor.Items, items },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.True },
+                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.False },
                 });
 
             Fields.Add(
@@ -122,8 +122,8 @@ namespace Our.Umbraco.Contentment.DataEditors
         }
 
         // TODO: [LK:2019-06-07] Review if these methods should be in a "Service" or other class? Feels odd them being in here.
-        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(IEnumerable<Type> types, bool onlyPublic = false, bool ignoreFields = false)
-            where TConfigurationEditor : class, IConfigurationEditorItem
+        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(IEnumerable<Type> types, bool onlyPublic = false, bool ignoreFields = false)
+            where TContentmentListItem : class, IContentmentListItem
         {
             if (types == null)
                 return Array.Empty<ConfigurationEditorModel>();
@@ -135,7 +135,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 if (onlyPublic && type.IsPublic == false)
                     continue;
 
-                var provider = Activator.CreateInstance(type) as TConfigurationEditor;
+                var provider = Activator.CreateInstance(type) as TContentmentListItem;
                 if (provider == null)
                     continue;
 
@@ -191,11 +191,11 @@ namespace Our.Umbraco.Contentment.DataEditors
             return models;
         }
 
-        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TConfigurationEditor>(bool onlyPublic = false, bool ignoreFields = false)
-            where TConfigurationEditor : class, IConfigurationEditorItem
+        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(bool onlyPublic = false, bool ignoreFields = false)
+            where TContentmentListItem : class, IContentmentListItem
         {
             // TODO: [LK:2019-06-06] Replace `Current.TypeLoader` using DI.
-            return GetConfigurationEditors<TConfigurationEditor>(Current.TypeLoader.GetTypes<TConfigurationEditor>(), onlyPublic, ignoreFields);
+            return GetConfigurationEditors<TContentmentListItem>(Current.TypeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
         }
     }
 }

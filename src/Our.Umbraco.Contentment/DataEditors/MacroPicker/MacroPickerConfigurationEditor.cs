@@ -47,7 +47,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { ItemPickerConfigurationEditor.Items, macros },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.True },
+                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.False },
                 });
 
             Fields.AddMaxItems();

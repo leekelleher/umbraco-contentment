@@ -2,7 +2,7 @@
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public interface IDataListSource : IConfigurationEditorItem
+    public interface IDataListSource : IContentmentListItem
     {
         IEnumerable<DataListItem> GetItems();
     }

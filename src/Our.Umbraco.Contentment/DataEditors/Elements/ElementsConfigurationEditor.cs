@@ -80,7 +80,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { ConfigurationEditorConfigurationEditor.OverlaySize, ConfigurationEditorConfigurationEditor.OverlaySizeConfigurationField.Large },
                     { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { ConfigurationEditorConfigurationEditor.EnableFilter, Constants.Values.True },
-                    { ConfigurationEditorConfigurationEditor.EnableDevMode, Constants.Values.True },
+                    { ConfigurationEditorConfigurationEditor.EnableDevMode, Constants.Values.False },
                 });
 
             Fields.AddMaxItems();
