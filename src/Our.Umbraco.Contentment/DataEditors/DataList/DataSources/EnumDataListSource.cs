@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
@@ -38,17 +39,21 @@ namespace Our.Umbraco.Contentment.DataEditors
 
             var enumType = default(Type);
             try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
-            if (enumType == null)
+            if (enumType == null || enumType.IsEnum == false)
                 return Enumerable.Empty<DataListItem>();
 
-            // TODO: [LK:2019-07-03] Investigate if we'd like to support the `Description` attribute? Then we could set the description field.
-            // https://www.codementor.io/cerkit/giving-an-enum-a-string-value-using-the-description-attribute-6b4fwdle0
-            // But then this raises a question about whether to check for `DisplayNameAttribute` too?
-
+            // Don't call `Enum.GetNames`, use `GetFields`, then you can check for the attributes, etc. Performance wise it's minimal, as .NET is using GetFields anyway.
+            // https://referencesource.microsoft.com/#mscorlib/system/type.cs,1419
             var names = default(string[]);
             try { names = Enum.GetNames(enumType); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (names == null)
                 return Enumerable.Empty<DataListItem>();
+
+            // TODO: [LK:2019-07-03] Investigate if we'd like to support the `Display` attribute? Then we could set the description field.
+            // `System.ComponentModel.DataAnnotations.DisplayAttribute`
+            // https://www.codementor.io/cerkit/giving-an-enum-a-string-value-using-the-description-attribute-6b4fwdle0
+            // But then this raises a question about whether to check for `DisplayAttribute` too?
+            // var foo = enumType.GetMember("")[0].GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
 
             if (SortAlphabetically)
             {
