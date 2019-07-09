@@ -1,0 +1,18 @@
+﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.contentment .umb-panel .form-search {
+    margin-bottom: 15px;
+}
+
+.contentment .umb-actions-child .umb-action-link {
+    padding-right: 10px;
+    width: 95%;
+}
+
+.contentment .umb-card-grid .umb-card-grid-item {
+    padding-top: 20%;
+    padding-bottom: 20%;
+}

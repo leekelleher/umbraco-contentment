@@ -392,6 +392,7 @@
     <Content Include="DataEditors\Elements\elements.html" />
     <Content Include="DataEditors\Elements\elements.js" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.css" />
+    <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
     <Content Include="DataEditors\ToggleGroup\toggle-group.js" />

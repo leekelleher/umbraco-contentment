@@ -3,7 +3,7 @@
    - https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/itempicker/itempicker.html
    - Modified under the permissions of the MIT License. -->
 
-<div ng-controller="Our.Umbraco.Contentment.Overlays.ItemPicker.Controller as vm">
+<div class="contentment" ng-controller="Our.Umbraco.Contentment.Overlays.ItemPicker.Controller as vm">
 
     <umb-editor-view>
 
@@ -20,7 +20,7 @@
 
                     <!-- TODO: [LK:2019-06-30] Display message if there are no items available. -->
 
-                    <div class="form-search" ng-if="vm.enableFilter" style="margin-bottom: 15px;">
+                    <div class="form-search" ng-if="vm.enableFilter">
                         <i class="icon-search"></i>
                         <input type="text"
                                ng-model="vm.searchTerm"
