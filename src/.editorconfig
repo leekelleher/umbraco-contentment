@@ -1,4 +1,5 @@
-# editorconfig.org
+# This .editorconfig has been taken from Umbraco CMS, licensed under MIT.
+# https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/.editorconfig
 
 # top-most EditorConfig file
 root = true

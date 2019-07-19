@@ -11,6 +11,7 @@ using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
@@ -183,7 +184,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     Type = type.GetFullNameWithAssembly(),
                     Name = provider.Name ?? type.Name.SplitPascalCasing(),
                     Description = provider.Description,
-                    Icon = provider.Icon ?? "icon-science",
+                    Icon = provider.Icon ?? UmbIcons.DefaultIcon,
                     Fields = fields
                 });
             }
