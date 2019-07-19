@@ -18,7 +18,6 @@ namespace Our.Umbraco.Contentment.DataEditors
         public CascadingDropdownListConfigurationEditor()
             : base()
         {
-            // TODO: [LK:2019-06-14] APIs description might be better using Notes.
             Fields.Add(
                 APIs,
                 nameof(APIs),

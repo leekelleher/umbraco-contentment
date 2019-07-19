@@ -23,7 +23,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-code";
 
-        // TODO: [LK:2019-06-13] Might need a "Notes" field at the top, to explain how these XPath queries work.
+        [ConfigurationField(typeof(XmlNotesConfigurationField))]
+        public string Notes { get; set; }
 
         [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the XML data source.<br><br>This can be either a remote URL, or local relative file path.")]
         public string Url { get; set; }
@@ -126,6 +127,15 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return doc;
+        }
+
+        class XmlNotesConfigurationField : NotesConfigurationField
+        {
+            // TODO: [LK:2019-07-19] Explain how these XPath queries work.
+            public XmlNotesConfigurationField()
+                : base(@"<p class=""alert alert-success""><strong>A note about XPath expressions.</strong><br>
+[add info about XPath, links, etc.]</p>", true)
+            { }
         }
     }
 }

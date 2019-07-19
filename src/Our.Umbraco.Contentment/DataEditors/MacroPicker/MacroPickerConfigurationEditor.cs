@@ -70,7 +70,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     }
                 }
 
-                // TODO: [LK:2019-06-06] Urgh! Send a PR to fix this Umbraco bug with `MacroService.GetAll`.
+                // TODO: [LK:2019-07-19] Raised bug report: https://github.com/umbraco/Umbraco-CMS/issues/5956
                 //System.InvalidOperationException: Cannot run a repository without an ambient scope.
                 //   at Umbraco.Core.Persistence.Repositories.Implement.RepositoryBase`2.get_AmbientScope()
                 //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.GetBaseQuery()

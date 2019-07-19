@@ -76,7 +76,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.Configura
         function save(item) {
 
             // TODO: [LK:2019-06-13] Not sure if we need to use `formHelper.submitForm` here? e.g. `formHelper.submitForm({ scope: $scope, formCtrl: this.configurationEditorForm })`
-            // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
+            // https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
             $scope.$broadcast("formSubmitting", { scope: $scope });
 
             var obj = {

@@ -13,6 +13,12 @@ using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
+// TODO: [LK:2019-07-19] Help wanted. How the heck does JSONPath work?
+// I have no idea how JSONPath works! Everytime I read the docs, it doesn't make any sense.
+// https://goessner.net/articles/JsonPath/index.html
+// How would you get the string-value from a "key"? and how do you get the text-value?
+// Tempted to say querying unstructured JSON is stupid.
+
 namespace Our.Umbraco.Contentment.DataEditors
 {
 #if !DEBUG
@@ -27,13 +33,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
-        // TODO: [LK:2019-06-13] Might need a "Notes" field at the top, to explain how these JSONPath queries work, (as I have no idea myself!)
+        [ConfigurationField(typeof(JsonNotesConfigurationField))]
+        public string Notes { get; set; }
 
         [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the JSON data source.")]
         public string Url { get; set; }
-
-        // TODO: [LK:2019-06-13] I have no idea how JSONPath works! Everytime I read the docs, it doesn't make any sense. How would you get the string-value from a "key"? and how do you get the text-value?
-        // Tempted to say querying unstructured JSON is stupid.
 
         //[ConfigurationField("itemsJsonPath", "Items JSONPath", "textstring", Description = "Enter the JSONPath expression to select the items from the JSON data source.")]
         //public string ItemsJsonPath { get; set; }
@@ -110,6 +114,15 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return json;
+        }
+
+        class JsonNotesConfigurationField : NotesConfigurationField
+        {
+            // TODO: [LK:2019-07-19] Explain how these JSONPath queries work, (as I have no idea myself!)
+            public JsonNotesConfigurationField()
+                : base(@"<p class=""alert alert-success""><strong>A note about JSONPath expressions.</strong><br>
+[add info about JSONPath, links, etc.]</p>", true)
+            { }
         }
     }
 }

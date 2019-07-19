@@ -15,6 +15,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public const string EnableDevMode = "enableDevMode";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
+        public const string OverlayOrderBy = "overlayOrderBy";
 
         public ItemPickerConfigurationEditor()
             : base()
@@ -56,6 +57,9 @@ namespace Our.Umbraco.Contentment.DataEditors
                 });
 
             Fields.Add(new ItemPickerTypeConfigurationField());
+
+            // TODO: [LK:2019-07-19] Consider if we should have an option for determining the default sort order (of the overlay items).
+
             Fields.AddMaxItems();
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.AddDisableSorting();

@@ -20,8 +20,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
             { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-            // TODO: [LK:2019-07-16] Consider if we should have an option for determining the default sort order (of the overlay items).
-            { "overlayOrderBy", string.Empty },
+            { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
         public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
