@@ -28,13 +28,7 @@ IF NOT EXIST "%WEBSITE_PATH%\App_Plugins\Contentment\editors\" MKDIR "%WEBSITE_P
 REM Copy property-editor HTML files
 FOR /R "%4DataEditors\" %%f IN (*.html) DO COPY "%%f" "%WEBSITE_PATH%\App_Plugins\Contentment\editors\" /Y
 
-REM Concatenate all the property-editor CSS files into a single file
-FOR /R "%4DataEditors\" %%f IN (*.css) DO TYPE "%%f" >> "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.css"
-
-REM Concatenate all the property-editor JS files into a single file
-FOR /R "%4DataEditors\" %%f IN (*.js) DO TYPE "%%f" >> "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.js"
-
-REM Run the CSS and JS through AjaxMin to remove all comments and minify
-REM Look to replace AjaxMin with NUglify, as it also does HTML. https://github.com/xoofx/NUglify
-"%4..\..\tools\AjaxMinifier.exe" "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.css" -out "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.css" -pretty
-"%4..\..\tools\AjaxMinifier.exe" "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.js" -out "%WEBSITE_PATH%\App_Plugins\Contentment\contentment.js" -pretty
+REM Bundle and minify all the property-editor CSS and JS files
+"%4..\..\tools\AjaxMinifier.exe" -XML "%4AjaxMin.xml"
+COPY /Y "%4contentment.*" "%WEBSITE_PATH%\App_Plugins\Contentment\"
+DEL /Q "%4contentment.*"
