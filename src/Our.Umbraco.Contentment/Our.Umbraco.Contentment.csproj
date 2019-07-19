@@ -391,6 +391,7 @@
     <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataEditors\CheckboxList\checkbox-list.css" />
     <Content Include="DataEditors\Elements\elements.css" />
     <Content Include="DataEditors\Elements\elements.html" />
     <Content Include="DataEditors\Elements\elements.js" />
