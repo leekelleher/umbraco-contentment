@@ -19,6 +19,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             maxItems: 0,
             listType: "grid",
             overlayView: "",
+            overlayOrderBy: "name",
             enableDevMode: 0,
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
@@ -73,6 +74,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
                     enableFilter: Object.toBoolean(config.enableFilter),
                     items: items,
                     listType: config.listType,
+                    orderBy: config.overlayOrderBy,
                 },
                 view: config.overlayView,
                 size: "small",
