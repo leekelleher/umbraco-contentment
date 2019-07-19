@@ -24,16 +24,23 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 new ConfigurationField
                 {
+                    Key = "displayIcon",
+                    Name = "Display icon",
+                    Description = "You can choose to select a different icon for this configuration.",
+                    View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath)
+                },
+                new ConfigurationField
+                {
                     Key = "displayName",
                     Name = "Display name",
-                    Description= "Enter a friendly name for this configuration.",
+                    Description = "Enter a friendly name for this configuration.",
                     View = "textstring"
                 },
                 new ConfigurationField
                 {
                     Key = "nameTemplate",
                     Name = "Name template",
-                    Description= "Enter an AngularJs expression to evaluate against each item for its name.",
+                    Description = "Enter an AngularJs expression to evaluate against each item for its name.",
                     View = "textstring"
                 },
                 new ConfigurationField
@@ -62,6 +69,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                     Fields = defaultFields,
                     DefaultValues = new Dictionary<string, object>
                     {
+                        { "displayIcon", x.Icon },
                         { "displayName", x.Name },
                         { "nameTemplate", $"{x.Name} #{{{{$index + 1}}}}" },
                     },

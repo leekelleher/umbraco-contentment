@@ -29,7 +29,6 @@ namespace Our.Umbraco.Contentment.DataEditors
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
-            // TODO: [LK:2019-07-19] Consider using DI for ConfigurationEditorService.
             _service = new ConfigurationEditorService();
 
             var configEditors = _service.GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true);

@@ -32,7 +32,6 @@ namespace Our.Umbraco.Contentment.DataEditors
                 { ConfigurationEditorConfigurationEditor.EnableDevMode, Constants.Values.False },
             };
 
-            // TODO: [LK:2019-07-19] Consider using DI for ConfigurationEditorService.
             var service = new ConfigurationEditorService();
             var dataSources = service.GetConfigurationEditors<IDataListSource>();
             var listEditors = service.GetConfigurationEditors<IDataListEditor>();
