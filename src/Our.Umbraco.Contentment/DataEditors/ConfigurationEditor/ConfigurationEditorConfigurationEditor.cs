@@ -17,6 +17,8 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
+        private readonly ConfigurationEditorService _service;
+
         public const string EnableDevMode = "enableDevMode";
         public const string EnableFilter = "enableFilter";
         public const string Items = "items";
@@ -27,8 +29,12 @@ namespace Our.Umbraco.Contentment.DataEditors
         public ConfigurationEditorConfigurationEditor()
             : base()
         {
-            var configEditors = GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true);
+            // TODO: [LK:2019-07-19] Consider using DI for ConfigurationEditorService.
+            _service = new ConfigurationEditorService();
+
+            var configEditors = _service.GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true);
             var items = new List<DataListItem>();
+
             foreach (var configEditor in configEditors)
             {
                 items.Add(new DataListItem
@@ -110,8 +116,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     }
                 }
 
-                config[Items] = GetConfigurationEditors<IConfigurationEditorItem>(types);
-                config[OrderBy] = string.Empty; // TODO: [LK:2019-07-01] Why is this empty? Do we need it?
+                config[Items] = _service.GetConfigurationEditors<IConfigurationEditorItem>(types);
+                config[OrderBy] = string.Empty; // Set to empty, so to preserve the selected order.
             }
 
             if (config.ContainsKey(OverlayView) == false)
@@ -120,82 +126,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return config;
-        }
-
-        // TODO: [LK:2019-06-07] Review if these methods should be in a "Service" or other class? Feels odd them being in here.
-        private static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(IEnumerable<Type> types, bool onlyPublic = false, bool ignoreFields = false)
-            where TContentmentListItem : class, IContentmentListItem
-        {
-            if (types == null)
-                return Array.Empty<ConfigurationEditorModel>();
-
-            var models = new List<ConfigurationEditorModel>();
-
-            foreach (var type in types)
-            {
-                if (onlyPublic && type.IsPublic == false)
-                    continue;
-
-                var provider = Activator.CreateInstance(type) as TContentmentListItem;
-                if (provider == null)
-                    continue;
-
-                var fields = new List<ConfigurationField>();
-
-                if (ignoreFields == false)
-                {
-                    var properties = type.GetProperties();
-
-                    foreach (var property in properties)
-                    {
-                        if (Attribute.IsDefined(property, typeof(ConfigurationFieldAttribute)) == false)
-                            continue;
-
-                        var attr = property.GetCustomAttribute<ConfigurationFieldAttribute>(false);
-                        if (attr == null)
-                            continue;
-
-                        if (attr.Type != null)
-                        {
-                            var field = Activator.CreateInstance(attr.Type) as ConfigurationField;
-                            if (field != null)
-                            {
-                                fields.Add(field);
-                            }
-                        }
-                        else
-                        {
-                            fields.Add(new ConfigurationField
-                            {
-                                Key = attr.Key ?? property.Name,
-                                Name = attr.Name ?? property.Name,
-                                PropertyName = property.Name,
-                                PropertyType = property.PropertyType,
-                                Description = attr.Description,
-                                HideLabel = attr.HideLabel,
-                                View = attr.View
-                            });
-                        }
-                    }
-                }
-
-                models.Add(new ConfigurationEditorModel
-                {
-                    Type = type.GetFullNameWithAssembly(),
-                    Name = provider.Name ?? type.Name.SplitPascalCasing(),
-                    Description = provider.Description,
-                    Icon = provider.Icon ?? UmbIcons.DefaultIcon,
-                    Fields = fields
-                });
-            }
-
-            return models;
-        }
-
-        internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(bool onlyPublic = false, bool ignoreFields = false)
-            where TContentmentListItem : class, IContentmentListItem
-        {
-            return GetConfigurationEditors<TContentmentListItem>(Current.TypeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
         }
     }
 }

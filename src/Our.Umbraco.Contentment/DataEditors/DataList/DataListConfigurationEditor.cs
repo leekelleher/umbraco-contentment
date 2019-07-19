@@ -32,8 +32,10 @@ namespace Our.Umbraco.Contentment.DataEditors
                 { ConfigurationEditorConfigurationEditor.EnableDevMode, Constants.Values.False },
             };
 
-            var dataSources = GetDataSources();
-            var listEditors = GetListEditors();
+            // TODO: [LK:2019-07-19] Consider using DI for ConfigurationEditorService.
+            var service = new ConfigurationEditorService();
+            var dataSources = service.GetConfigurationEditors<IDataListSource>();
+            var listEditors = service.GetConfigurationEditors<IDataListEditor>();
 
             Fields.Add(
                 DataSource,
@@ -91,16 +93,6 @@ namespace Our.Umbraco.Contentment.DataEditors
             }
 
             return config;
-        }
-
-        private IEnumerable<ConfigurationEditorModel> GetDataSources()
-        {
-            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListSource>();
-        }
-
-        private IEnumerable<ConfigurationEditorModel> GetListEditors()
-        {
-            return ConfigurationEditorConfigurationEditor.GetConfigurationEditors<IDataListEditor>();
         }
     }
 }
