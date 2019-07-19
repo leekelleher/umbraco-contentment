@@ -195,7 +195,6 @@ namespace Our.Umbraco.Contentment.DataEditors
         internal static IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(bool onlyPublic = false, bool ignoreFields = false)
             where TContentmentListItem : class, IContentmentListItem
         {
-            // TODO: [LK:2019-06-06] Replace `Current.TypeLoader` using DI.
             return GetConfigurationEditors<TContentmentListItem>(Current.TypeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
         }
     }

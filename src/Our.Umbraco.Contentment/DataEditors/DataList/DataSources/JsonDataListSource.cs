@@ -88,7 +88,6 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-                    // TODO: [LK:2019-06-13] Once we figure out how to DI with deserialized JSON, replace `Current.Logger`.
                     Current.Logger.Error<JsonDataListSource>(ex, "Unable to fetch remote data.");
                 }
             }

@@ -72,14 +72,10 @@ namespace Our.Umbraco.Contentment.DataEditors
                 {
                     var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                     {
-                        // TODO: [LK:2019-06-06] How to do DI when deserializing? (I want to inject IEntityService into UmbracoEntityDataListSource)
-                        // https://www.newtonsoft.com/json/help/html/DeserializeWithDependencyInjection.htm
                         ContractResolver = new ConfigurationFieldContractResolver(),
                         Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
                     });
 
-                    // TODO: [LK:2019-07-01] Give this a try...
-                    // https://our.umbraco.com/forum/extending-umbraco-and-using-the-api/97948-how-to-deserialize-json-with-lightinject-dependency-injection#comment-309016
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
                     var options = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
 
