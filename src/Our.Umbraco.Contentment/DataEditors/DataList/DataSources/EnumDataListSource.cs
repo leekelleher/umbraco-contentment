@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
@@ -32,39 +31,37 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems()
         {
+            var items = new List<DataListItem>();
+
             var assembly = default(Assembly);
             try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (assembly == null)
-                return Enumerable.Empty<DataListItem>();
+                return items;
 
             var enumType = default(Type);
             try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (enumType == null || enumType.IsEnum == false)
-                return Enumerable.Empty<DataListItem>();
+                return items;
 
-            // Don't call `Enum.GetNames`, use `GetFields`, then you can check for the attributes, etc. Performance wise it's minimal, as .NET is using GetFields anyway.
-            // https://referencesource.microsoft.com/#mscorlib/system/type.cs,1419
-            var names = default(string[]);
-            try { names = Enum.GetNames(enumType); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
-            if (names == null)
-                return Enumerable.Empty<DataListItem>();
-
-            // TODO: [LK:2019-07-03] Investigate if we'd like to support the `Display` attribute? Then we could set the description field.
-            // `System.ComponentModel.DataAnnotations.DisplayAttribute`
-            // https://www.codementor.io/cerkit/giving-an-enum-a-string-value-using-the-description-attribute-6b4fwdle0
-            // But then this raises a question about whether to check for `DisplayAttribute` too?
-            // var foo = enumType.GetMember("")[0].GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+            var fields = enumType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            foreach (var field in fields)
+            {
+                var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
+                items.Add(new DataListItem
+                {
+                    Description = attr?.Description,
+                    Icon = attr?.Icon,
+                    Name = attr?.Name ?? field.Name.SplitPascalCasing(),
+                    Value = field.Name
+                });
+            }
 
             if (SortAlphabetically)
             {
-                Array.Sort(names, StringComparer.InvariantCultureIgnoreCase);
+                return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
             }
 
-            return names.Select(x => new DataListItem
-            {
-                Name = x.SplitPascalCasing(),
-                Value = x
-            });
+            return items;
         }
 
         class EnumTypeConfigurationField : ConfigurationField

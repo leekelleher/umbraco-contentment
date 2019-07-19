@@ -291,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\ToggleGroupDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
