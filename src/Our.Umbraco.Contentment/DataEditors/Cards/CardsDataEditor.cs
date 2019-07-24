@@ -20,14 +20,14 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = Constants.Conventions.PropertyGroups.Lists,
         Icon = DataEditorIcon)]
-    public class GridSelectorDataEditor : DataEditor
+    public class CardsDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "GridSelector";
-        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Grid Selector";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "grid-selector.html";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Cards";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Cards";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "cards.html";
         internal const string DataEditorIcon = "icon-thumbnails-small";
 
-        public GridSelectorDataEditor(ILogger logger)
+        public CardsDataEditor(ILogger logger)
             : base(logger)
         { }
 

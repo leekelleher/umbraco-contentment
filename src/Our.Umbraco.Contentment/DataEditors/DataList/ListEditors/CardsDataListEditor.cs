@@ -9,13 +9,13 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class GridSelectorDataListEditor : IDataListEditor
+    internal class CardsDataListEditor : IDataListEditor
     {
-        public string Name => "Grid Selector";
+        public string Name => "Cards";
 
         public string Description => "¯\\_(ツ)_/¯";
 
-        public string Icon => GridSelectorDataEditor.DataEditorIcon;
+        public string Icon => CardsDataEditor.DataEditorIcon;
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
@@ -23,7 +23,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
-        public string View => IOHelper.ResolveUrl(GridSelectorDataEditor.DataEditorViewPath);
+        public string View => IOHelper.ResolveUrl(CardsDataEditor.DataEditorViewPath);
 
         [ConfigurationField(typeof(IconPickerConfigurationEditor.DefaultIconConfigurationField))]
         public string DefaultIcon { get; set; }
