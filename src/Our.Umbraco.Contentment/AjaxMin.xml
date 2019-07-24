@@ -7,7 +7,7 @@
 <root>
     <output path="contentment.js">
         <input path="Web\UI\App_Plugins\Contentment\contentment.js" />
-        <input path="DataEditors\ByteSize\byte-size.js" />
+        <input path="DataEditors\Bytes\bytes.js" />
         <input path="DataEditors\Cards\cards.js" />
         <input path="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
         <input path="DataEditors\Checkbox\checkbox.js" />

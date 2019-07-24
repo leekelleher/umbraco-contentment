@@ -16,17 +16,17 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Bigint,
         Group = Constants.Conventions.PropertyGroups.Display,
         Icon = DataEditorIcon)]
-    public class ByteSizeDataEditor : DataEditor
+    public class BytesDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ByteSize";
-        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Byte Size";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Bytes";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Bytes";
         internal const string DataEditorViewPath = "readonlyvalue";
         internal const string DataEditorIcon = "icon-binarycode";
 
-        public ByteSizeDataEditor(ILogger logger)
+        public BytesDataEditor(ILogger logger)
             : base(logger)
         { }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new ByteSizeConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new BytesConfigurationEditor();
     }
 }

@@ -297,9 +297,9 @@
     <Compile Include="DataEditors\DataList\ListEditors\ToggleGroupDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
-    <Compile Include="DataEditors\ByteSize\ByteSizeDataEditor.cs" />
-    <Compile Include="DataEditors\ByteSize\ByteSizeConfigurationEditor.cs" />
-    <Compile Include="DataEditors\ByteSize\ByteSizeValueConverter.cs" />
+    <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
+    <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
+    <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListValueConverter.cs" />
@@ -413,7 +413,7 @@
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
-    <Content Include="DataEditors\ByteSize\byte-size.js" />
+    <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />
     <Content Include="DataEditors\IconPicker\icon-picker.js" />
     <Content Include="DataEditors\CodeEditor\code-editor.js" />

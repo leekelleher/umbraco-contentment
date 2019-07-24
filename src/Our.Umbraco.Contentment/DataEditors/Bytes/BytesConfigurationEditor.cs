@@ -9,14 +9,14 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class ByteSizeConfigurationEditor : ConfigurationEditor
+    internal class BytesConfigurationEditor : ConfigurationEditor
     {
         public const string Decimals = "decimals";
         public const string Filter = "filter";
         public const string Format = "format";
         public const string Kilo = "kilo";
 
-        public ByteSizeConfigurationEditor()
+        public BytesConfigurationEditor()
         {
             Fields.Add(
                 Kilo,
