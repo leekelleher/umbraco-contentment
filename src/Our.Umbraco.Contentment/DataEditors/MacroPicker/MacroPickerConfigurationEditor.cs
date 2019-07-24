@@ -70,11 +70,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     }
                 }
 
-                // TODO: [LK:2019-07-19] Raised bug report: https://github.com/umbraco/Umbraco-CMS/issues/5956
-                //System.InvalidOperationException: Cannot run a repository without an ambient scope.
-                //   at Umbraco.Core.Persistence.Repositories.Implement.RepositoryBase`2.get_AmbientScope()
-                //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.GetBaseQuery()
-                //   at Umbraco.Core.Persistence.Repositories.Implement.MacroRepository.Get(Guid id)
+                // TODO: [LK:2019-07-19] Once the MacroService bug patch is available, we can uncomment the line below.
+                // Issue: https://github.com/umbraco/Umbraco-CMS/issues/5956 // PR: https://github.com/umbraco/Umbraco-CMS/pull/5962 by @kjac
                 //config.Add("availableMacros", _macroService.GetAll(ids).Select(x => x.Alias));
                 config.Add("availableMacros", _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
                 config.Remove(AllowedMacros);

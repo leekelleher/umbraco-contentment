@@ -20,10 +20,9 @@
         </umb-editor-header>
 
         <umb-editor-container>
-            <umb-box>
-                <umb-box-content>
 
-                    <!-- TODO: [LK:2019-06-30] Display message if there are no items available. -->
+            <umb-box ng-if="vm.items.length > 0">
+                <umb-box-content>
 
                     <div class="form-search" ng-if="vm.enableFilter">
                         <i class="icon-search"></i>
@@ -61,6 +60,11 @@
 
                 </umb-box-content>
             </umb-box>
+
+            <umb-empty-state ng-if="vm.items.length == 0" position="center">
+                <p>There are no items available to add.</p>
+            </umb-empty-state>
+
         </umb-editor-container>
 
         <umb-editor-footer>

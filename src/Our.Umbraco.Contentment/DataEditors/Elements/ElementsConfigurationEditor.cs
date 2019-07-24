@@ -51,7 +51,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 }
             };
 
-            // TODO: [LK:2019-07-01] I'm not completely happy with this approach.
+            // I'm not completely happy with this approach.
             // I'd like to be able to select a doctype, then override it's name/description/icon.
             // The we could have multiple instances of a doctype.
             // Or is that overkill? Should we work like Umbraco, just use the exact names/icons? Don't over-complicate it.

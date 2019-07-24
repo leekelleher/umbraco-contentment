@@ -3,12 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.CardList.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cards.Controller", [
     "$scope",
     "editorService",
     function ($scope, editorService) {
 
-        //console.log("card-list.model", $scope.model);
+        //console.log("cards.model", $scope.model);
 
         var defaultConfig = {
             allowDuplicates: 0,
