@@ -293,6 +293,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorService.cs" />
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
+    <Compile Include="DataEditors\DataList\ListEditors\GridSelectorDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\ListEditors\ToggleGroupDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
@@ -320,6 +321,8 @@
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
+    <Compile Include="DataEditors\GridSelector\ShowDescriptionsConfigurationField.cs" />
+    <Compile Include="DataEditors\GridSelector\GridSelectorDataEditor.cs" />
     <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerValueConverter.cs" />
     <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
@@ -397,6 +400,8 @@
     <Content Include="DataEditors\Elements\elements.css" />
     <Content Include="DataEditors\Elements\elements.html" />
     <Content Include="DataEditors\Elements\elements.js" />
+    <Content Include="DataEditors\GridSelector\grid-selector.html" />
+    <Content Include="DataEditors\GridSelector\grid-selector.js" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />

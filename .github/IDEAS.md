@@ -24,9 +24,4 @@
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-groups-builder.html
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/directives/components/umbgroupsbuilder.directive.js
 
-- Data List - Cards (Grid Selector)
-  An alternative view, to display items as cards. Similar to the UI for picking a DocType Template.
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/documenttypes/views/templates/templates.html#L12
-  https://github.com/umbraco/Umbraco-CMS/blob/6bfcc7bb34ce1db607b2d7e39e1ae85fd059a6c0/src/Umbraco.Web.UI.Client/src/views/components/umb-grid-selector.html
-
 - 
