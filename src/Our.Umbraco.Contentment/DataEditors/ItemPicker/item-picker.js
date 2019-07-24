@@ -97,7 +97,6 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ItemPi
             };
 
             editorService.open(itemPicker);
-
         };
 
         function bind() {
