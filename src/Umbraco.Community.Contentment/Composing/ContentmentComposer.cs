@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.Composing
                 .Components()
                     .Append<ContentmentComponent>()
             ;
+
 #if !DEBUG
             composition
                 .DataEditors()
@@ -27,9 +28,9 @@ namespace Umbraco.Community.Contentment.Composing
                     .Exclude<CheckboxListDataEditor>()
                     .Exclude<CodeEditorDataEditor>()
                     .Exclude<ConfigurationEditorDataEditor>()
+                    .Exclude<ContentBlocksDataEditor>()
                     .Exclude<DataTableDataEditor>()
                     .Exclude<DropdownListDataEditor>()
-                    .Exclude<ElementDataEditor>()
                     .Exclude<ItemPickerDataEditor>()
                     .Exclude<MacroPickerDataEditor>()
                     .Exclude<RadioButtonListDataEditor>()
@@ -44,6 +45,7 @@ namespace Umbraco.Community.Contentment.Composing
                     .Remove<CheckboxListValueConverter>()
                     .Remove<CodeEditorValueConverter>()
                     .Remove<ConfigurationEditorValueConverter>()
+                    .Remove<ContentBlocksValueConverter>()
                     .Remove<DataTableValueConverter>()
                     .Remove<DropdownListValueConverter>()
                     .Remove<ItemPickerValueConverter>()
