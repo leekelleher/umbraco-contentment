@@ -93,11 +93,11 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.DataTa
 
         function showPrompt(row) {
             row.prompt = true;
-        }
+        };
 
         function hidePrompt(row) {
             delete row.prompt;
-        }
+        };
 
         function setDirty() {
             if ($scope.propertyForm) {

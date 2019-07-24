@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         public string Name => "Item Picker";
 
-        public string Description => "Select multiple values from an Umbraco style overlay.";
+        public string Description => "Select items from an Umbraco style overlay.";
 
         public string Icon => ItemPickerDataEditor.DataEditorIcon;
 

@@ -20,9 +20,9 @@ namespace Our.Umbraco.Contentment.DataEditors
             Description = "Enable to allow an empty option at the top of the dropdown list.";
             View = "views/propertyeditors/boolean/boolean.html";
             Config = new Dictionary<string, object>
-                {
-                    { "default", Constants.Values.True }
-                };
+            {
+                { "default", Constants.Values.True }
+            };
         }
     }
 }

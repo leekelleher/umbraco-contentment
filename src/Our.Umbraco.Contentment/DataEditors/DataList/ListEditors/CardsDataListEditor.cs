@@ -13,7 +13,7 @@ namespace Our.Umbraco.Contentment.DataEditors
     {
         public string Name => "Cards";
 
-        public string Description => "¯\\_(ツ)_/¯";
+        public string Description => "Select items to add to a list, displayed as cards.";
 
         public string Icon => CardsDataEditor.DataEditorIcon;
 
