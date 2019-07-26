@@ -23,5 +23,10 @@
   Stacked Content Evo? Take the DocType Editor UI (Group Builder) and apply the concept to Stacked (Inner) Content.
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-groups-builder.html
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/directives/components/umbgroupsbuilder.directive.js
+  For a toolbar menu, maybe add options using the action overlay UI?
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-confirm-action.html
+
+- User Picker
+  The default User Picker property-editor is a plain dropdown list, (it's rubbish), but in the Users section, the Role editor has a really nice User picker, with overlay.
 
 - 
