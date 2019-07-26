@@ -12,6 +12,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.ItemPicke
         var defaultConfig = {
             title: "Select...",
             enableFilter: false,
+            enableMultiple: false,
             items: [],
             listType: "grid",
             orderBy: "name",
@@ -24,6 +25,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.ItemPicke
 
             vm.title = config.title;
             vm.enableFilter = config.enableFilter;
+            vm.enableMultiple = config.enableMultiple;
             vm.items = config.items;
             vm.listType = config.listType;
             vm.orderBy = config.orderBy;
@@ -34,14 +36,31 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.Overlays.ItemPicke
         };
 
         function select(item) {
-            // TODO: [LK:2019-06-17] Explore what would be involved in making this multiple selection.
-            $scope.model.selectedItem = item;
-            submit($scope.model);
+            if (vm.enableMultiple) {
+                item.selected = !item.selected;
+            } else {
+                $scope.model.value = item;
+                submit();
+            }
         };
 
-        function submit(model) {
+        function submit() {
             if ($scope.model.submit) {
-                $scope.model.submit(model);
+
+                var selectedItems = [];
+
+                if (vm.enableMultiple) {
+                    _.each(vm.items, function (x) {
+                        if (x.selected) {
+                            delete x.selected;
+                            selectedItems.push(x);
+                        }
+                    });
+                } else {
+                    selectedItems.push($scope.model.value);
+                }
+
+                $scope.model.submit(selectedItems);
             }
         }
 

@@ -325,6 +325,7 @@
     <Compile Include="DataEditors\Cards\CardsDataEditor.cs" />
     <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerValueConverter.cs" />
+    <Compile Include="DataEditors\ItemPicker\EnableMultipleConfigurationField.cs" />
     <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerValueConverter.cs" />
     <Compile Include="DataEditors\ItemPicker\ConfigurationFieldExtensions.cs" />

@@ -16,3 +16,13 @@
     padding-top: 20%;
     padding-bottom: 20%;
 }
+
+.contentment .umb-action-link .umb-checkmark {
+    margin-right: 15px;
+    min-width: 30px;
+}
+
+.contentment .umb-action-link .menu-label {
+    margin-left: 15px;
+    padding-left: 0;
+}
