@@ -17,10 +17,8 @@ Let's open the shoebox and take a look inside...
 
 ##### Property Editors
 
-- [Checkbox](../docs/data-editors/checkbox.md)
 - [Data List](../docs/data-editors/data-list.md)
 - [Icon Picker](../docs/data-editors/icon-picker.md)
-- [Macro Picker](../docs/data-editors/macro-picker.md)
 - [Notes](../docs/data-editors/notes.md)
 - [Render Macro](../docs/data-editors/render-macro.md)
 
