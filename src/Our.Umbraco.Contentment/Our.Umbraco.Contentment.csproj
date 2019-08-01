@@ -344,7 +344,6 @@
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataList\DataSources\ManualDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\EnumDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
