@@ -32,17 +32,19 @@ Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com), [Umbrella Inc](ht
 
 All source code is licensed under the [Mozilla Public License](../LICENSE.md).
 
-#### A note about licensing
+<details>
+<summary>A note about licensing</summary>
 
-Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, but I no longer feel MIT reflects my spirit of encouraging open source collaboration.
+Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
 The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
 
 _More give, less take._
 
-You will still have the same freedoms to use the source code however you like.
+If you do not to intend to modifiy the source code, then you will still have the same freedoms as when using the MIT license.
 
 For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
+</details>
 
 ### Acknowledgements
 
@@ -50,9 +52,11 @@ For more information about the Mozilla Public License, please visit: <https://ww
 
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
+Current development time: **300+ hours** (as of 2019-08-01) - _so you have an idea how of much human time/effort has been put into making this package._
+
 #### Special thanks
 
-- Thank you to [Umbrella](https://umbrellainc.co.uk) for providing me with the time and resource to develop this project.
+- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating me with the time and resource to develop this project.
 
 #### Logo
 
