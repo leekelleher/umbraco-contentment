@@ -294,7 +294,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorService.cs" />
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
-    <Compile Include="DataEditors\ToggleGroup\ToggleGroupDataListEditor.cs" />
+    <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
@@ -330,8 +330,8 @@
     <Compile Include="DataEditors\ItemPicker\ItemPickerValueConverter.cs" />
     <Compile Include="DataEditors\ItemPicker\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
-    <Compile Include="DataEditors\ToggleGroup\ToggleGroupConfigurationEditor.cs" />
-    <Compile Include="DataEditors\ToggleGroup\ToggleGroupDataEditor.cs" />
+    <Compile Include="DataEditors\Toggles\TogglesConfigurationEditor.cs" />
+    <Compile Include="DataEditors\Toggles\TogglesDataEditor.cs" />
     <Compile Include="DataEditors\Transclude\TranscludeValueConverter.cs" />
     <Compile Include="DataEditors\Transclude\TranscludeDataEditor.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
@@ -352,7 +352,7 @@
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataListEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataListEditor.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataListEditor.cs" />
-    <Compile Include="DataEditors\DropdownList\DropdownDataListEditor.cs" />
+    <Compile Include="DataEditors\DropdownList\DropdownListDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
@@ -406,8 +406,8 @@
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
-    <Content Include="DataEditors\ToggleGroup\toggle-group.js" />
-    <Content Include="DataEditors\ToggleGroup\toggle-group.html" />
+    <Content Include="DataEditors\Toggles\toggles.js" />
+    <Content Include="DataEditors\Toggles\toggles.html" />
     <Content Include="DataEditors\Transclude\transclude.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />

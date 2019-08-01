@@ -20,18 +20,18 @@ namespace Our.Umbraco.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = Constants.Conventions.PropertyGroups.Lists,
         Icon = DataEditorIcon)]
-    public class ToggleGroupDataEditor : DataEditor
+    public class TogglesDataEditor : DataEditor
     {
-        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ToggleGroup";
-        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Toggle Group";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "toggle-group.html";
+        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Toggles";
+        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Toggles";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "toggles.html";
         internal const string DataEditorIcon = "icon-equalizer";
 
-        public ToggleGroupDataEditor(ILogger logger)
+        public TogglesDataEditor(ILogger logger)
             : base(logger)
         { }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new ToggleGroupConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new TogglesConfigurationEditor();
 
         protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }

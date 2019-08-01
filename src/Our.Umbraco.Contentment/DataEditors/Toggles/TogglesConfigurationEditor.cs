@@ -9,12 +9,12 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    public class ToggleGroupConfigurationEditor : ConfigurationEditor
+    public class TogglesConfigurationEditor : ConfigurationEditor
     {
         public const string Items = "items";
         public const string DefaultValue = "defaultValue";
 
-        public ToggleGroupConfigurationEditor()
+        public TogglesConfigurationEditor()
             : base()
         {
             var listFields = new[]

@@ -8,16 +8,16 @@ using Umbraco.Core.IO;
 
 namespace Our.Umbraco.Contentment.DataEditors
 {
-    internal class ToggleGroupDataListEditor : IDataListEditor
+    internal class TogglesDataListEditor : IDataListEditor
     {
-        public string Name => "Toggle Group";
+        public string Name => "Toggles";
 
         public string Description => "Select multiple values from a group of toggles.";
 
-        public string Icon => ToggleGroupDataEditor.DataEditorIcon;
+        public string Icon => TogglesDataEditor.DataEditorIcon;
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public string View => IOHelper.ResolveUrl(ToggleGroupDataEditor.DataEditorViewPath);
+        public string View => IOHelper.ResolveUrl(TogglesDataEditor.DataEditorViewPath);
     }
 }

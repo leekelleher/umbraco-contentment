@@ -3,11 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.ToggleGroup.Controller", [
+angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Toggles.Controller", [
     "$scope",
     function ($scope) {
 
-        // console.log("toggle-group.model", $scope.model);
+        // console.log("toggles.model", $scope.model);
 
         var defaultConfig = { items: [], defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
