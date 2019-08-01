@@ -293,8 +293,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorService.cs" />
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\CardsDataListEditor.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\ToggleGroupDataListEditor.cs" />
+    <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
+    <Compile Include="DataEditors\ToggleGroup\ToggleGroupDataListEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsDataEditor.cs" />
     <Compile Include="DataEditors\Elements\ElementsConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
@@ -349,11 +349,11 @@
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\CheckboxListDataListEditor.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\ItemPickerDataListEditor.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\RadioButtonListDataListEditor.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\DropdownDataListEditor.cs" />
-    <Compile Include="DataEditors\DataList\ListEditors\IDataListEditor.cs" />
+    <Compile Include="DataEditors\CheckboxList\CheckboxListDataListEditor.cs" />
+    <Compile Include="DataEditors\ItemPicker\ItemPickerDataListEditor.cs" />
+    <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataListEditor.cs" />
+    <Compile Include="DataEditors\DropdownList\DropdownDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListValueConverter.cs" />
