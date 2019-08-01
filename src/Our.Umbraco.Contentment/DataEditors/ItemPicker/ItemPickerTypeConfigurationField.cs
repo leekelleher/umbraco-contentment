@@ -32,7 +32,7 @@ namespace Our.Umbraco.Contentment.DataEditors
             {
                 { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
                 { RadioButtonListConfigurationEditor.Items, items },
-                { RadioButtonListConfigurationEditor.DefaultValue, Grid }
+                { RadioButtonListConfigurationEditor.DefaultValue, List }
             };
         }
     }
