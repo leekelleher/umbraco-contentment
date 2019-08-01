@@ -23,11 +23,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         public string Icon => "icon-code";
 
-        [ConfigurationField(typeof(XmlNotesConfigurationField))]
-        public string Notes { get; set; }
-
         [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the XML data source.<br><br>This can be either a remote URL, or local relative file path.")]
         public string Url { get; set; }
+
+        [ConfigurationField(typeof(XmlNotesConfigurationField))]
+        public string Notes { get; set; }
 
         [ConfigurationField("itemsXPath", "Items XPath", "textstring", Description = "Enter the XPath expression to select the items from the XML data source.")]
         public string ItemsXPath { get; set; }
@@ -131,10 +131,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 
         class XmlNotesConfigurationField : NotesConfigurationField
         {
-            // TODO: [LK:2019-07-19] Explain how these XPath queries work.
             public XmlNotesConfigurationField()
-                : base(@"<p class=""alert alert-success""><strong>A note about XPath expressions.</strong><br>
-[add info about XPath, links, etc.]</p>", true)
+                : base(@"<div class=""alert alert-success"">
+<p><strong>A note about your XPath expressions.</strong></p>
+<p>If you need assistance with the XPath syntax, please refer to this cheatsheet: <a href=""https://devhints.io/xpath"" target=""_blank""><strong>devhints.io/xpath</strong></a>.</p>
+</div>", true)
             { }
         }
     }
