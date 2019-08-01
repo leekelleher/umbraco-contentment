@@ -332,8 +332,6 @@
     <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Toggles\TogglesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataEditor.cs" />
-    <Compile Include="DataEditors\Transclude\TranscludeValueConverter.cs" />
-    <Compile Include="DataEditors\Transclude\TranscludeDataEditor.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
     <Compile Include="DataEditors\_\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
@@ -407,7 +405,6 @@
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
     <Content Include="DataEditors\Toggles\toggles.js" />
     <Content Include="DataEditors\Toggles\toggles.html" />
-    <Content Include="DataEditors\Transclude\transclude.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
