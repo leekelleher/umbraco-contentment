@@ -57,6 +57,7 @@ namespace Our.Umbraco.Contentment
         {
             var property = base.CreateProperty(member, memberSerialization);
 
+            // TODO: [LK:2019-08-01] Check that the declaring type inherits from `IPublishedContent`.
 
             property.ShouldSerialize = _ =>
             {
@@ -64,13 +65,6 @@ namespace Our.Umbraco.Contentment
             };
 
             return property;
-        }
-
-        protected override JsonContract CreateContract(Type objectType)
-        {
-            var contract = base.CreateContract(objectType);
-
-            return contract;
         }
     }
 }
