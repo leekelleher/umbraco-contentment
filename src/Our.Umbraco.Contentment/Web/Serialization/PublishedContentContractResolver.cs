@@ -17,7 +17,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Our.Umbraco.Contentment
 {
-    public class PublishedContentContractResolver : DefaultContractResolver
+    public class PublishedContentContractResolver : CamelCasePropertyNamesContractResolver
     {
         public static readonly PublishedContentContractResolver Instance = new PublishedContentContractResolver();
 
@@ -52,8 +52,6 @@ namespace Our.Umbraco.Contentment
                 if (property.PropertyName == "ContentSet") return false;
                 //ADD CUSTOM OVERRRIDES AFTER THIS IN THE ABOVE FORMAT
 
-                //making people on the other end of my api happy 
-                //property.PropertyName = StringUtils.ToCamelCase(property.PropertyName);
 
                 return true;
             };
