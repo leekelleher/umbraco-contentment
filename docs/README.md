@@ -8,6 +8,7 @@
 
 Here is the documentation for the Contentment property editors...
 
+- [Bytes](../docs/data-editors/bytes.md)
 - [Data List](../docs/data-editors/data-list.md)
 - [Icon Picker](../docs/data-editors/icon-picker.md)
 - [Notes](../docs/data-editors/notes.md)

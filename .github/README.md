@@ -17,6 +17,7 @@ Let's open the shoebox and take a look inside...
 
 ##### Property Editors
 
+- [Bytes](../docs/data-editors/bytes.md)
 - [Data List](../docs/data-editors/data-list.md)
 - [Icon Picker](../docs/data-editors/icon-picker.md)
 - [Notes](../docs/data-editors/notes.md)
