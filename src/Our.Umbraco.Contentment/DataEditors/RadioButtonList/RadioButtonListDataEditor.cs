@@ -17,7 +17,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 #endif
         DataEditorName,
         DataEditorViewPath,
-        ValueType = ValueTypes.Json,
+        ValueType = ValueTypes.String,
         Group = Constants.Conventions.PropertyGroups.Lists,
         Icon = DataEditorIcon)]
     public class RadioButtonListDataEditor : DataEditor

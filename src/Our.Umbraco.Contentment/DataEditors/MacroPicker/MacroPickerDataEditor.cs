@@ -12,7 +12,11 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue | EditorType.MacroParameter,
+#if DEBUG
+        EditorType.PropertyValue | EditorType.MacroParameter, // NOTE: IsWorkInProgress [LK]
+#else
+        EditorType.Nothing,
+#endif
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
