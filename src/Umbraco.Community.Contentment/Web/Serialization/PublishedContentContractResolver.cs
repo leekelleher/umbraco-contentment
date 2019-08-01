@@ -14,42 +14,45 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Umbraco.Core.Models.PublishedContent;
 
-namespace Our.Umbraco.Contentment
+namespace Umbraco.Community.Contentment
 {
     public class PublishedContentContractResolver : CamelCasePropertyNamesContractResolver
     {
         public static readonly PublishedContentContractResolver Instance = new PublishedContentContractResolver();
 
-        private readonly HashSet<string> _excludedProperties;
+        private readonly Dictionary<string, JsonConverter> _converterLookup;
+        private readonly HashSet<string> _ignoreFromContent;
+        private readonly HashSet<string> _ignoreFromProperty;
 
         public PublishedContentContractResolver()
         {
-            _excludedProperties = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+            _converterLookup = new Dictionary<string, JsonConverter>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "ItemType", new StringEnumConverter() }
+            };
+
+            _ignoreFromContent = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
                 "Children",
                 "ChildrenForAllCultures",
                 "CompositionAliases",
                 "ContentSet",
                 "ContentType",
-                "CreateDate",
                 "CreatorId",
-                "CreatorName",
-                "DocumentTypeId",
-                "IsDraft",
-                "ItemType",
-                "ObjectContent",
+                "Cultures",
                 "Parent",
-                "Properties",
-                "PropertyTypes",
-                "SortOrder",
                 "TemplateId",
-                "UpdateDate",
-                "Url",
-                "Version",
                 "WriterId",
-                "WriterName",
+            };
+
+            _ignoreFromProperty = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "PropertyType",
+                "ReferenceCacheLevel",
             };
         }
 
@@ -57,12 +60,25 @@ namespace Our.Umbraco.Contentment
         {
             var property = base.CreateProperty(member, memberSerialization);
 
-            // TODO: [LK:2019-08-01] Check that the declaring type inherits from `IPublishedContent`.
-
-            property.ShouldSerialize = _ =>
+            if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType))
             {
-                return _excludedProperties.Contains(property.PropertyName) == false;
-            };
+                property.ShouldSerialize = _ =>
+                {
+                    return _ignoreFromContent.Contains(property.PropertyName) == false;
+                };
+            }
+            else if (typeof(IPublishedProperty).IsAssignableFrom(member.DeclaringType))
+            {
+                property.ShouldSerialize = _ =>
+                {
+                    return _ignoreFromProperty.Contains(property.PropertyName) == false;
+                };
+            }
+
+            if (_converterLookup.ContainsKey(property.PropertyName))
+            {
+                property.Converter = _converterLookup[property.PropertyName];
+            }
 
             return property;
         }
