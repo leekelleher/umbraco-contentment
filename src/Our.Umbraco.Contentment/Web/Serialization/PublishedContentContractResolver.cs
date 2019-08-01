@@ -11,6 +11,7 @@
  * has been licensed. I'll assume it's available under MIT license. */
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -21,39 +22,45 @@ namespace Our.Umbraco.Contentment
     {
         public static readonly PublishedContentContractResolver Instance = new PublishedContentContractResolver();
 
+        private readonly HashSet<string> _excludedProperties;
+
+        public PublishedContentContractResolver()
+        {
+            _excludedProperties = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                "Children",
+                "ChildrenForAllCultures",
+                "CompositionAliases",
+                "ContentSet",
+                "ContentType",
+                "CreateDate",
+                "CreatorId",
+                "CreatorName",
+                "DocumentTypeId",
+                "IsDraft",
+                "ItemType",
+                "ObjectContent",
+                "Parent",
+                "Properties",
+                "PropertyTypes",
+                "SortOrder",
+                "TemplateId",
+                "UpdateDate",
+                "Url",
+                "Version",
+                "WriterId",
+                "WriterName",
+            };
+        }
+
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var property = base.CreateProperty(member, memberSerialization);
 
-            property.ShouldSerialize = instance =>
+
+            property.ShouldSerialize = _ =>
             {
-                if (property.PropertyName == "CompositionAliases") return false;
-                if (property.PropertyName == "ContentSet") return false;
-                if (property.PropertyName == "PropertyTypes") return false;
-                if (property.PropertyName == "ObjectContent") return false;
-                if (property.PropertyName == "Properties") return false;
-                if (property.PropertyName == "Parent") return false;
-                if (property.PropertyName == "Children") return false;
-                if (property.PropertyName == "ChildrenForAllCultures") return false;
-                if (property.PropertyName == "DocumentTypeId") return false;
-                if (property.PropertyName == "WriterName") return false;
-                if (property.PropertyName == "CreatorName") return false;
-                if (property.PropertyName == "WriterId") return false;
-                if (property.PropertyName == "CreatorId") return false;
-                if (property.PropertyName == "CreateDate") return false;
-                if (property.PropertyName == "UpdateDate") return false;
-                if (property.PropertyName == "Version") return false;
-                if (property.PropertyName == "SortOrder") return false;
-                if (property.PropertyName == "TemplateId") return false;
-                if (property.PropertyName == "IsDraft") return false;
-                if (property.PropertyName == "ItemType") return false;
-                if (property.PropertyName == "ContentType") return false;
-                if (property.PropertyName == "Url") return false;
-                if (property.PropertyName == "ContentSet") return false;
-                //ADD CUSTOM OVERRRIDES AFTER THIS IN THE ABOVE FORMAT
-
-
-                return true;
+                return _excludedProperties.Contains(property.PropertyName) == false;
             };
 
             return property;
