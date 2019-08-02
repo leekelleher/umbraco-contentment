@@ -28,8 +28,8 @@ namespace Our.Umbraco.Contentment.DataEditors
                     { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
                     { RadioButtonListConfigurationEditor.Items, new[]
                         {
-                            new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong>." },
-                            new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong>. Today, this is known as a kibibyte." },
+                            new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong> (decimal)." },
+                            new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong> (binary). Today, this is known as a kibibyte." },
                         }
                     },
                     { RadioButtonListConfigurationEditor.DefaultValue, "1024" },

@@ -37,7 +37,7 @@ Having picked your icon, the selected icon will be displayed in the icon box.
 
 ### How to get the value?
 
-The value for the Icon Picker is a `string`. To use this in your view templates, here are a couple of examples.
+The value for the Icon Picker is a `string`. To use this in your view templates, here are some examples.
 
 Assuming that your property's alias is `"icon"`, then...
 
@@ -62,7 +62,7 @@ Strongly-typed...
 ```
 
 
-### How to configure as a Parameter-Editor?
+### How to configure as a parameter-editor?
 
 Icon Picker is available as a macro parameter-editor by default. It will automatically be listed in the parameter options for your macros.
 
