@@ -8,7 +8,7 @@
 
 This is a collection of Umbraco components that I have developed for use on my own **Umbraco v8** implementation projects.
 
-Some components may be innovative, others may be a reimagining of existing components, data-editors, features and other community packages.
+Some components may be innovative, others may be a reimagining of existing components, property-editors, features and other community packages.
 
 
 #### What's on offer?
@@ -17,11 +17,11 @@ Let's open the shoebox and take a look inside...
 
 ##### Property Editors
 
-- [Bytes](../docs/data-editors/bytes.md)
-- [Data List](../docs/data-editors/data-list.md)
-- [Icon Picker](../docs/data-editors/icon-picker.md)
-- [Notes](../docs/data-editors/notes.md)
-- [Render Macro](../docs/data-editors/render-macro.md)
+- [Bytes](../docs/editors/bytes.md)
+- [Data List](../docs/editors/data-list.md)
+- [Icon Picker](../docs/editors/icon-picker.md)
+- [Notes](../docs/editors/notes.md)
+- [Render Macro](../docs/editors/render-macro.md)
 
 
 
