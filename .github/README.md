@@ -33,7 +33,7 @@ There is documentation for each of the property-editors, with screenshots, use-c
 
 ### Documentation
 
-Documentation for each of the components can be found in [the /docs folder](../docs/).
+[Documentation for each of the components can be found in the /docs folder](../docs/).
 
 
 #### Known issues
@@ -70,7 +70,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development time: **300+ hours** (as of 2019-08-01)</summary>
+<summary>Current development time: <b>300+ hours</b> (as of 2019-08-01)</summary>
 
 _To give you an idea of how much human time/effort has been put into making this package._
 
