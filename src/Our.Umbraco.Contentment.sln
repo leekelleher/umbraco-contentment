@@ -36,13 +36,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		..\docs\README.md = ..\docs\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Editors", "Data Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\data-editors\bytes.md = ..\docs\data-editors\bytes.md
-		..\docs\data-editors\data-list.md = ..\docs\data-editors\data-list.md
-		..\docs\data-editors\icon-picker.md = ..\docs\data-editors\icon-picker.md
-		..\docs\data-editors\notes.md = ..\docs\data-editors\notes.md
-		..\docs\data-editors\render-macro.md = ..\docs\data-editors\render-macro.md
+		..\docs\editors\bytes.md = ..\docs\editors\bytes.md
+		..\docs\editors\data-list.md = ..\docs\editors\data-list.md
+		..\docs\editors\icon-picker.md = ..\docs\editors\icon-picker.md
+		..\docs\editors\notes.md = ..\docs\editors\notes.md
+		..\docs\editors\render-macro.md = ..\docs\editors\render-macro.md
 	EndProjectSection
 EndProject
 Global

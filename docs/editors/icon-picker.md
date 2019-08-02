@@ -4,28 +4,69 @@
 
 ### Icon Picker
 
-[A single paragraph introduction for the data editor.]
+Icon Picker is a property-editor that is used to pick a single icon from Umbraco's default icon set.
 
 
-### How to configure the editor
+### How to configure the editor?
 
-[A few sentences about the configuration editor + screenshots]
+In your new Data Type, selected the "[Contentment] Icon Picker" option. You will see the following configuration fields.
 
+![Configuration Editor for Icon Picker](icon-picker--configuration-editor.png)
 
-### How to use the editor
+The main field is **Default icon**, with this you can define the default icon for the property.
 
-[A few sentences about how to use the editor itself + screenshots]
+> _Fun fact: This field uses a pre-configured Icon Picker to select the default icon._
 
-
-### How to get the value
-
-[A few sentences about how to get the value + value converter / models builder info]
-
-[Include a code sample.]
+There is also an option to **hide the label** on the property itself. Selecting this option will hide the property's label and description, display the editor in full width of the content property panel.
 
 
-### How to configure as a Parameter Editor
+### How to use the editor?
 
-[Add a couple of sentences on how to configure this editor as a Parameter Editor.]
+Once you have added the configured Data Type to your Document Type, the Icon Picker editor will be displayed on the content page's property panel.
 
-[Include a code snippet.]
+![Icon Picker property-editor - default state](icon-picker--property-editor-01.png)
+
+By clicking on the icon box, will open Umbraco's icon picker overlay. Text filters and color selection can also be used.
+
+![Icon Picker property-editor - icon picker overlay open, selecting icon](icon-picker--property-editor-02.png)
+
+Having picked your icon, the selected icon will be displayed in the icon box.
+
+![Icon Picker property-editor - selected state](icon-picker--property-editor-03.png)
+
+
+### How to get the value?
+
+The value for the Icon Picker is a `string`. To use this in your view templates, here are a couple of examples.
+
+Assuming that your property's alias is `"icon"`, then...
+
+Using Umbraco's Models Builder...
+
+```cshtml
+<i class="icon @Model.Icon"></i>
+```
+
+Without ModelsBuilder...
+
+Weakly-typed...
+
+```cshtml
+<i class="icon @Model.Value("icon")"></i>
+```
+
+Strongly-typed...
+
+```cshtml
+<i class="icon @(Model.Value<string>("icon"))"></i>
+```
+
+
+### How to configure as a Parameter-Editor?
+
+Icon Picker is available as a macro parameter-editor by default. It will automatically be listed in the parameter options for your macros.
+
+
+### Further reading
+
+For a list of available icons in Umbraco, [Nic Bell's UCreate project has a page for them](https://nicbell.github.io/ucreate/icons.html).

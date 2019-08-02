@@ -8,7 +8,12 @@
 
 This is a collection of Umbraco components that I have developed for use on my own **Umbraco v8** implementation projects.
 
-Some components may be innovative, others may be a reimagining of existing components, property-editors, features and other community packages.
+Some components may be innovative, others may be reimagining of existing components, property-editors, features and other community packages.
+
+
+#### Why should I use it?
+
+I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it. No pressure from me.
 
 
 #### What's on offer?
@@ -23,6 +28,17 @@ Let's open the shoebox and take a look inside...
 - [Notes](../docs/editors/notes.md)
 - [Render Macro](../docs/editors/render-macro.md)
 
+There is documentation for each of the property-editors, with screenshots, use-cases and code examples.
+
+
+### Documentation
+
+Documentation for each of the components can be found in [the /docs folder](../docs/).
+
+
+#### Known issues
+
+_There are currently no known issues with the Contentment package._
 
 
 
@@ -46,17 +62,25 @@ For more information about the Mozilla Public License, please visit: <https://ww
 
 </details>
 
+
 ### Acknowledgements
 
 #### Developers
 
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
-Current development time: **300+ hours** (as of 2019-08-01) - _so you have an idea how of much human time/effort has been put into making this package._
+<details>
+<summary>Current development time: **300+ hours** (as of 2019-08-01)</summary>
+
+_To give you an idea of how much human time/effort has been put into making this package._
+
+</details>
+
 
 #### Special thanks
 
-- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating me with the time and resource to develop this project.
+- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me develop this project.
+
 
 #### Logo
 
