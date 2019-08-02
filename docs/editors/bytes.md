@@ -73,7 +73,9 @@ Strongly-typed...
 ### Further reading
 
 - If you would like a .NET library to help byte size representation in code easier, check out [ByteSize by Omar Khudeira](https://github.com/omar/ByteSize).
-  - [Omar is a fan of 1024 bytes in a kilobyte](https://omar.io/2017/01/16/when-technically-right-is-wrong-kilobytes.html). Here are some more opinions on the matter...
-    - [Coding Horror (Jeff Atwood) - Gigabyte: Decimal vs. Binary](https://blog.codinghorror.com/gigabyte-decimal-vs-binary/)
-    - [xkcd (Randall Munroe) #394 - Kilobyte](https://xkcd.com/394/)
-    - [Stack Overflow - Really 1 KB (KiloByte) equals 1024 bytes?](https://stackoverflow.com/q/19819763/12787)
+  - [Omar is a fan of 1024 bytes in a kilobyte](https://omar.io/2017/01/16/when-technically-right-is-wrong-kilobytes.html).
+
+Here are some more opinions on the matter...
+  - [Coding Horror (Jeff Atwood) - Gigabyte: Decimal vs. Binary](https://blog.codinghorror.com/gigabyte-decimal-vs-binary/)
+  - [xkcd (Randall Munroe) #394 - Kilobyte](https://xkcd.com/394/)
+  - [Stack Overflow - Really 1 KB (KiloByte) equals 1024 bytes?](https://stackoverflow.com/q/19819763/12787)
