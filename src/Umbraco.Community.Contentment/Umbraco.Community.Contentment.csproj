@@ -295,8 +295,11 @@
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
+    <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />
+    <Compile Include="DataEditors\Element\ElementConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\EnableFilterConfigurationField.cs" />
+    <Compile Include="DataEditors\Element\ElementDataEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
@@ -322,6 +325,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
+    <Compile Include="DataEditors\_\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="DataEditors\Cards\CardsDataEditor.cs" />
@@ -402,6 +406,10 @@
     <Content Include="DataEditors\Cards\cards.html" />
     <Content Include="DataEditors\Cards\cards.js" />
     <Content Include="DataEditors\Checkbox\checkbox.css" />
+    <Content Include="DataEditors\Element\element.html" />
+    <Content Include="DataEditors\Element\element.js" />
+    <Content Include="DataEditors\Element\element.overlay.html" />
+    <Content Include="DataEditors\Element\element.overlay.js" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
