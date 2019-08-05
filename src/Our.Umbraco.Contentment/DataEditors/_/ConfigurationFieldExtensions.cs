@@ -10,6 +10,7 @@ namespace Our.Umbraco.Contentment.DataEditors
 {
     internal static partial class ConfigurationFieldExtensions
     {
+        // TODO: [LK:2019-08-05] This extension method should be in Umbraco core. Send a PR.
         public static void Add(
             this List<ConfigurationField> fields,
             string key,
