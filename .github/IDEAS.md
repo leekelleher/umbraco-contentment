@@ -29,4 +29,21 @@
 - User Picker
   The default User Picker property-editor is a plain dropdown list, (it's rubbish), but in the Users section, the Role editor has a really nice User picker, with overlay.
 
+- Dimensions - Width x Height combo
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L29-L34
+
+- Smaller number input (+ label suffix)
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L36-L40
+
+- Template editor (type of thing?) Add columns (blocks). Each one could be an InnerContent-esque editor?
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/grid/dialogs/rowconfig.html#L44-L64
+
+- Color Picker (+ multiple picker)
+  Basically a property-editor of the prevalue-editor. Using the Spectrum color picker library.
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/colorpicker/colorpicker.prevalues.html
+  or could look to put <umb-color-swatches> in an overlay?
+  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-color-swatches.html
+  e.g. https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/iconpicker/iconpicker.html#L35-L41
+  then have a "Multiple Approved Color Picker"?
+
 - 
