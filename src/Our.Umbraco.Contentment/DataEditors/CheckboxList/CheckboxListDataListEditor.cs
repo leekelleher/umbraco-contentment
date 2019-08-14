@@ -24,7 +24,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(CheckAllConfigurationField))]
         public bool CheckAll { get; set; }
 
-        [ConfigurationField(typeof(OrientationConfigurationField))]
-        public string Orientation { get; set; }
+        [ConfigurationField(typeof(ShowDescriptionsConfigurationField))]
+        public bool ShowDescriptions { get; set; }
     }
 }

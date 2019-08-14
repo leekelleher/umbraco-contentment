@@ -48,7 +48,7 @@ namespace Our.Umbraco.Contentment.DataEditors
                 });
 
             Fields.Add(new CheckAllConfigurationField());
-            Fields.Add(new OrientationConfigurationField());
+            Fields.Add(new ShowDescriptionsConfigurationField());
             Fields.AddHideLabel();
         }
     }

@@ -319,7 +319,7 @@
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
-    <Compile Include="DataEditors\Cards\ShowDescriptionsConfigurationField.cs" />
+    <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="DataEditors\Cards\CardsDataEditor.cs" />
     <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerValueConverter.cs" />

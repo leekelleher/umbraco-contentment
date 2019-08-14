@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
 
         // console.log("checkboxlist.model", $scope.model);
 
-        var defaultConfig = { items: [], checkAll: 0, orientation: "vertical", defaultValue: [] };
+        var defaultConfig = { items: [], checkAll: 0, showDescriptions: 1, defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -27,7 +27,8 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
                 item.checked = _.contains($scope.model.value, item.value);
             });
 
-            vm.layout = config.orientation === "horizontal" ? "inline" : "";
+            vm.showDescriptions = Object.toBoolean(config.showDescriptions);
+
             vm.changed = changed;
 
             vm.toggleAll = Object.toBoolean(config.checkAll);

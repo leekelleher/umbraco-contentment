@@ -17,7 +17,7 @@ namespace Our.Umbraco.Contentment.DataEditors
         {
             Key = ShowDescriptions;
             Name = "Show descriptions?";
-            Description = "Enable to display the item's description on the card, (if available).";
+            Description = "Enable to display the description for the item, (if available).";
             View = "views/propertyeditors/boolean/boolean.html";
             Config = new Dictionary<string, object>
             {
