@@ -16,6 +16,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cards.
             showDescriptions: 1,
             disableSorting: 0,
             enableFilter: 1,
+            enableMultiple: 0,
             items: [],
             maxItems: 0,
             listType: "grid",
@@ -81,16 +82,19 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Cards.
                 config: {
                     title: "Choose...",
                     enableFilter: Object.toBoolean(config.enableFilter),
+                    enableMultiple: Object.toBoolean(config.enableMultiple),
                     items: items,
                     listType: config.listType,
                     orderBy: config.overlayOrderBy,
                 },
                 view: config.overlayView,
                 size: "small",
-                submit: function (model) {
+                submit: function (selectedItems) {
 
-                    vm.items.push(angular.copy(model.selectedItem))
-                    $scope.model.value.push(model.selectedItem.value);
+                    _.each(selectedItems, function (x) {
+                        vm.items.push(angular.copy(x));
+                        $scope.model.value.push(x.value);
+                    });
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;

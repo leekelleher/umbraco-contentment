@@ -28,6 +28,7 @@
     </output>
     <output path="contentment.css">
         <input path="Web\UI\App_Plugins\Contentment\contentment.css" />
+        <input path="DataEditors\Cards\cards.css" />
         <input path="DataEditors\CheckboxList\checkbox-list.css" />
         <input path="DataEditors\ItemPicker\item-picker.overlay.css" />
         <input path="DataEditors\RadioButtonList\radio-button-list.css" />

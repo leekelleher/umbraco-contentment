@@ -40,6 +40,9 @@ namespace Our.Umbraco.Contentment.DataEditors
         [ConfigurationField(typeof(AllowDuplicatesConfigurationField))]
         public bool AllowDuplicates { get; set; }
 
+        [ConfigurationField(typeof(EnableMultipleConfigurationField))]
+        public bool EnableMultiple { get; set; }
+
         [ConfigurationField(typeof(DisableSortingConfigurationField))]
         public bool DisableSorting { get; set; }
     }

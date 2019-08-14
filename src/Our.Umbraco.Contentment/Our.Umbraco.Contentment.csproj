@@ -392,6 +392,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AjaxMin.xml" />
+    <Content Include="DataEditors\Cards\cards.css" />
     <Content Include="DataEditors\CheckboxList\checkbox-list.css" />
     <Content Include="DataEditors\Cards\cards.html" />
     <Content Include="DataEditors\Cards\cards.js" />
