@@ -3,10 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-.contentment.umb-checkboxlist ul.toggle-all {
-    margin-bottom: 15px;
-}
-
-.contentment.umb-checkboxlist ul li label {
-    margin-bottom: 8px;
+.contentment .umb-form-check__text small {
+    padding-top: 0;
 }

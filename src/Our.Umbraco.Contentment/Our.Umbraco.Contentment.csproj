@@ -396,6 +396,7 @@
     <Content Include="DataEditors\CheckboxList\checkbox-list.css" />
     <Content Include="DataEditors\Cards\cards.html" />
     <Content Include="DataEditors\Cards\cards.js" />
+    <Content Include="DataEditors\Checkbox\checkbox.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
