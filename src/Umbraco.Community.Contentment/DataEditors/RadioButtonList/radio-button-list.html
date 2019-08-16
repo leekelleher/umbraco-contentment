@@ -1,0 +1,16 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-radiobuttons" ng-controller="Umbraco.Community.Contentment.DataEditors.RadioButtonList.Controller as vm">
+    <ul class="unstyled radio no-indent" ng-class="vm.layout">
+        <li ng-repeat="item in vm.items">
+            <label>
+                <input type="radio" ng-model="model.value" value="{{item.value}}" />
+                <span ng-bind-html="item.name | safe_html"></span>
+                <small ng-if="item.description &amp;&amp; vm.layout === ''" ng-bind-html="item.description | safe_html"></small>
+            </label>
+        </li>
+    </ul>
+</div>

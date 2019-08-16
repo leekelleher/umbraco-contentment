@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Community.Contentment", "Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj", "{7D440D19-44D0-474F-8BAB-A7DDF4062994}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4F87338-D989-4C50-BF8E-EF4AF179B459}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84-5180-4489-B642-E3453B51330F}"
+	ProjectSection(SolutionItems) = preProject
+		PostBuildEvents.bat = PostBuildEvents.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\CODE_OF_CONDUCT.md = ..\.github\CODE_OF_CONDUCT.md
+		..\.github\CONTRIBUTING.md = ..\.github\CONTRIBUTING.md
+		..\.github\IDEAS.md = ..\.github\IDEAS.md
+		..\.github\ISSUE_TEMPLATE.md = ..\.github\ISSUE_TEMPLATE.md
+		..\LICENSE.md = ..\LICENSE.md
+		..\.github\PULL_REQUEST_TEMPLATE.md = ..\.github\PULL_REQUEST_TEMPLATE.md
+		..\.github\README.md = ..\.github\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{56F1FA82-1108-4C75-A122-D58D759D61E2}"
+	ProjectSection(SolutionItems) = preProject
+		..\tools\insert-license-header.snippet = ..\tools\insert-license-header.snippet
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{9C956438-0434-40DD-BBA0-7F837E8FF1C8}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\README.md = ..\docs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\editors\bytes.md = ..\docs\editors\bytes.md
+		..\docs\editors\data-list.md = ..\docs\editors\data-list.md
+		..\docs\editors\icon-picker.md = ..\docs\editors\icon-picker.md
+		..\docs\editors\notes.md = ..\docs\editors\notes.md
+		..\docs\editors\render-macro.md = ..\docs\editors\render-macro.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5297EC84-5180-4489-B642-E3453B51330F} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{56F1FA82-1108-4C75-A122-D58D759D61E2} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{9C956438-0434-40DD-BBA0-7F837E8FF1C8} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F} = {9C956438-0434-40DD-BBA0-7F837E8FF1C8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8F86B45-B473-45E7-85C7-863A10E21554}
+	EndGlobalSection
+EndGlobal

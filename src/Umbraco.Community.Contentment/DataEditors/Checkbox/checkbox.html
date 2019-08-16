@@ -1,0 +1,19 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-boolean" ng-controller="Umbraco.Community.Contentment.DataEditors.Checkbox.Controller as vm">
+    <label class="checkbox umb-form-check umb-form-check--checkbox">
+        <input type="checkbox" id="{{vm.alias}}" class="umb-form-check__input" ng-model="model.value" ng-true-value="{{vm.true}}" ng-false-value="{{vm.false}}" />
+        <span class="umb-form-check__state" aria-hidden="true">
+            <span class="umb-form-check__check">
+                <i class="umb-form-check__icon icon-check"></i>
+            </span>
+        </span>
+        <span class="umb-form-check__text" ng-if="vm.showInline">
+            <strong ng-bind-html="vm.label"></strong>
+            <small ng-bind-html="vm.description"></small>
+        </span>
+    </label>
+</div>
