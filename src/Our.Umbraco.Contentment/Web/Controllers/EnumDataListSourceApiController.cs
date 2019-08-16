@@ -12,7 +12,7 @@ using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 
-namespace Our.Umbraco.Contentment
+namespace Umbraco.Community.Contentment
 {
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
     public class EnumDataSourceApiController : UmbracoAuthorizedJsonController

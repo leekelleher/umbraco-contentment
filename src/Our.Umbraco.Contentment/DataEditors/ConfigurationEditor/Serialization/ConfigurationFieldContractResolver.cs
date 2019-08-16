@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Umbraco.Core.PropertyEditors;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/PropertyEditors/ConfigurationEditor.cs#L127-L145
     internal class ConfigurationFieldContractResolver : DefaultContractResolver

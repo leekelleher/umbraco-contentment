@@ -6,7 +6,7 @@
 using System.ComponentModel;
 using Umbraco.Core.Composing;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IContentmentListItem : IDiscoverable

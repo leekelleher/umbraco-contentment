@@ -8,7 +8,7 @@ using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
 #if !DEBUG
     // TODO: Rethink if this data source is necessary. [LK]

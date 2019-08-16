@@ -7,8 +7,8 @@
     <ProjectGuid>{7D440D19-44D0-474F-8BAB-A7DDF4062994}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Our.Umbraco.Contentment</RootNamespace>
-    <AssemblyName>Our.Umbraco.Contentment</AssemblyName>
+    <RootNamespace>Umbraco.Community.Contentment</RootNamespace>
+    <AssemblyName>Umbraco.Community.Contentment</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -12,7 +12,7 @@ using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Serialization;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public class DataListConfigurationEditor : ConfigurationEditor
     {

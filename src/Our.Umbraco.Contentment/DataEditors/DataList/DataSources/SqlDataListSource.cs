@@ -13,7 +13,7 @@ using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class SqlDataListSource : IDataListSource
     {

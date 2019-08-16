@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Umbraco.Core.IO;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class TogglesDataListEditor : IDataListEditor
     {

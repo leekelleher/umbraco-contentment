@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-namespace Our.Umbraco.Contentment
+namespace Umbraco.Community.Contentment
 {
     internal static partial class Constants
     {
@@ -11,7 +11,7 @@ namespace Our.Umbraco.Contentment
         {
             internal const string ProjectName = "Contentment";
 
-            internal const string ProjectNamespace = "Our.Umbraco.Contentment";
+            internal const string ProjectNamespace = "Umbraco.Community.Contentment";
 
             internal const string DataEditorNamePrefix = "[" + ProjectName + "] ";
 

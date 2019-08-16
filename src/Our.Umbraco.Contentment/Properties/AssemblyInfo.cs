@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using Our.Umbraco.Contentment;
+using Umbraco.Community.Contentment;
 
 [assembly: AssemblyTitle(Constants.Internals.ProjectNamespace)]
 [assembly: AssemblyDescription("Umbraco Contentment - a shoebox of happiness")]

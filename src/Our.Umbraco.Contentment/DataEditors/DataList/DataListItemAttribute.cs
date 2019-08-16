@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class DataListItemAttribute : Attribute

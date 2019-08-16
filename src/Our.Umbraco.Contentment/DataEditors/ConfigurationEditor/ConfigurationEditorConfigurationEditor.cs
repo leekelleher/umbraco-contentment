@@ -13,7 +13,7 @@ using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbIcons = Umbraco.Core.Constants.Icons;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {

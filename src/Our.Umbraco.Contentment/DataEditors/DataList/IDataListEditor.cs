@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public interface IDataListEditor : IContentmentListItem
     {

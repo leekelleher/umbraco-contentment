@@ -14,7 +14,7 @@ using Umbraco.Core.Services;
 using Umbraco.Web.Models.ContentEditing;
 using UmbracoConstants = Umbraco.Core.Constants;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class UmbracoEntityDataListSource : IDataListSource
     {

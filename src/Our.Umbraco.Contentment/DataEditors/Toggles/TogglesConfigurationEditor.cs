@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public class TogglesConfigurationEditor : ConfigurationEditor
     {

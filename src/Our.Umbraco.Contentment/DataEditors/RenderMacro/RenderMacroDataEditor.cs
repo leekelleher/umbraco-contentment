@@ -7,7 +7,7 @@ using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,

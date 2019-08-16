@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public class DataListItem
     {

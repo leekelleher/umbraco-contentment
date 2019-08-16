@@ -11,7 +11,7 @@ using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 using UmbIcons = Umbraco.Core.Constants.Icons;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class ConfigurationEditorService
     {

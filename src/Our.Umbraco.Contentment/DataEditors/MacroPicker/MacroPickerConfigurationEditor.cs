@@ -13,7 +13,7 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
-namespace Our.Umbraco.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public class MacroPickerConfigurationEditor : ConfigurationEditor
     {
