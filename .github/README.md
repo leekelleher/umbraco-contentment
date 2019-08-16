@@ -13,7 +13,7 @@ Some components may be innovative, others may be reimagining of existing compone
 
 #### Why should I use it?
 
-I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it. No pressure from me.
+I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it. No pressure or marketing spin from me.
 
 
 #### What's on offer?
@@ -28,18 +28,56 @@ Let's open the shoebox and take a look inside...
 - [Notes](../docs/editors/notes.md)
 - [Render Macro](../docs/editors/render-macro.md)
 
-There is documentation for each of the property-editors, with screenshots, use-cases and code examples.
+#### Documentation
+
+[Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
+
+Please note, you may find other components within Contentment that haven't yet been documented. _Let's call those "undocumented features"._
 
 
-### Documentation
+#### Release status
 
-[Documentation for each of the components can be found in the /docs folder](../docs/).
+My aim to have a v1.0 beta release ready by the **end of Q3 (September) 2019**.
+
+Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
 
 #### Known issues
 
 _There are currently no known issues with the Contentment package._
 
+
+### Support
+
+In terms of licensing and support, from my past experience, soul searching and burnout! I am taking a subtler approach - no implementation support, no bug reports, no feature requests.
+
+With one exception, **Pull Requests will be warmly embraced!** I want to welcome and encourage code collaborations.
+If you find a bug, fix it, send me a patch. Got an idea for a new feature, open a pull request (with or without code) and we can discuss.
+Show some willing and I will be your best friend.
+
+_"But I'm not a coder, I need support!"_ I hear you cry. Then hopefully someone can help you on the Our Umbraco support forum.
+_"But I already work 70 hours a week, I need these bugs fixing ASAP!"_ Ah, time vs money.
+
+I am not unempathetic to your needs, but also I am not your support developer.
+The Umbraco community is amongst the friendliest on our planet. Ask for help on the Our Umbraco support forum, hopefully someone can help you there.
+
+If you don't like this, then I would advise not to use this package. I am not forcing you to do so.
+
+I have enjoyed developing these editors, I have enjoyed sharing my code with the world, I have not enjoyed being a free support developer.
+
+
+### Contributions, collaborations, rules of engagement
+
+If you would like to contribute to this project, please do feel free to send over any pull requests. I'll be happy to discuss.
+
+Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
+
+This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). Play nice or go home. :v::heart::dove:
+
+If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them - preferably in the form of a pull request.
+Otherwise you are completely free to complain on your favourite social network, or shout into the void.
+
+However, unacceptable behaviour towards myself or contributors may result in being blocked from this repository.
 
 
 ### License
@@ -56,7 +94,7 @@ The main difference with the [Mozilla Public License](https://opensource.org/lic
 
 _More give, less take._
 
-If you do not to intend to modifiy the source code, then you will still have the same freedoms as when using the MIT license.
+If you do not to intend to modify the source code, then you will still have the same freedoms as when using the MIT license.
 
 For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
