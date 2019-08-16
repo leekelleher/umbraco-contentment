@@ -26,9 +26,6 @@
   For a toolbar menu, maybe add options using the action overlay UI?
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-confirm-action.html
 
-- User Picker
-  The default User Picker property-editor is a plain dropdown list, (it's rubbish), but in the Users section, the Role editor has a really nice User picker, with overlay.
-
 - Dimensions - Width x Height combo
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L29-L34
 

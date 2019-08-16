@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public class IconPickerConfigurationEditor : ConfigurationEditor
     {
         public IconPickerConfigurationEditor()
-    : base()
+            : base()
         {
             Fields.Add(new DefaultIconConfigurationField());
             Fields.AddHideLabel();

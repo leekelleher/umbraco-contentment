@@ -55,6 +55,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-science";
 
+        // TODO: [LK:2019-08-16] Add a note, to say why we've limited the support for specific entity types.
+        // e.g. it's generally UDI support for those entity types.
+
         [ConfigurationField(typeof(EntityTypeConfigurationField))]
         public string EntityType { get; set; }
 
