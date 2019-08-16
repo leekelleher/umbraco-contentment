@@ -32,6 +32,7 @@ angular.module("umbraco").controller("Our.Umbraco.Contentment.DataEditors.Checkb
             vm.changed = changed;
 
             vm.toggleAll = Object.toBoolean(config.checkAll);
+
             if (vm.toggleAll) {
                 vm.toggle = toggle;
                 vm.toggleChecked = _.every(vm.items, function (item) {

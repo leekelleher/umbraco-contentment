@@ -3,6 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-.contentment .umb-form-check__text small {
-    padding-top: 0;
+.contentment .umb-form-check__text {
+    margin-top: 1px;
 }
+
+    .contentment .umb-form-check__text small {
+        display: block;
+        padding-top: 0;
+    }
