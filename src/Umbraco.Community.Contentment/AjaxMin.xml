@@ -24,6 +24,7 @@
         <input path="DataEditors\RadioButtonList\radio-button-list.js" />
         <input path="DataEditors\RenderMacro\render-macro.js" />
         <input path="DataEditors\Toggles\toggles.js" />
+        <input path="DataEditors\UserPicker\user-picker.js" />
         <input path="DataEditors\_\_dev-mode.js" />
     </output>
     <output path="contentment.css">

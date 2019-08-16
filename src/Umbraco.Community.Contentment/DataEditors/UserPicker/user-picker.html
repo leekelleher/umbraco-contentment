@@ -1,0 +1,18 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div ng-controller="Umbraco.Community.Contentment.DataEditors.UserPicker.Controller as vm">
+    <div class="umb-property-editor--limit-width" ui-sortable="vm.sortableOptions" ng-model="vm.items">
+        <umb-user-preview ng-repeat="user in vm.items"
+                          name="user.name"
+                          avatars="user.avatars"
+                          allow-remove="vm.allowRemove"
+                          on-remove="vm.remove($index)">
+        </umb-user-preview>
+    </div>
+    <a class="umb-node-preview-add" href="" ng-click="vm.add()" ng-if="vm.allowAdd" prevent-default>
+        <localize key="general_add">Add</localize>
+    </a>
+</div>

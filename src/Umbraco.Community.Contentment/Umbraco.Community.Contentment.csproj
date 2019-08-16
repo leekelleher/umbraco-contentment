@@ -319,6 +319,8 @@
     <Compile Include="DataEditors\ConfigurationEditor\Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
+    <Compile Include="DataEditors\UserPicker\UserPickerConfigurationEditor.cs" />
+    <Compile Include="DataEditors\UserPicker\UserPickerDataEditor.cs" />
     <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="DataEditors\Cards\CardsDataEditor.cs" />
     <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
@@ -402,6 +404,8 @@
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />
     <Content Include="DataEditors\Toggles\toggles.js" />
     <Content Include="DataEditors\Toggles\toggles.html" />
+    <Content Include="DataEditors\UserPicker\user-picker.html" />
+    <Content Include="DataEditors\UserPicker\user-picker.js" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
