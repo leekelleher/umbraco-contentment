@@ -2,18 +2,8 @@
 
 ## Data Editors
 
-- Configuration Settings
-  A property-editor that wraps another editor to add a cog icon in the top-right, which would open an overlay with configuration settings.
-  Think Vorto, but for extra options.
-
-- Hide Label
-  A property-editor wrapper that can add a "Hide Label" field. Apart from that, everything else is an invisible wrapper.
-
 - Textbox
   Customizable textbox, Placeholder text, Default value, Prefix / suffix (input groups), Char limit, Hide label, Html5 types, Data list
-
-- Remote Content
-  Enter a URL into a textbox, the value-converter will request the URL, cache and return its contents as the property value.
 
 - Local Content
   Enable editing of a local file's content, e.g. robots.txt
@@ -42,5 +32,17 @@
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-color-swatches.html
   e.g. https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/iconpicker/iconpicker.html#L35-L41
   then have a "Multiple Approved Color Picker"?
+
+- Try using the umb-confirm directive with some other buttons in there... interesting concept.
+
+- Checkbox List - arrange in columns? (e.g. think categories / taxonomy)
+
+- editorService Ideas
+  - `embed` - OEmbed Editor - Dave W has one, but once you add the OEmbed, you can't edit it. This may be a limitation of Umbraco's `editorService.embed` feature, but feels like it can be improved.
+    https://our.umbraco.com/packages/backoffice-extensions/oembed-picker-property-editor/
+  - `linkPicker` - MultiUrlPicker leverages Umbraco's `editorService.linkPicker` feature, but the UI for the overlay is too much! Needs drastically simplifying.
+  - `queryBuilder` - could this ever be useful on a content item? Same goes for `editorService.insertCodeSnippet` or `editorService.insertField`?
+  - `treePicker` - have a generic picker? where the "section" and "treeAlias", or "entityType" can be defined in the Data Type?
+  - `userGroupPicker` - I guess a User Group Picker could be useful as a property-editor?
 
 - 
