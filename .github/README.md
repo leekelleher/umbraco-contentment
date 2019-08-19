@@ -52,26 +52,21 @@ _Let's call those "undocumented features"._
 
 ### Support
 
-<details>
-<summary>A note about support</summary>
+In terms of licensing and support, from past experience and having suffered my fair share of burnout! I am reluctant to offer any support.
 
-In terms of licensing and support, from my past experience, soul searching and burnout! I am taking a subtler approach - no implementation support, no bug reports, no feature requests.
+I developed this project for use in my own Umbraco implementations. I enjoy developing these editors, and I enjoy sharing my code with you. I have not enjoyed being a free support developer.
 
-With one exception, **Pull Requests will be warmly embraced!** I want to welcome and encourage code collaborations.
-If you find a bug, fix it, send me a patch. Got an idea for a new feature, open a pull request (with or without code) and we can discuss.
-Show some willing and I will be your best friend.
+If you decide to use Contentment in your own Umbraco implementations, that is brilliant. I'd love to hear about it.
+**Any feedback you have will be warmly embraced!** _...and if you send me a Pull Request, I'll be your best friend!_
 
-- _"But I'm not a coder, I need support!"_ I hear you cry. Then hopefully someone can help you on the Our Umbraco support forum.
-- _"But I already work 70 hours a week, I need these bugs fixing ASAP!"_ Ah, time vs money.
+I can not offer this project with warranty for bug fixes. Particularly if it is used in unconventional ways. _(e.g. using a Data List inside a Nested Content, inside a Grid editor, inside a multi-lingual Variant.)_
 
-I am not unempathetic to your needs, but also I am not your support developer.
-The Umbraco community is amongst the friendliest on our planet. Ask for help on the Our Umbraco support forum, hopefully someone can help you there.
+While I can not offer any warranty for bus fixes, if you do report a bug, I reserve the right to address it in my own time, or ignore it completely.
 
-If you don't like this, then I would advise not to use this package. I am not forcing you to do so.
+I appreciate that not everyone is a coder, or that some folk are working over 70 hours a week and need bugs fixing ASAP!
+I am not unempathetic to your needs, but I am not your support developer.
 
-I have enjoyed developing these editors, I have enjoyed sharing my code with the world, I have not enjoyed being a free support developer.
-
-</details>
+You should embrace the Umbraco community, it is amongst the friendliest on our planet. Ask for help on the Our Umbraco support forum, hopefully someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
@@ -94,8 +89,7 @@ Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com), [Umbrella Inc](ht
 
 All source code is licensed under the [Mozilla Public License](../LICENSE.md).
 
-<details>
-<summary>A note about licensing</summary>
+#### A note about licensing
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
 The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
@@ -105,8 +99,6 @@ _More give, less take._
 If you do not to intend to modify the source code, then you will still have the same freedoms as when using the MIT license.
 
 For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
-
-</details>
 
 
 ### Acknowledgements
