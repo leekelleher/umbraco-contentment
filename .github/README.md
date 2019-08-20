@@ -52,23 +52,14 @@ _Let's call those "undocumented features"._
 
 ### Support
 
-In terms of licensing and support, from past experience and having suffered my fair share of burnout, I am reluctant to offer any support!
+I've been doing open source for a long time. I have suffered my fair share of burnout and empathy fatigue.
 
-I developed this project for use in my own Umbraco implementations.
-I enjoy developing these editors, and sharing my code with you. I have not enjoyed being a free support developer.
+I reserve the right to address bug reports or feature requests in my own time, or ignore them completely.
 
-If you decide to use Contentment in your own Umbraco 8 implementations, that is brilliant! I'd love to hear about it.<br>
-**Any feedback you have will be warmly embraced!** _...and if you send me a Pull Request, I'll be your best friend!_
+**Any feedback is warmly welcome.** Although remember, I am not your support developer.
 
-I can not offer this project with warranty for bug fixes. Particularly if it is used in unconventional ways: _(e.g. using a Data List inside a Nested Content, inside a Grid editor, inside a multi-lingual Variant. You've probably over-engineered your implementation.)_
-
-If you do report a bug, I reserve the right to address it in my own time, or ignore it completely.
-
-I appreciate that not everyone is a coder, or that some folk are working over 70 hours a week and need bugs fixing ASAP!
-I am not unempathetic to anyone's needs, but I am not your support developer.
-
-You should embrace the Umbraco community, it is amongst the friendliest on our planet.
-Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), hopefully someone can help you there.
+The Umbraco community is amongst the friendliest on our planet, learn to embrace it.
+Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
