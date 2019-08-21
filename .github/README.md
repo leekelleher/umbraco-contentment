@@ -58,7 +58,7 @@ I reserve the right to address bug reports or feature requests in my own time, o
 
 **Any feedback is warmly welcome.** Although remember, I am not your support developer.
 
-The Umbraco community is amongst the friendliest on our planet, learn to embrace it.
+The Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
@@ -70,7 +70,7 @@ Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
 This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go home.** :v::heart::dove:
 
-If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them - preferably in the form of a pull request.
+If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
 Otherwise you are completely free to complain on your favourite social network, or shout into the void.
 
 Unacceptable behaviour towards myself or contributors may result in being blocked from accessing this repository.

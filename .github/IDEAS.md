@@ -33,8 +33,6 @@
   e.g. https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/iconpicker/iconpicker.html#L35-L41
   then have a "Multiple Approved Color Picker"?
 
-- Try using the umb-confirm directive with some other buttons in there... interesting concept.
-
 - Checkbox List - arrange in columns? (e.g. think categories / taxonomy)
 
 - editorService Ideas
@@ -43,6 +41,7 @@
   - `linkPicker` - MultiUrlPicker leverages Umbraco's `editorService.linkPicker` feature, but the UI for the overlay is too much! Needs drastically simplifying.
   - `queryBuilder` - could this ever be useful on a content item? Same goes for `editorService.insertCodeSnippet` or `editorService.insertField`?
   - `treePicker` - have a generic picker? where the "section" and "treeAlias", or "entityType" can be defined in the Data Type?
+    - File picker, Stylesheet picker, Scripts picker, Member Group picker, Relation Type picker, Languages picker, 
   - `userGroupPicker` - I guess a User Group Picker could be useful as a property-editor?
 
 - 
