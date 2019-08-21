@@ -290,12 +290,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
     <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DataEditors\TextInput\TextInputConfigurationEditor.cs" />
+    <Compile Include="DataEditors\TextInput\TextInputDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
@@ -437,6 +440,9 @@
     <Content Include="DataEditors\Element\element.html" />
     <Content Include="DataEditors\Element\element.js" />
     <Content Include="DataEditors\Element\element.overlay.html" />
+    <Content Include="DataEditors\TextInput\text-input.css" />
+    <Content Include="DataEditors\TextInput\text-input.html" />
+    <Content Include="DataEditors\TextInput\text-input.js" />
     <Content Include="DataEditors\Element\element.overlay.js" />
     <Content Include="DataEditors\IconPicker\icon-picker.css" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />

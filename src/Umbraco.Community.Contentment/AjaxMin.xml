@@ -25,6 +25,7 @@
         <input path="DataEditors\MacroPicker\macro-picker.js" />
         <input path="DataEditors\RadioButtonList\radio-button-list.js" />
         <input path="DataEditors\RenderMacro\render-macro.js" />
+        <input path="DataEditors\TextInput\text-input.js" />
         <input path="DataEditors\Toggles\toggles.js" />
         <input path="DataEditors\_\_dev-mode.js" />
     </output>
@@ -36,5 +37,6 @@
         <input path="DataEditors\IconPicker\icon-picker.css" />
         <input path="DataEditors\ItemPicker\item-picker.overlay.css" />
         <input path="DataEditors\RadioButtonList\radio-button-list.css" />
+        <input path="DataEditors\TextInput\text-input.css" />
     </output>
 </root>
