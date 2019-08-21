@@ -300,6 +300,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\TextInput\TextInputConfigurationEditor.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataEditor.cs" />
+    <Compile Include="DataEditors\Dimensions\DimensionsModel.cs" />
+    <Compile Include="DataEditors\Dimensions\DimensionsValueConverter.cs" />
+    <Compile Include="DataEditors\Dimensions\DimensionsDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
@@ -421,6 +424,9 @@
     <Content Include="DataEditors\Cards\cards.css" />
     <Content Include="DataEditors\Cards\cards.html" />
     <Content Include="DataEditors\Cards\cards.js" />
+    <Content Include="DataEditors\Dimensions\dimensions.js" />
+    <Content Include="DataEditors\Dimensions\dimensions.css" />
+    <Content Include="DataEditors\Dimensions\dimensions.html" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.html" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
     <Content Include="DataEditors\CheckboxList\checkbox-list.css" />

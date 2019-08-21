@@ -1,0 +1,11 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment controls-row"ng-controller="Umbraco.Community.Contentment.DataEditors.Dimensions.Controller as vm">
+    <div class="vertical-align-items">
+        <input type="number" min="0" ng-model="model.value.width" class="umb-property-editor-small" title="{{vm.labelWidth}}" placeholder="{{vm.labelWidth}}" /> &times;
+        <input type="number" min="0" ng-model="model.value.height" class="umb-property-editor-small" title="{{vm.labelHeight}}" placeholder="{{vm.labelHeight}}" /> {{vm.labelPixels}}
+    </div>
+</div>
