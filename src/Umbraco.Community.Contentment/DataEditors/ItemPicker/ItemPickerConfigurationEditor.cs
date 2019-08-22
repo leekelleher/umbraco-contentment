@@ -12,7 +12,9 @@ namespace Umbraco.Community.Contentment.DataEditors
     public class ItemPickerConfigurationEditor : ConfigurationEditor
     {
         public const string DefaultIcon = "defaultIcon";
+        public const string DefaultValue = "defaultValue";
         public const string EnableDevMode = "enableDevMode";
+        public const string EnableFilter = "enableFilter";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
         public const string OverlayOrderBy = "overlayOrderBy";
@@ -55,6 +57,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
+
+            Fields.Add(
+               EnableFilter,
+               "Enable filter?",
+               "Select to enable the search filter in the overlay selection panel.",
+               "boolean");
 
             Fields.Add(new ItemPickerTypeConfigurationField());
             Fields.AddMaxItems();

@@ -8,11 +8,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "editorService",
     function ($scope, editorService) {
 
-        //console.log("item-picker.model", $scope.model);
+        // console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
             allowDuplicates: 0,
             defaultIcon: "icon-science",
+            defaultValue: [],
             disableSorting: 0,
             enableFilter: 1,
             enableMultiple: 0,
@@ -29,7 +30,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function init() {
 
-            $scope.model.value = $scope.model.value || [];
+            $scope.model.value = $scope.model.value || config.defaultValue;
+
+            if (_.isArray($scope.model.value) === false) {
+                $scope.model.value = [$scope.model.value];
+            }
 
             vm.icon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
