@@ -51,6 +51,8 @@ angular.module("umbraco.directives").directive("contentmentDevMode", [
         };
     }
 ]);
+
+// TODO: [LK:2019-08-22] Change this to be an AngularJs Component. (I hear they are all the rage now?!)
 angular.module("umbraco.directives").directive("leeWasHere", [
     function () {
         console.log(`%c

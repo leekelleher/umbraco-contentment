@@ -44,4 +44,7 @@
     - File picker, Stylesheet picker, Scripts picker, Member Group picker, Relation Type picker, Languages picker, 
   - `userGroupPicker` - I guess a User Group Picker could be useful as a property-editor?
 
+- Tabbed Textarea
+  Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
+
 - 
