@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
     internal class ManualDataListSource : IDataListSource
     {
-        public string Name => "Manual";
+        public string Name => "User-defined list";
 
         public string Description => "Manually configure the items for the data source.";
 
