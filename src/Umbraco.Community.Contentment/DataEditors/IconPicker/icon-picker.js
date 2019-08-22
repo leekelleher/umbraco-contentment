@@ -18,6 +18,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultIcon;
             vm.pick = pick;
+            vm.clear = clear;
         };
 
         function pick() {
@@ -38,6 +39,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             };
 
             editorService.iconPicker(iconPicker);
+        };
+
+        function clear() {
+            // TODO: [LK:2019-08-22] Style up the clear button.
+            $scope.model.value = "";
         };
 
         function setDirty() {

@@ -4,7 +4,10 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
-    <a href="" class="umb-panel-header-icon -placeholder" ng-attr-title="{{model.value}}" ng-click="vm.pick()">
+    <a href="" class="umb-panel-header-icon -placeholder" ng-attr-title="{{model.value}}" ng-click="vm.pick()" prevent-default>
         <i class="icon {{model.value}}"></i>
+    </a>
+    <a href="" ng-click="vm.clear()"  prevent-default>
+        Clear
     </a>
 </div>
