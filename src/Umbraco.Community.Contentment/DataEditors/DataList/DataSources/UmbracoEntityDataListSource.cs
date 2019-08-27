@@ -20,22 +20,22 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
         {
-            { nameof(UmbracoEntityTypes.DataType), UmbracoObjectTypes.DataType },
-            { nameof(UmbracoEntityTypes.Document), UmbracoObjectTypes.DocumentType },
-            { nameof(UmbracoEntityTypes.DocumentType), UmbracoObjectTypes.DocumentType },
-            { nameof(UmbracoEntityTypes.Media), UmbracoObjectTypes.Media },
-            { nameof(UmbracoEntityTypes.MediaType), UmbracoObjectTypes.MediaType },
-            { nameof(UmbracoEntityTypes.Member), UmbracoObjectTypes.Member },
-            { nameof(UmbracoEntityTypes.MemberType), UmbracoObjectTypes.MemberType },
+            { nameof(UmbracoObjectTypes.DataType), UmbracoObjectTypes.DataType },
+            { nameof(UmbracoObjectTypes.Document), UmbracoObjectTypes.Document },
+            { nameof(UmbracoObjectTypes.DocumentType), UmbracoObjectTypes.DocumentType },
+            { nameof(UmbracoObjectTypes.Media), UmbracoObjectTypes.Media },
+            { nameof(UmbracoObjectTypes.MediaType), UmbracoObjectTypes.MediaType },
+            { nameof(UmbracoObjectTypes.Member), UmbracoObjectTypes.Member },
+            { nameof(UmbracoObjectTypes.MemberType), UmbracoObjectTypes.MemberType },
         };
 
         internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
         {
-            { nameof(UmbracoEntityTypes.DataType), UmbracoConstants.Icons.DataType },
-            { nameof(UmbracoEntityTypes.DocumentType), UmbracoConstants.Icons.ContentType },
-            { nameof(UmbracoEntityTypes.MediaType), UmbracoConstants.Icons.MediaType },
-            { nameof(UmbracoEntityTypes.Member),  UmbracoConstants.Icons.Member },
-            { nameof(UmbracoEntityTypes.MemberType),  UmbracoConstants.Icons.MemberType },
+            { nameof(UmbracoObjectTypes.DataType), UmbracoConstants.Icons.DataType },
+            { nameof(UmbracoObjectTypes.DocumentType), UmbracoConstants.Icons.ContentType },
+            { nameof(UmbracoObjectTypes.MediaType), UmbracoConstants.Icons.MediaType },
+            { nameof(UmbracoObjectTypes.Member),  UmbracoConstants.Icons.Member },
+            { nameof(UmbracoObjectTypes.MemberType),  UmbracoConstants.Icons.MemberType },
         };
 
         private readonly IEntityService _entityService;
@@ -55,8 +55,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-science";
 
-        // TODO: [LK:2019-08-16] Add a note, to say why we've limited the support for specific entity types.
-        // e.g. it's generally UDI support for those entity types.
+        [ConfigurationField(typeof(UmbracoEntityNotesConfigurationField))]
+        public string Notes { get; set; }
 
         [ConfigurationField(typeof(EntityTypeConfigurationField))]
         public string EntityType { get; set; }
@@ -81,6 +81,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             return null;
         }
 
+        class UmbracoEntityNotesConfigurationField : NotesConfigurationField
+        {
+            public UmbracoEntityNotesConfigurationField()
+                : base(@"<p class=""alert alert-warning""><strong>A note about supported Umbraco entity types.</strong><br>
+The Umbraco `EntityService` API has support for a limited set of entity types. Typically, these are entities that would be given a unique Id, (e.g. a Guid or UDI).<br>
+Unsupported entity types have been removed from the list below.</p>", true)
+            { }
+        }
+
         class EntityTypeConfigurationField : ConfigurationField
         {
             public const string EntityType = "entityType";
@@ -92,7 +101,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 Key = EntityType;
                 Name = "Entity type";
-                Description = "Select the entity type to use.<br><br>Unsupported entity types have been hidden from the list.";
+                Description = "Select the Umbraco entity type to use.";
                 View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
