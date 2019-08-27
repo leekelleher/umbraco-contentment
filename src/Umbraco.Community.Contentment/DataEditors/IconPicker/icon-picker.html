@@ -1,13 +1,37 @@
-﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+﻿<!-- Copyright © 2013-present Umbraco.
+   - This Source Code has been take from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/mediapicker/mediapicker.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
    - This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
-    <a href="" class="umb-panel-header-icon -placeholder" ng-attr-title="{{model.value}}" ng-click="vm.pick()" prevent-default>
-        <i class="icon {{model.value}}"></i>
-    </a>
-    <a href="" ng-click="vm.clear()"  prevent-default>
-        Clear
-    </a>
+<div class="umb-property-editor umb-mediapicker umb-mediapicker-single" ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
+    <div class="flex flex-wrap error">
+        <ul class="umb-sortable-thumbnails">
+            <li class="umb-sortable-thumbnails__wrapper" ng-if="vm.allowAdd === false">
+                <div class="umb-icon-holder">
+                    <span class="file-icon">
+                        <i class="icon large" ng-class="model.value"></i>
+                    </span>
+                    <small ng-bind-html="vm.label"></small>
+                </div>
+                <div class="umb-sortable-thumbnails__actions">
+                    <a href="" class="umb-sortable-thumbnails__action" ng-click="vm.edit()" prevent-default>
+                        <i class="icon icon-edit"></i>
+                    </a>
+                    <a class="umb-sortable-thumbnails__action -red" href="" ng-click="vm.remove()" prevent-default>
+                        <i class="icon icon-delete"></i>
+                    </a>
+                </div>
+            </li>
+            <li style="border: none;" class="add-wrapper unsortable" ng-if="vm.allowAdd">
+                <a href="" class="add-link add-link-square" ng-click="vm.add()" prevent-default>
+                    <i class="icon icon-add large"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

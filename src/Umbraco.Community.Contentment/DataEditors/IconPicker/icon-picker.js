@@ -10,15 +10,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("icon-picker.model", $scope.model);
 
-        var defaultConfig = { defaultIcon: "icon-document" };
+        var defaultConfig = { defaultIcon: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
             $scope.model.value = $scope.model.value || config.defaultIcon;
-            vm.pick = pick;
-            vm.clear = clear;
+
+            vm.label = $scope.model.value.replace(" ", "<br>");
+
+            vm.allowAdd = $scope.model.value === "";
+
+            vm.add = pick;
+            vm.edit = pick;
+            vm.remove = remove;
         };
 
         function pick() {
@@ -30,7 +36,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 color: parts[1],
                 submit: function (model) {
                     $scope.model.value = [model.icon, model.color].filter(s => s).join(" ");
+
+                    vm.label = $scope.model.value.replace(" ", "<br>");
+
+                    vm.allowAdd = false;
+
                     setDirty();
+
                     editorService.close();
                 },
                 close: function () {
@@ -41,9 +53,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             editorService.iconPicker(iconPicker);
         };
 
-        function clear() {
-            // TODO: [LK:2019-08-22] Style up the clear button.
+        function remove() {
             $scope.model.value = "";
+
+            vm.label = "";
+
+            vm.allowAdd = true;
+
+            setDirty();
         };
 
         function setDirty() {
