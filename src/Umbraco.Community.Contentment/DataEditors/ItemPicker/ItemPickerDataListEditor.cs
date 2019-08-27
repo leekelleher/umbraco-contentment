@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
 
-        [ConfigurationField(typeof(IconPickerConfigurationEditor.DefaultIconConfigurationField))]
+        [ConfigurationField(typeof(DefaultIconConfigurationField))]
         public string DefaultIcon { get; set; }
 
         [ConfigurationField(typeof(ItemPickerTypeConfigurationField))]
