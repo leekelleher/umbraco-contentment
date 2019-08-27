@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
@@ -17,46 +17,68 @@ namespace Umbraco.Community.Contentment
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
     public class EnumDataSourceApiController : UmbracoAuthorizedJsonController
     {
-        private const string App_Code = "App_Code";
-
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
         internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
 
-        public IEnumerable<object> GetAssemblies()
+        public IEnumerable<DataListItem> GetAssemblies()
         {
-            var options = new SortedDictionary<string, string>();
+            const string App_Code = "App_Code";
+
+            var options = new SortedDictionary<string, DataListItem>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             if (assemblies?.Length > 0)
             {
                 foreach (var assembly in assemblies)
                 {
-                    if (options.ContainsKey(assembly.FullName) || assembly.IsDynamic || assembly.ExportedTypes?.Any(x => x.IsEnum) == false)
+                    if (options.ContainsKey(assembly.FullName) || assembly.IsDynamic)
+                        continue;
+
+                    var hasEnums = false;
+                    if (assembly.ExportedTypes != null)
+                    {
+                        foreach (var exportedType in assembly.ExportedTypes)
+                        {
+                            if (exportedType.IsEnum)
+                            {
+                                hasEnums = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (hasEnums == false)
                         continue;
 
                     if (assembly.FullName.StartsWith(App_Code) && options.ContainsKey(App_Code) == false)
                     {
-                        options.Add(App_Code, App_Code);
+                        options.Add(App_Code, new DataListItem { Name = App_Code, Value = App_Code });
                     }
                     else
                     {
                         var assemblyName = assembly.GetName();
-                        options.Add(assemblyName.FullName, assemblyName.Name);
+                        options.Add(assemblyName.FullName, new DataListItem { Name = assemblyName.Name, Value = assemblyName.FullName });
                     }
                 }
             }
 
-            return options.Select(x => new { name = x.Value, value = x.Key });
+            return options.Values;
         }
 
-        public IEnumerable<object> GetEnums(string assembly)
+        public IEnumerable<DataListItem> GetEnums(string assembly)
         {
-            return Assembly
-                .Load(assembly)
-                .GetTypes()
-                .Where(x => x.IsEnum)
-                .Select(x => new { name = x.Name.SplitPascalCasing(), value = x.FullName })
-                .OrderBy(x => x.name);
+            var options = new SortedDictionary<string, DataListItem>();
+
+            var types = Assembly.Load(assembly).GetTypes();
+            foreach (var type in types)
+            {
+                if (type.IsEnum == false)
+                    continue;
+
+                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(), Value = type.FullName });
+            }
+
+            return options.Values;
         }
     }
 }
