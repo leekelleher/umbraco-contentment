@@ -17,9 +17,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class EnumDataListSource : IDataListSource
     {
-        public string Name => "Enum";
+        public string Name => ".NET Enumeration";
 
-        public string Description => "Select an enum from a .NET assembly as the data source.";
+        public string Description => "Select an enumeration from a .NET assembly as the data source.";
 
         public string Icon => "icon-indent";
 
@@ -66,7 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class EnumTypeConfigurationField : ConfigurationField
         {
-            public const string Enum = "enumType";
+            public const string EnumType = "enumType";
 
             public EnumTypeConfigurationField()
             {
@@ -76,9 +76,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     EnumDataSourceApiController.GetEnumsUrl,
                 };
 
-                Key = Enum;
-                Name = nameof(Enum);
-                Description = "Select the enum from an assembly type.";
+                Key = EnumType;
+                Name = "Enumeration type";
+                Description = "Select the enumeration from an assembly type.";
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
@@ -94,8 +94,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             public SortAlphabeticallyConfigurationField()
             {
                 Key = SortAlphabetically;
-                Name = "Sort alphabetically";
-                Description = "Select to sort the enum in alphabetical order.<br>By default, the order is defined by the enum itself.";
+                Name = "Sort alphabetically?";
+                Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.";
                 View = "boolean";
             }
         }
