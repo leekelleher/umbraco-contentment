@@ -32,6 +32,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
+            if (_.isArray($scope.model.value) === false) {
+                $scope.model.value = [$scope.model.value];
+            }
+
             vm.icon = config.defaultIcon;
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
