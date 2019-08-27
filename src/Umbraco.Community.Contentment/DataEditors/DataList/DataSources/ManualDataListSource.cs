@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         class ManualNotesConfigurationField : NotesConfigurationField
         {
             public ManualNotesConfigurationField()
-                : base(@"<p class='alert alert-warning'><strong>A note manually configuring the data list.</strong><br>
+                : base(@"<p class='alert alert-warning'><strong>A note about manually configuring the data list.</strong><br>
 If you intend to use this Data List exclusively with a checkbox, dropdown or radiobutton list type, then you may want to consider not using a Data List editor.<br>
 Data List has an overhead <i>(albeit a small overhead)</i> when processing the data source. From a performance perspective it would be better to use a specific Checkbox List, Dropdown List or Radiobutton List editor.</p>", true)
             { }
