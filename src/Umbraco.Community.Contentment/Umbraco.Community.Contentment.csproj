@@ -382,6 +382,7 @@
     <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
+    <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +408,7 @@
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="DataEditors\Bytes\bytes.js" />

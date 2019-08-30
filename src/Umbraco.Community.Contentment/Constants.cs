@@ -22,6 +22,8 @@ namespace Umbraco.Community.Contentment
             internal const string PackagePathRoot = "~/App_Plugins/" + ProjectName + "/";
 
             internal const string PluginControllerName = ProjectName;
+
+            internal const string TreeAlias = "contentment";
         }
 
         internal static partial class Conventions
