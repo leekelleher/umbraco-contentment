@@ -93,6 +93,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             editorService.open(configPicker);
         };
 
+        // TODO: [LK:2019-08-30] Do we need to pass through the `item` param?
+        // Can't we get it from `$scope.model.value[$index]`?
         function edit($index, item) {
 
             var editor = _.find(config.items, function (x) {

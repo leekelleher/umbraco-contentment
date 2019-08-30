@@ -5,31 +5,28 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class ConfigurationEditorModel
     {
-        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("icon")]
         public string Icon { get; set; }
 
-        [JsonProperty("fields")]
         public IEnumerable<ConfigurationField> Fields { get; set; }
 
-        [JsonProperty("defaultValues", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object> DefaultValues { get; set; }
 
-        [JsonProperty("nameTemplate", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string NameTemplate { get; set; }
     }
 }
