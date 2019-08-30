@@ -47,4 +47,7 @@
 - Tabbed Textarea
   Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
 
+- Bootstrap Social picker
+  Utilising the "bootstrap-social.css" (that ships with Umbraco out-the-box)
+
 - 
