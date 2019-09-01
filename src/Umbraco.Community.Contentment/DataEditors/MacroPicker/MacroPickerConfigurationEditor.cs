@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public class MacroPickerConfigurationEditor : ConfigurationEditor
     {
         public const string AllowedMacros = "allowedMacros";
+        public const string AvailableMacros = "availableMacros";
 
         private readonly IMacroService _macroService;
 
@@ -47,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ItemPickerConfigurationEditor.Items, macros },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.False },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
                 });
 
             Fields.AddMaxItems();
@@ -72,8 +73,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 // TODO: [LK:2019-07-19] Once the MacroService bug patch is available, we can uncomment the line below.
                 // Issue: https://github.com/umbraco/Umbraco-CMS/issues/5956 // PR: https://github.com/umbraco/Umbraco-CMS/pull/5962 by @kjac
-                //config.Add("availableMacros", _macroService.GetAll(ids).Select(x => x.Alias));
-                config.Add("availableMacros", _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
+                //config.Add(AvailableMacros, _macroService.GetAll(ids).Select(x => x.Alias));
+                config.Add(AvailableMacros, _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
                 config.Remove(AllowedMacros);
             }
 

@@ -13,8 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public const string DefaultIcon = "defaultIcon";
         public const string DefaultValue = "defaultValue";
-        public const string EnableDevMode = "enableDevMode";
-        public const string EnableFilter = "enableFilter";
         public const string Items = "items";
         public const string OverlayView = "overlayView";
         public const string OverlayOrderBy = "overlayOrderBy";
@@ -58,23 +56,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
-            Fields.Add(
-               EnableFilter,
-               "Enable filter?",
-               "Select to enable the search filter in the overlay selection panel.",
-               "boolean");
-
+            Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new ItemPickerTypeConfigurationField());
             Fields.AddMaxItems();
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.Add(new EnableMultipleConfigurationField());
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
-            Fields.Add(
-                EnableDevMode,
-                "Enable developer mode?",
-                "Select to enable add the ability to edit the raw JSON data for the editor value.",
-                "boolean");
+            Fields.Add(new EnableDevModeConfigurationField());
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

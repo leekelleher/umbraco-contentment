@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                 { ConfigurationEditorConfigurationEditor.OverlaySize, ConfigurationEditorConfigurationEditor.OverlaySizeConfigurationField.Large },
                 { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
-                { ConfigurationEditorConfigurationEditor.EnableDevMode, Constants.Values.False },
+                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
             };
 
             var service = new ConfigurationEditorService();

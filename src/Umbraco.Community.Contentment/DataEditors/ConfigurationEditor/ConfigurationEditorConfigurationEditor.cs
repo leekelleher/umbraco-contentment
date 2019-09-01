@@ -19,8 +19,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ConfigurationEditorService _service;
 
-        public const string EnableDevMode = "enableDevMode";
-        public const string EnableFilter = "enableFilter";
         public const string Items = "items";
         public const string OrderBy = "orderBy";
         public const string OverlaySize = "overlaySize";
@@ -56,15 +54,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ItemPickerConfigurationEditor.Items, items },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.False },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
                 });
 
-            Fields.Add(
-                EnableFilter,
-                "Enable filter?",
-                "Select to enable the search filter in the overlay selection panel.",
-                "boolean");
-
+            Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new OverlaySizeConfigurationField());
             Fields.AddMaxItems();
             Fields.AddDisableSorting();
