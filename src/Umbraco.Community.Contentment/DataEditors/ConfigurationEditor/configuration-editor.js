@@ -6,7 +6,9 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ConfigurationEditor.Controller", [
     "$scope",
     "editorService",
-    function ($scope, editorService) {
+    "localizationService",
+    "overlayService",
+    function ($scope, editorService, localizationService, overlayService) {
 
         // console.log("config-editor.model", $scope.model);
 
@@ -60,7 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.validate = validate;
         };
 
-        function add($event) {
+        function add() {
             var configPicker = {
                 view: config.overlayView,
                 size: "small",
@@ -92,12 +94,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             editorService.open(configPicker);
         };
 
-        // TODO: [LK:2019-08-30] Do we need to pass through the `item` param?
-        // Can't we get it from `$scope.model.value[$index]`?
-        function edit($index, item) {
+        function edit($index) {
 
+            var value = $scope.model.value[$index];
             var editor = _.find(config.items, function (x) {
-                return x.type === item.type;
+                return x.type === value.type;
             });
 
             var configPicker = {
@@ -107,7 +108,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     mode: "edit",
                     editor: editor,
                 },
-                value: item,
+                value: value,
                 submit: function (model) {
                     $scope.model.value[$index] = model;
                     setDirty();
@@ -122,13 +123,31 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
-            $scope.model.value.splice($index, 1);
+            var keys = ["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"];
+            localizationService.localizeMany(keys).then(function (data) {
+                overlayService.open({
+                    title: data[1],
+                    content: data[0],
+                    closeButtonLabel: data[2],
+                    submitButtonLabel: data[3],
+                    submitButtonStyle: "danger",
+                    submit: function () {
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                vm.allowAdd = true;
-            }
+                        $scope.model.value.splice($index, 1);
 
-            setDirty();
+                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                            vm.allowAdd = true;
+                        }
+
+                        setDirty();
+
+                        overlayService.close();
+                    },
+                    close: function () {
+                        overlayService.close();
+                    }
+                });
+            });
         };
 
         function validate() {

@@ -6,7 +6,9 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller", [
     "$scope",
     "editorService",
-    function ($scope, editorService) {
+    "localizationService",
+    "overlayService",
+    function ($scope, editorService, localizationService, overlayService) {
 
         // console.log("item-picker.model", $scope.model);
 
@@ -133,15 +135,32 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
+            var keys = ["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"];
+            localizationService.localizeMany(keys).then(function (data) {
+                overlayService.open({
+                    title: data[1],
+                    content: data[0],
+                    closeButtonLabel: data[2],
+                    submitButtonLabel: data[3],
+                    submitButtonStyle: "danger",
+                    submit: function () {
 
-            vm.items.splice($index, 1);
-            $scope.model.value.splice($index, 1);
+                        vm.items.splice($index, 1);
+                        $scope.model.value.splice($index, 1);
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                vm.allowAdd = true;
-            }
+                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                            vm.allowAdd = true;
+                        }
 
-            setDirty();
+                        setDirty();
+
+                        overlayService.close();
+                    },
+                    close: function () {
+                        overlayService.close();
+                    }
+                });
+            });
         };
 
         function ensureIcons(items) {
