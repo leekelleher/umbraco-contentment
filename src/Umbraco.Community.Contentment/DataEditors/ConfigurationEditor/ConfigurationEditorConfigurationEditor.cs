@@ -5,13 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Newtonsoft.Json.Linq;
-using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

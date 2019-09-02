@@ -71,8 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                // TODO: [LK:2019-07-19] Once the MacroService bug patch is available, we can uncomment the line below.
-                // Issue: https://github.com/umbraco/Umbraco-CMS/issues/5956 // PR: https://github.com/umbraco/Umbraco-CMS/pull/5962 by @kjac
+                // TODO: [LK:2019-07-19] If this PR gets merged into Umbraco core, then uncomment the line below. https://github.com/umbraco/Umbraco-CMS/pull/5962
                 //config.Add(AvailableMacros, _macroService.GetAll(ids).Select(x => x.Alias));
                 config.Add(AvailableMacros, _macroService.GetAll().Where(x => ids.Contains(x.Key)).Select(x => x.Alias));
                 config.Remove(AllowedMacros);

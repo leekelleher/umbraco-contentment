@@ -12,9 +12,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal static partial class ContentTypeServiceExtensions
     {
-        // TODO: [LK:2019-08-05] This extension method should be in Umbraco core. Send a PR.
+        // TODO: [LK:2019-09-02] Submitted PR to Umbraco core. If it gets merged in, then remove this code. https://github.com/umbraco/Umbraco-CMS/pull/6262
         public static IEnumerable<IContentType> GetAllElementTypes(this IContentTypeService contentTypeService)
         {
+            if (contentTypeService == null)
+            {
+                return Enumerable.Empty<IContentType>();
+            }
+
             return contentTypeService.GetAll().Where(x => x.IsElement);
         }
     }

@@ -32,9 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             public string Name { get; set; }
 
-            public int Id { get; set; } // TODO: [LK:2019-08-30] Decide whether its the ID or GUID that's used.
-
-            public Guid Key { get; set; }
+            public int Id { get; set; }
         }
     }
 }
