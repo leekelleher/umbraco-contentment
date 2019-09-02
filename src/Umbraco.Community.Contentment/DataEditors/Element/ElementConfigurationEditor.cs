@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ItemPickerConfigurationEditor.Items, items },
                     { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
                     { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { ItemPickerConfigurationEditor.EnableDevMode, Constants.Values.False },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
                 });
 
             Fields.Add(new EnableFilterConfigurationField());

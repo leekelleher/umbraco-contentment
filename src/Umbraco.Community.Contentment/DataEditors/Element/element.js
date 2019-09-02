@@ -6,7 +6,9 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.Element.Controller", [
     "$scope",
     "editorService",
-    function ($scope, editorService) {
+    "localizationService",
+    "overlayService",
+    function ($scope, editorService, localizationService, overlayService) {
 
         // console.log("element.model", $scope.model);
 
@@ -109,13 +111,31 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
-            $scope.model.value.splice($index, 1);
+            var keys = ["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"];
+            localizationService.localizeMany(keys).then(function (data) {
+                overlayService.open({
+                    title: data[1],
+                    content: data[0],
+                    closeButtonLabel: data[2],
+                    submitButtonLabel: data[3],
+                    submitButtonStyle: "danger",
+                    submit: function () {
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                vm.allowAdd = true;
-            }
+                        $scope.model.value.splice($index, 1);
 
-            setDirty();
+                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                            vm.allowAdd = true;
+                        }
+
+                        setDirty();
+
+                        overlayService.close();
+                    },
+                    close: function () {
+                        overlayService.close();
+                    }
+                });
+            });
         };
 
         function setDirty() {
