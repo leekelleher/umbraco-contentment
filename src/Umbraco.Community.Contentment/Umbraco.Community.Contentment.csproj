@@ -296,6 +296,8 @@
     <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
+    <Compile Include="DataEditors\Element\ElementModel.cs" />
+    <Compile Include="DataEditors\Element\ElementValueConverter.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />
     <Compile Include="DataEditors\Element\ElementConfigurationEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\EnableFilterConfigurationField.cs" />
@@ -327,6 +329,7 @@
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
     <Compile Include="DataEditors\_\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\EnableDevModeConfigurationField.cs" />
+    <Compile Include="DataEditors\Element\ContentTypeCacheHelper.cs" />
     <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="DataEditors\Cards\CardsDataEditor.cs" />
     <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
@@ -390,6 +393,8 @@
     <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
+    <Compile Include="Web\PublishedCache\DetachedPublishedProperty.cs" />
+    <Compile Include="Web\PublishedCache\DetachedPublishedElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
