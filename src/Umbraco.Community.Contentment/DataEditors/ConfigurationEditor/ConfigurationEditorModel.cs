@@ -25,8 +25,5 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object> DefaultValues { get; set; }
-
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string NameTemplate { get; set; }
     }
 }

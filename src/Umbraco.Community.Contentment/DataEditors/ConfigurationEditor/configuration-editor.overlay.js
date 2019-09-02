@@ -5,9 +5,8 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.ConfigurationEditor.Controller", [
     "$scope",
-    "$interpolate",
     "formHelper",
-    function ($scope, $interpolate, formHelper) {
+    function ($scope, formHelper) {
 
         // console.log("config-editor-overlay.model", $scope.model);
 
@@ -79,28 +78,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             // https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
             $scope.$broadcast("formSubmitting", { scope: $scope });
 
-            var obj = {
-                type: item.type,
-                name: item.name,
-                description: item.description,
-                icon: item.icon,
-                value: {}
-            };
+            var obj = angular.extend({ value: {} }, item);
 
             _.each(item.fields, function (x) {
                 obj.value[x.key] = x.value;
             });
-
-            // TODO: [LK:2019-07-01] Review if this should happen here, or in the add/edit functions of 'umb-node-preview'?
-            if (_.has(item, "nameTemplate") && item.nameTemplate) {
-                var nameExp = $interpolate(item.nameTemplate);
-                if (nameExp) {
-                    var newName = nameExp(obj.value);
-                    if (newName && (newName = $.trim(newName)) && obj.name !== newName) {
-                        obj.name = newName;
-                    }
-                }
-            }
 
             if ($scope.model.submit) {
                 $scope.model.submit(obj);
