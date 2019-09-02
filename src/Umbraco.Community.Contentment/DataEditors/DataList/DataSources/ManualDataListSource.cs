@@ -22,24 +22,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => UmbracoIcons.DataType;
 
-        [ConfigurationField(typeof(ManualNotesConfigurationField))]
-        public string Notes { get; set; }
-
         [ConfigurationField(typeof(ItemsConfigurationField))]
         public IEnumerable<DataListItem> Items { get; set; }
 
         public IEnumerable<DataListItem> GetItems()
         {
             return Items;
-        }
-
-        class ManualNotesConfigurationField : NotesConfigurationField
-        {
-            public ManualNotesConfigurationField()
-                : base(@"<p class='alert alert-warning'><strong>A note about manually configuring the data list.</strong><br>
-If you intend to use this Data List exclusively with a checkbox, dropdown or radiobutton list type, then you may want to consider not using a Data List editor.<br>
-Data List has an overhead <i>(albeit a small overhead)</i> when processing the data source. From a performance perspective it would be better to use a specific Checkbox List, Dropdown List or Radiobutton List editor.</p>", true)
-            { }
         }
 
         class ItemsConfigurationField : ConfigurationField
@@ -67,7 +55,7 @@ Data List has an overhead <i>(albeit a small overhead)</i> when processing the d
 
                 Key = Items;
                 Name = "Options";
-                Description = "Configure the option items for the dropdown list.<br><br>If you use duplicate values, then only the first option item will be used.";
+                Description = "Configure the option items for the data list.<br><br>If you use duplicate values, then only the first option item will be used.";
                 View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
