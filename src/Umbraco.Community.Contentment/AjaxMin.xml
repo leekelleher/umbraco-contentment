@@ -17,6 +17,8 @@
         <input path="DataEditors\ConfigurationEditor\configuration-editor.overlay.js" />
         <input path="DataEditors\DataTable\data-table.js" />
         <input path="DataEditors\DropdownList\dropdown-list.js" />
+        <input path="DataEditors\Element\element.js" />
+        <input path="DataEditors\Element\element.overlay.js" />
         <input path="DataEditors\IconPicker\icon-picker.js" />
         <input path="DataEditors\ItemPicker\item-picker.js" />
         <input path="DataEditors\ItemPicker\item-picker.overlay.js" />
