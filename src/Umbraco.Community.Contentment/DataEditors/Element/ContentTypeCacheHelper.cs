@@ -1,5 +1,5 @@
 ﻿/* Copyright © 2016 UMCO, Our Umbraco and other contributors.
- * This Source Code has been take from Inner Content.
+ * This Source Code has been derived from Inner Content.
  * https://github.com/umco/umbraco-inner-content/blob/2.0.4/src/Our.Umbraco.InnerContent/Helpers/ContentTypeCacheHelper.cs
  * Modified under the permissions of the MIT License.
  * Modifications are licensed under the Mozilla Public License.
