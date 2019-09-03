@@ -38,10 +38,8 @@
         </div>
     </div>
 
-    <div class="lk-icon-picker-small" ng-if="vm.size === 'small'">
-        <a href="" ng-click="vm.pick()" prevent-default>
-            <i class="icon" ng-class="[{ 'medium': vm.allowAdd === false }, { 'small icon-add': vm.allowAdd }, model.value]"></i>
-        </a>
-    </div>
+    <a class="lk-icon-picker-small" href="" ng-if="vm.size === 'small'" ng-click="vm.pick()" prevent-default>
+        <i class="icon" ng-class="[{ 'medium': vm.allowAdd === false }, { 'small icon-add': vm.allowAdd }, model.value]"></i>
+    </a>
 
 </div>

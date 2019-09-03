@@ -5,25 +5,17 @@
 
 .contentment .lk-icon-picker-small {
     border: 1px dashed #d8d7d9;
+    color: #d8d7d9;
+    display: inline-block;
+    height: 20px;
     padding: 5px 0;
     text-align: center;
-    height: 20px;
     width: 30px;
 }
 
+    .contentment .lk-icon-picker-small:focus,
     .contentment .lk-icon-picker-small:hover {
         border-color: #2152a3;
+        color: #2152a3;
+        text-decoration: none;
     }
-
-        .contentment .lk-icon-picker-small:hover a {
-            color: #2152a3;
-        }
-
-    .contentment .lk-icon-picker-small a {
-        color: #d8d7d9;
-    }
-
-        .contentment .lk-icon-picker-small a:focus,
-        .contentment .lk-icon-picker-small a:hover {
-            text-decoration: none;
-        }
