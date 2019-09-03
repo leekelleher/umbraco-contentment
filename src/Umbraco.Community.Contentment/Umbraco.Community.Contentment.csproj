@@ -415,6 +415,7 @@
     <Content Include="DataEditors\Element\element.js" />
     <Content Include="DataEditors\Element\element.overlay.html" />
     <Content Include="DataEditors\Element\element.overlay.js" />
+    <Content Include="DataEditors\IconPicker\icon-picker.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.css" />
     <Content Include="DataEditors\ItemPicker\item-picker.overlay.js" />
     <Content Include="DataEditors\RadioButtonList\radio-button-list.css" />

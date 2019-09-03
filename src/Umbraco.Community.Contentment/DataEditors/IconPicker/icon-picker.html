@@ -8,30 +8,40 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="umb-property-editor umb-mediapicker umb-mediapicker-single" ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
-    <div class="flex flex-wrap error">
-        <ul class="umb-sortable-thumbnails">
-            <li class="umb-sortable-thumbnails__wrapper" ng-if="vm.allowAdd === false">
-                <div class="umb-icon-holder">
-                    <span class="file-icon">
-                        <i class="icon large" ng-class="model.value"></i>
-                    </span>
-                    <small ng-bind-html="vm.label"></small>
-                </div>
-                <div class="umb-sortable-thumbnails__actions">
-                    <a href="" class="umb-sortable-thumbnails__action" ng-click="vm.edit()" prevent-default>
-                        <i class="icon icon-edit"></i>
+<div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
+
+    <div class="umb-property-editor umb-mediapicker umb-mediapicker-single" ng-if="vm.size === 'large'">
+        <div class="flex flex-wrap error">
+            <ul class="umb-sortable-thumbnails">
+                <li class="umb-sortable-thumbnails__wrapper" ng-if="vm.allowAdd === false">
+                    <div class="umb-icon-holder">
+                        <span class="file-icon">
+                            <i class="icon large" ng-class="model.value"></i>
+                        </span>
+                        <small ng-bind-html="vm.label"></small>
+                    </div>
+                    <div class="umb-sortable-thumbnails__actions">
+                        <a href="" class="umb-sortable-thumbnails__action" ng-click="vm.pick()" prevent-default>
+                            <i class="icon icon-edit"></i>
+                        </a>
+                        <a class="umb-sortable-thumbnails__action -red" href="" ng-click="vm.remove()" prevent-default>
+                            <i class="icon icon-delete"></i>
+                        </a>
+                    </div>
+                </li>
+                <li style="border: none;" class="add-wrapper unsortable" ng-if="vm.allowAdd">
+                    <a href="" class="add-link add-link-square" ng-click="vm.pick()" prevent-default>
+                        <i class="icon icon-add large"></i>
                     </a>
-                    <a class="umb-sortable-thumbnails__action -red" href="" ng-click="vm.remove()" prevent-default>
-                        <i class="icon icon-delete"></i>
-                    </a>
-                </div>
-            </li>
-            <li style="border: none;" class="add-wrapper unsortable" ng-if="vm.allowAdd">
-                <a href="" class="add-link add-link-square" ng-click="vm.add()" prevent-default>
-                    <i class="icon icon-add large"></i>
-                </a>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
+
+    <div class="lk-icon-picker-small" ng-if="vm.size === 'small'">
+        <a href="" ng-click="vm.pick()" prevent-default>
+            <i class="icon" ng-class="[{ 'medium': vm.allowAdd === false }, { 'small icon-add': vm.allowAdd }, model.value]"></i>
+        </a>
+    </div>
+
 </div>

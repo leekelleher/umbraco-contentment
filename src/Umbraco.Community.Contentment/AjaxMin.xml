@@ -33,6 +33,7 @@
         <input path="DataEditors\Cards\cards.css" />
         <input path="DataEditors\Checkbox\checkbox.css" />
         <input path="DataEditors\CheckboxList\checkbox-list.css" />
+        <input path="DataEditors\IconPicker\icon-picker.css" />
         <input path="DataEditors\ItemPicker\item-picker.overlay.css" />
         <input path="DataEditors\RadioButtonList\radio-button-list.css" />
     </output>

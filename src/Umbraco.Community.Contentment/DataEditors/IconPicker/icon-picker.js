@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("icon-picker.model", $scope.model);
 
-        var defaultConfig = { defaultIcon: "" };
+        var defaultConfig = { defaultIcon: "", size: "large" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -19,11 +19,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             $scope.model.value = $scope.model.value || config.defaultIcon;
 
             vm.label = $scope.model.value.replace(" ", "<br>");
+            vm.size = config.size;
 
             vm.allowAdd = $scope.model.value === "";
 
-            vm.add = pick;
-            vm.edit = pick;
+            vm.pick = pick;
             vm.remove = remove;
         };
 

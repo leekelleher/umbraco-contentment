@@ -26,7 +26,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "icon",
                     Name = "Icon",
-                    View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath)
+                    View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
+                    Config = new Dictionary<string, object>
+                    {
+                        { IconPickerConfigurationEditor.Size, IconPickerConfigurationEditor.SizeConfigurationField.Small }
+                    }
                 },
                 new ConfigurationField
                 {
