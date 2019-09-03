@@ -291,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ContentmentVersion.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
@@ -300,6 +301,12 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\TextInput\TextInputConfigurationEditor.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
+    <Compile Include="DataEditors\SocialLinks\SocialLinksDataEditor.cs" />
+    <Compile Include="DataEditors\SocialLinks\SocialLinksValueConverter.cs" />
+    <Compile Include="DataEditors\SocialLinks\SocialLink.cs" />
+    <Compile Include="DataEditors\SocialPicker\SocialPickerValueConverter.cs" />
+    <Compile Include="DataEditors\SocialPicker\SocialPickerDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
@@ -337,12 +344,10 @@
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\EnumDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
@@ -436,6 +441,15 @@
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.html" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.js" />
     <Content Include="DataEditors\DataTable\data-table.html" />
+    <Content Include="DataEditors\SocialLinks\social-links.css" />
+    <Content Include="DataEditors\SocialLinks\social-links.html" />
+    <Content Include="DataEditors\SocialLinks\social-links.js" />
+    <Content Include="DataEditors\SocialPicker\social-picker.overlay.css" />
+    <Content Include="DataEditors\SocialPicker\social-picker.overlay.js" />
+    <Content Include="DataEditors\SocialPicker\social-picker.overlay.html" />
+    <Content Include="DataEditors\SocialPicker\social-picker.css" />
+    <Content Include="DataEditors\SocialPicker\social-picker.html" />
+    <Content Include="DataEditors\SocialPicker\social-picker.js" />
     <Content Include="DataEditors\DataTable\data-table.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />

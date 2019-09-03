@@ -1,0 +1,39 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-property-editor umb-multiple-textbox" ng-controller="Umbraco.Community.Contentment.DataEditors.SocialLinks.Controller as vm">
+    <div ui-sortable="vm.sortableOptions" ng-model="model.value">
+        <div class="flex flex-wrap textbox-wrapper" ng-repeat="item in model.value track by $index">
+            <a href="" class="btn btn-social-icon" ng-class="item.button" ng-click="vm.pick($index)" prevent-default>
+                <i ng-class="item.icon"></i>
+            </a>
+            <div class="lk-textstring-wrapper flx-i">
+                <input type="text" class="umb-textstring textstring" ng-model="item.name" />
+                <input type="text" class="umb-textstring textstring" ng-model="item.url" />
+            </div>
+            <div class="icon-wrapper">
+                <i class="icon icon-navigation handle"></i>
+                <div class="umb-multiple-textbox__confirm">
+                    <button type="button"
+                            class="umb-multiple-textbox__confirm-action"
+                            ng-click="vm.showPrompt($index)"
+                            prevet-default
+                            localize="title"
+                            title="@content_removeTextBox">
+                        <i class="icon-trash"></i>
+                    </button>
+                    <umb-confirm-action ng-if="vm.promptIsVisible === $index"
+                                        direction="left"
+                                        on-confirm="vm.remove($index)"
+                                        on-cancel="vm.hidePrompt()">
+                    </umb-confirm-action>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="" class="add-link" ng-click="vm.add()" prevent-default>
+        <localize key="general_add">Add</localize>
+    </a>
+</div>

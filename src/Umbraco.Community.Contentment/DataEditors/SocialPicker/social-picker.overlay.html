@@ -1,0 +1,49 @@
+﻿<!-- Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment" ng-controller="Umbraco.Community.Contentment.Overlays.SocialPicker.Controller as vm">
+
+    <umb-editor-view>
+
+        <umb-editor-header name="vm.title"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true">
+        </umb-editor-header>
+
+        <umb-editor-container>
+            <umb-box>
+                <umb-box-content>
+
+                    <div class="lk-social-network" ng-repeat="item in vm.items">
+                        <a class="btn btn-social-icon btn-{{item.network}}"
+                           ng-class="{ active: model.value.network === item.network }"
+                           ng-click="vm.select(item)"
+                           ng-attr-title="{{item.name}}"
+                           prevent-default>
+                            <i class="fa fa-{{item.network}}"></i>
+                        </a>
+                    </div>
+
+                </umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            shortcut="esc"
+                            action="vm.close()">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+
+    </umb-editor-view>
+
+</div>
+
