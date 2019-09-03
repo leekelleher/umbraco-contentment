@@ -98,9 +98,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var blueprints = allBlueprints[contentType.Id]?.Select(x => new ElementTypeItem.BlueprintItem
                         {
-                            Name = x.Name,
                             Id = x.Id,
-                            Key = x.Key
+                            Name = x.Name
                         }) ?? Enumerable.Empty<ElementTypeItem.BlueprintItem>();
 
                         elementTypes.Add(new ElementTypeItem
