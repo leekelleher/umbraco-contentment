@@ -71,7 +71,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.remove = remove;
         };
 
-        function add($event) {
+        function add() {
             vm.items.push(angular.copy(config.fields));
 
             if ((config.maxItems !== 0 && config.maxItems !== "0") && vm.items.length >= config.maxItems) {
