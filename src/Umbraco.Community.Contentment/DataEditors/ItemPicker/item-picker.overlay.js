@@ -62,13 +62,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
 
                 $scope.model.submit(selectedItems);
             }
-        }
+        };
 
         function close() {
             if ($scope.model.close) {
                 $scope.model.close();
             }
-        }
+        };
 
         init();
     }
