@@ -11,7 +11,7 @@ using UmbracoIcons = Umbraco.Core.Constants.Icons;
 namespace Umbraco.Community.Contentment.DataEditors
 {
 #if !DEBUG
-    // TODO: Rethink if this data source is necessary. [LK]
+    // TODO: Consider whether this data source is necessary. [LK:2019-08-16]
     [global::Umbraco.Core.Composing.HideFromTypeFinder]
 #endif
     internal class ManualDataListSource : IDataListSource
