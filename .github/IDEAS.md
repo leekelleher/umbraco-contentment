@@ -1,5 +1,10 @@
 # Contentment Ideas
 
+## Post-BackOffice Installation
+
+- Add the current (logged on) user to a mailing list. Umbraco HQ do this for Umbraco Forms installation.
+
+
 ## Data Editors
 
 - Textbox
