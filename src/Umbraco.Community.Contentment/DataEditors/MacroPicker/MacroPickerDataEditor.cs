@@ -6,7 +6,6 @@
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -21,13 +20,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = Constants.Conventions.PropertyGroups.Pickers,
-        Icon = DataEditorIcon)]
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class MacroPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "MacroPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Macro Picker";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "macro-picker.html";
-        internal const string DataEditorIcon = UmbracoIcons.Macro;
+        internal const string DataEditorIcon = Core.Constants.Icons.Macro;
 
         private readonly IMacroService _macroService;
 

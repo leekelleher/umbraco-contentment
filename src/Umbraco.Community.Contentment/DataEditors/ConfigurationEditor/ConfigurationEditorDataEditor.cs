@@ -5,7 +5,6 @@
 
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,14 +19,19 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = Constants.Conventions.PropertyGroups.Pickers,
-        Icon = DataEditorIcon)]
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class ConfigurationEditorDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ConfigurationEditor";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Configuration Editor";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.overlay.html";
-        internal const string DataEditorIcon = UmbracoIcons.Macro;
+        internal const string DataEditorIcon = Core.Constants.Icons.Macro;
 
         public ConfigurationEditorDataEditor(ILogger logger)
             : base(logger)

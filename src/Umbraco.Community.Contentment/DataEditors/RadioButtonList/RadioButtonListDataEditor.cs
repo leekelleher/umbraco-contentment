@@ -19,7 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.String,
         Group = Constants.Conventions.PropertyGroups.Lists,
-        Icon = DataEditorIcon)]
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class RadioButtonListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RadioButtonList";

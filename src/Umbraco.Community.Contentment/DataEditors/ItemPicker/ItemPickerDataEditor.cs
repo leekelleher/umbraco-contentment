@@ -19,7 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = Constants.Conventions.PropertyGroups.Pickers,
-        Icon = DataEditorIcon)]
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class ItemPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ItemPicker";

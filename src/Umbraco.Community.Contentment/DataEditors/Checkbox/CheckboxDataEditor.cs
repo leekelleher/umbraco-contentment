@@ -19,7 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
         Group = Constants.Conventions.PropertyGroups.Common,
-        Icon = DataEditorIcon)]
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class CheckboxDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Checkbox";

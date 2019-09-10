@@ -18,8 +18,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group =  Constants.Conventions.PropertyGroups.Lists,
-        Icon = DataEditorIcon)]
+        Group = Constants.Conventions.PropertyGroups.Lists,
+#if DEBUG
+        Icon = "icon-block color-red"
+#else
+        Icon = DataEditorIcon
+#endif
+        )]
     public class CascadingDropdownListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CascadingDropdownList";
