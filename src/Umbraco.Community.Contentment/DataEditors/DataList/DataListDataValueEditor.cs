@@ -35,7 +35,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var item = array[0];
 
-                    // NOTE: Using `TypeFinder` here, as `TypeLoader` doesn't expose the `GetTypeByName` method. [LK:2019-06-06]
                     var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
                     if (type != null)
                     {
