@@ -294,7 +294,9 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorService.cs" />
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
     <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
     <Compile Include="DataEditors\Element\ElementModel.cs" />
     <Compile Include="DataEditors\Element\ElementValueConverter.cs" />
