@@ -298,6 +298,7 @@
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
     <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
+    <Compile Include="DataEditors\IconPicker\SizeConfigurationField.cs" />
     <Compile Include="DataEditors\Element\ElementModel.cs" />
     <Compile Include="DataEditors\Element\ElementValueConverter.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />

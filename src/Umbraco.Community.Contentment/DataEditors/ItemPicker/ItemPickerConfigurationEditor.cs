@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>
                     {
-                        { IconPickerConfigurationEditor.Size, IconPickerConfigurationEditor.SizeConfigurationField.Small }
+                        { SizeConfigurationField.Size, SizeConfigurationField.Small }
                     }
                 },
                 new ConfigurationField
