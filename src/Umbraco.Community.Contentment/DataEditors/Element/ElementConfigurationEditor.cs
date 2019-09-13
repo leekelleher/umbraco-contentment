@@ -20,7 +20,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IdkMap _idkMap;
 
-        public const string ElementTypes = "elementTypes";
         public const string OverlayView = "overlayView";
 
         public ElementConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService, IdkMap idkMap)
@@ -30,32 +29,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentTypeService = contentTypeService;
             _idkMap = idkMap;
 
-            var items = contentTypeService
-                .GetAllElementTypes()
-                .OrderBy(x => x.Name)
-                .Select(x => new DataListItem
-                {
-                    Description = x.Description,
-                    Icon = x.Icon,
-                    Name = x.Name,
-                    Value = x.GetUdi().ToString(),
-                });
-
-            Fields.Add(
-                ElementTypes,
-                "Element types",
-                "Select the element types to use.",
-                IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
-                {
-                    { AllowDuplicatesConfigurationField.AllowDuplicates, Constants.Values.False },
-                    { ItemPickerConfigurationEditor.Items, items },
-                    { ItemPickerTypeConfigurationField.ListType, ItemPickerTypeConfigurationField.List },
-                    { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },
-                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
-                });
-
+            Fields.Add(new ElementTypesConfigurationField(contentTypeService));
             Fields.Add(new EnableFilterConfigurationField());
+            Fields.Add(new OverlaySizeConfigurationField { Name = "Editor overlay size" });
             Fields.AddMaxItems();
             Fields.AddDisableSorting();
             Fields.AddHideLabel();
@@ -65,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue(ElementTypes, out var tmp) && tmp is JArray array && array.Count > 0)
+            if (config.TryGetValue(ElementTypesConfigurationField.ElementTypes, out var tmp) && tmp is JArray array && array.Count > 0)
             {
                 var ids = new int[array.Count];
 
@@ -113,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                config[ElementTypes] = elementTypes;
+                config[ElementTypesConfigurationField.ElementTypes] = elementTypes;
             }
 
             if (config.ContainsKey(OverlayView) == false)

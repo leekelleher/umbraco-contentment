@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string Small = "small";
         public const string Large = "large";
 
-        public OverlaySizeConfigurationField()
+        public OverlaySizeConfigurationField(string defaultSize = Large)
             : base()
         {
             var items = new[]
@@ -26,13 +26,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Key = OverlaySize;
             Name = "Overlay size";
-            Description = "Select the size of the overlay editing panel. By default this is set to 'large'. However if the configuration editor fields require a smaller panel, select 'small'.";
+            Description = "Select the size of the overlay editing panel. By default this is set to 'large'. However if the editor fields require a smaller panel, select 'small'.";
             View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
                 { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
                 { RadioButtonListConfigurationEditor.Items, items },
-                { RadioButtonListConfigurationEditor.DefaultValue, Large }
+                { RadioButtonListConfigurationEditor.DefaultValue, defaultSize }
             };
         }
     }

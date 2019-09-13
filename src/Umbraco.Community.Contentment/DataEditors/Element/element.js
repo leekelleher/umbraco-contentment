@@ -19,7 +19,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             elementTypes: [],
             enableFilter: 0,
             maxItems: 0,
-            overlayView: ""
+            overlayView: "",
+            overlaySize: "large",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -63,7 +64,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
             editorService.open({
                 config: {
-                    elementTypes: config.elementTypes
+                    elementTypes: config.elementTypes,
+                    editOverlaySize: config.overlaySize
                 },
                 size: "small",
                 value: null,
@@ -97,7 +99,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     elementType: elementType
                 },
-                size: "large",
+                size: config.overlaySize,
                 value: value,
                 view: config.overlayView,
                 submit: function (model) {

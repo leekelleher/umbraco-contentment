@@ -16,7 +16,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ele
         var defaultConfig = {
             defaultAppAlias: "umbContent",
             elementType: null,
-            elementTypes: []
+            elementTypes: [],
+            editOverlaySize: "large",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -42,7 +43,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ele
             if (config.elementType && $scope.model.value) {
 
                 vm.mode = "edit";
-                $scope.model.size = "large";
 
                 edit(config.elementType, $scope.model.value);
 
@@ -81,7 +81,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ele
 
         function create(elementType, blueprint) {
 
-            $scope.model.size = "large";
+            $scope.model.size = config.editOverlaySize;
             vm.mode = "edit";
 
             vm.isNew = true;
@@ -155,7 +155,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ele
                 var item = {
                     elementType: model.contentNode.documentType.key,
                     key: guid,
-                    udi: "umb://document/" + guid.replace(/-/g, ""), // TODO: [LK:2019-09-13] I would have liked the UDI to be `umb://element/{GUID}`
+                    udi: "umb://document/" + guid.replace(/-/g, ""), // NOTE: [LK:2019-09-13] I would have liked the UDI to be `umb://element/{GUID}`
                     name: model.contentNode.variants[0].name,
                     icon: model.contentNode.icon,
                     value: {},
