@@ -155,7 +155,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ele
                 var item = {
                     elementType: model.contentNode.documentType.key,
                     key: guid,
-                    udi: "umb://element/" + guid.replace(/-/g, ""),
+                    udi: "umb://document/" + guid.replace(/-/g, ""), // TODO: [LK:2019-09-13] I would have liked the UDI to be `umb://element/{GUID}`
                     name: model.contentNode.variants[0].name,
                     icon: model.contentNode.icon,
                     value: {},
