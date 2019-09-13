@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal static partial class ConfigurationFieldExtensions
     {
-        // TODO: [LK:2019-09-02] Submitted PR to Umbraco core. If it gets merged in, then remove this code. https://github.com/umbraco/Umbraco-CMS/pull/6264
+        // TODO: [LK:2019-09-13] My PR to Umbraco core got merged in. Remove this code when v8.2.0 is out. https://github.com/umbraco/Umbraco-CMS/pull/6264
         public static void Add(
             this List<ConfigurationField> fields,
             string key,

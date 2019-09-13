@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
