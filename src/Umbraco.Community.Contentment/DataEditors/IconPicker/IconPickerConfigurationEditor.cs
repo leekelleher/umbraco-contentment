@@ -12,8 +12,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IconPickerConfigurationEditor()
             : base()
         {
-            Fields.Add(new DefaultIconConfigurationField(string.Empty, SizeConfigurationField.Large));
-            Fields.Add(new SizeConfigurationField());
+            Fields.Add(new DefaultIconConfigurationField(string.Empty, IconPickerSizeConfigurationField.Large));
+            Fields.Add(new IconPickerSizeConfigurationField());
             Fields.AddHideLabel();
         }
     }

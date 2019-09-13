@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string DefaultIcon = "defaultIcon";
 
         public DefaultIconConfigurationField()
-            : this(UmbIcons.DefaultIcon, SizeConfigurationField.Large)
+            : this(UmbIcons.DefaultIcon, IconPickerSizeConfigurationField.Large)
         { }
 
         public DefaultIconConfigurationField(string defaultIcon, string size)
@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Config = new Dictionary<string, object>
             {
                 { DefaultIcon, defaultIcon },
-                { SizeConfigurationField.Size, size }
+                { IconPickerSizeConfigurationField.Size, size }
             };
         }
     }
