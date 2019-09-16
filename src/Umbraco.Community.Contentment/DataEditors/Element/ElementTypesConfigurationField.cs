@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
+using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
@@ -15,6 +16,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal class ElementTypesConfigurationField : ConfigurationField
     {
         public const string ElementTypes = "elementTypes";
+
+        public ElementTypesConfigurationField()
+            : this(Current.Services.ContentTypeService)
+        { }
 
         public ElementTypesConfigurationField(IContentTypeService contentTypeService)
         {
