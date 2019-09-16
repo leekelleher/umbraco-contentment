@@ -15,7 +15,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class ConfigurationEditorService
     {
-        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(IEnumerable<Type> types, bool onlyPublic = false, bool ignoreFields = false)
+        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(
+            IEnumerable<Type> types,
+            bool onlyPublic = false,
+            bool ignoreFields = false)
             where TContentmentListItem : class, IContentmentListItem
         {
             if (types == null)

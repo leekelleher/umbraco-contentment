@@ -21,11 +21,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             if (vm.mode === "select") {
 
-                vm.title = "Select...";
-                vm.items = config.items;
-                vm.enableFilter = config.enableFilter;
-                vm.orderBy = config.orderBy;
-                vm.select = select;
+                if (config.items.length > 1) {
+
+                    vm.title = "Select...";
+                    vm.items = config.items;
+                    vm.enableFilter = config.enableFilter;
+                    vm.orderBy = config.orderBy;
+                    vm.select = select;
+
+                } else {
+
+                    // NOTE: If there is a single option available, then auto-select it.
+                    select(config.items[0]);
+
+                }
 
             } else if (vm.mode === "edit" && config.editor) {
 
@@ -43,7 +52,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 $scope.model.size = config.overlaySize;
             }
 
-            vm.title = "Configure " + editor.name;
+            vm.title = "Configure " + editor.name.toLowerCase();
             vm.editor = angular.copy(editor);
 
             if (vm.editor.fields.length > 0) {

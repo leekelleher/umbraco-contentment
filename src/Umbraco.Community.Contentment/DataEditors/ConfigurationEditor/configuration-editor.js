@@ -65,7 +65,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
             var configPicker = {
                 view: config.overlayView,
-                size: "small",
+                size: config.items.length === 1 ? config.overlaySize : "small",
                 config: {
                     mode: "select",
                     items: angular.copy(config.items),
@@ -107,6 +107,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     mode: "edit",
                     editor: editor,
+                    overlaySize: config.overlaySize,
                 },
                 value: value,
                 submit: function (model) {
