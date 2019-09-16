@@ -55,8 +55,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { ConfigurationEditorConfigurationEditor.Items, listEditors }
                 });
-
-            Fields.AddHideLabel();
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

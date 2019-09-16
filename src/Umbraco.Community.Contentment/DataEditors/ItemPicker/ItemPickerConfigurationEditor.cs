@@ -66,7 +66,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.Add(new EnableMultipleConfigurationField());
             Fields.AddDisableSorting();
-            Fields.AddHideLabel();
             Fields.Add(new EnableDevModeConfigurationField());
         }
 

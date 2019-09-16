@@ -47,7 +47,5 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new ElementConfigurationEditor(_contentService, _contentTypeService, _idkMap);
-
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

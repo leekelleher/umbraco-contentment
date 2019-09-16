@@ -37,7 +37,5 @@ namespace Umbraco.Community.Contentment.DataEditors
         { }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new DropdownListConfigurationEditor();
-
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

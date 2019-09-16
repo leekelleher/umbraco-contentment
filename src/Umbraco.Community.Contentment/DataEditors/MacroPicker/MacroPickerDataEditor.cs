@@ -42,7 +42,5 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new MacroPickerConfigurationEditor(_macroService);
-
-        protected override IDataValueEditor CreateValueEditor() => new HideLabelDataValueEditor(Attribute);
     }
 }

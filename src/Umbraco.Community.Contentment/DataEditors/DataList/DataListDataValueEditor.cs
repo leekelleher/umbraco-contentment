@@ -12,7 +12,7 @@ using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DataListDataValueEditor : HideLabelDataValueEditor
+    public class DataListDataValueEditor : DataValueEditor
     {
         public DataListDataValueEditor(DataEditorAttribute attribute)
             : base(attribute)

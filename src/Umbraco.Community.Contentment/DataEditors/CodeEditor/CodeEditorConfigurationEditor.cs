@@ -98,8 +98,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("enableSnippets", "enableSnippets", "[A friendly description]", "boolean");// enableSnippets: 0,
             //Fields.Add("enableBasicAutocompletion", "enableBasicAutocompletion", "[A friendly description]", "boolean");// enableBasicAutocompletion: 0,
             //Fields.Add("enableLiveAutocompletion", "enableLiveAutocompletion", "[A friendly description]", "boolean");// enableLiveAutocompletion: 0,
-
-            Fields.AddHideLabel();
         }
 
         public override IDictionary<string, object> ToConfigurationEditor(object configuration)

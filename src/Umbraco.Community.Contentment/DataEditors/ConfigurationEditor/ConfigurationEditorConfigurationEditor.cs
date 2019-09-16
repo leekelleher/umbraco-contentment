@@ -57,7 +57,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new OverlaySizeConfigurationField());
             Fields.AddMaxItems();
             Fields.AddDisableSorting();
-            Fields.AddHideLabel();
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

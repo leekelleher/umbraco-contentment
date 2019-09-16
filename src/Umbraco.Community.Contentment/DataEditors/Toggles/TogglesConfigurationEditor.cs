@@ -52,8 +52,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
-
-            Fields.AddHideLabel();
         }
     }
 }

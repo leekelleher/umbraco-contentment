@@ -74,7 +74,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 "Restrict width?",
                 "Select to restrict the width of the data table. This will attempt to make the table to be the same width as the 'Add' button.",
                 "boolean");
-            Fields.AddHideLabel();
             Fields.AddDisableSorting();
         }
 
