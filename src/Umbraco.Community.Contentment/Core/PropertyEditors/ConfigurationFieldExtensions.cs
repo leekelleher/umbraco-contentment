@@ -4,11 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.PropertyEditors;
 
-namespace Umbraco.Community.Contentment.DataEditors
+namespace Umbraco.Core.PropertyEditors
 {
-    internal static partial class ConfigurationFieldExtensions
+    internal static class ConfigurationFieldExtensions
     {
         // TODO: [LK:2019-09-13] My PR to Umbraco core got merged in. Remove this code when v8.2.0 is out. https://github.com/umbraco/Umbraco-CMS/pull/6264
         public static void Add(
