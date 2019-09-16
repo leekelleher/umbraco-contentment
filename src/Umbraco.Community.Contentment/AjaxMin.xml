@@ -10,8 +10,8 @@
         <input path="DataEditors\Bytes\bytes.js" />
         <input path="DataEditors\Cards\cards.js" />
         <input path="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
-        <input path="DataEditors\Checkbox\checkbox.js" />
         <input path="DataEditors\CheckboxList\checkbox-list.js" />
+        <input path="DataEditors\Checkbox\checkbox.js" />
         <input path="DataEditors\CodeEditor\code-editor.js" />
         <input path="DataEditors\ConfigurationEditor\configuration-editor.js" />
         <input path="DataEditors\ConfigurationEditor\configuration-editor.overlay.js" />
@@ -31,8 +31,8 @@
     <output path="contentment.css">
         <input path="Web\UI\App_Plugins\Contentment\contentment.css" />
         <input path="DataEditors\Cards\cards.css" />
-        <input path="DataEditors\Checkbox\checkbox.css" />
         <input path="DataEditors\CheckboxList\checkbox-list.css" />
+        <input path="DataEditors\Checkbox\checkbox.css" />
         <input path="DataEditors\IconPicker\icon-picker.css" />
         <input path="DataEditors\ItemPicker\item-picker.overlay.css" />
         <input path="DataEditors\RadioButtonList\radio-button-list.css" />
