@@ -51,8 +51,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
                 });
 
-            Fields.AddMaxItems();
-            Fields.AddDisableSorting();
+            Fields.Add(new MaxItemsConfigurationField());
+            Fields.Add(new DisableSortingConfigurationField());
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

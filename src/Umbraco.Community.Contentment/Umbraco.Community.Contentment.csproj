@@ -358,7 +358,6 @@
     <Compile Include="DataEditors\IconPicker\IconPickerSizeConfigurationField.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerValueConverter.cs" />
     <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
-    <Compile Include="DataEditors\ItemPicker\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\ItemPicker\DisableSortingConfigurationField.cs" />
     <Compile Include="DataEditors\ItemPicker\EnableFilterConfigurationField.cs" />
     <Compile Include="DataEditors\ItemPicker\EnableMultipleConfigurationField.cs" />
@@ -372,7 +371,6 @@
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />
-    <Compile Include="DataEditors\Notes\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\Notes\NotesDataEditor.cs" />
@@ -387,8 +385,8 @@
     <Compile Include="DataEditors\Toggles\TogglesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
-    <Compile Include="DataEditors\_\ConfigurationFieldExtensions.cs" />
-    <Compile Include="DataEditors\_\ContentTypeServiceExtensions.cs" />
+    <Compile Include="Core\PropertyEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="Core\Services\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
     <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />

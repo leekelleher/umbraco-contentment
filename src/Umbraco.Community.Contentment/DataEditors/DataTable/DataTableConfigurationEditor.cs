@@ -68,13 +68,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { UsePrevalueEditors, Constants.Values.False }
                 });
 
-            Fields.AddMaxItems();
+            Fields.Add(new MaxItemsConfigurationField());
             Fields.Add(
                 RestrictWidth,
                 "Restrict width?",
                 "Select to restrict the width of the data table. This will attempt to make the table to be the same width as the 'Add' button.",
                 "boolean");
-            Fields.AddDisableSorting();
+            Fields.Add(new DisableSortingConfigurationField());
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

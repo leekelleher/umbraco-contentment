@@ -62,10 +62,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new ItemPickerTypeConfigurationField());
-            Fields.AddMaxItems();
+            Fields.Add(new MaxItemsConfigurationField());
             Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.Add(new EnableMultipleConfigurationField());
-            Fields.AddDisableSorting();
+            Fields.Add(new DisableSortingConfigurationField());
             Fields.Add(new EnableDevModeConfigurationField());
         }
 

@@ -32,8 +32,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new ElementTypesConfigurationField(contentTypeService));
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new OverlaySizeConfigurationField { Name = "Editor overlay size" });
-            Fields.AddMaxItems();
-            Fields.AddDisableSorting();
+            Fields.Add(new MaxItemsConfigurationField());
+            Fields.Add(new DisableSortingConfigurationField());
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
