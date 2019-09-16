@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { MaxItemsConfigurationField.MaxItems, 1 }
                 });
 
-            Fields.AddHideLabel();
+            Fields.Add(new HideLabelConfigurationField());
         }
     }
 }

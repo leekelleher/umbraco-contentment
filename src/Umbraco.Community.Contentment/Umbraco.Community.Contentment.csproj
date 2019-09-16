@@ -350,7 +350,6 @@
     <Compile Include="DataEditors\Element\ElementModel.cs" />
     <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
     <Compile Include="DataEditors\Element\ElementValueConverter.cs" />
-    <Compile Include="DataEditors\HideLabel\ConfigurationFieldExtensions.cs" />
     <Compile Include="DataEditors\HideLabel\HideLabelConfigurationField.cs" />
     <Compile Include="DataEditors\HideLabel\HideLabelDataValueEditor.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />

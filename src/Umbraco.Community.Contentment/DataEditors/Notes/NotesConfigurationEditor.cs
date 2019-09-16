@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                  IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 new Dictionary<string, object> { { "editor", editor } });
 
-            Fields.AddHideLabel();
+            Fields.Add(new HideLabelConfigurationField());
         }
     }
 }
