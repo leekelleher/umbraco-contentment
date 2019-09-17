@@ -10,11 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-#if DEBUG
-        EditorType.PropertyValue, // NOTE: IsWorkInProgress [LK]
-#else
-        EditorType.Nothing,
-#endif
+        EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Text,
