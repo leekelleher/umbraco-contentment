@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var listFields = new[]
             {
-                 new ConfigurationField
+                new ConfigurationField
                 {
                     Key = "icon",
                     Name = "Icon",

@@ -18,10 +18,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         public OverlaySizeConfigurationField(string defaultSize = Large)
             : base()
         {
-            var items = new[]
+            var items = new DataListItem[]
             {
-                new { name = nameof(Small), value = Small },
-                new { name = nameof(Large), value = Large }
+                new DataListItem { Name = nameof(Small), Value = Small },
+                new DataListItem { Name = nameof(Large), Value = Large }
             };
 
             Key = OverlaySize;

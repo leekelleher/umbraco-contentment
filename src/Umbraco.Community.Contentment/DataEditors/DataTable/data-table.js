@@ -32,7 +32,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.items.push(fields);
             });
 
-            vm.styleTable = { "max-width": Object.toBoolean(config.restrictWidth) ? "66.6%" : "100%" };
+            vm.styleTable = { "max-width": Object.toBoolean(config.restrictWidth) ? "800px" : "100%" };
             vm.styleButton = Object.toBoolean(config.restrictWidth) ? {} : { "max-width": "100%" };
 
             vm.usePrevalueEditors = Object.toBoolean(config.usePrevalueEditors) ? true : null;

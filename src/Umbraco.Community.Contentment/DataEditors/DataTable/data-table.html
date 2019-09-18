@@ -21,7 +21,7 @@
                     <umb-property-editor model="field" is-pre-value="{{vm.usePrevalueEditors}}"></umb-property-editor>
                 </td>
                 <td style="text-align: right;vertical-align: top;">
-                    <div ng-if="vm.allowRemove" style="position:relative;">
+                    <div ng-if="vm.allowRemove" style="position:relative;cursor:pointer;">
                         <i class="icon-trash" ng-click="vm.showPrompt(item)"></i>
                         <umb-confirm-action ng-if="item.prompt"
                                             direction="left"
