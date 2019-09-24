@@ -388,8 +388,8 @@
     <Compile Include="DataEditors\Toggles\TogglesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
-    <Compile Include="Core\PropertyEditors\ConfigurationFieldExtensions.cs" />
-    <Compile Include="Core\Services\ContentTypeServiceExtensions.cs" />
+    <Compile Include="Umbraco.Core\PropertyEditors\ConfigurationFieldExtensions.cs" />
+    <Compile Include="Umbraco.Core\Services\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
     <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
