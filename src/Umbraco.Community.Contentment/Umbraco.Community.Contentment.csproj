@@ -290,7 +290,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composing\ContentmentComponent.cs" />
     <Compile Include="Composing\ContentmentComposer.cs" />
+    <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
@@ -393,6 +395,7 @@
     <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
     <Compile Include="DataEditors\_\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
+    <Compile Include="Migrations\ContentmentPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
