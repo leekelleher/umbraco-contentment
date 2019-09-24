@@ -8,7 +8,7 @@ Bytes is a drop-in replacement for Umbraco's "Label (bigint)" Data Type.
 
 When you've uploaded an image to the Media section, have you wondered why the "Size" field displays such a long number?
 
-![Label (bigint) property-editor - showing long (bigint) value](bytes--property-editor-00.png)
+![Label (bigint) property-editor - showing long (bigint) value, feat. Werner Buchholz](bytes--property-editor-00.png)
 
 Of course, it's the filesize of the image - in bytes. But how many kilobytes or megabytes is that?
 
@@ -38,7 +38,7 @@ The intended purpose for Bytes was to replace the "Size" property on the "File" 
 
 Once you have added the configured Data Type to your Media Type, the bytes will be displayed.
 
-![Bytes property-editor - showing value formatted in bytes](bytes--property-editor-01.png)
+![Bytes property-editor - showing value formatted in bytes, feat. Werner Buchholz](bytes--property-editor-01.png)
 
 This property-editor is a read-only label.
 
