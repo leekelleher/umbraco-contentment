@@ -13,7 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base()
         {
             Fields.Add(new DefaultIconConfigurationField(string.Empty, IconPickerSizeConfigurationField.Large));
-            Fields.Add(new IconPickerSizeConfigurationField());
         }
     }
 }
