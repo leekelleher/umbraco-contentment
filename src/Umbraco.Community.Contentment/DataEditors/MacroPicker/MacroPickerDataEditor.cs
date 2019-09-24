@@ -11,11 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-#if DEBUG
-        EditorType.PropertyValue | EditorType.MacroParameter, // NOTE: IsWorkInProgress [LK]
-#else
-        EditorType.Nothing,
-#endif
+        EditorType.PropertyValue | EditorType.MacroParameter,
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
