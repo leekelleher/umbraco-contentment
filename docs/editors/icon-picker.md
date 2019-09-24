@@ -15,10 +15,6 @@ In your new Data Type, selected the "[Contentment] Icon Picker" option. You will
 
 The main field is **Default icon**, with this you can define the default icon for the property.
 
-> _Fun fact: This field uses a pre-configured Icon Picker to select the default icon._
-
-There is also an option to **hide the label** on the property itself. Selecting this option will hide the property's label and description, display the editor in full width of the content property panel.
-
 
 ### How to use the editor?
 
