@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -19,5 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultConfig => default;
 
         public string View => IOHelper.ResolveUrl(TogglesDataEditor.DataEditorViewPath);
+
+        [ConfigurationField(typeof(ShowDescriptionsConfigurationField))]
+        public bool ShowDescriptions { get; set; }
     }
 }

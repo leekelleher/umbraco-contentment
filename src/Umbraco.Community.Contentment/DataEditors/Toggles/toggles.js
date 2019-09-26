@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("toggles.model", $scope.model);
 
-        var defaultConfig = { items: [], defaultValue: [] };
+        var defaultConfig = { items: [], showDescriptions: 1, defaultValue: [] };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -23,7 +23,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = angular.copy(config.items);
 
+            var removeDescriptions = Object.toBoolean(config.showDescriptions) == false;
+
             _.each(vm.items, function (item) {
+                if (removeDescriptions) delete item.description;
                 item.checked = _.contains($scope.model.value, item.value);
             });
 

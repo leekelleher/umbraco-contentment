@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(
                 Items,
                 "Options",
-                "Configure the option items for the checkbox list.",
+                "Configure the option items for the toggle group.",
                 IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
@@ -52,6 +52,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
+
+            Fields.Add(new ShowDescriptionsConfigurationField());
         }
     }
 }
