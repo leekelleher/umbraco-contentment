@@ -9,7 +9,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("checkboxlist.model", $scope.model);
 
-        var defaultConfig = { items: [], checkAll: 0, showDescriptions: 1, defaultValue: [] };
+        var defaultConfig = {
+            items: [],
+            checkAll: 0,
+            showDescriptions: 1,
+            defaultValue: []
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
