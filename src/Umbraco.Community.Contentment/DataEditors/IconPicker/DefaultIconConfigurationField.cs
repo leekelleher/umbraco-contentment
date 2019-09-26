@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -15,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string DefaultIcon = "defaultIcon";
 
         public DefaultIconConfigurationField()
-            : this(UmbIcons.DefaultIcon, IconPickerSizeConfigurationField.Large)
+            : this(Core.Constants.Icons.DefaultIcon, IconPickerSizeConfigurationField.Large)
         { }
 
         public DefaultIconConfigurationField(string defaultIcon, string size)

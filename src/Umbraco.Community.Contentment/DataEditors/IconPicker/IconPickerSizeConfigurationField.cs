@@ -15,12 +15,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string Small = "small";
         public const string Large = "large";
 
-        public IconPickerSizeConfigurationField(string defaultValue = Large)
+        public IconPickerSizeConfigurationField()
+            : this(Large)
+        { }
+
+        public IconPickerSizeConfigurationField(string defaultValue)
             : base()
         {
             Key = Size;
             Name = nameof(Size);
-            Description = "Select the size of the icon picker. By default this is set to 'large'.<br><br>If 'small' is selected, the description and delete button will not be visible.";
+            Description = $"Select the size of the icon picker. By default this is set to '{Large}'.<br><br>If '{Small}' is selected, the description and delete button will not be visible.";
             View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {

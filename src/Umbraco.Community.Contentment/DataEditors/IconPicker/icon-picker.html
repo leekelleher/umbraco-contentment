@@ -9,7 +9,6 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.IconPicker.Controller as vm">
-
     <div class="umb-property-editor umb-mediapicker umb-mediapicker-single" ng-if="vm.size === 'large'">
         <div class="flex flex-wrap error">
             <ul class="umb-sortable-thumbnails">
@@ -37,9 +36,7 @@
             </ul>
         </div>
     </div>
-
     <a class="lk-icon-picker-small" href="" ng-if="vm.size === 'small'" ng-click="vm.pick()" prevent-default>
         <i class="icon" ng-class="[{ 'medium': vm.allowAdd === false }, { 'small icon-add': vm.allowAdd }, model.value]"></i>
     </a>
-
 </div>
