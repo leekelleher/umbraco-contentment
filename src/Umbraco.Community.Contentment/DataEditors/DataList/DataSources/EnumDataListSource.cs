@@ -33,6 +33,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var items = new List<DataListItem>();
 
+            if (EnumType == null || EnumType.Length < 2)
+                return items;
+
             var assembly = default(Assembly);
             try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
             if (assembly == null)
@@ -70,19 +73,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             public EnumTypeConfigurationField()
             {
-                var apis = new[]
-                {
-                    EnumDataSourceApiController.GetAssembliesUrl,
-                    EnumDataSourceApiController.GetEnumsUrl,
-                };
-
                 Key = EnumType;
                 Name = "Enumeration type";
                 Description = "Select the enumeration from an assembly type.";
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>
                 {
-                    { CascadingDropdownListConfigurationEditor.APIs, apis }
+                    { CascadingDropdownListConfigurationEditor.APIs, new[]
+                        {
+                            EnumDataSourceApiController.GetAssembliesUrl,
+                            EnumDataSourceApiController.GetEnumsUrl,
+                        }
+                    }
                 };
             }
         }

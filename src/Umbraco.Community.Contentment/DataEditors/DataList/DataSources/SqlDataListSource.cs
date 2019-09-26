@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class SqlDataListSource : IDataListSource
     {
-        public string Name => "SQL";
+        public string Name => "SQL Data";
 
         public string Description => "Use a SQL Server database as the data source.";
 
@@ -94,9 +94,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         class SqlNotesConfigurationField : NotesConfigurationField
         {
             public SqlNotesConfigurationField()
-                : base(@"<p class=""alert alert-success""><strong>A note about your SQL query.</strong><br>
-Your SQL query should be designed to a minimum of 2 columns, (and a maximum of 4 columns). These will be used to populate a List Editor item.<br>
-The columns will be mapped in the following order: <strong>1. Name (label)</strong>, <strong>2. Value</strong>, <em>then optionally, 3. Description and 4. Icon</em>.</p>", true)
+                : base(@"<div class=""alert alert-info"">
+<p><strong>A note about your SQL query.</strong></p>
+<p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 4 columns). These columns will be used to populate the List Editor items.</p>
+<p>The columns will be mapped in the following order:</p>
+<ol>
+<li><strong>Name</strong> <em>(e.g. item's label)</em></li>
+<li><strong>Value</strong></li>
+<li>Description <em>(optional)</em></li>
+<li>Icon <em>(optional)</em></li>
+</ol>
+<p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
+</div>", true)
             { }
         }
 
@@ -142,7 +151,7 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
                 {
                     { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                     { DropdownListConfigurationEditor.Items, items },
-                    { DropdownListConfigurationEditor.DefaultValue, items.Count > 0 ? items[0].Value : string.Empty },
+                    { DropdownListConfigurationEditor.DefaultValue, Core.Constants.System.UmbracoConnectionName },
                 };
             }
         }

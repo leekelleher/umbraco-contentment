@@ -17,9 +17,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class XmlDataListSource : IDataListSource
     {
-        public string Name => "XML";
+        private readonly ILogger _logger;
 
-        public string Description => "Configure the data source to use XML data.";
+        public XmlDataListSource()
+            : this(Current.Logger)
+        { }
+
+        public XmlDataListSource(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public string Name => "XML Data";
+
+        public string Description => "Configure local or remote XML data to populate the data source.";
 
         public string Icon => "icon-code";
 
@@ -109,7 +120,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-                    Current.Logger.Error<XmlDataListSource>(ex, "Unable to fetch remote data.");
+                    _logger.Error<XmlDataListSource>(ex, "Unable to fetch remote data.");
                 }
             }
             else
@@ -122,7 +133,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-                    Current.Logger.Warn<XmlDataListSource>("Unable to find the local file path.");
+                    _logger.Warn<XmlDataListSource>("Unable to find the local file path.");
                 }
             }
 
@@ -132,9 +143,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         class XmlNotesConfigurationField : NotesConfigurationField
         {
             public XmlNotesConfigurationField()
-                : base(@"<div class=""alert alert-success"">
+                : base(@"<div class=""alert alert-info"">
 <p><strong>A note about your XPath expressions.</strong></p>
-<p>If you need assistance with the XPath syntax, please refer to this cheatsheet: <a href=""https://devhints.io/xpath"" target=""_blank""><strong>devhints.io/xpath</strong></a>.</p>
+<p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 </div>", true)
             { }
         }

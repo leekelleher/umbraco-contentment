@@ -11,8 +11,6 @@ using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
-using Umbraco.Web.Models.ContentEditing;
-using UmbracoConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -31,11 +29,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
         {
-            { nameof(UmbracoObjectTypes.DataType), UmbracoConstants.Icons.DataType },
-            { nameof(UmbracoObjectTypes.DocumentType), UmbracoConstants.Icons.ContentType },
-            { nameof(UmbracoObjectTypes.MediaType), UmbracoConstants.Icons.MediaType },
-            { nameof(UmbracoObjectTypes.Member),  UmbracoConstants.Icons.Member },
-            { nameof(UmbracoObjectTypes.MemberType),  UmbracoConstants.Icons.MemberType },
+            { nameof(UmbracoObjectTypes.DataType), Core.Constants.Icons.DataType },
+            { nameof(UmbracoObjectTypes.DocumentType), Core.Constants.Icons.ContentType },
+            { nameof(UmbracoObjectTypes.MediaType), Core.Constants.Icons.MediaType },
+            { nameof(UmbracoObjectTypes.Member),  Core.Constants.Icons.Member },
+            { nameof(UmbracoObjectTypes.MemberType),  Core.Constants.Icons.MemberType },
         };
 
         private readonly IEntityService _entityService;
@@ -74,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         Icon = icon,
                         Name = x.Name,
-                        Value = Udi.Create(UmbracoConstants.UdiEntityType.FromUmbracoObjectType(objectType), x.Key).ToString(),
+                        Value = Udi.Create(Core.Constants.UdiEntityType.FromUmbracoObjectType(objectType), x.Key).ToString(),
                     });
             }
 
@@ -84,9 +82,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         class UmbracoEntityNotesConfigurationField : NotesConfigurationField
         {
             public UmbracoEntityNotesConfigurationField()
-                : base(@"<p class=""alert alert-warning""><strong>A note about supported Umbraco entity types.</strong><br>
-The Umbraco `EntityService` API has support for a limited set of entity types. Typically, these are entities that would be given a unique Id, (e.g. a Guid or UDI).<br>
-Unsupported entity types have been removed from the list below.</p>", true)
+                : base(@"<div class=""alert alert-warning"">
+<p><strong>A note about supported Umbraco entity types.</strong></p>
+<p>Umbraco's `EntityService` API has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
+<p>Supported entity types are available in the list below.</p>
+</div>", true)
             { }
         }
 

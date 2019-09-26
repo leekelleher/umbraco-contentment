@@ -11,24 +11,29 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class PhysicalFileSystemDataSource : IDataListSource
+    internal class PhysicalFileSystemDataSource : IDataListSource
     {
         public string Name => "File System";
 
-        public string Description => "Select files from the physical file system.";
+        public string Description => "Select file paths from the file system as the data source.";
 
         public string Icon => "icon-folder-close";
 
         [ConfigurationField("path", "Folder Path", "textstring", Description = "Enter the relative path of the folder. e.g. `~/css`")]
         public string Path { get; set; }
 
-        [ConfigurationField("filter", "Filename filter", "textstring", Description = "Enter a filter for the filenames. e.g. `*.css`")]
+        [ConfigurationField("filter", "Filename filter", "textstring", Description = "Enter a wildcard filter for the filenames. e.g. `*.css`")]
         public string Filter { get; set; }
 
         public IEnumerable<DataListItem> GetItems()
         {
-            var path = string.IsNullOrWhiteSpace(Path) == false ? Path.EnsureEndsWith("/") : "~/";
-            var filter = string.IsNullOrWhiteSpace(Filter) == false ? Filter : "*.*";
+            var path = string.IsNullOrWhiteSpace(Path) == false
+                ? Path.EnsureEndsWith("/")
+                : "~/";
+
+            var filter = string.IsNullOrWhiteSpace(Filter) == false
+                ? Filter
+                : "*.*";
 
             var fs = new PhysicalFileSystem(path);
             var files = fs.GetFiles(".", filter);
