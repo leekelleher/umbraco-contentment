@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core.Composing;
@@ -25,47 +26,69 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 base.Configuration = value;
 
-                // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
-                // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values. [LK]
-                if (value is Dictionary<string, object> config &&
-                    config.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
-                    listEditor is JArray array &&
-                    array.Count > 0)
+                // NOTE: I'd have preferred to have done this in `DataListConfigurationEditor.ToValueEditor`, but unfortunately I couldn't alter the `View` from there.
+                // Furthermore this method is triggered before `ToValueEditor`, and there's nowhere else I could manipulate the configuration values. [LK]
+                if (value is Dictionary<string, object> config)
                 {
-                    var item = array[0];
-
-                    var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                    if (type != null)
+                    var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                     {
-                        var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                        ContractResolver = new ConfigurationFieldContractResolver(),
+                        Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
+                    });
+
+                    if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
+                        dataSource is JArray array1 &&
+                        array1.Count > 0)
+                    {
+                        var item = array1[0];
+
+                        var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
+                        if (type != null)
                         {
-                            ContractResolver = new ConfigurationFieldContractResolver(),
-                            Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                        });
+                            var source = item["value"].ToObject(type, serializer) as IDataListSource;
+                            var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
 
-                        var val = item["value"] as JObject;
-                        var obj = val.ToObject(type, serializer) as IDataListEditor;
-
-                        View = obj.View;
-
-                        foreach (var prop in val)
-                        {
-                            if (config.ContainsKey(prop.Key) == false)
-                            {
-                                config.Add(prop.Key, prop.Value);
-                            }
+                            config.Add(DataListConfigurationEditor.Items, items);
                         }
 
-                        if (obj.DefaultConfig != null)
+                        config.Remove(DataListConfigurationEditor.DataSource);
+                    }
+
+                    if (config.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
+                        listEditor is JArray array2 &&
+                        array2.Count > 0)
+                    {
+                        var item = array2[0];
+
+                        var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
+                        if (type != null)
                         {
-                            foreach (var prop in obj.DefaultConfig)
+                            var val = item["value"] as JObject;
+                            var obj = val.ToObject(type, serializer) as IDataListEditor;
+
+                            View = obj.View;
+
+                            foreach (var prop in val)
                             {
                                 if (config.ContainsKey(prop.Key) == false)
                                 {
                                     config.Add(prop.Key, prop.Value);
                                 }
                             }
+
+                            if (obj.DefaultConfig != null)
+                            {
+                                foreach (var prop in obj.DefaultConfig)
+                                {
+                                    if (config.ContainsKey(prop.Key) == false)
+                                    {
+                                        config.Add(prop.Key, prop.Value);
+                                    }
+                                }
+                            }
                         }
+
+                        config.Remove(DataListConfigurationEditor.ListEditor);
                     }
                 }
             }

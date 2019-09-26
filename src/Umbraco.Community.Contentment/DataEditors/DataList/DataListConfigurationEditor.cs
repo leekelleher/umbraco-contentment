@@ -4,13 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -23,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public DataListConfigurationEditor()
             : base()
         {
+            var configEditorViewPath = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
@@ -40,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 DataSource,
                 "Data source",
                 "Select and configure the data source.",
-                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { ConfigurationEditorConfigurationEditor.Items, dataSources }
@@ -50,45 +46,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ListEditor,
                 "List editor",
                 "Select and configure the type of editor for the data list.",
-                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { ConfigurationEditorConfigurationEditor.Items, listEditors }
                 });
-        }
-
-        public override IDictionary<string, object> ToValueEditor(object configuration)
-        {
-            var config = base.ToValueEditor(configuration);
-
-            if (config.TryGetValue(DataSource, out var dataSource) && dataSource is JArray array && array.Count > 0)
-            {
-                var item = array[0];
-
-                var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                if (type != null)
-                {
-                    var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
-                    {
-                        ContractResolver = new ConfigurationFieldContractResolver(),
-                        Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                    });
-
-                    var source = item["value"].ToObject(type, serializer) as IDataListSource;
-                    var options = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
-
-                    config.Add(Items, options);
-                }
-
-                config.Remove(DataSource);
-            }
-
-            if (config.ContainsKey(ListEditor))
-            {
-                config.Remove(ListEditor);
-            }
-
-            return config;
         }
     }
 }
