@@ -1,4 +1,9 @@
-﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+﻿/* Copyright © 2013-present Umbraco.
+ * This Source Code has been derived from Umbraco CMS.
+ * https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/PropertyEditors/ConfigurationEditor.cs#L127-L145
+ * Modified under the permissions of the MIT License.
+ * Modifications are licensed under the Mozilla Public License.
+ * Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -11,7 +16,6 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/PropertyEditors/ConfigurationEditor.cs#L127-L145
     internal class ConfigurationFieldContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
