@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "overlayService",
     function ($scope, editorService, localizationService, overlayService) {
 
-        console.log("config-editor.model", $scope.model);
+        // console.log("config-editor.model", $scope.model);
 
         var defaultConfig = {
             items: [],
