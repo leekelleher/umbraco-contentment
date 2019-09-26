@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
@@ -14,8 +15,9 @@ using Umbraco.Web.WebApi;
 
 namespace Umbraco.Community.Contentment
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
-    public class EnumDataSourceApiController : UmbracoAuthorizedJsonController
+    public sealed class EnumDataSourceApiController : UmbracoAuthorizedJsonController
     {
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
         internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
