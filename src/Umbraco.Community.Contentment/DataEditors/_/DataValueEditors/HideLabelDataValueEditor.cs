@@ -24,9 +24,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (value is Dictionary<string, object> config && config.ContainsKey(HideLabelConfigurationField.HideLabelAlias))
                 {
-                    // NOTE: This is how NestedContent handles this in core. Looks like a code-smell to me. [LK:2019-05-03]
-                    // I don't think "display logic" should be done inside the setter.
-                    // Where is the best place to do this? I'd assume `ToEditor`, but the `Configuration` is empty?!
+                    // NOTE: This is how NestedContent handles this in core. Feels like code-smell to me. [LK:2019-05-03]
+                    // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.0/src/Umbraco.Web/PropertyEditors/NestedContentPropertyEditor.cs#L80
+                    // I don't think "display logic" should be done inside a property's setter method.
+                    // So where is the best place to do this? I would have assumed `ToEditor`, but the `Configuration` is empty?!
                     HideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
                 }
             }
