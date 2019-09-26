@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { RadioButtonListConfigurationEditor.Items, new[]
                     {
-                        new DataListItem { Name = nameof(Grid), Value = Grid, Description = "Grid displays as a card based layout, (3 cards per row)." },
+                        new DataListItem { Name = nameof(Grid), Value = Grid, Description = "Grid displays as a card based layout, (4 cards per row)." },
                         new DataListItem { Name = nameof(List), Value = List, Description = "List will display as a menu of single items." }
                     }
                 },

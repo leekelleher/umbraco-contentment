@@ -52,8 +52,8 @@
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
                                 <i class="large icon {{item.icon}}"></i>
                                 <span class="menu-label">
-                                    <span>{{item.name}}</span>
-                                    <small>{{item.description}}</small>
+                                    <span ng-bind="item.name"></span>
+                                    <small ng-bind="item.description"></small>
                                 </span>
                             </a>
                         </li>
