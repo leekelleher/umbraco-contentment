@@ -331,7 +331,7 @@
     <Compile Include="DataEditors\DataList\DataSources\EnumDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\ManualDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />

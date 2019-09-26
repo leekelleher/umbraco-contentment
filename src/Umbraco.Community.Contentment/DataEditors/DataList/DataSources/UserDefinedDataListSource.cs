@@ -6,21 +6,16 @@
 using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-#if !DEBUG
-    // TODO: Consider whether this data source is necessary. [LK:2019-08-16]
-    [global::Umbraco.Core.Composing.HideFromTypeFinder]
-#endif
-    internal class ManualDataListSource : IDataListSource
+    internal class UserDefinedDataListSource : IDataListSource
     {
-        public string Name => "User-defined list";
+        public string Name => "User-defined List";
 
         public string Description => "Manually configure the items for the data source.";
 
-        public string Icon => UmbracoIcons.DataType;
+        public string Icon => Core.Constants.Icons.DataType;
 
         [ConfigurationField(typeof(ItemsConfigurationField))]
         public IEnumerable<DataListItem> Items { get; set; }
@@ -32,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class ItemsConfigurationField : ConfigurationField
         {
-            public const string Items = "Items";
+            public const string Items = "items";
 
             public ItemsConfigurationField()
                 : base()
@@ -55,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 Key = Items;
                 Name = "Options";
-                Description = "Configure the option items for the data list.<br><br>If you use duplicate values, then only the first option item will be used.";
+                Description = "Configure the option items for the data list.<br>If you use duplicate values, then only the first option item will be used.";
                 View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath);
                 Config = new Dictionary<string, object>()
                 {
