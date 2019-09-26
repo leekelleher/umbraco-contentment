@@ -21,7 +21,5 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
 
-        [ConfigurationField(typeof(OrientationConfigurationField))]
-        public string Orientation { get; set; }
     }
 }

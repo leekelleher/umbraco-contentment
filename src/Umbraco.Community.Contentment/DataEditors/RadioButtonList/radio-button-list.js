@@ -9,7 +9,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("radiobuttonlist.model", $scope.model);
 
-        var defaultConfig = { items: [], orientation: "vertical", defaultValue: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -22,7 +21,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
 
             vm.items = config.items;
-            vm.layout = config.orientation === "horizontal" ? "inline" : "";
         };
 
         init();

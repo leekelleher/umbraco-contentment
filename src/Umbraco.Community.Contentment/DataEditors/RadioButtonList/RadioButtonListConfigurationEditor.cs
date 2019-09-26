@@ -47,7 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
-            Fields.Add(new OrientationConfigurationField());
         }
     }
 }

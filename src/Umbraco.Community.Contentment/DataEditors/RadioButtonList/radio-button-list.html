@@ -4,7 +4,7 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment umb-radiobuttons" ng-controller="Umbraco.Community.Contentment.DataEditors.RadioButtonList.Controller as vm">
-    <ul class="unstyled radio no-indent" ng-class="vm.layout">
+    <ul class="unstyled radio no-indent">
         <li ng-repeat="item in vm.items">
             <label>
                 <input type="radio" ng-model="model.value" value="{{item.value}}" />

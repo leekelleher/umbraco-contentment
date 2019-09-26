@@ -392,7 +392,6 @@
     <Compile Include="Umbraco.Core\Services\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
-    <Compile Include="DataEditors\_\OrientationConfigurationField.cs" />
     <Compile Include="DataEditors\_\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\_\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="Migrations\ContentmentPlan.cs" />

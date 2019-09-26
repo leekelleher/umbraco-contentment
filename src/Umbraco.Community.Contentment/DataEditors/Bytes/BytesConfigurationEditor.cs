@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { OrientationConfigurationField.Orientation, OrientationConfigurationField.Vertical },
                     { RadioButtonListConfigurationEditor.Items, new[]
                         {
                             new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong> (decimal)." },
