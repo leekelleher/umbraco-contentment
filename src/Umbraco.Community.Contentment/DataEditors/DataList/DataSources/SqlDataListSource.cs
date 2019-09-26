@@ -8,7 +8,6 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
-using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
@@ -129,10 +128,10 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
 
             public ConnectionStringConfigurationField()
             {
-                var connectionStrings = new List<string>();
+                var items = new List<DataListItem>();
                 foreach (ConnectionStringSettings connString in ConfigurationManager.ConnectionStrings)
                 {
-                    connectionStrings.Add(connString.Name);
+                    items.Add(new DataListItem { Name = connString.Name, Value = connString.Name });
                 }
 
                 Key = ConnectionString;
@@ -142,7 +141,8 @@ The columns will be mapped in the following order: <strong>1. Name (label)</stro
                 Config = new Dictionary<string, object>
                 {
                     { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, connectionStrings.Select(x => new { name = x, value = x }) },
+                    { DropdownListConfigurationEditor.Items, items },
+                    { DropdownListConfigurationEditor.DefaultValue, items.Count > 0 ? items[0].Value : string.Empty },
                 };
             }
         }

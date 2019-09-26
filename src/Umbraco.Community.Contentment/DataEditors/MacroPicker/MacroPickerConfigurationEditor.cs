@@ -51,6 +51,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
                 });
 
+            // TODO: [LK:2019-09-25] Consider having a block-based UI option.
+
             Fields.Add(new MaxItemsConfigurationField());
             Fields.Add(new DisableSortingConfigurationField());
         }
