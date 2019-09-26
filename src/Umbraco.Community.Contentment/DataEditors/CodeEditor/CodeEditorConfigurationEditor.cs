@@ -21,13 +21,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         public CodeEditorConfigurationEditor()
             : base()
         {
-            Fields.Add(new NotesConfigurationField(@"<div class=""alert alert-info"">
+            var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
+
+            Fields.Add(new NotesConfigurationField($@"<div class=""alert alert-info"">
 <p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> that is distributed with Umbraco. By default, Umbraco ships a minimal set of programming language modes and themes.</p>
-<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy whichever <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>~/umbraco/lib/ace-builds/src-min-noconflict</code> folder in this Umbraco installation.</p>
+<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
 <p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options below.</p>
 </div>"));
 
-            var aceEditorPath = IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/");
+            var aceEditorPath = IOHelper.MapPath(targetPath);
             if (Directory.Exists(aceEditorPath))
             {
                 var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
