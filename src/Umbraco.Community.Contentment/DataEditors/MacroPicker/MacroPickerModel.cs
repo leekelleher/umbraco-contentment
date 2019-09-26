@@ -5,18 +5,17 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class MacroPickerModel
     {
-        [JsonProperty("udi")]
         public string Udi { get; set; }
 
-        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("alias")]
         public string Alias { get; set; }
 
         [JsonProperty("params")]

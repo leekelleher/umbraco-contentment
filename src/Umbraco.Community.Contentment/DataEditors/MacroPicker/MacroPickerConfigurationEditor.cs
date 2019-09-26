@@ -11,7 +11,6 @@ using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -31,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .GetAll()
                 .Select(x => new DataListItem
                 {
-                    Icon = UmbracoIcons.Macro,
+                    Icon = Core.Constants.Icons.Macro,
                     Name = x.Name,
                     Description = x.Alias,
                     Value = x.GetUdi().ToString()

@@ -11,14 +11,16 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("macro-picker.model", $scope.model);
 
-        var defaultConfig = { availableMacros: [], maxItems: 0, disableSorting: 0 };
+        var defaultConfig = {
+            availableMacros: [],
+            maxItems: 0,
+            disableSorting: 0
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
-
-            vm.loading = true;
 
             $scope.model.value = $scope.model.value || [];
 
@@ -45,13 +47,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.add = add;
             vm.edit = edit;
             vm.remove = remove;
-
-            vm.loading = false;
         };
 
-        function add($event) {
+        function add() {
             var macroPicker = {
-                dialogData: { richTextEditor: false, macroData: { macroAlias: "" }, allowedMacros: config.availableMacros },
+                dialogData: {
+                    richTextEditor: false,
+                    macroData: { macroAlias: "" },
+                    allowedMacros: config.availableMacros
+                },
                 submit: function (model) {
 
                     $scope.model.value.push({
@@ -77,9 +81,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             editorService.macroPicker(macroPicker);
         };
 
-        function edit($index, item) {
+        function edit($index) {
+            var item = $scope.model.value[$index];
             var macroPicker = {
-                dialogData: { richTextEditor: false, macroData: { macroAlias: item.alias, macroParamsDictionary: item.params }, allowedMacros: config.availableMacros },
+                dialogData: {
+                    richTextEditor: false,
+                    macroData: { macroAlias: item.alias, macroParamsDictionary: item.params },
+                    allowedMacros: config.availableMacros
+                },
                 submit: function (model) {
                     $scope.model.value[$index] = {
                         udi: model.selectedMacro.udi,
