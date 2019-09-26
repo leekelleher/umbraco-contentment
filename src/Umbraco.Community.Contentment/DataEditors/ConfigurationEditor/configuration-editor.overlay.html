@@ -18,7 +18,7 @@
             <div ng-if="vm.mode == 'select'">
 
                 <umb-box ng-if="vm.items.length > 0">
-                    <umb-box-content class="block-form">
+                    <umb-box-content>
                         <div class="form-search" ng-if="vm.enableFilter">
                             <i class="icon-search"></i>
                             <input type="text"
@@ -56,7 +56,7 @@
                 </umb-empty-state>
 
                 <umb-box ng-if="vm.editor.fields.length > 0">
-                    <umb-box-content class="block-form">
+                    <umb-box-content>
                         <ng-form ng-class="{ 'form-vertical' : model.size === 'small', 'form-horizontal': model.size === 'large' }" name="configurationEditorForm" novalidate val-form-manager>
                             <umb-property property="field" ng-repeat="field in vm.editor.fields">
                                 <umb-property-editor model="field" is-pre-value="true"></umb-property-editor>

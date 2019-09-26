@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Large },
+                { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
                 { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
             };
