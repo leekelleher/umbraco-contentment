@@ -9,7 +9,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         //console.log("dropdown-list.model", $scope.model);
 
-        var defaultConfig = { items: [], allowEmpty: 1, defaultValue: "" };
+        var defaultConfig = {
+            items: [],
+            allowEmpty: 1,
+            defaultValue: ""
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -21,13 +25,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = _.first($scope.model.value);
             }
 
-            _.each(config.items, function (item) {
-                if (item.hasOwnProperty("enabled")) {
-                    item.disabled = Object.toBoolean(item.enabled);
-                }
-            });
-
-            vm.items = config.items;
+            vm.items = angular.copy(config.items);
 
             vm.allowEmpty = Object.toBoolean(config.allowEmpty);
         };

@@ -31,13 +31,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = "Value",
                     View = "textbox"
                 },
-                //new ConfigurationField
-                //{
-                //    Key = "enabled",
-                //    Name = "Enabled",
-                //    View = "boolean",
-                //    Config = new Dictionary<string, object> { { "default", Constants.Values.True } }
-                //},
             };
 
             Fields.Add(
