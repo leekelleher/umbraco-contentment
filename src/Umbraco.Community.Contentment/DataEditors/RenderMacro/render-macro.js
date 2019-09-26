@@ -9,6 +9,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "macroResource",
     function ($scope, $routeParams, macroResource) {
 
+        // console.log("render-macro.model", $scope.model);
+
         var vm = this;
 
         function init() {

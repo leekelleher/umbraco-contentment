@@ -5,7 +5,6 @@
 
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
-using UmbracoIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -22,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Render Macro";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "render-macro.html";
-        internal const string DataEditorIcon = UmbracoIcons.Macro;
+        internal const string DataEditorIcon = Core.Constants.Icons.Macro;
 
         public RenderMacroDataEditor(ILogger logger)
             : base(logger)

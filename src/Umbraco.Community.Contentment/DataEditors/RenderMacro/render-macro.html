@@ -4,12 +4,12 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="umb-readonlyvalue" ng-controller="Umbraco.Community.Contentment.DataEditors.RenderMacro.Controller as vm">
-    <div class="umb-rte row-fluid span8" ng-if="vm.loading">
+    <div class="umb-rte row-fluid span8" ng-if="vm.loading === true">
         <umb-load-indicator></umb-load-indicator>
     </div>
-    <div ng-bind-html="vm.html | safe_html" ng-if="!vm.loading && vm.html"></div>
-    <div class="umb-contentpicker__min-max-help" ng-if="!vm.loading && vm.error">
-        <h5>{{vm.error.title}}</h5>
-        <p>{{vm.error.message}}<p>
+    <div ng-bind-html="vm.html | safe_html" ng-if="vm.loading === false && vm.html"></div>
+    <div class="umb-contentpicker__min-max-help" ng-if="vm.loading === false && vm.error">
+        <h5 ng-bind="vm.error.title"></h5>
+        <p ng-bind="vm.error.message"><p>
     </div>
 </div>
