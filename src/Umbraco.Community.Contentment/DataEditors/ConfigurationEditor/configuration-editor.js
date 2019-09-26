@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "overlayService",
     function ($scope, editorService, localizationService, overlayService) {
 
-        // console.log("config-editor.model", $scope.model);
+        console.log("config-editor.model", $scope.model);
 
         var defaultConfig = {
             items: [],
@@ -68,6 +68,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 size: config.items.length === 1 ? config.overlaySize : "small",
                 config: {
                     mode: "select",
+                    label: $scope.model.label,
                     items: angular.copy(config.items),
                     enableFilter: Object.toBoolean(config.enableFilter),
                     overlaySize: config.overlaySize,

@@ -10,7 +10,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         // console.log("config-editor-overlay.model", $scope.model);
 
-        var defaultConfig = { mode: "select", items: [], editor: null, overlaySize: "large", enableFilter: false, orderBy: "name" };
+        var defaultConfig = {
+            mode: "select",
+            label: "",
+            items: [],
+            editor: null,
+            overlaySize: "large",
+            enableFilter: false,
+            orderBy: "name"
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -23,7 +31,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                 if (config.items.length > 1) {
 
-                    vm.title = "Select...";
+                    vm.title = "Select " + config.label.toLowerCase() + "...";
                     vm.items = config.items;
                     vm.enableFilter = config.enableFilter;
                     vm.orderBy = config.orderBy;
@@ -52,7 +60,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 $scope.model.size = config.overlaySize;
             }
 
-            vm.title = "Configure " + editor.name.toLowerCase();
+            vm.title = "Configure " + editor.name;
             vm.editor = angular.copy(editor);
 
             if (vm.editor.fields.length > 0) {

@@ -32,10 +32,10 @@
                         <ul class="umb-actions umb-actions-child">
                             <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
                                 <a class="umb-action-link" ng-click="vm.select(item)">
-                                    <i class="large icon {{item.icon}}"></i>
+                                    <i class="large icon" ng-class="item.icon"></i>
                                     <span class="menu-label">
-                                        <span>{{item.name}}</span>
-                                        <small>{{item.description}}</small>
+                                        <span ng-bind="item.name"></span>
+                                        <small ng-bind="item.description"></small>
                                     </span>
                                 </a>
                             </li>
@@ -52,7 +52,7 @@
             <div ng-if="vm.mode == 'edit'">
 
                 <umb-empty-state ng-if="vm.editor === undefined" position="center">
-                    <p>Unable to find the editor for this value.</p>
+                    <p>Unable to find the editor for this configuration value.</p>
                 </umb-empty-state>
 
                 <umb-box ng-if="vm.editor.fields.length > 0">
@@ -66,7 +66,6 @@
                 </umb-box>
 
                 <umb-empty-state ng-if="vm.editor.fields.length == 0" position="center">
-                    <div><lee-was-here /></div>
                     <p>There are no parameters for this item.</p>
                 </umb-empty-state>
 

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
@@ -12,7 +13,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class ConfigurationEditorConfigurationEditor : ConfigurationEditor
+    internal sealed class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
         private readonly ConfigurationEditorService _service;
 
@@ -25,19 +26,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _service = new ConfigurationEditorService();
 
-            var configEditors = _service.GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true);
-            var items = new List<DataListItem>();
-
-            foreach (var configEditor in configEditors)
-            {
-                items.Add(new DataListItem
+            var items = _service
+                .GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true)
+                .Select(x => new DataListItem
                 {
-                    Icon = configEditor.Icon,
-                    Name = configEditor.Name,
-                    Description = configEditor.Description,
-                    Value = configEditor.Type
+                    Icon = x.Icon,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Value = x.Type
                 });
-            }
 
             Fields.Add(
                 Items,

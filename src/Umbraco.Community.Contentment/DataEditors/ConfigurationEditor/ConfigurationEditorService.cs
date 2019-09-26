@@ -9,12 +9,22 @@ using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
-using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class ConfigurationEditorService
     {
+        private TypeLoader _typeLoader;
+
+        public ConfigurationEditorService()
+            : this(Current.TypeLoader)
+        { }
+
+        public ConfigurationEditorService(TypeLoader typeLoader)
+        {
+            _typeLoader = typeLoader;
+        }
+
         public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(
             IEnumerable<Type> types,
             bool onlyPublic = false,
@@ -79,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Type = type.GetFullNameWithAssembly(),
                     Name = provider.Name ?? type.Name.SplitPascalCasing(),
                     Description = provider.Description,
-                    Icon = provider.Icon ?? UmbIcons.DefaultIcon,
+                    Icon = provider.Icon ?? Core.Constants.Icons.DefaultIcon,
                     Fields = fields
                 });
             }
@@ -90,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(bool onlyPublic = false, bool ignoreFields = false)
             where TContentmentListItem : class, IContentmentListItem
         {
-            return GetConfigurationEditors<TContentmentListItem>(Current.TypeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
+            return GetConfigurationEditors<TContentmentListItem>(_typeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
         }
     }
 }
