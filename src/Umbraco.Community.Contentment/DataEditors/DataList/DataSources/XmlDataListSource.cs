@@ -15,7 +15,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class XmlDataListSource : IDataListSource
+    internal sealed class XmlDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
 

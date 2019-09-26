@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class UserDefinedDataListSource : IDataListSource
+    internal sealed class UserDefinedDataListSource : IDataListSource
     {
         public string Name => "User-defined List";
 

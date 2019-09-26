@@ -14,7 +14,7 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class UmbracoEntityDataListSource : IDataListSource
+    internal sealed class UmbracoEntityDataListSource : IDataListSource
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
         {

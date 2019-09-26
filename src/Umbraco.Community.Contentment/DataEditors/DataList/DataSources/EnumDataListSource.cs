@@ -15,7 +15,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class EnumDataListSource : IDataListSource
+    internal sealed class EnumDataListSource : IDataListSource
     {
         public string Name => ".NET Enumeration";
 
