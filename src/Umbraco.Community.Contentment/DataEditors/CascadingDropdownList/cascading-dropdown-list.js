@@ -16,51 +16,44 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("cascading-dropdown-list.model", $scope.model);
 
-        var defaultConfig = { apis: [], options: [] };
+        var defaultConfig = {
+            apis: [],
+            defaultValue: [""]
+        };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
         function init() {
 
-            $scope.model.value = $scope.model.value || [{}];
+            $scope.model.value = $scope.model.value || config.defaultValue;
 
             vm.dropdowns = [];
 
-            if (config.options.length === 0) {
+            if (config.apis.length > 0) {
 
-                if (config.apis.length > 0) {
+                vm.loading = true;
 
-                    vm.loading = true;
+                var chain = [];
 
-                    var chain = [];
+                for (var i = 0; i < $scope.model.value.length; i++) {
 
-                    for (var i = 0; i < $scope.model.value.length; i++) {
-
-                        var url = config.apis[i];
-                        for (var j = 0; j < i; j++) {
-                            url = url.replace("{" + j + "}", $scope.model.value[j]);
-                        }
-
-                        chain.push($http({ method: "GET", url: url }));
+                    var url = config.apis[i];
+                    for (var j = 0; j < i; j++) {
+                        url = url.replace("{" + j + "}", $scope.model.value[j]);
                     }
 
-                    $q.all(chain).then(function (results) {
-
-                        _.each(results, function (x, i) {
-                            vm.dropdowns[i] = { options: x.data }
-                        });
-
-                        vm.loading = false;
-                    });
+                    chain.push($http({ method: "GET", url: url }));
                 }
 
-            } else {
+                $q.all(chain).then(function (results) {
 
-                _.each(config.options, function (x, i) {
-                    vm.dropdowns.push({ options: x });
+                    _.each(results, function (x, i) {
+                        vm.dropdowns[i] = { options: x.data }
+                    });
+
+                    vm.loading = false;
                 });
-
             }
 
             vm.change = change;
