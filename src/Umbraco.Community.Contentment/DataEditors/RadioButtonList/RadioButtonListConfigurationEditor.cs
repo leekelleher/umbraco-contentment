@@ -27,6 +27,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 },
                 new ConfigurationField
                 {
+                    Key = "description",
+                    Name = "Description",
+                    View = "textbox"
+                },
+                new ConfigurationField
+                {
                     Key = "value",
                     Name = "Value",
                     View = "textbox"
@@ -47,6 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.False }
                 });
 
+            Fields.Add(new ShowDescriptionsConfigurationField());
         }
     }
 }

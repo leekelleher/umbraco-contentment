@@ -9,6 +9,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("radiobuttonlist.model", $scope.model);
 
+        var defaultConfig = { items: [], showDescriptions: 1, defaultValue: "" };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -20,7 +21,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = _.first($scope.model.value);
             }
 
-            vm.items = config.items;
+            vm.items = angular.copy(config.items);
+
+            vm.showDescriptions = Object.toBoolean(config.showDescriptions);
         };
 
         init();

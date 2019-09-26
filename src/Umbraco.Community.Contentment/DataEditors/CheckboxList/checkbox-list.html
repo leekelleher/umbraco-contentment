@@ -33,7 +33,7 @@
                 </span>
                 <span class="umb-form-check__text">
                     <span ng-bind-html="item.name | safe_html"></span>
-                    <small ng-if="vm.showDescriptions" ng-bind-html="item.description | safe_html"></small>
+                    <small ng-if="vm.showDescriptions && item.description" ng-bind-html="item.description | safe_html"></small>
                 </span>
             </label>
         </li>

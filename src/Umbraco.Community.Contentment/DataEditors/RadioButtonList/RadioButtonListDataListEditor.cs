@@ -21,5 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
 
+        [ConfigurationField(typeof(ShowDescriptionsConfigurationField))]
+        public bool ShowDescriptions { get; set; }
     }
 }
