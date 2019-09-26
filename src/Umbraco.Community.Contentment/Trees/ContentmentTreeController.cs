@@ -9,16 +9,14 @@ using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
 using Umbraco.Web.WebApi.Filters;
-using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.Trees
 {
     [Tree(
-        UmbConstants.Applications.Settings,
+        Core.Constants.Applications.Settings,
         Constants.Internals.TreeAlias,
         IsSingleNodeTree = true,
-        //SortOrder = 1,
-        TreeGroup = UmbConstants.Trees.Groups.ThirdParty,
+        TreeGroup = Core.Constants.Trees.Groups.ThirdParty,
         TreeTitle = Constants.Internals.ProjectName,
         TreeUse = TreeUse.Main)]
     [PluginController(Constants.Internals.PluginControllerName)]
@@ -30,7 +28,7 @@ namespace Umbraco.Community.Contentment.Trees
 
             root.Icon = "icon-smiley";
             root.HasChildren = false;
-            root.RoutePath = $"{UmbConstants.Applications.Settings}/{Constants.Internals.TreeAlias}/index";
+            root.RoutePath = $"{Core.Constants.Applications.Settings}/{Constants.Internals.TreeAlias}/index";
             root.MenuUrl = null;
 
             return root;
