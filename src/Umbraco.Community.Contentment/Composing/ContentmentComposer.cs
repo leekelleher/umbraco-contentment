@@ -16,7 +16,8 @@ namespace Umbraco.Community.Contentment.Composing
         {
             composition
                 .Components()
-                    .Append<ContentmentComponent>();
+                    .Append<ContentmentComponent>()
+            ;
 
             composition
                 .DataEditors()

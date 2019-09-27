@@ -290,6 +290,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Experience\HidePropertyLabelComponent.cs" />
+    <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
     <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
