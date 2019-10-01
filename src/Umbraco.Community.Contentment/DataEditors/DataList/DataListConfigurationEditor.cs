@@ -14,6 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string DataSource = "dataSource";
         public const string Items = "items";
         public const string ListEditor = "listEditor";
+        internal const string EditorConfig = "editorConfig";
 
         public DataListConfigurationEditor()
             : base()
@@ -51,6 +52,22 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { ConfigurationEditorConfigurationEditor.Items, listEditors }
                 });
+        }
+
+        public override IDictionary<string, object> ToValueEditor(object configuration)
+        {
+            var config = base.ToValueEditor(configuration);
+
+            // NOTE: I am unable to set the `DataListDataValueEditor.View` property from here.
+            // The bulk of the configuration code is done in the `DataListDataValueEditor.Configuration` property-setter.
+            // Storing the view-editor's config in a temporary dictionary item. Which we then return directly to the view-editor.
+            // It feels quite hacky, alas there isn't a viable alternative at present.
+            if (config.TryGetValue(EditorConfig, out var tmp) && tmp is Dictionary<string, object> editorConfig)
+            {
+                return editorConfig;
+            }
+
+            return config;
         }
     }
 }

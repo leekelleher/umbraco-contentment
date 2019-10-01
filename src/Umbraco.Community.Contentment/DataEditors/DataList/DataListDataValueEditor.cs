@@ -28,8 +28,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 // NOTE: I'd have preferred to have done this in `DataListConfigurationEditor.ToValueEditor`, but unfortunately I couldn't alter the `View` from there.
                 // Furthermore this method is triggered before `ToValueEditor`, and there's nowhere else I could manipulate the configuration values. [LK]
-                if (value is Dictionary<string, object> config)
+                if (value is Dictionary<string, object> config && config.ContainsKey(DataListConfigurationEditor.EditorConfig) == false)
                 {
+                    var editorConfig = new Dictionary<string, object>();
+
                     var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                     {
                         ContractResolver = new ConfigurationFieldContractResolver(),
@@ -48,10 +50,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var source = item["value"].ToObject(type, serializer) as IDataListSource;
                             var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
 
-                            config.Add(DataListConfigurationEditor.Items, items);
+                            editorConfig.Add(DataListConfigurationEditor.Items, items);
                         }
-
-                        config.Remove(DataListConfigurationEditor.DataSource);
                     }
 
                     if (config.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
@@ -70,9 +70,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                             foreach (var prop in val)
                             {
-                                if (config.ContainsKey(prop.Key) == false)
+                                if (editorConfig.ContainsKey(prop.Key) == false)
                                 {
-                                    config.Add(prop.Key, prop.Value);
+                                    editorConfig.Add(prop.Key, prop.Value);
                                 }
                             }
 
@@ -80,16 +80,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                             {
                                 foreach (var prop in obj.DefaultConfig)
                                 {
-                                    if (config.ContainsKey(prop.Key) == false)
+                                    if (editorConfig.ContainsKey(prop.Key) == false)
                                     {
-                                        config.Add(prop.Key, prop.Value);
+                                        editorConfig.Add(prop.Key, prop.Value);
                                     }
                                 }
                             }
                         }
-
-                        config.Remove(DataListConfigurationEditor.ListEditor);
                     }
+
+                    config.Add(DataListConfigurationEditor.EditorConfig, editorConfig);
                 }
             }
         }
