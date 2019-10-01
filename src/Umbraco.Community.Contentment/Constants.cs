@@ -32,15 +32,7 @@ namespace Umbraco.Community.Contentment
             {
                 public const string Code = "Code";
 
-                public const string Common = "Common";
-
                 public const string Display = "Display";
-
-                public const string Lists = "Lists";
-
-                public const string Pickers = "Pickers";
-
-                public const string RichContent = "Rich Content";
             }
         }
 

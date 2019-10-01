@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Group = Core.Constants.PropertyEditors.Groups.Pickers,
 #if DEBUG
         Icon = "icon-block color-red"
 #else

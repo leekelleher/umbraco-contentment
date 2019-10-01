@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = Constants.Conventions.PropertyGroups.Common,
+        Group = Core.Constants.PropertyEditors.Groups.Common,
 #if DEBUG
         Icon = "icon-block color-red"
 #else

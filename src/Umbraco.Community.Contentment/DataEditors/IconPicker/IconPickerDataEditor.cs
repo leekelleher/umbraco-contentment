@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.String,
-        Group = Constants.Conventions.PropertyGroups.Pickers,
+        Group = Core.Constants.PropertyEditors.Groups.Pickers,
         Icon = DataEditorIcon)]
     public class IconPickerDataEditor : DataEditor
     {
