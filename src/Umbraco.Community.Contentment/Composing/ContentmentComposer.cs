@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.Composing
                 .Components()
                     .Append<ContentmentComponent>()
             ;
-
+#if !DEBUG
             composition
                 .DataEditors()
                     .Exclude<CardsDataEditor>()
@@ -34,6 +34,7 @@ namespace Umbraco.Community.Contentment.Composing
                     .Exclude<MacroPickerDataEditor>()
                     .Exclude<RadioButtonListDataEditor>()
                     .Exclude<TogglesDataEditor>()
+#endif
             ;
         }
     }

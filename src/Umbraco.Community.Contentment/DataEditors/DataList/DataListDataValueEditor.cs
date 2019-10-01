@@ -26,8 +26,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 base.Configuration = value;
 
-                // NOTE: I'd have preferred to have done this in `DataListConfigurationEditor.ToValueEditor`, but unfortunately I couldn't alter the `View` from there.
-                // Furthermore this method is triggered before `ToValueEditor`, and there's nowhere else I could manipulate the configuration values. [LK]
+                // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
+                // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values.
+                // Maybe we need a `ConfigureViewEditor(config)` method? [LK]
                 if (value is Dictionary<string, object> config && config.ContainsKey(DataListConfigurationEditor.EditorConfig) == false)
                 {
                     var editorConfig = new Dictionary<string, object>();
