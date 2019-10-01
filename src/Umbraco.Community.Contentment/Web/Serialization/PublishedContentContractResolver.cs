@@ -18,7 +18,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Umbraco.Core.Models.PublishedContent;
 
-namespace Umbraco.Community.Contentment
+namespace Umbraco.Community.Contentment.Web.Serialization
 {
     public sealed class PublishedContentContractResolver : CamelCasePropertyNamesContractResolver
     {

@@ -13,7 +13,7 @@ using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 
-namespace Umbraco.Community.Contentment
+namespace Umbraco.Community.Contentment.Web.Controllers
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]

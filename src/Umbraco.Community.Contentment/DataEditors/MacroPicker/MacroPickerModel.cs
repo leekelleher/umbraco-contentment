@@ -10,7 +10,7 @@ using Newtonsoft.Json.Serialization;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class MacroPickerModel
+    internal sealed class MacroPickerModel
     {
         public string Udi { get; set; }
 

@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-code";
 
-        [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the XML data source.<br><br>This can be either a remote URL, or local relative file path.")]
+        [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.")]
         public string Url { get; set; }
 
         [ConfigurationField(typeof(XmlNotesConfigurationField))]
