@@ -4,11 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [HideFromTypeFinder]
     internal sealed class TogglesDataListEditor : IDataListEditor
     {
         public string Name => "Toggles";
