@@ -18,9 +18,9 @@
      Please do not modify any licensing information, e.g. do not update the copyright year. -->
 
 - [ ] Documentation change
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+- [ ] Bug fix _(non-breaking change which fixes an issue)_
+- [ ] New feature _(non-breaking change which adds functionality)_
+- [ ] Breaking change _(fix or feature that would cause existing functionality to change)_
 
 ### Checklist
 
