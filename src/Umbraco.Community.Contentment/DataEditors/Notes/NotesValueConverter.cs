@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class NotesValueConverter : PropertyValueConverterBase
+    internal sealed class NotesValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(NotesDataEditor.DataEditorAlias);
 

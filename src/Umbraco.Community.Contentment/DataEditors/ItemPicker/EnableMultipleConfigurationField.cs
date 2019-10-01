@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class EnableMultipleConfigurationField : ConfigurationField
+    internal sealed class EnableMultipleConfigurationField : ConfigurationField
     {
-        public const string EnableMultiple = "enableMultiple";
+        internal const string EnableMultiple = "enableMultiple";
 
         public EnableMultipleConfigurationField()
             : base()

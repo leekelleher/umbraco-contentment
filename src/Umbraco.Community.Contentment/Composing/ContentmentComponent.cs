@@ -13,7 +13,7 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.Composing
 {
-    internal class ContentmentComponent : IComponent
+    internal sealed class ContentmentComponent : IComponent
     {
         private readonly IScopeProvider _scopeProvider;
         private readonly IMigrationBuilder _migrationBuilder;

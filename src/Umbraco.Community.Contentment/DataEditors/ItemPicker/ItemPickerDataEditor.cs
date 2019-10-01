@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class ItemPickerDataEditor : DataEditor
+    internal sealed class ItemPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ItemPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Item Picker";

@@ -7,7 +7,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class ReadOnlyDataValueEditor : HideLabelDataValueEditor
+    internal sealed class ReadOnlyDataValueEditor : HideLabelDataValueEditor
     {
         public ReadOnlyDataValueEditor(DataEditorAttribute attribute)
             : base(attribute)

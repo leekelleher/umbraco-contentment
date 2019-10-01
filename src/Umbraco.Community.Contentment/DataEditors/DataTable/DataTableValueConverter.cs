@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DataTableValueConverter : PropertyValueConverterBase
+    internal sealed class DataTableValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(DataTableDataEditor.DataEditorAlias);
 

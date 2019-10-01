@@ -111,7 +111,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class QueryConfigurationField : ConfigurationField
         {
-            public const string Query = "query";
+            internal const string Query = "query";
 
             public QueryConfigurationField()
             {
@@ -133,7 +133,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class ConnectionStringConfigurationField : ConfigurationField
         {
-            public const string ConnectionString = "connectionString";
+            internal const string ConnectionString = "connectionString";
 
             public ConnectionStringConfigurationField()
             {

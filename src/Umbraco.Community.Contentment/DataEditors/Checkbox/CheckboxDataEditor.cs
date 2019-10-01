@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class CheckboxDataEditor : DataEditor
+    internal sealed class CheckboxDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Checkbox";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Checkbox";

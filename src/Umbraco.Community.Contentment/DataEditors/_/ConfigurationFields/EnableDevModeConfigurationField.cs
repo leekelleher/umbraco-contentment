@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class EnableDevModeConfigurationField : ConfigurationField
+    internal sealed class EnableDevModeConfigurationField : ConfigurationField
     {
-        public const string EnableDevMode = "enableDevMode";
+        internal const string EnableDevMode = "enableDevMode";
 
         public EnableDevModeConfigurationField()
             : base()

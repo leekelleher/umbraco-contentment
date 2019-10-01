@@ -14,7 +14,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.Web.PublishedCache
 {
-    internal class DetachedPublishedProperty : IPublishedProperty
+    internal sealed class DetachedPublishedProperty : IPublishedProperty
     {
         private readonly object _sourceValue;
         private readonly Lazy<object> _interValue;

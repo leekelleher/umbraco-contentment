@@ -38,21 +38,21 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Package
         {
-            internal const string Author = "Lee Kelleher";
+            public const string Author = "Lee Kelleher";
 
-            internal const string AuthorUrl = "https://leekelleher.com";
+            public const string AuthorUrl = "https://leekelleher.com";
 
-            internal static readonly System.Version ContentmentVersion = new System.Version(1, 0, 0);
+            public static readonly System.Version ContentmentVersion = new System.Version(1, 0, 0);
 
-            internal const string IconUrl = "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png";
+            public const string IconUrl = "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png";
 
-            internal const string License = "Mozilla Public License";
+            public const string License = "Mozilla Public License";
 
-            internal const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
+            public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
-            internal static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 1, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 1, 0);
 
-            internal const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
+            public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
 
         internal static partial class Values

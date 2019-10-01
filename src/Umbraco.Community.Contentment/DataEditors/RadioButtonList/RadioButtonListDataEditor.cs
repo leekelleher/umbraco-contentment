@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class RadioButtonListDataEditor : DataEditor
+    internal sealed class RadioButtonListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RadioButtonList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Radio Button List";

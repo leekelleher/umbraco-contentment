@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class TogglesDataEditor : DataEditor
+    internal sealed class TogglesDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Toggles";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Toggles";

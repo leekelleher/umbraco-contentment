@@ -17,9 +17,9 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ConfigurationEditorService _service;
 
-        public const string Items = "items";
-        public const string OrderBy = "orderBy";
-        public const string OverlayView = "overlayView";
+        internal const string Items = "items";
+        internal const string OrderBy = "orderBy";
+        internal const string OverlayView = "overlayView";
 
         public ConfigurationEditorConfigurationEditor()
             : base()

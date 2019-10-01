@@ -8,7 +8,7 @@ using Umbraco.Core.Migrations;
 
 namespace Umbraco.Community.Contentment.Migrations
 {
-    internal class ContentmentPlan : MigrationPlan
+    internal sealed class ContentmentPlan : MigrationPlan
     {
         public ContentmentPlan()
             : base(Constants.Internals.ProjectName)

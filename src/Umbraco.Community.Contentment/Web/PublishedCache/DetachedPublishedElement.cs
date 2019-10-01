@@ -15,7 +15,7 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace Umbraco.Community.Contentment.Web.PublishedCache
 {
-    internal class DetachedPublishedElement : IPublishedElement
+    internal sealed class DetachedPublishedElement : IPublishedElement
     {
         public DetachedPublishedElement(Guid key, IPublishedContentType contentType, IEnumerable<IPublishedProperty> properties)
         {

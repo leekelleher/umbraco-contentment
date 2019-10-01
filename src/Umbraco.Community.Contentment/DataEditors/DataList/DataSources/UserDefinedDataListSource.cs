@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class ItemsConfigurationField : ConfigurationField
         {
-            public const string Items = "items";
+            internal const string Items = "items";
 
             public ItemsConfigurationField()
                 : base()

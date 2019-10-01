@@ -10,7 +10,7 @@ using Umbraco.Core.Composing;
 namespace Umbraco.Community.Contentment.Composing
 {
     [RuntimeLevel(MinLevel = RuntimeLevel.Run)]
-    internal class ContentmentComposer : IUserComposer
+    internal sealed class ContentmentComposer : IUserComposer
     {
         public void Compose(Composition composition)
         {

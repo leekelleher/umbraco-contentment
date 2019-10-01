@@ -8,7 +8,7 @@ using System;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class DataListItemAttribute : Attribute
+    public sealed class DataListItemAttribute : Attribute
     {
         public DataListItemAttribute()
             : base()

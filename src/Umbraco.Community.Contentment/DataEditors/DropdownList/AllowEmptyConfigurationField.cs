@@ -8,9 +8,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class AllowEmptyConfigurationField : ConfigurationField
+    internal sealed class AllowEmptyConfigurationField : ConfigurationField
     {
-        public const string AllowEmpty = "allowEmpty";
+        internal const string AllowEmpty = "allowEmpty";
 
         public AllowEmptyConfigurationField()
             : base()

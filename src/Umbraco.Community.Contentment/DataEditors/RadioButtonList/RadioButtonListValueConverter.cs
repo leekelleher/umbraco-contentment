@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class RadioButtonListValueConverter : PropertyValueConverterBase
+    internal sealed class RadioButtonListValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(RadioButtonListDataEditor.DataEditorAlias);
 

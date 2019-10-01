@@ -9,13 +9,13 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class ItemPickerConfigurationEditor : ConfigurationEditor
+    internal sealed class ItemPickerConfigurationEditor : ConfigurationEditor
     {
-        public const string DefaultIcon = "defaultIcon";
-        public const string DefaultValue = "defaultValue";
-        public const string Items = "items";
-        public const string OverlayView = "overlayView";
-        public const string OverlayOrderBy = "overlayOrderBy";
+        internal const string DefaultIcon = "defaultIcon";
+        internal const string DefaultValue = "defaultValue";
+        internal const string Items = "items";
+        internal const string OverlayView = "overlayView";
+        internal const string OverlayOrderBy = "overlayOrderBy";
 
         public ItemPickerConfigurationEditor()
             : base()

@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class DisableSortingConfigurationField : ConfigurationField
+    internal sealed class DisableSortingConfigurationField : ConfigurationField
     {
-        public const string DisableSorting = "disableSorting";
+        internal const string DisableSorting = "disableSorting";
 
         public DisableSortingConfigurationField()
             : base()

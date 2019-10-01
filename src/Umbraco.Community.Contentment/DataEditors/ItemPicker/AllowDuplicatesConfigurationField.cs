@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class AllowDuplicatesConfigurationField : ConfigurationField
+    internal sealed class AllowDuplicatesConfigurationField : ConfigurationField
     {
-        public const string AllowDuplicates = "allowDuplicates";
+        internal const string AllowDuplicates = "allowDuplicates";
 
         public AllowDuplicatesConfigurationField()
             : base()

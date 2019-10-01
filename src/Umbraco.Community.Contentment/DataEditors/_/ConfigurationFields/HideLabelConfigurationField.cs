@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class HideLabelConfigurationField : ConfigurationField
+    internal sealed class HideLabelConfigurationField : ConfigurationField
     {
-        public const string HideLabelAlias = "hideLabel";
+        internal const string HideLabelAlias = "hideLabel";
 
         public HideLabelConfigurationField()
             : base()

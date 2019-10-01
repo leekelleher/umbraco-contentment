@@ -11,7 +11,7 @@ using Newtonsoft.Json.Serialization;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal class ElementTypeItem
+    internal sealed class ElementTypeItem
     {
         public string Alias { get; set; }
 
@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<BlueprintItem> Blueprints { get; set; }
 
         [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-        internal class BlueprintItem
+        internal sealed class BlueprintItem
         {
             public string Name { get; set; }
 

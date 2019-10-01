@@ -7,7 +7,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class IconPickerConfigurationEditor : ConfigurationEditor
+    internal sealed class IconPickerConfigurationEditor : ConfigurationEditor
     {
         public IconPickerConfigurationEditor()
             : base()

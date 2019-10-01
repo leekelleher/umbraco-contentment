@@ -12,7 +12,7 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.Migrations.Install
 {
-    internal class RegisterUmbracoPackageEntry : MigrationBase
+    internal sealed class RegisterUmbracoPackageEntry : MigrationBase
     {
         private readonly IPackagingService _packagingService;
 

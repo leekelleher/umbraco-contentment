@@ -16,7 +16,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ConfigurationFieldContractResolver : DefaultContractResolver
+    internal sealed class ConfigurationFieldContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {

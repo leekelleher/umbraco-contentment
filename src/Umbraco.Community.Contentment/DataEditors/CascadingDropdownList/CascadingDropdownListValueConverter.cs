@@ -12,7 +12,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CascadingDropdownListValueConverter : PropertyValueConverterBase
+    internal sealed class CascadingDropdownListValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CascadingDropdownListDataEditor.DataEditorAlias);
 

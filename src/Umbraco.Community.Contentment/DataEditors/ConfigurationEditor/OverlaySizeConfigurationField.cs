@@ -9,11 +9,11 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class OverlaySizeConfigurationField : ConfigurationField
+    internal sealed class OverlaySizeConfigurationField : ConfigurationField
     {
-        public const string OverlaySize = "overlaySize";
-        public const string Small = "small";
-        public const string Large = "large";
+        internal const string OverlaySize = "overlaySize";
+        internal const string Small = "small";
+        internal const string Large = "large";
 
         public OverlaySizeConfigurationField(string defaultSize = Large)
             : base()

@@ -67,9 +67,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        class EnumTypeConfigurationField : ConfigurationField
+        private class EnumTypeConfigurationField : ConfigurationField
         {
-            public const string EnumType = "enumType";
+            internal const string EnumType = "enumType";
 
             public EnumTypeConfigurationField()
             {
@@ -91,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class SortAlphabeticallyConfigurationField : ConfigurationField
         {
-            public const string SortAlphabetically = "sortAlphabetically";
+            internal const string SortAlphabetically = "sortAlphabetically";
 
             public SortAlphabeticallyConfigurationField()
             {

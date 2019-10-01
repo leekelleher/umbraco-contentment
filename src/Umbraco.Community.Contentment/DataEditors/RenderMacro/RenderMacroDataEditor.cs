@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Integer,
         Group = Constants.Conventions.PropertyGroups.Display,
         Icon = DataEditorIcon)]
-    public class RenderMacroDataEditor : DataEditor
+    internal sealed class RenderMacroDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Render Macro";

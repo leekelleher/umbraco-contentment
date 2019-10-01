@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CheckboxValueConverter : PropertyValueConverterBase
+    internal sealed class CheckboxValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CheckboxDataEditor.DataEditorAlias);
 

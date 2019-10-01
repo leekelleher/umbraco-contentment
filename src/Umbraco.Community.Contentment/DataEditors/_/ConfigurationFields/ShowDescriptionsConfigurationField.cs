@@ -8,9 +8,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ShowDescriptionsConfigurationField : ConfigurationField
+    internal sealed class ShowDescriptionsConfigurationField : ConfigurationField
     {
-        public const string ShowDescriptions = "showDescriptions";
+        internal const string ShowDescriptions = "showDescriptions";
 
         public ShowDescriptionsConfigurationField()
             : base()

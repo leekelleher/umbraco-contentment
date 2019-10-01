@@ -9,9 +9,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class RenderMacroConfigurationEditor : ConfigurationEditor
+    internal sealed class RenderMacroConfigurationEditor : ConfigurationEditor
     {
-        public const string Macro = "macro";
+        internal const string Macro = "macro";
 
         public RenderMacroConfigurationEditor()
             : base()

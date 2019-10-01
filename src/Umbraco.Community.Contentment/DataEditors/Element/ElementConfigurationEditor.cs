@@ -14,13 +14,13 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class ElementConfigurationEditor : ConfigurationEditor
+    internal sealed class ElementConfigurationEditor : ConfigurationEditor
     {
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
         private readonly IdkMap _idkMap;
 
-        public const string OverlayView = "overlayView";
+        internal const string OverlayView = "overlayView";
 
         public ElementConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService, IdkMap idkMap)
             : base()

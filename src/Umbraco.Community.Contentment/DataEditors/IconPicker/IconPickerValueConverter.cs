@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class IconPickerValueConverter : PropertyValueConverterBase
+    internal sealed class IconPickerValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(IconPickerDataEditor.DataEditorAlias);
 

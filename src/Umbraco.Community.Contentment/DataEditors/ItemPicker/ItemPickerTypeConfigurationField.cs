@@ -9,11 +9,11 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ItemPickerTypeConfigurationField : ConfigurationField
+    internal sealed class ItemPickerTypeConfigurationField : ConfigurationField
     {
-        public const string ListType = "listType";
-        public const string Grid = "grid";
-        public const string List = "list";
+        internal const string ListType = "listType";
+        internal const string Grid = "grid";
+        internal const string List = "list";
 
         public ItemPickerTypeConfigurationField()
             : this(List)

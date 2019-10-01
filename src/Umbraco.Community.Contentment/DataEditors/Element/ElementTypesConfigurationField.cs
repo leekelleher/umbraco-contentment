@@ -13,9 +13,9 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ElementTypesConfigurationField : ConfigurationField
+    internal sealed class ElementTypesConfigurationField : ConfigurationField
     {
-        public const string ElementTypes = "elementTypes";
+        internal const string ElementTypes = "elementTypes";
 
         public ElementTypesConfigurationField()
             : this(Current.Services.ContentTypeService)

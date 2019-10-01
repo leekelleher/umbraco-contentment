@@ -9,10 +9,10 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CheckboxListConfigurationEditor : ConfigurationEditor
+    internal sealed class CheckboxListConfigurationEditor : ConfigurationEditor
     {
-        public const string Items = "items";
-        public const string DefaultValue = "defaultValue";
+        internal const string Items = "items";
+        internal const string DefaultValue = "defaultValue";
 
         public CheckboxListConfigurationEditor()
             : base()

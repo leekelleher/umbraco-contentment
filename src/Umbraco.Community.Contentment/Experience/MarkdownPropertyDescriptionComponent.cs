@@ -14,7 +14,7 @@ using Umbraco.Web.Editors;
 
 namespace Umbraco.Community.Contentment.Experience
 {
-    public class MarkdownPropertyDescriptionComponent : IComponent
+    public sealed class MarkdownPropertyDescriptionComponent : IComponent
     {
         public void Initialize()
         {

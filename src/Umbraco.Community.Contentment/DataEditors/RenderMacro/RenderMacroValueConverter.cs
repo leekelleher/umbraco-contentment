@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class RenderMacroValueConverter : PropertyValueConverterBase
+    internal sealed class RenderMacroValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(RenderMacroDataEditor.DataEditorAlias);
 

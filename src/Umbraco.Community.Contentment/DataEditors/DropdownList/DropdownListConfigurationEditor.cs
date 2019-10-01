@@ -9,10 +9,10 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DropdownListConfigurationEditor : ConfigurationEditor
+    internal sealed class DropdownListConfigurationEditor : ConfigurationEditor
     {
-        public const string Items = "items";
-        public const string DefaultValue = "defaultValue";
+        internal const string Items = "items";
+        internal const string DefaultValue = "defaultValue";
 
         public DropdownListConfigurationEditor()
             : base()

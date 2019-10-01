@@ -12,7 +12,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ConfigurationEditorService
+    internal sealed class ConfigurationEditorService
     {
         private TypeLoader _typeLoader;
 

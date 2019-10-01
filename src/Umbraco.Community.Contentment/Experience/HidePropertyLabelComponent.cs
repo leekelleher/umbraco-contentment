@@ -10,7 +10,7 @@ using Umbraco.Web.Editors;
 
 namespace Umbraco.Community.Contentment.Experience
 {
-    public class HidePropertyLabelComponent : IComponent
+    public sealed class HidePropertyLabelComponent : IComponent
     {
         public void Initialize()
         {

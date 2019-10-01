@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class MacroPickerDataEditor : DataEditor
+    internal sealed class MacroPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "MacroPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Macro Picker";

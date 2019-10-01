@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class TogglesDataListEditor : IDataListEditor
+    internal sealed class TogglesDataListEditor : IDataListEditor
     {
         public string Name => "Toggles";
 

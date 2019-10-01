@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CheckboxConfigurationEditor : ConfigurationEditor
+    internal sealed class CheckboxConfigurationEditor : ConfigurationEditor
     {
-        public const string ShowInline = "showInline";
+        internal const string ShowInline = "showInline";
 
         public CheckboxConfigurationEditor()
             : base()

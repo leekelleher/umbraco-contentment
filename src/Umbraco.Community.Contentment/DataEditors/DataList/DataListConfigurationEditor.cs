@@ -9,11 +9,11 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DataListConfigurationEditor : ConfigurationEditor
+    internal sealed class DataListConfigurationEditor : ConfigurationEditor
     {
-        public const string DataSource = "dataSource";
-        public const string Items = "items";
-        public const string ListEditor = "listEditor";
+        internal const string DataSource = "dataSource";
+        internal const string Items = "items";
+        internal const string ListEditor = "listEditor";
         internal const string EditorConfig = "editorConfig";
 
         public DataListConfigurationEditor()

@@ -9,11 +9,11 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class IconPickerSizeConfigurationField : ConfigurationField
+    internal sealed class IconPickerSizeConfigurationField : ConfigurationField
     {
-        public const string Size = "size";
-        public const string Small = "small";
-        public const string Large = "large";
+        internal const string Size = "size";
+        internal const string Small = "small";
+        internal const string Large = "large";
 
         public IconPickerSizeConfigurationField()
             : this(Large)

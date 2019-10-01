@@ -92,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         class EntityTypeConfigurationField : ConfigurationField
         {
-            public const string EntityType = "entityType";
+            internal const string EntityType = "entityType";
 
             public EntityTypeConfigurationField()
                 : base()

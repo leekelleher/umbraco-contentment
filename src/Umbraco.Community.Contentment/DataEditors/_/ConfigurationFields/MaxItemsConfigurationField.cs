@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class MaxItemsConfigurationField : ConfigurationField
+    internal sealed class MaxItemsConfigurationField : ConfigurationField
     {
-        public const string MaxItems = "maxItems";
+        internal const string MaxItems = "maxItems";
 
         public MaxItemsConfigurationField()
             : base()

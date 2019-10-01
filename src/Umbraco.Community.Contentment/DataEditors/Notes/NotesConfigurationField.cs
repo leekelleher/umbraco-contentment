@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class NotesConfigurationField : ConfigurationField
     {
-        public const string Notes = "notes";
+        internal const string Notes = "notes";
 
         public NotesConfigurationField(string notes, bool hideLabel = true)
             : base()
@@ -18,10 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = Notes;
             Name = nameof(Notes);
             View = NotesDataEditor.DataEditorViewPath;
-            Config = new Dictionary<string, object>
-            {
-                { Notes, notes }
-            };
+            Config = new Dictionary<string, object> { { Notes, notes } };
             HideLabel = hideLabel;
         }
     }

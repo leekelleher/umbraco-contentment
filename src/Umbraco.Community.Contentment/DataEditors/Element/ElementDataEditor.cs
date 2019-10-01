@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class ElementDataEditor : DataEditor
+    internal sealed class ElementDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Element";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Element";

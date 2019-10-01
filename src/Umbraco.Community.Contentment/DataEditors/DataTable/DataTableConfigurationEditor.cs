@@ -11,11 +11,11 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DataTableConfigurationEditor : ConfigurationEditor
+    internal sealed class DataTableConfigurationEditor : ConfigurationEditor
     {
-        public const string FieldItems = "fields";
-        public const string RestrictWidth = "restrictWidth";
-        public const string UsePrevalueEditors = "usePrevalueEditors";
+        internal const string FieldItems = "fields";
+        internal const string RestrictWidth = "restrictWidth";
+        internal const string UsePrevalueEditors = "usePrevalueEditors";
 
         public DataTableConfigurationEditor()
             : base()

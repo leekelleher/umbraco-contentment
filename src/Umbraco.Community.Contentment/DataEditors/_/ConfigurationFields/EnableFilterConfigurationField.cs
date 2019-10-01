@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class EnableFilterConfigurationField : ConfigurationField
+    internal sealed class EnableFilterConfigurationField : ConfigurationField
     {
-        public const string EnableFilter = "enableFilter";
+        internal const string EnableFilter = "enableFilter";
 
         public EnableFilterConfigurationField()
             : base()

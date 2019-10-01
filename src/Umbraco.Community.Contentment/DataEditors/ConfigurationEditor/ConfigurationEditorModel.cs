@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal class ConfigurationEditorModel
+    internal sealed class ConfigurationEditorModel
     {
         public string Type { get; set; }
 

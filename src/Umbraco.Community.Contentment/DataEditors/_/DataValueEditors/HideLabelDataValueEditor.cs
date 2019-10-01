@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class HideLabelDataValueEditor : DataValueEditor
+    internal class HideLabelDataValueEditor : DataValueEditor
     {
         public HideLabelDataValueEditor(DataEditorAttribute attribute)
             : base(attribute)

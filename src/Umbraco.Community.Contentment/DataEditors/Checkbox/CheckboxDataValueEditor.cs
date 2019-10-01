@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CheckboxDataValueEditor : DataValueEditor
+    internal sealed class CheckboxDataValueEditor : DataValueEditor
     {
         public CheckboxDataValueEditor(DataEditorAttribute attribute)
             : base(attribute)

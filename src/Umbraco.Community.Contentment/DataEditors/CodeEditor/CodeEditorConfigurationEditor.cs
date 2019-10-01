@@ -11,12 +11,12 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CodeEditorConfigurationEditor : ConfigurationEditor
+    internal sealed class CodeEditorConfigurationEditor : ConfigurationEditor
     {
-        public const string FontSize = "fontSize";
-        public const string Mode = "mode";
-        public const string Theme = "theme";
-        public const string UseWrapMode = "useWrapMode";
+        internal const string FontSize = "fontSize";
+        internal const string Mode = "mode";
+        internal const string Theme = "theme";
+        internal const string UseWrapMode = "useWrapMode";
 
         public CodeEditorConfigurationEditor()
             : base()

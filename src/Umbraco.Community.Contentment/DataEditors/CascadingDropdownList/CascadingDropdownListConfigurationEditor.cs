@@ -11,9 +11,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class CascadingDropdownListConfigurationEditor : ConfigurationEditor
+    internal sealed class CascadingDropdownListConfigurationEditor : ConfigurationEditor
     {
-        public const string APIs = "apis";
+        internal const string APIs = "apis";
 
         public CascadingDropdownListConfigurationEditor()
             : base()

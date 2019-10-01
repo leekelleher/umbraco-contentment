@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = Core.Constants.PropertyEditors.Groups.Lists,
         Icon = DataEditorIcon)]
-    public class DataListDataEditor : DataEditor
+    internal sealed class DataListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DataList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Data List";

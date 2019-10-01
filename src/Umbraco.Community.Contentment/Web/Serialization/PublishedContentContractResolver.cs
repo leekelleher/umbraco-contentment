@@ -20,7 +20,7 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace Umbraco.Community.Contentment
 {
-    public class PublishedContentContractResolver : CamelCasePropertyNamesContractResolver
+    public sealed class PublishedContentContractResolver : CamelCasePropertyNamesContractResolver
     {
         public static readonly PublishedContentContractResolver Instance = new PublishedContentContractResolver();
 

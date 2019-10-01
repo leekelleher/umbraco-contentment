@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class CascadingDropdownListDataEditor : DataEditor
+    internal sealed class CascadingDropdownListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CascadingDropdownList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Cascading Dropdown List";

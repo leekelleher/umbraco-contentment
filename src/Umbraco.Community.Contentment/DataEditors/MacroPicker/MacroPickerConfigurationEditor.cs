@@ -14,12 +14,12 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class MacroPickerConfigurationEditor : ConfigurationEditor
+    internal sealed class MacroPickerConfigurationEditor : ConfigurationEditor
     {
-        public const string AllowedMacros = "allowedMacros";
-        public const string AvailableMacros = "availableMacros";
-
         private readonly IMacroService _macroService;
+
+        internal const string AllowedMacros = "allowedMacros";
+        internal const string AvailableMacros = "availableMacros";
 
         public MacroPickerConfigurationEditor(IMacroService macroService)
             : base()

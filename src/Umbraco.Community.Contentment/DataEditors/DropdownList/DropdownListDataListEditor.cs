@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class DropdownListDataListEditor : IDataListEditor
+    internal sealed class DropdownListDataListEditor : IDataListEditor
     {
         public string Name => "Dropdown List";
 

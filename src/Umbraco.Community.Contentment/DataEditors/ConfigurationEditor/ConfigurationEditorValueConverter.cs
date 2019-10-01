@@ -15,7 +15,7 @@ using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class ConfigurationEditorValueConverter : PropertyValueConverterBase
+    internal sealed class ConfigurationEditorValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ConfigurationEditorDataEditor.DataEditorAlias);
 

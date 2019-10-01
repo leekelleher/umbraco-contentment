@@ -9,9 +9,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class NotesConfigurationEditor : ConfigurationEditor
+    internal sealed class NotesConfigurationEditor : ConfigurationEditor
     {
-        public const string Notes = NotesConfigurationField.Notes;
+        internal const string Notes = NotesConfigurationField.Notes;
 
         public NotesConfigurationEditor()
             : base()

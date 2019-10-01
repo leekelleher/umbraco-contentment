@@ -9,9 +9,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class DefaultIconConfigurationField : ConfigurationField
+    internal sealed class DefaultIconConfigurationField : ConfigurationField
     {
-        public const string DefaultIcon = "defaultIcon";
+        internal const string DefaultIcon = "defaultIcon";
 
         public DefaultIconConfigurationField()
             : this(Core.Constants.Icons.DefaultIcon, IconPickerSizeConfigurationField.Large)

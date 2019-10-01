@@ -7,9 +7,9 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class CheckAllConfigurationField : ConfigurationField
+    internal sealed class CheckAllConfigurationField : ConfigurationField
     {
-        public const string CheckAll = "checkAll";
+        internal const string CheckAll = "checkAll";
 
         public CheckAllConfigurationField()
             : base()

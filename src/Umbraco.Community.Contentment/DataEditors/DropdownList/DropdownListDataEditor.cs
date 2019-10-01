@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         Icon = DataEditorIcon
 #endif
         )]
-    public class DropdownListDataEditor : DataEditor
+    internal sealed class DropdownListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DropdownList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Dropdown List";
