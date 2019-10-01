@@ -33,20 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClientDependency.Core, Version=1.9.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClientDependency.1.9.7\lib\net45\ClientDependency.Core.dll</HintPath>
+    <Reference Include="ClientDependency.Core, Version=1.9.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency.1.9.8\lib\net45\ClientDependency.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ClientDependency.Core.Mvc, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClientDependency-Mvc5.1.8.0.0\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency-Mvc5.1.9.3\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CSharpTest.Net.Collections, Version=14.906.1403.1082, Culture=neutral, PublicKeyToken=06aee00cce822474, processorArchitecture=MSIL">
       <HintPath>..\packages\CSharpTest.Net.Collections.14.906.1403.1082\lib\net40\CSharpTest.Net.Collections.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Examine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Examine.1.0.0\lib\net452\Examine.dll</HintPath>
+    <Reference Include="Examine, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Examine.1.0.1\lib\net452\Examine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -273,19 +273,19 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Umbraco.Core, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmbracoCms.Core.8.1.0\lib\net472\Umbraco.Core.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Core.8.2.0-rc\lib\net472\Umbraco.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Umbraco.Examine, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmbracoCms.Web.8.1.0\lib\net472\Umbraco.Examine.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Web.8.2.0-rc\lib\net472\Umbraco.Examine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Umbraco.Web, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmbracoCms.Web.8.1.0\lib\net472\Umbraco.Web.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Web.8.2.0-rc\lib\net472\Umbraco.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Umbraco.Web.UI, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmbracoCms.Web.8.1.0\lib\net472\Umbraco.Web.UI.dll</HintPath>
+      <HintPath>..\packages\UmbracoCms.Web.8.2.0-rc\lib\net472\Umbraco.Web.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -390,8 +390,6 @@
     <Compile Include="DataEditors\Toggles\TogglesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataEditor.cs" />
     <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
-    <Compile Include="Umbraco.Core\PropertyEditors\ConfigurationFieldExtensions.cs" />
-    <Compile Include="Umbraco.Core\Services\ContentTypeServiceExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
     <Compile Include="DataEditors\_\DataValueEditors\ReadOnlyDataValueEditor.cs" />
