@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development time: <b>360+ hours</b> (as of 2019-09-10)</summary>
+<summary>Current development effort: <b>420+ hours</b> (between 2019-03-13 to 2019-09-30)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

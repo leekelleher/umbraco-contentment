@@ -7,22 +7,9 @@
 
 ## Data Editors
 
-- Textbox
-  Customizable textbox, Placeholder text, Default value, Prefix / suffix (input groups), Char limit, Hide label, Html5 types, Data list
-
 - Local Content
   Enable editing of a local file's content, e.g. robots.txt
   Something similar to this, https://our.umbraco.com/packages/website-utilities/umbraco-content-files/, but not as tied to the doctype.
-
-- Elements
-  Stacked Content Evo? Take the DocType Editor UI (Group Builder) and apply the concept to Stacked (Inner) Content.
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-groups-builder.html
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/directives/components/umbgroupsbuilder.directive.js
-  For a toolbar menu, maybe add options using the action overlay UI?
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/components/umb-confirm-action.html
-
-- Dimensions - Width x Height combo
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L29-L34
 
 - Smaller number input (+ label suffix)
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L36-L40
@@ -51,8 +38,5 @@
 
 - Tabbed Textarea
   Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
-
-- Bootstrap Social picker
-  Utilising the "bootstrap-social.css" (that ships with Umbraco out-the-box)
 
 - 
