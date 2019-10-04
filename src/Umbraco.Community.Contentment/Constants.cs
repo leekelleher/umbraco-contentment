@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System.Reflection;
+
 namespace Umbraco.Community.Contentment
 {
     internal static partial class Constants
@@ -41,8 +43,6 @@ namespace Umbraco.Community.Contentment
             public const string Author = "Lee Kelleher";
 
             public const string AuthorUrl = "https://leekelleher.com";
-
-            public static readonly System.Version ContentmentVersion = new System.Version(1, 0, 0);
 
             public const string IconUrl = "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png";
 

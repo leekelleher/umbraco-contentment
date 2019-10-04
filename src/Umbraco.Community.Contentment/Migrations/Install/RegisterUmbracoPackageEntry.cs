@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Core.IO;
 using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
@@ -39,7 +40,7 @@ namespace Umbraco.Community.Contentment.Migrations.Install
                     License = Constants.Package.License,
                     LicenseUrl = Constants.Package.LicenseUrl,
                     UmbracoVersion = Constants.Package.MinimumSupportedUmbracoVersion,
-                    Version = Constants.Package.ContentmentVersion.ToString(),
+                    Version = ContentmentVersion.Version.ToString(),
                     Readme = "",
                 });
             }
