@@ -1,0 +1,49 @@
+﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.TextInput.Controller", [
+    "$scope",
+    function ($scope) {
+
+        // console.log("text-input.model", $scope.model);
+
+        var defaultConfig = {
+            items: [],
+            autocomplete: 0,
+            placeholderText: null,
+            defaultValue: null,
+            prepend: null,
+            append: null,
+            maxChars: 500
+        };
+        var config = angular.extend({}, defaultConfig, $scope.model.config);
+
+        var vm = this;
+
+        function init() {
+
+            $scope.model.value = $scope.model.value || config.defaultValue;
+
+            if (_.isArray($scope.model.value)) {
+                $scope.model.value = $scope.model.value.join(", ");
+            }
+
+            vm.autoComplete = Object.toBoolean(config.autocomplete) ? "on" : "off";
+            vm.placeholderText = config.placeholderText;
+            vm.maxChars = parseInt(0 + config.maxChars);
+            vm.maxCharsThreshold = vm.maxChars * .8;
+
+            vm.prepend = config.prepend;
+            vm.append = config.append;
+
+            if (config.items && config.items.length > 0) {
+                vm.dataListId = $scope.model.alias + $scope.model.dataTypeKey.substring(0, 8);
+                vm.dataList = config.items;
+            }
+        };
+
+        init();
+    }
+]);

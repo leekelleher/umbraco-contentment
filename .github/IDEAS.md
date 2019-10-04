@@ -11,8 +11,6 @@
   Enable editing of a local file's content, e.g. robots.txt
   Something similar to this, https://our.umbraco.com/packages/website-utilities/umbraco-content-files/, but not as tied to the doctype.
 
-- Smaller number input (+ label suffix)
-  https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/rte/rte.prevalues.html#L36-L40
 
 - Template editor (type of thing?) Add columns (blocks). Each one could be an InnerContent-esque editor?
   https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/grid/dialogs/rowconfig.html#L44-L64
