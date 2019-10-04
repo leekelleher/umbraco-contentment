@@ -1,6 +1,6 @@
 ﻿# Roadmap
 
-A roadmap for Umbraco Contentment package.
+Here is a _provisional_ roadmap for the Umbraco Contentment package, to be actioned at my own pleasure.
 
 
 ## v1
@@ -20,11 +20,11 @@ Initial release. Property Editors are:
 ### v1.1
 
 - Checkbox
-- Cascading Dropdown List
-
+- Data List UIs _(Cards, Text Input, Toggles)_
 
 ### v1.2
 
+- Cascading Dropdown List
 - Code Editor
 
 
@@ -50,12 +50,18 @@ Initial release. Property Editors are:
 
 ### v1.x-future
 
-Editor ideas...
+**Editor ideas...**
 
 - Social Links (#8)
 - Transclude (#5)
 - User Picker (#2)
 - Dimensions (#1)
+
+
+**Validation exploration**
+
+None of the editors have explicit validation implemented, (only because I've never researched it).
+Could be an interesting to explore the validation approaches for the Contentment editors.
 
 
 ## v2

@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{49BDDD
 		..\.github\ISSUE_TEMPLATE.md = ..\.github\ISSUE_TEMPLATE.md
 		..\.github\PULL_REQUEST_TEMPLATE.md = ..\.github\PULL_REQUEST_TEMPLATE.md
 		..\.github\README.md = ..\.github\README.md
+		..\.github\ROADMAP.md = ..\.github\ROADMAP.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{56F1FA82-1108-4C75-A122-D58D759D61E2}"
