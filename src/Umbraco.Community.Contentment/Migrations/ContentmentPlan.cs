@@ -10,11 +10,13 @@ namespace Umbraco.Community.Contentment.Migrations
 {
     internal sealed class ContentmentPlan : MigrationPlan
     {
+        public override string InitialState => "{contentment-init-state}";
+
         public ContentmentPlan()
             : base(Constants.Internals.ProjectName)
         {
-            From(string.Empty)
-                .To<RegisterUmbracoPackageEntry>("{92FFD63F-44DC-4555-A347-87C5B1D24D6E}")
+            From(InitialState)
+                .To<RegisterUmbracoPackageEntry>(RegisterUmbracoPackageEntry.State)
             ;
         }
     }

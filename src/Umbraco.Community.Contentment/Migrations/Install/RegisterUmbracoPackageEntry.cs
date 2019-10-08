@@ -3,10 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Linq;
 using Umbraco.Community.Contentment.Configuration;
-using Umbraco.Core.IO;
 using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;
@@ -16,6 +14,8 @@ namespace Umbraco.Community.Contentment.Migrations.Install
     internal sealed class RegisterUmbracoPackageEntry : MigrationBase
     {
         private readonly IPackagingService _packagingService;
+
+        public const string State = "{contentment-reg-umb-pkg-entry}";
 
         public RegisterUmbracoPackageEntry(IPackagingService packagingService, IMigrationContext context)
             : base(context)
