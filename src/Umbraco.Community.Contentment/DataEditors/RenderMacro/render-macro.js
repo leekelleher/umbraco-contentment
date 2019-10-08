@@ -18,7 +18,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.loading = true;
 
             if (_.isEmpty($scope.model.config.macro) === false) {
+
                 var macro = _.first($scope.model.config.macro);
+
+                angular.extend(macro.params, {
+                    "__propertyAlias": $scope.model.alias,
+                    "__propertyLabel": $scope.model.label,
+                    "__propertyCulture": $scope.model.culture,
+                    "__propertyDataTypeKey": $scope.model.dataTypeKey,
+                    "__propertyDescription": $scope.model.description,
+                    "__propertyHideLabel": $scope.model.hideLabel,
+                });
+
                 macroResource.getMacroResultAsHtmlForEditor(macro.alias, $routeParams.id, macro.params).then(
                     function (result) {
                         vm.html = result;
@@ -33,11 +44,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     }
                 );
             } else {
+
                 vm.error = {
                     title: "Macro not configured",
                     message: "This data type has not been configured. Please ensure that a macro has been selected."
                 };
+
                 vm.loading = false;
+
             }
         };
 
