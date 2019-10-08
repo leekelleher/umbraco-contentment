@@ -5,7 +5,7 @@
 
 <!-- This is an AjaxMinifier XML for bundling and minifying the CSS and JS -->
 <root>
-    <output path="contentment.js">
+    <output type="js" path="contentment.js">
         <input path="Web\UI\App_Plugins\Contentment\contentment.js" />
         <input path="DataEditors\Bytes\bytes.js" />
         <input path="DataEditors\Cards\cards.js" />
@@ -29,7 +29,7 @@
         <input path="DataEditors\Toggles\toggles.js" />
         <input path="DataEditors\_\_dev-mode.js" />
     </output>
-    <output path="contentment.css">
+    <output type="css" path="contentment.css">
         <input path="Web\UI\App_Plugins\Contentment\contentment.css" />
         <input path="DataEditors\Cards\cards.css" />
         <input path="DataEditors\CheckboxList\checkbox-list.css" />
