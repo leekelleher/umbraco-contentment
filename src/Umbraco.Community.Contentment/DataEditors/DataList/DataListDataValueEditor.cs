@@ -29,68 +29,79 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
                 // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values.
                 // Maybe we need a `ConfigureViewEditor(config)` method? [LK]
-                if (value is Dictionary<string, object> config && config.ContainsKey(DataListConfigurationEditor.EditorConfig) == false)
+                if (value is Dictionary<string, object> config)
                 {
-                    var editorConfig = new Dictionary<string, object>();
-
-                    var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                    if (config.ContainsKey(DataListConfigurationEditor.EditorConfig) == false)
                     {
-                        ContractResolver = new ConfigurationFieldContractResolver(),
-                        Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                    });
+                        var editorConfig = new Dictionary<string, object>();
 
-                    if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
-                        dataSource is JArray array1 &&
-                        array1.Count > 0)
-                    {
-                        var item = array1[0];
-
-                        var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                        if (type != null)
+                        var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
                         {
-                            var source = item["value"].ToObject(type, serializer) as IDataListSource;
-                            var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
+                            ContractResolver = new ConfigurationFieldContractResolver(),
+                            Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
+                        });
 
-                            editorConfig.Add(DataListConfigurationEditor.Items, items);
-                        }
-                    }
-
-                    if (config.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
-                        listEditor is JArray array2 &&
-                        array2.Count > 0)
-                    {
-                        var item = array2[0];
-
-                        var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                        if (type != null)
+                        if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
+                            dataSource is JArray array1 &&
+                            array1.Count > 0)
                         {
-                            var val = item["value"] as JObject;
-                            var obj = val.ToObject(type, serializer) as IDataListEditor;
+                            var item = array1[0];
 
-                            View = obj.View;
-
-                            foreach (var prop in val)
+                            var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
+                            if (type != null)
                             {
-                                if (editorConfig.ContainsKey(prop.Key) == false)
-                                {
-                                    editorConfig.Add(prop.Key, prop.Value);
-                                }
+                                var source = item["value"].ToObject(type, serializer) as IDataListSource;
+                                var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
+
+                                editorConfig.Add(DataListConfigurationEditor.Items, items);
                             }
+                        }
 
-                            if (obj.DefaultConfig != null)
+                        if (config.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
+                            listEditor is JArray array2 &&
+                            array2.Count > 0)
+                        {
+                            var item = array2[0];
+
+                            var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
+                            if (type != null)
                             {
-                                foreach (var prop in obj.DefaultConfig)
+                                var val = item["value"] as JObject;
+                                var obj = val.ToObject(type, serializer) as IDataListEditor;
+
+                                if (config.ContainsKey(DataListConfigurationEditor.EditorView) == false)
+                                {
+                                    config.Add(DataListConfigurationEditor.EditorView, obj.View);
+                                }
+
+                                foreach (var prop in val)
                                 {
                                     if (editorConfig.ContainsKey(prop.Key) == false)
                                     {
                                         editorConfig.Add(prop.Key, prop.Value);
                                     }
                                 }
+
+                                if (obj.DefaultConfig != null)
+                                {
+                                    foreach (var prop in obj.DefaultConfig)
+                                    {
+                                        if (editorConfig.ContainsKey(prop.Key) == false)
+                                        {
+                                            editorConfig.Add(prop.Key, prop.Value);
+                                        }
+                                    }
+                                }
                             }
                         }
+
+                        config.Add(DataListConfigurationEditor.EditorConfig, editorConfig);
                     }
 
-                    config.Add(DataListConfigurationEditor.EditorConfig, editorConfig);
+                    if (config.TryGetValue(DataListConfigurationEditor.EditorView, out var tmp) && tmp is string view)
+                    {
+                        View = view;
+                    }
                 }
             }
         }

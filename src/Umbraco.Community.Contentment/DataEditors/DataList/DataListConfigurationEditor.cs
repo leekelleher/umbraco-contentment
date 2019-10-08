@@ -15,6 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string Items = "items";
         internal const string ListEditor = "listEditor";
         internal const string EditorConfig = "editorConfig";
+        internal const string EditorView = "editorView";
 
         public DataListConfigurationEditor()
             : base()
