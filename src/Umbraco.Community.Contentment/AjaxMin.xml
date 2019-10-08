@@ -28,6 +28,7 @@
         <input path="DataEditors\TextInput\text-input.js" />
         <input path="DataEditors\Toggles\toggles.js" />
         <input path="DataEditors\_\_dev-mode.js" />
+        <!--<symbolMap name="V3" path="contentment.js.map" />-->
     </output>
     <output type="css" path="contentment.css">
         <input path="Web\UI\App_Plugins\Contentment\contentment.css" />
