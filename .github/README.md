@@ -78,7 +78,7 @@ Unacceptable behaviour towards myself or contributors may result in being blocke
 
 ### License
 
-Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com), [Umbrella Inc](https://umbrellainc.co.uk), and [other contributors](https://github.com/leekelleher/umbraco-contentment/graphs/contributors).
+Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com).
 
 All source code is licensed under the [Mozilla Public License](../LICENSE).
 

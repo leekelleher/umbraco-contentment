@@ -3,7 +3,7 @@
  * https://gist.github.com/leekelleher/be0b93c069c1c40633a826e63aaaf7b1
  * Modified under the permissions of the MIT License.
  * Modifications are licensed under the Mozilla Public License.
- * Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */

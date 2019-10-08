@@ -3,7 +3,7 @@
  * Licensed under the permissions of the CC BY-SA 4.0.
  * https://creativecommons.org/licenses/by-sa/4.0/
  * Modifications are licensed under the Mozilla Public License.
- * Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+ * Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
