@@ -32,7 +32,7 @@ Let's open the shoebox and take a look inside...
 
 #### Release status
 
-My aim to have a v1.0 beta release ready by the **end of Q3 (September) 2019**.
+My aim to have a v1.0 beta release ready soon after **Umbraco v8.2.0 release**.
 
 Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
@@ -46,7 +46,7 @@ _There are currently no known issues with the Contentment package._
 
 [Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
 
-Please note, you may find other components within Contentment that haven't yet been documented.
+Please note, you may find other components within Contentment that have not yet been documented.
 _Let's call those "undocumented features"._
 
 
@@ -56,7 +56,7 @@ I've been doing open source for a long time. I have suffered my fair share of bu
 
 I reserve the right to address bug reports or feature requests in my own time, or ignore them completely.
 
-**Any feedback is warmly welcome.** Although remember, I am not your support developer.
+**Any feedback is warmly welcome.** But please keep in mind, I am not your personal support developer.
 
 The Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
@@ -71,7 +71,7 @@ Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go home.** :v::heart::dove:
 
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
-Otherwise you are completely free to complain on your favourite social network, or shout into the void.
+Otherwise you are completely free to not use this software, complain on your favourite social network, or shout into the void.
 
 Unacceptable behaviour towards myself or contributors may result in being blocked from accessing this repository.
 
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>420+ hours</b> (between 2019-03-13 to 2019-09-30)</summary>
+<summary>Current development effort: <b>450+ hours</b> (between 2019-03-13 to 2019-10-09)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
