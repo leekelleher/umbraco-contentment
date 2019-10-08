@@ -26,7 +26,7 @@ There is also an option to **hide the label** on the property itself. Selecting 
 
 ### How to use the editor?
 
-Once you have added the configured Data Type to your Document Type, the notes will be displayed on the content page's property panel.
+Once you have added the configured Data Type on your Document Type, the notes will be displayed on the content page's property panel.
 
 
 ### How to get the value?

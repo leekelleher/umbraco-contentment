@@ -13,25 +13,23 @@ _If that sounds too generic, think of it like this... take a data source, say a 
 
 ### How to configure the editor?
 
-[A few sentences about the configuration editor + screenshots]
-
 In your new Data Type, selected the "[Contentment] Data List" option. You will see the following configuration fields.
 
-![Configuration Editor for Data List - empty state](data-list--configuration-editor-01.png)
-
 The two main fields are "**Data source**" and "**List editor**".
+
+![Configuration Editor for Data List - empty state](data-list--configuration-editor-01.png)
 
 Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, SQL, Umbraco entities, XML data.
 
 ![Configuration Editor for Data List - available data sources](data-list--configuration-editor-02.png)
 
-For our example, let's choose **Umbraco Entity**. You will then be presented with the configuration options for this data source.
+For our example, let's choose **Umbraco Entity**. You will then be presented with configuration options for this data source.
 
 ![Configuration Editor for Data List - data source configuration (for Umbraco Entity)](data-list--configuration-editor-03.png)
 
 Once you have configured the data source, press the **Done** button at the bottom of the overlay.
 
-Next is to select and configure the **List editor**. You will be presented with a selection of options.
+Next is to select and configure the **List editor**. You will be presented with a selection of configuration options.
 
 ![Configuration Editor for Data List - available list editors](data-list--configuration-editor-04.png)
 
@@ -44,13 +42,11 @@ Once you have configured both the **Data source** and **List editor** you can **
 
 ### How to use the editor?
 
-[A few sentences about how to use the editor itself + screenshots]
-
-Once you have added the configured Data Type to your Document Type, the notes will be displayed on the content page's property panel.
+Once you have added the configured Data Type on your Document Type, the Data List will be displayed.
 
 ![Data List property-editor - displaying the data source with a Checkbox List](data-list--property-editor-01.png)
 
-The beauty of the **Data List** property-editor is that all the list editors are hot-swappable. Meaning that you wanted to use a **Radiobutton List** instead, no problem.
+The beauty of the **Data List** property-editor is that all of the list editors are hot-swappable. Meaning that if you wanted to use a **Radiobutton List** instead, no problem.
 
 ![Data List property-editor - displaying the data source with a Radiobutton List](data-list--property-editor-02.png)
 
@@ -61,6 +57,65 @@ or a **Dropdown List**?
 or an **Item Picker**? _(This list editor is visually similar to Umbraco's Content Picker editor.)_
 
 ![Data List property-editor - displaying the data source with an Item Picker](data-list--property-editor-04.png)
+
+
+### How to extend this with my own stuff?
+
+You can extend Data List with your own custom data sources and list editors.
+
+
+#### Extending with your own custom data source
+
+For creating your own custom data source, you will need to create a new C# class that implements the `Umbraco.Community.Contentment.DataEditors.IDataListSource` interface.
+
+This interface contains one method called `GetItems()`, which must return a `IEnumerable<DataListItem>` object type.
+
+The `DataListItem` model is made up of four `string` properties: `Name`, `Value`, `Description` _(optional)_ and `Icon` _(optional)_.
+
+Here's an example of a custom data source of time zones, _(leveraging .NET Framework's `System.TimeZoneInfo` API)_.
+
+```csharp
+public class TimeZoneDataSource : IDataListSource
+{
+    public string Name => "Time zones";
+
+    public string Description => "Data source for all the time zones.";
+
+    public string Icon => "icon-globe";
+
+    public IEnumerable<DataListItem> GetItems()
+    {
+        var items = new List<DataListItem>();
+
+        foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
+        {
+            items.Add(new DataListItem
+            {
+                Name = timezone.DisplayName,
+                Value = timezone.BaseUtcOffset.ToString()
+            });
+        }
+
+        return items;
+    }
+}
+```
+
+If you require extra configuration options on your custom data source, this can be done by adding extra properties on the class itself, and marking them with Umbraco's [`ConfigurationFieldAttribute`](https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.0/src/Umbraco.Core/PropertyEditors/ConfigurationFieldAttribute.cs).
+
+```csharp
+[ConfigurationField("alias", "Label (name)", "textstring", Description = "[Add a friendly description]")]
+public string ConfigOption { get; set; }
+```
+
+
+#### Extending with your own custom list editor
+
+For creating your own custom list editor, you will need to create a new C# class that implements the `Umbraco.Community.Contentment.DataEditors.IContentmentListItem` interface.
+
+This interface contains two properties, `View` and `DefaultConfig` _(optional)_.
+
+The `View` property should set the path of the AngularJS view file. This can be whatever you want it to be. The only prerequisite is that the AngularJS controller (for the view) will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessed by `$scope.model.config.items`.
 
 
 ### How to get the value?
