@@ -56,9 +56,8 @@ angular.module("umbraco.directives").component("leeWasHere", {
     controller: function () {
         console.log(`%c
                      888888888888
-                   88            88
-                 88                88
-               88                    88
+                  888            888
+               888                  888
               88    88888    88888    88
              88    8  o  8  8  o  8    88
 ----8888---------------- 8  8 --------------8888-------
