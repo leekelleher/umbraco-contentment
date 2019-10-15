@@ -20,6 +20,7 @@
         text-decoration: none;
     }
 
-    .contentment .lk-icon-picker-small i.color-black {
+    .contentment .lk-icon-picker-small i.color-black,
+    .contentment .umb-sortable-thumbnails .umb-icon-holder .file-icon > i.color-black {
         color: #000;
     }
