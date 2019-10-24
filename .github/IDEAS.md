@@ -1,9 +1,20 @@
 # Contentment Ideas
 
+## Marketing focus
+
+!! Contentment editor experience
+!! Really drive home the idea of editor experience in Contentment.
+
+
 ## Post-BackOffice Installation
 
 - Add the current (logged on) user to a mailing list. Umbraco HQ do this for Umbraco Forms installation.
 
+## BackOffice Features
+
+- NuCache viewer dashboard - similar to the Examine dashboard
+- Categories - Full category management
+- DataType Copy
 
 ## Data Editors
 
@@ -23,7 +34,7 @@
   e.g. https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/iconpicker/iconpicker.html#L35-L41
   then have a "Multiple Approved Color Picker"?
 
-- Checkbox List - arrange in columns? (e.g. think categories / taxonomy)
+- Checkbox List - arrange in columns? (e.g. think categories / taxonomy) Try using the `columns: 3;` CSS rule?
 
 - editorService Ideas
   - `embed` - OEmbed Editor - Dave W has one, but once you add the OEmbed, you can't edit it. This may be a limitation of Umbraco's `editorService.embed` feature, but feels like it can be improved.
@@ -38,5 +49,6 @@
   Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
 
 - Data List - CSV Data Source
+- Data List - Tags-esque List Editor - so not "real" tags, but a same interaction/experience.
 
 - 
