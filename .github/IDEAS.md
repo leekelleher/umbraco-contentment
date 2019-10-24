@@ -51,4 +51,11 @@
 - Data List - CSV Data Source
 - Data List - Tags-esque List Editor - so not "real" tags, but a same interaction/experience.
 
+- TinyMCE - push the boundaries beyond Umbraco's defaults?
+  - How's about a TinyMCE that is 30px height, Distraction Free mode, all menu items disabled.
+  - Only keyboard shortcuts would be enabled. Try to make it become a single-line rich-textbox.
+
+- Text Input - Change Font-Size within Input Field Based on Length (similar to Facebook's post experience)
+  - https://web-design-weekly.com/snippets/change-font-size-within-input-field-based-on-length/
+
 - 
