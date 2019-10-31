@@ -11,7 +11,6 @@ using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -45,11 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (type != null)
                     {
-                        var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
-                        {
-                            ContractResolver = new ConfigurationFieldContractResolver(),
-                            Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                        });
+                        var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
 
                         if (item["value"].ToObject(type, serializer) is IConfigurationEditorItem obj)
                         {

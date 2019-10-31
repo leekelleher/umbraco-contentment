@@ -10,7 +10,6 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -94,11 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
                 if (type != null)
                 {
-                    var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
-                    {
-                        ContractResolver = new ConfigurationFieldContractResolver(),
-                        Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                    });
+                    var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
 
                     var source = item["value"].ToObject(type, serializer) as IDataListSource;
                     var options = source?.GetItems() ?? Enumerable.Empty<DataListItem>();

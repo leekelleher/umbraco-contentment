@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Umbraco.Core.PropertyEditors;
 
-namespace Umbraco.Community.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.Serialization
 {
     internal sealed class ConfigurationFieldContractResolver : DefaultContractResolver
     {

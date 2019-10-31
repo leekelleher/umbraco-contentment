@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -35,11 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var editorConfig = new Dictionary<string, object>();
 
-                        var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
-                        {
-                            ContractResolver = new ConfigurationFieldContractResolver(),
-                            Converters = new List<JsonConverter>(new[] { new FuzzyBooleanConverter() })
-                        });
+                        var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
 
                         if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
                             dataSource is JArray array1 &&
