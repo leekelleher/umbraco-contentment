@@ -12,8 +12,5 @@ Thumbs.db
 .vs
 
 artifacts/
+build/tmp/
 src/packages/*/**
-build/_nuget/
-build/_umbraco/
-
-PostBuildEvents.bat

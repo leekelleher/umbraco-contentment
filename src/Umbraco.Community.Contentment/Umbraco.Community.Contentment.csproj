@@ -408,7 +408,6 @@
     <Compile Include="Web\Serialization\PublishedContentContractResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
@@ -482,8 +481,6 @@
     <Error Condition="!Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(SolutionDir)PostBuildEvents.bat" (
-$(SolutionDir)PostBuildEvents.bat  $(TargetPath) $(TargetDir) $(ProjectName) $(ProjectDir) $(ConfigurationName)
-)</PostBuildEvent>
+    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -TargetDevWebsite $(TargetDevWebsite) -ConfigurationName $(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

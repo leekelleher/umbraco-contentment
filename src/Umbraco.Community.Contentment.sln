@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84-5180-4489-B642-E3453B51330F}"
 	ProjectSection(SolutionItems) = preProject
-		PostBuildEvents.bat = PostBuildEvents.bat
+		..\build\build-assets.ps1 = ..\build\build-assets.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}"
