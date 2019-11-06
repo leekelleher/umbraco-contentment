@@ -1,9 +1,16 @@
-param([string]$SolutionDir,
-      [string]$TargetDir,
-      [string]$ProjectName,
-      [string]$ProjectDir,
-      [string]$TargetDevWebsite,
-      [string]$ConfigurationName);
+# Copyright © 2019 Lee Kelleher.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+param(
+    [string]$SolutionDir,
+    [string]$TargetDir,
+    [string]$ProjectName,
+    [string]$ProjectDir,
+    [string]$TargetDevWebsite,
+    [string]$ConfigurationName
+);
 
 Write-Host $ConfigurationName;
 
@@ -15,7 +22,7 @@ if ($ConfigurationName -eq 'Debug') {
   Write-Host $TargetDevWebsite;
 }
 
-$targetFolder = "${SolutionDir}..\build\tmp";
+$targetFolder = "${SolutionDir}..\build\assets";
 
 # Copy DLL / PDB
 $binFolder = "${targetFolder}\bin";

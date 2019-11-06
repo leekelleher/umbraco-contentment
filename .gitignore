@@ -12,5 +12,6 @@ Thumbs.db
 .vs
 
 artifacts/
-build/tmp/
+build/assets/
 src/packages/*/**
+/tools/*.exe

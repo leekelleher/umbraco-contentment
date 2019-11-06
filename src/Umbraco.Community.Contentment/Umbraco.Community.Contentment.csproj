@@ -327,6 +327,8 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorValueConverter.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\OverlaySizeConfigurationField.cs" />
+    <Compile Include="Properties\SolutionInfo.cs" />
+    <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
@@ -415,7 +417,6 @@
     <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AjaxMin.xml" />
     <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\Cards\cards.css" />
     <Content Include="DataEditors\Cards\cards.html" />
