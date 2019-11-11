@@ -50,6 +50,7 @@
 
 - Data List - CSV Data Source
 - Data List - Tags-esque List Editor - so not "real" tags, but a same interaction/experience.
+- Data List - Button Group (needs rename), e.g. https://twitter.com/leekelleher/status/1031862617084710912
 
 - TinyMCE - push the boundaries beyond Umbraco's defaults?
   - How's about a TinyMCE that is 30px height, Distraction Free mode, all menu items disabled.

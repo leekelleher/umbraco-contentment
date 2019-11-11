@@ -32,7 +32,7 @@ Let's open the shoebox and take a look inside...
 
 #### Release status
 
-My aim to have a v1.0 beta release ready soon after **Umbraco v8.2.0 release**.
+My aim to have a private v1.0 beta release ready soon, with a public release by end of Q1 (March) 2020.
 
 Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
