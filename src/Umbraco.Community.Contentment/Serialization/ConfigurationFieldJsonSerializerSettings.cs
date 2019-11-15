@@ -9,6 +9,8 @@ using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.Serialization
 {
+    // TODO: [LK:2019-11-15] If I can remove my custom `ConfigurationFieldContractResolver`,
+    // then we can use `Core.PropertyEditors.ConfigurationEditor.ConfigurationJsonSettings` directly.
     internal class ConfigurationFieldJsonSerializerSettings : JsonSerializerSettings
     {
         public ConfigurationFieldJsonSerializerSettings()

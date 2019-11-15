@@ -27,6 +27,8 @@ namespace Umbraco.Community.Contentment.Serialization
             {
                 if (attribute.Type != null)
                 {
+                    // TODO: [LK:2019-11-15] Submit this patch to Umbraco core
+                    // https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.2/src/Umbraco.Core/PropertyEditors/ConfigurationEditor.cs#L136
                     var field = (ConfigurationField)Activator.CreateInstance(attribute.Type);
                     property.PropertyName = field.Key;
                 }
