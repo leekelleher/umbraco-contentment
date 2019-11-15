@@ -3,8 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Reflection;
-
 namespace Umbraco.Community.Contentment
 {
     internal static partial class Constants
@@ -50,7 +48,7 @@ namespace Umbraco.Community.Contentment
 
             public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 1, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 2, 0);
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
