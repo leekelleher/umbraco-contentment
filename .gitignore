@@ -15,3 +15,5 @@ artifacts/
 build/assets/
 src/packages/*/**
 /tools/*.exe
+/build/__umb/*
+/build/__nuget/*

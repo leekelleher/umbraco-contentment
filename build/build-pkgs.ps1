@@ -23,23 +23,33 @@ Function parseSemVer($version) {
     };
 }
 
-# Set various variables / paths
+
+# Set various variables / folder paths
 
 $projectNamespace = 'Umbraco.Community.Contentment';
+$packageName = 'Contentment';
+$packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
+$licenseName = 'Mozilla Public License Version 2.0';
+$licenseUrl = 'https://mozilla.org/MPL/2.0/';
+$authorName = 'Lee Kelleher';
+$authorUrl = 'https://leekelleher.com/';
+$minUmbracoVersion = parseSemVer('8.2.0');
 
-$rootPath = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
-$buildPath = Join-Path -Path $rootPath -ChildPath 'build';
-$assetsPath = Join-Path -Path $buildPath -ChildPath 'assets';
-$srcPath = Join-Path -Path $rootPath -ChildPath 'src';
+$rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
+$buildFolder = Join-Path -Path $rootFolder -ChildPath 'build';
+$assetsFolder = Join-Path -Path $buildFolder -ChildPath 'assets';
+$srcFolder = Join-Path -Path $rootFolder -ChildPath 'src';
+
 
 # Get some package metadata - name, description, links, etc.
 
-$version = Get-Content -Path "${rootPath}\VERSION";
+$version = Get-Content -Path "${rootFolder}\VERSION";
 $semver = parseSemVer($version);
+
 
 # Update the assembly version number
 
-Set-Content -Path "${srcPath}\Umbraco.Community.Contentment\Properties\VersionInfo.cs" -Value @"
+Set-Content -Path "${srcFolder}\${projectNamespace}\Properties\VersionInfo.cs" -Value @"
 using System.Reflection;
 
 [assembly: AssemblyVersion("$($semver.Major).$($semver.Minor)")]
@@ -51,7 +61,7 @@ using System.Reflection;
 # Build the VS project
 
 # Ensure NuGet.exe
-$nuget_exe = "${rootPath}\tools\nuget.exe";
+$nuget_exe = "${rootFolder}\tools\nuget.exe";
 If (-NOT(Test-Path -Path $nuget_exe)) {
     Write-Host "Retrieving nuget.exe...";
     Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $nuget_exe;
@@ -66,23 +76,61 @@ if (-NOT(Test-Path $msbuild_exe)) {
 }
 
 Write-Host 'Restoring NuGet packages...';
-& $nuget_exe restore "${srcPath}\${projectNamespace}.sln";
+& $nuget_exe restore "${srcFolder}\${projectNamespace}.sln";
 
 Write-Host 'Compiling Visual Studio solution.';
-& $msbuild_exe "${srcPath}\${projectNamespace}.sln" /p:Configuration=Release
+& $msbuild_exe "${srcFolder}\${projectNamespace}.sln" /p:Configuration=Release
 if (-NOT $?) {
     throw 'The MSBuild process returned an error code.';
 }
 
+
 # Populate the Umbraco package manifest
 
+$umbFolder = Join-Path -Path $buildFolder -ChildPath '__umb';
+if (!(Test-Path -Path $umbFolder)) {New-Item -Path $umbFolder -Type Directory;}
 
-$umbracoPackageManifest = Join-Path -Path $buildPath -ChildPath 'manifest-umbraco.xml';
+$umbracoManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-umbraco.xml';
+$umbracoPackageXml = [xml](Get-Content $umbracoManifest);
+$umbracoPackageXml.umbPackage.info.package.version = "$($semver.Major).$($semver.Minor).$($semver.Patch)";
+$umbracoPackageXml.umbPackage.info.package.name = $packageName;
+$umbracoPackageXml.umbPackage.info.package.license.set_InnerText($licenseName);
+$umbracoPackageXml.umbPackage.info.package.license.url = $licenseUrl;
+$umbracoPackageXml.umbPackage.info.package.url = $packageUrl;
+$umbracoPackageXml.umbPackage.info.package.requirements.major = "$($minUmbracoVersion.Major)";
+$umbracoPackageXml.umbPackage.info.package.requirements.minor = "$($minUmbracoVersion.Minor)";
+$umbracoPackageXml.umbPackage.info.package.requirements.patch = "$($minUmbracoVersion.Patch)";
+$umbracoPackageXml.umbPackage.info.author.name = $authorName;
+$umbracoPackageXml.umbPackage.info.author.website = $authorUrl;
+
+$filesXml = $umbracoPackageXml.CreateElement('files');
+
+$assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse;
+foreach($assetFile in $assetFiles){
+
+    $hash = Get-FileHash -Path $assetFile.FullName -Algorithm MD5;
+    $guid = $hash.Hash.ToLower() + $assetFile.Extension;
+    $orgPath = "~" + $assetFile.Directory.FullName.Replace($assetsFolder, "").Replace("\", "/");
+
+    $fileXml = $umbracoPackageXml.CreateElement("file");
+    $fileXml.set_InnerXML("<guid>${guid}</guid><orgPath>${orgPath}</orgPath><orgName>$($assetFile.Name)</orgName>");
+    $filesXml.AppendChild($fileXml);
+
+    Copy-Item -Path $assetFile.FullName -Destination "${umbFolder}\${guid}";
+}
+
+$umbracoPackageXml.umbPackage.ReplaceChild($filesXml, $umbracoPackageXml.SelectSingleNode("/umbPackage/files")) | Out-Null;
+$umbracoPackageXml.Save("${umbFolder}\package.xml");
+
+$artifactsFolder = Join-Path -Path $rootFolder -ChildPath 'artifacts';
+if (!(Test-Path -Path $artifactsFolder)) {New-Item -Path $artifactsFolder -Type Directory;}
+Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Contentment_$($semver.VersionString).zip" -Force;
 
 
 # Populate the NuGet package manifest
 
-$nugetPackageManifest = Join-Path -Path $buildPath -ChildPath 'manifest-nuget.xml';
+
+$nugetPackageManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-nuget.xml';
 
 
 # Anything else?

@@ -15,11 +15,11 @@ param(
 Write-Host $ConfigurationName;
 
 if ($ConfigurationName -eq 'Debug') {
-  Write-Host $SolutionDir;
-  Write-Host $TargetDir;
-  Write-Host $ProjectName;
-  Write-Host $ProjectDir;
-  Write-Host $TargetDevWebsite;
+    Write-Host $SolutionDir;
+    Write-Host $TargetDir;
+    Write-Host $ProjectName;
+    Write-Host $ProjectDir;
+    Write-Host $TargetDevWebsite;
 }
 
 $targetFolder = "${SolutionDir}..\build\assets";
@@ -34,17 +34,12 @@ $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}
 Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse -Destination "${pluginFolder}";
 
-# Load WebMarkupMin (for minification)
-[Reflection.Assembly]::LoadFile("${SolutionDir}..\tools\lib\AdvancedStringBuilder.dll");
-[Reflection.Assembly]::LoadFile("${SolutionDir}..\tools\lib\WebMarkupMin.Core.dll");
-$htmlMinifier = [WebMarkupMin.Core.HtmlMinifier]::new();
-
 # HTML - Copy and Minify (or just remove comments)
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
 foreach($htmlFile in $htmlFiles){
-  $contents = Get-Content -Path $htmlFile.FullName;
-  $minifiedHtml = $htmlMinifier.Minify($contents).MinifiedContent;
-  Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
+    $contents = Get-Content -Path $htmlFile.FullName;
+    $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
+    Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
 }
 
 # CSS - Bundle & Minify
@@ -59,5 +54,5 @@ Get-Content -Path "${ProjectDir}DataEditors\**\*.js" | Set-Content -Path $target
 
 # In debug mode, copy the assets over to the local dev website
 if ($ConfigurationName -eq 'Debug' -AND -NOT($TargetDevWebsite -eq '')) {
-  Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite;
+    Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite;
 }
