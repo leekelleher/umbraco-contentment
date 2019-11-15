@@ -16,7 +16,8 @@
                     ng-model="model.value[$index]"
                     ng-options="item.value as item.name disable when item.disabled for item in dropdown.options"
                     ng-required="true"
-                    ng-change="vm.change($index)"></select>
+                    ng-change="vm.change($index)">
+            </select>
         </span>
     </div>
 
