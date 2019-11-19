@@ -4,7 +4,7 @@
 
 **What is a Macro?**
 
-If you are not sure what a Macro is, (within an Umbraco context), please read the documentation on the Umbraco community website.
+If you are not sure what a Macro is, (within the context of Umbraco), please read the documentation on the Umbraco community website.
 
 - [Our Umbraco - Documentation - Templating - Macros](https://our.umbraco.com/documentation/reference/templating/macros/)
 
@@ -15,7 +15,7 @@ Umbraco Macros are typically used for functionality on frontend of a website. Bu
 
 Render Macro is a read-only property-editor to display the HTML output from a Macro template.
 
-> This property-editor has taken inspiration from the community package, [uComponents RenderMacro](http://ucomponents.github.io/data-types/render-macro/) by Lee Kelleher.
+> This property-editor has taken inspiration from the community package, [uComponents RenderMacro](http://ucomponents.github.io/data-types/render-macro/) by me, Lee Kelleher.
 
 Similar to the [Notes](notes.md) property-editor, Render Macro can be used to display rich-text instructional messages for content editors.
 
