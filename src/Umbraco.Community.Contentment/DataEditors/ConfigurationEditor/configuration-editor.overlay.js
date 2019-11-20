@@ -12,6 +12,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         var defaultConfig = {
             mode: "select",
+            autoSelect: true,
             label: "",
             items: [],
             editor: null,
@@ -29,18 +30,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             if (vm.mode === "select") {
 
-                if (config.items.length > 1) {
+                if (config.autoSelect && config.items.length === 1) {
+
+                    // NOTE: If there is a single option available, then auto-select it.
+                    select(config.items[0]);
+
+                } else {
 
                     vm.title = "Select " + config.label.toLowerCase() + "...";
                     vm.items = config.items;
                     vm.enableFilter = config.enableFilter;
                     vm.orderBy = config.orderBy;
                     vm.select = select;
-
-                } else {
-
-                    // NOTE: If there is a single option available, then auto-select it.
-                    select(config.items[0]);
 
                 }
 
