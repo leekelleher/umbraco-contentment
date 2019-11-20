@@ -13,6 +13,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("config-editor.model", $scope.model);
 
         var defaultConfig = {
+            allowDuplicates: 0,
             items: [],
             maxItems: 0,
             disableSorting: 0,
@@ -63,13 +64,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
+
+            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
+                return _.find($scope.model.value, function (y) { return x.type === y.type; });
+            });
+
             var configPicker = {
                 view: config.overlayView,
                 size: config.items.length === 1 ? config.overlaySize : "small",
                 config: {
                     mode: "select",
+                    autoSelect: config.items.length === 1,
                     label: $scope.model.label,
-                    items: angular.copy(config.items),
+                    items: items,
                     enableFilter: Object.toBoolean(config.enableFilter),
                     overlaySize: config.overlaySize,
                     orderBy: config.orderBy,
