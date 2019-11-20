@@ -8,13 +8,13 @@ using Newtonsoft.Json.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(
+        ItemNullValueHandling = NullValueHandling.Ignore,
+        NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public sealed class DataListItem
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Icon { get; set; }
 
         public string Name { get; set; }
