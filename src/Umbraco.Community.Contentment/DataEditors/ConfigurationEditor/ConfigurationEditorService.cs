@@ -5,16 +5,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ConfigurationEditorService
     {
-        private TypeLoader _typeLoader;
+        private readonly TypeLoader _typeLoader;
 
         public ConfigurationEditorService()
             : this(Current.TypeLoader)
@@ -45,44 +47,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (provider == null)
                     continue;
 
-                var fields = new List<ConfigurationField>();
-
-                if (ignoreFields == false)
-                {
-                    var properties = type.GetProperties();
-
-                    foreach (var property in properties)
-                    {
-                        if (Attribute.IsDefined(property, typeof(ConfigurationFieldAttribute)) == false)
-                            continue;
-
-                        var attr = property.GetCustomAttribute<ConfigurationFieldAttribute>(false);
-                        if (attr == null)
-                            continue;
-
-                        if (attr.Type != null)
-                        {
-                            var field = Activator.CreateInstance(attr.Type) as ConfigurationField;
-                            if (field != null)
-                            {
-                                fields.Add(field);
-                            }
-                        }
-                        else
-                        {
-                            fields.Add(new ConfigurationField
-                            {
-                                Key = attr.Key ?? property.Name,
-                                Name = attr.Name ?? property.Name,
-                                PropertyName = property.Name,
-                                PropertyType = property.PropertyType,
-                                Description = attr.Description,
-                                HideLabel = attr.HideLabel,
-                                View = attr.View
-                            });
-                        }
-                    }
-                }
+                var fields = ignoreFields == false
+                    ? GetConfigurationFields(type)
+                    : Enumerable.Empty<ConfigurationField>();
 
                 models.Add(new ConfigurationEditorModel
                 {
@@ -101,6 +68,47 @@ namespace Umbraco.Community.Contentment.DataEditors
             where TContentmentListItem : class, IContentmentListItem
         {
             return GetConfigurationEditors<TContentmentListItem>(_typeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
+        }
+
+        internal IEnumerable<ConfigurationField> GetConfigurationFields(Type type)
+        {
+            var fields = new List<ConfigurationField>();
+
+            var properties = type.GetProperties();
+
+            foreach (var property in properties)
+            {
+                if (Attribute.IsDefined(property, typeof(ConfigurationFieldAttribute)) == false)
+                    continue;
+
+                var attr = property.GetCustomAttribute<ConfigurationFieldAttribute>(false);
+                if (attr == null)
+                    continue;
+
+                if (attr.Type != null)
+                {
+                    var field = Activator.CreateInstance(attr.Type) as ConfigurationField;
+                    if (field != null)
+                    {
+                        fields.Add(field);
+                    }
+                }
+                else
+                {
+                    fields.Add(new ConfigurationField
+                    {
+                        Key = attr.Key ?? property.Name,
+                        Name = attr.Name ?? property.Name,
+                        PropertyName = property.Name,
+                        PropertyType = property.PropertyType,
+                        Description = attr.Description,
+                        HideLabel = attr.HideLabel,
+                        View = IOHelper.ResolveVirtualUrl(attr.View)
+                    });
+                }
+            }
+
+            return fields;
         }
     }
 }
