@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en" intName="English (UK)" localName="English (UK)" lcid="" culture="en-GB">
+    <creator>
+        <name>Lee Kelleher</name>
+        <link>https://leekelleher.com</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+    </area>
+</language>
