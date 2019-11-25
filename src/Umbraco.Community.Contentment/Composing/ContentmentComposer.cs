@@ -35,8 +35,22 @@ namespace Umbraco.Community.Contentment.Composing
                     .Exclude<RadioButtonListDataEditor>()
                     .Exclude<TextInputDataEditor>()
                     .Exclude<TogglesDataEditor>()
-#endif
             ;
+
+            composition
+                .PropertyValueConverters()
+                    .Remove<CascadingDropdownListValueConverter>()
+                    .Remove<CheckboxValueConverter>()
+                    .Remove<CheckboxListValueConverter>()
+                    .Remove<CodeEditorValueConverter>()
+                    .Remove<ConfigurationEditorValueConverter>()
+                    .Remove<DataTableValueConverter>()
+                    .Remove<DropdownListValueConverter>()
+                    .Remove<ItemPickerValueConverter>()
+                    .Remove<MacroPickerValueConverter>()
+                    .Remove<RadioButtonListValueConverter>()
+            ;
+#endif
         }
     }
 }
