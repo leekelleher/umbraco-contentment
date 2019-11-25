@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 // NOTE: I'd have preferred to do this in `DataListConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
                 // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values.
-                // Maybe we need a `ConfigureViewEditor(config)` method? [LK]
+                // Maybe we need a `ConfigureViewEditor(config)` method? In Umbraco v7, we had a `ConfigureForDisplay` method. [LK]
                 if (value is Dictionary<string, object> config)
                 {
                     if (config.ContainsKey(DataListConfigurationEditor.EditorConfig) == false)
