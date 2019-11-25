@@ -17,11 +17,15 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
 {
     internal sealed class DetachedPublishedElement : IPublishedElement
     {
+        private readonly Dictionary<string, IPublishedProperty> _propertyLookup;
+
         public DetachedPublishedElement(Guid key, IPublishedContentType contentType, IEnumerable<IPublishedProperty> properties)
         {
             Key = key;
             ContentType = contentType;
             Properties = properties;
+
+            _propertyLookup = properties.ToDictionary(x => x.Alias, StringComparer.OrdinalIgnoreCase);
         }
 
         public IPublishedContentType ContentType { get; }
@@ -32,10 +36,8 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
 
         public IPublishedProperty GetProperty(string alias)
         {
-            var index = ContentType.GetPropertyIndex(alias);
-
-            return index > 0
-                ? Properties.ElementAtOrDefault(index)
+            return _propertyLookup.ContainsKey(alias)
+                ? _propertyLookup[alias]
                 : null;
         }
     }
