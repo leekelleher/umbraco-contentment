@@ -57,7 +57,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = provider.Name ?? type.Name.SplitPascalCasing(),
                     Description = provider.Description,
                     Icon = provider.Icon ?? Core.Constants.Icons.DefaultIcon,
-                    Fields = fields
+                    Fields = fields,
+                    DefaultValues = provider.DefaultValues,
                 });
             }
 

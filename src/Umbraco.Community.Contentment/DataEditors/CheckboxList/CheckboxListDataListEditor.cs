@@ -17,6 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => CheckboxListDataEditor.DataEditorIcon;
 
+        public Dictionary<string, object> DefaultValues => default;
+
         public Dictionary<string, object> DefaultConfig => default;
 
         public string View => IOHelper.ResolveUrl(CheckboxListDataEditor.DataEditorViewPath);

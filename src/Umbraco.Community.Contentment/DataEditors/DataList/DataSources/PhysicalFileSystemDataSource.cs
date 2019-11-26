@@ -19,10 +19,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-folder-close";
 
-        [ConfigurationField("path", "Folder Path", "textstring", Description = "Enter the relative path of the folder. e.g. `~/css`")]
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { "path", "~/" },
+            { "filter", "*.*" },
+        };
+
+        [ConfigurationField("path", "Folder Path", "textstring", Description = "Enter the relative path of the folder. e.g. <code>~/css</code>")]
         public string Path { get; set; }
 
-        [ConfigurationField("filter", "Filename filter", "textstring", Description = "Enter a wildcard filter for the filenames. e.g. `*.css`")]
+        [ConfigurationField("filter", "Filename filter", "textstring", Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>")]
         public string Filter { get; set; }
 
         public IEnumerable<DataListItem> GetItems()

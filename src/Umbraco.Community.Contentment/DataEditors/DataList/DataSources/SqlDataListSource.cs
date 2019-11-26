@@ -22,6 +22,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { ConnectionStringConfigurationField.ConnectionString, Core.Constants.System.UmbracoConnectionName }
+        };
+
         [ConfigurationField(typeof(SqlNotesConfigurationField))]
         public string Notes { get; set; }
 
@@ -151,7 +156,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
                     { DropdownListConfigurationEditor.Items, items },
-                    { DropdownListConfigurationEditor.DefaultValue, Core.Constants.System.UmbracoConnectionName },
                 };
             }
         }

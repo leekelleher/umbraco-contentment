@@ -24,6 +24,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-indent";
 
+        public Dictionary<string, object> DefaultValues => default;
+
         [ConfigurationField(typeof(EnumTypeConfigurationField))]
         public string[] EnumType { get; set; }
 

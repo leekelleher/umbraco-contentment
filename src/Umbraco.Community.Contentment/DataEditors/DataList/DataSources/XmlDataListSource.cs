@@ -30,9 +30,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "XML Data";
 
-        public string Description => "Configure local or remote XML data to populate the data source.";
+        public string Description => "Configure XML data to populate the data source.";
 
         public string Icon => "icon-code";
+
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { "itemsXPath", "//*" },
+        };
 
         [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.")]
         public string Url { get; set; }

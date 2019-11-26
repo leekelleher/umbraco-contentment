@@ -17,6 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => Core.Constants.Icons.DataType;
 
+        public Dictionary<string, object> DefaultValues => default;
+
         [ConfigurationField(typeof(ItemsConfigurationField))]
         public IEnumerable<DataListItem> Items { get; set; }
 

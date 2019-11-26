@@ -17,6 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => ItemPickerDataEditor.DataEditorIcon;
 
+        public Dictionary<string, object> DefaultValues => default;
+
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
             { ItemPickerConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorOverlayViewPath) },

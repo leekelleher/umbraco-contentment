@@ -22,6 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "fa fa-font-awesome";
 
+        public Dictionary<string, object> DefaultValues => default;
+
         public IEnumerable<DataListItem> GetItems()
         {
             var items = new HashSet<string>();

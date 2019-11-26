@@ -18,6 +18,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-globe";
 
+        public Dictionary<string, object> DefaultValues => default;
+
         public IEnumerable<DataListItem> GetItems()
         {
             var items = new List<DataListItem>();

@@ -53,6 +53,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-science";
 
+        public Dictionary<string, object> DefaultValues => default;
+
         [ConfigurationField(typeof(UmbracoEntityNotesConfigurationField))]
         public string Notes { get; set; }
 
