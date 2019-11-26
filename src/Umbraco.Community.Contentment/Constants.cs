@@ -23,6 +23,8 @@ namespace Umbraco.Community.Contentment
 
             internal const string PluginControllerName = ProjectName;
 
+            internal const string BackOfficePathRoot = PackagePathRoot + "backoffice/" + TreeAlias + "/";
+
             internal const string TreeAlias = "contentment";
         }
 
