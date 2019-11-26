@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
@@ -17,20 +18,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksConfigurationEditor : ConfigurationEditor
     {
-        private readonly IContentService _contentService;
-        private readonly IContentTypeService _contentTypeService;
-        private readonly IdkMap _idkMap;
+        private readonly Dictionary<Guid, IContentType> _elementTypes;
+        private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
 
         internal const string OverlayView = "overlayView";
 
-        public ContentBlocksConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService, IdkMap idkMap)
+        public ContentBlocksConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService)
             : base()
         {
-            _contentService = contentService;
-            _contentTypeService = contentTypeService;
-            _idkMap = idkMap;
+            // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
+            _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
+            _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
-            Fields.Add(new ContentBlocksTypesConfigurationField(contentTypeService, new ConfigurationEditorService()));
+            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, new ConfigurationEditorService()));
             Fields.Add(new ContentBlocksDisplayModeConfigurationField());
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());
@@ -44,59 +44,28 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.TryGetValue(ContentBlocksTypesConfigurationField.ContentBlockTypes, out var tmp) && tmp is JArray array && array.Count > 0)
             {
-                var lookup = new Dictionary<int, ContentBlocksTypeConfiguration>();
+                var elementTypes = new List<ContentBlockType>();
+                var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
 
                 for (var i = 0; i < array.Count; i++)
                 {
-                    // NOTE: [LK:2019-08-05] Why `IContentTypeService.GetAll` doesn't support GUIDs/UDIs, I do not know!?
-                    // Thought v8 was meant to be "GUID ALL THE THINGS!!1"? ¯\_(ツ)_/¯
-
-                    if (Guid.TryParse(array[i].Value<string>("type"), out var guid))
+                    if (Guid.TryParse(array[i].Value<string>("type"), out var guid) && _elementTypes.ContainsKey(guid))
                     {
-                        var attempt = _idkMap.GetIdForKey(guid, UmbracoObjectTypes.DocumentType);
-                        if (attempt.Success)
-                        {
-                            var id = attempt.Result;
-                            if (lookup.ContainsKey(id) == false)
-                            {
-                                var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
-                                var cbtc = array[i]["value"].ToObject<ContentBlocksTypeConfiguration>(serializer);
-                                if (cbtc != null)
-                                {
-                                    lookup.Add(id, cbtc);
-                                }
-                            }
-                        }
-                    }
-                }
+                        var elementType = _elementTypes[guid];
 
-                var elementTypes = new List<ContentBlockType>();
+                        var settings = array[i]["value"].ToObject<ContentBlocksTypeConfiguration>(serializer);
 
-                if (lookup.Count > 0)
-                {
-                    var ids = lookup.Keys.ToArray();
-                    var contentTypes = _contentTypeService.GetAll(ids);
-
-                    // NOTE: Gets all the blueprints in one hit, rather than several inside the loop.
-                    var allBlueprints = _contentService.GetBlueprintsForContentTypes(ids).ToLookup(x => x.ContentTypeId);
-
-                    // TODO: [LK:2019-11-22] Refactor to order the elementTypes as they are in the original array.
-
-                    foreach (var contentType in contentTypes)
-                    {
-                        var settings = lookup[contentType.Id];
-
-                        var blueprints = allBlueprints.Contains(contentType.Id)
-                            ? allBlueprints[contentType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })
+                        var blueprints = _elementBlueprints.Value.Contains(elementType.Id)
+                            ? _elementBlueprints.Value[elementType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })
                             : Enumerable.Empty<ContentBlockType.BlueprintItem>();
 
                         elementTypes.Add(new ContentBlockType
                         {
-                            Alias = contentType.Alias,
-                            Name = contentType.Name,
-                            Description = contentType.Description,
-                            Icon = contentType.Icon,
-                            Key = contentType.Key,
+                            Alias = elementType.Alias,
+                            Name = elementType.Name,
+                            Description = elementType.Description,
+                            Icon = elementType.Icon,
+                            Key = elementType.Key,
                             Blueprints = blueprints,
                             NameTemplate = settings?.NameTemplate,
                             OverlaySize = settings?.OverlaySize,

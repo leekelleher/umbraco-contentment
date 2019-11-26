@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -17,11 +17,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string ContentBlockTypes = "contentBlockTypes";
 
         public ContentBlocksTypesConfigurationField(
-            IContentTypeService contentTypeService,
+            IEnumerable<IContentType> elementTypes,
             ConfigurationEditorService configurationEditorService)
         {
-            var items = contentTypeService
-                .GetAllElementTypes()
+            var items = elementTypes
                 .OrderBy(x => x.Name)
                 .Select(x => new ConfigurationEditorModel
                 {

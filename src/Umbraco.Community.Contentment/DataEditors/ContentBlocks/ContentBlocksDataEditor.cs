@@ -31,7 +31,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
-        private readonly IdkMap _idkMap;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
 
         public ContentBlocksDataEditor(
@@ -39,21 +38,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentService contentService,
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
-            IdkMap idkMap,
             Lazy<PropertyEditorCollection> propertyEditors)
             : base(logger)
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeService = dataTypeService;
-            _idkMap = idkMap;
             _propertyEditors = propertyEditors;
         }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new ContentBlocksConfigurationEditor(
             _contentService,
-            _contentTypeService,
-            _idkMap);
+            _contentTypeService);
 
         protected override IDataValueEditor CreateValueEditor() => new ContentBlocksDataValueEditor(
             Attribute,

@@ -36,7 +36,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                 vm.mode = "select";
                 vm.items = config.elementTypes;
-                vm.orderBy = "name";
                 vm.selectedElementType = null;
 
                 if (config.elementTypes.length > 1) {
