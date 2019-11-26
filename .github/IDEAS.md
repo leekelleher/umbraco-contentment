@@ -6,15 +6,11 @@
 !! Really drive home the idea of editor experience in Contentment.
 
 
-## Post-BackOffice Installation
-
-- Add the current (logged on) user to a mailing list. Umbraco HQ do this for Umbraco Forms installation.
-
 ## BackOffice Features
 
 - NuCache viewer dashboard - similar to the Examine dashboard
 - Categories - Full category management
-- DataType Copy
+
 
 ## Data Editors
 
@@ -48,7 +44,6 @@
 - Tabbed Textarea
   Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
 
-- Data List - CSV Data Source
 - Data List - Tags-esque List Editor - so not "real" tags, but a same interaction/experience.
 - Data List - Button Group (needs rename), e.g. https://twitter.com/leekelleher/status/1031862617084710912
 
