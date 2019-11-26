@@ -7,20 +7,15 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Umbraco.Core;
-using Umbraco.Core.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal sealed class ElementModel
+    internal sealed class ContentBlock
     {
         public Guid ElementType { get; set; }
 
         public Guid Key { get; set; }
-
-        [JsonConverter(typeof(UdiJsonConverter))]
-        public Udi Udi { get; set; }
 
         public string Name { get; set; }
 

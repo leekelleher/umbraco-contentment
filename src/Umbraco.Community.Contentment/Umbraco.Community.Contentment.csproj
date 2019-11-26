@@ -291,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ContentmentVersion.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
+    <Compile Include="DataEditors\ContentBlocks\EnablePreviewConfigurationField.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="Experience\DataTypeTreeCopyMenuItemComponent.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
@@ -356,13 +359,14 @@
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataListEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListValueConverter.cs" />
-    <Compile Include="DataEditors\Element\ContentTypeCacheHelper.cs" />
-    <Compile Include="DataEditors\Element\ElementTypesConfigurationField.cs" />
-    <Compile Include="DataEditors\Element\ElementConfigurationEditor.cs" />
-    <Compile Include="DataEditors\Element\ElementDataEditor.cs" />
-    <Compile Include="DataEditors\Element\ElementModel.cs" />
-    <Compile Include="DataEditors\Element\ElementTypeItem.cs" />
-    <Compile Include="DataEditors\Element\ElementValueConverter.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentTypeCacheHelper.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDataValueEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksConfigurationEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDataEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlock.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlockType.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypesConfigurationField.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksValueConverter.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HideLabelConfigurationField.cs" />
     <Compile Include="DataEditors\_\DataValueEditors\HideLabelDataValueEditor.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />
@@ -443,13 +447,15 @@
     <Content Include="DataEditors\DataTable\data-table.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />
-    <Content Include="DataEditors\Element\element.html" />
-    <Content Include="DataEditors\Element\element.js" />
-    <Content Include="DataEditors\Element\element.overlay.html" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.html" />
+    <Content Include="DataEditors\ContentBlocks\content-list.html" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.html" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.css" />
     <Content Include="DataEditors\TextInput\text-input.css" />
     <Content Include="DataEditors\TextInput\text-input.html" />
     <Content Include="DataEditors\TextInput\text-input.js" />
-    <Content Include="DataEditors\Element\element.overlay.js" />
     <Content Include="DataEditors\IconPicker\icon-picker.css" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />
     <Content Include="DataEditors\IconPicker\icon-picker.js" />
@@ -468,6 +474,7 @@
     <Content Include="DataEditors\RenderMacro\render-macro.js" />
     <Content Include="DataEditors\Toggles\toggles.html" />
     <Content Include="DataEditors\Toggles\toggles.js" />
+    <Content Include="DataEditors\_\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_debug.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />

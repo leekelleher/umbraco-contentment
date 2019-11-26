@@ -15,13 +15,13 @@ using Umbraco.Web.PublishedCache;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ElementValueConverter : PropertyValueConverterBase
+    internal sealed class ContentBlocksValueConverter : PropertyValueConverterBase
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedModelFactory _publishedModelFactory;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
-        public ElementValueConverter(
+        public ContentBlocksValueConverter(
             IContentTypeService contentTypeService,
             IPublishedModelFactory publishedModelFactory,
             IPublishedSnapshotAccessor publishedSnapshotAccessor)
@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
 
-        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ElementDataEditor.DataEditorAlias);
+        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ContentBlocksDataEditor.DataEditorAlias);
 
         public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
 
@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (source is string value)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<ElementModel>>(value);
+                return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
         {
-            if (inter is IEnumerable<ElementModel> items)
+            if (inter is IEnumerable<ContentBlock> items)
             {
                 var elements = new List<IPublishedElement>();
 
