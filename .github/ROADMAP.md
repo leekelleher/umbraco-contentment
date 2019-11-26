@@ -10,12 +10,11 @@ Here is a _provisional_ roadmap for the Umbraco Contentment package, to be actio
 
 Initial release. Property Editors are:
 
-- Bytes
-- Data List
-- Icon Picker
-- Notes
-- Render Macro
-
+- [Bytes](../docs/editors/bytes.md)
+- [Data List](../docs/editors/data-list.md)
+- [Icon Picker](../docs/editors/icon-picker.md)
+- [Notes](../docs/editors/notes.md)
+- [Render Macro](../docs/editors/render-macro.md)
 
 ### v1.1
 
