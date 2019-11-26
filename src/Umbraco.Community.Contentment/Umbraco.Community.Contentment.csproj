@@ -292,6 +292,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
+    <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
