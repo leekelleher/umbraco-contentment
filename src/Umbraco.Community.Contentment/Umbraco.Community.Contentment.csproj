@@ -292,7 +292,6 @@
   <ItemGroup>
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
-    <Compile Include="DataEditors\ContentBlocks\EnablePreviewConfigurationField.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />

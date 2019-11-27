@@ -69,7 +69,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Blueprints = blueprints,
                             NameTemplate = settings?.NameTemplate,
                             OverlaySize = settings?.OverlaySize,
-                            PreviewEnabled = settings?.EnablePreview == true,
                         });
                     }
                 }
