@@ -4,39 +4,44 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment lk-content-blocks" ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <ul class="umb-group-builder__properties" ui-sortable="vm.sortableOptions" ng-model="model.value">
-        <li ng-repeat="item in model.value">
-            <div class="umb-group-builder__property">
+    <div class="lk-content-blocks__container" ui-sortable="vm.sortableOptions" ng-model="model.value">
+        <div class="lk-content-blocks__block" ng-repeat="item in model.value">
 
-                <div tabindex="-1" class="umb-group-builder__property-preview">
-                    <div class="umb-group-builder__property-tags"></div>
-                    <div class="umb-group-builder__property-tags -right"></div>
-                    <div class="umb-group-builder__property-preview-form">
-                        <div class="lk-content-blocks-preview-default">
-                            <i class="icon" ng-class="item.icon"></i>
-                            <div ng-bind="vm.populateName(item, $index)"></div>
-                        </div>
-                    </div>
-                    <button aria-label="Edit content" type="button" class="umb-group-builder__open-settings" ng-click="vm.edit($index)"></button>
+            <div tabindex="-1" class="lk-content-blocks__preview">
+                <div class="lk-content-blocks__preview--left" ng-if="vm.previews[item.key]">
+                    <i class="icon" ng-class="item.icon"></i>
+                    <span ng-bind="vm.populateName(item, $index)"></span>
                 </div>
-
-                <div class="umb-group-builder__property-actions">
-                    <div>
-                        <div class="umb-group-builder__property-action umb-node-preview--sortable" title="Sort" ng-if="vm.sortable">
-                            <i class="icon icon-navigation"></i>
-                        </div>
-                        <div class="umb-group-builder__property-action" title="Remove" ng-if="vm.allowRemove">
-                            <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
-                        </div>
-                        <div class="umb-group-builder__property-action" ng-if="vm.blockActions[$index]">
-                            <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
-                        </div>
+                <div class="lk-content-blocks__preview--main">
+                    <div class="lk-content-blocks__preview--default" ng-if="!vm.previews[item.key]">
+                        <i class="icon" ng-class="item.icon"></i>
+                        <h5 ng-bind="vm.populateName(item, $index)"></h5>
+                    </div>
+                    <div class="lk-content-blocks__preview--markup" ng-if="vm.previews[item.key]">
+                        <umb-load-indicator ng-show="vm.previews[item.key].loading" />
+                        <div ng-bind-html="vm.previews[item.key].markup | safe_html"></div>
                     </div>
                 </div>
-
+                <button aria-label="Edit content"
+                        type="button"
+                        class="lk-content-blocks__edit"
+                        ng-click="vm.edit($index)"></button>
             </div>
-        </li>
-    </ul>
+
+            <ul class="lk-content-blocks__actions">
+                <li aria-label="Sort" class="lk-content-blocks__action--item umb-node-preview--sortable" ng-if="vm.sortable">
+                    <i class="icon icon-navigation"></i>
+                </li>
+                <li class="lk-content-blocks__action--item" ng-if="vm.allowRemove">
+                    <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
+                </li>
+                <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[$index]">
+                    <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
+                </li>
+            </ul>
+
+        </div>
+    </div>
     <button type="button"
             class="umb-node-preview-add"
             id="{{model.alias}}"

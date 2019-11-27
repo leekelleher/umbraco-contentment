@@ -4,8 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller", [
-    "$interpolate",
     "$scope",
+    "$http",
+    "$interpolate",
     "clipboardService",
     "contentResource",
     "editorService",
@@ -13,8 +14,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "localizationService",
     "notificationsService",
     "overlayService",
+    "umbRequestHelper",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($interpolate, $scope, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, devModeService) {
+    function ($scope, $http, $interpolate, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
 
         // console.log("content-blocks.model", $scope.model);
 
@@ -25,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             disableSorting: 0,
             contentBlockTypes: [],
             enableFilter: 0,
+            enablePreview: 0,
             maxItems: 0,
             overlayView: "",
             enableDevMode: 0,
@@ -34,6 +37,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var vm = this;
 
         function init() {
+
+            // NOTE: [LK] Some of the editors may need the context of the current page.
+            // If the page is new, then it doesn't have an id, so the parentId will be used.
+            var currentNode = editorState.getCurrent();
+            config.currentPageId = currentNode.id > 0 ? currentNode.id : currentNode.parentId;
 
             $scope.model.value = $scope.model.value || [];
 
@@ -53,6 +61,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
 
+            vm.enablePreview = Object.toBoolean(config.enablePreview);
+
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowCopy = Object.toBoolean(config.allowCopy) && clipboardService.isSupported();
             vm.allowEdit = Object.toBoolean(config.allowEdit);
@@ -68,6 +78,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 scroll: true,
                 tolerance: "pointer",
                 stop: function (e, ui) {
+                    populatePreviews();
                     setDirty();
                 }
             };
@@ -78,11 +89,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.remove = remove;
             vm.populateName = populateName;
 
+            vm.previews = [];
             vm.blockActions = [];
 
             for (var i = 0; i < $scope.model.value.length; i++) {
                 vm.blockActions.push(actionsFactory(i));
             }
+
+            populatePreviews();
 
             if ($scope.umbProperty) {
 
@@ -116,11 +130,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     $scope.umbProperty.setPropertyActions(propertyActions);
                 }
             }
-
-            // NOTE: [LK] Some of the editors may need the context of the current page.
-            // If the page is new, then it doesn't have an id, so the parentId will be used.
-            var currentNode = editorState.getCurrent();
-            config.currentPageId = currentNode.id > 0 ? currentNode.id : currentNode.parentId;
         };
 
         function actionsFactory($index) {
@@ -161,7 +170,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     $scope.model.value.push(model);
 
-                    vm.blockActions.push(actionsFactory($scope.model.value.length - 1));
+                    var idx = $scope.model.value.length - 1;
+
+                    vm.blockActions.push(actionsFactory(idx));
+
+                    preview(idx);
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
@@ -202,6 +215,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     $scope.model.value[$index] = model;
 
+                    preview($index);
+
                     setDirty();
 
                     editorService.close();
@@ -210,6 +225,42 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     editorService.close();
                 }
             });
+        };
+
+        function preview($index) {
+            if (vm.enablePreview === true) {
+
+                var item = $scope.model.value[$index];
+
+                if (config.elementTypeLookup[item.elementType].previewEnabled) {
+
+                    vm.previews[item.key] = { loading: true };
+
+                    umbRequestHelper.resourcePromise(
+                        $http.post(
+                            "backoffice/Contentment/ContentBlocksApi/GetPreviewMarkup",
+                            item,
+                            { params: { elementIndex: $index, elementKey: item.key, contentId: config.currentPageId } }
+                        ),
+                        "Failed to retrieve preview markup")
+                        .then(function (result) {
+                            if (result && result.elementKey && result.markup) {
+                                vm.previews[result.elementKey] = {
+                                    loading: false,
+                                    markup: result.markup
+                                };
+                            }
+                        });
+                }
+            }
+        };
+
+        function populatePreviews() {
+            if (vm.enablePreview === true) {
+                for (var i = 0; i < $scope.model.value.length; i++) {
+                    preview(i);
+                }
+            }
         };
 
         function populateName(item, $index) {
@@ -245,7 +296,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     submit: function () {
 
                         $scope.model.value.splice($index, 1);
+
                         vm.blockActions.pop();
+
+                        populatePreviews();
 
                         if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;

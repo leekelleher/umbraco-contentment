@@ -51,6 +51,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                         },
                         { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
                     }
+                },
+                new ConfigurationField
+                {
+                    Key = "enablePreview",
+                    Name = "Enable preview?",
+                    Description = "Select to enable a rich preview for this content block type.",
+                    View = "views/propertyeditors/boolean/boolean.html",
+                    Config = new Dictionary<string, object>
+                    {
+                        { "default", Constants.Values.False }
+                    }
                 }
             };
 
