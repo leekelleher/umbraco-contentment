@@ -137,6 +137,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     using (var client = new WebClient())
                     {
+                        {
+                            client.Encoding = Encoding.UTF8;
+                            doc.LoadXml(client.DownloadString(Url));
+                        }
+                    }
+                }
                 catch (WebException ex)
                 {
                     _logger.Error<XmlDataListSource>(ex, "Unable to fetch remote data.");
