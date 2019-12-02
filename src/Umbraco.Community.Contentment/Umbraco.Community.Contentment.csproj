@@ -422,9 +422,6 @@
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\Cards\cards.css" />
     <Content Include="DataEditors\Cards\cards.html" />
@@ -478,7 +475,7 @@
     <Content Include="DataEditors\_\_debug.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
-    <Content Include="DataEditors\_\_empty.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Trees\DataTypeCopy\data-type-copy.html" />
     <Content Include="Trees\DataTypeCopy\data-type-copy.js" />
