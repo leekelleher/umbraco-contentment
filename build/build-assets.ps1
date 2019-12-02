@@ -34,15 +34,12 @@ $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}
 Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse -Destination "${pluginFolder}";
 
-
 # HTML (Property Editors) - Copy and Minify (or just remove comments)
-$editorFolder = "${pluginFolder}\editors"
-if (!(Test-Path -Path $editorFolder)) {New-Item -Path $editorFolder -Type Directory;}
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
 foreach($htmlFile in $htmlFiles){
     $contents = Get-Content -Path $htmlFile.FullName;
     $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
-    Set-Content -Path "$editorFolder\$($htmlFile.Name)" -Value $minifiedHtml;
+    Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
 }
 
 # HTML (Back-office Components) - Copy and Minify (or just remove comments)
