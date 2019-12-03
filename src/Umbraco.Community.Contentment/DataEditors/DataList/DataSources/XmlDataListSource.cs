@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml;
@@ -115,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-                    _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + node.OuterXml.Substring(0,1000));
+                    _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + string.Concat(node.OuterXml.Take(1000)));
                     _logger.Info<string>($"Result of name XPATH ({NameXPath}): " + (name != null ? name.OuterXml : "null") );
                     _logger.Info<string>($"Result of value XPATH ({ValueXPath}): " + (value != null ? value.OuterXml : "null") );
                 }
