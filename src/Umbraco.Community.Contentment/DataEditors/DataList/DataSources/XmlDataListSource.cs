@@ -87,19 +87,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (name != null && value != null)
                 {
                     var icon = string.IsNullOrWhiteSpace(IconXPath) == false
-                        ? node.SelectSingleNode(IconXPath)?.Value
+                        ? node.SelectSingleNode(IconXPath)
                         : null;
 
                     var description = string.IsNullOrWhiteSpace(DescriptionXPath) == false
-                        ? node.SelectSingleNode(DescriptionXPath)?.Value
+                        ? node.SelectSingleNode(DescriptionXPath)
                         : null;
 
                     items.Add(new DataListItem
                     {
-                        Icon = icon,
-                        Name = name.Value,
-                        Description = description,
-                        Value = value.Value
+                        Icon = icon?.Value ?? icon?.InnerText,
+                        Name = name.Value ?? name.InnerText,
+                        Description = description?.Value ?? description?.InnerText,
+                        Value = value.Value ?? name.InnerText
                     });
                 }
             }
