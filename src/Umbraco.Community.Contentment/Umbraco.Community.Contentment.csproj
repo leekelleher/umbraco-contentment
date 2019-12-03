@@ -423,9 +423,6 @@
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Web\UI\App_Plugins\Contentment\editors\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\Cards\cards.css" />
     <Content Include="DataEditors\Cards\cards.html" />
@@ -476,10 +473,9 @@
     <Content Include="DataEditors\Toggles\toggles.html" />
     <Content Include="DataEditors\Toggles\toggles.js" />
     <Content Include="DataEditors\_\readonly-node-preview.html" />
-    <Content Include="DataEditors\_\_debug.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
-    <Content Include="DataEditors\_\_empty.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Trees\DataTypeCopy\data-type-copy.html" />
     <Content Include="Trees\DataTypeCopy\data-type-copy.js" />
@@ -497,6 +493,6 @@
     <Error Condition="!Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -TargetDevWebsite $(TargetDevWebsite) -ConfigurationName $(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -TargetDevWebsite "$(TargetDevWebsite)" -ConfigurationName $(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
 </Project>
