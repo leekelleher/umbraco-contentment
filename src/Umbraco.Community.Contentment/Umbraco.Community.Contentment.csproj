@@ -436,6 +436,7 @@
     <Content Include="DataEditors\Checkbox\checkbox.js" />
     <Content Include="DataEditors\CodeEditor\code-editor.html" />
     <Content Include="DataEditors\CodeEditor\code-editor.js" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.css" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.html" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.js" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.html" />
