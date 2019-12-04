@@ -3,13 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.XPath;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
@@ -21,6 +23,11 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class XmlDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
+        private string _itemsXPath;
+        private string _nameXPath;
+        private string _valueXPath;
+        private string _iconXPath;
+        private string _descriptionXPath;
 
         public XmlDataListSource()
             : this(Current.Logger)
@@ -49,19 +56,19 @@ namespace Umbraco.Community.Contentment.DataEditors
         public string Notes { get; set; }
 
         [ConfigurationField("itemsXPath", "Items XPath", "textstring", Description = "Enter the XPath expression to select the items from the XML data source.")]
-        public string ItemsXPath { get; set; }
+        public string ItemsXPath { get => _itemsXPath; set => _itemsXPath = XmlStripForXPath(value); }
 
         [ConfigurationField("nameXPath", "Name XPath", "textstring", Description = "Enter the XPath expression to select the name from the item.")]
-        public string NameXPath { get; set; }
+        public string NameXPath { get => _nameXPath; set => _nameXPath = XmlStripForXPath(value); }
 
         [ConfigurationField("valueXPath", "Value XPath", "textstring", Description = "Enter the XPath expression to select the value (key) from the item.")]
-        public string ValueXPath { get; set; }
+        public string ValueXPath { get => _valueXPath; set => _valueXPath = XmlStripForXPath(value); }
 
         [ConfigurationField("iconXPath", "Icon XPath", "textstring", Description = "<em>(optional)</em> Enter the XPath expression to select the icon from the item.")]
-        public string IconXPath { get; set; }
+        public string IconXPath { get => _iconXPath; set => _iconXPath = XmlStripForXPath(value); }
 
         [ConfigurationField("descriptionXPath", "Description XPath", "textstring", Description = "<em>(optional)</em> Enter the XPath expression to select the description from the item.")]
-        public string DescriptionXPath { get; set; }
+        public string DescriptionXPath { get => _descriptionXPath; set => _descriptionXPath = XmlStripForXPath(value); }
 
         public IEnumerable<DataListItem> GetItems()
         {
@@ -74,12 +81,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
             }
 
-            var ns = CreateNamespaceManager(doc);
-            var nodes = doc.SelectNodes(ItemsXPath, ns);
+            var nodes = doc.SelectNodes(ItemsXPath);
 
             if (nodes.Count == 0)
             {
-                _logger.Warn<string>("Did not recognize any items in the XML: " + doc.OuterXml);
+                _logger.Warn<string>($"Contentment | XmlDataList | Using XPath ({ ItemsXPath }) - Did not find any items in the XML: {doc.OuterXml}");
                 return items;
             }
 
@@ -93,32 +99,32 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             foreach (XmlNode node in nodes)
             {
-                var name = node.SelectSingleNode(nameXPath, ns);
-                var value = node.SelectSingleNode(valueXPath, ns);
+                var name = SelectSingleNodeValue(node, NameXPath);
+                var value = SelectSingleNodeValue(node, ValueXPath);
 
                 if (name != null && value != null)
                 {
                     var icon = string.IsNullOrWhiteSpace(IconXPath) == false
-                        ? node.SelectSingleNode(IconXPath)?.Value
+                        ? SelectSingleNodeValue(node, IconXPath)
                         : null;
 
                     var description = string.IsNullOrWhiteSpace(DescriptionXPath) == false
-                        ? node.SelectSingleNode(DescriptionXPath)?.Value
+                        ? SelectSingleNodeValue(node, DescriptionXPath)
                         : null;
 
                     items.Add(new DataListItem
                     {
                         Icon = icon,
-                        Name = name.Value,
+                        Name = name,
                         Description = description,
-                        Value = value.Value
+                        Value = value
                     });
                 }
                 else
                 {
                     _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + string.Concat(node.OuterXml.Take(1000)));
-                    _logger.Info<string>($"Result of name XPATH ({NameXPath}): " + (name != null ? name.OuterXml : "null") );
-                    _logger.Info<string>($"Result of value XPATH ({ValueXPath}): " + (value != null ? value.OuterXml : "null") );
+                    _logger.Info<string>($"Result of name XPath ({NameXPath}): " + (name != null ? name : "null"));
+                    _logger.Info<string>($"Result of value XPath ({ValueXPath}): " + (value != null ? value : "null"));
                 }
             }
 
@@ -140,7 +146,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         {
                             client.Encoding = Encoding.UTF8;
-                            doc.LoadXml(client.DownloadString(Url));
+                            var xmlString = client.DownloadString(Url);
+                            doc.LoadXml(XmlStripForNamespace(xmlString));
+
                         }
                     }
                 }
@@ -155,7 +163,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var path = IOHelper.MapPath(Url);
                 if (File.Exists(path))
                 {
-                    doc.Load(path);
+                    var xmlString = File.ReadAllText(path, Encoding.UTF8);
+                    doc.LoadXml(XmlStripForNamespace(xmlString));
                 }
                 else
                 {
@@ -166,6 +175,68 @@ namespace Umbraco.Community.Contentment.DataEditors
             return doc;
         }
 
+        private string XmlStripForNamespace(string xmlString)
+        {
+            //remove "xmlns etc." in XMLString
+            xmlString = Regex.Replace(xmlString, @"xmlns(:\w+)?=""([^""]+)""", "");
+
+            //replace ":" with "_" in node-name in XMLString
+            xmlString = Regex.Replace(xmlString, @"<(\/?\w*):", "<$1_");
+
+            //replace ":" with "_" in attributenames
+            xmlString = Regex.Replace(xmlString, @":(?=\w*=[^\s])+", "_");
+
+            return xmlString;
+        }
+
+        private string XmlStripForXPath(string xmlString)
+        {
+            // Replace single ":" iwith "_" in XPath, but ignores :: 
+            return Regex.Replace(xmlString, @"(\/?\w*)(?<!:):(?!:)", "$1_");
+        }
+
+        public string SelectSingleNodeValue(XmlNode node, string xPath)
+        {
+            try
+            {
+                // This method is used to either return the attribute (if xpath ends with a @attribute) or the node value
+
+                // We'll check to see if the xPath is to return a node or an attribute
+                var lastIdx = xPath.LastIndexOf('/');
+                var wantsAttribute = (lastIdx > 0 && xPath.Length > lastIdx && xPath[lastIdx + 1] == '@');
+
+                // Assigning them in case I need to log them later
+                var path = "null";
+                var attribute = "null";
+                XmlNode v = null;
+
+                if (wantsAttribute)
+                {
+                    try
+                    {
+                        attribute = xPath.Substring(lastIdx + 2); // remove @
+                        path = xPath.Substring(0, lastIdx);
+                        v = node.SelectSingleNode(path);
+                        return v?.Attributes[attribute]?.Value;
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error<string>($"Contentment | XmlDataList | Error ({ e.Message }) in parsing attribute! (Attribute name: {attribute}, xPath: {path}, current node: {v?.OuterXml}");
+                        throw;
+                    }
+                }
+                else
+                {
+                    v = node.SelectSingleNode(xPath);
+                    return v?.Value;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         class XmlNotesConfigurationField : NotesConfigurationField
         {
             public XmlNotesConfigurationField()
@@ -174,36 +245,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 </div>", true)
             { }
-        }
-
-
-        /// <summary>
-        /// Returns an instance of XmlNamespaceManager with a specified XmlDocument.NameTable.  
-        /// Returns null if no namespace is defined.
-        /// </summary>
-        /// <param name="doc">The XmlDocument</param>
-        /// <returns>XmlNamespaceManager if there is at least one namespace, null if there is no namespace defined.</returns>
-        private XmlNamespaceManager CreateNamespaceManager(XmlDocument doc)
-        {
-            var result = new XmlNamespaceManager(doc.NameTable);
-
-            IDictionary<string, string> localNamespaces = null;
-            XPathNavigator xNav = doc.CreateNavigator();
-            while (xNav.MoveToFollowing(XPathNodeType.Element))
-            {
-                localNamespaces = xNav.GetNamespacesInScope(XmlNamespaceScope.Local);
-                foreach (var localNamespace in localNamespaces)
-                {
-                    string prefix = localNamespace.Key;
-                    if (string.IsNullOrEmpty(prefix))
-                        prefix = "DEFAULT";
-
-                    _logger.Debug<string>("Found and added XML namespace: " + prefix + " : " + localNamespace.Value);
-                    result.AddNamespace(prefix, localNamespace.Value);
-                }
-            }
-
-            return result;
         }
     }
 }
