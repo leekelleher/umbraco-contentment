@@ -99,32 +99,32 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             foreach (XmlNode node in nodes)
             {
-                var name = SelectSingleNodeValue(node, NameXPath);
-                var value = SelectSingleNodeValue(node, ValueXPath);
+                var name = node.SelectSingleNode(NameXPath);
+                var value = node.SelectSingleNode(ValueXPath);
 
                 if (name != null && value != null)
                 {
                     var icon = string.IsNullOrWhiteSpace(IconXPath) == false
-                        ? SelectSingleNodeValue(node, IconXPath)
+                        ? node.SelectSingleNode(IconXPath)
                         : null;
 
                     var description = string.IsNullOrWhiteSpace(DescriptionXPath) == false
-                        ? SelectSingleNodeValue(node, DescriptionXPath)
+                        ? node.SelectSingleNode(DescriptionXPath)
                         : null;
 
                     items.Add(new DataListItem
                     {
-                        Icon = icon,
-                        Name = name,
-                        Description = description,
-                        Value = value
+                        Icon = icon?.Value ?? icon?.InnerText,
+                        Name = name.Value ?? name.InnerText,
+                        Description = description?.Value ?? description?.InnerText,
+                        Value = value.Value ?? name.InnerText
                     });
                 }
                 else
                 {
                     _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + string.Concat(node.OuterXml.Take(1000)));
-                    _logger.Info<string>($"Result of name XPath ({NameXPath}): " + (name != null ? name : "null"));
-                    _logger.Info<string>($"Result of value XPath ({ValueXPath}): " + (value != null ? value : "null"));
+                    _logger.Info<string>($"Result of name XPath ({NameXPath}): " + (name != null ? name.OuterXml : "null"));
+                    _logger.Info<string>($"Result of value XPath ({ValueXPath}): " + (value != null ? value.OuterXml : "null"));
                 }
             }
 
@@ -193,48 +193,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             // Replace single ":" iwith "_" in XPath, but ignores :: 
             return Regex.Replace(xmlString, @"(\/?\w*)(?<!:):(?!:)", "$1_");
-        }
-
-        public string SelectSingleNodeValue(XmlNode node, string xPath)
-        {
-            try
-            {
-                // This method is used to either return the attribute (if xpath ends with a @attribute) or the node value
-
-                // We'll check to see if the xPath is to return a node or an attribute
-                var lastIdx = xPath.LastIndexOf('/');
-                var wantsAttribute = (lastIdx > 0 && xPath.Length > lastIdx && xPath[lastIdx + 1] == '@');
-
-                // Assigning them in case I need to log them later
-                var path = "null";
-                var attribute = "null";
-                XmlNode v = null;
-
-                if (wantsAttribute)
-                {
-                    try
-                    {
-                        attribute = xPath.Substring(lastIdx + 2); // remove @
-                        path = xPath.Substring(0, lastIdx);
-                        v = node.SelectSingleNode(path);
-                        return v?.Attributes[attribute]?.Value;
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.Error<string>($"Contentment | XmlDataList | Error ({ e.Message }) in parsing attribute! (Attribute name: {attribute}, xPath: {path}, current node: {v?.OuterXml}");
-                        throw;
-                    }
-                }
-                else
-                {
-                    v = node.SelectSingleNode(xPath);
-                    return v?.Value;
-                }
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         class XmlNotesConfigurationField : NotesConfigurationField
