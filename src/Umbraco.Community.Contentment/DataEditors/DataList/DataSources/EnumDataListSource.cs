@@ -56,6 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 items.Add(new DataListItem
                 {
                     Description = attr?.Description,
+                    Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(),
                     Value = field.Name
