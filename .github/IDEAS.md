@@ -30,8 +30,6 @@
   e.g. https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/common/infiniteeditors/iconpicker/iconpicker.html#L35-L41
   then have a "Multiple Approved Color Picker"?
 
-- Checkbox List - arrange in columns? (e.g. think categories / taxonomy) Try using the `columns: 3;` CSS rule?
-
 - editorService Ideas
   - `embed` - OEmbed Editor - Dave W has one, but once you add the OEmbed, you can't edit it. This may be a limitation of Umbraco's `editorService.embed` feature, but feels like it can be improved.
     https://our.umbraco.com/packages/backoffice-extensions/oembed-picker-property-editor/

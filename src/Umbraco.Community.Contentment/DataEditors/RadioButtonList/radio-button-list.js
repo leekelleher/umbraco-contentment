@@ -23,6 +23,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = angular.copy(config.items);
 
+            vm.uniqueId = [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-");
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
         };
 

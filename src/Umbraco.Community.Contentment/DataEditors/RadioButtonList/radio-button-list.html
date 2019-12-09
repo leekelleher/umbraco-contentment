@@ -8,7 +8,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment umb-radiobuttons" ng-controller="Umbraco.Community.Contentment.DataEditors.RadioButtonList.Controller as vm">
+<div class="contentment umb-radiobuttons" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.RadioButtonList.Controller as vm">
     <ul class="unstyled radio no-indent">
         <li ng-repeat="item in vm.items">
             <label class="radio umb-form-check umb-form-check--radiobutton" ng-class="{ 'umb-form-check--disabled': item.disabled }">

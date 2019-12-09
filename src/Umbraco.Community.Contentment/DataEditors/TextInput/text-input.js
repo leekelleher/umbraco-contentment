@@ -39,7 +39,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.append = config.append;
 
             if (config.items && config.items.length > 0) {
-                vm.dataListId = $scope.model.alias + $scope.model.dataTypeKey.substring(0, 8);
+                vm.dataListId = [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-");
                 vm.dataList = config.items;
             }
         };

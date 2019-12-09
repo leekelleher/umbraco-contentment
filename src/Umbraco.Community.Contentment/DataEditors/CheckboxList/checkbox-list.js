@@ -32,6 +32,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 item.checked = _.contains($scope.model.value, item.value);
             });
 
+            vm.uniqueId = [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-");
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
 
             vm.changed = changed;
