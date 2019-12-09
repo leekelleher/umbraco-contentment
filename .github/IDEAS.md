@@ -1,11 +1,5 @@
 # Contentment Ideas
 
-## Marketing focus
-
-!! Contentment editor experience
-!! Really drive home the idea of editor experience in Contentment.
-
-
 ## BackOffice Features
 
 - NuCache viewer dashboard - similar to the Examine dashboard
@@ -43,8 +37,6 @@
   Like what you see on code examples, (e.g. MDN), with a HTML, CSS, JS tabs. Couple be useful, maybe?
 
 - Data List - Tags-esque List Editor - so not "real" tags, but a same interaction/experience.
-- Data List - Button Group (needs rename), e.g. https://twitter.com/leekelleher/status/1031862617084710912
-
 - TinyMCE - push the boundaries beyond Umbraco's defaults?
   - How's about a TinyMCE that is 30px height, Distraction Free mode, all menu items disabled.
   - Only keyboard shortcuts would be enabled. Try to make it become a single-line rich-textbox.
