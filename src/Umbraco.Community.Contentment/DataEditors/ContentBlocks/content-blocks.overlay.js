@@ -4,13 +4,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.ContentBlocks.Controller", [
-    "$q",
     "$scope",
     "blueprintConfig",
     "clipboardService",
     "contentResource",
     "versionHelper",
-    function ($q, $scope, blueprintConfig, clipboardService, contentResource, versionHelper) {
+    function ($scope, blueprintConfig, clipboardService, contentResource, versionHelper) {
 
         // console.log("content-blocks-overlay.model", $scope.model, blueprintConfig);
 
