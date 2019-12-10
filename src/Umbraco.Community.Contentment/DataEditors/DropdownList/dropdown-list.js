@@ -12,7 +12,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var defaultConfig = {
             items: [],
             allowEmpty: 1,
-            defaultValue: ""
+            defaultValue: "",
+            htmlAttributes: []
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -28,6 +29,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.items = angular.copy(config.items);
 
             vm.allowEmpty = Object.toBoolean(config.allowEmpty);
+
+            vm.uniqueId = [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-");
+            vm.htmlAttributes = config.htmlAttributes;
         };
 
         init();

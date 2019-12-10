@@ -295,6 +295,7 @@
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
+    <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Experience\DataTypeTreeCopyMenuItemComponent.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
@@ -475,6 +476,7 @@
     <Content Include="DataEditors\_\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
+    <Content Include="DataEditors\_\_directives.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Trees\DataTypeCopy\data-type-copy.html" />

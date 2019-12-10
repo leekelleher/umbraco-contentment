@@ -48,6 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
 
             Fields.Add(new AllowEmptyConfigurationField());
+            Fields.Add(new HtmlAttributesConfigurationField());
         }
     }
 }

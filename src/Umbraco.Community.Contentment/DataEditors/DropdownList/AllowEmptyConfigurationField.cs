@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base()
         {
             Key = AllowEmpty;
-            Name = "Allow Empty";
+            Name = "Allow empty?";
             Description = "Enable to allow an empty option at the top of the dropdown list.";
             View = "views/propertyeditors/boolean/boolean.html";
             Config = new Dictionary<string, object>

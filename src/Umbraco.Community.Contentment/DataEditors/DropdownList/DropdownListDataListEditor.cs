@@ -25,5 +25,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [ConfigurationField(typeof(AllowEmptyConfigurationField))]
         public bool AllowEmpty { get; set; }
+
+        [ConfigurationField(typeof(HtmlAttributesConfigurationField))]
+        public IEnumerable<DataListItem> HtmlAttributes { get; set; }
     }
 }
