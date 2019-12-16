@@ -30,8 +30,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.allowEmpty = Object.toBoolean(config.allowEmpty);
 
-            vm.uniqueId = [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-");
             vm.htmlAttributes = config.htmlAttributes;
+
+            vm.uniqueId = _.has($scope.model, "dataTypeKey")
+                ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
+                : $scope.model.alias;
         };
 
         init();
