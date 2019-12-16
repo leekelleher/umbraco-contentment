@@ -1,0 +1,22 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - Parts of this Source Code has been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.5/src/Umbraco.Web.UI.Client/src/views/components/forms/umb-radiobutton.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2019 Lee Kelleher and Marc Stöcker.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-imagebuttons" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.ImageButtonList.Controller as vm">
+    <ul class="unstyled radio no-indent image-selector">
+        <li ng-repeat="item in vm.items">
+            <input type="radio" value="{{item.value}}" ng-model="model.value" ng-disabled="item.disabled" id="{{vm.uniqueId + '_' + item.value}}" />
+            <label for="{{vm.uniqueId + '_' + item.value}}" class="sprite-image" ng-class="{ 'umb-form-check--disabled': item.disabled }" title="{{item.name}}">
+                <svg class="imagebutton-icon">
+                    <use ng-href="{{vm.svgSpriteUrl}}#{{item.value}}" xlink:href="" />
+                </svg>
+            </label>
+        </li>
+    </ul>
+</div>
