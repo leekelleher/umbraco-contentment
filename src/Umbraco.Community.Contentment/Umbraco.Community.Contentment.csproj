@@ -291,7 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Composing\ContentmentBootComposer.cs" />
-    <Compile Include="Composing\CompositionExtensions.cs" />
+    <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />

@@ -12,10 +12,6 @@ namespace Umbraco.Community.Contentment.Composing
     public sealed class ContentmentListItemCollectionBuilder
         : LazyCollectionBuilderBase<ContentmentListItemCollectionBuilder, ContentmentListItemCollection, IContentmentListItem>
     {
-        public ContentmentListItemCollectionBuilder()
-            : base()
-        { }
-
         protected override ContentmentListItemCollectionBuilder This => this;
     }
 
