@@ -290,9 +290,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composing\ContentmentBootComposer.cs" />
+    <Compile Include="Composing\CompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
+    <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
+    <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
@@ -301,7 +305,7 @@
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
-    <Compile Include="Composing\ContentmentComposer.cs" />
+    <Compile Include="Composing\ContentmentRunComposer.cs" />
     <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\TextInput\TextInputConfigurationEditor.cs" />
@@ -329,7 +333,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
-    <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorService.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorValueConverter.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\OverlaySizeConfigurationField.cs" />

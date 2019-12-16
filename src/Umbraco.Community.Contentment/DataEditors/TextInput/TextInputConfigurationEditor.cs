@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public const string MaxChars = "maxChars";
         public const string PlaceholderText = "placeholderText";
 
-        public TextInputConfigurationEditor()
+        public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
             Fields.Add(
@@ -63,8 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             //        { IconPickerSizeConfigurationField.Size, IconPickerSizeConfigurationField.Large }
             //    });
 
-            var service = new ConfigurationEditorService();
-            var dataSources = service.GetConfigurationEditors<IDataListSource>();
+            var dataSources = utility.GetConfigurationEditors<IDataListSource>();
 
             Fields.Add(
                 Items,

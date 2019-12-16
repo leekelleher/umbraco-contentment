@@ -23,11 +23,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "_empty.html";
         internal const string DataEditorIcon = "icon-bulleted-list";
 
-        public DataListDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        private readonly ConfigurationEditorUtility _utility;
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DataListConfigurationEditor();
+        public DataListDataEditor(ILogger logger, ConfigurationEditorUtility utility)
+            : base(logger)
+        {
+            _utility = utility;
+        }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new DataListConfigurationEditor(_utility);
 
         protected override IDataValueEditor CreateValueEditor() => new DataListDataValueEditor(Attribute);
     }

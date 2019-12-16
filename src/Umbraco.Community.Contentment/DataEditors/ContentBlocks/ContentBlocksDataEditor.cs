@@ -32,24 +32,28 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
+        private readonly ConfigurationEditorUtility _utility;
 
         public ContentBlocksDataEditor(
             ILogger logger,
             IContentService contentService,
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
-            Lazy<PropertyEditorCollection> propertyEditors)
+            Lazy<PropertyEditorCollection> propertyEditors,
+            ConfigurationEditorUtility utility)
             : base(logger)
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeService = dataTypeService;
             _propertyEditors = propertyEditors;
+            _utility = utility;
         }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new ContentBlocksConfigurationEditor(
             _contentService,
-            _contentTypeService);
+            _contentTypeService,
+            _utility);
 
         protected override IDataValueEditor CreateValueEditor() => new ContentBlocksDataValueEditor(
             Attribute,

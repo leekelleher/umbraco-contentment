@@ -23,14 +23,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         internal const string OverlayView = "overlayView";
 
-        public ContentBlocksConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService)
+        public ContentBlocksConfigurationEditor(
+            IContentService contentService,
+            IContentTypeService contentTypeService,
+            ConfigurationEditorUtility utility)
             : base()
         {
             // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
             _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
-            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, new ConfigurationEditorService()));
+            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, utility));
             Fields.Add(new ContentBlocksDisplayModeConfigurationField());
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());

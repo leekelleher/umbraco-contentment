@@ -17,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EditorConfig = "editorConfig";
         internal const string EditorView = "editorView";
 
-        public DataListConfigurationEditor()
+        public DataListConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
             var configEditorViewPath = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
@@ -30,9 +30,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
             };
 
-            var service = new ConfigurationEditorService();
-            var dataSources = service.GetConfigurationEditors<IDataListSource>();
-            var listEditors = service.GetConfigurationEditors<IDataListEditor>();
+            var dataSources = utility.GetConfigurationEditors<IDataListSource>();
+            var listEditors = utility.GetConfigurationEditors<IDataListEditor>();
 
             Fields.Add(
                 DataSource,
