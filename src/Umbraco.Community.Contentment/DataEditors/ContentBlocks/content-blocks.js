@@ -7,11 +7,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$interpolate",
     "$scope",
     "clipboardService",
+    "contentResource",
     "editorService",
     "localizationService",
+    "notificationsService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($interpolate, $scope, clipboardService, editorService, localizationService, overlayService, devModeService) {
+    function ($interpolate, $scope, clipboardService, contentResource, editorService, localizationService, notificationsService, overlayService, devModeService) {
 
         // console.log("content-blocks.model", $scope.model);
 
@@ -94,30 +96,38 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         devModeService.editValue(
                             $scope.model,
                             function () {
-                                // TODO: [LK] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
+                                // TODO: [LK:2020-01-02] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
                             }
                         );
                     }
                 });
             }
 
-            _.each($scope.model.value, function (item, index) {
-                vm.blockActions.push(actionsFactory(index));
-            });
+            for (var i = 0; i < $scope.model.value.length; i++) {
+                vm.blockActions.push(actionsFactory(i));
+            }
         };
 
-        function actionsFactory(index) {
+        function actionsFactory($index) {
             var actions = [];
 
             if (vm.allowCopy) {
                 actions.push({
-                    labelKey: "general_copy",
+                    labelKey: "contentment_copyContentBlock",
                     icon: "documents",
                     method: function () {
-                        copy(index);
+                        copy($index);
                     }
                 });
             }
+
+            actions.push({
+                labelKey: "contentment_createContentTemplate",
+                icon: "blueprint",
+                method: function () {
+                    saveBlueprint($index);
+                }
+            });
 
             return actions;
         };
@@ -225,6 +235,82 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         setDirty();
 
                         overlayService.close();
+                    },
+                    close: function () {
+                        overlayService.close();
+                    }
+                });
+            });
+        };
+
+        function saveBlueprint($index) {
+            var keys = [
+                "blueprints_createBlueprintFrom",
+                "blueprints_blueprintDescription",
+                "blueprints_createdBlueprintHeading",
+                "blueprints_createdBlueprintMessage",
+                "general_cancel",
+                "general_create"
+            ];
+
+            localizationService.localizeMany(keys).then(function (labels) {
+
+                var item = $scope.model.value[$index];
+                var elementType = config.elementTypeLookup[item.elementType];
+
+                overlayService.open({
+                    disableBackdropClick: true,
+                    title: localizationService.tokenReplace(labels[0], [item.name]),
+                    description: labels[1],
+                    blueprintName: item.name,
+                    view: "/App_Plugins/Contentment/editors/content-blocks.blueprint.html",
+                    closeButtonLabel: labels[4],
+                    submitButtonLabel: labels[5],
+                    submitButtonStyle: "action",
+                    submit: function (model) {
+
+                        delete model.error;
+                        model.submitButtonState = "busy";
+
+                        var variant = {
+                            save: true,
+                            name: model.blueprintName,
+                            tabs: [{
+                                properties: _.map(_.pairs(item.value), function (x) {
+                                    return { id: 0, alias: x[0], value: x[1] };
+                                })
+                            }]
+                        };
+
+                        var content = {
+                            action: "saveNew",
+                            id: 0,
+                            parentId: -1,
+                            contentTypeAlias: elementType.alias,
+                            expireDate: null,
+                            releaseDate: null,
+                            templateAlias: null,
+                            variants: [angular.extend({ save: true }, variant)]
+                        };
+
+                        contentResource
+                            .saveBlueprint(content, true, [], false)
+                            .then(function (data) {
+
+                                model.submitButtonState = "success";
+
+                                notificationsService.success(labels[2], localizationService.tokenReplace(labels[3], [item.name]));
+
+                                elementType.blueprints.push({ id: data.id, name: data.variants[0].name });
+
+                                overlayService.close();
+
+                            }, function (error) {
+
+                                model.submitButtonState = "error";
+                                model.error = error.data.ModelState.Name[0];
+
+                            });
                     },
                     close: function () {
                         overlayService.close();
