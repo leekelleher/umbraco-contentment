@@ -72,7 +72,7 @@
 
             <umb-box ng-if="vm.selectBlueprint === false && vm.clipboardItems.length > 0">
                 <umb-box-header title-key="content_createFromClipboard">
-                    <div style="position:relative;cursor:pointer;">
+                    <div style="position:relative;cursor:pointer;" title="Clear clipboard">
                         <i class="icon-trash" ng-click="vm.showPrompt()"></i>
                         <umb-confirm-action ng-if="vm.prompt"
                                             direction="left"
@@ -107,13 +107,6 @@
             <ng-form class="form-horizontal" val-form-manager ng-if="vm.loading === false">
                 <umb-tabbed-content content="vm.content"></umb-tabbed-content>
             </ng-form>
-
-            <!-- Umbraco core editors that don't work
-               - Member Group Picker
-               - Image Cropper
-               - Upload
-               -->
-
         </umb-editor-container>
 
         <umb-editor-footer>
@@ -130,7 +123,6 @@
                             label-key="bulk_done"
                             ng-if="vm.mode === 'edit'"
                             action="vm.submit()">
-                    <!-- TODO: [LK:2019-11-19] Add option to "Save as Content Template" -->
                 </umb-button>
             </umb-editor-footer-content-right>
         </umb-editor-footer>
