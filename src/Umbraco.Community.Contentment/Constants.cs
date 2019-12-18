@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment
 
             public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 2, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 4, 0);
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
