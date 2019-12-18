@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.XPath;
@@ -106,6 +107,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var nodes = nav.Select(ItemsXPath, nsmgr);
 
+            if (nodes.Count == 0)
+            {
+                _logger.Warn<string>($"Contentment | XmlDataList | Using XPath ({ ItemsXPath }) - Did not find any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+                return items;
+            }
+
             var nameXPath = string.IsNullOrWhiteSpace(NameXPath) == false
                 ? NameXPath
                 : "text()";
@@ -136,6 +143,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Description = description?.Value,
                         Value = value.Value
                     });
+                }
+                else
+                {
+                    _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + node.OuterXml.Substring(0, Math.Min(300, node.OuterXml.Length)));
+                    _logger.Info<string>($"Result of name XPath ({NameXPath}): " + (name != null ? name.OuterXml : "null"));
+                    _logger.Info<string>($"Result of value XPath ({ValueXPath}): " + (value != null ? value.OuterXml : "null"));
                 }
             }
 
