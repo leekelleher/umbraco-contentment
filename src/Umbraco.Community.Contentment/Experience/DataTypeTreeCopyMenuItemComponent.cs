@@ -8,9 +8,9 @@ using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Services;
-using Umbraco.Core.Services.Implement;
 using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Trees;
+using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.Experience
 {
@@ -27,10 +27,10 @@ namespace Umbraco.Community.Contentment.Experience
         {
             TreeControllerBase.MenuRendering += (sender, args) =>
             {
-                if (sender.TreeAlias.InvariantEquals("dataTypes") == false)
+                if (sender.TreeAlias.InvariantEquals(UmbConstants.Trees.DataTypes) == false)
                     return;
 
-                if (args.NodeId.InvariantEquals(Core.Constants.System.RootString))
+                if (args.NodeId.InvariantEquals(UmbConstants.System.RootString))
                     return;
 
                 // This is a quicker way to detect if the node is an actual data-type, (not a container).
