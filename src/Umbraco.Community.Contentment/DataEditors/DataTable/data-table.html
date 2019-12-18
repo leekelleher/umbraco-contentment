@@ -33,7 +33,14 @@
             </tr>
         </tbody>
     </table>
-    <a class="umb-node-preview-add" href="" ng-click="vm.add()" ng-if="vm.allowAdd" ng-style="vm.styleButton" prevent-default>
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{model.alias}}"
+            aria-label="Add"
+            ng-click="vm.add()"
+            ng-style="vm.styleButton"
+            ng-if="vm.allowAdd">
         <localize key="general_add">Add</localize>
-    </a>
+        <span class="sr-only">...</span>
+    </button>
 </div>

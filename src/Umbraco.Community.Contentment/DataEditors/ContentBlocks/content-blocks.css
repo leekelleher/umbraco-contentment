@@ -18,7 +18,7 @@
     }
 
 .contentment.lk-content-blocks .umb-group-builder__property-actions {
-    margin-top: 0;
+    margin-top: 10px;
 }
 
 .contentment.lk-content-blocks .umb-group-builder__property-action {
@@ -40,12 +40,14 @@
         }
 
 .contentment.lk-content-blocks .umb-group-builder__property-preview {
-    height: 40px;
-    padding-top: 25px;
+    height: auto;
+    padding: 30px 10px 5px;
 }
 
 .contentment.lk-content-blocks .lk-content-blocks-preview-default {
     text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
 }
 
     .contentment.lk-content-blocks .lk-content-blocks-preview-default .icon {
