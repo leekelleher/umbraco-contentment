@@ -38,10 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IEntityService _entityService;
 
-        public UmbracoEntityDataListSource()
-            : this(Current.Services.EntityService)
-        { }
-
         public UmbracoEntityDataListSource(IEntityService entityService)
         {
             _entityService = entityService;

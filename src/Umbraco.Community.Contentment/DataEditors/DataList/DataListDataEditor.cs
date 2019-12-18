@@ -33,6 +33,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new DataListConfigurationEditor(_utility);
 
-        protected override IDataValueEditor CreateValueEditor() => new DataListDataValueEditor(Attribute);
+        protected override IDataValueEditor CreateValueEditor() => new DataListDataValueEditor(Attribute, _utility);
     }
 }

@@ -23,6 +23,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _listItems = listItems;
         }
 
+        public T GetConfigurationEditor<T>(string typeName)
+             where T : IContentmentListItem
+        {
+            if (_listItems.TryGet(typeName, out var tmp) && tmp is T item)
+            {
+                return item;
+            }
+
+            return default;
+        }
+
         public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<T>(bool ignoreFields = false)
            where T : IContentmentListItem
         {

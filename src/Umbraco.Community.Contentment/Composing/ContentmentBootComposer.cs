@@ -6,9 +6,11 @@
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
+using Umbraco.Web.Runtime;
 
 namespace Umbraco.Community.Contentment.Composing
 {
+    [ComposeAfter(typeof(WebInitialComposer))]
     [ComposeBefore(typeof(ContentmentRunComposer))]
     [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
     internal sealed class ContentmentBootComposer : IUserComposer
@@ -19,7 +21,7 @@ namespace Umbraco.Community.Contentment.Composing
                 .ContentmentListItems()
                 .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>());
 
-            composition.Register<ConfigurationEditorUtility>();
+            composition.RegisterUnique<ConfigurationEditorUtility>();
         }
     }
 }

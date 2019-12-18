@@ -20,10 +20,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ILogger _logger;
 
-        public TextDelimitedDataListSource()
-            : this(Current.Logger)
-        { }
-
         public TextDelimitedDataListSource(ILogger logger)
         {
             _logger = logger;

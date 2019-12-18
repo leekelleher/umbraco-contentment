@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.XPath;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
@@ -18,10 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class XmlDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
-
-        public XmlDataListSource()
-            : this(Current.Logger)
-        { }
 
         public XmlDataListSource(ILogger logger)
         {
