@@ -21,12 +21,11 @@ Initial release. Property Editors are:
 ### v1.1
 
 - Content Blocks _(a StackedContent-esque editor)_
-- Macro Blocks _(a MacroContainer-esque editor)_
 
 ### v1.2
 
 - Checkbox _(includes "Inline Checkbox" option)_
-- Data List UIs _(Cards, Text Input, Toggles)_
+- Data List UIs _(possibly Cards, Text Input, Toggles)_
 
 ### v1.3
 
@@ -35,17 +34,15 @@ Initial release. Property Editors are:
 
 ### v1.x-future
 
-**Internally used editors** that could be made into standalone property editors?
+**Internally used editors** that could potentially be made into standalone property editors.
 
 - Configuration Editor
 - Data Table
 
 **Other editor ideas...** _(already prototyped)_
 
-- Social Links ([#8](https://github.com/leekelleher/umbraco-contentment/pull/8))
-- Transclude ([#5](https://github.com/leekelleher/umbraco-contentment/pull/5))
-- User Picker ([#2](https://github.com/leekelleher/umbraco-contentment/pull/2))
 - Dimensions ([#1](https://github.com/leekelleher/umbraco-contentment/pull/1))
+- Macro Blocks _(a MacroContainer-esque editor)_
 
 
 **Validation exploration**
