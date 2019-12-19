@@ -107,13 +107,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     _logger.Error<JsonDataListSource>("Contentment | Logging: No 'names' were found in json data. Consider changing your JSONPath. ");
                     // We return empty list to emphasize error
-                    items = new List<DataListItem>();
+                    items.Clear();
                 }
                 if (allValueNull)
                 {
                     _logger.Error<JsonDataListSource>("Contentment | Logging: No 'values' were found in json data. Consider changing your JSONPath. ");
                     // We return empty list to emphasize error
-                    items = new List<DataListItem>();
+                    items.Clear();
                 }
 
             }
