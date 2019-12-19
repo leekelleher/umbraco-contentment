@@ -28,10 +28,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "text-input.html";
         internal const string DataEditorIcon = "icon-autofill";
 
-        public TextInputDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        private readonly ConfigurationEditorUtility _utility;
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor();
+        public TextInputDataEditor(ILogger logger, ConfigurationEditorUtility utility)
+            : base(logger)
+        {
+            _utility = utility;
+        }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility);
     }
 }

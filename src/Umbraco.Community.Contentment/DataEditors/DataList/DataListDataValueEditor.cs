@@ -7,16 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class DataListDataValueEditor : DataValueEditor
     {
-        public DataListDataValueEditor(DataEditorAttribute attribute)
+        private readonly ConfigurationEditorUtility _utility;
+
+        public DataListDataValueEditor(DataEditorAttribute attribute, ConfigurationEditorUtility utility)
             : base(attribute)
-        { }
+        {
+            _utility = utility;
+        }
 
         public override object Configuration
         {
@@ -34,18 +37,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var editorConfig = new Dictionary<string, object>();
 
-                        var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
+                        var settings = new Serialization.ConfigurationFieldJsonSerializerSettings();
 
                         if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
                             dataSource is JArray array1 &&
                             array1.Count > 0)
                         {
                             var item = array1[0];
-
-                            var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                            if (type != null)
+                            var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("type"));
+                            if (source != null)
                             {
-                                var source = item["value"].ToObject(type, serializer) as IDataListSource;
+                                JsonConvert.PopulateObject(item["value"].ToString(), source, settings);
+
                                 var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
 
                                 editorConfig.Add(DataListConfigurationEditor.Items, items);
@@ -58,15 +61,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             var item = array2[0];
 
-                            var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                            if (type != null)
+                            var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("type"));
+                            if (editor != null)
                             {
                                 var val = item["value"] as JObject;
-                                var obj = val.ToObject(type, serializer) as IDataListEditor;
+
+                                JsonConvert.PopulateObject(val.ToString(), editor, settings);
 
                                 if (config.ContainsKey(DataListConfigurationEditor.EditorView) == false)
                                 {
-                                    config.Add(DataListConfigurationEditor.EditorView, obj.View);
+                                    config.Add(DataListConfigurationEditor.EditorView, editor.View);
                                 }
 
                                 foreach (var prop in val)
@@ -77,9 +81,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     }
                                 }
 
-                                if (obj.DefaultConfig != null)
+                                if (editor.DefaultConfig != null)
                                 {
-                                    foreach (var prop in obj.DefaultConfig)
+                                    foreach (var prop in editor.DefaultConfig)
                                     {
                                         if (editorConfig.ContainsKey(prop.Key) == false)
                                         {

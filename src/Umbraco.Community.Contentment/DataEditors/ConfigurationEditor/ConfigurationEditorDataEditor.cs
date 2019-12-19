@@ -29,10 +29,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.overlay.html";
         internal const string DataEditorIcon = Core.Constants.Icons.Macro;
 
-        public ConfigurationEditorDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        private readonly ConfigurationEditorUtility _utility;
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new ConfigurationEditorConfigurationEditor();
+        public ConfigurationEditorDataEditor(ILogger logger, ConfigurationEditorUtility utility)
+            : base(logger)
+        {
+            _utility = utility;
+        }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new ConfigurationEditorConfigurationEditor(_utility);
     }
 }

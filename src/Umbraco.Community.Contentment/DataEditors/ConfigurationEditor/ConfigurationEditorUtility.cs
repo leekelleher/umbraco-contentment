@@ -7,45 +7,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Umbraco.Community.Contentment.Composing;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ConfigurationEditorService
+    internal sealed class ConfigurationEditorUtility
     {
-        private readonly TypeLoader _typeLoader;
+        private readonly ContentmentListItemCollection _listItems;
 
-        public ConfigurationEditorService()
-            : this(Current.TypeLoader)
-        { }
-
-        public ConfigurationEditorService(TypeLoader typeLoader)
+        public ConfigurationEditorUtility(ContentmentListItemCollection listItems)
         {
-            _typeLoader = typeLoader;
+            _listItems = listItems;
         }
 
-        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(
-            IEnumerable<Type> types,
-            bool onlyPublic = false,
-            bool ignoreFields = false)
-            where TContentmentListItem : class, IContentmentListItem
+        public T GetConfigurationEditor<T>(string typeName)
+             where T : IContentmentListItem
         {
-            if (types == null)
-                return Array.Empty<ConfigurationEditorModel>();
+            if (_listItems.TryGet(typeName, out var tmp) && tmp is T item)
+            {
+                return item;
+            }
 
+            return default;
+        }
+
+        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<T>(bool ignoreFields = false)
+           where T : IContentmentListItem
+        {
             var models = new List<ConfigurationEditorModel>();
 
-            foreach (var type in types)
+            foreach (var item in _listItems)
             {
-                if (onlyPublic && type.IsPublic == false)
+                if (item is T == false)
                     continue;
 
-                var provider = Activator.CreateInstance(type) as TContentmentListItem;
-                if (provider == null)
-                    continue;
+                var type = item.GetType();
 
                 var fields = ignoreFields == false
                     ? GetConfigurationFields(type)
@@ -54,23 +53,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 models.Add(new ConfigurationEditorModel
                 {
                     Type = type.GetFullNameWithAssembly(),
-                    Name = provider.Name ?? type.Name.SplitPascalCasing(),
-                    Description = provider.Description,
-                    Icon = provider.Icon ?? Core.Constants.Icons.DefaultIcon,
-                    Fields = fields
+                    Name = item.Name ?? type.Name.SplitPascalCasing(),
+                    Description = item.Description,
+                    Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
+                    Fields = fields,
+                    DefaultValues = item.DefaultValues,
                 });
             }
 
             return models;
         }
 
-        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<TContentmentListItem>(bool onlyPublic = false, bool ignoreFields = false)
-            where TContentmentListItem : class, IContentmentListItem
-        {
-            return GetConfigurationEditors<TContentmentListItem>(_typeLoader.GetTypes<TContentmentListItem>(), onlyPublic, ignoreFields);
-        }
-
-        internal IEnumerable<ConfigurationField> GetConfigurationFields(Type type)
+        public IEnumerable<ConfigurationField> GetConfigurationFields(Type type)
         {
             var fields = new List<ConfigurationField>();
 

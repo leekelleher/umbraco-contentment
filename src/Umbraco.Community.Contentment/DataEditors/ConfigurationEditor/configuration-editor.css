@@ -1,0 +1,23 @@
+﻿/* Copyright © 2019 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.umb-editor--small .contentment .form-horizontal .umb-control-group .control-header {
+    float: none;
+    width: 100%;
+}
+
+.umb-editor--small .contentment .form-horizontal .controls {
+    margin-left: 0;
+}
+
+.umb-editor--small .contentment .form-horizontal .control-label {
+    float: none;
+    width: 100%;
+}
+
+/* Specific style rule for the Notes editor */
+.umb-editor--small .contentment .form-horizontal .umb-readonlyvalue .alert {
+    margin-bottom: 10px;
+}

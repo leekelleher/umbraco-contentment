@@ -18,11 +18,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class EnumDataListSource : IDataListSource
     {
+        private readonly ILogger _logger;
+
+        public EnumDataListSource(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public string Name => ".NET Enumeration";
 
         public string Description => "Select an enumeration from a .NET assembly as the data source.";
 
         public string Icon => "icon-indent";
+
+        public Dictionary<string, object> DefaultValues => default;
 
         [ConfigurationField(typeof(EnumTypeConfigurationField))]
         public string[] EnumType { get; set; }
@@ -38,12 +47,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
 
             var assembly = default(Assembly);
-            try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
+            try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
             if (assembly == null)
                 return items;
 
             var enumType = default(Type);
-            try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { Current.Logger.Error<EnumDataListSource>(ex); }
+            try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
             if (enumType == null || enumType.IsEnum == false)
                 return items;
 
@@ -54,6 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 items.Add(new DataListItem
                 {
                     Description = attr?.Description,
+                    Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(),
                     Value = field.Name

@@ -33,7 +33,7 @@ $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = parseSemVer('8.2.0');
+$minUmbracoVersion = parseSemVer('8.4.0');
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
 $buildFolder = Join-Path -Path $rootFolder -ChildPath 'build';

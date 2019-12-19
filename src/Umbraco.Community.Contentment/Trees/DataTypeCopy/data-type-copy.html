@@ -1,0 +1,58 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - This Source Code has been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.3.0/src/Umbraco.Web.UI.Client/src/views/documenttypes/copy.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="umb-dialog" ng-controller="Umbraco.Community.Contentment.Trees.DataTypeCopy.Controller as vm">
+    <div class="umb-dialog-body">
+        <div class="umb-pane">
+
+            <p class="abstract" ng-hide="vm.success">
+                <localize key="contentTypeEditor_folderToCopy">Select the folder to copy</localize> <strong>{{vm.source.name}}</strong>&nbsp;<localize key="contentTypeEditor_structureBelow">to in the tree structure below</localize>
+            </p>
+
+            <umb-loader ng-show="vm.busy"></umb-loader>
+
+            <div ng-show="vm.error">
+                <div class="alert alert-error">
+                    <div><strong>{{vm.error.errorMsg}}</strong></div>
+                    <div>{{vm.error.data.message}}</div>
+                </div>
+            </div>
+
+            <div ng-show="vm.success">
+                <div class="alert alert-success">
+                    <strong>{{vm.source.name}}</strong> <localize key="contentTypeEditor_copiedUnderneath">was copied underneath</localize>&nbsp;<strong>{{vm.target.name}}</strong>
+                </div>
+                <button class="btn btn-primary" ng-click="vm.close()">OK</button>
+            </div>
+
+            <div ng-hide="vm.success">
+                <umb-tree section="settings"
+                          treealias="dataTypes"
+                          customtreeparams="foldersonly=1"
+                          hideheader="false"
+                          hideoptions="true"
+                          isdialog="true"
+                          api="vm.dialogTreeApi"
+                          on-init="vm.initDataTypeTree()"
+                          enablecheckboxes="true">
+                </umb-tree>
+            </div>
+        </div>
+    </div>
+
+    <div class="umb-dialog-footer btn-toolbar umb-btn-toolbar" ng-hide="vm.success">
+        <button type="button" class="btn btn-link" ng-click="vm.close()" ng-show="!vm.busy">
+            <localize key="general_cancel">Cancel</localize>
+        </button>
+        <button class="btn btn-primary" ng-click="vm.copy()" ng-disabled="vm.busy || !vm.target">
+            <localize key="actions_copy">Copy</localize>
+        </button>
+    </div>
+</div>

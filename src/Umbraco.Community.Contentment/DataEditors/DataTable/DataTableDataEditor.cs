@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
@@ -32,6 +33,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base(logger)
         { }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DataTableConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new DataTableConfigurationEditor(Current.ParameterEditors);
     }
 }

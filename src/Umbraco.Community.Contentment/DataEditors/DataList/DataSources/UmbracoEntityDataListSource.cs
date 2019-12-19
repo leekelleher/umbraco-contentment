@@ -38,10 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IEntityService _entityService;
 
-        public UmbracoEntityDataListSource()
-            : this(Current.Services.EntityService)
-        { }
-
         public UmbracoEntityDataListSource(IEntityService entityService)
         {
             _entityService = entityService;
@@ -52,6 +48,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public string Description => "Select an Umbraco entity type to populate the data source.";
 
         public string Icon => "icon-science";
+
+        public Dictionary<string, object> DefaultValues => default;
 
         [ConfigurationField(typeof(UmbracoEntityNotesConfigurationField))]
         public string Notes { get; set; }

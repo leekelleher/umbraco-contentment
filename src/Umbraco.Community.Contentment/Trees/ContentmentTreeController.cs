@@ -34,14 +34,12 @@ namespace Umbraco.Community.Contentment.Trees
             return root;
         }
 
-        protected override MenuItemCollection GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings)
-        {
-            return null;
-        }
+        protected override MenuItemCollection GetMenuForNode(
+            string id,
+            [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
 
-        protected override TreeNodeCollection GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings)
-        {
-            return null;
-        }
+        protected override TreeNodeCollection GetTreeNodes(
+            string id,
+            [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
     }
 }

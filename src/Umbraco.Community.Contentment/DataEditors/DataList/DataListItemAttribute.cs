@@ -16,6 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description { get; set; }
 
+        public bool Disabled { get; set; }
+
         public string Icon { get; set; }
 
         public string Name { get; set; }

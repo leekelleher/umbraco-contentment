@@ -34,7 +34,7 @@ $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}
 Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse -Destination "${pluginFolder}";
 
-# HTML - Copy and Minify (or just remove comments)
+# HTML (Property Editors) - Copy and Minify (or just remove comments)
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
 foreach($htmlFile in $htmlFiles){
     $contents = Get-Content -Path $htmlFile.FullName;
@@ -42,14 +42,22 @@ foreach($htmlFile in $htmlFiles){
     Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
 }
 
+# HTML (Back-office Components) - Copy and Minify (or just remove comments)
+$htmlFiles = Get-ChildItem -Path "${ProjectDir}Trees" -Recurse -Force -Include *.html;
+foreach($htmlFile in $htmlFiles){
+    $contents = Get-Content -Path $htmlFile.FullName;
+    $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
+    Set-Content -Path "${pluginFolder}\backoffice\contentment\$($htmlFile.Name)" -Value $minifiedHtml;
+}
+
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
-Get-Content -Path "${ProjectDir}DataEditors\**\*.css" | Set-Content -Path $targetCssPath;
+Get-Content -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
 # JS - Bundle & Minify
 $targetJsPath = "${pluginFolder}contentment.js";
-Get-Content -Path "${ProjectDir}DataEditors\**\*.js" | Set-Content -Path $targetJsPath;
+Get-Content -Path "${ProjectDir}**\**\*.js" | Set-Content -Path $targetJsPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
 
 # In debug mode, copy the assets over to the local dev website

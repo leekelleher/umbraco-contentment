@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -17,12 +16,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string RestrictWidth = "restrictWidth";
         internal const string UsePrevalueEditors = "usePrevalueEditors";
 
-        public DataTableConfigurationEditor()
+        public DataTableConfigurationEditor(ParameterEditorCollection parameterEditors)
             : base()
         {
             // NOTE: Excluded these ParameterEditors, as they don't fully support zero-config.
             var exclusions = new[] { "contentpicker", "mediapicker", "entitypicker" };
-            var paramEditors = Current.ParameterEditors
+            var paramEditors = parameterEditors
                 .Select(x => new { name = x.Name, value = x.GetValueEditor().View })
                 .Where(x => exclusions.Contains(x.value) == false)
                 .OrderBy(x => x.name)

@@ -15,19 +15,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ConfigurationEditorConfigurationEditor : ConfigurationEditor
     {
-        private readonly ConfigurationEditorService _service;
+        private readonly ConfigurationEditorUtility _utility;
 
         internal const string Items = "items";
         internal const string OrderBy = "orderBy";
         internal const string OverlayView = "overlayView";
 
-        public ConfigurationEditorConfigurationEditor()
+        public ConfigurationEditorConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
-            _service = new ConfigurationEditorService();
+            _utility = utility;
 
-            var items = _service
-                .GetConfigurationEditors<IConfigurationEditorItem>(onlyPublic: true, ignoreFields: true)
+            var items = utility
+                .GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true)
                 .Select(x => new DataListItem
                 {
                     Icon = x.Icon,
@@ -73,7 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                config[Items] = _service.GetConfigurationEditors<IConfigurationEditorItem>(types);
+                config[Items] = _utility.GetConfigurationEditors<IConfigurationEditorItem>();
                 config[OrderBy] = string.Empty; // Set to empty, so to preserve the selected order.
             }
 

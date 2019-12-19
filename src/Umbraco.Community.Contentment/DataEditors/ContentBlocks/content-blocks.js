@@ -3,24 +3,26 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.Element.Controller", [
+angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller", [
+    "$interpolate",
     "$scope",
+    "clipboardService",
     "editorService",
     "localizationService",
     "overlayService",
-    function ($scope, editorService, localizationService, overlayService) {
+    function ($interpolate, $scope, clipboardService, editorService, localizationService, overlayService) {
 
-        // console.log("element.model", $scope.model);
+        // console.log("content-blocks.model", $scope.model);
 
         var defaultConfig = {
+            allowCopy: 1,
             allowEdit: 1,
             allowRemove: 1,
             disableSorting: 0,
-            elementTypes: [],
+            contentBlockTypes: [],
             enableFilter: 0,
             maxItems: 0,
             overlayView: "",
-            overlaySize: "large",
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -38,7 +40,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
+            config.elementTypeLookup = _.indexBy(config.contentBlockTypes, "key");
+
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowCopy = Object.toBoolean(config.allowCopy) && clipboardService.isSupported();
             vm.allowEdit = Object.toBoolean(config.allowEdit);
             vm.allowRemove = Object.toBoolean(config.allowRemove);
             vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
@@ -52,11 +57,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 scroll: true,
                 tolerance: "pointer",
                 stop: function (e, ui) {
+                    _.each($scope.model.value, function (item, index) {
+                        populateName(item, index);
+                    });
                     setDirty();
                 }
             };
 
             vm.add = add;
+            vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
         };
@@ -64,13 +73,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
             editorService.open({
                 config: {
-                    elementTypes: config.elementTypes,
-                    editOverlaySize: config.overlaySize
+                    elementTypes: config.contentBlockTypes,
+                    enableFilter: config.enableFilter
                 },
-                size: "small",
+                size: config.contentBlockTypes.length === 1 ? config.contentBlockTypes[0].overlaySize : "small",
                 value: null,
                 view: config.overlayView,
                 submit: function (model) {
+
+                    populateName(model, $scope.model.value.length);
 
                     $scope.model.value.push(model);
 
@@ -88,28 +99,51 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
+        function copy($index) {
+
+            var item = $scope.model.value[$index];
+
+            clipboardService.copy("contentment.element", item.elementType, item);
+        };
+
         function edit($index) {
 
-            var value = $scope.model.value[$index];
-            var elementType = _.find(config.elementTypes, function (x) {
-                return x.key === value.elementType;
-            });
+            var item = $scope.model.value[$index];
+            var elementType = config.elementTypeLookup[item.elementType];
 
             editorService.open({
                 config: {
                     elementType: elementType
                 },
-                size: config.overlaySize,
-                value: value,
+                size: elementType.overlaySize,
+                value: item,
                 view: config.overlayView,
                 submit: function (model) {
+
+                    populateName(model, $index, elementType.nameTemplate);
+
                     $scope.model.value[$index] = model;
+
                     editorService.close();
                 },
                 close: function () {
                     editorService.close();
                 }
             });
+        };
+
+        function populateName(item, index, nameTemplate) {
+
+            nameTemplate = nameTemplate || config.elementTypeLookup[item.elementType].nameTemplate || "Item {{ $index + 1 }}"
+
+            var expression = $interpolate(nameTemplate);
+            if (expression) {
+                item.value.$index = index;
+                item.name = expression(item.value);
+                delete item.value.$index;
+            } else {
+                item.name = config.elementTypeLookup[item.elementType].name;
+            }
         };
 
         function remove($index) {
@@ -124,6 +158,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     submit: function () {
 
                         $scope.model.value.splice($index, 1);
+
+                        _.each($scope.model.value, function (item, index) {
+                            populateName(item, index);
+                        });
 
                         if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;

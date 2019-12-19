@@ -17,11 +17,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DropdownListDataEditor.DataEditorIcon;
 
+        public Dictionary<string, object> DefaultValues => default;
+
         public Dictionary<string, object> DefaultConfig => default;
 
         public string View => IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
 
         [ConfigurationField(typeof(AllowEmptyConfigurationField))]
         public bool AllowEmpty { get; set; }
+
+        [ConfigurationField(typeof(HtmlAttributesConfigurationField))]
+        public IEnumerable<DataListItem> HtmlAttributes { get; set; }
     }
 }

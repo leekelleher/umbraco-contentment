@@ -3,11 +3,12 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div ng-controller="Umbraco.Community.Contentment.DataEditors.DropdownList.Controller as vm">
+<div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.DropdownList.Controller as vm">
     <select id="{{model.alias}}"
             class="umb-dropdown"
+            umb-html-attributes="vm.htmlAttributes"
             ng-model="model.value"
             ng-options="item.value as item.name disable when item.disabled for item in vm.items">
-        <option ng-if="vm.allowEmpty"></option>
+        <option ng-if="vm.allowEmpty" value=""></option>
     </select>
 </div>

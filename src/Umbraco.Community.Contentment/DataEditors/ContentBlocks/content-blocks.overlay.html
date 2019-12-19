@@ -1,0 +1,132 @@
+﻿<!-- Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment" ng-controller="Umbraco.Community.Contentment.Overlays.ContentBlocks.Controller as vm">
+
+    <umb-editor-view>
+
+        <umb-editor-header name="vm.title"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           description="vm.description"
+                           description-locked="true">
+        </umb-editor-header>
+
+        <umb-editor-container ng-if="vm.mode === 'select'">
+
+            <umb-box ng-if="vm.enableFilter && vm.items.length > 0">
+                <umb-box-content>
+                    <div class="form-search">
+                        <i class="icon-search"></i>
+                        <input type="text"
+                               ng-model="vm.searchTerm"
+                               class="umb-search-field search-query input-block-level -full-width-input"
+                               localize="placeholder"
+                               placeholder="@placeholders_filter"
+                               umb-auto-focus
+                               no-dirty-check />
+                    </div>
+                </umb-box-content>
+            </umb-box>
+
+            <umb-box ng-if="vm.items.length > 0">
+                <umb-box-header title-key="content_createEmpty"></umb-box-header>
+                <umb-box-content>
+
+                    <ul class="umb-actions umb-actions-child" ng-show="vm.selectBlueprint === false">
+                        <li class="umb-action" ng-repeat="item in vm.items | filter:vm.searchTerm">
+                            <a class="umb-action-link" ng-click="vm.select(item)">
+                                <i class="large icon" ng-class="item.icon"></i>
+                                <span class="menu-label">
+                                    <span ng-bind="item.name"></span>
+                                    <small ng-bind="item.description"></small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="umb-actions umb-actions-child" ng-show="vm.selectBlueprint === true">
+                        <li class="umb-action" ng-repeat="blueprint in vm.selectedElementType.blueprints | orderBy:vm.orderBy | filter:vm.searchTerm">
+                            <a class="umb-action-link" ng-click="vm.create(vm.selectedElementType, blueprint)">
+                                <i class="large icon" ng-class="vm.selectedElementType.icon"></i>
+                                <span class="menu-label">
+                                    <span ng-bind="blueprint.name"></span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="umb-action sep" ng-show="vm.blueprintAllowBlank">
+                            <a class="umb-action-link" ng-click="vm.create(vm.selectedElementType)">
+                                <i class="large icon" ng-class="vm.selectedElementType.icon"></i>
+                                <span class="menu-label">
+                                    <span><localize key="blueprints_blankBlueprint">Blank</localize></span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </umb-box-content>
+            </umb-box>
+
+            <umb-box ng-if="vm.selectBlueprint === false && vm.clipboardItems.length > 0">
+                <umb-box-header title-key="content_createFromClipboard">
+                    <div style="position:relative;cursor:pointer;" title="Clear clipboard">
+                        <i class="icon-trash" ng-click="vm.showPrompt()"></i>
+                        <umb-confirm-action ng-if="vm.prompt"
+                                            direction="left"
+                                            on-confirm="vm.clearClipboard()"
+                                            on-cancel="vm.hidePrompt()">
+                        </umb-confirm-action>
+                    </div>
+                </umb-box-header>
+                <umb-box-content>
+                    <ul class="umb-actions umb-actions-child">
+                        <li class="umb-action" ng-repeat="item in vm.clipboardItems | orderBy:vm.orderBy | filter:vm.searchTerm">
+                            <a class="umb-action-link" ng-click="vm.paste(item)">
+                                <i class="large icon" ng-class="item.icon"></i>
+                                <span class="menu-label">
+                                    <span ng-bind="item.name"></span>
+                                    <small ng-bind="item.contentTypeAlias"></small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </umb-box-content>
+            </umb-box>
+
+            <umb-empty-state ng-if="vm.items.length == 0" position="center">
+                <p>There are no items available to add.</p>
+            </umb-empty-state>
+
+        </umb-editor-container>
+
+        <umb-editor-container ng-if="vm.mode === 'edit'">
+            <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+            <ng-form class="form-horizontal" val-form-manager ng-if="vm.loading === false">
+                <umb-tabbed-content content="vm.content"></umb-tabbed-content>
+            </ng-form>
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            shortcut="esc"
+                            label-key="general_close"
+                            action="vm.close()">
+                </umb-button>
+                <umb-button type="button"
+                            button-style="action"
+                            shortcut="ctrl+s"
+                            label-key="bulk_done"
+                            ng-if="vm.mode === 'edit'"
+                            action="vm.submit()">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+
+    </umb-editor-view>
+
+</div>

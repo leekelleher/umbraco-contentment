@@ -1,4 +1,6 @@
-﻿# Roadmap
+﻿<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+
+# Umbraco Contentment - Roadmap
 
 Here is a _provisional_ roadmap for the Umbraco Contentment package, to be actioned at my own pleasure.
 
@@ -10,47 +12,37 @@ Here is a _provisional_ roadmap for the Umbraco Contentment package, to be actio
 
 Initial release. Property Editors are:
 
-- Bytes
-- Data List
-- Icon Picker
-- Notes
-- Render Macro
-
+- [Bytes](../docs/editors/bytes.md)
+- [Data List](../docs/editors/data-list.md)
+- [Icon Picker](../docs/editors/icon-picker.md)
+- [Notes](../docs/editors/notes.md)
+- [Render Macro](../docs/editors/render-macro.md)
 
 ### v1.1
 
-- Checkbox _(includes "Inline Checkbox" option)_
-- Data List UIs _(Cards, Text Input, Toggles)_
+- Content Blocks _(a StackedContent-esque editor)_
 
 ### v1.2
 
-- Cascading Dropdown List
-- Code Editor
+- Checkbox _(includes "Inline Checkbox" option)_
+- Data List UIs _(possibly Cards, Text Input, Toggles)_
 
 ### v1.3
 
-- Macro Blocks _(a MacroContainer-esque editor)_
-
-### v1.4
-
-- Content Blocks _(a StackedContent-esque editor)_
-
-### v1.5
-
-- Data Table
-
-### v1.6
-
-- Configuration Editor
+- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
+- Code Editor _(using ACE bundled with Umbraco)_
 
 ### v1.x-future
 
-**Editor ideas...**
+**Internally used editors** that could potentially be made into standalone property editors.
 
-- Social Links ([#8](https://github.com/leekelleher/umbraco-contentment/pull/8))
-- Transclude ([#5](https://github.com/leekelleher/umbraco-contentment/pull/5))
-- User Picker ([#2](https://github.com/leekelleher/umbraco-contentment/pull/2))
+- Configuration Editor
+- Data Table
+
+**Other editor ideas...** _(already prototyped)_
+
 - Dimensions ([#1](https://github.com/leekelleher/umbraco-contentment/pull/1))
+- Macro Blocks _(a MacroContainer-esque editor)_
 
 
 **Validation exploration**

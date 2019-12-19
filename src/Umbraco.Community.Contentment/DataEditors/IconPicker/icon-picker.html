@@ -13,25 +13,25 @@
         <div class="flex flex-wrap error">
             <ul class="umb-sortable-thumbnails">
                 <li class="umb-sortable-thumbnails__wrapper" ng-if="vm.allowAdd === false">
-                    <div class="umb-icon-holder">
+                    <span class="umb-file-icon">
                         <span class="file-icon">
-                            <i class="icon large" ng-class="model.value"></i>
+                            <i class="icon" ng-class="model.value" aria-hidden="true"></i>
                         </span>
                         <small ng-bind-html="vm.label"></small>
-                    </div>
+                    </span>
                     <div class="umb-sortable-thumbnails__actions">
-                        <a href="" class="umb-sortable-thumbnails__action" ng-click="vm.pick()" prevent-default>
-                            <i class="icon icon-edit"></i>
-                        </a>
-                        <a class="umb-sortable-thumbnails__action -red" href="" ng-click="vm.remove()" prevent-default>
-                            <i class="icon icon-delete"></i>
-                        </a>
+                        <button aria-label="Edit icon" type="button" class="umb-sortable-thumbnails__action btn-reset" ng-click="vm.pick()">
+                            <i class="icon icon-edit" aria-hidden="true"></i>
+                        </button>
+                        <button aria-label="Remove" type="button" class="umb-sortable-thumbnails__action -red btn-reset" ng-click="vm.remove()">
+                            <i class="icon icon-delete" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </li>
                 <li style="border: none;" class="add-wrapper unsortable" ng-if="vm.allowAdd">
-                    <a href="" class="add-link add-link-square" ng-click="vm.pick()" prevent-default>
-                        <i class="icon icon-add large"></i>
-                    </a>
+                    <button aria-label="Open icon picker" type="button" class="add-link add-link-square btn-reset" ng-click="vm.pick()">
+                        <i class="icon icon-add large" aria-hidden="true"></i>
+                    </button>
                 </li>
             </ul>
         </div>
