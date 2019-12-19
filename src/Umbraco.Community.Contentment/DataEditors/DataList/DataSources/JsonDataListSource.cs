@@ -13,26 +13,24 @@ using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
-// TODO: [LK:2019-07-19] Help wanted. How the heck does JSONPath work?
-// I have no idea how JSONPath works! Everytime I read the docs, it doesn't make any sense.
-// https://goessner.net/articles/JsonPath/index.html
-// How would you get the string-value from a "key"? and how do you get the text-value?
-// Tempted to say querying unstructured JSON is stupid.
-// I need help with this. "Up for grabs" https://github.com/leekelleher/umbraco-contentment/pull/4
-
 namespace Umbraco.Community.Contentment.DataEditors
 {
-#if !DEBUG
-    // TODO: IsWorkInProgress - Under development.
-    [global::Umbraco.Core.Composing.HideFromTypeFinder]
-#endif
     internal class JsonDataListSource : IDataListSource
     {
+        private readonly ILogger _logger;
+
+        public JsonDataListSource(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public string Name => "JSON";
 
         public string Description => "Configure the data source to use JSON data.";
 
         public string Icon => "icon-brackets";
+
+        public Dictionary<string, object> DefaultValues => default;
 
         [ConfigurationField(typeof(JsonNotesConfigurationField))]
         public string Notes { get; set; }
@@ -51,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems()
         {
-            // Try something like... http://country.io/names.json
             var items = new List<DataListItem>();
 
             var json = GetJson();
@@ -110,7 +107,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-                    Current.Logger.Warn<JsonDataListSource>("Unable to find the local file path.");
+                    _logger.Warn<JsonDataListSource>("Unable to find the local file path.");
                 }
             }
 
