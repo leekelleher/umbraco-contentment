@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Xml;
 using System.Xml.XPath;
 using Umbraco.Core;
@@ -80,6 +81,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             catch (XmlException ex)
             {
                 _logger.Error<XmlDataListSource>(ex, "Unable to load XML data.");
+            }
+            catch (WebException ex)
+            {
+                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from the data source: {path}.");
+                return items;
             }
 
             if (doc == null || string.IsNullOrWhiteSpace(ItemsXPath))
