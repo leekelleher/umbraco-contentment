@@ -5,7 +5,7 @@
 
 <div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.DropdownList.Controller as vm">
     <select id="{{model.alias}}"
-            class="umb-dropdown"
+            class="umb-property-editor umb-dropdown"
             umb-html-attributes="vm.htmlAttributes"
             ng-model="model.value"
             ng-options="item.value as item.name disable when item.disabled for item in vm.items">
