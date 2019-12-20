@@ -76,10 +76,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var jsonItems = json.SelectTokens(ItemsJsonPath);
 
-                // if either all names are null or values are null, then we'll return empty array and log an exception
-                var allNameNull = true;
-                var allValueNull = true;
-
                 foreach (var item in jsonItems)
                 {
                     var name = item.SelectToken(NameJsonPath);
@@ -88,11 +84,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var description = string.IsNullOrEmpty(DescriptionJsonPath) ? null : item.SelectToken(DescriptionJsonPath);
 
                     // How should we log if either name or value is empty? Note that empty or missing values are totally legal according to json
-                    if (name == null) _logger.Warn<JsonDataListSource>("Contentment | Logging: No 'name' was found using JSONPath: " + NameJsonPath);
-                    if (value == null) _logger.Warn<JsonDataListSource>("Contentment | Logging: No 'value' was found using JSONPath: " + ValueJsonPath);
+                    if (name == null) _logger.Warn<JsonDataListSource>($"Contentment | Logging: No 'name' was found using JSONPath: {NameJsonPath}");
 
-                    allNameNull = allNameNull && (name == null); // Will flip first time name is not null
-                    allValueNull = allValueNull && (value == null); // Will flip first time value is not null
+                    // If value is missing we'll skip this specific item and log as a warning
+                    if (value == null) {
+                        _logger.Warn<JsonDataListSource>($"Contentment | Logging: No 'value' was found using JSONPath: {ValueJsonPath}. Skipping item!");
+                        continue;
+                    }
 
                     items.Add(new DataListItem
                     {
@@ -102,26 +100,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Description = description?.ToString() ?? ""
                     });
                 }
-
-                if (allNameNull)
-                {
-                    _logger.Error<JsonDataListSource>("Contentment | Logging: No 'names' were found in json data. Consider changing your JSONPath. ");
-                    // We return empty list to emphasize error
-                    items.Clear();
-                }
-                if (allValueNull)
-                {
-                    _logger.Error<JsonDataListSource>("Contentment | Logging: No 'values' were found in json data. Consider changing your JSONPath. ");
-                    // We return empty list to emphasize error
-                    items.Clear();
-                }
-
             }
             catch (Exception ex)
             {
                 _logger.Error<JsonDataListSource>(ex, "Error finding nodes in the JSON object. Check the syntax of your JSON Paths.");
             }
-
 
             return items;
         }
