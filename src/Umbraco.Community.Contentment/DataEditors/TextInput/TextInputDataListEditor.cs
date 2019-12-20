@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [HideFromTypeFinder]
-    internal sealed class TextInputDataListEditor : IDataListEditor
+    public sealed class TextInputDataListEditor : IDataListEditor
     {
         public string Name => "Text Input";
 

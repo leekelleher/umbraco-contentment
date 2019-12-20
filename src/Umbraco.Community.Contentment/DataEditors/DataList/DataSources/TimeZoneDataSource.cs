@@ -10,7 +10,7 @@ using Umbraco.Core.Composing;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [HideFromTypeFinder]
-    internal sealed class TimeZoneDataSource : IDataListSource
+    public sealed class TimeZoneDataSource : IDataListSource
     {
         public string Name => "Time zones";
 

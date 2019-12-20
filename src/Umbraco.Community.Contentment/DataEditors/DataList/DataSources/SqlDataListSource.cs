@@ -14,7 +14,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class SqlDataListSource : IDataListSource
+    public sealed class SqlDataListSource : IDataListSource
     {
         public string Name => "SQL Data";
 

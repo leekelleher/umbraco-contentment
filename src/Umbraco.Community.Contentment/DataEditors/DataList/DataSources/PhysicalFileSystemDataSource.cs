@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class PhysicalFileSystemDataSource : IDataListSource
+    public sealed class PhysicalFileSystemDataSource : IDataListSource
     {
         public string Name => "File System";
 

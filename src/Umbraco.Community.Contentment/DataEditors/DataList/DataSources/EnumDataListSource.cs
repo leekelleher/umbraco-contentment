@@ -9,14 +9,13 @@ using System.Linq;
 using System.Reflection;
 using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class EnumDataListSource : IDataListSource
+    public sealed class EnumDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
 

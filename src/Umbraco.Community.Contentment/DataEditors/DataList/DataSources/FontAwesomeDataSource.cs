@@ -14,7 +14,7 @@ using Umbraco.Core.IO;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [HideFromTypeFinder]
-    internal sealed class FontAwesomeDataSource : IDataListSource
+    public sealed class FontAwesomeDataSource : IDataListSource
     {
         public string Name => "Font Awesome";
 

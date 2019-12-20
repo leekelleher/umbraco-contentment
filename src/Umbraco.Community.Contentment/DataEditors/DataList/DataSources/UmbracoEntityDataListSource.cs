@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
@@ -14,7 +13,7 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class UmbracoEntityDataListSource : IDataListSource
+    public sealed class UmbracoEntityDataListSource : IDataListSource
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
         {

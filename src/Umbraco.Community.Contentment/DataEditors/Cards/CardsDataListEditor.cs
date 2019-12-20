@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [HideFromTypeFinder]
-    internal sealed class CardsDataListEditor : IDataListEditor
+    public sealed class CardsDataListEditor : IDataListEditor
     {
         public string Name => "Cards";
 

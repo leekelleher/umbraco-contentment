@@ -9,7 +9,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class CheckboxListDataListEditor : IDataListEditor
+    public sealed class CheckboxListDataListEditor : IDataListEditor
     {
         public string Name => "Checkbox List";
 
