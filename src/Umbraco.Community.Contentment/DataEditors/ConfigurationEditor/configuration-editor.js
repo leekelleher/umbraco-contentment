@@ -8,7 +8,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "editorService",
     "localizationService",
     "overlayService",
-    function ($scope, editorService, localizationService, overlayService) {
+    "Umbraco.Community.Contentment.Services.DevMode",
+    function ($scope, editorService, localizationService, overlayService, devModeService) {
 
         // console.log("config-editor.model", $scope.model);
 
@@ -55,12 +56,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             };
 
-            vm.enableDevMode = Object.toBoolean(config.enableDevMode);
-
             vm.add = add;
             vm.edit = edit;
             vm.remove = remove;
-            vm.validate = validate;
+
+            vm.propertyActions = [];
+
+            if (Object.toBoolean(config.enableDevMode)) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue($scope.model, validate);
+                    }
+                });
+            }
         };
 
         function add() {

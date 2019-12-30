@@ -10,7 +10,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "editorService",
     "localizationService",
     "overlayService",
-    function ($interpolate, $scope, clipboardService, editorService, localizationService, overlayService) {
+    "Umbraco.Community.Contentment.Services.DevMode",
+    function ($interpolate, $scope, clipboardService, editorService, localizationService, overlayService, devModeService) {
 
         // console.log("content-blocks.model", $scope.model);
 
@@ -23,6 +24,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             enableFilter: 0,
             maxItems: 0,
             overlayView: "",
+            enableDevMode: 0,
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
 
@@ -78,6 +80,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     }
                 }
             }];
+
+            if (Object.toBoolean(config.enableDevMode)) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue(
+                            $scope.model,
+                            function () {
+                                // TODO: [LK] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
+                            }
+                        );
+                    }
+                });
+            }
         };
 
         function add() {

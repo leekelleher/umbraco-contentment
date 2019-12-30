@@ -3,52 +3,43 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco.directives").directive("contentmentDevMode", [
+angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Services.DevMode", [
     "editorService",
     function (editorService) {
         return {
-            restrict: "E",
-            require: "ngModel",
-            scope: {
-                onUpdate: "&?",
-            },
-            link: function (scope, element, attrs, ngModelCtrl) {
-                scope.open = function () {
-                    editorService.open({
-                        title: "Edit JSON value...",
-                        value: angular.toJson(ngModelCtrl.$modelValue, true),
-                        ace: {
-                            showGutter: true,
-                            useWrapMode: true,
-                            useSoftTabs: true,
-                            theme: "chrome",
-                            mode: "javascript",
-                            advanced: {
-                                fontSize: "14px",
-                                wrap: true
-                            },
+            editValue: function (model, callback) {
+                editorService.open({
+                    title: "Edit raw value",
+                    value: angular.toJson(model.value, true),
+                    ace: {
+                        showGutter: true,
+                        useWrapMode: true,
+                        useSoftTabs: true,
+                        theme: "chrome",
+                        mode: "javascript",
+                        advanced: {
+                            fontSize: "14px",
+                            wrap: true
                         },
-                        view: "/App_Plugins/Contentment/editors/_json-editor.html",
-                        size: "small",
-                        submit: function (value) {
+                    },
+                    view: "/App_Plugins/Contentment/editors/_json-editor.html",
+                    size: "small",
+                    submit: function (value) {
 
-                            ngModelCtrl.$setViewValue(angular.fromJson(value));
-                            ngModelCtrl.$render();
+                        model.value = angular.fromJson(value);
 
-                            if (scope.onUpdate) {
-                                scope.onUpdate();
-                            }
-
-                            editorService.close();
-                        },
-                        close: function () {
-                            editorService.close();
+                        if (callback) {
+                            callback();
                         }
-                    });
-                };
-            },
-            templateUrl: "/App_Plugins/Contentment/editors/_dev-mode.html",
-        };
+
+                        editorService.close();
+                    },
+                    close: function () {
+                        editorService.close();
+                    }
+                });
+            }
+        }
     }
 ]);
 

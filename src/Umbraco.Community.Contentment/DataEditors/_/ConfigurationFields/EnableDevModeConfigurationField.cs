@@ -15,8 +15,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base()
         {
             Key = EnableDevMode;
-            Name = "Enable developer mode?";
-            Description = "Select to enable add the ability to edit the raw JSON data for the editor value.";
+            Name = "Developer mode?";
+            Description = "Enable a property action to edit the raw data for the editor value.";
             View = "boolean";
         }
     }

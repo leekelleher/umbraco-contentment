@@ -8,5 +8,6 @@
         <key alias="name">Contentment</key>
 
         <key alias="copyAllBlocks">Copy all blocks</key>
+        <key alias="editRawValue">Edit raw value</key>
     </area>
 </language>
