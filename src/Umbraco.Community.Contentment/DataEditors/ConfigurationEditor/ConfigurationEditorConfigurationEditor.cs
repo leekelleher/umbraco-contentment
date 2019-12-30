@@ -53,6 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new OverlaySizeConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());
+            Fields.Add(new AllowDuplicatesConfigurationField());
             Fields.Add(new DisableSortingConfigurationField());
         }
 
