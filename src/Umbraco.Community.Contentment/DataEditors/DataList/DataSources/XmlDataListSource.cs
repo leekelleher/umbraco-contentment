@@ -78,14 +78,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 doc = new XPathDocument(path);
             }
+            catch (WebException ex)
+            {
+                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+                return items;
+            }
             catch (XmlException ex)
             {
                 _logger.Error<XmlDataListSource>(ex, "Unable to load XML data.");
-            }
-            catch (WebException ex)
-            {
-                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from the data source: {path}.");
-                return items;
             }
 
             if (doc == null || string.IsNullOrWhiteSpace(ItemsXPath))
@@ -110,7 +110,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (nodes.Count == 0)
             {
-                _logger.Warn<string>($"Contentment | XmlDataList | Using XPath ({ ItemsXPath }) - Did not find any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+                _logger.Warn<XmlDataListSource>($"The XPath '{ItemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
                 return items;
             }
 
@@ -147,9 +147,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-                    _logger.Warn<string>("Did not recognize a name or a value in the node XML: " + node.OuterXml.Substring(0, Math.Min(300, node.OuterXml.Length)));
-                    _logger.Info<string>($"Result of name XPath ({NameXPath}): " + (name != null ? name.OuterXml : "null"));
-                    _logger.Info<string>($"Result of value XPath ({ValueXPath}): " + (value != null ? value.OuterXml : "null"));
+                    var outerXml = node.OuterXml.Substring(0, Math.Min(300, node.OuterXml.Length));
+
+                    if (name == null)
+                    {
+                        _logger.Warn<XmlDataListSource>($"The XPath '{NameXPath}' did not match a 'name' in the item XML: {outerXml}");
+                    }
+
+                    if (value == null)
+                    {
+                        _logger.Warn<XmlDataListSource>($"The XPath '{ValueXPath}' did not match a 'value' in the item XML: {outerXml}");
+                    }
                 }
             }
 
