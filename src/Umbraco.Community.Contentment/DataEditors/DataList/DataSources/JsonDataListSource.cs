@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -13,14 +14,9 @@ using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
-// TODO
-// How would you get the string-value from a "key"?
-// This project https://github.com/s3u/JSONPath supports "~" to retrieve keys. However this is not in the original jsonpath-specs.
-// We could implement something similar, which checks the JsonPaths for a ~, and the we'll code-extract the keys. However this is a somewhat shady solution.
-
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class JsonDataListSource : IDataListSource
+    public class JsonDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
 
@@ -31,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "JSON Data";
 
-        public string Description => "Configure the data source (file or url) to use JSON data. Data retrieved from urls are set to UTF-8 encoding.";
+        public string Description => "Configure JSON data to populate the data source.";
 
         public string Icon => "icon-brackets";
 
@@ -67,43 +63,66 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var items = new List<DataListItem>();
 
+            if (string.IsNullOrWhiteSpace(Url))
+                return items;
+
             var json = GetJson();
 
-            if (json == null)
+            if (json == null || string.IsNullOrWhiteSpace(ItemsJsonPath))
                 return items;
 
             try
             {
-                var jsonItems = json.SelectTokens(ItemsJsonPath);
+                var tokens = json.SelectTokens(ItemsJsonPath);
 
-                foreach (var item in jsonItems)
+                if (tokens.Any() == false)
                 {
-                    var name = item.SelectToken(NameJsonPath);
-                    var value = item.SelectToken(ValueJsonPath);
-                    var icon = string.IsNullOrEmpty(IconJsonPath) ? null : item.SelectToken(IconJsonPath);
-                    var description = string.IsNullOrEmpty(DescriptionJsonPath) ? null : item.SelectToken(DescriptionJsonPath);
+                    _logger.Warn<JsonDataListSource>($"The JSONPath '{ItemsJsonPath}' did not match any items in the JSON.");
+                    return items;
+                }
+
+                // TODO: How would you get the string-value from a "key"?
+                // This project https://github.com/s3u/JSONPath supports "~" to retrieve keys. However this is not in the original jsonpath-specs.
+                // We could implement something similar, which checks the JsonPaths for a ~, and the we'll code-extract the keys. However this is a somewhat shady solution.
+
+                foreach (var token in tokens)
+                {
+                    var name = token.SelectToken(NameJsonPath);
+                    var value = token.SelectToken(ValueJsonPath);
+
+                    var icon = string.IsNullOrEmpty(IconJsonPath) == false
+                        ? token.SelectToken(IconJsonPath)
+                        : null;
+
+                    var description = string.IsNullOrEmpty(DescriptionJsonPath) == false
+                        ? token.SelectToken(DescriptionJsonPath)
+                        : null;
 
                     // How should we log if either name or value is empty? Note that empty or missing values are totally legal according to json
-                    if (name == null) _logger.Warn<JsonDataListSource>($"Contentment | Logging: No 'name' was found using JSONPath: {NameJsonPath}");
+                    if (name == null)
+                    {
+                        _logger.Warn<JsonDataListSource>($"The JSONPath '{NameJsonPath}' did not match a 'name' in the item JSON.");
+                    }
 
                     // If value is missing we'll skip this specific item and log as a warning
-                    if (value == null) {
-                        _logger.Warn<JsonDataListSource>($"Contentment | Logging: No 'value' was found using JSONPath: {ValueJsonPath}. Skipping item!");
+                    if (value == null)
+                    {
+                        _logger.Warn<JsonDataListSource>($"The JSONPath '{ValueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
                         continue;
                     }
 
                     items.Add(new DataListItem
                     {
-                        Name = name?.ToString() ?? "",
-                        Value = value?.ToString() ?? "",
-                        Icon = icon?.ToString() ?? "",
-                        Description = description?.ToString() ?? ""
+                        Name = name?.ToString() ?? string.Empty,
+                        Value = value?.ToString() ?? string.Empty,
+                        Icon = icon?.ToString() ?? string.Empty,
+                        Description = description?.ToString() ?? string.Empty
                     });
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error<JsonDataListSource>(ex, "Error finding nodes in the JSON object. Check the syntax of your JSON Paths.");
+                _logger.Error<JsonDataListSource>(ex, "Error finding items in the JSON. Please check the syntax of your JSONPath expressions.");
             }
 
             return items;
@@ -111,19 +130,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private JToken GetJson()
         {
-            if (string.IsNullOrWhiteSpace(Url))
-                return null;
-
-            var content = "";
-            var json = default(JToken);
+            var content = string.Empty;
 
             if (Url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
             {
                 try
                 {
-                    using (var client = new WebClient())
+                    using (var client = new WebClient() { Encoding = Encoding.UTF8 })
                     {
-                        client.Encoding = Encoding.UTF8;
                         content = client.DownloadString(Url);
                     }
                 }
@@ -147,45 +161,36 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            // Here the question is what to deserialize the json-string to.
-            // I was inspired by a post I found on StackOverflow (https://stackoverflow.com/questions/38558844/jcontainer-jobject-jtoken-and-linq-confusion):
-            //
-            // Here's the basic rule of thumb:
-            //
-            // If you know you have an object(denoted by curly braces { and } in JSON), use JObject
-            // If you know you have an array or list(denoted by square brackets[and]), use JArray
-            // If you know you have a primitive value, use JValue
-            // If you don't know what kind of token you have, or want to be able to handle any of the above in a general way, use JToken. You can then check its Type property to determine what kind of token it is and cast it appropriately.
-
-            if (string.IsNullOrWhiteSpace(content) == false)
+            if (string.IsNullOrWhiteSpace(content))
             {
-                try
-                {
-                    json = JToken.Parse(content);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error<JsonDataListSource>(ex, "Error parsing string into json: " + content.Substring(0, Math.Min(400, content.Length)));
-                    return null;
-                }
+                _logger.Warn<JsonDataListSource>($"The contents of '{Url}' was empty. Unable to process JSON data.");
 
+                return default;
             }
-            else
+
+            try
             {
-                _logger.Warn<JsonDataListSource>($"JsonContent ({Url}) was empty.");
-                return null;
+                // Deserialize to a JToken, for general purposes.
+                // Inspiration taken from StackOverflow: https://stackoverflow.com/a/38560188/12787
+                return JToken.Parse(content);
             }
-            return json;
+            catch (Exception ex)
+            {
+                var trimmed = content.Substring(0, Math.Min(400, content.Length));
+                _logger.Error<JsonDataListSource>(ex, $"Error parsing string to JSON: {trimmed}");
+            }
+
+            return default;
         }
 
         class JsonNotesConfigurationField : NotesConfigurationField
         {
-            // TODO: [LK:2019-07-19] Explain how these JSONPath queries work, (as I have no idea myself!)
             public JsonNotesConfigurationField()
-                : base(@"<p class=""alert alert-success""><strong>Help with your JSONPath?</strong><br>
-Using Newtonsoft we're limitted to only extracting the 'value' of the key/value-pair attributes.<br /><br />
-Please refer to this resource for more information: <a href='https://goessner.net/articles/JsonPath/' target='_blank'>https://goessner.net/articles/JsonPath/</a>
-</p>", true)
+                : base(@"<div class=""alert alert-info"">
+<p><strong>Help with your JSONPath expressions?</strong></p>
+<p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
+<p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank"">goessner.net/articles/JsonPath</a>.</p>
+</div>", true)
             { }
         }
     }
