@@ -6,5 +6,7 @@
     </creator>
     <area alias="contentment">
         <key alias="name">Contentment</key>
+
+        <key alias="copyAllBlocks">Copy all blocks</key>
     </area>
 </language>

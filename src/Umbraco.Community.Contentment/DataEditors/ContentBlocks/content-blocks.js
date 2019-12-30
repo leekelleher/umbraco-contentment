@@ -68,6 +68,16 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
+
+            vm.propertyActions = [{
+                labelKey: "contentment_copyAllBlocks",
+                icon: "documents",
+                method: function () {
+                    for (var i = 0; i < $scope.model.value.length; i++) {
+                        copy(i);
+                    }
+                }
+            }];
         };
 
         function add() {
