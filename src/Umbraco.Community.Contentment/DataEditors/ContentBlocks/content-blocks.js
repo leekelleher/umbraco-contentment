@@ -161,11 +161,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function populateName(item, index, nameTemplate) {
 
-            nameTemplate = nameTemplate || config.elementTypeLookup[item.elementType].nameTemplate || "Item {{ $index + 1 }}"
+            nameTemplate = nameTemplate || config.elementTypeLookup[item.elementType].nameTemplate || "Item {{ $index }}"
 
             var expression = $interpolate(nameTemplate);
             if (expression) {
-                item.value.$index = index;
+                item.value.$index = index + 1;
                 item.name = expression(item.value);
                 delete item.value.$index;
             } else {

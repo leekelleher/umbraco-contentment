@@ -37,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 Icon = x.Icon
                             }
                         },
-                        { "nameTemplate", $"{x.Name} {{{{ $index + 1 }}}}" },
+                        { "nameTemplate", $"{x.Name} {{{{ $index }}}}" },
                     },
                     Fields = utility.GetConfigurationFields(typeof(ContentBlocksTypeConfiguration))
                 });
