@@ -25,11 +25,11 @@
                         <div class="umb-group-builder__property-action umb-node-preview--sortable" title="Sort" ng-if="vm.sortable">
                             <i class="icon icon-navigation"></i>
                         </div>
-                        <div class="umb-group-builder__property-action" title="Copy" ng-if="vm.allowCopy">
-                            <button aria-label="Copy content block" type="button" class="icon icon-documents" ng-click="vm.copy($index)"></button>
-                        </div>
                         <div class="umb-group-builder__property-action" title="Remove" ng-if="vm.allowRemove">
                             <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
+                        </div>
+                        <div class="umb-group-builder__property-action" title="Actions" ng-if="vm.blockActions[$index]">
+                            <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
                         </div>
                     </div>
                 </div>

@@ -71,15 +71,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.edit = edit;
             vm.remove = remove;
 
-            vm.propertyActions = [{
-                labelKey: "contentment_copyAllBlocks",
-                icon: "documents",
-                method: function () {
-                    for (var i = 0; i < $scope.model.value.length; i++) {
-                        copy(i);
+            vm.propertyActions = [];
+            vm.blockActions = [];
+
+            if (vm.allowCopy) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_copyAllBlocks",
+                    icon: "documents",
+                    method: function () {
+                        for (var i = 0; i < $scope.model.value.length; i++) {
+                            copy(i);
+                        }
                     }
-                }
-            }];
+                });
+            }
 
             if (Object.toBoolean(config.enableDevMode)) {
                 vm.propertyActions.push({
@@ -95,6 +100,26 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     }
                 });
             }
+
+            _.each($scope.model.value, function (item, index) {
+                vm.blockActions.push(actionsFactory(index));
+            });
+        };
+
+        function actionsFactory(index) {
+            var actions = [];
+
+            if (vm.allowCopy) {
+                actions.push({
+                    labelKey: "general_copy",
+                    icon: "documents",
+                    method: function () {
+                        copy(index);
+                    }
+                });
+            }
+
+            return actions;
         };
 
         function add() {
@@ -111,6 +136,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     populateName(model, $scope.model.value.length);
 
                     $scope.model.value.push(model);
+
+                    vm.blockActions.push(actionsFactory($scope.model.value.length - 1));
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
@@ -185,6 +212,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     submit: function () {
 
                         $scope.model.value.splice($index, 1);
+                        vm.blockActions.pop();
 
                         _.each($scope.model.value, function (item, index) {
                             populateName(item, index);

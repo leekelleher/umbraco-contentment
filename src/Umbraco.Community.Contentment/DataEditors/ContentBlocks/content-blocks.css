@@ -39,6 +39,25 @@
             color: #2152a3;
         }
 
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions {
+        float: none;
+    }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__toggle {
+        margin-top: 5px;
+        margin-left: 12px;
+        opacity: 1;
+        background-color: transparent;
+    }
+
+        .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__toggle:hover {
+            background-color: #f9f6f5;
+        }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__menu {
+        margin-left: 12px;
+    }
+
 .contentment.lk-content-blocks .umb-group-builder__property-preview {
     height: auto;
     padding: 30px 10px 5px;
