@@ -4,14 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 .contentment .text-input {
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
 }
 
     .contentment .text-input.input-prepend .umb-textstring,
     .contentment .text-input.input-append .umb-textstring {
-        width: 768px;
+        width: calc(100% - 30px);
     }
 
     .contentment .text-input.input-prepend.input-append .umb-textstring {
-        width: 740px;
+        width: calc(100% - 60px);
     }

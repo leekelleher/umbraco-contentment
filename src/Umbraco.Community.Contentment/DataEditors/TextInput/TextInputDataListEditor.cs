@@ -4,13 +4,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [HideFromTypeFinder]
+    [Core.Composing.HideFromTypeFinder]
     public sealed class TextInputDataListEditor : IDataListEditor
     {
         public string Name => "Text Input";
@@ -19,19 +18,22 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => TextInputDataEditor.DataEditorIcon;
 
-        public Dictionary<string, object> DefaultValues => default;
-
         public Dictionary<string, object> DefaultConfig => default;
+
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { MaxCharsConfigurationField.MaxChars, 500 }
+        };
 
         public string View => IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath);
 
-        [ConfigurationField("placeholderText", "Placeholder text", "textstring", Description = "Add placeholder text for the text input.<br>This is to be used as instructional information, not as a default value.")]
+        [ConfigurationField(typeof(PlaceholderTextConfigurationField))]
         public string PlaceholderText { get; set; }
 
-        [ConfigurationField("autocomplete", "Enable autocomplete?", "boolean", Description = "Select to enable autocomplete functionality on the text input.")]
+        [ConfigurationField(typeof(AutocompleteConfigurationField))]
         public bool Autocomplete { get; set; }
 
-        [ConfigurationField("maxChars", "Maximum allowed characters", "number", Description = "Enter the maximum number of characters allowed for the text input.<br>The default is a 500 character limit.")]
+        [ConfigurationField(typeof(MaxCharsConfigurationField))]
         public int MaxChars { get; set; }
     }
 }

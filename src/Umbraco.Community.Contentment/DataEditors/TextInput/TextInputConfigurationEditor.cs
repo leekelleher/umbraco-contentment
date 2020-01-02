@@ -15,56 +15,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class TextInputConfigurationEditor : ConfigurationEditor
     {
-        public const string Autocomplete = "autocomplete";
         public const string Items = "items";
-        public const string MaxChars = "maxChars";
-        public const string PlaceholderText = "placeholderText";
 
         public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
-            Fields.Add(
-                PlaceholderText,
-                "Placeholder text",
-                "Add placeholder text for the text input. This is to be used as instructional information, not as a default value.",
-                "textstring");
-
-            Fields.Add(
-                "autocomplete",
-                "Enable autocomplete?",
-                "Select to enable autocomplete functionality on the text input.",
-                "boolean");
-
-            Fields.Add(
-                "maxChars",
-                "Maximum allowed characters",
-                "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
-                IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
-
-            //Fields.Add(
-            //    "prepend",
-            //    "Prepend Icon",
-            //    "[Add friendly description]",
-            //    IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
-            //    new Dictionary<string, object>
-            //    {
-            //        { DefaultIconConfigurationField.DefaultIcon, string.Empty },
-            //        { IconPickerSizeConfigurationField.Size, IconPickerSizeConfigurationField.Large }
-            //    });
-
-            //Fields.Add(
-            //    "append",
-            //    "Append Icon",
-            //    "[Add friendly description]",
-            //    IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
-            //    new Dictionary<string, object>
-            //    {
-            //        { DefaultIconConfigurationField.DefaultIcon, string.Empty },
-            //        { IconPickerSizeConfigurationField.Size, IconPickerSizeConfigurationField.Large }
-            //    });
-
             var dataSources = utility.GetConfigurationEditors<IDataListSource>();
 
+            Fields.Add(new PlaceholderTextConfigurationField());
+            Fields.Add(new AutocompleteConfigurationField());
+            Fields.Add(new MaxCharsConfigurationField());
             Fields.Add(
                 Items,
                 "Data list",
@@ -75,9 +35,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
                     { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { ConfigurationEditorConfigurationEditor.Items, dataSources },
-                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
-                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                     { MaxItemsConfigurationField.MaxItems, 1 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                 });
         }
 

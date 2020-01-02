@@ -300,6 +300,11 @@
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputValueConverter.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
+    <Compile Include="DataEditors\TextInput\PrependIconConfigurationField.cs" />
+    <Compile Include="DataEditors\TextInput\AppendIconConfigurationField.cs" />
+    <Compile Include="DataEditors\TextInput\PlaceholderTextConfigurationField.cs" />
+    <Compile Include="DataEditors\TextInput\AutocompleteConfigurationField.cs" />
+    <Compile Include="DataEditors\TextInput\MaxCharsConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Experience\DataTypeTreeCopyMenuItemComponent.cs" />
