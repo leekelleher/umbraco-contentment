@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                 { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
                 { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
-                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.False },
+                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
             var dataSources = utility.GetConfigurationEditors<IDataListSource>();
