@@ -1,0 +1,25 @@
+﻿<!-- Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div style="margin-left: 10px;">
+
+    <p ng-bind="model.description"></p>
+
+    <div class="alert alert-danger" ng-if="model.error">
+        <span ng-bind="model.error"></span>
+    </div>
+
+    <umb-control-group label="@general_name">
+        <input type="text"
+               name="name"
+               val-server-field="name"
+               class="umb-textstring textstring input-block-level"
+               ng-model="model.blueprintName"
+               umb-auto-focus
+               focus-on-filled="true"
+               required />
+    </umb-control-group>
+
+</div>

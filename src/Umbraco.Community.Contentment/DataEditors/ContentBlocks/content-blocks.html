@@ -28,7 +28,7 @@
                         <div class="umb-group-builder__property-action" title="Remove" ng-if="vm.allowRemove">
                             <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
                         </div>
-                        <div class="umb-group-builder__property-action" title="Actions" ng-if="vm.blockActions[$index]">
+                        <div class="umb-group-builder__property-action" ng-if="vm.blockActions[$index]">
                             <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
                         </div>
                     </div>

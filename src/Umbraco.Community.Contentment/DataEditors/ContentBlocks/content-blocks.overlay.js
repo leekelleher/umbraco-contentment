@@ -8,8 +8,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
     "blueprintConfig",
     "clipboardService",
     "contentResource",
-    "versionHelper",
-    function ($scope, blueprintConfig, clipboardService, contentResource, versionHelper) {
+    function ($scope, blueprintConfig, clipboardService, contentResource) {
 
         // console.log("content-blocks-overlay.model", $scope.model, blueprintConfig);
 
@@ -40,7 +39,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 if (config.elementTypes.length > 1) {
 
                     vm.title = "Add content";
-                    vm.description = "Select an element type...";
+                    vm.description = "Select a content type...";
                     vm.selectBlueprint = false;
                     vm.enableFilter = Object.toBoolean(config.enableFilter);
 
