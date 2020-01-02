@@ -298,6 +298,8 @@
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
+    <Compile Include="DataEditors\NumberInput\NumberInputValueConverter.cs" />
+    <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Experience\DataTypeTreeCopyMenuItemComponent.cs" />
@@ -457,6 +459,7 @@
     <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.html" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.js" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.css" />
+    <Content Include="DataEditors\NumberInput\number-input.html" />
     <Content Include="DataEditors\TextInput\text-input.css" />
     <Content Include="DataEditors\TextInput\text-input.html" />
     <Content Include="DataEditors\TextInput\text-input.js" />

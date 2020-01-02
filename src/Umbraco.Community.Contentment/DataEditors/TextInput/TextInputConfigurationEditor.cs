@@ -38,8 +38,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(
                 "maxChars",
                 "Maximum allowed characters",
-                "Enter the maximum number of characters allowed for the text input.<br>The default is a 500 character limit.",
-                "number");
+                "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
+                IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
 
             //Fields.Add(
             //    "prepend",
