@@ -78,7 +78,7 @@ Unacceptable behaviour towards myself or contributors may result in being blocke
 
 ### License
 
-Copyright &copy; 2019 [Lee Kelleher](https://leekelleher.com).
+Copyright &copy; [Lee Kelleher](https://leekelleher.com).
 
 All source code is licensed under the [Mozilla Public License](../LICENSE).
 
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>580+ hours</b> (between 2019-03-13 to 2019-12-18)</summary>
+<summary>Current development effort: <b>600+ hours</b> (between 2019-03-13 to 202-01-02)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
