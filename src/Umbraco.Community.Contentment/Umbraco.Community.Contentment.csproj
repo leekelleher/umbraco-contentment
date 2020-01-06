@@ -488,7 +488,6 @@
     <Content Include="DataEditors\Toggles\toggles.js" />
     <Content Include="DataEditors\_\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_property-actions.js" />
-    <Content Include="DataEditors\_\_dev-mode.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="DataEditors\_\_directives.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />

@@ -5,12 +5,12 @@
 
 angular.module("umbraco").component("contentmentPropertyActions", {
     bindings: {
-        umbPropertyActions: "<"
+        actions: "<"
     },
     controller: function () {
         this.$onInit = function () {
-            if (this.umbProperty && this.umbPropertyActions) {
-                this.umbProperty.setPropertyActions(this.umbPropertyActions);
+            if (this.umbProperty && this.actions) {
+                this.umbProperty.setPropertyActions(this.actions);
             }
         };
     },

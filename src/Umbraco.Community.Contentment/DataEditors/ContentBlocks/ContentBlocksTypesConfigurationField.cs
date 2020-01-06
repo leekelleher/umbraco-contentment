@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Type = x.Key.ToString(),
                     Name = x.Name,
-                    Description = x.Alias,
+                    Description = string.IsNullOrWhiteSpace(x.Description) == false ? x.Description : x.Alias,
                     Icon = x.Icon,
                     DefaultValues = new Dictionary<string, object>
                     {
