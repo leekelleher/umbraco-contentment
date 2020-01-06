@@ -307,7 +307,6 @@
     <Compile Include="DataEditors\TextInput\MaxCharsConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
-    <Compile Include="Experience\DataTypeTreeCopyMenuItemComponent.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
@@ -422,8 +421,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ConfigurationFieldJsonSerializerSettings.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
-    <Compile Include="Trees\DataTypeCopy\DataTypeCopyApiController.cs" />
-    <Compile Include="Core\Services\DataTypeServiceExtensions.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
     <Compile Include="Web\PublishedCache\DetachedPublishedElement.cs" />
     <Compile Include="Web\PublishedCache\DetachedPublishedProperty.cs" />
@@ -492,8 +489,6 @@
     <Content Include="DataEditors\_\_directives.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
-    <Content Include="Trees\DataTypeCopy\data-type-copy.html" />
-    <Content Include="Trees\DataTypeCopy\data-type-copy.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />

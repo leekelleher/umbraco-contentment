@@ -42,14 +42,6 @@ foreach($htmlFile in $htmlFiles){
     Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
 }
 
-# HTML (Back-office Components) - Copy and Minify (or just remove comments)
-$htmlFiles = Get-ChildItem -Path "${ProjectDir}Trees" -Recurse -Force -Include *.html;
-foreach($htmlFile in $htmlFiles){
-    $contents = Get-Content -Path $htmlFile.FullName;
-    $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
-    Set-Content -Path "${pluginFolder}\backoffice\contentment\$($htmlFile.Name)" -Value $minifiedHtml;
-}
-
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
 Get-Content -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;
