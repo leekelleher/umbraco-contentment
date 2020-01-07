@@ -20,6 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             IEnumerable<IContentType> elementTypes,
             ConfigurationEditorUtility utility)
         {
+            var fields = utility.GetConfigurationFields(typeof(ContentBlocksTypeConfiguration));
+
             var items = elementTypes
                 .OrderBy(x => x.Name)
                 .Select(x => new ConfigurationEditorModel
@@ -39,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         },
                         { "nameTemplate", $"{x.Name} {{{{ $index }}}}" },
                     },
-                    Fields = utility.GetConfigurationFields(typeof(ContentBlocksTypeConfiguration))
+                    Fields = fields
                 });
 
             Key = ContentBlockTypes;

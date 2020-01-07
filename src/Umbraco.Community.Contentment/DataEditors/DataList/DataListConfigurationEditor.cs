@@ -30,8 +30,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
-            var dataSources = utility.GetConfigurationEditors<IDataListSource>();
-            var listEditors = utility.GetConfigurationEditors<IDataListEditor>();
+            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>();
+            var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>();
 
             Fields.Add(
                 DataSource,

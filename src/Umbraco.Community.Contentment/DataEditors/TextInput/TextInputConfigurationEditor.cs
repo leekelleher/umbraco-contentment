@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
-            var dataSources = utility.GetConfigurationEditors<IDataListSource>();
+            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>();
 
             Fields.Add(new PlaceholderTextConfigurationField());
             Fields.Add(new AutocompleteConfigurationField());

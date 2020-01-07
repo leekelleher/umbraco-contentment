@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _utility = utility;
 
             var items = utility
-                .GetConfigurationEditors<IConfigurationEditorItem>(ignoreFields: true)
+                .GetConfigurationEditorModels<IConfigurationEditorItem>(ignoreFields: true)
                 .Select(x => new DataListItem
                 {
                     Icon = x.Icon,
@@ -74,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                config[Items] = _utility.GetConfigurationEditors<IConfigurationEditorItem>();
+                config[Items] = _utility.GetConfigurationEditorModels<IConfigurationEditorItem>();
                 config[OrderBy] = string.Empty; // Set to empty, so to preserve the selected order.
             }
 

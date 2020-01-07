@@ -34,7 +34,33 @@ namespace Umbraco.Community.Contentment.DataEditors
             return default;
         }
 
-        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditors<T>(bool ignoreFields = false)
+        public ConfigurationEditorModel GetConfigurationEditorModel<T>(bool ignoreFields = false)
+            where T : IContentmentListItem
+        {
+            return GetConfigurationEditorModel(GetConfigurationEditor<T>(typeof(T).GetFullNameWithAssembly()), ignoreFields);
+        }
+
+        public ConfigurationEditorModel GetConfigurationEditorModel<T>(T item, bool ignoreFields = false)
+            where T : IContentmentListItem
+        {
+            var type = item.GetType();
+
+            var fields = ignoreFields == false
+                   ? GetConfigurationFields(type)
+                   : Enumerable.Empty<ConfigurationField>();
+
+            return new ConfigurationEditorModel
+            {
+                Type = type.GetFullNameWithAssembly(),
+                Name = item.Name ?? type.Name.SplitPascalCasing(),
+                Description = item.Description,
+                Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
+                Fields = fields,
+                DefaultValues = item.DefaultValues,
+            };
+        }
+
+        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditorModels<T>(bool ignoreFields = false)
            where T : IContentmentListItem
         {
             var models = new List<ConfigurationEditorModel>();
@@ -44,21 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (item is T == false)
                     continue;
 
-                var type = item.GetType();
-
-                var fields = ignoreFields == false
-                    ? GetConfigurationFields(type)
-                    : Enumerable.Empty<ConfigurationField>();
-
-                models.Add(new ConfigurationEditorModel
-                {
-                    Type = type.GetFullNameWithAssembly(),
-                    Name = item.Name ?? type.Name.SplitPascalCasing(),
-                    Description = item.Description,
-                    Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
-                    Fields = fields,
-                    DefaultValues = item.DefaultValues,
-                });
+                models.Add(GetConfigurationEditorModel(item, ignoreFields));
             }
 
             return models;
