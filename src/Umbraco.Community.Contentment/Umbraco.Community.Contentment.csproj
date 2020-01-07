@@ -443,6 +443,8 @@
     <Content Include="DataEditors\Checkbox\checkbox.css" />
     <Content Include="DataEditors\Checkbox\checkbox.html" />
     <Content Include="DataEditors\Checkbox\checkbox.js" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.inline.html" />
+    <Content Include="DataEditors\ConfigurationEditor\configuration-editor.inline.js" />
     <Content Include="DataEditors\CodeEditor\code-editor.html" />
     <Content Include="DataEditors\CodeEditor\code-editor.js" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.css" />
