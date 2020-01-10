@@ -22,6 +22,8 @@ namespace Umbraco.Community.Contentment.Serialization
             {
                 new FuzzyBooleanConverter(),
             });
+
+            ObjectCreationHandling = ObjectCreationHandling.Replace;
         }
     }
 }
