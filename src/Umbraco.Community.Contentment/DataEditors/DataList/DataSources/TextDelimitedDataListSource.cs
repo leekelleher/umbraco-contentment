@@ -48,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "delimiter",
                 Name = "Delimiter",
-                Description = "Enter the character to use as the delimiter. The default delimiter is a comma, <code>,</code>.",
+                Description = "Enter the character to use as the delimiter.<br>The default delimiter is a comma, <code>,</code>.",
                 View = "textstring"
             },
             new ConfigurationField
@@ -62,29 +62,29 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "nameIndex",
                 Name = "Name Index",
-                Description = "Enter the index position of the name field from the delimited line. The default index position is '0'.",
-                View = "number"
+                Description = "Enter the index position of the name field from the delimited line.<br>The default index position is '0'.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
             },
             new ConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
-                Description = "Enter the index position of the value (key) field from the delimited line. The default index position is '1'.",
-                View = "number"
+                Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is '1'.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
             },
             new ConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set to '-1'.",
-                View = "number"
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
             },
             new ConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set to '-1'.",
-                View = "number"
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
             }
         };
 
