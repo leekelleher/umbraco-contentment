@@ -3,18 +3,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ConfigurationEditorUtility
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public sealed class ConfigurationEditorUtility
     {
         private readonly ContentmentListItemCollection _listItems;
 

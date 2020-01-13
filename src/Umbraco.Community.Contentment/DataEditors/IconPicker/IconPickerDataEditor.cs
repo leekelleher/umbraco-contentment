@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.String,
         Group = Core.Constants.PropertyEditors.Groups.Pickers,
         Icon = DataEditorIcon)]
-    internal sealed class IconPickerDataEditor : DataEditor
+    public sealed class IconPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "IconPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Icon Picker";

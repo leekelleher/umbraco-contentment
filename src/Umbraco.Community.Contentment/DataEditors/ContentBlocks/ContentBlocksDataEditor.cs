@@ -18,7 +18,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Json,
         Group = Core.Constants.PropertyEditors.Groups.RichContent,
         Icon = DataEditorIcon)]
-    internal sealed class ContentBlocksDataEditor : DataEditor
+    [Core.Composing.HideFromTypeFinder]
+    public sealed class ContentBlocksDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Content Blocks";

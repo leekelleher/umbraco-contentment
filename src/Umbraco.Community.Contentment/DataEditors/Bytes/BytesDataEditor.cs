@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Bigint,
         Group = Constants.Conventions.PropertyGroups.Display,
         Icon = DataEditorIcon)]
-    internal sealed class BytesDataEditor : DataEditor
+    public sealed class BytesDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "Bytes";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Bytes";

@@ -4,14 +4,16 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal sealed class ConfigurationEditorModel
+    public sealed class ConfigurationEditorModel
     {
         public string Type { get; set; }
 

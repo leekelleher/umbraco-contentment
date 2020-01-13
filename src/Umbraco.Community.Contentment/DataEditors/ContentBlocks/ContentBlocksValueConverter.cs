@@ -15,7 +15,8 @@ using Umbraco.Web.PublishedCache;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ContentBlocksValueConverter : PropertyValueConverterBase
+    [Core.Composing.HideFromTypeFinder]
+    public sealed class ContentBlocksValueConverter : PropertyValueConverterBase
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedModelFactory _publishedModelFactory;
