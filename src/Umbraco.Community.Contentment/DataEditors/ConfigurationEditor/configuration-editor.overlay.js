@@ -64,7 +64,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             vm.title = "Configure " + editor.name;
             vm.editor = angular.copy(editor);
 
-            if (vm.editor.fields.length > 0) {
+            if (vm.editor.fields && vm.editor.fields.length > 0) {
                 _.each(vm.editor.fields, function (x) {
                     x.alias = x.key;
                     x.value = item.value[x.key];

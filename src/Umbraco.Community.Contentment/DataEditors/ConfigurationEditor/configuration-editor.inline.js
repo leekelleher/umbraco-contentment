@@ -24,7 +24,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             $scope.model.value = $scope.model.value || { type: vm.editor.type, value: vm.editor.defaultValues || {} };
 
             if ($scope.model.value.type !== vm.editor.type) {
-                // TODO: [LK] What to do if it's a different type?
+                // TODO: [LK:2020-01-07] What to do if it's a different type?
                 console.log("[LK] type is different", $scope.model.value.type, vm.editor.type);
 
                 $scope.model.value.type = vm.editor.type;
