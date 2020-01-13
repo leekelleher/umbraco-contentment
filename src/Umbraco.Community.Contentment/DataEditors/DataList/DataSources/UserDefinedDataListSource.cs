@@ -4,6 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -17,14 +19,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => Core.Constants.Icons.DataType;
 
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        {
+            new ItemsConfigurationField()
+        };
+
         public Dictionary<string, object> DefaultValues => default;
 
-        [ConfigurationField(typeof(ItemsConfigurationField))]
-        public IEnumerable<DataListItem> Items { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return Items;
+            return config.TryGetValue("items", out var tmp) && tmp is JArray array
+                ? array.ToObject<IEnumerable<DataListItem>>()
+                : Enumerable.Empty<DataListItem>();
         }
 
         class ItemsConfigurationField : ConfigurationField

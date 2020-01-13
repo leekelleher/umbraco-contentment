@@ -31,6 +31,64 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-ordered-list";
 
+        public IEnumerable<ConfigurationField> Fields => new[]
+        {
+            new NotesConfigurationField(@"<div class=""alert alert-info"">
+<p><strong>A note about using this data source.</strong></p>
+<p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
+<p>The fields are then assigned by index position.</p>
+</div>", true),
+            new ConfigurationField
+            {
+                Key = "url",
+                Name = "URL",
+                Description = "Enter the URL of the text-delimited data source.<br>This can be either a remote URL, or local relative file path.",
+                View = "textstring"
+            },
+            new ConfigurationField
+            {
+                Key = "delimiter",
+                Name = "Delimiter",
+                Description = "Enter the character to use as the delimiter. The default delimiter is a comma, <code>,</code>.",
+                View = "textstring"
+            },
+            new ConfigurationField
+            {
+                Key = "ignoreFirstLine",
+                Name = "Ignore the first line?",
+                Description = "Select to ignore the first line. Typically with text delimited data sources, the first line can be used for column headings.",
+                View = "boolean"
+            },
+            new ConfigurationField
+            {
+                Key = "nameIndex",
+                Name = "Name Index",
+                Description = "Enter the index position of the name field from the delimited line. The default index position is '0'.",
+                View = "number"
+            },
+            new ConfigurationField
+            {
+                Key = "valueIndex",
+                Name = "Value Index",
+                Description = "Enter the index position of the value (key) field from the delimited line. The default index position is '1'.",
+                View = "number"
+            },
+            new ConfigurationField
+            {
+                Key = "iconIndex",
+                Name = "Icon Index",
+                Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set to '-1'.",
+                View = "number"
+            },
+            new ConfigurationField
+            {
+                Key = "descriptionIndex",
+                Name = "Description Index",
+                Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set to '-1'.",
+                View = "number"
+            }
+        };
+
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "delimiter", "," },
@@ -40,60 +98,46 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionIndex", -1 },
         };
 
-        [ConfigurationField(typeof(TextDelimitedNotesConfigurationField))]
-        public string Notes { get; set; }
-
-        [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the text-delimited data source.<br>This can be either a remote URL, or local relative file path.")]
-        public string Url { get; set; }
-
-        [ConfigurationField("delimiter", "Delimiter", "textstring", Description = "Enter the character to use as the delimiter. The default delimiter is a comma, <code>,</code>.")]
-        public string Delimiter { get; set; }
-
-        [ConfigurationField("ignoreFirstLine", "Ignore the first line?", "boolean", Description = "Select to ignore the first line. Typically with text delimited data sources, the first line can be used for column headings.")]
-        public bool IgnoreFirstLine { get; set; }
-
-        [ConfigurationField("nameIndex", "Name Index", "number", Description = "Enter the index position of the name field from the delimited line. The default index position is '0'.")]
-        public int NameIndex { get; set; }
-
-        [ConfigurationField("valueIndex", "Value Index", "number", Description = "Enter the index position of the value (key) field from the delimited line. The default index position is '1'.")]
-        public int ValueIndex { get; set; }
-
-        [ConfigurationField("iconIndex", "Icon Index", "number", Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set to '-1'.")]
-        public int IconIndex { get; set; }
-
-        [ConfigurationField("descriptionIndex", "Description Index", "number", Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set to '-1'.")]
-        public int DescriptionIndex { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new List<DataListItem>();
 
-            var lines = GetTextLines();
+            var url = config.GetValueAs("url", string.Empty);
+            var delimiter = config.GetValueAs("delimiter", ",");
+            var ignoreFirstLine = config.GetValueAs("ignoreFirstLine", false);
+            var nameIndex = config.GetValueAs("nameIndex", 0);
+            var valueIndex = config.GetValueAs("valueIndex", 0);
+            var iconIndex = config.GetValueAs("iconIndex", -1);
+            var descriptionIndex = config.GetValueAs("descriptionIndex", -1);
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return items;
+            }
+
+            var lines = GetTextLines(url);
 
             if (lines == null || lines.Length == 0)
+            {
                 return items;
+            }
 
-            var delimiter = string.IsNullOrEmpty(Delimiter) == false ? new[] { Delimiter } : new[] { "," };
-            var nameIndex = NameIndex >= 0 ? NameIndex : 0;
-            var valueIndex = ValueIndex >= 0 ? ValueIndex : 0;
-            var iconIndex = IconIndex >= 0 ? IconIndex : -1;
-            var descriptionIndex = DescriptionIndex >= 0 ? DescriptionIndex : -1;
+            var separator = new[] { delimiter };
+            var trimChars = new[] { ' ', '"', '\'' };
 
             for (var i = 0; i < lines.Length; i++)
             {
-                if (i == 0 && IgnoreFirstLine)
+                if (i == 0 && ignoreFirstLine)
                 {
                     continue;
                 }
 
-                var fields = lines[i].Split(delimiter, StringSplitOptions.None);
+                var fields = lines[i].Split(separator, StringSplitOptions.None);
 
                 if (fields.Length == 0)
                 {
                     continue;
                 }
-
-                var trimChars = new[] { ' ', '"', '\'' };
 
                 var name = nameIndex >= 0 && fields.Length > nameIndex
                     ? fields[nameIndex].Trim(trimChars)
@@ -126,18 +170,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        private string[] GetTextLines()
+        private string[] GetTextLines(string url)
         {
-            if (string.IsNullOrWhiteSpace(Url))
-                return default;
-
-            if (Url.InvariantStartsWith("http"))
+            if (url.InvariantStartsWith("http"))
             {
                 try
                 {
                     using (var client = new WebClient())
                     {
-                        return client.DownloadString(Url).Split('\r', '\n');
+                        return client.DownloadString(url).Split('\r', '\n');
                     }
                 }
                 catch (WebException ex)
@@ -148,7 +189,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             else
             {
                 // assume local file
-                var path = IOHelper.MapPath(Url);
+                var path = IOHelper.MapPath(url);
                 if (File.Exists(path))
                 {
                     return File.ReadAllLines(path);
@@ -160,17 +201,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return default;
-        }
-
-        class TextDelimitedNotesConfigurationField : NotesConfigurationField
-        {
-            public TextDelimitedNotesConfigurationField()
-                : base(@"<div class=""alert alert-info"">
-<p><strong>A note about using this data source.</strong></p>
-<p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
-<p>The fields are then assigned by index position.</p>
-</div>", true)
-            { }
         }
     }
 }

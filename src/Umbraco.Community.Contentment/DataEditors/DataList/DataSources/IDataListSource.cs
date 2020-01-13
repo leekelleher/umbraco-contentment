@@ -9,6 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public interface IDataListSource : IContentmentListItem
     {
-        IEnumerable<DataListItem> GetItems();
+        IEnumerable<DataListItem> GetItems(Dictionary<string, object> config);
     }
 }

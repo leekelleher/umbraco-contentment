@@ -18,6 +18,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => TextInputDataEditor.DataEditorIcon;
 
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        {
+            new PlaceholderTextConfigurationField(),
+            new AutocompleteConfigurationField(),
+            new MaxCharsConfigurationField(),
+        };
+
         public Dictionary<string, object> DefaultConfig => default;
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
@@ -26,14 +33,5 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         public string View => IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath);
-
-        [ConfigurationField(typeof(PlaceholderTextConfigurationField))]
-        public string PlaceholderText { get; set; }
-
-        [ConfigurationField(typeof(AutocompleteConfigurationField))]
-        public bool Autocomplete { get; set; }
-
-        [ConfigurationField(typeof(MaxCharsConfigurationField))]
-        public int MaxChars { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -22,9 +23,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "fa fa-font-awesome";
 
+        public IEnumerable<ConfigurationField> Fields => default;
+
         public Dictionary<string, object> DefaultValues => default;
 
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new HashSet<string>();
 

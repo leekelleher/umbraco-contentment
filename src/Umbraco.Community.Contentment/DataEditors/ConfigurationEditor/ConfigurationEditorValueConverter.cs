@@ -44,9 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (type != null)
                     {
-                        var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
-
-                        if (item["value"].ToObject(type, serializer) is IConfigurationEditorItem obj)
+                        if (item["value"].ToObject(type) is IConfigurationEditorItem obj)
                         {
                             items.Add(obj);
                         }

@@ -16,11 +16,26 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string ContentBlockTypes = "contentBlockTypes";
 
-        public ContentBlocksTypesConfigurationField(
-            IEnumerable<IContentType> elementTypes,
-            ConfigurationEditorUtility utility)
+        public ContentBlocksTypesConfigurationField(IEnumerable<IContentType> elementTypes)
         {
-            var fields = utility.GetConfigurationFields(typeof(ContentBlocksTypeConfiguration));
+            var fields = new[]
+            {
+                new ConfigurationField
+                {
+                    Key = "elementType",
+                    Name = "Element type",
+                    View = IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "readonly-node-preview.html"),
+                    HideLabel = true,
+                },
+                new ConfigurationField
+                {
+                    Key = "nameTemplate",
+                    Name = "Name template",
+                    View = "textstring",
+                    Description = "Enter an AngularJS expression to evaluate against each block for its name."
+                },
+                new OverlaySizeConfigurationField()
+            };
 
             var items = elementTypes
                 .OrderBy(x => x.Name)

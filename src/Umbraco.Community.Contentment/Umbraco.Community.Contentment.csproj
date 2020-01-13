@@ -295,9 +295,16 @@
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
-    <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypeConfiguration.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputValueConverter.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
     <Compile Include="DataEditors\TextInput\PrependIconConfigurationField.cs" />
@@ -307,6 +314,7 @@
     <Compile Include="DataEditors\TextInput\MaxCharsConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
+    <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
@@ -316,7 +324,6 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\TextInput\TextInputConfigurationEditor.cs" />
     <Compile Include="DataEditors\TextInput\TextInputDataEditor.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesDataEditor.cs" />
     <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
@@ -345,7 +352,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\OverlaySizeConfigurationField.cs" />
     <Compile Include="Properties\SolutionInfo.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
-    <Compile Include="Serialization\ConfigurationFieldContractResolver.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
@@ -353,14 +359,7 @@
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\EnumDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
@@ -419,7 +418,6 @@
     <Compile Include="DataEditors\_\ConfigurationFields\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="Migrations\ContentmentPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\ConfigurationFieldJsonSerializerSettings.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
     <Compile Include="Web\PublishedCache\DetachedPublishedElement.cs" />

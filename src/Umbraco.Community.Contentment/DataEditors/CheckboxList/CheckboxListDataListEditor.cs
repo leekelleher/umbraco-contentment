@@ -17,16 +17,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => CheckboxListDataEditor.DataEditorIcon;
 
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        {
+            new CheckAllConfigurationField(),
+            new ShowDescriptionsConfigurationField(),
+        };
+
         public Dictionary<string, object> DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => default;
 
         public string View => IOHelper.ResolveUrl(CheckboxListDataEditor.DataEditorViewPath);
-
-        [ConfigurationField(typeof(CheckAllConfigurationField))]
-        public bool CheckAll { get; set; }
-
-        [ConfigurationField(typeof(ShowDescriptionsConfigurationField))]
-        public bool ShowDescriptions { get; set; }
     }
 }
