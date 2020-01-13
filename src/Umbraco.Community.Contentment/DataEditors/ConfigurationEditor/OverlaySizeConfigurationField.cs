@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string Large = "large";
 
         public OverlaySizeConfigurationField()
-            : this(Large)
+            : this(Small)
         { }
 
         public OverlaySizeConfigurationField(string defaultSize)
