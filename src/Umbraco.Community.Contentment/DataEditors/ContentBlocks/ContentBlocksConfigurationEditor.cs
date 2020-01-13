@@ -23,17 +23,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         internal const string OverlayView = "overlayView";
 
-        public ContentBlocksConfigurationEditor(
-            IContentService contentService,
-            IContentTypeService contentTypeService,
-            ConfigurationEditorUtility utility)
+        public ContentBlocksConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService)
             : base()
         {
             // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
             _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
-            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, utility));
+            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values));
             Fields.Add(new ContentBlocksDisplayModeConfigurationField());
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());
@@ -49,7 +46,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (config.TryGetValue(ContentBlocksTypesConfigurationField.ContentBlockTypes, out var tmp) && tmp is JArray array && array.Count > 0)
             {
                 var elementTypes = new List<ContentBlockType>();
-                var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
 
                 for (var i = 0; i < array.Count; i++)
                 {
@@ -57,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var elementType = _elementTypes[guid];
 
-                        var settings = array[i]["value"].ToObject<ContentBlocksTypeConfiguration>(serializer);
+                        var settings = array[i]["value"].ToObject<Dictionary<string, object>>();
 
                         var blueprints = _elementBlueprints.Value.Contains(elementType.Id)
                             ? _elementBlueprints.Value[elementType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })
@@ -71,8 +67,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Icon = elementType.Icon,
                             Key = elementType.Key,
                             Blueprints = blueprints,
-                            NameTemplate = settings?.NameTemplate,
-                            OverlaySize = settings?.OverlaySize,
+                            NameTemplate = settings?.ContainsKey("nameTemplate") == true ? settings["nameTemplate"].ToString() : null,
+                            OverlaySize = settings?.ContainsKey("overlaySize") == true ? settings["overlaySize"].ToString() : null,
                         });
                     }
                 }

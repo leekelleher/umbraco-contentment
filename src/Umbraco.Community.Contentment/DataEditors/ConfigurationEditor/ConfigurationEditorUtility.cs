@@ -46,8 +46,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             var type = item.GetType();
 
             var fields = ignoreFields == false
-                   ? GetConfigurationFields(type)
-                   : Enumerable.Empty<ConfigurationField>();
+                ? item.Fields
+                : Enumerable.Empty<ConfigurationField>();
 
             return new ConfigurationEditorModel
             {
@@ -74,47 +74,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return models;
-        }
-
-        public IEnumerable<ConfigurationField> GetConfigurationFields(Type type)
-        {
-            var fields = new List<ConfigurationField>();
-
-            var properties = type.GetProperties();
-
-            foreach (var property in properties)
-            {
-                if (Attribute.IsDefined(property, typeof(ConfigurationFieldAttribute)) == false)
-                    continue;
-
-                var attr = property.GetCustomAttribute<ConfigurationFieldAttribute>(false);
-                if (attr == null)
-                    continue;
-
-                if (attr.Type != null)
-                {
-                    var field = Activator.CreateInstance(attr.Type) as ConfigurationField;
-                    if (field != null)
-                    {
-                        fields.Add(field);
-                    }
-                }
-                else
-                {
-                    fields.Add(new ConfigurationField
-                    {
-                        Key = attr.Key ?? property.Name,
-                        Name = attr.Name ?? property.Name,
-                        PropertyName = property.Name,
-                        PropertyType = property.PropertyType,
-                        Description = attr.Description,
-                        HideLabel = attr.HideLabel,
-                        View = IOHelper.ResolveVirtualUrl(attr.View)
-                    });
-                }
-            }
-
-            return fields;
         }
     }
 }

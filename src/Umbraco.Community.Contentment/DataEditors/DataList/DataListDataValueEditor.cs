@@ -37,8 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var editorConfig = new Dictionary<string, object>();
 
-                        var settings = new Serialization.ConfigurationFieldJsonSerializerSettings();
-
                         if (config.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
                             dataSource is JArray array1 &&
                             array1.Count > 0)
@@ -47,9 +45,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("type"));
                             if (source != null)
                             {
-                                JsonConvert.PopulateObject(item["value"].ToString(), source, settings);
-
-                                var items = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
+                                var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
+                                var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
 
                                 editorConfig.Add(DataListConfigurationEditor.Items, items);
                             }
@@ -65,8 +62,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                             if (editor != null)
                             {
                                 var val = item["value"] as JObject;
-
-                                JsonConvert.PopulateObject(val.ToString(), editor, settings);
 
                                 if (config.ContainsKey(DataListConfigurationEditor.EditorView) == false)
                                 {

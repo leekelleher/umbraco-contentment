@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Umbraco.Core.Composing;
+using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -17,6 +18,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         string Description { get; }
 
         string Icon { get; }
+
+        IEnumerable<ConfigurationField> Fields { get; }
 
         Dictionary<string, object> DefaultValues { get; }
     }

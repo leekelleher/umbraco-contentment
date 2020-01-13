@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
@@ -31,6 +32,57 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
+        public IEnumerable<ConfigurationField> Fields => new[]
+        {
+            new NotesConfigurationField(@"<div class=""alert alert-info"">
+<p><strong>Help with your JSONPath expressions?</strong></p>
+<p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
+<p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank"">goessner.net/articles/JsonPath</a>.</p>
+</div>", true),
+            new ConfigurationField
+            {
+                Key = "url",
+                Name = "URL",
+                Description = "Enter the URL of the JSON data source.",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "itemsJsonPath",
+                Name = "Items JSONPath",
+                Description = "Enter the JSONPath expression to select the items from the JSON data source.",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "nameJsonPath",
+                Name = "Name JSONPath",
+                Description = "Enter the JSONPath expression to select the name from the item.",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "valueJsonPath",
+                Name = "Value JSONPath",
+                Description = "Enter the JSONPath expression to select the value (key) from the item.",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "iconJsonPath",
+                Name = "Icon JSONPath",
+                Description = "<em>(optional)</em> Enter the JSONPath expression to select the icon from the item.",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "descriptionJsonPath",
+                Name = "Description JSONPath",
+                Description = "<em>(optional)</em> Enter the JSONPath expression to select the description from the item.",
+                View = "textstring",
+            },
+        };
+
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "itemsJsonPath", "$..book[?(@.enabled == true)]" },
@@ -38,76 +90,73 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "valueJsonPath", "$.id" },
         };
 
-        [ConfigurationField(typeof(JsonNotesConfigurationField))]
-        public string Notes { get; set; }
-
-        [ConfigurationField("url", "URL", "textstring", Description = "Enter the URL of the JSON data source.")]
-        public string Url { get; set; }
-
-        [ConfigurationField("itemsJsonPath", "Items JSONPath", "textstring", Description = "Enter the JSONPath expression to select the items from the JSON data source.")]
-        public string ItemsJsonPath { get; set; }
-
-        [ConfigurationField("nameJsonPath", "Name JSONPath", "textstring", Description = "Enter the JSONPath expression to select the name from the item.")]
-        public string NameJsonPath { get; set; }
-
-        [ConfigurationField("valueJsonPath", "Value JSONPath", "textstring", Description = "Enter the JSONPath expression to select the value (key) from the item.")]
-        public string ValueJsonPath { get; set; }
-
-        [ConfigurationField("iconXPath", "Icon JSONPath", "textstring", Description = "<em>(optional)</em> Enter the JSONPath expression to select the icon from the item.")]
-        public string IconJsonPath { get; set; }
-
-        [ConfigurationField("descriptionJsonPath", "Description JSONPath", "textstring", Description = "<em>(optional)</em> Enter the JSONPath expression to select the description from the item.")]
-        public string DescriptionJsonPath { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new List<DataListItem>();
 
-            if (string.IsNullOrWhiteSpace(Url))
-                return items;
+            var url = config.GetValueAs("url", string.Empty);
 
-            var json = GetJson();
-
-            if (json == null || string.IsNullOrWhiteSpace(ItemsJsonPath))
+            if (string.IsNullOrWhiteSpace(url))
+            {
                 return items;
+            }
+
+            var json = GetJson(url);
+
+            if (json == null)
+            {
+                return items;
+            }
+
+            var itemsJsonPath = config.GetValueAs("itemsJsonPath", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(itemsJsonPath))
+            {
+                return items;
+            }
 
             try
             {
-                var tokens = json.SelectTokens(ItemsJsonPath);
+                var tokens = json.SelectTokens(itemsJsonPath);
 
                 if (tokens.Any() == false)
                 {
-                    _logger.Warn<JsonDataListSource>($"The JSONPath '{ItemsJsonPath}' did not match any items in the JSON.");
+                    _logger.Warn<JsonDataListSource>($"The JSONPath '{itemsJsonPath}' did not match any items in the JSON.");
                     return items;
                 }
 
-                // TODO: How would you get the string-value from a "key"?
+                // TODO: [UP-FOR-GRABS] How would you get the string-value from a "key"?
                 // This project https://github.com/s3u/JSONPath supports "~" to retrieve keys. However this is not in the original jsonpath-specs.
                 // We could implement something similar, which checks the JsonPaths for a ~, and the we'll code-extract the keys. However this is a somewhat shady solution.
 
+                var nameJsonPath = config.GetValueAs("nameJsonPath", string.Empty);
+                var valueJsonPath = config.GetValueAs("valueJsonPath", string.Empty);
+                var iconJsonPath = config.GetValueAs("iconJsonPath", string.Empty);
+                var descriptionJsonPath = config.GetValueAs("descriptionJsonPath", string.Empty);
+
                 foreach (var token in tokens)
                 {
-                    var name = token.SelectToken(NameJsonPath);
-                    var value = token.SelectToken(ValueJsonPath);
+                    var name = token.SelectToken(nameJsonPath);
+                    var value = token.SelectToken(valueJsonPath);
 
-                    var icon = string.IsNullOrEmpty(IconJsonPath) == false
-                        ? token.SelectToken(IconJsonPath)
+                    var icon = string.IsNullOrEmpty(iconJsonPath) == false
+                        ? token.SelectToken(iconJsonPath)
                         : null;
 
-                    var description = string.IsNullOrEmpty(DescriptionJsonPath) == false
-                        ? token.SelectToken(DescriptionJsonPath)
+                    var description = string.IsNullOrEmpty(descriptionJsonPath) == false
+                        ? token.SelectToken(descriptionJsonPath)
                         : null;
 
                     // How should we log if either name or value is empty? Note that empty or missing values are totally legal according to json
                     if (name == null)
                     {
-                        _logger.Warn<JsonDataListSource>($"The JSONPath '{NameJsonPath}' did not match a 'name' in the item JSON.");
+                        _logger.Warn<JsonDataListSource>($"The JSONPath '{nameJsonPath}' did not match a 'name' in the item JSON.");
                     }
 
                     // If value is missing we'll skip this specific item and log as a warning
                     if (value == null)
                     {
-                        _logger.Warn<JsonDataListSource>($"The JSONPath '{ValueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
+                        _logger.Warn<JsonDataListSource>($"The JSONPath '{valueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
                         continue;
                     }
 
@@ -128,42 +177,42 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        private JToken GetJson()
+        private JToken GetJson(string url)
         {
             var content = string.Empty;
 
-            if (Url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+            if (url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
             {
                 try
                 {
                     using (var client = new WebClient() { Encoding = Encoding.UTF8 })
                     {
-                        content = client.DownloadString(Url);
+                        content = client.DownloadString(url);
                     }
                 }
                 catch (WebException ex)
                 {
-                    _logger.Error<JsonDataListSource>(ex, $"Unable to fetch remote data from URL: {Url}");
+                    _logger.Error<JsonDataListSource>(ex, $"Unable to fetch remote data from URL: {url}");
                 }
             }
             else
             {
                 // assume local file
-                var path = IOHelper.MapPath(Url);
+                var path = IOHelper.MapPath(url);
                 if (File.Exists(path))
                 {
                     content = File.ReadAllText(path);
                 }
                 else
                 {
-                    _logger.Error<JsonDataListSource>(new FileNotFoundException(), $"Unable to find the local file path: {Url}");
+                    _logger.Error<JsonDataListSource>(new FileNotFoundException(), $"Unable to find the local file path: {url}");
                     return null;
                 }
             }
 
             if (string.IsNullOrWhiteSpace(content))
             {
-                _logger.Warn<JsonDataListSource>($"The contents of '{Url}' was empty. Unable to process JSON data.");
+                _logger.Warn<JsonDataListSource>($"The contents of '{url}' was empty. Unable to process JSON data.");
 
                 return default;
             }
@@ -181,17 +230,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return default;
-        }
-
-        class JsonNotesConfigurationField : NotesConfigurationField
-        {
-            public JsonNotesConfigurationField()
-                : base(@"<div class=""alert alert-info"">
-<p><strong>Help with your JSONPath expressions?</strong></p>
-<p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
-<p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank"">goessner.net/articles/JsonPath</a>.</p>
-</div>", true)
-            { }
         }
     }
 }

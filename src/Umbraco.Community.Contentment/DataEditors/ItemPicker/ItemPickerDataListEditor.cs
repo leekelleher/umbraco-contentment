@@ -17,6 +17,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => ItemPickerDataEditor.DataEditorIcon;
 
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        {
+            new DefaultIconConfigurationField(),
+            new ItemPickerTypeConfigurationField(),
+            new MaxItemsConfigurationField(),
+            new AllowDuplicatesConfigurationField(),
+            new EnableMultipleConfigurationField(),
+            new DisableSortingConfigurationField(),
+        };
+
         public Dictionary<string, object> DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
@@ -26,23 +36,5 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
-
-        [ConfigurationField(typeof(DefaultIconConfigurationField))]
-        public string DefaultIcon { get; set; }
-
-        [ConfigurationField(typeof(ItemPickerTypeConfigurationField))]
-        public string ListType { get; set; }
-
-        [ConfigurationField(typeof(MaxItemsConfigurationField))]
-        public int MaxItems { get; set; }
-
-        [ConfigurationField(typeof(AllowDuplicatesConfigurationField))]
-        public bool AllowDuplicates { get; set; }
-
-        [ConfigurationField(typeof(EnableMultipleConfigurationField))]
-        public bool EnableMultiple { get; set; }
-
-        [ConfigurationField(typeof(DisableSortingConfigurationField))]
-        public bool DisableSorting { get; set; }
     }
 }

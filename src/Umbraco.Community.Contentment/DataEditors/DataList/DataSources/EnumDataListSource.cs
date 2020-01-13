@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -32,30 +33,63 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => default;
 
-        [ConfigurationField(typeof(EnumTypeConfigurationField))]
-        public string[] EnumType { get; set; }
+        public IEnumerable<ConfigurationField> Fields => new[]
+        {
+            new ConfigurationField
+            {
+                Key = "enumType",
+                Name = "Enumeration type",
+                Description = "Select the enumeration from an assembly type.",
+                View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { CascadingDropdownListConfigurationEditor.APIs, new[]
+                        {
+                            EnumDataSourceApiController.GetAssembliesUrl,
+                            EnumDataSourceApiController.GetEnumsUrl,
+                        }
+                    }
+                }
+            },
+            new ConfigurationField
+            {
+                Key = "sortAlphabetically",
+                Name = "Sort alphabetically?",
+                Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
+                View = "boolean"
+            }
+        };
 
-        [ConfigurationField(typeof(SortAlphabeticallyConfigurationField))]
-        public bool SortAlphabetically { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new List<DataListItem>();
 
-            if (EnumType == null || EnumType.Length < 2)
+            var enumType = default(string[]);
+            if (config.TryGetValue("enumType", out var tmp1) && tmp1 is JArray array)
+            {
+                enumType = array.ToObject<string[]>();
+            }
+
+            if (enumType == default || enumType.Length < 2)
+            {
                 return items;
+            }
 
             var assembly = default(Assembly);
-            try { assembly = Assembly.Load(EnumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+            try { assembly = Assembly.Load(enumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
             if (assembly == null)
+            {
                 return items;
+            }
 
-            var enumType = default(Type);
-            try { enumType = assembly.GetType(EnumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
-            if (enumType == null || enumType.IsEnum == false)
+            var type = default(Type);
+            try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+            if (type == null || type.IsEnum == false)
+            {
                 return items;
+            }
 
-            var fields = enumType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             foreach (var field in fields)
             {
                 var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
@@ -65,51 +99,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(),
-                    Value = field.Name
+                    Value = attr?.Value ?? field.Name
                 });
             }
 
-            if (SortAlphabetically)
+            if (config.TryGetValue("sortAlphabetically", out var tmp2) && tmp2 is string boolean && boolean.Equals("1"))
             {
                 return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
             }
 
             return items;
-        }
-
-        private class EnumTypeConfigurationField : ConfigurationField
-        {
-            internal const string EnumType = "enumType";
-
-            public EnumTypeConfigurationField()
-            {
-                Key = EnumType;
-                Name = "Enumeration type";
-                Description = "Select the enumeration from an assembly type.";
-                View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath);
-                Config = new Dictionary<string, object>
-                {
-                    { CascadingDropdownListConfigurationEditor.APIs, new[]
-                        {
-                            EnumDataSourceApiController.GetAssembliesUrl,
-                            EnumDataSourceApiController.GetEnumsUrl,
-                        }
-                    }
-                };
-            }
-        }
-
-        class SortAlphabeticallyConfigurationField : ConfigurationField
-        {
-            internal const string SortAlphabetically = "sortAlphabetically";
-
-            public SortAlphabeticallyConfigurationField()
-            {
-                Key = SortAlphabetically;
-                Name = "Sort alphabetically?";
-                Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.";
-                View = "boolean";
-            }
         }
     }
 }

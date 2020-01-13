@@ -19,30 +19,45 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-folder-close";
 
+        public IEnumerable<ConfigurationField> Fields => new[]
+        {
+            new ConfigurationField
+            {
+                Key = "path",
+                Name = "Folder Path",
+                Description = "Enter the relative path of the folder. e.g. <code>~/css</code>",
+                View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "filter",
+                Name = "Filename filter",
+                Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>",
+                View = "textstring",
+            }
+        };
+
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "path", "~/" },
             { "filter", "*.*" },
         };
 
-        [ConfigurationField("path", "Folder Path", "textstring", Description = "Enter the relative path of the folder. e.g. <code>~/css</code>")]
-        public string Path { get; set; }
-
-        [ConfigurationField("filter", "Filename filter", "textstring", Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>")]
-        public string Filter { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var path = string.IsNullOrWhiteSpace(Path) == false
-                ? Path.EnsureEndsWith("/")
+            var path = config.GetValueAs("path", string.Empty);
+            var filter = config.GetValueAs("filter", string.Empty);
+
+            var virtualRoot = string.IsNullOrWhiteSpace(path) == false
+                ? path.EnsureEndsWith("/")
                 : "~/";
 
-            var filter = string.IsNullOrWhiteSpace(Filter) == false
-                ? Filter
+            var fileFilter = string.IsNullOrWhiteSpace(filter) == false
+                ? filter
                 : "*.*";
 
-            var fs = new PhysicalFileSystem(path);
-            var files = fs.GetFiles(".", filter);
+            var fs = new PhysicalFileSystem(virtualRoot);
+            var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem
             {

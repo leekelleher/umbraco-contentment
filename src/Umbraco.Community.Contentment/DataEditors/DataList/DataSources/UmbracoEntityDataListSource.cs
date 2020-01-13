@@ -36,10 +36,32 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         private readonly IEntityService _entityService;
+        private readonly ConfigurationField[] _fields;
 
         public UmbracoEntityDataListSource(IEntityService entityService)
         {
             _entityService = entityService;
+
+            _fields = new ConfigurationField[]
+            {
+                new NotesConfigurationField(@"<div class=""alert alert-warning"">
+<p><strong>A note about supported Umbraco entity types.</strong></p>
+<p>Umbraco's `EntityService` API has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
+<p>Supported entity types are available in the list below.</p>
+</div>", true),
+                new ConfigurationField
+                {
+                    Key = "entityType",
+                    Name = "Entity type",
+                    Description = "Select the Umbraco entity type to use.",
+                    View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                    Config = new Dictionary<string, object>()
+                    {
+                        { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
+                        { DropdownListConfigurationEditor.Items, SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x }) },
+                    }
+                }
+            };
         }
 
         public string Name => "Umbraco Entity";
@@ -48,19 +70,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-science";
 
+        public IEnumerable<ConfigurationField> Fields => _fields;
+
         public Dictionary<string, object> DefaultValues => default;
 
-        [ConfigurationField(typeof(UmbracoEntityNotesConfigurationField))]
-        public string Notes { get; set; }
-
-        [ConfigurationField(typeof(EntityTypeConfigurationField))]
-        public string EntityType { get; set; }
-
-        public IEnumerable<DataListItem> GetItems()
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (SupportedEntityTypes.TryGetValue(EntityType, out var objectType))
+            var entityType = config.TryGetValue("entityType", out var tmp1) && tmp1 is string value
+                ? value
+                : string.Empty;
+
+            if (SupportedEntityTypes.TryGetValue(entityType, out var objectType))
             {
-                var icon = EntityTypeIcons.ContainsKey(EntityType) ? EntityTypeIcons[EntityType] : this.Icon;
+                var icon = EntityTypeIcons.ContainsKey(entityType) ? EntityTypeIcons[entityType] : this.Icon;
 
                 return _entityService
                     .GetAll(objectType)
@@ -73,39 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     });
             }
 
-            return null;
-        }
-
-        class UmbracoEntityNotesConfigurationField : NotesConfigurationField
-        {
-            public UmbracoEntityNotesConfigurationField()
-                : base(@"<div class=""alert alert-warning"">
-<p><strong>A note about supported Umbraco entity types.</strong></p>
-<p>Umbraco's `EntityService` API has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
-<p>Supported entity types are available in the list below.</p>
-</div>", true)
-            { }
-        }
-
-        class EntityTypeConfigurationField : ConfigurationField
-        {
-            internal const string EntityType = "entityType";
-
-            public EntityTypeConfigurationField()
-                : base()
-            {
-                var items = SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x });
-
-                Key = EntityType;
-                Name = "Entity type";
-                Description = "Select the Umbraco entity type to use.";
-                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
-                Config = new Dictionary<string, object>()
-                {
-                    { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, items },
-                };
-            }
+            return Enumerable.Empty<DataListItem>();
         }
     }
 }

@@ -52,10 +52,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
                 if (type != null)
                 {
-                    var serializer = JsonSerializer.CreateDefault(new Serialization.ConfigurationFieldJsonSerializerSettings());
-
-                    var source = item["value"].ToObject(type, serializer) as IDataListSource;
-                    var options = source?.GetItems() ?? Enumerable.Empty<DataListItem>();
+                    // TODO: [LK:2020-01-13] Investigate this. Look to reuse same code as DataList.
+                    var source = item["value"].ToObject(type) as IDataListSource;
+                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
+                    var options = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
 
                     config[Items] = options;
                 }
