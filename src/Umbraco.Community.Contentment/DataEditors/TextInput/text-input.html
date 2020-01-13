@@ -8,7 +8,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.TextInput.Controller as vm">
+<div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.TextInput.Controller as vm">
     <div class="text-input" ng-class="{ 'input-prepend': vm.prepend, 'input-append': vm.append }">
         <span class="add-on" ng-if="vm.prepend">
             <i class="icon" ng-class="vm.prepend"></i>

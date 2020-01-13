@@ -38,12 +38,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.prepend = config.prepend;
             vm.append = config.append;
 
+            vm.uniqueId = _.has($scope.model, "dataTypeKey")
+                ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
+                : $scope.model.alias;
+
             if (config.items && config.items.length > 0) {
 
                 vm.dataList = config.items;
-                vm.dataListId = _.has($scope.model, "dataTypeKey")
-                    ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
-                    : $scope.model.alias;
+                vm.dataListId = "dl-" + vm.uniqueId;
             }
         };
 
