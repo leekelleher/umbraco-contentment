@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
@@ -93,9 +94,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             foreach (var field in fields)
             {
                 var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
+                var attr2 = field.GetCustomAttribute<DescriptionAttribute>(false);
                 items.Add(new DataListItem
                 {
-                    Description = attr?.Description,
+                    Description = attr?.Description ?? attr2?.Description,
                     Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(),
