@@ -8,14 +8,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [HideFromTypeFinder]
+    [Core.Composing.HideFromTypeFinder]
     public sealed class TextDelimitedDataListSource : IDataListSource
     {
         private readonly ILogger _logger;

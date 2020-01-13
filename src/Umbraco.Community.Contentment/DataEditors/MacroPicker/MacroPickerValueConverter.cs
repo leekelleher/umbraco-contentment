@@ -14,6 +14,7 @@ using Umbraco.Web.Models;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [Core.Composing.HideFromTypeFinder]
     internal sealed class MacroPickerValueConverter : PropertyValueConverterBase
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(MacroPickerDataEditor.DataEditorAlias);

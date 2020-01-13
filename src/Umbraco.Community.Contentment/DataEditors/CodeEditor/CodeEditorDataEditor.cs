@@ -15,12 +15,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Text,
         Group = Constants.Conventions.PropertyGroups.Code,
-#if DEBUG
-        Icon = "icon-block color-red"
-#else
-        Icon = DataEditorIcon
-#endif
-        )]
+        Icon = DataEditorIcon)]
+    [Core.Composing.HideFromTypeFinder]
     internal sealed class CodeEditorDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CodeEditor";

@@ -16,12 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = Core.Constants.PropertyEditors.Groups.Lists,
-#if DEBUG
-        Icon = "icon-block color-red"
-#else
-        Icon = DataEditorIcon
-#endif
-        )]
+        Icon = DataEditorIcon)]
+    [Core.Composing.HideFromTypeFinder]
     internal sealed class DataTableDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DataTable";

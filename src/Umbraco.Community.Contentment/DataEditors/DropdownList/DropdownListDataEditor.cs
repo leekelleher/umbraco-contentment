@@ -15,12 +15,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.String,
         Group = Core.Constants.PropertyEditors.Groups.Lists,
-#if DEBUG
-        Icon = "icon-block color-red"
-#else
-        Icon = DataEditorIcon
-#endif
-        )]
+        Icon = DataEditorIcon)]
+    [Core.Composing.HideFromTypeFinder]
     internal sealed class DropdownListDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DropdownList";

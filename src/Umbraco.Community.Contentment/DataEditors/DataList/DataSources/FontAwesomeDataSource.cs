@@ -8,13 +8,12 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [HideFromTypeFinder]
+    [Core.Composing.HideFromTypeFinder]
     public sealed class FontAwesomeDataSource : IDataListSource
     {
         public string Name => "Font Awesome";

@@ -16,12 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorViewPath,
         ValueType = ValueTypes.Json,
         Group = Core.Constants.PropertyEditors.Groups.Pickers,
-#if DEBUG
-        Icon = "icon-block color-red"
-#else
-        Icon = DataEditorIcon
-#endif
-        )]
+        Icon = DataEditorIcon)]
+    [Core.Composing.HideFromTypeFinder]
     internal sealed class MacroPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "MacroPicker";

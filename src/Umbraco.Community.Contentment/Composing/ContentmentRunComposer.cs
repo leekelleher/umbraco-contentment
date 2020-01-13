@@ -3,12 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if DEBUG
 using Umbraco.Community.Contentment.DataEditors;
+#endif
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 
 namespace Umbraco.Community.Contentment.Composing
 {
+    [ComposeAfter(typeof(ContentmentBootComposer))]
     [RuntimeLevel(MinLevel = RuntimeLevel.Run)]
     internal sealed class ContentmentRunComposer : IUserComposer
     {
@@ -19,40 +22,40 @@ namespace Umbraco.Community.Contentment.Composing
                     .Append<ContentmentComponent>()
             ;
 
-#if !DEBUG
+#if DEBUG
             composition
                 .DataEditors()
-                    .Exclude<CardsDataEditor>()
-                    .Exclude<CascadingDropdownListDataEditor>()
-                    .Exclude<CheckboxDataEditor>()
-                    .Exclude<CheckboxListDataEditor>()
-                    .Exclude<CodeEditorDataEditor>()
-                    .Exclude<ConfigurationEditorDataEditor>()
-                    .Exclude<ContentBlocksDataEditor>()
-                    .Exclude<DataTableDataEditor>()
-                    .Exclude<DropdownListDataEditor>()
-                    .Exclude<ItemPickerDataEditor>()
-                    .Exclude<MacroPickerDataEditor>()
-                    .Exclude<NumberInputDataEditor>()
-                    .Exclude<RadioButtonListDataEditor>()
-                    .Exclude<TextInputDataEditor>()
-                    .Exclude<TogglesDataEditor>()
+                    .Add<CardsDataEditor>()
+                    .Add<CascadingDropdownListDataEditor>()
+                    .Add<CheckboxDataEditor>()
+                    .Add<CheckboxListDataEditor>()
+                    .Add<CodeEditorDataEditor>()
+                    .Add<ConfigurationEditorDataEditor>()
+                    .Add<ContentBlocksDataEditor>()
+                    .Add<DataTableDataEditor>()
+                    .Add<DropdownListDataEditor>()
+                    .Add<ItemPickerDataEditor>()
+                    .Add<MacroPickerDataEditor>()
+                    .Add<NumberInputDataEditor>()
+                    .Add<RadioButtonListDataEditor>()
+                    .Add<TextInputDataEditor>()
+                    .Add<TogglesDataEditor>()
             ;
 
             composition
                 .PropertyValueConverters()
-                    .Remove<CascadingDropdownListValueConverter>()
-                    .Remove<CheckboxValueConverter>()
-                    .Remove<CheckboxListValueConverter>()
-                    .Remove<CodeEditorValueConverter>()
-                    .Remove<ConfigurationEditorValueConverter>()
-                    .Remove<ContentBlocksValueConverter>()
-                    .Remove<DataTableValueConverter>()
-                    .Remove<DropdownListValueConverter>()
-                    .Remove<ItemPickerValueConverter>()
-                    .Remove<MacroPickerValueConverter>()
-                    .Remove<NumberInputValueConverter>()
-                    .Remove<RadioButtonListValueConverter>()
+                    .Append<CascadingDropdownListValueConverter>()
+                    .Append<CheckboxValueConverter>()
+                    .Append<CheckboxListValueConverter>()
+                    .Append<CodeEditorValueConverter>()
+                    .Append<ConfigurationEditorValueConverter>()
+                    .Append<ContentBlocksValueConverter>()
+                    .Append<DataTableValueConverter>()
+                    .Append<DropdownListValueConverter>()
+                    .Append<ItemPickerValueConverter>()
+                    .Append<MacroPickerValueConverter>()
+                    .Append<NumberInputValueConverter>()
+                    .Append<RadioButtonListValueConverter>()
             ;
 #endif
         }

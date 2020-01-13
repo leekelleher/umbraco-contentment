@@ -5,12 +5,11 @@
 
 using System;
 using System.Collections.Generic;
-using Umbraco.Core.Composing;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [HideFromTypeFinder]
+    [Core.Composing.HideFromTypeFinder]
     public sealed class TimeZoneDataSource : IDataListSource
     {
         public string Name => "Time zones";
