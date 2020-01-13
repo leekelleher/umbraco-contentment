@@ -36,14 +36,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                if (config.elementTypes.length > 1) {
+                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", _.pluck(config.elementTypes, "key"));
+
+                if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
                     vm.title = "Add content";
                     vm.description = "Select a content type...";
                     vm.selectBlueprint = false;
                     vm.enableFilter = Object.toBoolean(config.enableFilter);
-
-                    vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", _.pluck(config.elementTypes, "key"));
 
                     vm.select = select;
                     vm.paste = paste;
