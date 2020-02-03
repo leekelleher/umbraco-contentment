@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.Trees
         TreeTitle = Constants.Internals.ProjectName,
         TreeUse = TreeUse.Main)]
     [PluginController(Constants.Internals.PluginControllerName)]
-    internal sealed class ContentmentTreeController : TreeController
+    public sealed class ContentmentTreeController : TreeController
     {
         protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
         {

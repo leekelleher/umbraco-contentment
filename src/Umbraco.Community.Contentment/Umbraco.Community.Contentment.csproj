@@ -293,6 +293,7 @@
     <Compile Include="Composing\ContentmentBootComposer.cs" />
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
+    <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
