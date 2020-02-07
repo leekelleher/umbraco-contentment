@@ -56,6 +56,7 @@ namespace Umbraco.Community.Contentment.Composing
                     .Append<MacroPickerValueConverter>()
                     .Append<NumberInputValueConverter>()
                     .Append<RadioButtonListValueConverter>()
+                    .Append<TextInputValueConverter>()
             ;
 #endif
         }

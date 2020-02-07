@@ -308,6 +308,7 @@
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputValueConverter.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
+    <Compile Include="DataEditors\TextInput\TextInputValueConverter.cs" />
     <Compile Include="DataEditors\TextInput\PrependIconConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\AppendIconConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\PlaceholderTextConfigurationField.cs" />
