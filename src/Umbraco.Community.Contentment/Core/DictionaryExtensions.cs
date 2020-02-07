@@ -11,7 +11,7 @@ namespace Umbraco.Core
     {
         public static TValOut GetValueAs<TKey, TVal, TValOut>(this Dictionary<TKey, TVal> config, TKey key, TValOut defaultValue = default)
         {
-            if (config.TryGetValue(key, out var tmp) == false)
+            if (config.TryGetValue(key, out var tmp))
             {
                 if (tmp is TValOut value)
                 {
