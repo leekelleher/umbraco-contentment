@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.Composing
 #if DEBUG
             composition
                 .DataEditors()
-                    .Add<CardsDataEditor>()
                     .Add<CascadingDropdownListDataEditor>()
                     .Add<CheckboxDataEditor>()
                     .Add<CheckboxListDataEditor>()
@@ -39,7 +38,6 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add<NumberInputDataEditor>()
                     .Add<RadioButtonListDataEditor>()
                     .Add<TextInputDataEditor>()
-                    .Add<TogglesDataEditor>()
             ;
 
             composition

@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select items to add to a list, displayed as cards.";
 
-        public string Icon => CardsDataEditor.DataEditorIcon;
+        public string Icon => "icon-thumbnails-small";
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -37,6 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
-        public string View => IOHelper.ResolveUrl(CardsDataEditor.DataEditorViewPath);
+        public string View => IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "cards.html");
     }
 }

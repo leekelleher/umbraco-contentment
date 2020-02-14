@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select multiple values from a group of toggles.";
 
-        public string Icon => TogglesDataEditor.DataEditorIcon;
+        public string Icon => "icon-equalizer";
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -27,6 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public string View => IOHelper.ResolveUrl(TogglesDataEditor.DataEditorViewPath);
+        public string View => IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "toggles.html");
     }
 }
