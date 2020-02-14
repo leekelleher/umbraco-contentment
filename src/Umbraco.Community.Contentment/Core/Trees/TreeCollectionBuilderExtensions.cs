@@ -18,11 +18,13 @@ namespace Umbraco.Web
 {
     public static class TreeCollectionBuilderExtensions
     {
-        public static void RemoveTreeController<TController>(this TreeCollectionBuilder collection)
+        public static TreeCollectionBuilder RemoveTreeController<TController>(this TreeCollectionBuilder collection)
             where TController : TreeControllerBase
-                => RemoveTreeController(collection, typeof(TController));
+        {
+            return RemoveTreeController(collection, typeof(TController));
+        }
 
-        public static void RemoveTreeController(this TreeCollectionBuilder collection, Type controllerType)
+        public static TreeCollectionBuilder RemoveTreeController(this TreeCollectionBuilder collection, Type controllerType)
         {
             var type = typeof(TreeCollectionBuilder);
 
@@ -30,13 +32,13 @@ namespace Umbraco.Web
             var field = type.GetField("_trees", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
             if (field == null)
             {
-                return;
+                return collection;
             }
 
             var trees = (List<Tree>)field.GetValue(collection);
             if (trees == null)
             {
-                return;
+                return collection;
             }
 
             if (typeof(TreeControllerBase).IsAssignableFrom(controllerType) == false)
@@ -49,6 +51,8 @@ namespace Umbraco.Web
             {
                 trees.Remove(exists);
             }
+
+            return collection;
         }
     }
 }
