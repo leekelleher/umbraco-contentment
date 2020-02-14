@@ -62,17 +62,11 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
             if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType))
             {
-                property.ShouldSerialize = _ =>
-                {
-                    return _ignoreFromContent.Contains(property.PropertyName) == false;
-                };
+                property.ShouldSerialize = _ => _ignoreFromContent.Contains(property.PropertyName) == false;
             }
             else if (typeof(IPublishedProperty).IsAssignableFrom(member.DeclaringType))
             {
-                property.ShouldSerialize = _ =>
-                {
-                    return _ignoreFromProperty.Contains(property.PropertyName) == false;
-                };
+                property.ShouldSerialize = _ => _ignoreFromProperty.Contains(property.PropertyName) == false;
             }
 
             if (_converterLookup.ContainsKey(property.PropertyName))
