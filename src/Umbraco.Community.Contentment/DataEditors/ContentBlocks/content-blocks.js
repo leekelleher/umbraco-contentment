@@ -188,6 +188,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     $scope.model.value[$index] = model;
 
+                    setDirty();
+
                     editorService.close();
                 },
                 close: function () {
