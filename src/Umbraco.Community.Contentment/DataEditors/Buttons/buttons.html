@@ -1,0 +1,11 @@
+﻿<!-- Copyright © 2020 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment lk-buttons" ng-controller="Umbraco.Community.Contentment.DataEditors.Buttons.Controller as vm">
+    <button type="button" ng-class="{ 'selected' : item.selected }" ng-click="vm.select(item)" ng-repeat="item in vm.items">
+        <i class="icon medium" ng-class="item.icon || vm.icon"></i>
+        <span ng-bind="item.name"></span>
+    </button>
+</div>

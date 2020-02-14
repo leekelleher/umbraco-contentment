@@ -1,0 +1,28 @@
+﻿/* Copyright © 2020 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.contentment.lk-buttons button {
+    background: #ffffff;
+    border: 1px solid #d8d7d9;
+    width: auto;
+    min-width: 90px;
+    height: 80px;
+    padding: 10px;
+    margin: 3px;
+}
+
+    .contentment.lk-buttons button.selected {
+        background-color: #f5c1bc;
+        border-color: #1b264f;
+        color: #1b264f;
+    }
+
+    .contentment.lk-buttons button i {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
