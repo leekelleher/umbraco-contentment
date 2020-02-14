@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             Key = EnableMultiple;
             Name = "Multiple selection?";
-            Description = "Select to enable picking multiple items in the overlay.";
+            Description = "Select to enable picking multiple items.";
             View = "boolean";
         }
     }

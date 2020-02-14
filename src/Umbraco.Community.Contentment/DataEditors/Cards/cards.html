@@ -13,8 +13,8 @@
         <div class="umb-grid-selector__item -sortable" ng-repeat="item in vm.items">
             <div class="umb-grid-selector__item-content">
                 <i class="umb-grid-selector__item-icon" ng-class="item.icon || vm.icon"></i>
-                <div class="umb-grid-selector__item-label">{{item.name}}</div>
-                <div class="umb-grid-selector__item-default-label -blue" ng-if="vm.showDescriptions && item.description">{{item.description}}</div>
+                <div class="umb-grid-selector__item-label" ng-bind="item.name"></div>
+                <div class="umb-grid-selector__item-default-label -blue" ng-if="vm.showDescriptions && item.description" ng-bind="item.description"></div>
             </div>
             <div class="umb-grid-selector__item-remove">
                 <i class="icon icon-trash" ng-click="vm.showPrompt(item)"></i>
