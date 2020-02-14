@@ -15,8 +15,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(CheckboxDataEditor.DataEditorAlias);
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Element;
-
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(bool);
     }
 }
