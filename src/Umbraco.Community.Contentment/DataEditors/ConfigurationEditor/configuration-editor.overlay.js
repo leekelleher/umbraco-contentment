@@ -76,7 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function select(editor) {
             // If there are no fields, then we can save & close the overlay
-            if (editor.fields.length == 0) {
+            if (_.isEmpty(editor.fields)) {
                 save(editor);
             } else {
                 vm.mode = "edit";
