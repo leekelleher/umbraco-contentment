@@ -1,11 +1,5 @@
 # Contentment Ideas
 
-## BackOffice Features
-
-- NuCache viewer dashboard - similar to the Examine dashboard
-- Categories - Full category management
-
-
 ## Data Editors
 
 - TinyMCE - push the boundaries beyond Umbraco's defaults?
