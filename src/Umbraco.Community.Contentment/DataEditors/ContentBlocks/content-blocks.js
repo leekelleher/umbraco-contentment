@@ -44,7 +44,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            config.elementTypeLookup = _.indexBy(config.contentBlockTypes, "key");
+            config.elementTypeLookup = {};
+            config.nameTemplates = {};
+
+            _.each(config.contentBlockTypes, function (blockType) {
+                config.elementTypeLookup[blockType.key] = blockType;
+                config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
+            });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowCopy = Object.toBoolean(config.allowCopy) && clipboardService.isSupported();
@@ -61,9 +67,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 scroll: true,
                 tolerance: "pointer",
                 stop: function (e, ui) {
-                    _.each($scope.model.value, function (item, index) {
-                        populateName(item, index);
-                    });
                     setDirty();
                 }
             };
@@ -72,6 +75,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
+            vm.populateName = populateName;
 
             vm.propertyActions = [];
             vm.blockActions = [];
@@ -143,8 +147,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 view: config.overlayView,
                 submit: function (model) {
 
-                    populateName(model, $scope.model.value.length);
-
                     $scope.model.value.push(model);
 
                     vm.blockActions.push(actionsFactory($scope.model.value.length - 1));
@@ -184,8 +186,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 view: config.overlayView,
                 submit: function (model) {
 
-                    populateName(model, $index, elementType.nameTemplate);
-
                     $scope.model.value[$index] = model;
 
                     setDirty();
@@ -198,18 +198,25 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
-        function populateName(item, index, nameTemplate) {
+        function populateName(item, $index) {
 
-            nameTemplate = nameTemplate || config.elementTypeLookup[item.elementType].nameTemplate || "Item {{ $index }}"
+            var name = "";
 
-            var expression = $interpolate(nameTemplate);
+            var expression = config.nameTemplates[item.elementType];
+
             if (expression) {
-                item.value.$index = index + 1;
-                item.name = expression(item.value);
+
+                item.value.$index = $index + 1;
+                name = expression(item.value);
                 delete item.value.$index;
+
             } else {
-                item.name = config.elementTypeLookup[item.elementType].name;
+
+                name = config.elementTypeLookup[item.elementType].name;
+
             }
+
+            return name;
         };
 
         function remove($index) {
@@ -225,10 +232,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         $scope.model.value.splice($index, 1);
                         vm.blockActions.pop();
-
-                        _.each($scope.model.value, function (item, index) {
-                            populateName(item, index);
-                        });
 
                         if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
@@ -258,13 +261,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             localizationService.localizeMany(keys).then(function (labels) {
 
                 var item = $scope.model.value[$index];
+                var itemName = populateName(item, $index);
                 var elementType = config.elementTypeLookup[item.elementType];
 
                 overlayService.open({
                     disableBackdropClick: true,
-                    title: localizationService.tokenReplace(labels[0], [item.name]),
+                    title: localizationService.tokenReplace(labels[0], [itemName]),
                     description: labels[1],
-                    blueprintName: item.name,
+                    blueprintName: itemName,
                     view: "/App_Plugins/Contentment/editors/content-blocks.blueprint.html",
                     closeButtonLabel: labels[4],
                     submitButtonLabel: labels[5],
@@ -301,7 +305,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                                 model.submitButtonState = "success";
 
-                                notificationsService.success(labels[2], localizationService.tokenReplace(labels[3], [item.name]));
+                                notificationsService.success(labels[2], localizationService.tokenReplace(labels[3], [itemName]));
 
                                 elementType.blueprints.push({ id: data.id, name: data.variants[0].name });
 

@@ -7,7 +7,7 @@
     <div ui-sortable="vm.sortableOptions" ng-model="model.value">
         <umb-node-preview ng-repeat="item in model.value"
                           icon="item.icon"
-                          name="item.name"
+                          name="vm.populateName(item, $index)"
                           published="true"
                           description=""
                           sortable="vm.sortable"

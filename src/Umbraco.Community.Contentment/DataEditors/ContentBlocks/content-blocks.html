@@ -14,7 +14,7 @@
                     <div class="umb-group-builder__property-preview-form">
                         <div class="lk-content-blocks-preview-default">
                             <i class="icon" ng-class="item.icon"></i>
-                            <div ng-bind="item.name"></div>
+                            <div ng-bind="vm.populateName(item, $index)"></div>
                         </div>
                     </div>
                     <button aria-label="Edit content" type="button" class="umb-group-builder__open-settings" ng-click="vm.edit($index)"></button>
