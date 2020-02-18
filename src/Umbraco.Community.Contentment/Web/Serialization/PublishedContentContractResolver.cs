@@ -32,27 +32,24 @@ namespace Umbraco.Community.Contentment.Web.Serialization
         {
             _converterLookup = new Dictionary<string, JsonConverter>(StringComparer.OrdinalIgnoreCase)
             {
-                { "ItemType", new StringEnumConverter() }
+                { nameof(IPublishedContent.ItemType), new StringEnumConverter() },
             };
 
             _ignoreFromContent = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
-                "Children",
-                "ChildrenForAllCultures",
-                "CompositionAliases",
-                "ContentSet",
-                "ContentType",
-                "CreatorId",
-                "Cultures",
-                "Parent",
-                "TemplateId",
-                "WriterId",
+                nameof(IPublishedContent.Children),
+                nameof(IPublishedContent.ChildrenForAllCultures),
+                nameof(IPublishedContent.ContentType),
+                nameof(IPublishedContent.CreatorId),
+                nameof(IPublishedContent.Cultures),
+                nameof(IPublishedContent.Parent),
+                nameof(IPublishedContent.TemplateId),
+                nameof(IPublishedContent.WriterId),
             };
 
             _ignoreFromProperty = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
-                "PropertyType",
-                "ReferenceCacheLevel",
+                nameof(IPublishedProperty.PropertyType),
             };
         }
 
