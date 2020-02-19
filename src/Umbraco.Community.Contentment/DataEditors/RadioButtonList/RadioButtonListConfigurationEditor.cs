@@ -54,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
 
             Fields.Add(new ShowDescriptionsConfigurationField());
+            Fields.Add(new ShowIconsConfigurationField());
         }
     }
 }

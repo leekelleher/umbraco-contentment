@@ -13,6 +13,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             items: [],
             checkAll: 0,
             showDescriptions: 1,
+            showIcons: 0,
             defaultValue: []
         };
         var config = angular.extend({}, defaultConfig, $scope.model.config);
@@ -33,6 +34,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
+            vm.showIcons = Object.toBoolean(config.showIcons);
 
             vm.uniqueId = _.has($scope.model, "dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")

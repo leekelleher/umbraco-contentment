@@ -21,6 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new CheckAllConfigurationField(),
             new ShowDescriptionsConfigurationField(),
+            new ShowIconsConfigurationField(),
         };
 
         public Dictionary<string, object> DefaultValues => default;

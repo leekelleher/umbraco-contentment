@@ -17,9 +17,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => RadioButtonListDataEditor.DataEditorIcon;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ShowDescriptionsConfigurationField()
+            new ShowDescriptionsConfigurationField(),
+            new ShowIconsConfigurationField(),
         };
 
         public Dictionary<string, object> DefaultValues => default;

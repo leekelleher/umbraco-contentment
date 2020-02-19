@@ -17,6 +17,7 @@
                     <span class="umb-form-check__check"></span>
                 </span>
                 <span class="umb-form-check__text">
+                    <i ng-if="vm.showIcons && item.icon" class="icon" ng-class="item.icon"></i>
                     <span ng-bind-html="item.name | safe_html"></span>
                     <small ng-if="vm.showDescriptions && item.description" ng-bind-html="item.description | safe_html"></small>
                 </span>
