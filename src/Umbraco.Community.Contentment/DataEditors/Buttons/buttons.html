@@ -4,7 +4,7 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment lk-buttons" ng-controller="Umbraco.Community.Contentment.DataEditors.Buttons.Controller as vm">
-    <button type="button" ng-class="{ 'selected' : item.selected }" ng-click="vm.select(item)" ng-repeat="item in vm.items">
+    <button type="button" ng-class="{ 'selected' : item.selected }" ng-click="vm.select(item)" ng-disabled="item.disabled" ng-repeat="item in vm.items">
         <i class="icon medium" ng-class="item.icon || vm.icon"></i>
         <span ng-bind="item.name"></span>
     </button>
