@@ -36,13 +36,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         private readonly IEntityService _entityService;
-        private readonly ConfigurationField[] _fields;
 
         public UmbracoEntityDataListSource(IEntityService entityService)
         {
             _entityService = entityService;
 
-            _fields = new ConfigurationField[]
+            Fields = new ConfigurationField[]
             {
                 new NotesConfigurationField(@"<div class=""alert alert-warning"">
 <p><strong>A note about supported Umbraco entity types.</strong></p>
@@ -70,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-science";
 
-        public IEnumerable<ConfigurationField> Fields => _fields;
+        public IEnumerable<ConfigurationField> Fields { get; }
 
         public Dictionary<string, object> DefaultValues => default;
 

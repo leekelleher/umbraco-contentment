@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -24,18 +25,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = new List<DataListItem>();
-
-            foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
-            {
-                items.Add(new DataListItem
+            return TimeZoneInfo
+                .GetSystemTimeZones()
+                .Select(x => new DataListItem
                 {
-                    Name = timezone.DisplayName,
-                    Value = timezone.BaseUtcOffset.ToString()
+                    Name = x.DisplayName,
+                    Value = x.BaseUtcOffset.ToString()
                 });
-            }
-
-            return items;
         }
     }
 }
