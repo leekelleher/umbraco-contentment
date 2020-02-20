@@ -302,6 +302,7 @@
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\CountriesDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoImageCropDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
