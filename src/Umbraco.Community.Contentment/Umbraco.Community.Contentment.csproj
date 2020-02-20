@@ -320,6 +320,7 @@
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />
+    <Compile Include="Experience\SetContentTreeIconComponent.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
