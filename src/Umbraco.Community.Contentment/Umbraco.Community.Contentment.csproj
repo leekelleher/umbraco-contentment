@@ -392,10 +392,7 @@
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataListEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerTypeConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\MaxItemsConfigurationField.cs" />
-    <Compile Include="DataEditors\MacroPicker\MacroPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
-    <Compile Include="DataEditors\MacroPicker\MacroPickerModel.cs" />
-    <Compile Include="DataEditors\MacroPicker\MacroPickerValueConverter.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationField.cs" />
     <Compile Include="DataEditors\Notes\NotesDataEditor.cs" />
