@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpath, nodeContextId, getPath, publishedContentExists);
 
-                if (string.IsNullOrWhiteSpace(parsed) == false)
+                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
                     return umbracoContext
                         .Content
