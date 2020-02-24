@@ -26,7 +26,6 @@ namespace Umbraco.Community.Contentment.Composing
             composition
                 .DataEditors()
                     .Add<ContentBlocksDataEditor>()
-                    .Add<ItemPickerDataEditor>()
                     .Add<MacroPickerDataEditor>()
                     .Add<NumberInputDataEditor>()
                     .Add<TextInputDataEditor>()
@@ -35,7 +34,6 @@ namespace Umbraco.Community.Contentment.Composing
             composition
                 .PropertyValueConverters()
                     .Append<ContentBlocksValueConverter>()
-                    .Append<ItemPickerValueConverter>()
                     .Append<MacroPickerValueConverter>()
                     .Append<NumberInputValueConverter>()
                     .Append<TextInputValueConverter>()
