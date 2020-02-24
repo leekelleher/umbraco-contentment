@@ -364,7 +364,6 @@
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
-    <Compile Include="DataEditors\DataTable\DataTableValueConverter.cs" />
     <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
