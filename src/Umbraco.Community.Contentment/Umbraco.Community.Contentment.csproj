@@ -368,7 +368,6 @@
     <Compile Include="DataEditors\DropdownList\DropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataListEditor.cs" />
-    <Compile Include="DataEditors\DropdownList\DropdownListValueConverter.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentTypeCacheHelper.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDataValueEditor.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksConfigurationEditor.cs" />
