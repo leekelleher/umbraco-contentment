@@ -26,14 +26,12 @@ namespace Umbraco.Community.Contentment.Composing
             composition
                 .DataEditors()
                     .Add<ContentBlocksDataEditor>()
-                    .Add<NumberInputDataEditor>()
                     .Add<TextInputDataEditor>()
             ;
 
             composition
                 .PropertyValueConverters()
                     .Append<ContentBlocksValueConverter>()
-                    .Append<NumberInputValueConverter>()
                     .Append<TextInputValueConverter>()
             ;
 #endif
