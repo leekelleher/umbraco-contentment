@@ -404,7 +404,6 @@
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListConfigurationEditor.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataEditor.cs" />
     <Compile Include="DataEditors\RadioButtonList\RadioButtonListDataListEditor.cs" />
-    <Compile Include="DataEditors\RadioButtonList\RadioButtonListValueConverter.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroConfigurationEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroValueConverter.cs" />

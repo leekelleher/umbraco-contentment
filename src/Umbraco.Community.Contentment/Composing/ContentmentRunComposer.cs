@@ -29,7 +29,6 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add<ItemPickerDataEditor>()
                     .Add<MacroPickerDataEditor>()
                     .Add<NumberInputDataEditor>()
-                    .Add<RadioButtonListDataEditor>()
                     .Add<TextInputDataEditor>()
             ;
 
@@ -39,7 +38,6 @@ namespace Umbraco.Community.Contentment.Composing
                     .Append<ItemPickerValueConverter>()
                     .Append<MacroPickerValueConverter>()
                     .Append<NumberInputValueConverter>()
-                    .Append<RadioButtonListValueConverter>()
                     .Append<TextInputValueConverter>()
             ;
 #endif
