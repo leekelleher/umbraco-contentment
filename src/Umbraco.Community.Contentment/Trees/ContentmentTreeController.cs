@@ -9,14 +9,15 @@ using Umbraco.Web.Models.Trees;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.Trees;
 using Umbraco.Web.WebApi.Filters;
+using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.Trees
 {
     [Tree(
-        Core.Constants.Applications.Settings,
+        UmbConstants.Applications.Settings,
         Constants.Internals.TreeAlias,
         IsSingleNodeTree = true,
-        TreeGroup = Core.Constants.Trees.Groups.ThirdParty,
+        TreeGroup = UmbConstants.Trees.Groups.ThirdParty,
         TreeTitle = Constants.Internals.ProjectName,
         TreeUse = TreeUse.Main)]
     [PluginController(Constants.Internals.PluginControllerName)]
@@ -28,18 +29,14 @@ namespace Umbraco.Community.Contentment.Trees
 
             root.Icon = "icon-smiley";
             root.HasChildren = false;
-            root.RoutePath = $"{Core.Constants.Applications.Settings}/{Constants.Internals.TreeAlias}/index";
+            root.RoutePath = $"{UmbConstants.Applications.Settings}/{Constants.Internals.TreeAlias}/index";
             root.MenuUrl = null;
 
             return root;
         }
 
-        protected override MenuItemCollection GetMenuForNode(
-            string id,
-            [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
+        protected override MenuItemCollection GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
 
-        protected override TreeNodeCollection GetTreeNodes(
-            string id,
-            [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
+        protected override TreeNodeCollection GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
     }
 }
