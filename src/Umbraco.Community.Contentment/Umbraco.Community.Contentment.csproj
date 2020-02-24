@@ -344,10 +344,7 @@
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataListEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListValueConverter.cs" />
-    <Compile Include="DataEditors\Checkbox\CheckboxConfigurationEditor.cs" />
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
-    <Compile Include="DataEditors\Checkbox\CheckboxDataValueEditor.cs" />
-    <Compile Include="DataEditors\Checkbox\CheckboxValueConverter.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorValueConverter.cs" />

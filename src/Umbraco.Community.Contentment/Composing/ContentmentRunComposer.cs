@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.Composing
 #if DEBUG
             composition
                 .DataEditors()
-                    .Add<CheckboxDataEditor>()
                     .Add<CheckboxListDataEditor>()
                     .Add<CodeEditorDataEditor>()
                     .Add<ConfigurationEditorDataEditor>()
@@ -41,7 +40,6 @@ namespace Umbraco.Community.Contentment.Composing
 
             composition
                 .PropertyValueConverters()
-                    .Append<CheckboxValueConverter>()
                     .Append<CheckboxListValueConverter>()
                     .Append<CodeEditorValueConverter>()
                     .Append<ConfigurationEditorValueConverter>()
