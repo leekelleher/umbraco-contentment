@@ -339,7 +339,6 @@
     <Compile Include="DataEditors\Cards\CardsDataListEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
-    <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListValueConverter.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckAllConfigurationField.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListConfigurationEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataEditor.cs" />

@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.Composing
 #if DEBUG
             composition
                 .DataEditors()
-                    .Add<CascadingDropdownListDataEditor>()
                     .Add<CheckboxDataEditor>()
                     .Add<CheckboxListDataEditor>()
                     .Add<CodeEditorDataEditor>()
@@ -42,7 +41,6 @@ namespace Umbraco.Community.Contentment.Composing
 
             composition
                 .PropertyValueConverters()
-                    .Append<CascadingDropdownListValueConverter>()
                     .Append<CheckboxValueConverter>()
                     .Append<CheckboxListValueConverter>()
                     .Append<CodeEditorValueConverter>()
