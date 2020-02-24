@@ -346,7 +346,6 @@
     <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
-    <Compile Include="DataEditors\CodeEditor\CodeEditorValueConverter.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />

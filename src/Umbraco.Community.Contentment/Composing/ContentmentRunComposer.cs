@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.Composing
 #if DEBUG
             composition
                 .DataEditors()
-                    .Add<CodeEditorDataEditor>()
                     .Add<ConfigurationEditorDataEditor>()
                     .Add<ContentBlocksDataEditor>()
                     .Add<DataTableDataEditor>()
@@ -39,7 +38,6 @@ namespace Umbraco.Community.Contentment.Composing
 
             composition
                 .PropertyValueConverters()
-                    .Append<CodeEditorValueConverter>()
                     .Append<ConfigurationEditorValueConverter>()
                     .Append<ContentBlocksValueConverter>()
                     .Append<DataTableValueConverter>()
