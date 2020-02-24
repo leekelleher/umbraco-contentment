@@ -25,7 +25,6 @@ namespace Umbraco.Community.Contentment.Composing
 #if DEBUG
             composition
                 .DataEditors()
-                    .Add<ConfigurationEditorDataEditor>()
                     .Add<ContentBlocksDataEditor>()
                     .Add<DataTableDataEditor>()
                     .Add<DropdownListDataEditor>()
@@ -38,7 +37,6 @@ namespace Umbraco.Community.Contentment.Composing
 
             composition
                 .PropertyValueConverters()
-                    .Append<ConfigurationEditorValueConverter>()
                     .Append<ContentBlocksValueConverter>()
                     .Append<DataTableValueConverter>()
                     .Append<DropdownListValueConverter>()

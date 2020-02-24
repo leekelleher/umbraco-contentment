@@ -349,7 +349,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
-    <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorValueConverter.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\OverlaySizeConfigurationField.cs" />
     <Compile Include="Properties\SolutionInfo.cs" />
