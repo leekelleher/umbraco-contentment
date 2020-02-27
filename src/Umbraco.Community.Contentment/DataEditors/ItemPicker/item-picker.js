@@ -128,6 +128,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 if (orphaned.length > 0) {
                     $scope.model.value = _.difference($scope.model.value, orphaned);
+
+                    if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                        vm.allowAdd = true;
+                    }
                 }
 
                 ensureIcons(vm.items);
