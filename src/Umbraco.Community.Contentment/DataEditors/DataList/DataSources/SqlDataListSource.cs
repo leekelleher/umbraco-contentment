@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
+using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
@@ -16,58 +17,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class SqlDataListSource : IDataListSource
     {
-        private readonly ConfigurationField[] _fields;
+        private readonly string _codeEditorMode;
+        private readonly IEnumerable<DataListItem> _connectionStrings;
+
         public SqlDataListSource()
         {
             // NOTE: Umbraco doesn't ship with SQL mode, so we check if its been added manually, otherwise defautls to Razor.
-            var codeEditorMode = System.IO.File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sql.js"))
+            _codeEditorMode = System.IO.File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sql.js"))
                 ? "sql"
                 : "razor";
 
-            var connStrings = new List<DataListItem>();
-            foreach (ConnectionStringSettings connString in ConfigurationManager.ConnectionStrings)
-            {
-                connStrings.Add(new DataListItem { Name = connString.Name, Value = connString.Name });
-            }
-
-            _fields = new ConfigurationField[]
-            {
-                new NotesConfigurationField(@"<div class=""alert alert-info"">
-<p><strong>A note about your SQL query.</strong></p>
-<p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 4 columns). These columns will be used to populate the List Editor items.</p>
-<p>The columns will be mapped in the following order:</p>
-<ol>
-<li><strong>Name</strong> <em>(e.g. item's label)</em></li>
-<li><strong>Value</strong></li>
-<li>Description <em>(optional)</em></li>
-<li>Icon <em>(optional)</em></li>
-</ol>
-<p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
-</div>", true),
-                new ConfigurationField
+            _connectionStrings = ConfigurationManager.ConnectionStrings
+                .Cast<ConnectionStringSettings>()
+                .Select(x => new DataListItem
                 {
-                    Key = "query",
-                    Name = "SQL query",
-                    Description = "Enter your SQL query.",
-                    View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath),
-                    Config = new Dictionary<string, object>
-                    {
-                        { CodeEditorConfigurationEditor.Mode, codeEditorMode },
-                    }
-                },
-                new ConfigurationField
-                {
-                    Key = "connectionString",
-                    Name = "Connection string",
-                    Description = "Enter the connection string.",
-                    View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
-                    Config = new Dictionary<string, object>
-                    {
-                        { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
-                        { DropdownListConfigurationEditor.Items, connStrings },
-                    }
-                }
-            };
+                    Name = x.Name,
+                    Value = x.Name
+                });
         }
 
         public string Name => "SQL Data";
@@ -76,11 +42,49 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
-        public IEnumerable<ConfigurationField> Fields => _fields;
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        {
+            new NotesConfigurationField(@"<div class=""alert alert-info"">
+<p><strong>A note about your SQL query.</strong></p>
+<p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
+<p>The columns will be mapped in the following order:</p>
+<ol>
+<li><strong>Name</strong> <em>(e.g. item's label)</em></li>
+<li><strong>Value</strong></li>
+<li>Description <em>(optional)</em></li>
+<li>Icon <em>(optional)</em></li>
+<li>Disabled <em>(optional)</em></li>
+</ol>
+<p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
+</div>", true),
+            new ConfigurationField
+            {
+                Key = "query",
+                Name = "SQL query",
+                Description = "Enter your SQL query.",
+                View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
+                }
+            },
+            new ConfigurationField
+            {
+                Key = "connectionString",
+                Name = "Connection string",
+                Description = "Enter the connection string.",
+                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { AllowEmptyConfigurationField.AllowEmpty, Constants.Values.False },
+                    { DropdownListConfigurationEditor.Items, _connectionStrings },
+                }
+            }
+        };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "query", $"SELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
+            { "query", $"-- This query will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
             { "connectionString", Core.Constants.System.UmbracoConnectionName }
         };
 
@@ -94,20 +98,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (string.IsNullOrWhiteSpace(query) || string.IsNullOrWhiteSpace(connectionString))
                 return items;
 
-            var sql = query.Replace("\r", string.Empty).Replace("\n", " ").Replace("\t", " ");
             var settings = ConfigurationManager.ConnectionStrings[connectionString];
-
             if (settings == null)
                 return items;
 
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
             if (settings.ProviderName.InvariantEquals("System.Data.SqlServerCe.4.0"))
             {
-                items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(sql, settings.ConnectionString));
+                items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
             }
             else
             {
-                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(sql, settings.ConnectionString));
+                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
             }
 
             return items;
@@ -129,16 +131,21 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             var item = new DataListItem
                             {
-                                Name = reader[0].ToString()
+                                Name = reader[0].TryConvertTo<string>().Result
                             };
 
-                            item.Value = reader.FieldCount > 1 ? reader[1].ToString() : item.Name;
+                            item.Value = reader.FieldCount > 1
+                                ? reader[1].TryConvertTo<string>().Result
+                                : item.Name;
 
                             if (reader.FieldCount > 2)
-                                item.Description = reader[2].ToString();
+                                item.Description = reader[2].TryConvertTo<string>().Result;
 
                             if (reader.FieldCount > 3)
-                                item.Icon = reader[3].ToString();
+                                item.Icon = reader[3].TryConvertTo<string>().Result;
+
+                            if (reader.FieldCount > 4)
+                                item.Disabled = reader[4].ToString().TryConvertTo<bool>().Result;
 
                             yield return item;
                         }
