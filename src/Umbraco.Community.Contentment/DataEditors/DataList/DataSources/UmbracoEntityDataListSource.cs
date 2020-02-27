@@ -13,6 +13,7 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoEntityDataListSource : IDataListSource
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>

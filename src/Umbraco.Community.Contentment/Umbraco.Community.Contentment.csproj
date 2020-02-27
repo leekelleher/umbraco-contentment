@@ -294,7 +294,6 @@
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
-    <Compile Include="Core\Xml\UmbracoXPathPathSyntaxParser.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
@@ -305,7 +304,6 @@
     <Compile Include="DataEditors\DataList\DataSources\TextDelimitedDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\CountriesDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\UmbracoContentXPathDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoImageCropDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
@@ -322,7 +320,6 @@
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />
-    <Compile Include="Experience\SetContentTreeIconComponent.cs" />
     <Compile Include="Experience\DisablePreviewComponent.cs" />
     <Compile Include="Experience\HidePropertyLabelComponent.cs" />
     <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
