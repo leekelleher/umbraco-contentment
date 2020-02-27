@@ -37,6 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
-        public string View => IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "cards.html");
+        public string View => Constants.Internals.EditorsPathRoot + "cards.html";
     }
 }

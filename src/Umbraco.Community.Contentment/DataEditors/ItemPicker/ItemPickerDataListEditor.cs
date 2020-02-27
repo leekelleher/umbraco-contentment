@@ -35,6 +35,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
-        public string View => IOHelper.ResolveUrl(ItemPickerDataEditor.DataEditorViewPath);
+        public string View => ItemPickerDataEditor.DataEditorViewPath;
     }
 }

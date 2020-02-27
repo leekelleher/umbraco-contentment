@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -27,6 +26,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public string View => IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
+        public string View => RadioButtonListDataEditor.DataEditorViewPath;
     }
 }

@@ -27,6 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public string View => IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath);
+        public string View => DropdownListDataEditor.DataEditorViewPath;
     }
 }
