@@ -375,7 +375,6 @@
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypesConfigurationField.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksValueConverter.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HideLabelConfigurationField.cs" />
-    <Compile Include="DataEditors\_\DataValueEditors\HideLabelDataValueEditor.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerConfigurationEditor.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerDataEditor.cs" />

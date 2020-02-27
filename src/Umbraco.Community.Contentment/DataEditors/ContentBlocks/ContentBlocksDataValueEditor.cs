@@ -16,7 +16,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.Editors;
 using Umbraco.Core.PropertyEditors;
@@ -24,40 +23,21 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ContentBlocksDataValueEditor : HideLabelDataValueEditor
+    internal sealed class ContentBlocksDataValueEditor : DataValueEditor
     {
         private readonly IDataTypeService _dataTypeService;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
         public ContentBlocksDataValueEditor(
-            DataEditorAttribute attribute,
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
             PropertyEditorCollection propertyEditors)
-            : base(attribute)
+            : base()
         {
             _dataTypeService = dataTypeService;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
-        }
-
-        public override object Configuration
-        {
-            get => base.Configuration;
-            set
-            {
-                base.Configuration = value;
-
-                // NOTE: I'd have preferred to do this in `ElementConfigurationEditor.ToValueEditor`, but I couldn't alter the `View` from there.
-                // ...and this method is triggered before `ToValueEditor`, and there's nowhere else I can manipulate the configuration values. [LK]
-                if (value is Dictionary<string, object> config &&
-                    config.TryGetValue(ContentBlocksDisplayModeConfigurationField.DisplayMode, out var displayMode) &&
-                    displayMode is string view)
-                {
-                    View = IOHelper.ResolveUrl(view);
-                }
-            }
         }
 
         public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)

@@ -4,22 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
-using Umbraco.Core.Logging;
+using System.Collections.Generic;
+using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [DataEditor(
-        DataEditorAlias,
-        EditorType.PropertyValue,
-        DataEditorName,
-        DataEditorViewPath,
-        ValueType = ValueTypes.Json,
-        Group = Core.Constants.PropertyEditors.Groups.RichContent,
-        Icon = DataEditorIcon)]
     [Core.Composing.HideFromTypeFinder]
-    public sealed class ContentBlocksDataEditor : DataEditor
+    public sealed class ContentBlocksDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Content Blocks";
@@ -35,12 +28,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
 
         public ContentBlocksDataEditor(
-            ILogger logger,
             IContentService contentService,
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
             Lazy<PropertyEditorCollection> propertyEditors)
-            : base(logger)
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
@@ -48,14 +39,53 @@ namespace Umbraco.Community.Contentment.DataEditors
             _propertyEditors = propertyEditors;
         }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new ContentBlocksConfigurationEditor(
-            _contentService,
-            _contentTypeService);
+        public string Alias => DataEditorAlias;
 
-        protected override IDataValueEditor CreateValueEditor() => new ContentBlocksDataValueEditor(
-            Attribute,
-            _contentTypeService,
-            _dataTypeService,
-            _propertyEditors.Value);
+        public EditorType Type => EditorType.PropertyValue;
+
+        public string Name => DataEditorName;
+
+        public string Icon => DataEditorIcon;
+
+        public string Group => Core.Constants.PropertyEditors.Groups.RichContent;
+
+        public bool IsDeprecated => false;
+
+        public IDictionary<string, object> DefaultConfiguration => default;
+
+        public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
+
+        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(_contentService, _contentTypeService);
+
+        public IDataValueEditor GetValueEditor()
+        {
+            return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value);
+        }
+
+        public IDataValueEditor GetValueEditor(object configuration)
+        {
+            var hideLabel = false;
+            var view = DataEditorViewPath;
+
+            if (configuration is Dictionary<string, object> config)
+            {
+                if (config.ContainsKey(HideLabelConfigurationField.HideLabelAlias))
+                {
+                    hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
+                }
+
+                if (config.TryGetValue(ContentBlocksDisplayModeConfigurationField.DisplayMode, out var displayMode) && displayMode is string view1)
+                {
+                    view = view1;
+                }
+            }
+
+            return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value)
+            {
+                Configuration = configuration,
+                HideLabel = hideLabel,
+                View = view
+            };
+        }
     }
 }
