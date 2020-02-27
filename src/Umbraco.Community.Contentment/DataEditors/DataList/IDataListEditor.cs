@@ -11,6 +11,8 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         Dictionary<string, object> DefaultConfig { get; }
 
+        bool HasMultipleValues { get; }
+
         string View { get; }
     }
 }

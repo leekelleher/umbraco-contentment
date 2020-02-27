@@ -27,6 +27,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
+        public bool HasMultipleValues => false;
+
         public string View => DropdownListDataEditor.DataEditorViewPath;
     }
 }

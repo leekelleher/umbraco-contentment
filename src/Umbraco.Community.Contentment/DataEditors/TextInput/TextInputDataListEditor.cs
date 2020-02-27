@@ -31,6 +31,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             { MaxCharsConfigurationField.MaxChars, 500 }
         };
 
+        public bool HasMultipleValues => false;
+
         public string View => TextInputDataEditor.DataEditorViewPath;
     }
 }
