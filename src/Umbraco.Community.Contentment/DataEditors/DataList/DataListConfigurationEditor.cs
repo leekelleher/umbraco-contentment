@@ -58,10 +58,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            // NOTE: I am unable to set the `DataListDataValueEditor.View` property from here.
-            // The bulk of the configuration code is done in the `DataListDataValueEditor.Configuration` property-setter.
-            // Storing the view-editor's config in a temporary dictionary item. Which we then return directly to the view-editor.
-            // It feels quite hacky, alas there isn't a viable alternative at present.
+            // NOTE: Storing the view-editor's config in a temporary dictionary item. Which we then return directly to the view-editor.
+            // It feels a little hacky, alas there isn't a viable alternative at present.
             if (config.TryGetValue(EditorConfig, out var tmp) && tmp is Dictionary<string, object> editorConfig)
             {
                 return editorConfig;

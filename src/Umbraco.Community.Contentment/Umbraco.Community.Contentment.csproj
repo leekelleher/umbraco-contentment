@@ -354,7 +354,6 @@
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListDataEditor.cs" />
-    <Compile Include="DataEditors\DataList\DataListDataValueEditor.cs" />
     <Compile Include="DataEditors\DataList\DataListItem.cs" />
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
