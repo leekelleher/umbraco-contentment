@@ -32,7 +32,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
-            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            if (Array.isArray($scope.model.value) === false) {
                 $scope.model.value = [$scope.model.value];
             }
 
