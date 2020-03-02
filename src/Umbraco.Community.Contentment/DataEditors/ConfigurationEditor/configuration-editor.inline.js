@@ -31,10 +31,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {
-                _.each(vm.editor.fields, function (x) {
+                _.each(vm.editor.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     x.alias = x.key;
 
-                    if (_.has($scope.model.value.value, x.key)) {
+                    if (_.has($scope.model.value.value, x.key)) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                         x.value = $scope.model.value.value[x.key];
                     }
                 });
@@ -42,7 +42,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.$on("formSubmitting", function (ev, args) {
                 if (vm.editor.fields && vm.editor.fields.length > 0) {
-                    _.each(vm.editor.fields, function (x) {
+                    _.each(vm.editor.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                         $scope.model.value.value[x.key] = x.value;
                     });
                 }

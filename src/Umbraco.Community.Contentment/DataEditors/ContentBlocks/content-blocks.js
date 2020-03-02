@@ -40,14 +40,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [];
             }
 
-            if (_.isArray($scope.model.value) === false) {
+            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 $scope.model.value = [$scope.model.value];
             }
 
             config.elementTypeLookup = {};
             config.nameTemplates = {};
 
-            _.each(config.contentBlockTypes, function (blockType) {
+            _.each(config.contentBlockTypes, function (blockType) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 config.elementTypeLookup[blockType.key] = blockType;
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
@@ -282,7 +282,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             save: true,
                             name: model.blueprintName,
                             tabs: [{
-                                properties: _.map(_.pairs(item.value), function (x) {
+                                properties: _.map(_.pairs(item.value), function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                                     return { id: 0, alias: x[0], value: x[1] };
                                 })
                             }]

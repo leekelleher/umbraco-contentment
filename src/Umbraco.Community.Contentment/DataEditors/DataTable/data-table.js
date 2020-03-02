@@ -18,13 +18,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
-            vm.headings = _.pluck(config.fields, "label");
+            vm.headings = _.pluck(config.fields, "label"); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             vm.items = [];
 
-            _.each($scope.model.value, function (value, row) {
+            _.each($scope.model.value, function (value, row) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 var fields = angular.copy(config.fields); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
-                _.each(fields, function (field, cell) {
+                _.each(fields, function (field, cell) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     field.alias = [$scope.model.alias, row, cell].join("_");
                     field.value = value[field.key];
                 });
@@ -107,10 +107,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var unsubscribe = $scope.$on("formSubmitting", function (ev, args) {
             $scope.model.value = [];
-            _.each(vm.items, function (row) {
+            _.each(vm.items, function (row) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 var obj = {};
 
-                _.each(row, function (cell) {
+                _.each(row, function (cell) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     obj[cell.key] = cell.value;
                 });
 

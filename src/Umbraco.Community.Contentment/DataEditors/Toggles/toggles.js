@@ -17,7 +17,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultValue;
 
-            if (_.isArray($scope.model.value) === false) {
+            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 $scope.model.value = [$scope.model.value];
             }
 
@@ -25,9 +25,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var removeDescriptions = Object.toBoolean(config.showDescriptions) == false;
 
-            _.each(vm.items, function (item) {
+            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 if (removeDescriptions) delete item.description;
-                item.checked = _.contains($scope.model.value, item.value);
+                item.checked = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             vm.changed = changed;
@@ -37,7 +37,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = [];
 
-            _.each(vm.items, function (x) {
+            _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 if (x.checked) {
                     $scope.model.value.push(x.value);
                 }

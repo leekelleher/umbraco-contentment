@@ -65,7 +65,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             vm.editor = angular.copy(editor); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {
-                _.each(vm.editor.fields, function (x) {
+                _.each(vm.editor.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     x.alias = x.key;
                     x.value = item.value[x.key];
                 });
@@ -76,7 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function select(editor) {
             // If there are no fields, then we can save & close the overlay
-            if (_.isEmpty(editor.fields)) {
+            if (_.isEmpty(editor.fields)) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 save(editor);
             } else {
                 vm.mode = "edit";
@@ -98,7 +98,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             var obj = angular.extend({ value: {} }, item); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
-            _.each(item.fields, function (x) {
+            _.each(item.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 obj.value[x.key] = x.value;
             });
 

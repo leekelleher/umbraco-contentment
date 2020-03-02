@@ -17,9 +17,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.loading = true;
 
-            if (_.isEmpty($scope.model.config.macro) === false) {
+            if (_.isEmpty($scope.model.config.macro) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
-                var macro = _.first($scope.model.config.macro);
+                var macro = _.first($scope.model.config.macro); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
                 angular.extend(macro.params, { // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                     "__propertyAlias": $scope.model.alias,

@@ -62,7 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; }))
+                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; })) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     });
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
@@ -94,7 +94,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; }))
+                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; })) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     };
 
                     setDirty();

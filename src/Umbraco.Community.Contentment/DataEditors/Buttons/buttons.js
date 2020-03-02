@@ -22,7 +22,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultValue;
 
-            if (_.isArray($scope.model.value) === false) {
+            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 $scope.model.value = [$scope.model.value];
             }
 
@@ -35,8 +35,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
-            _.each(vm.items, function (item) {
-                item.selected = _.contains($scope.model.value, item.value);
+            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                item.selected = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             vm.select = select;
@@ -47,7 +47,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             item.selected = item.selected === false;
             $scope.model.value = [];
 
-            _.each(vm.items, function (x) {
+            _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
                 if (vm.multiple === false) {
                     x.selected = x.value === item.value;

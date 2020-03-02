@@ -36,7 +36,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", _.pluck(config.elementTypes, "key"));
+                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", _.pluck(config.elementTypes, "key")); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
                 if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
@@ -63,7 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function clearClipboard() {
             vm.clipboardItems = [];
-            clipboardService.clearEntriesOfType("contentment.element", _.pluck(config.elementTypes, "key"));
+            clipboardService.clearEntriesOfType("contentment.element", _.pluck(config.elementTypes, "key")); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
         };
 
         function showPrompt() {
@@ -120,7 +120,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function paste(element) {
 
-            var elementType = _.find(config.elementTypes, function (x) {
+            var elementType = _.find(config.elementTypes, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 return x.key === element.elementType;
             });
 

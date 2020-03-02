@@ -23,20 +23,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultValue;
 
-            if (_.isArray($scope.model.value) === false) {
+            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 $scope.model.value = [$scope.model.value];
             }
 
             vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
-            _.each(vm.items, function (item) {
-                item.checked = _.contains($scope.model.value, item.value);
+            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                item.checked = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.showIcons = Object.toBoolean(config.showIcons);
 
-            vm.uniqueId = _.has($scope.model, "dataTypeKey")
+            vm.uniqueId = _.has($scope.model, "dataTypeKey") // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
                 : $scope.model.alias;
 
@@ -46,7 +46,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (vm.toggleAll) {
                 vm.toggle = toggle;
-                vm.toggleChecked = _.every(vm.items, function (item) {
+                vm.toggleChecked = _.every(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     return item.checked;
                 });
             }
@@ -54,13 +54,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function changed(item) {
 
-            vm.toggleChecked = _.every(vm.items, function (item) {
+            vm.toggleChecked = _.every(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 return item.checked;
             });
 
             $scope.model.value = [];
 
-            _.each(vm.items, function (x) {
+            _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 if (x.checked) {
                     $scope.model.value.push(x.value);
                 }
@@ -72,7 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function toggle() {
             $scope.model.value = [];
 
-            _.each(vm.items, function (item) {
+            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
                 item.checked = vm.toggleChecked;
 

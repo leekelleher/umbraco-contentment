@@ -22,8 +22,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultValue;
 
-            if (_.isArray($scope.model.value)) {
-                $scope.model.value = _.first($scope.model.value);
+            if (_.isArray($scope.model.value)) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                $scope.model.value = _.first($scope.model.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             }
 
             vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
@@ -31,7 +31,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.showIcons = Object.toBoolean(config.showIcons);
 
-            vm.uniqueId = _.has($scope.model, "dataTypeKey")
+            vm.uniqueId = _.has($scope.model, "dataTypeKey") // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
                 : $scope.model.alias;
         };

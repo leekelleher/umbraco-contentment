@@ -34,7 +34,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
-            if (_.isArray($scope.model.value) === false) {
+            if (_.isArray($scope.model.value) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 $scope.model.value = [$scope.model.value];
             }
 
@@ -75,8 +75,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) {
-                return _.find($scope.model.value, function (y) { return x.type === y.type; });
+            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                return _.find($scope.model.value, function (y) { return x.type === y.type; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             var configPicker = {
@@ -115,7 +115,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function edit($index) {
 
             var value = $scope.model.value[$index];
-            var editor = _.find(config.items, function (x) {
+            var editor = _.find(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 return x.type === value.type;
             });
 

@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$http",
     function ($scope, $q, $http) {
 
-        if (_.has($scope.model, "contentTypeId")) {
+        if (_.has($scope.model, "contentTypeId")) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
             return;
         }
@@ -48,7 +48,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 $q.all(chain).then(function (results) {
 
-                    _.each(results, function (x, i) {
+                    _.each(results, function (x, i) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                         vm.dropdowns[i] = { options: x.data }
                     });
 
