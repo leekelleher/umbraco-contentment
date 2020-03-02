@@ -21,7 +21,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 var macro = _.first($scope.model.config.macro);
 
-                angular.extend(macro.params, {
+                angular.extend(macro.params, { // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                     "__propertyAlias": $scope.model.alias,
                     "__propertyLabel": $scope.model.label,
                     "__propertyCulture": $scope.model.culture,

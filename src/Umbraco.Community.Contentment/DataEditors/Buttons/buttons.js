@@ -15,7 +15,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             items: [],
             enableMultiple: 0
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -33,7 +33,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value.splice(1);
             }
 
-            vm.items = angular.copy(config.items);
+            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             _.each(vm.items, function (item) {
                 item.selected = _.contains($scope.model.value, item.value);

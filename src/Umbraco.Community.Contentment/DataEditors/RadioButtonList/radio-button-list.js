@@ -15,7 +15,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             showIcons: 0,
             defaultValue: ""
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -26,7 +26,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = _.first($scope.model.value);
             }
 
-            vm.items = angular.copy(config.items);
+            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.showIcons = Object.toBoolean(config.showIcons);

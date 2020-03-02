@@ -16,7 +16,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             maxItems: 0,
             disableSorting: 0
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 

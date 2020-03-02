@@ -13,13 +13,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var defaultConfig = {
             editor: {}
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
         function init() {
 
-            vm.editor = angular.copy(config.editor);
+            vm.editor = angular.copy(config.editor); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             $scope.model.value = $scope.model.value || { type: vm.editor.type, value: vm.editor.defaultValues || {} };
 

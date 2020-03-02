@@ -26,7 +26,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayOrderBy: "name",
             enableDevMode: 0,
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -90,7 +90,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 submit: function (selectedItems) {
 
                     _.each(selectedItems, function (x) {
-                        vm.items.push(angular.copy(x));
+                        vm.items.push(angular.copy(x)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                         $scope.model.value.push(x.value);
                     });
 
@@ -120,7 +120,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 _.each($scope.model.value, function (v) {
                     var item = _.find(config.items, function (x) { return x.value === v });
                     if (item) {
-                        vm.items.push(angular.copy(item));
+                        vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                     } else {
                         orphaned.push(v);
                     }

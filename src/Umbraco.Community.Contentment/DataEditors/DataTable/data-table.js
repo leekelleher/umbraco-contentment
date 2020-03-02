@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("datatable.model", $scope.model);
 
         var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -22,7 +22,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.items = [];
 
             _.each($scope.model.value, function (value, row) {
-                var fields = angular.copy(config.fields);
+                var fields = angular.copy(config.fields); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
                 _.each(fields, function (field, cell) {
                     field.alias = [$scope.model.alias, row, cell].join("_");
@@ -72,7 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            vm.items.push(angular.copy(config.fields));
+            vm.items.push(angular.copy(config.fields)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             if ((config.maxItems !== 0 && config.maxItems !== "0") && vm.items.length >= config.maxItems) {
                 vm.allowAdd = false;

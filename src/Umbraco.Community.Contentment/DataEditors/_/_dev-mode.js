@@ -10,7 +10,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
             editValue: function (model, callback) {
                 editorService.open({
                     title: "Edit raw value",
-                    value: angular.toJson(model.value, true),
+                    value: angular.toJson(model.value, true), // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                     ace: {
                         showGutter: true,
                         useWrapMode: true,
@@ -26,7 +26,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
                     size: "small",
                     submit: function (value) {
 
-                        model.value = angular.fromJson(value);
+                        model.value = angular.fromJson(value); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
                         if (callback) {
                             callback();

@@ -28,7 +28,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayView: "",
             enableDevMode: 0,
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -296,7 +296,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             expireDate: null,
                             releaseDate: null,
                             templateAlias: null,
-                            variants: [angular.extend({ save: true }, variant)]
+                            variants: [angular.extend({ save: true }, variant)] // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                         };
 
                         contentResource

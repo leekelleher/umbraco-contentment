@@ -20,7 +20,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             enableFilter: false,
             orderBy: "name"
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -62,7 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             }
 
             vm.title = "Configure " + editor.name;
-            vm.editor = angular.copy(editor);
+            vm.editor = angular.copy(editor); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {
                 _.each(vm.editor.fields, function (x) {
@@ -96,7 +96,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             // https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
             $scope.$broadcast("formSubmitting", { scope: $scope });
 
-            var obj = angular.extend({ value: {} }, item);
+            var obj = angular.extend({ value: {} }, item); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             _.each(item.fields, function (x) {
                 obj.value[x.key] = x.value;

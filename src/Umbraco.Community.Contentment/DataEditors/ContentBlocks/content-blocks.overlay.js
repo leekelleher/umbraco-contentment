@@ -17,7 +17,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             elementTypes: [],
             enableFilter: true,
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -112,7 +112,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 : contentResource.getScaffold(-2, elementType.alias);
 
             getScaffold.then(function (data) {
-                angular.extend(vm.content, data.variants[0]);
+                angular.extend(vm.content, data.variants[0]); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                 vm.loading = false;
             });
 
@@ -158,7 +158,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     }
                 }
 
-                angular.extend(vm.content, data.variants[0]);
+                angular.extend(vm.content, data.variants[0]); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                 vm.loading = false;
             });
 

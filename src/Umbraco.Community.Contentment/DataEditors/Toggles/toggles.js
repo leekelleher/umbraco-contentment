@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("toggles.model", $scope.model);
 
         var defaultConfig = { items: [], showDescriptions: 1, defaultValue: [] };
-        var config = angular.extend({}, defaultConfig, $scope.model.config);
+        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
         var vm = this;
 
@@ -21,7 +21,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            vm.items = angular.copy(config.items);
+            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
             var removeDescriptions = Object.toBoolean(config.showDescriptions) == false;
 
