@@ -9,7 +9,7 @@ namespace Umbraco.Core
 {
     internal static class DictionaryExtensions
     {
-        public static TValOut GetValueAs<TKey, TVal, TValOut>(this Dictionary<TKey, TVal> config, TKey key, TValOut defaultValue = default)
+        public static TValOut GetValueAs<TKey, TVal, TValOut>(this IDictionary<TKey, TVal> config, TKey key, TValOut defaultValue = default)
         {
             if (config.TryGetValue(key, out var tmp))
             {
@@ -26,6 +26,28 @@ namespace Umbraco.Core
             }
 
             return defaultValue;
+        }
+
+        public static bool TryGetValueAs<TKey, TVal, TValOut>(this IDictionary<TKey, TVal> config, TKey key, out TValOut value)
+        {
+            if (config.TryGetValue(key, out var tmp1))
+            {
+                if (tmp1 is TValOut tmp2)
+                {
+                    value = tmp2;
+                    return true;
+                }
+
+                var attempt = tmp1.TryConvertTo<TValOut>();
+                if (attempt.Success)
+                {
+                    value = attempt.Result;
+                    return attempt.Success;
+                }
+            }
+
+            value = default;
+            return false;
         }
     }
 }

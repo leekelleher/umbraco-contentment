@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -29,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return config.TryGetValue("items", out var tmp) && tmp is JArray array
+            return config.TryGetValueAs("items", out JArray array)
                 ? array.ToObject<IEnumerable<DataListItem>>()
                 : Enumerable.Empty<DataListItem>();
         }

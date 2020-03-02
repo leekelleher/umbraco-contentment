@@ -76,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var entityType = config.TryGetValue("entityType", out var tmp1) && tmp1 is string value
+            var entityType = config.TryGetValueAs("entityType", out string value)
                 ? value
                 : string.Empty;
 

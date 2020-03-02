@@ -105,7 +105,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
             }
 
-            if (config.TryGetValue("sortAlphabetically", out var tmp2) && tmp2 is string boolean && boolean.Equals("1"))
+            if (config.TryGetValueAs("sortAlphabetically", out string boolean) && boolean.Equals("1"))
             {
                 return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
             }

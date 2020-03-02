@@ -74,9 +74,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
                 }
 
-                if (config.TryGetValue(ContentBlocksDisplayModeConfigurationField.DisplayMode, out var displayMode) && displayMode is string view1)
+                if (config.TryGetValueAs(ContentBlocksDisplayModeConfigurationField.DisplayMode, out string displayMode))
                 {
-                    view = view1;
+                    view = displayMode;
                 }
             }
 

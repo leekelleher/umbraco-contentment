@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
@@ -44,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue(Items, out var items) && items is JArray array && array.Count > 0)
+            if (config.TryGetValueAs(Items, out JArray array) && array.Count > 0)
             {
                 var item = array[0];
 

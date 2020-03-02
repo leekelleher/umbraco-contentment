@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValue(ContentBlocksTypesConfigurationField.ContentBlockTypes, out var tmp) && tmp is JArray array && array.Count > 0)
+            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray array) && array.Count > 0)
             {
                 var elementTypes = new List<ContentBlockType>();
 
