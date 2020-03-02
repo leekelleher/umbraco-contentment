@@ -17,7 +17,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : IDataListSource
+    public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly ILogger _logger;
 
@@ -65,27 +65,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var items = new List<DataListItem>();
 
-            var enumType = default(string[]);
-            if (config.TryGetValue("enumType", out var tmp1) && tmp1 is JArray array)
-            {
-                enumType = array.ToObject<string[]>();
-            }
-
-            if (enumType == default || enumType.Length < 2)
-            {
-                return items;
-            }
-
-            var assembly = default(Assembly);
-            try { assembly = Assembly.Load(enumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
-            if (assembly == null)
-            {
-                return items;
-            }
-
-            var type = default(Type);
-            try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
-            if (type == null || type.IsEnum == false)
+            var type = GetValueType(config);
+            if (type == null)
             {
                 return items;
             }
@@ -116,6 +97,40 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return items;
+        }
+
+        public Type GetValueType(Dictionary<string, object> config)
+        {
+            if (config.TryGetValueAs("enumType", out JArray array))
+            {
+                var enumType = array.ToObject<string[]>();
+                if (enumType?.Length > 1)
+                {
+                    var assembly = default(Assembly);
+                    try { assembly = Assembly.Load(enumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+                    if (assembly != null)
+                    {
+                        var type = default(Type);
+                        try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+                        if (type != null && type.IsEnum)
+                        {
+                            return type;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public object ConvertValue(Type type, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
+            {
+                try { return Enum.Parse(type, value, true); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+            }
+
+            return type.GetDefaultValue();
         }
     }
 }
