@@ -36,7 +36,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.showIcons = Object.toBoolean(config.showIcons);
 
-            vm.uniqueId = _.has($scope.model, "dataTypeKey") // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
                 : $scope.model.alias;
 

@@ -9,7 +9,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$http",
     function ($scope, $q, $http) {
 
-        if (_.has($scope.model, "contentTypeId")) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+        if ($scope.model.hasOwnProperty("contentTypeId")) {
             // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
             return;
         }

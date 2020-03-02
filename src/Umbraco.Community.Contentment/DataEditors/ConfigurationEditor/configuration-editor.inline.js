@@ -34,7 +34,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 _.each(vm.editor.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     x.alias = x.key;
 
-                    if (_.has($scope.model.value.value, x.key)) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    if ($scope.model.value.value.hasOwnProperty(x.key)) {
                         x.value = $scope.model.value.value[x.key];
                     }
                 });
