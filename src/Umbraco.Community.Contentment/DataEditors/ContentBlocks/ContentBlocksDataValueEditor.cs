@@ -86,8 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         continue;
                     }
 
-                    var configuration = dataTypeService.GetDataType(propertyType.DataTypeId)?.Configuration;
-                    var convertedValue = propertyEditor.GetValueEditor(configuration)?.ToEditor(fakeProperty, dataTypeService);
+                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, dataTypeService);
 
                     block.Value[key] = convertedValue != null
                         ? JToken.FromObject(convertedValue)
