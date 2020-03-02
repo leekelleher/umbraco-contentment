@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -52,13 +52,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var view = default(string);
 
-            if (configuration is Dictionary<string, object> config)
+            if (configuration is Dictionary<string, object> config &&
+                config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray array) &&
+                array.Count > 0)
             {
-                config[DataListConfigurationEditor.EditorConfig] = GetEditorConfiguration(config);
-
-                if (config.TryGetValue(DataListConfigurationEditor.EditorView, out var tmp) && tmp is string view1)
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(array[0].Value<string>("type"));
+                if (editor != null)
                 {
-                    view = view1;
+                    view = editor.View;
                 }
             }
 
@@ -68,62 +69,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ValueType = ValueTypes.Json,
                 View = view ?? DataEditorViewPath,
             };
-        }
-
-        private Dictionary<string, object> GetEditorConfiguration(Dictionary<string, object> configuration)
-        {
-            var editorConfig = new Dictionary<string, object>();
-
-            if (configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var dataSource) &&
-                dataSource is JArray array1 &&
-                array1.Count > 0)
-            {
-                var item = array1[0];
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("type"));
-                if (source != null)
-                {
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
-
-                    editorConfig.Add(DataListConfigurationEditor.Items, items);
-                }
-            }
-
-            if (configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var listEditor) &&
-                listEditor is JArray array2 &&
-                array2.Count > 0)
-            {
-                var item = array2[0];
-
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("type"));
-                if (editor != null)
-                {
-                    var val = item["value"] as JObject;
-
-                    configuration[DataListConfigurationEditor.EditorView] = editor.View;
-
-                    foreach (var prop in val)
-                    {
-                        if (editorConfig.ContainsKey(prop.Key) == false)
-                        {
-                            editorConfig.Add(prop.Key, prop.Value);
-                        }
-                    }
-
-                    if (editor.DefaultConfig != null)
-                    {
-                        foreach (var prop in editor.DefaultConfig)
-                        {
-                            if (editorConfig.ContainsKey(prop.Key) == false)
-                            {
-                                editorConfig.Add(prop.Key, prop.Value);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return editorConfig;
         }
     }
 }

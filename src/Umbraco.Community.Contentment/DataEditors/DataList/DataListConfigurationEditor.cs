@@ -4,6 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -17,9 +20,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EditorConfig = "editorConfig";
         internal const string EditorView = "editorView";
 
+        private readonly ConfigurationEditorUtility _utility;
+
         public DataListConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
+            _utility = utility;
+
             var configEditorViewPath = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
@@ -58,14 +65,51 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            // NOTE: Storing the view-editor's config in a temporary dictionary item. Which we then return directly to the view-editor.
-            // It feels a little hacky, alas there isn't a viable alternative at present.
-            if (config.TryGetValue(EditorConfig, out var tmp) && tmp is Dictionary<string, object> editorConfig)
+            var toValueEditor = new Dictionary<string, object>();
+
+            if (config.TryGetValueAs(DataSource, out JArray dataSource) && dataSource.Count > 0)
             {
-                return editorConfig;
+                var item = dataSource[0];
+                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("type"));
+                if (source != null)
+                {
+                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
+                    var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
+
+                    toValueEditor.Add(Items, items);
+                }
             }
 
-            return config;
+            if (config.TryGetValueAs(ListEditor, out JArray listEditor) && listEditor.Count > 0)
+            {
+                var item = listEditor[0];
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("type"));
+                if (editor != null)
+                {
+                    var editorConfig = item["value"].ToObject<Dictionary<string, object>>();
+
+                    foreach (var prop in editorConfig)
+                    {
+                        if (toValueEditor.ContainsKey(prop.Key) == false)
+                        {
+                            toValueEditor.Add(prop.Key, prop.Value);
+                        }
+                    }
+
+                    if (editor.DefaultConfig != null)
+                    {
+                        foreach (var prop in editor.DefaultConfig)
+                        {
+                            if (toValueEditor.ContainsKey(prop.Key) == false)
+                            {
+                                toValueEditor.Add(prop.Key, prop.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return toValueEditor;
         }
     }
 }
