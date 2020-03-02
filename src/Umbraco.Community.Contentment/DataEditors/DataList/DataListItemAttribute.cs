@@ -20,6 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon { get; set; }
 
+        public bool Ignore { get; set; }
+
         public string Name { get; set; }
 
         public string Value { get; set; }

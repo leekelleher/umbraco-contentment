@@ -94,6 +94,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             foreach (var field in fields)
             {
                 var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
+                if (attr?.Ignore == true)
+                {
+                    continue;
+                }
+
                 var attr2 = field.GetCustomAttribute<DescriptionAttribute>(false);
                 items.Add(new DataListItem
                 {
