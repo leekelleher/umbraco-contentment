@@ -46,7 +46,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (vm.toggleAll) {
                 vm.toggle = toggle;
-                vm.toggleChecked = _.every(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                vm.toggleChecked = vm.items.every(function (item) {
                     return item.checked;
                 });
             }
@@ -54,7 +54,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function changed(item) {
 
-            vm.toggleChecked = _.every(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.toggleChecked = vm.items.every(function (item) {
                 return item.checked;
             });
 
