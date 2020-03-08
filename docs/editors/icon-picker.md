@@ -33,7 +33,7 @@ Having picked your icon, the selected icon will be displayed in the icon box.
 
 ### How to get the value?
 
-The value for the Icon Picker is a `string`. To use this in your view templates, here are some examples.
+The value for the Icon Picker is a `string` in the form of `"icon-{name} color-{name}"` (e.g. `"icon-hat color-black"`). To use this in your view templates, here are some examples.
 
 Assuming that your property's alias is `"icon"`, then...
 
