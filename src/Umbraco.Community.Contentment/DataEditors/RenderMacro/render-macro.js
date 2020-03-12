@@ -9,6 +9,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "macroResource",
     function ($scope, $routeParams, macroResource) {
 
+        if ($scope.model.hasOwnProperty("contentTypeId")) {
+            // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
+            return;
+        }
+
         // console.log("render-macro.model", $scope.model);
 
         var vm = this;
@@ -19,7 +24,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (_.isEmpty($scope.model.config.macro) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
-                var macro = _.first($scope.model.config.macro); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                var macro = $scope.model.config.macro[0];
 
                 angular.extend(macro.params, { // TODO: Replace AngularJS dependency. [LK:2020-03-02]
                     "__propertyAlias": $scope.model.alias,
