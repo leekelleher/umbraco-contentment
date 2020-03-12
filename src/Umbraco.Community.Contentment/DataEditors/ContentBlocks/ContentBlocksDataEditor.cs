@@ -59,7 +59,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-            return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value);
+            return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value)
+            {
+                ValueType = ValueTypes.Json,
+                View = DataEditorViewPath,
+            };
         }
 
         public IDataValueEditor GetValueEditor(object configuration)
@@ -84,7 +88,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,
-                View = view
+                ValueType = ValueTypes.Json,
+                View = view,
             };
         }
     }

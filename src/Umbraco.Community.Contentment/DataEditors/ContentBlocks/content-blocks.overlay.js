@@ -53,7 +53,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     vm.showPrompt = showPrompt;
                     vm.hidePrompt = hidePrompt;
 
-                } else {
+                } else if (config.elementTypes.length === 1) {
 
                     select(config.elementTypes[0]);
 
