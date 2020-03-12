@@ -18,7 +18,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new CheckAllConfigurationField(),
+            new ConfigurationField
+            {
+                Key = "checkAll",
+                Name = "Check all?",
+                Description = "Include a toggle button to select or deselect all the options?",
+                View = "boolean",
+            },
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
         };
