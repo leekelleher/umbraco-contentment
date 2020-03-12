@@ -19,6 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         string Icon { get; }
 
+        // TODO: Introduce `IContentmentEditorItem`
         IEnumerable<ConfigurationField> Fields { get; }
 
         Dictionary<string, object> DefaultValues { get; }
