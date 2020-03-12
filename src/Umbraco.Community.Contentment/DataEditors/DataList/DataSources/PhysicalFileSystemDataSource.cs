@@ -62,8 +62,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             return files.Select(x => new DataListItem
             {
                 Name = x,
-                Value = path + x,
-                Description = path + x,
+                Value = virtualRoot + x,
+                Description = virtualRoot + x,
             });
         }
     }
