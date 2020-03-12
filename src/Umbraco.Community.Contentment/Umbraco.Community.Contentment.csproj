@@ -401,7 +401,7 @@
     <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
-    <Compile Include="DataEditors\_\DataValueEditors\ReadOnlyDataValueEditor.cs" />
+    <Compile Include="DataEditors\ReadOnly\ReadOnlyDataValueEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="Migrations\ContentmentPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -473,7 +473,7 @@
     <Content Include="DataEditors\Buttons\buttons.js" />
     <Content Include="DataEditors\Toggles\toggles.html" />
     <Content Include="DataEditors\Toggles\toggles.js" />
-    <Content Include="DataEditors\_\readonly-node-preview.html" />
+    <Content Include="DataEditors\ReadOnly\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_property-actions.js" />
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="DataEditors\_\_directives.js" />
