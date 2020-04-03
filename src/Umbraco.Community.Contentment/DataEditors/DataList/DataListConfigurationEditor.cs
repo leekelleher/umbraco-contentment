@@ -67,26 +67,38 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var toValueEditor = new Dictionary<string, object>();
 
-            if (config.TryGetValueAs(DataSource, out JArray dataSource) && dataSource.Count > 0)
+            if (config.TryGetValueAs(DataSource, out JArray array1) && array1.Count > 0 && array1[0] is JObject item1)
             {
-                var item = dataSource[0];
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (item1.ContainsKey("key") == false && item1.ContainsKey("type"))
+                {
+                    item1.Add("key", item1["type"]);
+                    item1.Remove("type");
+                }
+
+                var source = _utility.GetConfigurationEditor<IDataListSource>(item1.Value<string>("key"));
                 if (source != null)
                 {
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
+                    var sourceConfig = item1["value"].ToObject<Dictionary<string, object>>();
                     var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
 
                     toValueEditor.Add(Items, items);
                 }
             }
 
-            if (config.TryGetValueAs(ListEditor, out JArray listEditor) && listEditor.Count > 0)
+            if (config.TryGetValueAs(ListEditor, out JArray array2) && array2.Count > 0 && array2[0] is JObject item2)
             {
-                var item = listEditor[0];
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (item2.ContainsKey("key") == false && item2.ContainsKey("type"))
+                {
+                    item2.Add("key", item2["type"]);
+                    item2.Remove("type");
+                }
+
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item2.Value<string>("key"));
                 if (editor != null)
                 {
-                    var editorConfig = item["value"].ToObject<Dictionary<string, object>>();
+                    var editorConfig = item2["value"].ToObject<Dictionary<string, object>>();
 
                     foreach (var prop in editorConfig)
                     {

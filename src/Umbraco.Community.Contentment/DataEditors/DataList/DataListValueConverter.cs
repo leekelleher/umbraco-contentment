@@ -31,20 +31,34 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
                 configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) &&
-                tmp1 is JArray array1 && array1.Count > 0 &&
+                tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1 &&
                 configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) &&
-                tmp2 is JArray array2 && array2.Count > 0)
+                tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2)
             {
                 var valueType = default(Type);
 
-                var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(array1[0].Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (obj1.ContainsKey("key") == false && obj1.ContainsKey("type"))
+                {
+                    obj1.Add("key", obj1["type"]);
+                    obj1.Remove("type");
+                }
+
+                var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(obj1.Value<string>("key"));
                 if (source != null)
                 {
-                    var config = array1[0]["value"].ToObject<Dictionary<string, object>>();
+                    var config = obj1["value"].ToObject<Dictionary<string, object>>();
                     valueType = source.GetValueType(config);
                 }
 
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(array2[0].Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (obj2.ContainsKey("key") == false && obj2.ContainsKey("type"))
+                {
+                    obj2.Add("key", obj2["type"]);
+                    obj2.Remove("type");
+                }
+
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(obj2.Value<string>("key"));
 
                 return editor?.HasMultipleValues == true
                     ? typeof(IEnumerable<>).MakeGenericType(valueType ?? defaultValueType)
@@ -76,12 +90,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
                 configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) &&
-                tmp1 is JArray array1 && array1.Count > 0)
+                tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject item1)
             {
-                var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(array1[0].Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (item1.ContainsKey("key") == false && item1.ContainsKey("type"))
+                {
+                    item1.Add("key", item1["type"]);
+                    item1.Remove("type");
+                }
+
+                var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(item1.Value<string>("key"));
                 if (source != null)
                 {
-                    var config = array1[0]["value"].ToObject<Dictionary<string, object>>();
+                    var config = item1["value"].ToObject<Dictionary<string, object>>();
                     valueType = source.GetValueType(config);
                     converter = source.ConvertValue;
                 }

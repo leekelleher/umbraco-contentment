@@ -47,7 +47,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             } else if (vm.mode === "edit" && config.editor) {
 
-                var item = $scope.model.value || { type: "", name: "", icon: "", value: {} };
+                var item = $scope.model.value || { key: "", value: {} };
                 edit(config.editor, item);
 
             }

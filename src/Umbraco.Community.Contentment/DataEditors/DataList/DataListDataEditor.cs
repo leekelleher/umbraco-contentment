@@ -54,9 +54,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (configuration is Dictionary<string, object> config &&
                 config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray array) &&
-                array.Count > 0)
+                array.Count > 0 &&
+                array[0] is JObject item)
             {
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(array[0].Value<string>("type"));
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                if (item.ContainsKey("key") == false && item.ContainsKey("type"))
+                {
+                    item.Add("key", item["type"]);
+                    item.Remove("type");
+                }
+
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("key"));
                 if (editor != null)
                 {
                     view = editor.View;

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -17,10 +16,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public const string Items = "items";
 
+        private readonly ConfigurationEditorUtility _utility;
+
         public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
             : base()
         {
-            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>();
+            _utility = utility;
+
+            var dataSources = _utility.GetConfigurationEditorModels<IDataListSource>();
 
             Fields.Add(new PlaceholderTextConfigurationField());
             Fields.Add(new AutocompleteConfigurationField());
@@ -45,19 +48,22 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Items, out JArray array) && array.Count > 0)
+            if (config.TryGetValueAs(Items, out JArray array) && array.Count > 0 && array[0] is JObject item)
             {
-                var item = array[0];
-
-                var type = TypeFinder.GetTypeByName(item.Value<string>("type"));
-                if (type != null)
+                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`.
+                if (item.ContainsKey("key") == false && item.ContainsKey("type"))
                 {
-                    // TODO: [LK:2020-01-13] Investigate this. Look to reuse same code as DataList.
-                    var source = item["value"].ToObject(type) as IDataListSource;
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var options = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
+                    item.Add("key", item["type"]);
+                    item.Remove("type");
+                }
 
-                    config[Items] = options;
+                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("key"));
+                if (source != null)
+                {
+                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
+                    var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
+
+                    config[Items] = items;
                 }
             }
 

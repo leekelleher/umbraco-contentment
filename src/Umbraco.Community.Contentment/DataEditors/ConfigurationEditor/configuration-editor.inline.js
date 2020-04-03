@@ -21,13 +21,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.editor = angular.copy(config.editor); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
 
-            $scope.model.value = $scope.model.value || { type: vm.editor.type, value: vm.editor.defaultValues || {} };
+            $scope.model.value = $scope.model.value || { type: vm.editor.key, value: vm.editor.defaultValues || {} };
 
-            if ($scope.model.value.type !== vm.editor.type) {
+            if ($scope.model.value.key !== vm.editor.key) {
                 // TODO: [LK:2020-01-07] What to do if it's a different type?
-                console.log("[LK] type is different", $scope.model.value.type, vm.editor.type);
+                console.log("[LK] type is different", $scope.model.value.key, vm.editor.key);
 
-                $scope.model.value.type = vm.editor.type;
+                $scope.model.value.key = vm.editor.key;
             }
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {

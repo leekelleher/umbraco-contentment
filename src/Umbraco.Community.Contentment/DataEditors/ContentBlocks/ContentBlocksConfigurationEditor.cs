@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -49,11 +48,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 for (var i = 0; i < array.Count; i++)
                 {
-                    if (Guid.TryParse(array[i].Value<string>("type"), out var guid) && _elementTypes.ContainsKey(guid))
+                    var item = (JObject)array[i];
+
+                    // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
+                    if (item.ContainsKey("key") == false && item.ContainsKey("type"))
+                    {
+                        item.Add("key", item["type"]);
+                        item.Remove("type");
+                    }
+
+                    if (Guid.TryParse(item.Value<string>("key"), out var guid) && _elementTypes.ContainsKey(guid))
                     {
                         var elementType = _elementTypes[guid];
 
-                        var settings = array[i]["value"].ToObject<Dictionary<string, object>>();
+                        var settings = item["value"].ToObject<Dictionary<string, object>>();
 
                         var blueprints = _elementBlueprints.Value.Contains(elementType.Id)
                             ? _elementBlueprints.Value[elementType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })
