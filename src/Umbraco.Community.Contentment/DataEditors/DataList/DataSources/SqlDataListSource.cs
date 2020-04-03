@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
 
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            if (settings.ProviderName.InvariantEquals("System.Data.SqlServerCe.4.0"))
+            if (settings.ProviderName.InvariantEquals(Core.Constants.DatabaseProviders.SqlCe))
             {
                 items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
             }
