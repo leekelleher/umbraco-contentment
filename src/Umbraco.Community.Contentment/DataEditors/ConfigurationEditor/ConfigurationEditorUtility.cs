@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return new ConfigurationEditorModel
             {
-                Type = type.GetFullNameWithAssembly(),
+                Key = type.GetFullNameWithAssembly(),
                 Name = item.Name ?? type.Name.SplitPascalCasing(),
                 Description = item.Description,
                 Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,

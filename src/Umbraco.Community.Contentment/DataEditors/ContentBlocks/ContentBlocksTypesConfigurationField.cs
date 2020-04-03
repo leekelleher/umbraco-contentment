@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new ConfigurationEditorModel
                 {
-                    Type = x.Key.ToString(),
+                    Key = x.Key.ToString(),
                     Name = x.Name,
                     Description = string.IsNullOrWhiteSpace(x.Description) == false ? x.Description : x.Alias,
                     Icon = x.Icon,

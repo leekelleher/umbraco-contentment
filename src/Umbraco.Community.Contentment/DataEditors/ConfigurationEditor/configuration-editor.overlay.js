@@ -96,7 +96,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             // https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/common/services/formhelper.service.js#L26
             $scope.$broadcast("formSubmitting", { scope: $scope });
 
-            var obj = angular.extend({ value: {} }, item); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            var obj = {
+                key: item.key,
+                name: item.name,
+                icon: item.icon,
+                description: item.description,
+                value: {}
+            };
 
             _.each(item.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                 obj.value[x.key] = x.value;
