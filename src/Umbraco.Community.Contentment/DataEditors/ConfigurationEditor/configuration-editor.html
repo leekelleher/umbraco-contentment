@@ -6,10 +6,10 @@
 <div class="umb-contentpicker" ng-controller="Umbraco.Community.Contentment.DataEditors.ConfigurationEditor.Controller as vm">
     <div ui-sortable="vm.sortableOptions" ng-model="model.value">
         <umb-node-preview ng-repeat="item in model.value"
-                          icon="item.icon"
-                          name="item.name"
+                          icon="vm.populate(item, 'icon')"
+                          name="vm.populate(item, 'name')"
                           published="true"
-                          description="item.description"
+                          description="vm.populate(item, 'description')"
                           sortable="vm.sortable"
                           allow-remove="vm.allowRemove"
                           allow-edit="vm.allowEdit"

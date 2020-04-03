@@ -98,9 +98,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             var obj = {
                 key: item.key,
-                name: item.name,
-                icon: item.icon,
-                description: item.description,
                 value: {}
             };
 

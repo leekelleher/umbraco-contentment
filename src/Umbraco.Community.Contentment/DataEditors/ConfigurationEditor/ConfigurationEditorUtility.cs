@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public T GetConfigurationEditor<T>(string typeName)
              where T : IContentmentEditorItem
         {
-            if (_listItems.TryGet(typeName, out var tmp) && tmp is T item)
+            if (string.IsNullOrWhiteSpace(typeName) == false && _listItems.TryGet(typeName, out var tmp) && tmp is T item)
             {
                 return item;
             }

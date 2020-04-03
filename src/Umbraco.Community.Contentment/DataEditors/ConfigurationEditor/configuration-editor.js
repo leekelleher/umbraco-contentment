@@ -46,6 +46,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             });
 
+            config.itemLookup = {};
+
+            config.items.forEach(function (item) {
+                config.itemLookup[item.key] = item;
+            });
+
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = Object.toBoolean(config.allowEdit);
             vm.allowRemove = Object.toBoolean(config.allowRemove);
@@ -66,6 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.add = add;
             vm.edit = edit;
+            vm.populate = populate;
             vm.remove = remove;
 
             vm.propertyActions = [];
@@ -123,9 +130,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function edit($index) {
 
             var value = $scope.model.value[$index];
-            var editor = _.find(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return x.key === value.key;
-            });
+            var editor = config.itemLookup[value.key];
 
             var configPicker = {
                 view: config.overlayView,
@@ -148,6 +153,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             };
 
             editorService.open(configPicker);
+        };
+
+        function populate(item, propertyName) {
+            return config.itemLookup[item.key][propertyName];
         };
 
         function remove($index) {
