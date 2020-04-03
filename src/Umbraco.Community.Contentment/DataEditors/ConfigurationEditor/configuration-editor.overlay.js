@@ -101,7 +101,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 value: {}
             };
 
-            _.each(item.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            item.fields.forEach(function (x) {
                 obj.value[x.key] = x.value;
             });
 

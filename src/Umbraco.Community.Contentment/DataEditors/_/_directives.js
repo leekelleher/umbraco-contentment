@@ -13,7 +13,7 @@ angular.module("umbraco.directives.html").directive("umbHtmlAttributes", [
             link: function (scope, element, attrs) {
                 var attributes = scope.attributes();
                 if (Array.isArray(attributes) && attributes.length > 0) {
-                    _.each(attributes, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    attributes.forEach(function (x) {
                         element.attr(x.name, x.value);
                     });
                 }
