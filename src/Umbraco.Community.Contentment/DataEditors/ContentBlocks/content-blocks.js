@@ -28,7 +28,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayView: "",
             enableDevMode: 0,
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+        var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
@@ -47,7 +47,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.elementTypeLookup = {};
             config.nameTemplates = {};
 
-            _.each(config.contentBlockTypes, function (blockType) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            config.contentBlockTypes.forEach(function (blockType) {
                 config.elementTypeLookup[blockType.key] = blockType;
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
@@ -297,7 +297,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             expireDate: null,
                             releaseDate: null,
                             templateAlias: null,
-                            variants: [angular.extend({ save: true }, variant)] // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+                            variants: [Object.assign({}, variant, { save: true })]
                         };
 
                         contentResource
