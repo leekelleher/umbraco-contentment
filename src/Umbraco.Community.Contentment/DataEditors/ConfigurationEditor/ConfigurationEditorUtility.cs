@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public T GetConfigurationEditor<T>(string typeName)
-             where T : IContentmentListItem
+             where T : IContentmentEditorItem
         {
             if (_listItems.TryGet(typeName, out var tmp) && tmp is T item)
             {
@@ -34,13 +34,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public ConfigurationEditorModel GetConfigurationEditorModel<T>(bool ignoreFields = false)
-            where T : IContentmentListItem
+            where T : IContentmentEditorItem
         {
             return GetConfigurationEditorModel(GetConfigurationEditor<T>(typeof(T).GetFullNameWithAssembly()), ignoreFields);
         }
 
         public ConfigurationEditorModel GetConfigurationEditorModel<T>(T item, bool ignoreFields = false)
-            where T : IContentmentListItem
+            where T : IContentmentEditorItem
         {
             var type = item.GetType();
 
@@ -60,16 +60,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public IEnumerable<ConfigurationEditorModel> GetConfigurationEditorModels<T>(bool ignoreFields = false)
-           where T : IContentmentListItem
+           where T : IContentmentEditorItem
         {
             var models = new List<ConfigurationEditorModel>();
 
             foreach (var item in _listItems)
             {
-                if (item is T == false)
-                    continue;
-
-                models.Add(GetConfigurationEditorModel(item, ignoreFields));
+                if (item is T editorItem)
+                {
+                    models.Add(GetConfigurationEditorModel(editorItem, ignoreFields));
+                }
             }
 
             return models;

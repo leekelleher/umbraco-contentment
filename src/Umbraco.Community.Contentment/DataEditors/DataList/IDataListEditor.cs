@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public interface IDataListEditor : IContentmentListItem
+    public interface IDataListEditor : IContentmentEditorItem
     {
         Dictionary<string, object> DefaultConfig { get; }
 
