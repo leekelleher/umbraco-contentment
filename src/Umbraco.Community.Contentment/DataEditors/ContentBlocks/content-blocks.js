@@ -167,7 +167,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function copy($index) {
 
-            var item = $scope.model.value[$index];
+            var tmp = $scope.model.value[$index];
+            var item = Object.assign({}, tmp, { name: populateName(tmp, $index) });
 
             clipboardService.copy("contentment.element", item.elementType, item);
         };
