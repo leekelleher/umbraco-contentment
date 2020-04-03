@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
             _codeEditorMode = System.IO.File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
-                ? "sql"
+                ? "sqlserver"
                 : "razor";
 
             _connectionStrings = ConfigurationManager.ConnectionStrings
