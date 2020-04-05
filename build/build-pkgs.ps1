@@ -28,12 +28,16 @@ Function parseSemVer($version) {
 
 $projectNamespace = 'Umbraco.Community.Contentment';
 $packageName = 'Contentment';
+$packageDescription = 'Contentment, a collection of components for Umbraco 8.';
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
+$iconUrl = 'https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png';
+$iconPath = 'content/App_Plugins/Contentment/contentment.png';
 $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
 $minUmbracoVersion = parseSemVer('8.4.0');
+$copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
 $buildFolder = Join-Path -Path $rootFolder -ChildPath 'build';
@@ -94,6 +98,7 @@ $umbracoManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-umbraco.xml
 $umbracoPackageXml = [xml](Get-Content $umbracoManifest);
 $umbracoPackageXml.umbPackage.info.package.version = "$($semver.Major).$($semver.Minor).$($semver.Patch)";
 $umbracoPackageXml.umbPackage.info.package.name = $packageName;
+$umbracoPackageXml.umbPackage.info.package.iconUrl = $iconUrl;
 $umbracoPackageXml.umbPackage.info.package.license.set_InnerText($licenseName);
 $umbracoPackageXml.umbPackage.info.package.license.url = $licenseUrl;
 $umbracoPackageXml.umbPackage.info.package.url = $packageUrl;
@@ -102,6 +107,7 @@ $umbracoPackageXml.umbPackage.info.package.requirements.minor = "$($minUmbracoVe
 $umbracoPackageXml.umbPackage.info.package.requirements.patch = "$($minUmbracoVersion.Patch)";
 $umbracoPackageXml.umbPackage.info.author.name = $authorName;
 $umbracoPackageXml.umbPackage.info.author.website = $authorUrl;
+$umbracoPackageXml.umbPackage.info.readme.'#cdata-section' = $packageDescription;
 
 $filesXml = $umbracoPackageXml.CreateElement('files');
 
@@ -129,8 +135,10 @@ Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Con
 
 # Populate the NuGet package manifest
 
+$nugetPackageManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-nuget.nuspec';
+& $nuget_exe pack $nugetPackageManifest -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;icon=$iconPath;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
 
-$nugetPackageManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-nuget.xml';
 
+# Tidy up folders
+Remove-Item -Recurse -Force $umbFolder;
 
-# Anything else?

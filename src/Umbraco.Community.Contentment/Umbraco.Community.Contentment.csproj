@@ -477,6 +477,7 @@
     <Content Include="DataEditors\_\_property-actions.js" />
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="DataEditors\_\_directives.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\contentment.png" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />

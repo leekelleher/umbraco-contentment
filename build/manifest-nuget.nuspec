@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$authors$</authors>
+    <owners>$owners$</owners>
+    <description>$description$</description>
+    <projectUrl>$projectUrl$</projectUrl>
+    <icon>$icon$</icon>
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
+    <copyright>$copyright$</copyright>
+    <license type="expression">$license$</license>
+    <language>$language$</language>
+    <tags>$tags$</tags>
+    <repository type="git" url="$repositoryUrl$" />
+    <dependencies>
+      <group targetFramework="net472">
+        <dependency id="UmbracoCms.Core" version="[$minUmbracoVersion$, 9.0.0)" />
+        <dependency id="UmbracoCms.Web" version="[$minUmbracoVersion$, 9.0.0)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\*.*" target="lib\net472" />
+    <file src="App_Plugins\**\*.*" target="content\App_Plugins" />
+  </files>
+</package>

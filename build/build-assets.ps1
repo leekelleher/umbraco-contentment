@@ -24,8 +24,14 @@ if ($ConfigurationName -eq 'Debug') {
 
 $targetFolder = "${SolutionDir}..\build\assets";
 
+# If it already exists, delete it
+if (Test-Path -Path $targetFolder) {
+    Remove-Item -Recurse -Force $targetFolder;
+}
+
 # Copy DLL / PDB
 $binFolder = "${targetFolder}\bin";
+
 if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
 Copy-Item -Path "${TargetDir}${ProjectName}.*" -Destination $binFolder;
 
