@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Umbraco Community forum
+    url: https://our.umbraco.com/
+    about: "For support questions, please use the Umbraco Community forum. This repository's issues are reserved for bug reports and feature requests."
