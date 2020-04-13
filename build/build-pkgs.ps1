@@ -31,7 +31,6 @@ $packageName = 'Contentment';
 $packageDescription = 'Contentment, a collection of components for Umbraco 8.';
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
 $iconUrl = 'https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png';
-$iconPath = 'content/App_Plugins/Contentment/contentment.png';
 $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
@@ -135,8 +134,9 @@ Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Con
 
 # Populate the NuGet package manifest
 
-$nugetPackageManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-nuget.nuspec';
-& $nuget_exe pack $nugetPackageManifest -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;icon=$iconPath;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
+& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders
