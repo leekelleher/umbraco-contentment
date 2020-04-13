@@ -46,7 +46,7 @@ _There are currently no known issues with the Contentment package._
 
 [Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
 
-Please note, you may find other components within Contentment that have not yet been documented.
+Please note, you may find other components within Contentment that have not yet been documented.<br>
 _Let's call those "undocumented features"._
 
 
@@ -58,7 +58,7 @@ I reserve the right to address bug reports or feature requests in my own time, o
 
 **Any feedback is warmly welcome.** But please keep in mind, I am not your personal support developer.
 
-The Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
+If you are really suck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>650+ hours</b> (between 2019-03-13 to 2020-02-24)</summary>
+<summary>Current development effort: <b>680+ hours</b> (between 2019-03-13 to 2020-04-13)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
