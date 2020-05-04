@@ -1,0 +1,19 @@
+﻿/* Copyright © 2020 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+/*
+    Umbraco Contentment - Backoffice UI Shim
+    These are CSS override rules to enforce specific changes in the Umbraco back-office.
+*/
+
+/* Enables the use of FontAwesome icons without the extra `.fa` CSS baggage. */
+[class].icon-fa {
+    font-family: FontAwesome;
+    text-align: center;
+}
+
+.umb-tree-icon.icon-fa {
+    width: 20px;
+}
