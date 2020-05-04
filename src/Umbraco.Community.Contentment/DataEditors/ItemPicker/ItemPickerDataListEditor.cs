@@ -35,7 +35,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             { ItemPickerConfigurationEditor.OverlayOrderBy, string.Empty },
         };
 
-        public bool HasMultipleValues => true;
+        public bool HasMultipleValues(Dictionary<string, object> config)
+        {
+            return (config.TryGetValue(MaxItemsConfigurationField.MaxItems, out var tmp) && tmp is string s && s != "1") == false;
+        }
 
         public string View => ItemPickerDataEditor.DataEditorViewPath;
     }

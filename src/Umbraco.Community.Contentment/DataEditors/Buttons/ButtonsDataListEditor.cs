@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -27,7 +28,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public bool HasMultipleValues => true;
+        public bool HasMultipleValues(Dictionary<string, object> config)
+        {
+            return config.TryGetValue(EnableMultipleConfigurationField.EnableMultiple, out var tmp) && tmp.TryConvertTo<bool>().Result;
+        }
 
         public string View => Constants.Internals.EditorsPathRoot + "buttons.html";
     }

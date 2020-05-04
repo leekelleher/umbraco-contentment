@@ -36,6 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2)
             {
                 var valueType = default(Type);
+                var hasMultipleValues = false;
 
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
                 if (obj1.ContainsKey("key") == false && obj1.ContainsKey("type"))
@@ -59,8 +60,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 var editor = _utility.GetConfigurationEditor<IDataListEditor>(obj2.Value<string>("key"));
+                if (editor != null)
+                {
+                    var config = obj2["value"].ToObject<Dictionary<string, object>>();
+                    hasMultipleValues = editor.HasMultipleValues(config);
+                }
 
-                return editor?.HasMultipleValues == true
+                return hasMultipleValues == true
                     ? typeof(IEnumerable<>).MakeGenericType(valueType ?? defaultValueType)
                     : valueType ?? defaultValueType;
             }
@@ -123,7 +129,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     foreach (var item in items)
                     {
-                        objects.Add(converter != null ? converter(valueType, item) : item);
+                        var obj = converter != null ? converter(valueType, item) : item;
+                        if (obj != null)
+                        {
+                            objects.Add(obj);
+                        }
                     }
 
                     var result = Array.CreateInstance(valueType, objects.Count);

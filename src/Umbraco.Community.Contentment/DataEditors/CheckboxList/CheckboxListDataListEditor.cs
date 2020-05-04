@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => default;
 
-        public bool HasMultipleValues => true;
+        public bool HasMultipleValues(Dictionary<string, object> config) => true;
 
         public string View => CheckboxListDataEditor.DataEditorViewPath;
     }
