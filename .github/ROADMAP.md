@@ -25,7 +25,7 @@ Initial release. Property Editors are:
 ### v1.2
 
 - Text Input _(a reimagining of the textstring editor)_
-- Number Intput _(a reimagining of the numeric editor)_
+- Number Input _(a reimagining of the numeric editor)_
 
 ### v1.3
 
