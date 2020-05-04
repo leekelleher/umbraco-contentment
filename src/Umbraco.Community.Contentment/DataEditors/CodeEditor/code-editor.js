@@ -25,8 +25,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             enableBasicAutocompletion: 0,
             enableLiveAutocompletion: 0,
             readonly: 0,
+            minLines: undefined,
+            maxLines: undefined,
         };
-        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+        var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
@@ -50,6 +52,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     enableSnippets: Object.toBoolean(config.enableSnippets),
                     enableBasicAutocompletion: Object.toBoolean(config.enableBasicAutocompletion),
                     enableLiveAutocompletion: Object.toBoolean(config.enableLiveAutocompletion),
+                    minLines: config.minLines,
+                    maxLines: config.maxLines,
                     wrap: Object.toBoolean(config.useWrapMode)
                 },
                 //rendererOptions: {},
