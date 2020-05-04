@@ -48,6 +48,7 @@
 
                     <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
                         <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
+                        <!-- TODO: See if we can do the `disabled` state? -->
                             <a class="umb-action-link" ng-click="vm.select(item)">
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
                                 <i class="large icon {{item.icon}}"></i>

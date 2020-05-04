@@ -22,10 +22,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             _listItems = listItems;
         }
 
-        public T GetConfigurationEditor<T>(string typeName)
+        public T GetConfigurationEditor<T>(string key)
              where T : IContentmentEditorItem
         {
-            if (string.IsNullOrWhiteSpace(typeName) == false && _listItems.TryGet(typeName, out var tmp) && tmp is T item)
+            if (string.IsNullOrWhiteSpace(key) == false && _listItems.TryGet(key, out var tmp) && tmp is T item)
             {
                 return item;
             }

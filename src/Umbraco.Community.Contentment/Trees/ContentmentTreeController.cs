@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.Trees
 
             root.Icon = "icon-smiley";
             root.HasChildren = false;
-            root.RoutePath = $"{UmbConstants.Applications.Settings}/{Constants.Internals.TreeAlias}/index";
+            root.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.MenuUrl = null;
 
             return root;

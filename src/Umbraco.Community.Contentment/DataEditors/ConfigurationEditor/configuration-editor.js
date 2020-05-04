@@ -144,7 +144,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 submit: function (model) {
 
                     $scope.model.value[$index] = model;
+
                     setDirty();
+
                     editorService.close();
                 },
                 close: function () {
