@@ -298,7 +298,7 @@
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
     <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\IDataListSourceValueConverter.cs" />
+    <Compile Include="DataEditors\DataList\IDataListSourceValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\SqlDataListSource.cs" />
@@ -356,7 +356,7 @@
     <Compile Include="DataEditors\DataList\DataListItemAttribute.cs" />
     <Compile Include="DataEditors\DataList\DataListValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\EnumDataListSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\IDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\IDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
