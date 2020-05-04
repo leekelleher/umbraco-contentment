@@ -12,3 +12,8 @@
 - Nested Content - Reimagined. Reach for its heart, imagine a new landscape, another atmosphere, and see how it goes.
 
 - 
+
+## Tracking
+
+- v8.6+ IDataValueReferenceFactory, IDataValueReference
+
