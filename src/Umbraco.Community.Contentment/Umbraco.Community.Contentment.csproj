@@ -412,6 +412,14 @@
     <Compile Include="Web\Serialization\PublishedContentContractResolver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataEditors\CascadingDropdownList\README.md" />
+    <None Include="DataEditors\CheckboxList\README.md" />
+    <None Include="DataEditors\CodeEditor\README.md" />
+    <None Include="DataEditors\ConfigurationEditor\README.md" />
+    <None Include="DataEditors\DataTable\README.md" />
+    <None Include="DataEditors\DropdownList\README.md" />
+    <None Include="DataEditors\Notes\README.md" />
+    <None Include="DataEditors\RadioButtonList\README.md" />
     <None Include="packages.config" />
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
