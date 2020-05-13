@@ -8,7 +8,7 @@ using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;
 
-namespace Umbraco.Community.Contentment.Migrations.Install
+namespace Umbraco.Community.Contentment.Migrations
 {
     internal sealed class RegisterUmbracoPackageEntry : MigrationBase
     {

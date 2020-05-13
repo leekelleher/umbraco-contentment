@@ -18,7 +18,8 @@ namespace Umbraco.Community.Contentment.Composing
         {
             composition
                 .ContentmentListItems()
-                .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>());
+                    .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
+            ;
 
             composition.RegisterUnique<ConfigurationEditorUtility>();
         }

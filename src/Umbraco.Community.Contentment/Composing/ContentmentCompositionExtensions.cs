@@ -12,6 +12,8 @@ namespace Umbraco.Core.Composing
     public static partial class ContentmentCompositionExtensions
     {
         public static ContentmentListItemCollectionBuilder ContentmentListItems(this Composition composition)
-               => composition.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
+        {
+            return composition.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
+        }
     }
 }

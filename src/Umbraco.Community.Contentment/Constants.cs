@@ -11,6 +11,8 @@ namespace Umbraco.Community.Contentment
         {
             internal const string ProjectName = "Contentment";
 
+            internal const string ProjectAlias = "contentment";
+
             internal const string ProjectNamespace = "Umbraco.Community.Contentment";
 
             internal const string DataEditorNamePrefix = "[" + ProjectName + "] ";
@@ -25,7 +27,7 @@ namespace Umbraco.Community.Contentment
 
             internal const string BackOfficePathRoot = PackagePathRoot + "backoffice/" + TreeAlias + "/";
 
-            internal const string TreeAlias = "contentment";
+            internal const string TreeAlias = ProjectAlias;
         }
 
         internal static partial class Conventions
