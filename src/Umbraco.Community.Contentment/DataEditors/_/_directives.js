@@ -3,12 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco.directives.html").directive("umbHtmlAttributes", [
+angular.module("umbraco.directives.html").directive("lkHtmlAttributes", [
     function () {
         return {
             restrict: "A",
             scope: {
-                attributes: "&umbHtmlAttributes"
+                attributes: "&lkHtmlAttributes"
             },
             link: function (scope, element, attrs) {
                 var attributes = scope.attributes();
