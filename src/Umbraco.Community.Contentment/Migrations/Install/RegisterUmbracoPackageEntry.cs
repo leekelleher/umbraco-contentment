@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Linq;
-using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;

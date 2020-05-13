@@ -3,13 +3,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System.Collections.Generic;
 using Umbraco.Community.Contentment.Migrations;
+using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Migrations;
 using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
+using Umbraco.Web.JavaScript;
 
 namespace Umbraco.Community.Contentment.Composing
 {
@@ -26,19 +29,35 @@ namespace Umbraco.Community.Contentment.Composing
             IKeyValueService keyValueService,
             IProfilingLogger logger)
         {
-            this._scopeProvider = scopeProvider;
-            this._migrationBuilder = migrationBuilder;
-            this._keyValueService = keyValueService;
-            this._logger = logger;
+            _scopeProvider = scopeProvider;
+            _migrationBuilder = migrationBuilder;
+            _keyValueService = keyValueService;
+            _logger = logger;
         }
 
         public void Initialize()
         {
             var upgrader = new Upgrader(new ContentmentPlan());
             upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
+
+            ServerVariablesParser.Parsing += ServerVariablesParser_Parsing;
         }
 
         public void Terminate()
-        { }
+        {
+            ServerVariablesParser.Parsing -= ServerVariablesParser_Parsing;
+        }
+
+        private void ServerVariablesParser_Parsing(object sender, Dictionary<string, object> e)
+        {
+            if (e.ContainsKey(Constants.Internals.ProjectAlias) == false)
+            {
+                e.Add(Constants.Internals.ProjectAlias, new
+                {
+                    name = Constants.Internals.ProjectName,
+                    version = ContentmentVersion.SemanticVersion.ToSemanticString()
+                });
+            }
+        }
     }
 }

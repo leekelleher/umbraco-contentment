@@ -481,6 +481,8 @@
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\lang\en.xml" />
+    <Content Include="Web\UI\backoffice-ui-shim.css" />
+    <Content Include="Web\UI\backoffice.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
