@@ -359,7 +359,6 @@
     <Compile Include="DataEditors\DataList\IDataListEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
-    <Compile Include="DataEditors\DropdownList\AllowEmptyConfigurationField.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListConfigurationEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataListEditor.cs" />
@@ -451,6 +450,7 @@
     <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.js" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.css" />
     <Content Include="DataEditors\NumberInput\number-input.html" />
+    <None Include="DataEditors\ReadOnly\README.md" />
     <Content Include="DataEditors\TextInput\text-input.css" />
     <Content Include="DataEditors\TextInput\text-input.html" />
     <Content Include="DataEditors\TextInput\text-input.js" />
