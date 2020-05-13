@@ -21,3 +21,24 @@ angular.module("umbraco.directives.html").directive("lkHtmlAttributes", [
         };
     }
 ]);
+
+angular.module("umbraco.directives.html").directive("lkBindHtmlTemplate", [
+    "$compile",
+    function ($compile) {
+        return {
+            restrict: "A",
+            replace: true,
+            link: function (scope, element, attrs) {
+                scope.$watch(
+                    function (scope) {
+                        return scope.$eval(attrs.lkBindHtmlTemplate);
+                    },
+                    function (value) {
+                        element.html(value);
+                        $compile(element.contents())(scope);
+                    }
+                );
+            }
+        };
+    }
+]);
