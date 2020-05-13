@@ -42,7 +42,6 @@ Initial release. Property Editors are:
 - Checkbox _(includes "Inline Checkbox" option)_
 - Configuration Editor
 - Data Table
-- Data List UIs _(possibly Buttons, Cards, Toggles)_
 
 **Validation exploration**
 

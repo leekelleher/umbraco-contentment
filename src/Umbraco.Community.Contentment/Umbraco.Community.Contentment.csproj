@@ -398,7 +398,6 @@
     <Compile Include="DataEditors\RenderMacro\RenderMacroConfigurationEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroDataEditor.cs" />
     <Compile Include="DataEditors\RenderMacro\RenderMacroValueConverter.cs" />
-    <Compile Include="DataEditors\Toggles\TogglesDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\EnableDevModeConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentListItem.cs" />
     <Compile Include="DataEditors\ReadOnly\ReadOnlyDataValueEditor.cs" />
@@ -477,8 +476,6 @@
     <Content Include="DataEditors\RenderMacro\render-macro.js" />
     <Content Include="DataEditors\Buttons\buttons.html" />
     <Content Include="DataEditors\Buttons\buttons.js" />
-    <Content Include="DataEditors\Toggles\toggles.html" />
-    <Content Include="DataEditors\Toggles\toggles.js" />
     <Content Include="DataEditors\ReadOnly\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_property-actions.js" />
     <Content Include="DataEditors\_\_dev-mode.js" />
