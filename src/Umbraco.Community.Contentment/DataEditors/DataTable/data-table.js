@@ -10,7 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("datatable.model", $scope.model);
 
         var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
-        var config = angular.extend({}, defaultConfig, $scope.model.config); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+        var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;
 
