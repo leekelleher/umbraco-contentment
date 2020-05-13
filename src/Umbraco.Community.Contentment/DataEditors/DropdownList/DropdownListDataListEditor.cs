@@ -18,7 +18,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new AllowEmptyConfigurationField(),
+            new ConfigurationField
+            {
+                Key = DropdownListConfigurationEditor.AllowEmpty,
+                Name = "Allow empty?",
+                Description = "Enable to allow an empty option at the top of the dropdown list.",
+                View = "views/propertyeditors/boolean/boolean.html",
+                Config = new Dictionary<string, object>
+                {
+                    { "default", Constants.Values.True }
+                }
+            },
             new HtmlAttributesConfigurationField(),
         };
 

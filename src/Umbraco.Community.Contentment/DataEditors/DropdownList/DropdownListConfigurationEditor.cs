@@ -7,6 +7,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class DropdownListConfigurationEditor
     {
+        internal const string AllowEmpty = "allowEmpty";
         internal const string Items = "items";
         internal const string DefaultValue = "defaultValue";
     }
