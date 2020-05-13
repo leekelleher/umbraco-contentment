@@ -16,7 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84
 	ProjectSection(SolutionItems) = preProject
 		..\build\build-assets.ps1 = ..\build\build-assets.ps1
 		..\build\build-pkgs.ps1 = ..\build\build-pkgs.ps1
-		..\build\manifest-nuget.xml = ..\build\manifest-nuget.xml
+		..\build\manifest-nuget-core.nuspec = ..\build\manifest-nuget-core.nuspec
+		..\build\manifest-nuget-web.nuspec = ..\build\manifest-nuget-web.nuspec
 		..\build\manifest-umbraco.xml = ..\build\manifest-umbraco.xml
 	EndProjectSection
 EndProject
