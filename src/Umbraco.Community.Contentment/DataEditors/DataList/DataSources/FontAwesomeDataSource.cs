@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select icons from Font Awesome.";
 
-        public string Icon => "fa fa-font-awesome";
+        public string Icon => "icon-fa fa-font-awesome";
 
         public IEnumerable<ConfigurationField> Fields => default;
 
@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Name = ToAwesomeName(x),
                     Value = x,
-                    Icon = $"fa fa-{x}"
+                    Icon = $"icon-fa fa-{x}"
                 });
         }
 

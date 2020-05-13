@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Configure text-delimited data to populate the data source.";
 
-        public string Icon => "icon-ordered-list";
+        public string Icon => "icon-fa fa-file-text-o";
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {

@@ -10,6 +10,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DropdownList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Dropdown List";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
-        internal const string DataEditorIcon = "icon-indent";
+        internal const string DataEditorIcon = "icon-fa fa-caret-square-o-down";
     }
 }
