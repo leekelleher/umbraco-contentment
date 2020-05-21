@@ -6,12 +6,17 @@
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web.PropertyEditors.ValueConverters;
+using Umbraco.Web.Templates;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
     public sealed class TextInputValueConverter : TextStringValueConverter
     {
+        public TextInputValueConverter(HtmlLocalLinkParser linkParser, HtmlUrlParser urlParser)
+            : base(linkParser, urlParser)
+        { }
+
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(TextInputDataEditor.DataEditorAlias);
     }
 }
