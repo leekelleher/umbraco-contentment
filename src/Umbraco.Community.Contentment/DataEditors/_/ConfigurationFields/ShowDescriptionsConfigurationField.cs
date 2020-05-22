@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             View = "views/propertyeditors/boolean/boolean.html";
             Config = new Dictionary<string, object>
             {
-                { "default", Constants.Values.True }
+                { "default", Constants.Values.False }
             };
         }
     }

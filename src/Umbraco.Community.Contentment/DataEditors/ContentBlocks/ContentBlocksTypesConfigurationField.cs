@@ -70,6 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { ConfigurationEditorConfigurationEditor.Items, items },
                 { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
+                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
         }
     }

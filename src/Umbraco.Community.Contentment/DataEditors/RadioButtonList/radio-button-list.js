@@ -11,7 +11,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             items: [],
-            showDescriptions: 1,
+            showDescriptions: 0,
             showIcons: 0,
             defaultValue: ""
         };
