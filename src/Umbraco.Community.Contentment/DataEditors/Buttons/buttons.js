@@ -13,7 +13,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultIcon: "icon-science",
             defaultValue: [],
             items: [],
-            enableMultiple: 0
+            enableMultiple: 0,
+            hideName: 0,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -26,17 +27,23 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            vm.icon = config.defaultIcon;
             vm.multiple = Object.toBoolean(config.enableMultiple);
 
             if (vm.multiple === false && $scope.model.value.length > 0) {
                 $scope.model.value.splice(1);
             }
 
-            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.items = config.items.slice();
 
-            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                item.selected = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.hideName = Object.toBoolean(config.hideName);
+
+            var iconExtras = vm.hideName === false
+                ? "large "
+                : "large mr0 ";
+
+            vm.items.forEach(function (item) {
+                item.icon = iconExtras + (item.icon || config.defaultIcon);
+                item.selected = $scope.model.value.indexOf(item.value) > -1;
             });
 
             vm.select = select;
@@ -47,7 +54,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             item.selected = item.selected === false;
             $scope.model.value = [];
 
-            _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.items.forEach(function (x) {
 
                 if (vm.multiple === false) {
                     x.selected = x.value === item.value;

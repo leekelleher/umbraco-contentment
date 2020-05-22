@@ -21,6 +21,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new DefaultIconConfigurationField(),
+            new ConfigurationField
+            {
+                Key = "hideName",
+                Name = "Hide name?",
+                Description = "Select to hide the item's name and only display the icon.",
+                View = "boolean",
+            },
             new EnableMultipleConfigurationField()
         };
 

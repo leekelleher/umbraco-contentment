@@ -4,9 +4,14 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment lk-buttons" ng-controller="Umbraco.Community.Contentment.DataEditors.Buttons.Controller as vm">
-    <!-- TODO: [LK] Why not use `umb-button` directive? -->
-    <button type="button" ng-class="{ 'selected' : item.selected }" ng-click="vm.select(item)" ng-disabled="item.disabled" ng-repeat="item in vm.items">
-        <i class="icon medium" ng-class="item.icon || vm.icon"></i>
-        <span ng-bind="item.name"></span>
-    </button>
+    <umb-button type="button"
+                action="vm.select(item)"
+                size="l"
+                ng-repeat="item in vm.items"
+                ng-class="{ 'umb-button--selected' : item.selected }"
+                label="{{vm.hideName === false ? item.name : null}}"
+                title="{{item.name}}"
+                icon="{{item.icon}}"
+                disabled="item.disabled">
+    </umb-button>
 </div>
