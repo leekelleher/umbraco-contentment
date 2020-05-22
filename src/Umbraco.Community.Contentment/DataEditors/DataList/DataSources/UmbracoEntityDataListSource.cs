@@ -54,11 +54,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Key = "entityType",
                     Name = "Entity type",
                     Description = "Select the Umbraco entity type to use.",
-                    View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                    View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>()
                     {
-                        { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
-                        { DropdownListConfigurationEditor.Items, SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x }) },
+                        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                        { Constants.Conventions.ConfigurationFieldAliases.Items, SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x }) },
                     }
                 }
             };

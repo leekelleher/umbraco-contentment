@@ -22,16 +22,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Kilo,
                 "Kilobytes?",
                 "How many bytes do you prefer in your kilobyte?",
-                IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath),
+                IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 new Dictionary<string, object>
                 {
-                    { RadioButtonListConfigurationEditor.Items, new[]
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
                             new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong> (decimal)." },
                             new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong> (binary). Today, this is known as a kibibyte." },
                         }
                     },
-                    { RadioButtonListConfigurationEditor.DefaultValue, "1024" },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "1024" },
                 });
 
             Fields.Add(

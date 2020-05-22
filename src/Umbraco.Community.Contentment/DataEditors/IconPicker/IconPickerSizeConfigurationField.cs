@@ -25,16 +25,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = Size;
             Name = nameof(Size);
             Description = $"Select the size of the icon picker. By default this is set to '{Large}'.<br><br>If '{Small}' is selected, the description and delete button will not be visible.";
-            View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
+            View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
-                { RadioButtonListConfigurationEditor.Items, new[]
+                { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                     {
                         new DataListItem { Name = nameof(Small), Value = Small },
                         new DataListItem { Name = nameof(Large), Value = Large }
                     }
                 },
-                { RadioButtonListConfigurationEditor.DefaultValue, defaultValue }
+                { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultValue }
             };
         }
     }

@@ -25,16 +25,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = ListType;
             Name = "List type";
             Description = "Select the style of list to be displayed in the overlay.";
-            View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
+            View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
-                { RadioButtonListConfigurationEditor.Items, new[]
+                { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                     {
                         new DataListItem { Name = nameof(Grid), Value = Grid, Description = "Grid displays as a card based layout, (4 cards per row)." },
                         new DataListItem { Name = nameof(List), Value = List, Description = "List will display as a menu of single items." }
                     }
                 },
-                { RadioButtonListConfigurationEditor.DefaultValue, defaultValue }
+                { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultValue }
             };
         }
     }

@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
-                    { CascadingDropdownListConfigurationEditor.APIs, new[]
+                    { CascadingDropdownListDataEditor.APIs, new[]
                         {
                             EnumDataSourceApiController.GetAssembliesUrl,
                             EnumDataSourceApiController.GetEnumsUrl,

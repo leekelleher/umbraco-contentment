@@ -10,11 +10,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class RadioButtonListDataListEditor : IDataListEditor
     {
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
+
         public string Name => "Radio Button List";
 
         public string Description => "Select a single value from a list of radio buttons";
 
-        public string Icon => RadioButtonListDataEditor.DataEditorIcon;
+        public string Icon => "icon-target";
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -28,6 +30,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool HasMultipleValues(Dictionary<string, object> config) => false;
 
-        public string View => RadioButtonListDataEditor.DataEditorViewPath;
+        public string View => DataEditorViewPath;
     }
 }

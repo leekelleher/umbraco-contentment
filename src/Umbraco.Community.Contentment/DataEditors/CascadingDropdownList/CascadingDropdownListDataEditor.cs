@@ -7,9 +7,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class CascadingDropdownListDataEditor
     {
-        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CascadingDropdownList";
-        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Cascading Dropdown List";
+        internal const string APIs = "apis";
+
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "cascading-dropdown-list.html";
-        internal const string DataEditorIcon = "icon-indent";
     }
 }

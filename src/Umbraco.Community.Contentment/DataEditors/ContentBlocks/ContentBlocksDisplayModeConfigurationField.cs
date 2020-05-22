@@ -21,27 +21,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = DisplayMode;
             Name = "Display mode?";
             Description = "Select to display the elements in a list or as stacked blocks.";
-            View = IOHelper.ResolveUrl(RadioButtonListDataEditor.DataEditorViewPath);
+            View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
-                {
-                    { RadioButtonListConfigurationEditor.Items, new DataListItem[]
-                        {
-                            new DataListItem
-                            {
-                                Name = nameof(Blocks),
-                                Value = Blocks,
-                                Description = "This will display as stacked blocks."
-                            },
-                            new DataListItem
-                            {
-                                Name = nameof(List),
-                                Value = List,
-                                Description = "This will display similar to a content picker."
-                            },
-                        }
-                    },
-                    { RadioButtonListConfigurationEditor.DefaultValue, defaultValue }
-                };
+            {
+                { Constants.Conventions.ConfigurationFieldAliases.Items, new DataListItem[]
+                    {
+                        new DataListItem { Name = nameof(Blocks), Value = Blocks, Description = "This will display as stacked blocks." },
+                        new DataListItem { Name = nameof(List), Value = List, Description = "This will display similar to a content picker." },
+                    }
+                },
+                { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultValue }
+            };
         }
     }
 }

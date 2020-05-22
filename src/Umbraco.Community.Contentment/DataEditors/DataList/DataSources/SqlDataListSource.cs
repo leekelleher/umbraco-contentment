@@ -73,11 +73,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "connectionString",
                 Name = "Connection string",
                 Description = "Enter the connection string.",
-                View = IOHelper.ResolveUrl(DropdownListDataEditor.DataEditorViewPath),
+                View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListConfigurationEditor.AllowEmpty, Constants.Values.False },
-                    { DropdownListConfigurationEditor.Items, _connectionStrings },
+                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, _connectionStrings },
                 }
             }
         };

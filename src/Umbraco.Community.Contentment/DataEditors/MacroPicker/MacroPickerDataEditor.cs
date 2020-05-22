@@ -7,9 +7,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class MacroPickerDataEditor
     {
-        internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "MacroPicker";
-        internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Macro Picker";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "macro-picker.html";
-        internal const string DataEditorIcon = Core.Constants.Icons.Macro;
     }
 }

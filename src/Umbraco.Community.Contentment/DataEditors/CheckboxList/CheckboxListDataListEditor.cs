@@ -10,11 +10,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class CheckboxListDataListEditor : IDataListEditor
     {
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
+
         public string Name => "Checkbox List";
 
         public string Description => "Select multiple values from a list of checkboxes.";
 
-        public string Icon => CheckboxListDataEditor.DataEditorIcon;
+        public string Icon => "icon-fa fa-check-square-o";
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -35,6 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool HasMultipleValues(Dictionary<string, object> config) => true;
 
-        public string View => CheckboxListDataEditor.DataEditorViewPath;
+        public string View => DataEditorViewPath;
     }
 }

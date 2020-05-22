@@ -10,17 +10,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class DropdownListDataListEditor : IDataListEditor
     {
+        internal const string AllowEmpty = "allowEmpty";
+        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
+
         public string Name => "Dropdown List";
 
         public string Description => "Select a single value from a dropdown select list.";
 
-        public string Icon => DropdownListDataEditor.DataEditorIcon;
+        public string Icon => "icon-fa fa-caret-square-o-down";
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
-                Key = DropdownListConfigurationEditor.AllowEmpty,
+                Key = AllowEmpty,
                 Name = "Allow empty?",
                 Description = "Enable to allow an empty option at the top of the dropdown list.",
                 View = "views/propertyeditors/boolean/boolean.html",
@@ -38,6 +41,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool HasMultipleValues(Dictionary<string, object> config) => false;
 
-        public string View => DropdownListDataEditor.DataEditorViewPath;
+        public string View => DataEditorViewPath;
     }
 }

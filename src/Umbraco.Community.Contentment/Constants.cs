@@ -32,6 +32,13 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Conventions
         {
+            internal static partial class ConfigurationFieldAliases
+            {
+                public const string DefaultValue = "defaultValue";
+
+                public const string Items = "items";
+            }
+
             internal static partial class PropertyGroups
             {
                 public const string Code = "Code";
