@@ -413,6 +413,7 @@
     <None Include="DataEditors\ConfigurationEditor\README.md" />
     <None Include="DataEditors\DataTable\README.md" />
     <None Include="DataEditors\DropdownList\README.md" />
+    <None Include="DataEditors\MacroPicker\README.md" />
     <None Include="DataEditors\Notes\README.md" />
     <None Include="DataEditors\RadioButtonList\README.md" />
     <None Include="packages.config" />
