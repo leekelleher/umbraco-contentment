@@ -24,15 +24,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
-            vm.headings = _.pluck(config.fields, "label"); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.headings = config.fields.map(function (x) { return x.label });
             vm.items = [];
 
-            _.each($scope.model.value, function (value, row) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                var fields = angular.copy(config.fields); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            $scope.model.value.forEach(function (value, row) {
 
-                _.each(fields, function (field, cell) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                    field.alias = [$scope.model.alias, row, cell].join("_");
-                    field.value = value[field.key];
+                var fields = [];
+
+                config.fields.forEach(function (field, cell) {
+                    fields.push(Object.assign({
+                        alias: [$scope.model.alias, row, cell].join("_"),
+                        value: value[field.key]
+                    }, field));
                 });
 
                 vm.items.push(fields);
@@ -78,7 +81,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            vm.items.push(angular.copy(config.fields)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.items.push(angular.copy(config.fields));
 
             if ((config.maxItems !== 0 && config.maxItems !== "0") && vm.items.length >= config.maxItems) {
                 vm.allowAdd = false;
@@ -112,15 +115,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         var unsubscribe = $scope.$on("formSubmitting", function (ev, args) {
+
             $scope.model.value = [];
-            _.each(vm.items, function (row) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+
+            vm.items.forEach(function (row) {
+
                 var obj = {};
 
-                _.each(row, function (cell) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                row.forEach(function (cell) {
                     obj[cell.key] = cell.value;
                 });
 
                 $scope.model.value.push(obj);
+
             });
         });
 

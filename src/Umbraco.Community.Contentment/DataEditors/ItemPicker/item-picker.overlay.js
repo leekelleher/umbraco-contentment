@@ -50,7 +50,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
                 var selectedItems = [];
 
                 if (vm.enableMultiple) {
-                    _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    vm.items.forEach(function (x) {
                         if (x.selected) {
                             delete x.selected;
                             selectedItems.push(x);

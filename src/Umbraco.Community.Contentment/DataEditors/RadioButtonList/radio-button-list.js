@@ -23,10 +23,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             $scope.model.value = $scope.model.value || config.defaultValue;
 
             if (Array.isArray($scope.model.value)) {
-                $scope.model.value = _.first($scope.model.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                $scope.model.value = $scope.model.value[0];
             }
 
-            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.items = config.items.slice();
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
             vm.showIcons = Object.toBoolean(config.showIcons);

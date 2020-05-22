@@ -36,7 +36,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", _.pluck(config.elementTypes, "key")); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", config.elementTypes.map(function (x) { return x.key }));
 
                 if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
@@ -63,7 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function clearClipboard() {
             vm.clipboardItems = [];
-            clipboardService.clearEntriesOfType("contentment.element", _.pluck(config.elementTypes, "key")); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            clipboardService.clearEntriesOfType("contentment.element", config.elementTypes.map(function (x) { return x.key }));
         };
 
         function showPrompt() {
@@ -112,7 +112,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 : contentResource.getScaffold(-2, elementType.alias);
 
             getScaffold.then(function (data) {
-                angular.extend(vm.content, data.variants[0]); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+                Object.assign(vm.content, data.variants[0]);
                 vm.loading = false;
             });
 
@@ -158,7 +158,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     }
                 }
 
-                angular.extend(vm.content, data.variants[0]); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+                Object.assign(vm.content, data.variants[0]);
                 vm.loading = false;
             });
 

@@ -27,10 +27,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.items = config.items.slice();
 
-            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                item.checked = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.items.forEach(function (item) {
+                item.checked = $scope.model.value.indexOf(item.value) > -1;
             });
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
@@ -60,7 +60,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = [];
 
-            _.each(vm.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.items.forEach(function (x) {
                 if (x.checked) {
                     $scope.model.value.push(x.value);
                 }
@@ -72,7 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function toggle() {
             $scope.model.value = [];
 
-            _.each(vm.items, function (item) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            vm.items.forEach(function (item) {
 
                 item.checked = vm.toggleChecked;
 

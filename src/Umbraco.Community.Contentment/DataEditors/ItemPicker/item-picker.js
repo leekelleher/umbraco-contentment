@@ -54,7 +54,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 scroll: true,
                 tolerance: "pointer",
                 stop: function (e, ui) {
-                    $scope.model.value = _.map(vm.items, function (x) { return x.value }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    $scope.model.value = vm.items.map(function (x) { return x.value });
                     setDirty();
                 }
             };
@@ -89,8 +89,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 size: "small",
                 submit: function (selectedItems) {
 
-                    _.each(selectedItems, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                        vm.items.push(angular.copy(x)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+                    selectedItems.forEach(function (x) {
+                        vm.items.push(Object.assign({}, x));
                         $scope.model.value.push(x.value);
                     });
 
@@ -117,10 +117,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             if ($scope.model.value.length > 0 && config.items.length > 0) {
                 var orphaned = [];
 
-                _.each($scope.model.value, function (v) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                $scope.model.value.forEach(function (v) {
                     var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     if (item) {
-                        vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+                        vm.items.push(Object.assign({}, item));
                     } else {
                         orphaned.push(v);
                     }
@@ -168,7 +168,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function ensureIcons(items) {
-            _.each(items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            items.forEach(function (x) {
                 if (x.hasOwnProperty("icon") === false) {
                     x.icon = config.defaultIcon;
                 }

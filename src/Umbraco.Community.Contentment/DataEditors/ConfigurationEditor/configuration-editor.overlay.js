@@ -62,10 +62,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             }
 
             vm.title = "Configure " + editor.name;
-            vm.editor = angular.copy(editor); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.editor = Object.assign({}, editor);
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {
-                _.each(vm.editor.fields, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                vm.editor.fields.forEach(function (x) {
                     x.alias = x.key;
                     x.value = item.value[x.key];
                 });
@@ -101,9 +101,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 value: {}
             };
 
-            item.fields.forEach(function (x) {
-                obj.value[x.key] = x.value;
-            });
+            if (item.fields) {
+                item.fields.forEach(function (x) {
+                    obj.value[x.key] = x.value;
+                });
+            }
 
             if ($scope.model.submit) {
                 $scope.model.submit(obj);

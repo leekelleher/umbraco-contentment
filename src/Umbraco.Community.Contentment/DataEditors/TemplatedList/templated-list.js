@@ -34,10 +34,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value.splice(1);
             }
 
-            vm.items = angular.copy(config.items); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
+            vm.items = config.items.slice();
 
             vm.items.forEach(function (item) {
-                item.selected = _.contains($scope.model.value, item.value); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                item.selected = $scope.model.value.indexOf(item.value) > -1;
             });
 
             vm.htmlAttributes = config.htmlAttributes;
