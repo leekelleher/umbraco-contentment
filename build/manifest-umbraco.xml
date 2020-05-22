@@ -6,7 +6,7 @@
       <version>0.0.0</version>
       <license url=""></license>
       <url></url>
-	  <iconUrl></iconUrl>
+      <iconUrl></iconUrl>
       <requirements type="strict">
         <major>0</major>
         <minor>0</minor>

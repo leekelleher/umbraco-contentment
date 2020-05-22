@@ -28,14 +28,15 @@ Function parseSemVer($version) {
 
 $projectNamespace = 'Umbraco.Community.Contentment';
 $packageName = 'Contentment';
-$packageDescription = 'Contentment, a collection of components for Umbraco 8.';
+$nugetTitle = "${packageName} for Umbraco";
+$packageDescription = "${packageName}, a collection of components for Umbraco 8.";
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
 $iconUrl = 'https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png';
 $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = parseSemVer('8.4.0');
+$minUmbracoVersion = parseSemVer('8.6.1');
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
@@ -135,8 +136,8 @@ Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Con
 # Populate the NuGet package manifest
 
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
-& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
-& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$packageName for Umbraco;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders

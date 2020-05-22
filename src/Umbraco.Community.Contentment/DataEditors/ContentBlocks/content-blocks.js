@@ -77,38 +77,43 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.remove = remove;
             vm.populateName = populateName;
 
-            vm.propertyActions = [];
             vm.blockActions = [];
-
-            if (vm.allowCopy) {
-                vm.propertyActions.push({
-                    labelKey: "contentment_copyAllBlocks",
-                    icon: "documents",
-                    method: function () {
-                        for (var i = 0; i < $scope.model.value.length; i++) {
-                            copy(i);
-                        }
-                    }
-                });
-            }
-
-            if (Object.toBoolean(config.enableDevMode)) {
-                vm.propertyActions.push({
-                    labelKey: "contentment_editRawValue",
-                    icon: "brackets",
-                    method: function () {
-                        devModeService.editValue(
-                            $scope.model,
-                            function () {
-                                // TODO: [LK:2020-01-02] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
-                            }
-                        );
-                    }
-                });
-            }
 
             for (var i = 0; i < $scope.model.value.length; i++) {
                 vm.blockActions.push(actionsFactory(i));
+            }
+
+            if ($scope.umbProperty) {
+
+                var propertyActions = [];
+
+                if (vm.allowCopy) {
+                    propertyActions.push({
+                        labelKey: "contentment_copyAllBlocks",
+                        icon: "documents",
+                        method: function () {
+                            for (var i = 0; i < $scope.model.value.length; i++) {
+                                copy(i);
+                            }
+                        }
+                    });
+                }
+
+                if (Object.toBoolean(config.enableDevMode)) {
+                    propertyActions.push({
+                        labelKey: "contentment_editRawValue",
+                        icon: "brackets",
+                        method: function () {
+                            devModeService.editValue($scope.model, function () {
+                                // TODO: [LK:2020-01-02] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
+                            });
+                        }
+                    });
+                }
+
+                if (propertyActions.length > 0) {
+                    $scope.umbProperty.setPropertyActions(propertyActions);
+                }
             }
         };
 

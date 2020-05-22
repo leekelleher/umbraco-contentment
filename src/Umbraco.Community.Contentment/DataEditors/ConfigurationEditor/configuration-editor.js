@@ -75,16 +75,23 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.populate = populate;
             vm.remove = remove;
 
-            vm.propertyActions = [];
+            if ($scope.umbProperty) {
 
-            if (Object.toBoolean(config.enableDevMode)) {
-                vm.propertyActions.push({
-                    labelKey: "contentment_editRawValue",
-                    icon: "brackets",
-                    method: function () {
-                        devModeService.editValue($scope.model, validate);
-                    }
-                });
+                var propertyActions = [];
+
+                if (Object.toBoolean(config.enableDevMode)) {
+                    propertyActions.push({
+                        labelKey: "contentment_editRawValue",
+                        icon: "brackets",
+                        method: function () {
+                            devModeService.editValue($scope.model, validate);
+                        }
+                    });
+                }
+
+                if (propertyActions.length > 0) {
+                    $scope.umbProperty.setPropertyActions(propertyActions);
+                }
             }
         };
 
