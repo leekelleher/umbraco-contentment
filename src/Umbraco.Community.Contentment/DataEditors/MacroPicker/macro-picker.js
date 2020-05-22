@@ -50,7 +50,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            var macroPicker = {
+            editorService.macroPicker({
                 dialogData: {
                     richTextEditor: false,
                     macroData: { macroAlias: "" },
@@ -76,14 +76,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            }
-
-            editorService.macroPicker(macroPicker);
+            });
         };
 
         function edit($index) {
             var item = $scope.model.value[$index];
-            var macroPicker = {
+
+            editorService.macroPicker({
                 dialogData: {
                     richTextEditor: false,
                     macroData: { macroAlias: item.alias, macroParamsDictionary: item.params },
@@ -104,9 +103,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            }
-
-            editorService.macroPicker(macroPicker);
+            });
         };
 
         function remove($index) {

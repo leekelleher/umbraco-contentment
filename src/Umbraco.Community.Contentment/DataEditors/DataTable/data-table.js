@@ -9,7 +9,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("datatable.model", $scope.model);
 
-        var defaultConfig = { fields: [], disableSorting: 0, maxItems: 0, restrictWidth: 0, usePrevalueEditors: 1 };
+        var defaultConfig = {
+            fields: [],
+            disableSorting: 0,
+            maxItems: 0,
+            restrictWidth: 0,
+            usePrevalueEditors: 1
+        };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;

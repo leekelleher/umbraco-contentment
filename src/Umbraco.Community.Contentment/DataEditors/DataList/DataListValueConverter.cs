@@ -129,7 +129,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     foreach (var item in items)
                     {
-                        var obj = converter != null ? converter(valueType, item) : item;
+                        var obj = converter != null
+                            ? converter(valueType, item)
+                            : item;
+
                         if (obj != null)
                         {
                             objects.Add(obj);
@@ -140,7 +143,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     for (var i = 0; i < objects.Count; i++)
                     {
                         var attempt = objects[i].TryConvertTo(valueType);
-                        if (attempt.Success)
+                        if (attempt.Success == true)
                         {
                             result.SetValue(attempt.Result, i);
                         }
@@ -149,7 +152,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             // NOTE: At this point `TryConvertTo` can't convert to the `valueType`.
                             // This may be a case where the `valueType` is an interface.
                             // We can attempt to cast it directly, as a last resort.
-                            if (valueType.IsInstanceOfType(objects[i]))
+                            if (valueType.IsInstanceOfType(objects[i]) == true)
                             {
                                 result.SetValue(objects[i], i);
                             }
