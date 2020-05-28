@@ -8,7 +8,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment" ng-controller="Umbraco.Community.Contentment.Overlays.ItemPicker.Controller as vm">
+<div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.ItemPicker.Controller as vm">
 
     <umb-editor-view>
 
@@ -35,23 +35,20 @@
                                no-dirty-check />
                     </div>
 
-                    <ul class="umb-card-grid" ng-if="vm.listType === 'grid'">
-                        <li ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm"
-                            ng-click="vm.select(item)"
-                            class="-three-in-row">
-                            <a class="umb-card-grid-item" href="" title="{{item.name}}">
-                                <i class="icon large" ng-class="item.selected ? 'icon-check color-green' : item.icon"></i>
+                    <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
+                        <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
+                            <a class="umb-card-grid-item" ng-click="vm.select(item)">
+                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon"></i>
                                 {{item.name}}
                             </a>
                         </li>
                     </ul>
 
                     <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
-                        <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                        <!-- TODO: See if we can do the `disabled` state? -->
+                        <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
                             <a class="umb-action-link" ng-click="vm.select(item)">
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
-                                <i class="large icon {{item.icon}}"></i>
+                                <i class="large icon" ng-class="item.icon"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                     <small ng-bind="item.description"></small>

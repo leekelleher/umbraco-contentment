@@ -8,7 +8,7 @@
         <umb-node-preview ng-repeat="item in vm.items"
                           icon="item.icon || vm.icon"
                           name="item.name"
-                          published="vm.published"
+                          published="!item.disabled"
                           description="item.description"
                           sortable="vm.sortable"
                           allow-remove="vm.allowRemove"
