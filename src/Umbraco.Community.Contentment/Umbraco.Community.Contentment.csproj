@@ -301,7 +301,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
     <Compile Include="DataEditors\DataList\DataSources\FontAwesomeDataSource.cs" />
-    <Compile Include="DataEditors\DataList\DataSources\UmbracoDictionaryDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListSourceValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
@@ -313,7 +312,6 @@
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
-    <Compile Include="DataEditors\DictionaryPicker\DictionaryPickerDataEditor.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
     <Compile Include="DataEditors\TemplatedList\TemplatedListDataListEditor.cs" />
     <Compile Include="DataEditors\Buttons\ButtonsDataListEditor.cs" />
@@ -394,7 +392,6 @@
     <None Include="DataEditors\ConfigurationEditor\README.md" />
     <None Include="DataEditors\DataTable\README.md" />
     <None Include="DataEditors\DropdownList\README.md" />
-    <None Include="DataEditors\DictionaryPicker\README.md" />
     <None Include="DataEditors\MacroPicker\README.md" />
     <None Include="DataEditors\Notes\README.md" />
     <None Include="DataEditors\RadioButtonList\README.md" />
@@ -423,8 +420,6 @@
     <Content Include="DataEditors\DataTable\data-table.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />
-    <Content Include="DataEditors\DictionaryPicker\dictionary-picker.html" />
-    <Content Include="DataEditors\DictionaryPicker\dictionary-picker.js" />
     <Content Include="DataEditors\NumberInput\number-input.html" />
     <None Include="DataEditors\ReadOnly\README.md" />
     <Content Include="DataEditors\TemplatedList\templated-list.js" />
