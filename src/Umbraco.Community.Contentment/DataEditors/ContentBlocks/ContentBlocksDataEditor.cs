@@ -11,7 +11,6 @@ using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class ContentBlocksDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
