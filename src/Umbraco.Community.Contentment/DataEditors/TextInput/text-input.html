@@ -1,0 +1,45 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - Parts of this Source Code has been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.2.0-rc/src/Umbraco.Web.UI.Client/src/views/propertyeditors/textbox/textbox.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.TextInput.Controller as vm">
+    <div class="text-input" ng-class="{ 'input-prepend': vm.prepend, 'input-append': vm.append }">
+        <span class="add-on" ng-if="vm.prepend">
+            <i class="icon" ng-class="vm.prepend"></i>
+        </span>
+        <input ng-model="model.value"
+               ng-trim="false"
+               id="{{model.alias}}"
+               class="umb-property-editor umb-textstring"
+               type="text"
+               list="{{vm.dataListId}}"
+               autocomplete="{{vm.autoComplete}}"
+               placeholder="{{vm.placeholderText}}" />
+        <span class="add-on" ng-if="vm.append">
+            <i class="icon" ng-class="vm.append"></i>
+        </span>
+    </div>
+    <div class="help" ng-if="model.value.length >= vm.maxCharsThreshold && model.value.length <= vm.maxChars">
+        <p tabindex="0">
+            <span class="sr-only">{{model.label}}</span>
+            <localize key="textbox_characters_left" tokens="[vm.maxChars - model.value.length]" watch-tokens="true">%0% characters left.</localize>
+        </p>
+    </div>
+    <div class="help text-error" ng-if="model.value.length > vm.maxChars">
+        <p tabindex="0">
+            <span class="sr-only">{{model.label}}</span>
+            <localize key="textbox_characters_exceed" tokens="[vm.maxChars, model.value.length - vm.maxChars]" watch-tokens="true">Maximum %0% characters, <strong>%1%</strong> too many.</localize>
+        </p>
+    </div>
+    <datalist id="{{vm.dataListId}}" ng-if="vm.dataList">
+        <option ng-repeat="item in vm.dataList"
+                label="{{item.name}}"
+                value="{{item.value}}"></option>
+    </datalist>
+</div>

@@ -1,0 +1,18 @@
+﻿/* Copyright © 2019 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.contentment .text-input {
+    width: 100%;
+    max-width: 800px;
+}
+
+    .contentment .text-input.input-prepend .umb-textstring,
+    .contentment .text-input.input-append .umb-textstring {
+        width: calc(100% - 30px);
+    }
+
+    .contentment .text-input.input-prepend.input-append .umb-textstring {
+        width: calc(100% - 60px);
+    }
