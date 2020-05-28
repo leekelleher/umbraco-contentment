@@ -321,9 +321,6 @@
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />
     <Compile Include="DataEditors\_\IContentmentEditorItem.cs" />
-    <Compile Include="Experience\DisablePreviewComponent.cs" />
-    <Compile Include="Experience\HidePropertyLabelComponent.cs" />
-    <Compile Include="Experience\MarkdownPropertyDescriptionComponent.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
     <Compile Include="Composing\ContentmentRunComposer.cs" />
     <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
