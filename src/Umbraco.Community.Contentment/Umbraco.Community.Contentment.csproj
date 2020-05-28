@@ -374,15 +374,21 @@
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataEditors\Bytes\README.md" />
     <None Include="DataEditors\CascadingDropdownList\README.md" />
     <None Include="DataEditors\CheckboxList\README.md" />
     <None Include="DataEditors\CodeEditor\README.md" />
     <None Include="DataEditors\ConfigurationEditor\README.md" />
+    <None Include="DataEditors\DataList\README.md" />
     <None Include="DataEditors\DataTable\README.md" />
     <None Include="DataEditors\DropdownList\README.md" />
+    <None Include="DataEditors\IconPicker\README.md" />
+    <None Include="DataEditors\ItemPicker\README.md" />
     <None Include="DataEditors\MacroPicker\README.md" />
     <None Include="DataEditors\Notes\README.md" />
+    <None Include="DataEditors\NumberInput\README.md" />
     <None Include="DataEditors\RadioButtonList\README.md" />
+    <None Include="DataEditors\RenderMacro\README.md" />
     <None Include="packages.config" />
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
