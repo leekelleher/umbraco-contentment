@@ -314,7 +314,6 @@
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
     <Compile Include="DataEditors\TemplatedList\TemplatedListDataListEditor.cs" />
-    <Compile Include="DataEditors\Buttons\ButtonsDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />
@@ -398,7 +397,6 @@
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataEditors\Buttons\buttons.css" />
     <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.html" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
@@ -436,8 +434,6 @@
     <Content Include="DataEditors\RadioButtonList\radio-button-list.js" />
     <Content Include="DataEditors\RenderMacro\render-macro.html" />
     <Content Include="DataEditors\RenderMacro\render-macro.js" />
-    <Content Include="DataEditors\Buttons\buttons.html" />
-    <Content Include="DataEditors\Buttons\buttons.js" />
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="DataEditors\_\_directives.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
