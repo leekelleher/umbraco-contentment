@@ -1,0 +1,83 @@
+﻿/* Copyright © 2019 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.contentment.lk-content-blocks .umb-group-builder__properties {
+    padding: 0;
+    min-height: inherit;
+    max-width: 845px;
+}
+
+.contentment.lk-content-blocks .umb-group-builder__property {
+    border-bottom: none;
+}
+
+    .contentment.lk-content-blocks .umb-group-builder__property:last-of-type {
+        margin-bottom: 0;
+    }
+
+.contentment.lk-content-blocks .umb-group-builder__property-actions {
+    margin-top: 10px;
+}
+
+.contentment.lk-content-blocks .umb-group-builder__property-action {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action > i.icon {
+        font-size: 18px;
+        padding: 5px 10px;
+    }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action > .icon {
+        color: #1b264f;
+    }
+
+        .contentment.lk-content-blocks .umb-group-builder__property-action > .icon:hover {
+            color: #2152a3;
+        }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions {
+        float: none;
+    }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__toggle {
+        margin-top: 5px;
+        margin-left: 12px;
+        opacity: 1;
+        background-color: transparent;
+    }
+
+        .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__toggle:hover {
+            background-color: #f9f6f5;
+        }
+
+    .contentment.lk-content-blocks .umb-group-builder__property-action .umb-property-actions__menu {
+        margin-left: 12px;
+    }
+
+.contentment.lk-content-blocks .umb-group-builder__property-preview {
+    height: auto;
+    padding: 30px 10px 5px;
+}
+
+.contentment.lk-content-blocks .lk-content-blocks-preview-default {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+    .contentment.lk-content-blocks .lk-content-blocks-preview-default .icon {
+        font-size: 40px;
+    }
+
+    .contentment.lk-content-blocks .lk-content-blocks-preview-default > div {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+.contentment.lk-content-blocks .umb-node-preview-add {
+    margin-right: 45px;
+}

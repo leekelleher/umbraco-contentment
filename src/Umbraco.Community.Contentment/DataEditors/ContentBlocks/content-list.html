@@ -1,0 +1,29 @@
+﻿<!-- Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="umb-contentpicker" ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
+    <div ui-sortable="vm.sortableOptions" ng-model="model.value">
+        <umb-node-preview ng-repeat="item in model.value"
+                          icon="item.icon"
+                          name="vm.populateName(item, $index)"
+                          published="true"
+                          description=""
+                          sortable="vm.sortable"
+                          allow-remove="vm.allowRemove"
+                          allow-edit="vm.allowEdit"
+                          on-remove="vm.remove($index)"
+                          on-edit="vm.edit($index)">
+        </umb-node-preview>
+    </div>
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{model.alias}}"
+            aria-label="Add content"
+            ng-click="vm.add()"
+            ng-if="vm.allowAdd">
+        <localize key="grid_addElement">Add content</localize>
+        <span class="sr-only">...</span>
+    </button>
+</div>

@@ -1,0 +1,49 @@
+﻿<!-- Copyright © 2019 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment lk-content-blocks" ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
+    <ul class="umb-group-builder__properties" ui-sortable="vm.sortableOptions" ng-model="model.value">
+        <li ng-repeat="item in model.value">
+            <div class="umb-group-builder__property">
+
+                <div tabindex="-1" class="umb-group-builder__property-preview">
+                    <div class="umb-group-builder__property-tags"></div>
+                    <div class="umb-group-builder__property-tags -right"></div>
+                    <div class="umb-group-builder__property-preview-form">
+                        <div class="lk-content-blocks-preview-default">
+                            <i class="icon" ng-class="item.icon"></i>
+                            <div ng-bind="vm.populateName(item, $index)"></div>
+                        </div>
+                    </div>
+                    <button aria-label="Edit content" type="button" class="umb-group-builder__open-settings" ng-click="vm.edit($index)"></button>
+                </div>
+
+                <div class="umb-group-builder__property-actions">
+                    <div>
+                        <div class="umb-group-builder__property-action umb-node-preview--sortable" title="Sort" ng-if="vm.sortable">
+                            <i class="icon icon-navigation"></i>
+                        </div>
+                        <div class="umb-group-builder__property-action" title="Remove" ng-if="vm.allowRemove">
+                            <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
+                        </div>
+                        <div class="umb-group-builder__property-action" ng-if="vm.blockActions[$index]">
+                            <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{model.alias}}"
+            aria-label="Add content"
+            ng-click="vm.add()"
+            ng-if="vm.allowAdd">
+        <localize key="grid_addElement">Add content</localize>
+        <span class="sr-only">...</span>
+    </button>
+</div>
