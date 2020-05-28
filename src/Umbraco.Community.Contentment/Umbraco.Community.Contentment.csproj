@@ -313,7 +313,6 @@
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\XmlDataListSource.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
-    <Compile Include="DataEditors\TemplatedList\TemplatedListDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />
@@ -416,8 +415,6 @@
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />
     <Content Include="DataEditors\NumberInput\number-input.html" />
     <None Include="DataEditors\ReadOnly\README.md" />
-    <Content Include="DataEditors\TemplatedList\templated-list.js" />
-    <Content Include="DataEditors\TemplatedList\templated-list.html" />
     <Content Include="DataEditors\IconPicker\icon-picker.css" />
     <Content Include="DataEditors\IconPicker\icon-picker.html" />
     <Content Include="DataEditors\IconPicker\icon-picker.js" />
