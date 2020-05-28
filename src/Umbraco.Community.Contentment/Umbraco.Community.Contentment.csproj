@@ -374,6 +374,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
+    <Compile Include="Web\Serialization\PublishedContentContractResolver.cs" />
     <Compile Include="Web\PublishedCache\DetachedPublishedElement.cs" />
     <Compile Include="Web\PublishedCache\DetachedPublishedProperty.cs" />
   </ItemGroup>
