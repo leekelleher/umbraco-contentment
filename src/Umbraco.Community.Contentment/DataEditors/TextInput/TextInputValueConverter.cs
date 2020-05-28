@@ -10,7 +10,6 @@ using Umbraco.Web.Templates;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class TextInputValueConverter : TextStringValueConverter
     {
         public TextInputValueConverter(HtmlLocalLinkParser linkParser, HtmlUrlParser urlParser)

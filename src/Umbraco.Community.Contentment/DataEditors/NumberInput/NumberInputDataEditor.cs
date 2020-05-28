@@ -16,7 +16,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Integer,
         Group = Core.Constants.PropertyEditors.Groups.Common,
         Icon = DataEditorIcon)]
-    [Core.Composing.HideFromTypeFinder]
     internal sealed class NumberInputDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "NumberInput";

@@ -9,7 +9,6 @@ using Umbraco.Core.PropertyEditors.ValueConverters;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     internal sealed class NumberInputValueConverter : IntegerValueConverter
     {
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(NumberInputDataEditor.DataEditorAlias);
