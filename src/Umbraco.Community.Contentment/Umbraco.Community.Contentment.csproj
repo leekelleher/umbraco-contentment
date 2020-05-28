@@ -328,7 +328,6 @@
     <Compile Include="DataEditors\Bytes\BytesValueConverter.cs" />
     <Compile Include="DataEditors\CascadingDropdownList\CascadingDropdownListDataEditor.cs" />
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataListEditor.cs" />
-    <Compile Include="DataEditors\Checkbox\CheckboxDataEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
@@ -406,9 +405,6 @@
     <Content Include="DataEditors\CheckboxList\checkbox-list.css" />
     <Content Include="DataEditors\CheckboxList\checkbox-list.html" />
     <Content Include="DataEditors\CheckboxList\checkbox-list.js" />
-    <Content Include="DataEditors\Checkbox\checkbox.css" />
-    <Content Include="DataEditors\Checkbox\checkbox.html" />
-    <Content Include="DataEditors\Checkbox\checkbox.js" />
     <Content Include="DataEditors\CodeEditor\code-editor.html" />
     <Content Include="DataEditors\CodeEditor\code-editor.js" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.css" />
