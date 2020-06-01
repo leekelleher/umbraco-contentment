@@ -14,8 +14,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class TextInputConfigurationEditor : ConfigurationEditor
     {
-        public const string Items = "items";
-
         private readonly ConfigurationEditorUtility _utility;
 
         public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
@@ -25,11 +23,32 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var dataSources = _utility.GetConfigurationEditorModels<IDataListSource>();
 
-            Fields.Add(new PlaceholderTextConfigurationField());
-            Fields.Add(new AutocompleteConfigurationField());
-            Fields.Add(new MaxCharsConfigurationField());
+            Fields.Add(new ConfigurationField
+            {
+                Key = "placeholderText",
+                Name = "Placeholder text",
+                Description = "Add placeholder text for the text input.<br>This is to be used as instructional information, not as a default value.",
+                View = "textstring",
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "autocomplete",
+                Name = "Enable autocomplete?",
+                Description = "Select to enable autocomplete functionality on the text input.",
+                View = "boolean",
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Name = "Maximum allowed characters",
+                Key = "maxChars",
+                Description = "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+            });
+
             Fields.Add(
-                Items,
+                Constants.Conventions.ConfigurationFieldAliases.Items,
                 "Data list",
                 "<em>(optional)</em> Select and configure the data source to provide a HTML5 &lt;datalist&gt; for this text input.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
@@ -41,13 +60,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                 });
+
+            // TODO: [LK:2020-06-01] Consider options for "append" and "prepend", the editor can (currently) support displaying an icon.
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Items, out JArray array) && array.Count > 0 && array[0] is JObject item)
+            if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray array) && array.Count > 0 && array[0] is JObject item)
             {
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`.
                 if (item.ContainsKey("key") == false && item.ContainsKey("type"))
@@ -62,7 +83,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
                     var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
 
-                    config[Items] = items;
+                    config[Constants.Conventions.ConfigurationFieldAliases.Items] = items;
                 }
             }
 
