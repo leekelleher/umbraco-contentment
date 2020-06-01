@@ -323,7 +323,6 @@
     <Compile Include="DataEditors\CheckboxList\CheckboxListDataListEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\CodeEditor\CodeEditorDataEditor.cs" />
-    <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorConfigurationEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />

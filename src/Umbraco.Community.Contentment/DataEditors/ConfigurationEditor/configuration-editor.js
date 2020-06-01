@@ -100,7 +100,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return _.find($scope.model.value, function (y) { return x.key === y.key; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
-            var configPicker = {
+            editorService.open({
                 view: config.overlayView,
                 size: config.items.length === 1 ? config.items[0].overlaySize : "small",
                 config: {
@@ -127,9 +127,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            };
-
-            editorService.open(configPicker);
+            });
         };
 
         function edit($index) {
@@ -137,7 +135,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var value = $scope.model.value[$index];
             var editor = config.itemLookup[value.key];
 
-            var configPicker = {
+            editorService.open({
                 view: config.overlayView,
                 size: editor.overlaySize,
                 config: {
@@ -156,9 +154,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            };
-
-            editorService.open(configPicker);
+            });
         };
 
         function populate(item, propertyName) {
