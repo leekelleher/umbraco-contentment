@@ -31,6 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong> (binary). Today, this is known as a kibibyte." },
                         }
                     },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "1024" },
                 });
 
