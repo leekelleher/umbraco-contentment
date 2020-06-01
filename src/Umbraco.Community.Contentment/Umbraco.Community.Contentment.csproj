@@ -346,14 +346,9 @@
     <Compile Include="DataEditors\IconPicker\IconPickerDataEditor.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerSizeConfigurationField.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerValueConverter.cs" />
-    <Compile Include="DataEditors\ItemPicker\AllowDuplicatesConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\DisableSortingConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\EnableFilterConfigurationField.cs" />
-    <Compile Include="DataEditors\ItemPicker\EnableMultipleConfigurationField.cs" />
-    <Compile Include="DataEditors\ItemPicker\ItemPickerConfigurationEditor.cs" />
-    <Compile Include="DataEditors\ItemPicker\ItemPickerDataEditor.cs" />
     <Compile Include="DataEditors\ItemPicker\ItemPickerDataListEditor.cs" />
-    <Compile Include="DataEditors\ItemPicker\ItemPickerTypeConfigurationField.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\MaxItemsConfigurationField.cs" />
     <Compile Include="DataEditors\MacroPicker\MacroPickerDataEditor.cs" />
     <Compile Include="DataEditors\Notes\NotesConfigurationEditor.cs" />
