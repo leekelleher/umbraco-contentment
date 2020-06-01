@@ -25,7 +25,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
                         },
                     },
                     view: "/App_Plugins/Contentment/editors/_json-editor.html",
-                    size: "small",
+                    size: "medium",
                     submit: function (value) {
 
                         model.value = angular.fromJson(value); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
