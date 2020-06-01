@@ -30,6 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         new DataListItem { Name = nameof(List), Value = List, Description = "This will display similar to a content picker." },
                     }
                 },
+                { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultValue }
             };
         }

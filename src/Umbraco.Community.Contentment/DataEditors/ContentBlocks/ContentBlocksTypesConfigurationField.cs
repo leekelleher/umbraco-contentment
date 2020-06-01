@@ -34,7 +34,24 @@ namespace Umbraco.Community.Contentment.DataEditors
                     View = "textstring",
                     Description = "Enter an AngularJS expression to evaluate against each block for its name."
                 },
-                new OverlaySizeConfigurationField()
+                new ConfigurationField
+                {
+                    Key = "overlaySize",
+                    Name = "Editor overlay size",
+                    Description = "Select the size of the overlay editing panel. By default this is set to 'large'. However if the editor fields require a smaller panel, select 'small'.",
+                    View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                    Config = new Dictionary<string, object>
+                    {
+                        { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                            {
+                                new DataListItem { Name = "Small", Value = "small" },
+                                new DataListItem { Name = "Medium", Value = "medium" },
+                                new DataListItem { Name = "Large", Value = "large" }
+                            }
+                        },
+                        { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
+                    }
+                }
             };
 
             var items = elementTypes
@@ -65,11 +82,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
-                { AllowDuplicatesConfigurationField.AllowDuplicates, Constants.Values.False },
+                { "allowDuplicates", Constants.Values.False },
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
-                { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
-                { ConfigurationEditorConfigurationEditor.Items, items },
-                { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+                { "overlaySize", OverlaySize.Small },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
         }
