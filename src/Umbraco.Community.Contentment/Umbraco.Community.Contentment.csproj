@@ -313,6 +313,7 @@
     <Compile Include="DataEditors\_\IContentmentEditorItem.cs" />
     <Compile Include="Composing\ContentmentComponent.cs" />
     <Compile Include="Composing\ContentmentRunComposer.cs" />
+    <Compile Include="DataEditors\_\OverlaySize.cs" />
     <Compile Include="Migrations\Install\RegisterUmbracoPackageEntry.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataEditors\Bytes\BytesConfigurationEditor.cs" />
@@ -326,7 +327,6 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorDataEditor.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorModel.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\IConfigurationEditorItem.cs" />
-    <Compile Include="DataEditors\ConfigurationEditor\OverlaySizeConfigurationField.cs" />
     <Compile Include="Properties\SolutionInfo.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="DataEditors\DataList\DataListConfigurationEditor.cs" />

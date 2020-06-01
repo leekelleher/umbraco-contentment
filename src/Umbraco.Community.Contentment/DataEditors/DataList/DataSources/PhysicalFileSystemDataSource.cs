@@ -19,6 +19,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-folder-close";
 
+        public OverlaySize OverlaySize => OverlaySize.Small;
+
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField

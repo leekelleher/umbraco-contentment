@@ -42,6 +42,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
+        public OverlaySize OverlaySize => OverlaySize.Small;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new NotesConfigurationField(@"<div class=""alert alert-info"">

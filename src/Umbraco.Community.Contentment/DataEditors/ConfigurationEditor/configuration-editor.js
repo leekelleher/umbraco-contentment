@@ -22,7 +22,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             allowRemove: 1,
             enableFilter: 0,
             orderBy: "name",
-            overlaySize: "large",
             overlayView: "",
             enableDevMode: 0,
         };
@@ -103,14 +102,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var configPicker = {
                 view: config.overlayView,
-                size: config.items.length === 1 ? config.overlaySize : "small",
+                size: config.items.length === 1 ? config.items[0].overlaySize : "small",
                 config: {
                     mode: "select",
                     autoSelect: config.items.length === 1,
                     label: $scope.model.label,
                     items: items,
                     enableFilter: Object.toBoolean(config.enableFilter),
-                    overlaySize: config.overlaySize,
                     orderBy: config.orderBy,
                 },
                 value: {},
@@ -141,11 +139,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var configPicker = {
                 view: config.overlayView,
-                size: config.overlaySize,
+                size: editor.overlaySize,
                 config: {
                     mode: "edit",
                     editor: editor,
-                    overlaySize: config.overlaySize,
                 },
                 value: value,
                 submit: function (model) {

@@ -32,6 +32,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
+        public OverlaySize OverlaySize => OverlaySize.Small;
+
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(@"<div class=""alert alert-info"">

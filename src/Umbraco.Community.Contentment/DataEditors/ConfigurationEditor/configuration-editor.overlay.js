@@ -16,7 +16,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             label: "",
             items: [],
             editor: null,
-            overlaySize: "large",
             enableFilter: false,
             orderBy: "name"
         };
@@ -57,8 +56,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function edit(editor, item) {
 
-            if ($scope.model.size !== config.overlaySize) {
-                $scope.model.size = config.overlaySize;
+            if ($scope.model.size !== editor.overlaySize) {
+                $scope.model.size = editor.overlaySize;
             }
 
             vm.title = "Configure " + editor.name;
