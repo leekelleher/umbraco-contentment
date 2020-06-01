@@ -73,7 +73,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         },
                         { "nameTemplate", $"{x.Name} {{{{ $index }}}}" },
                     },
-                    Fields = fields
+                    Fields = fields,
+                    OverlaySize = OverlaySize.Small
                 });
 
             Key = ContentBlockTypes;
@@ -86,7 +87,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
                 { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                { "overlaySize", OverlaySize.Small },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
         }
