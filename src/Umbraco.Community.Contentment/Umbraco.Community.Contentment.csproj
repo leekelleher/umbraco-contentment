@@ -324,7 +324,6 @@
     <Compile Include="DataEditors\TextInput\PlaceholderTextConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\AutocompleteConfigurationField.cs" />
     <Compile Include="DataEditors\TextInput\MaxCharsConfigurationField.cs" />
-    <Compile Include="DataEditors\TextInput\TextInputDataListEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
     <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\ShowIconsConfigurationField.cs" />

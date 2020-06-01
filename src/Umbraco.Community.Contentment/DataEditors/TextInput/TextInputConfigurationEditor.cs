@@ -35,12 +35,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
-                    { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
-                    { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
-                    { ConfigurationEditorConfigurationEditor.Items, dataSources },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                 });
         }
 
