@@ -23,16 +23,16 @@ Let's open the shoebox and take a look inside...
 
 ##### Property Editors
 
-- [Bytes](../docs/editors/bytes.md)
-- [Data List](../docs/editors/data-list.md)
-- [Icon Picker](../docs/editors/icon-picker.md)
-- [Notes](../docs/editors/notes.md)
-- [Render Macro](../docs/editors/render-macro.md)
+- [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
+- [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
+- [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
+- [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 
 
 #### Release status
 
-My aim to have a private v1.0 beta release ready soon, with a public release by end of Q1 (March) 2020.
+My aim to have a v1.0 release by end of Q2 (June) 2020.
 
 Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>720+ hours</b> (between 2019-03-13 to 2020-05-22)</summary>
+<summary>Current development effort: <b>736+ hours</b> (between 2019-03-13 to 2020-06-01)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

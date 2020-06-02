@@ -8,11 +8,11 @@
 
 Here is the documentation for the Contentment property-editors...
 
-- [Bytes](../docs/editors/bytes.md)
-- [Data List](../docs/editors/data-list.md)
-- [Icon Picker](../docs/editors/icon-picker.md)
-- [Notes](../docs/editors/notes.md)
-- [Render Macro](../docs/editors/render-macro.md)
+- [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
+- [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
+- [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
+- [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 
 
 ##### Prerequisite
