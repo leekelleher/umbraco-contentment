@@ -58,7 +58,7 @@ I reserve the right to address bug reports or feature requests in my own time, o
 
 **Any feedback is warmly welcome.** But please keep in mind, I am not your personal support developer.
 
-If you are really suck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
+If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
