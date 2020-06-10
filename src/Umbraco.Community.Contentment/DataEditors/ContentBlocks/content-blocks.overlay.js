@@ -16,6 +16,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             elementType: null,
             elementTypes: [],
             enableFilter: true,
+            currentPageId: -2,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -108,8 +109,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             };
 
             var getScaffold = blueprint && blueprint.id > 0
-                ? contentResource.getBlueprintScaffold(-2, blueprint.id)
-                : contentResource.getScaffold(-2, elementType.alias);
+                ? contentResource.getBlueprintScaffold(config.currentPageId, blueprint.id)
+                : contentResource.getScaffold(config.currentPageId, elementType.alias);
 
             getScaffold.then(function (data) {
                 Object.assign(vm.content, data.variants[0]);
@@ -144,7 +145,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 key: element.key
             };
 
-            contentResource.getScaffold(-2, elementType.alias).then(function (data) {
+            contentResource.getScaffold(config.currentPageId, elementType.alias).then(function (data) {
 
                 if (element.value) {
                     for (var t = 0; t < data.variants[0].tabs.length; t++) {

@@ -9,11 +9,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "clipboardService",
     "contentResource",
     "editorService",
+    "editorState",
     "localizationService",
     "notificationsService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($interpolate, $scope, clipboardService, contentResource, editorService, localizationService, notificationsService, overlayService, devModeService) {
+    function ($interpolate, $scope, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, devModeService) {
 
         // console.log("content-blocks.model", $scope.model);
 
@@ -145,7 +146,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             editorService.open({
                 config: {
                     elementTypes: config.contentBlockTypes,
-                    enableFilter: config.enableFilter
+                    enableFilter: config.enableFilter,
+                    currentPageId: editorState.current.id,
                 },
                 size: config.contentBlockTypes.length === 1 ? config.contentBlockTypes[0].overlaySize : "small",
                 value: null,
@@ -185,7 +187,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             editorService.open({
                 config: {
-                    elementType: elementType
+                    elementType: elementType,
+                    currentPageId: editorState.current.id,
                 },
                 size: elementType.overlaySize,
                 value: item,
