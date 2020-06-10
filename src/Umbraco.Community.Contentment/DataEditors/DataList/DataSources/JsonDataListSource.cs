@@ -17,7 +17,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class JsonDataListSource : IDataListSource
+    public sealed class JsonDataListSource : IDataListSource
     {
         private readonly ILogger _logger;
 
