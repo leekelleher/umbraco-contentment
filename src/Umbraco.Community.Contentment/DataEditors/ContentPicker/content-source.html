@@ -1,0 +1,82 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - Parts of this Source Code have been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.6.1/src/Umbraco.Web.UI.Client/src/views/prevalueeditors/treesource.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2020 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div ng-controller="Umbraco.Community.Contentment.DataEditors.ContentSource.Controller as vm">
+
+    <div ng-show="vm.node">
+        <umb-load-indicator ng-show="vm.loading"></umb-load-indicator>
+        <umb-node-preview ng-hide="vm.loading"
+                          name="vm.node.name"
+                          icon="vm.node.icon"
+                          description="vm.node.path"
+                          published="vm.node.published"
+                          allow-remove="true"
+                          on-remove="vm.remove()">
+        </umb-node-preview>
+    </div>
+
+    <div ng-if="!vm.node">
+
+        <div ng-hide="vm.showSearch || model.value">
+            <umb-button type="button"
+                        button-style="[action,block]"
+                        action="vm.pick()"
+                        label-key="general_choose"
+                        add-ellipsis="true">
+            </umb-button>
+            <umb-button type="button"
+                        button-style="link"
+                        action="vm.show()"
+                        class="mt2"
+                        icon="icon-search"
+                        label="Query for start node with XPath">
+            </umb-button>
+        </div>
+
+        <div ng-show="vm.showSearch || model.value">
+
+            <input ng-model="model.value"
+                   type="text"
+                   class="umb-property-editor umb-textstring"
+                   placeholder="Enter XPath query..."
+                   spellcheck="false">
+
+            <div class="mt2">
+                <umb-button type="button"
+                            button-style="info"
+                            action="vm.help()"
+                            icon="icon-help-alt"
+                            label="Show XPath query help">
+                </umb-button>
+                <umb-button type="button"
+                            button-style="danger"
+                            action="vm.clear()"
+                            icon="icon-delete"
+                            label="Cancel and clear query">
+                </umb-button>
+                <div ng-show="vm.showHelp" class="alert alert-info mt2">
+                    <p>Use an XPath query to set a start page. For a context-aware query, you can use one of the pre-defined placeholders.</p>
+                    <p>Placeholders finds the nearest published content ID and runs the XPath query from there. For instance:</p>
+                    <pre><code>$site/newsListingPage</code></pre>
+                    <p>This query will try to get the current website page (at level 1), then find the first page of type `newsListingPage`.</p>
+                    <dl>
+                        <dt>Available placeholders:</dt>
+                        <dd><code>$current</code> - current page or closest ancestor.</dd>
+                        <dd><code>$parent</code> - parent page or closest ancestor.</dd>
+                        <dd><code>$root</code> - root page in the content tree.</dd>
+                        <dd><code>$site</code> - ancestor page located at level 1.</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -17,3 +17,13 @@
 .umb-tree-icon.icon-fa {
     width: 20px;
 }
+
+[class].icon-umbraco {
+    background-image: url(/umbraco/assets/img/application/logo_black.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.umb-action-link .icon-umbraco {
+    height: 30px;
+}
