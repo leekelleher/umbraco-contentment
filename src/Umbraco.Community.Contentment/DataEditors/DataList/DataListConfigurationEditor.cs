@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(
                 ListEditor,
                 "List editor",
-                "Select and configure the type of editor for the data list.",
+                "Select and configure the list editor.",
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
