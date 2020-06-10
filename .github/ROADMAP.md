@@ -21,6 +21,7 @@ Initial release. Property Editors are:
 ### v1.1
 
 - Content Blocks _(a StackedContent-esque editor)_
+- Data List: Umbraco Content _(a data source for selecting nodes)_
 
 ### v1.2
 
