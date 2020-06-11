@@ -7,9 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Community.Contentme
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4F87338-D989-4C50-BF8E-EF4AF179B459}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 		..\LICENSE = ..\LICENSE
-		Umbraco.Community.Contentment.sln.licenseheader = Umbraco.Community.Contentment.sln.licenseheader
 		..\VERSION = ..\VERSION
 	EndProjectSection
 EndProject
@@ -55,6 +53,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 		..\.github\ISSUE_TEMPLATE\ISSUE_FEATURE_REQUEST.md = ..\.github\ISSUE_TEMPLATE\ISSUE_FEATURE_REQUEST.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{7E3CB058-A757-42C9-9277-EB949E1D7D0E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Umbraco.Community.Contentment.sln.licenseheader = Umbraco.Community.Contentment.sln.licenseheader
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,7 @@ Global
 		{9C956438-0434-40DD-BBA0-7F837E8FF1C8} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 		{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F} = {9C956438-0434-40DD-BBA0-7F837E8FF1C8}
 		{02357F6B-DA34-47CC-BA3E-A737CEC66B0D} = {49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}
+		{7E3CB058-A757-42C9-9277-EB949E1D7D0E} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8F86B45-B473-45E7-85C7-863A10E21554}

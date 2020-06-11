@@ -30,6 +30,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool HasMultipleValues(Dictionary<string, object> config) => false;
 
+        public OverlaySize OverlaySize => OverlaySize.Small;
+
         public string View => DataEditorViewPath;
     }
 }

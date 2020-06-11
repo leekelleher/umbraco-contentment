@@ -1,4 +1,4 @@
-﻿<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+﻿<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
 
 # Umbraco Contentment - Roadmap
 
@@ -21,6 +21,7 @@ Initial release. Property Editors are:
 ### v1.1
 
 - Content Blocks _(a StackedContent-esque editor)_
+- Data List: Umbraco Content _(a data source for selecting nodes)_
 
 ### v1.2
 

@@ -27,5 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object> DefaultValues { get; set; }
+
+        public OverlaySize OverlaySize { get; set; }
     }
 }

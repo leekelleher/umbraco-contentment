@@ -36,7 +36,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
         };
 
         function select(item) {
-            if (vm.enableMultiple) {
+
+            if (item.disabled === true) {
+                return;
+            }
+
+            if (vm.enableMultiple === true) {
                 item.selected = !item.selected;
             } else {
                 $scope.model.value = item;
@@ -49,7 +54,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
 
                 var selectedItems = [];
 
-                if (vm.enableMultiple) {
+                if (vm.enableMultiple === true) {
                     vm.items.forEach(function (x) {
                         if (x.selected) {
                             delete x.selected;

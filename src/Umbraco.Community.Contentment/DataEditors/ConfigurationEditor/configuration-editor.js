@@ -22,7 +22,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             allowRemove: 1,
             enableFilter: 0,
             orderBy: "name",
-            overlaySize: "large",
             overlayView: "",
             enableDevMode: 0,
         };
@@ -101,16 +100,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return _.find($scope.model.value, function (y) { return x.key === y.key; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
-            var configPicker = {
+            editorService.open({
                 view: config.overlayView,
-                size: config.items.length === 1 ? config.overlaySize : "small",
+                size: config.items.length === 1 ? config.items[0].overlaySize : "small",
                 config: {
                     mode: "select",
                     autoSelect: config.items.length === 1,
                     label: $scope.model.label,
                     items: items,
                     enableFilter: Object.toBoolean(config.enableFilter),
-                    overlaySize: config.overlaySize,
                     orderBy: config.orderBy,
                 },
                 value: {},
@@ -129,9 +127,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            };
-
-            editorService.open(configPicker);
+            });
         };
 
         function edit($index) {
@@ -139,13 +135,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var value = $scope.model.value[$index];
             var editor = config.itemLookup[value.key];
 
-            var configPicker = {
+            editorService.open({
                 view: config.overlayView,
-                size: config.overlaySize,
+                size: editor.overlaySize,
                 config: {
                     mode: "edit",
                     editor: editor,
-                    overlaySize: config.overlaySize,
                 },
                 value: value,
                 submit: function (model) {
@@ -159,9 +154,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            };
-
-            editorService.open(configPicker);
+            });
         };
 
         function populate(item, propertyName) {

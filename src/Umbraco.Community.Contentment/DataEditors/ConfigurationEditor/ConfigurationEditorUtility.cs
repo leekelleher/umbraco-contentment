@@ -56,6 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
                 Fields = fields,
                 DefaultValues = item.DefaultValues,
+                OverlaySize = item.OverlaySize,
             };
         }
 

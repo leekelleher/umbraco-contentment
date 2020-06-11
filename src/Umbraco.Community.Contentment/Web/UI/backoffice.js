@@ -62,7 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
             ];
 
             vm.shareUrl = encodeURIComponent("https://github.com/leekelleher/umbraco-contentment");
-            vm.shareTitle = encodeURIComponent("Check out Contentment, probably the best package for Umbraco!");
+            vm.shareTitle = encodeURIComponent("Check out Contentment, probably the best Umbraco package in the world!");
 
             vm.vote = function (x) {
                 vm.nggyu = x == false;

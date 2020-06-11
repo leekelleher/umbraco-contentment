@@ -29,6 +29,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-file-text-o";
 
+        public OverlaySize OverlaySize => OverlaySize.Small;
+
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(@"<div class=""alert alert-info"">

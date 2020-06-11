@@ -32,8 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { OverlaySizeConfigurationField.OverlaySize, OverlaySizeConfigurationField.Small },
-                { ConfigurationEditorConfigurationEditor.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
@@ -47,17 +46,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { ConfigurationEditorConfigurationEditor.Items, dataSources }
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources }
                 });
 
             Fields.Add(
                 ListEditor,
                 "List editor",
-                "Select and configure the type of editor for the data list.",
+                "Select and configure the list editor.",
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { ConfigurationEditorConfigurationEditor.Items, listEditors }
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors }
                 });
         }
 

@@ -37,6 +37,8 @@ namespace Umbraco.Community.Contentment
                 public const string DefaultValue = "defaultValue";
 
                 public const string Items = "items";
+
+                public const string OverlayView = "overlayView";
             }
 
             internal static partial class PropertyGroups

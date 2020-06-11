@@ -23,7 +23,7 @@ assignees: "leekelleher"
 ### Please tell us about your set-up:
 
 - Contentment version: [1.0.0]
-- Umbraco version: [8.4.0]
+- Umbraco version: [8.6.1]
 - Browser _(if applicable?)_: [all | Chrome XX | Firefox XX | Edge XX | Safari XX ]
 
 

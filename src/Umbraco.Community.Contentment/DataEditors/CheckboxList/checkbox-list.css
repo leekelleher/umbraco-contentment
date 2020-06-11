@@ -10,3 +10,12 @@
 .contentment.umb-checkboxlist ul li label {
     margin-bottom: 8px;
 }
+
+.contentment .umb-form-check__text {
+    margin-top: 1px;
+}
+
+    .contentment .umb-form-check__text small {
+        display: block;
+        padding-top: 0;
+    }

@@ -26,3 +26,22 @@
     margin-left: 15px;
     padding-left: 0;
 }
+
+.contentment.lk-overlay .-disabled {
+    opacity: 0.5;
+}
+
+    .contentment.lk-overlay .-disabled .umb-card-grid-item,
+    .contentment.lk-overlay .-disabled .umb-action-link,
+    .contentment.lk-overlay .-disabled .umb-checkmark {
+        cursor: not-allowed;
+    }
+
+        .contentment.lk-overlay .-disabled .umb-checkmark:hover {
+            border-color: #bbbabf;
+            color: #1b264f;
+        }
+
+        .contentment.lk-overlay .-disabled .umb-checkmark.icon-check:before {
+            content: "\e230";
+        }

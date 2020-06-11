@@ -1,4 +1,4 @@
-<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Umbraco Contentment
 
@@ -19,13 +19,13 @@ The two main fields are "**Data source**" and "**List editor**".
 
 ![Configuration Editor for Data List - empty state](data-list--configuration-editor-01.png)
 
-Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, SQL, Umbraco entities, XML data.
+Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, SQL, CSV, JSON and XML data.
 
 ![Configuration Editor for Data List - available data sources](data-list--configuration-editor-02.png)
 
-For our example, let's choose **Umbraco Entity**. You will then be presented with configuration options for this data source.
+For our example, let's choose **File System**. You will then be presented with configuration options for this data source.
 
-![Configuration Editor for Data List - data source configuration (for Umbraco Entity)](data-list--configuration-editor-03.png)
+![Configuration Editor for Data List - data source configuration (for File System)](data-list--configuration-editor-03.png)
 
 Once you have configured the data source, press the **Done** button at the bottom of the overlay.
 
@@ -66,9 +66,9 @@ You can extend Data List with your own custom data sources and list editors.
 
 #### Extending with your own custom data source
 
-For creating your own custom data source, you will need to create a new C# class that implements the `Umbraco.Community.Contentment.DataEditors.IDataListSource` interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataListSource`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListSource.cs) interface.
 
-This interface contains one method called `GetItems()`, which must return a `IEnumerable<DataListItem>` object type.
+This interface contains one method called `GetItems(config)`, which must return a `IEnumerable<DataListItem>` object type.
 
 The `DataListItem` model is made up of four `string` properties: `Name`, `Value`, `Description` _(optional)_ and `Icon` _(optional)_.
 
@@ -83,7 +83,13 @@ public class TimeZoneDataSource : IDataListSource
 
     public string Icon => "icon-globe";
 
-    public IEnumerable<DataListItem> GetItems()
+    public OverlaySize OverlaySize => OverlaySize.Small;
+
+    public Dictionary<string, object> DefaultValues => default;
+
+    public IEnumerable<ConfigurationField> Fields => default;
+
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
     {
         var items = new List<DataListItem>();
 
@@ -101,26 +107,34 @@ public class TimeZoneDataSource : IDataListSource
 }
 ```
 
-If you require extra configuration options on your custom data source, this can be done by adding extra properties on the class itself, and marking them with Umbraco's [`ConfigurationFieldAttribute`](https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.0/src/Umbraco.Core/PropertyEditors/ConfigurationFieldAttribute.cs).
+If you require extra configuration options on your custom data source, this can be done by adding properties on the `Fields` property. A property is defined using Umbraco's [`ConfigurationField`](https://github.com/umbraco/Umbraco-CMS/blob/release-8.0.0/src/Umbraco.Core/PropertyEditors/ConfigurationField.cs) model.
 
 ```csharp
-[ConfigurationField("alias", "Label (name)", "textstring", Description = "[Add a friendly description]")]
-public string ConfigOption { get; set; }
+public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+{
+    new ConfigurationField
+    {
+        Key = "alias",
+        Name = "Label (name)",
+        Description = "[Add a friendly description]",
+        View = "textstring"
+    }
+}
 ```
 
 
 #### Extending with your own custom list editor
 
-For creating your own custom list editor, you will need to create a new C# class that implements the `Umbraco.Community.Contentment.DataEditors.IContentmentListItem` interface.
+For creating your own custom list editor, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataListEditor`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListEditor.cs) interface.
 
-This interface contains two properties, `View` and `DefaultConfig` _(optional)_.
+This interface contains two properties, `View` and `DefaultConfig` _(optional)_, and one method `HasMultipleValues(config)` returning a boolean value for whether the list editor can select multiple or single values.
 
-The `View` property should set the path of the AngularJS view file. This can be whatever you want it to be. The only prerequisite is that the AngularJS controller (for the view) will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessed by `$scope.model.config.items`.
+The `View` property should set the path of the AngularJS view file. This can be whatever you want it to be. The only requirement is that the AngularJS controller (for the view) will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessible by `$scope.model.config.items`.
 
 
 ### How to get the value?
 
-The value for the Data List is an `IEnumerable<string>`, _(regardless of whether it's a single value or multiple values)._
+The value for the Data List will either be a single value (`string`) or multiple values (`IEnumerable<string>`), _(depending on how the list-editor implements the `HasMultipleValues(config)` method)._
 
 To use this in your view templates, here are some examples.
 
@@ -145,7 +159,7 @@ Here's an example of strongly-typed...
 
 ```cshtml
 <ul>
-    @foreach (var item in @(Model.Value<string>("dataList")))
+    @foreach (var item in @(Model.Value<IEnumerable<string>>("dataList")))
     {
         <li>@item</li>
     }

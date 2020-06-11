@@ -1,8 +1,8 @@
-<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Umbraco Contentment
 
-> contentment /kənˈtɛntm(ə)nt/ - a shoebox of happiness and satisfaction
+> contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
 ### What is it?
 
@@ -19,20 +19,20 @@ No pressure or marketing spin from me.
 
 #### What's on offer?
 
-Let's open the shoebox and take a look inside...
+Let's take a look inside...
 
 ##### Property Editors
 
-- [Bytes](../docs/editors/bytes.md)
-- [Data List](../docs/editors/data-list.md)
-- [Icon Picker](../docs/editors/icon-picker.md)
-- [Notes](../docs/editors/notes.md)
-- [Render Macro](../docs/editors/render-macro.md)
+- [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
+- [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
+- [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
+- [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 
 
 #### Release status
 
-My aim to have a private v1.0 beta release ready soon, with a public release by end of Q1 (March) 2020.
+My aim to have a v1.0 release by end of Q2 (June) 2020.
 
 Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
@@ -47,7 +47,7 @@ _There are currently no known issues with the Contentment package._
 [Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
 
 Please note, you may find other components within Contentment that have not yet been documented.<br>
-_Let's call those "undocumented features"._
+_Let's call those "life's little surprises"._
 
 
 ### Support
@@ -58,13 +58,13 @@ I reserve the right to address bug reports or feature requests in my own time, o
 
 **Any feedback is warmly welcome.** But please keep in mind, I am not your personal support developer.
 
-If you are really suck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
+If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
 
-If you would like to contribute to this project, please do feel free to send over any pull requests. I'll be happy to discuss.
+If you would like to contribute to this project, please start a discussion before spending time on a pull request. Your time is precious.
 
 Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
@@ -73,7 +73,7 @@ This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
 Otherwise you are completely free to not use this software, complain on your favourite social network, or shout into the void.
 
-Unacceptable behaviour towards myself or contributors may result in being blocked from accessing this repository.
+Unacceptable behaviour towards myself (or contributors) may result in being blocked from accessing this repository.
 
 
 ### License
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>720+ hours</b> (between 2019-03-13 to 2020-05-22)</summary>
+<summary>Current development effort: <b>746+ hours</b> (between 2019-03-13 to 2020-06-11)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
@@ -111,9 +111,4 @@ _To give you an idea of how much human developer time/effort has been put into m
 #### Special thanks
 
 - Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me develop this project.
-
-
-#### Logo
-
-The package logo uses the [Shoebox](https://thenounproject.com/term/shoebox/79857/) (by [Jordynn Alexander](https://thenounproject.com/jordynn2/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
 
