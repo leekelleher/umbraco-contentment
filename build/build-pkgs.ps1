@@ -96,7 +96,7 @@ if (!(Test-Path -Path $umbFolder)) {New-Item -Path $umbFolder -Type Directory;}
 
 $umbracoManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-umbraco.xml';
 $umbracoPackageXml = [xml](Get-Content $umbracoManifest);
-$umbracoPackageXml.umbPackage.info.package.version = "$($semver.Major).$($semver.Minor).$($semver.Patch)";
+$umbracoPackageXml.umbPackage.info.package.version = "$($semver.VersionString)";
 $umbracoPackageXml.umbPackage.info.package.name = $packageName;
 $umbracoPackageXml.umbPackage.info.package.iconUrl = $iconUrl;
 $umbracoPackageXml.umbPackage.info.package.license.set_InnerText($licenseName);
