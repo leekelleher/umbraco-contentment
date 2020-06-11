@@ -1,8 +1,8 @@
-<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A shoebox of Umbraco happiness." height="130" align="right">
+<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Umbraco Contentment
 
-> contentment /kənˈtɛntm(ə)nt/ - a shoebox of happiness and satisfaction
+> contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
 ### What is it?
 
@@ -19,7 +19,7 @@ No pressure or marketing spin from me.
 
 #### What's on offer?
 
-Let's open the shoebox and take a look inside...
+Let's take a look inside...
 
 ##### Property Editors
 
@@ -47,7 +47,7 @@ _There are currently no known issues with the Contentment package._
 [Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
 
 Please note, you may find other components within Contentment that have not yet been documented.<br>
-_Let's call those "undocumented features"._
+_Let's call those "life's little surprises"._
 
 
 ### Support
@@ -64,7 +64,7 @@ Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am 
 
 ### Contributions, collaborations, rules of engagement
 
-If you would like to contribute to this project, please do feel free to send over any pull requests. I'll be happy to discuss.
+If you would like to contribute to this project, please start a discussion before spending time on a pull request. Your time is precious.
 
 Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
@@ -73,7 +73,7 @@ This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
 Otherwise you are completely free to not use this software, complain on your favourite social network, or shout into the void.
 
-Unacceptable behaviour towards myself or contributors may result in being blocked from accessing this repository.
+Unacceptable behaviour towards myself (or contributors) may result in being blocked from accessing this repository.
 
 
 ### License
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>736+ hours</b> (between 2019-03-13 to 2020-06-01)</summary>
+<summary>Current development effort: <b>746+ hours</b> (between 2019-03-13 to 2020-06-11)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
@@ -111,9 +111,4 @@ _To give you an idea of how much human developer time/effort has been put into m
 #### Special thanks
 
 - Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me develop this project.
-
-
-#### Logo
-
-The package logo uses the [Shoebox](https://thenounproject.com/term/shoebox/79857/) (by [Jordynn Alexander](https://thenounproject.com/jordynn2/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
 
