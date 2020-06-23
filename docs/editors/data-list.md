@@ -98,7 +98,7 @@ public class TimeZoneDataSource : IDataListSource
             items.Add(new DataListItem
             {
                 Name = timezone.DisplayName,
-                Value = timezone.BaseUtcOffset.ToString()
+                Value = timezone.Id
             });
         }
 
