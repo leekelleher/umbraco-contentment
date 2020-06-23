@@ -121,6 +121,59 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
+#### Providing custom values for published content
+
+As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.
+
+If you need something more than this, your custom data source should implement the [`Umbraco.Community.Contentment.DataEditors.IDataListSourceValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListSourceValueConverter.cs) interface instead of `IDataListSource`. This interface inherits from `IDataListSource`, but also specifies two new methods that your data source will have to implement - that is the `GetValueType` and `ConvertValue` methods.
+
+With this interface, the `TimeZoneDataSource` class from before could now look like:
+
+```csharp
+public class TimeZoneDataSource : IDataListSourceValueConverter
+{
+    public string Name => "Time zones";
+
+    public string Description => "Data source for all the time zones.";
+
+    public string Icon => "icon-globe";
+
+    public OverlaySize OverlaySize => OverlaySize.Small;
+
+    public Dictionary<string, object> DefaultValues => null;
+
+    public IEnumerable<ConfigurationField> Fields => null;
+
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+    {
+        var items = new List<DataListItem>();
+
+        foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
+        {
+            items.Add(new DataListItem
+            {
+                Name = timezone.DisplayName,
+                Value = timezone.Id
+            });
+        }
+
+        return items;
+    }
+
+    public Type GetValueType(Dictionary<string, object> config)
+    {
+        return typeof(TimeZoneInfo);
+    }
+
+    public object ConvertValue(Type type, string value)
+    {
+        return TimeZoneInfo.FindSystemTimeZoneById(value);
+    }
+
+}
+```
+
+This ensures that you'll get the value as `IEnumerable<TimeZoneInfo>` instead of `IEnumerable<string>`.
 
 
 #### Extending with your own custom list editor
