@@ -112,3 +112,7 @@ _To give you an idea of how much human developer time/effort has been put into m
 
 - Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me develop this project.
 
+
+#### Logo
+
+The package logo uses the [Happy](https://thenounproject.com/term/happy/375493/) (by [Nick Bluth](https://thenounproject.com/nickbluth/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
