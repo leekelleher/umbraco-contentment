@@ -1,6 +1,6 @@
-<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="../assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
-## Umbraco Contentment
+## Contentment for Umbraco
 
 ### Data List
 
@@ -130,7 +130,7 @@ If you need something more than this, your custom data source should implement t
 With this interface, the `TimeZoneDataSource` class from before could now look like:
 
 ```csharp
-public class TimeZoneDataSource : IDataListSourceValueConverter
+public class TimeZoneDataSource : IDataListSource, IDataListSourceValueConverter
 {
     public string Name => "Time zones";
 
@@ -140,9 +140,9 @@ public class TimeZoneDataSource : IDataListSourceValueConverter
 
     public OverlaySize OverlaySize => OverlaySize.Small;
 
-    public Dictionary<string, object> DefaultValues => null;
+    public Dictionary<string, object> DefaultValues => default;
 
-    public IEnumerable<ConfigurationField> Fields => null;
+    public IEnumerable<ConfigurationField> Fields => default;
 
     public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
     {
@@ -169,7 +169,6 @@ public class TimeZoneDataSource : IDataListSourceValueConverter
     {
         return TimeZoneInfo.FindSystemTimeZoneById(value);
     }
-
 }
 ```
 

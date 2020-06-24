@@ -1,8 +1,8 @@
-﻿<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
+﻿<img src="../docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
 # Umbraco Contentment - Roadmap
 
-Here is a _provisional_ roadmap for the Umbraco Contentment package, to be actioned at my own pleasure.
+Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be actioned at my own pleasure.
 
 
 ## v1

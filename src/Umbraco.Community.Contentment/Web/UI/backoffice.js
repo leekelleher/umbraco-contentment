@@ -38,7 +38,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                 {
                     icon: "icon-fa fa-comments-o",
                     name: "Support forum",
-                    url: "https://our.umbraco.com",
+                    url: "https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/",
                     description: "Ask for help, the community is your friend."
                 },
                 {

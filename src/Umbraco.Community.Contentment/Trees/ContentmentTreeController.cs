@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.Trees
         {
             var root = base.CreateRootNode(queryStrings);
 
-            root.Icon = "icon-fa fa-dot-circle-o";
+            root.Icon = "icon-fa fa-cube";
             root.HasChildren = false;
             root.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.MenuUrl = null;
