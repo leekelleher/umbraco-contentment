@@ -49,6 +49,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
+            var preview = true;
+
             var startNode = default(IPublishedContent);
 
             var parentNode = config.GetValueAs("parentNode", string.Empty);
@@ -64,19 +66,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                         ? parentId
                         : default(int?);
 
-                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(id).Path.ToDelimitedList().Reverse();
-                bool publishedContentExists(int id) => umbracoContext.Content.GetById(id) != null;
+                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id).Path.ToDelimitedList().Reverse();
+                bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
                 var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
-                    startNode = umbracoContext.Content.GetSingleByXPath(parsed);
+                    startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
                 }
             }
             else if (GuidUdi.TryParse(parentNode, out var udi) && udi.Guid.Equals(Guid.Empty) == false)
             {
-                startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(udi.Guid);
+                startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(preview, udi.Guid);
             }
 
             return startNode == null
@@ -86,7 +88,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = x.Name,
                     Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
                     Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) ? icon : Core.Constants.Icons.Content,
-                    Description = x.TemplateId > 0 ? x.Url : string.Empty
+                    Description = x.TemplateId > 0 ? x.Url : string.Empty,
+                    Disabled = x.IsPublished() == false,
                 });
         }
 
