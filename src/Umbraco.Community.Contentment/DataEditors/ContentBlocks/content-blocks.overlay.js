@@ -43,6 +43,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                     vm.title = "Add content";
                     vm.description = "Select a content type...";
+                    vm.icon = "icon-page-add";
                     vm.selectBlueprint = false;
                     vm.enableFilter = Object.toBoolean(config.enableFilter);
 
@@ -83,6 +84,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 else {
                     vm.title = "Add content";
                     vm.description = "Select a content blueprint...";
+                    vm.icon = "icon-blueprint";
                     vm.selectBlueprint = true;
                     vm.selectedElementType = elementType;
                     vm.blueprintAllowBlank = blueprintConfig.allowBlank;
@@ -98,9 +100,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             $scope.model.size = elementType.overlaySize;
 
             vm.mode = "edit";
+            vm.loading = true;
+
             vm.title = "Edit content";
             vm.description = elementType.name;
-            vm.loading = true;
+            vm.icon = elementType.icon;
 
             vm.content = {
                 elementType: elementType.key,
@@ -135,9 +139,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
         function edit(elementType, element) {
 
             vm.mode = "edit";
+            vm.loading = true;
+
             vm.title = "Edit content";
             vm.description = elementType.name;
-            vm.loading = true;
+            vm.icon = elementType.icon;
 
             vm.content = {
                 elementType: elementType.key,

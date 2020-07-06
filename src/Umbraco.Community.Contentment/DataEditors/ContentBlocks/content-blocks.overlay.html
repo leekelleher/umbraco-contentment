@@ -7,13 +7,17 @@
 
     <umb-editor-view>
 
-        <umb-editor-header name="vm.title"
-                           name-locked="true"
-                           hide-alias="true"
-                           hide-icon="true"
-                           description="vm.description"
-                           description-locked="true">
-        </umb-editor-header>
+        <div class="umb-editor-header">
+            <div class="flex items-center" style="height: 100%;">
+                    <div class="umb-editor-header__icon mr2">
+                        <i class="icon large" ng-class="vm.icon"></i>
+                    </div>
+                    <div class="umb-editor-header__name-and-description">
+                        <div class="umb-panel-header-name" ng-bind="vm.title"></div>
+                        <div class="umb-panel-header-locked-description" ng-bind-html="vm.description"></div>
+                    </div>
+            </div>
+        </div>
 
         <umb-editor-container ng-if="vm.mode === 'select'">
 
