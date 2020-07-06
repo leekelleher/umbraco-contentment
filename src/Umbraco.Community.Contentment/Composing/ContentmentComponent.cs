@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.Composing
                 e.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
-                    version = ContentmentVersion.SemanticVersion.ToSemanticString()
+                    version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString()
                 });
             }
         }

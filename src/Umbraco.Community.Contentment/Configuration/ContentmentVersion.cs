@@ -13,7 +13,7 @@ using System.Reflection;
 using Semver;
 using Umbraco.Core;
 
-namespace Umbraco.Community.Contentment
+namespace Umbraco.Community.Contentment.Configuration
 {
     public static class ContentmentVersion
     {
