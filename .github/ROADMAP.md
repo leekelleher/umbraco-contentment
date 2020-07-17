@@ -27,6 +27,7 @@ Initial release. Property Editors are:
 
 - Text Input _(a reimagining of the textstring editor)_
 - Number Input _(a reimagining of the numeric editor)_
+- Data List: Templated List _(use custom AngularJS markup to render items)_
 
 ### v1.3
 
@@ -53,5 +54,5 @@ Could be an interesting to explore the validation approaches for the Contentment
 ## v2
 
 - _Who knows?!_ `¯\_(ツ)_/¯`
-- Let's see if new ideas can be sparked from Umbraco v8.6+!
+- Let's see if new ideas can be sparked from Umbraco v8.7+!
 
