@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Radio Button List";
 
-        public string Description => "Select a single value from a list of radio buttons";
+        public string Description => "Select a single value from a list of radio buttons.";
 
         public string Icon => "icon-target";
 
