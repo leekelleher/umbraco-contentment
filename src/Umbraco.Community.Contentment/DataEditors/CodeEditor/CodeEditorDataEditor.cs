@@ -5,6 +5,7 @@
 
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Web.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -28,5 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         { }
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new CodeEditorConfigurationEditor();
+
+        protected override IDataValueEditor CreateValueEditor() => new TextOnlyValueEditor(Attribute);
     }
 }
