@@ -301,6 +301,7 @@
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
     <Compile Include="Core\Xml\UmbracoXPathPathSyntaxParser.cs" />
+    <Compile Include="DataEditors\CodeEditor\CodeEditorValueConverter.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlockPreviewView.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksViewHelper.cs" />

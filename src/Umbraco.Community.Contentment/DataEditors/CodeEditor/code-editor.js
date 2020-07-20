@@ -35,6 +35,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
 
             vm.readonly = Object.toBoolean(config.readonly);
+
             vm.options = {
                 autoFocus: false,
                 showGutter: Object.toBoolean(config.showGutter),
