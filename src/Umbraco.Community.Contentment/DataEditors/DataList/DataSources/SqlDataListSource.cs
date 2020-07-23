@@ -74,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "connectionString",
                 Name = "Connection string",
-                Description = "Enter the connection string.",
+                Description = "Select the connection string.",
                 View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
