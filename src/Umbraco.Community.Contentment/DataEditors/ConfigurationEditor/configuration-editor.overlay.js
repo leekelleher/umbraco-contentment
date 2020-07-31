@@ -60,6 +60,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 $scope.model.size = editor.overlaySize;
             }
 
+            if (!item.value) {
+                item.value = {};
+            }
+
             vm.title = "Configure " + editor.name;
             vm.editor = Object.assign({}, editor);
 

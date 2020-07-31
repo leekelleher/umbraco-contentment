@@ -18,7 +18,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             items: [],
             maxItems: 0,
             disableSorting: 0,
-            allowEdit: 1,
             allowRemove: 1,
             enableFilter: 0,
             orderBy: "name",
@@ -46,13 +45,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             config.itemLookup = {};
+            vm.allowEdit = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
+                vm.allowEdit[item.key] = item.fields && item.fields.length > 0;
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
-            vm.allowEdit = Object.toBoolean(config.allowEdit);
             vm.allowRemove = Object.toBoolean(config.allowRemove);
             vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 

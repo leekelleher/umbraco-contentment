@@ -12,7 +12,7 @@
                           description="vm.populate(item, 'description')"
                           sortable="vm.sortable"
                           allow-remove="vm.allowRemove"
-                          allow-edit="vm.allowEdit"
+                          allow-edit="vm.allowEdit[item.key]"
                           on-remove="vm.remove($index)"
                           on-edit="vm.edit($index)">
         </umb-node-preview>
