@@ -9,13 +9,13 @@
 
         <div class="umb-editor-header">
             <div class="flex items-center" style="height: 100%;">
-                    <div class="umb-editor-header__icon mr2">
-                        <i class="icon large" ng-class="vm.icon"></i>
-                    </div>
-                    <div class="umb-editor-header__name-and-description">
-                        <div class="umb-panel-header-name" ng-bind="vm.title"></div>
-                        <div class="umb-panel-header-locked-description" ng-bind-html="vm.description"></div>
-                    </div>
+                <div class="umb-editor-header__icon mr2">
+                    <i class="icon large" ng-class="vm.icon"></i>
+                </div>
+                <div class="umb-editor-header__name-and-description">
+                    <div class="umb-panel-header-name" ng-bind="vm.title"></div>
+                    <div class="umb-panel-header-locked-description" ng-bind-html="vm.description"></div>
+                </div>
             </div>
         </div>
 
@@ -92,7 +92,6 @@
                                 <i class="large icon" ng-class="item.icon"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
-                                    <small ng-bind="item.contentTypeAlias"></small>
                                 </span>
                             </a>
                         </li>
@@ -100,7 +99,7 @@
                 </umb-box-content>
             </umb-box>
 
-            <umb-empty-state ng-if="vm.items.length == 0" position="center">
+            <umb-empty-state ng-if="vm.items.length === 0" position="center">
                 <p>There are no items available to add.</p>
             </umb-empty-state>
 
