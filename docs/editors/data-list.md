@@ -9,6 +9,7 @@ Data List is a property-editor that takes a data source and makes the values sel
 _If that sounds too generic, think of it like this... take a data source, say a SQL query, and display the results in an editor, say a dropdown-list, or checkbox-list, or whatever!_
 
 > This property-editor has taken some inspiration from the community package, [nuPickers](https://our.umbraco.com/packages/backoffice-extensions/nupickers/) by Hendy Racher, _(itself inspired by [a uComponents idea](https://gist.github.com/leekelleher/6183524))._
+> **Please note,** Data List is not a drop in replacement for nuPickers. Data List does not offer like-for-like features.
 
 
 ### How to configure the editor?
