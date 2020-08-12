@@ -4,12 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Controller", [
-    "$http",
     "$scope",
-    "formHelper",
+    "$window",
     "navigationService",
-    "umbRequestHelper",
-    function ($http, $scope, formHelper, navigationService, umbRequestHelper) {
+    function ($scope, $window, navigationService) {
 
         // console.log("tree.model", $scope.model);
 
@@ -62,7 +60,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
             ];
 
             vm.shareUrl = encodeURIComponent("https://github.com/leekelleher/umbraco-contentment");
-            vm.shareTitle = encodeURIComponent("Check out Contentment, probably the best Umbraco package in the world!");
+            vm.shareTitle = encodeURIComponent("Check out Contentment, innovative editor components for Umbraco CMS!");
+
+            vm.subscribe = function ($event) {
+                $window.open("https://tinyletter.com/umbraco-contentment", "newsletterWindow", "scrollbars=yes,width=840,height=640");
+                return true;
+            };
 
             vm.vote = function (x) {
                 vm.nggyu = x == false;
