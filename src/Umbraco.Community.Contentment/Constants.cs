@@ -41,6 +41,36 @@ namespace Umbraco.Community.Contentment
                 public const string OverlayView = "overlayView";
             }
 
+            internal static partial class DefaultConfiguration
+            {
+                public static readonly object RichTextEditor = new
+                {
+                    maxImageSize = 500,
+                    mode = "classic",
+                    stylesheets = false,
+                    toolbar = new[]
+                    {
+                        "ace",
+                        "undo",
+                        "redo",
+                        "cut",
+                        "styleselect",
+                        "removeformat",
+                        "bold",
+                        "italic",
+                        "alignleft",
+                        "aligncenter",
+                        "alignright",
+                        "bullist",
+                        "numlist",
+                        "link",
+                        "umbmediapicker",
+                        "umbmacro",
+                        "umbembeddialog"
+                    },
+                };
+            }
+
             internal static partial class PropertyGroups
             {
                 public const string Code = "Code";

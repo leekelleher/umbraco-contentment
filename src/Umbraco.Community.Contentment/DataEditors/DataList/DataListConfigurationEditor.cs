@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(
                 DataSource,
                 "Data source",
-                "Select and configure the data source.",
+                "Select and configure a data source.",
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(
                 ListEditor,
                 "List editor",
-                "Select and configure the list editor.",
+                "Select and configure a list editor.",
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {

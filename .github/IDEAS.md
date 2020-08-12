@@ -1,4 +1,4 @@
-<img src="../docs/assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="../docs/assets/img/logo.png" alt="Contentment for Umbraco Logo" title="A state of Umbraco happiness." height="130" align="right">
 
 # Ideas for Contentment
 

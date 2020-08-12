@@ -9,16 +9,16 @@ namespace Umbraco.Core
 {
     internal static class DictionaryExtensions
     {
-        public static TValOut GetValueAs<TKey, TVal, TValOut>(this IDictionary<TKey, TVal> config, TKey key, TValOut defaultValue = default)
+        public static TValueOut GetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, TValueOut defaultValue = default)
         {
             if (config.TryGetValue(key, out var tmp))
             {
-                if (tmp is TValOut value)
+                if (tmp is TValueOut value)
                 {
                     return value;
                 }
 
-                var attempt = tmp.TryConvertTo<TValOut>();
+                var attempt = tmp.TryConvertTo<TValueOut>();
                 if (attempt.Success)
                 {
                     return attempt.Result;
@@ -28,17 +28,17 @@ namespace Umbraco.Core
             return defaultValue;
         }
 
-        public static bool TryGetValueAs<TKey, TVal, TValOut>(this IDictionary<TKey, TVal> config, TKey key, out TValOut value)
+        public static bool TryGetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, out TValueOut value)
         {
             if (config.TryGetValue(key, out var tmp1))
             {
-                if (tmp1 is TValOut tmp2)
+                if (tmp1 is TValueOut tmp2)
                 {
                     value = tmp2;
                     return true;
                 }
 
-                var attempt = tmp1.TryConvertTo<TValOut>();
+                var attempt = tmp1.TryConvertTo<TValueOut>();
                 if (attempt.Success)
                 {
                     value = attempt.Result;

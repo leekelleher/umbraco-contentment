@@ -1,6 +1,6 @@
-<img src="../assets/img/logo.png" alt="Umbraco Contentment Logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="../assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
-## Umbraco Contentment
+## Contentment for Umbraco
 
 ### Data List
 
@@ -9,6 +9,7 @@ Data List is a property-editor that takes a data source and makes the values sel
 _If that sounds too generic, think of it like this... take a data source, say a SQL query, and display the results in an editor, say a dropdown-list, or checkbox-list, or whatever!_
 
 > This property-editor has taken some inspiration from the community package, [nuPickers](https://our.umbraco.com/packages/backoffice-extensions/nupickers/) by Hendy Racher, _(itself inspired by [a uComponents idea](https://gist.github.com/leekelleher/6183524))._
+> **Please note,** Data List is not a drop in replacement for nuPickers. Data List does not offer like-for-like features.
 
 
 ### How to configure the editor?
@@ -98,7 +99,7 @@ public class TimeZoneDataSource : IDataListSource
             items.Add(new DataListItem
             {
                 Name = timezone.DisplayName,
-                Value = timezone.BaseUtcOffset.ToString()
+                Value = timezone.Id
             });
         }
 
@@ -121,6 +122,58 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
+#### Providing custom values for published content
+
+As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.
+
+If you need something more than this, your custom data source should implement the [`Umbraco.Community.Contentment.DataEditors.IDataListSourceValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListSourceValueConverter.cs) interface instead of `IDataListSource`. This interface inherits from `IDataListSource`, but also specifies two new methods that your data source will have to implement - that is the `GetValueType` and `ConvertValue` methods.
+
+With this interface, the `TimeZoneDataSource` class from before could now look like:
+
+```csharp
+public class TimeZoneDataSource : IDataListSource, IDataListSourceValueConverter
+{
+    public string Name => "Time zones";
+
+    public string Description => "Data source for all the time zones.";
+
+    public string Icon => "icon-globe";
+
+    public OverlaySize OverlaySize => OverlaySize.Small;
+
+    public Dictionary<string, object> DefaultValues => default;
+
+    public IEnumerable<ConfigurationField> Fields => default;
+
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+    {
+        var items = new List<DataListItem>();
+
+        foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
+        {
+            items.Add(new DataListItem
+            {
+                Name = timezone.DisplayName,
+                Value = timezone.Id
+            });
+        }
+
+        return items;
+    }
+
+    public Type GetValueType(Dictionary<string, object> config)
+    {
+        return typeof(TimeZoneInfo);
+    }
+
+    public object ConvertValue(Type type, string value)
+    {
+        return TimeZoneInfo.FindSystemTimeZoneById(value);
+    }
+}
+```
+
+This ensures that you'll get the value as `IEnumerable<TimeZoneInfo>` instead of `IEnumerable<string>`.
 
 
 #### Extending with your own custom list editor

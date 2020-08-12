@@ -26,6 +26,7 @@ Function parseSemVer($version) {
 
 # Set various variables / folder paths
 
+$nugetPackageId = 'Our.Umbraco.Community.Contentment';
 $projectNamespace = 'Umbraco.Community.Contentment';
 $packageName = 'Contentment';
 $nugetTitle = "${packageName} for Umbraco";
@@ -136,8 +137,8 @@ Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Con
 # Populate the NuGet package manifest
 
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
-& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
-& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$projectNamespace;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$nugetPackageId;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$nugetPackageId;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders

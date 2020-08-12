@@ -23,33 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 new Dictionary<string, object>
                 {
-                    { "editor", new
-                        {
-                            maxImageSize = 500,
-                            mode = "classic",
-                            stylesheets = false,
-                            toolbar = new[]
-                            {
-                                "ace",
-                                "undo",
-                                "redo",
-                                "cut",
-                                "styleselect",
-                                "removeformat",
-                                "bold",
-                                "italic",
-                                "alignleft",
-                                "aligncenter",
-                                "alignright",
-                                "bullist",
-                                "numlist",
-                                "link",
-                                "umbmediapicker",
-                                "umbmacro",
-                                "umbembeddialog"
-                            },
-                        }
-                    }
+                    { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
                 });
 
             Fields.Add(new HideLabelConfigurationField());

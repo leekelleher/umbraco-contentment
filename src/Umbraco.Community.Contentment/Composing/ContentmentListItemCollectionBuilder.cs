@@ -5,18 +5,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 
 namespace Umbraco.Community.Contentment.Composing
 {
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
     public sealed class ContentmentListItemCollectionBuilder
         : LazyCollectionBuilderBase<ContentmentListItemCollectionBuilder, ContentmentListItemCollection, IContentmentListItem>
     {
         protected override ContentmentListItemCollectionBuilder This => this;
     }
 
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
     public sealed class ContentmentListItemCollection : BuilderCollectionBase<IContentmentListItem>
     {
         private readonly Dictionary<string, IContentmentListItem> _lookup;

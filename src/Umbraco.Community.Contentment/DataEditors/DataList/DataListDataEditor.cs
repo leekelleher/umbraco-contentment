@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DataList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Data List";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "_empty.html";
-        internal const string DataEditorIcon = "icon-bulleted-list";
+        internal const string DataEditorIcon = "icon-fa fa-list-ul";
 
         private readonly ConfigurationEditorUtility _utility;
 
