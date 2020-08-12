@@ -39,7 +39,8 @@ Downloads will be made available, (in due course), on the [releases page](https:
 
 #### Known issues
 
-_There are currently no known issues with the Contentment package._
+- **Data List**
+  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. See #30 for details.
 
 
 ### Documentation
