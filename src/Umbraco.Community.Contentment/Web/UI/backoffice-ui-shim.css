@@ -18,6 +18,7 @@
     width: 20px;
 }
 
+/* Enables the use of the Umbraco icon in the backoffice. */
 [class].icon-umbraco {
     background-image: url(/umbraco/assets/img/application/logo_black.png);
     background-repeat: no-repeat;
