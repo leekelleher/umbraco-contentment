@@ -48,6 +48,13 @@ foreach($htmlFile in $htmlFiles){
     Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
 }
 
+# Razor Templates - Copy
+$razorFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.cshtml;
+foreach($razorFile in $razorFiles){
+    $contents = Get-Content -Path $razorFile.FullName;
+    Set-Content -Path "${pluginFolder}\render\$($razorFile.Name)" -Value $contents;
+}
+
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
 Get-Content -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;

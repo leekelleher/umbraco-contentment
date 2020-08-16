@@ -79,6 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (config.TryGetValueAs(ContentBlocksDisplayModeConfigurationField.DisplayMode, out string displayMode))
                 {
+                    config["enablePreview"] = ContentBlocksDisplayModeConfigurationField.SupportsPreview(displayMode);
                     view = displayMode;
                 }
             }

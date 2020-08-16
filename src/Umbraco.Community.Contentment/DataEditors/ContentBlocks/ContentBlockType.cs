@@ -30,6 +30,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string OverlaySize { get; set; }
 
+        public bool PreviewEnabled { get; set; }
+
         public IEnumerable<BlueprintItem> Blueprints { get; set; }
 
         [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]

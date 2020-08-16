@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -27,12 +28,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { Constants.Conventions.ConfigurationFieldAliases.Items, new DataListItem[]
                     {
                         new DataListItem { Name = nameof(Blocks), Value = Blocks, Description = "This will display as stacked blocks." },
-                        new DataListItem { Name = nameof(List), Value = List, Description = "This will display similar to a content picker." },
+                        new DataListItem { Name = nameof(List), Value = List, Description = "This will display similar to a content picker. Please note, if block preview is enabled, they will not be displayed in this view." },
                     }
                 },
                 { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultValue }
             };
+        }
+
+        internal static bool SupportsPreview(string displayMode)
+        {
+            // NOTE: Currently only the stacked blocks support the preview feature.
+            if (displayMode.InvariantEquals(Blocks) == true)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

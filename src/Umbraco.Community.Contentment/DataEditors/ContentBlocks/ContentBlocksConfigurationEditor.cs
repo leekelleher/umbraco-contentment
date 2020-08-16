@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -77,6 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Blueprints = blueprints,
                             NameTemplate = settings?.ContainsKey("nameTemplate") == true ? settings["nameTemplate"].ToString() : null,
                             OverlaySize = settings?.ContainsKey("overlaySize") == true ? settings["overlaySize"].ToString() : null,
+                            PreviewEnabled = settings?.ContainsKey("enablePreview") == true && settings["enablePreview"].TryConvertTo<bool>().ResultOr(false),
                         });
                     }
                 }
