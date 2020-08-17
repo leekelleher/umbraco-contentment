@@ -66,7 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         ? parentId
                         : default(int?);
 
-                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id).Path.ToDelimitedList().Reverse();
+                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
                 var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
