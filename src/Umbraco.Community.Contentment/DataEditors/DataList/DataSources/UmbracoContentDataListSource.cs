@@ -66,6 +66,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                         ? parentId
                         : default(int?);
 
+                if (nodeContextId == -20)
+                {
+                    // TODO: [LK:2020-08-17] If the ID = -20, then we can assume that it's come from Nested Content. What to do?
+                }
+
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 

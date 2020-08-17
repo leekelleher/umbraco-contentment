@@ -61,7 +61,7 @@
                             icon="icon-delete"
                             label="Cancel and clear query">
                 </umb-button>
-                <div ng-show="vm.showHelp" class="alert alert-info mt2">
+                <div ng-show="vm.showHelp" class="alert alert-form mt3">
                     <p>Use an XPath query to set a start page. For a context-aware query, you can use one of the pre-defined placeholders.</p>
                     <p>Placeholders finds the nearest published content ID and runs the XPath query from there. For instance:</p>
                     <pre><code>$site/newsListingPage</code></pre>
@@ -73,6 +73,8 @@
                         <dd><code>$root</code> - root page in the content tree.</dd>
                         <dd><code>$site</code> - ancestor page located at level 1.</dd>
                     </dl>
+                    <hr />
+                    <p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <em>This is a known issue.</em></p>
                 </div>
             </div>
         </div>
