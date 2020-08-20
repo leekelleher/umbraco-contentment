@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
@@ -16,8 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Content Blocks";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "_empty.html";
-        internal const string DataEditorListViewPath = Constants.Internals.EditorsPathRoot + "content-list.html";
-        internal const string DataEditorBlocksViewPath = Constants.Internals.EditorsPathRoot + "content-blocks.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "content-blocks.overlay.html";
         internal const string DataEditorIcon = "icon-fa fa-server";
 
@@ -25,17 +24,20 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
+        private readonly ConfigurationEditorUtility _utility;
 
         public ContentBlocksDataEditor(
             IContentService contentService,
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
-            Lazy<PropertyEditorCollection> propertyEditors)
+            Lazy<PropertyEditorCollection> propertyEditors,
+            ConfigurationEditorUtility utility)
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeService = dataTypeService;
             _propertyEditors = propertyEditors;
+            _utility = utility;
         }
 
         public string Alias => DataEditorAlias;
@@ -54,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(_contentService, _contentTypeService);
+        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(_contentService, _contentTypeService, _utility);
 
         public IDataValueEditor GetValueEditor()
         {
@@ -77,10 +79,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                     hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
                 }
 
-                if (config.TryGetValueAs(ContentBlocksDisplayModeConfigurationField.DisplayMode, out string displayMode))
+                if (config.TryGetValueAs(ContentBlocksConfigurationEditor.DisplayMode, out JArray array) &&
+                    array.Count > 0 &&
+                    array[0] is JObject item)
                 {
-                    config["enablePreview"] = ContentBlocksDisplayModeConfigurationField.SupportsPreview(displayMode);
-                    view = displayMode;
+                    var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item.Value<string>("key"));
+                    if (displayMode != null)
+                    {
+                        view = displayMode.View;
+                    }
                 }
             }
 

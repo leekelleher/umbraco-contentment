@@ -302,10 +302,10 @@
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlockPreviewView.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksViewHelper.cs" />
-    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDisplayModeConfigurationField.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlocksApiController.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
     <Compile Include="DataEditors\ContentBlocks\ContentBlockPreviewModel.cs" />
+    <Compile Include="DataEditors\ContentBlocks\IContentBlocksDisplayMode.cs" />
     <Compile Include="DataEditors\ContentPicker\ContentPickerDataEditor.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListSourceValueConverter.cs" />

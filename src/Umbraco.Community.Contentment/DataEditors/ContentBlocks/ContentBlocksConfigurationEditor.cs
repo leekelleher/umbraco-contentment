@@ -20,18 +20,40 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly Dictionary<Guid, IContentType> _elementTypes;
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
+        private readonly ConfigurationEditorUtility _utility;
 
         internal const string OverlayView = "overlayView";
+        internal const string DisplayMode = "displayMode";
 
-        public ContentBlocksConfigurationEditor(IContentService contentService, IContentTypeService contentTypeService)
+        public ContentBlocksConfigurationEditor(
+            IContentService contentService,
+            IContentTypeService contentTypeService,
+            ConfigurationEditorUtility utility)
             : base()
         {
+            _utility = utility;
+
             // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
             _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
+            var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
+
+            Fields.Add(
+                DisplayMode,
+                "Display mode",
+                "Select and configure how to display the blocks in the editor.",
+                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>()
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
+                    { MaxItemsConfigurationField.MaxItems, 1 },
+                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+                });
+
             Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values));
-            Fields.Add(new ContentBlocksDisplayModeConfigurationField());
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());
             Fields.Add(new DisableSortingConfigurationField());
@@ -43,13 +65,41 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray array) && array.Count > 0)
+            if (config.TryGetValueAs(DisplayMode, out JArray array1) && array1.Count > 0 && array1[0] is JObject item1)
+            {
+                var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
+                if (displayMode != null)
+                {
+                    var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
+
+                    foreach (var prop in editorConfig)
+                    {
+                        if (config.ContainsKey(prop.Key) == false)
+                        {
+                            config.Add(prop.Key, prop.Value);
+                        }
+                    }
+
+                    if (displayMode.DefaultConfig != null)
+                    {
+                        foreach (var prop in displayMode.DefaultConfig)
+                        {
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray array2) && array2.Count > 0)
             {
                 var elementTypes = new List<ContentBlockType>();
 
-                for (var i = 0; i < array.Count; i++)
+                for (var i = 0; i < array2.Count; i++)
                 {
-                    var item = (JObject)array[i];
+                    var item = (JObject)array2[i];
 
                     // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
                     if (item.ContainsKey("key") == false && item.ContainsKey("type"))
