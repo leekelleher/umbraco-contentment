@@ -22,6 +22,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             allowCopy: 1,
+            allowCreateContentTemplate: 0,
             allowEdit: 1,
             allowRemove: 1,
             disableSorting: 0,
@@ -31,6 +32,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             maxItems: 0,
             overlayView: "",
             enableDevMode: 0,
+            sortableAxis: "y",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -70,7 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {
-                axis: "y",
+                axis: config.sortableAxis,
                 containment: "parent",
                 cursor: "move",
                 disabled: vm.sortable === false,
@@ -145,13 +147,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
             }
 
-            actions.push({
-                labelKey: "contentment_createContentTemplate",
-                icon: "blueprint",
-                method: function () {
-                    saveBlueprint($index);
-                }
-            });
+            if (config.allowCreateContentTemplate) {
+                actions.push({
+                    labelKey: "contentment_createContentTemplate",
+                    icon: "blueprint",
+                    method: function () {
+                        saveBlueprint($index);
+                    }
+                });
+            }
 
             return actions;
         };
