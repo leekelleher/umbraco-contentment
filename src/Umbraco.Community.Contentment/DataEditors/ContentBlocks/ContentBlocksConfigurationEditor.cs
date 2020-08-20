@@ -39,6 +39,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
 
+            // NOTE: Sets the default display mode to be the Stack.
+            DefaultConfiguration.Add(DisplayMode, new[]
+            {
+                new
+                {
+                    key = typeof(StackDisplayMode).GetFullNameWithAssembly(),
+                    value = new Dictionary<string,object>
+                    {
+                        { "allowCopy", Constants.Values.True },
+                        { "allowCreateContentTemplate", Constants.Values.True }
+                    }
+                }
+            });
+
             Fields.Add(
                 DisplayMode,
                 "Display mode",
