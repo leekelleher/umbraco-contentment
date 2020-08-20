@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -22,7 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
         private readonly ConfigurationEditorUtility _utility;
 
-        internal const string OverlayView = "overlayView";
         internal const string DisplayMode = "displayMode";
 
         public ContentBlocksConfigurationEditor(
@@ -150,9 +148,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config[ContentBlocksTypesConfigurationField.ContentBlockTypes] = elementTypes;
             }
 
-            if (config.ContainsKey(OverlayView) == false)
+            if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
             {
-                config.Add(OverlayView, IOHelper.ResolveUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath));
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath));
             }
 
             return config;
