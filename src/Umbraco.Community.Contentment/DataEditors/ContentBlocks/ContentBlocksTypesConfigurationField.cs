@@ -94,6 +94,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
+                { "addButtonLabelKey", "contentment_configureElementType" },
                 { "allowDuplicates", Constants.Values.False },
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
                 { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },

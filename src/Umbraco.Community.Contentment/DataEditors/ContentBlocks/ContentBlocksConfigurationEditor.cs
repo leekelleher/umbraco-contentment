@@ -51,6 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
+                    { "addButtonLabelKey", "contentment_configureDisplayMode" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
