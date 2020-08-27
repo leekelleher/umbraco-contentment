@@ -23,6 +23,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             orderBy: "name",
             overlayView: "",
             enableDevMode: 0,
+            addButtonLabelKey: "general_add",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -68,6 +69,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     setDirty();
                 }
             };
+
+            vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
 
             vm.add = add;
             vm.edit = edit;
