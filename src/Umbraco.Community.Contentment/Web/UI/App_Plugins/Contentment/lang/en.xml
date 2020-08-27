@@ -12,5 +12,10 @@
 
         <key alias="copyContentBlock">Copy content block</key>
         <key alias="createContentTemplate">Create content template...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Select and configure a data source</key>
+        <key alias="configureListEditor">Select and configure a list editor</key>
+
     </area>
 </language>
