@@ -74,16 +74,24 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (configuration is Dictionary<string, object> config)
             {
-                if (config.ContainsKey(HideLabelConfigurationField.HideLabelAlias))
+                if (config.ContainsKey(HideLabelConfigurationField.HideLabelAlias) == true)
                 {
                     hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
                 }
 
-                if (config.TryGetValueAs(ContentBlocksConfigurationEditor.DisplayMode, out JArray array) &&
-                    array.Count > 0 &&
-                    array[0] is JObject item)
+                if (config.TryGetValue(ContentBlocksConfigurationEditor.DisplayMode, out var tmp1) == true)
                 {
-                    var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item.Value<string>("key"));
+                    var displayMode = default(IContentBlocksDisplayMode);
+
+                    if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
+                    {
+                        displayMode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
+                    }
+                    else if (tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject item1)
+                    {
+                        displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
+                    }
+
                     if (displayMode != null)
                     {
                         view = displayMode.View;

@@ -73,11 +73,31 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
+        public override IDictionary<string, object> ToConfigurationEditor(object configuration)
+        {
+            var config = base.ToConfigurationEditor(configuration);
+
+            if (config.TryGetValueAs(DisplayMode, out string str1) == true && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
+            {
+                var mode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
+                if (mode != null)
+                {
+                    config[DisplayMode] = new
+                    {
+                        key = mode.GetType().GetFullNameWithAssembly(),
+                        value = mode.DefaultConfig
+                    };
+                }
+            }
+
+            return config;
+        }
+
         public override IDictionary<string, object> ToValueEditor(object configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DisplayMode, out JArray array1) && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DisplayMode, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
             {
                 var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
                 if (displayMode != null)
