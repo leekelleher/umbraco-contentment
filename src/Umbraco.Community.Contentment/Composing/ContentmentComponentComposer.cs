@@ -23,10 +23,13 @@ namespace Umbraco.Community.Contentment.Composing
 
             composition.RegisterUnique<ConfigurationEditorUtility>();
 
-            composition
-                .Components()
-                    .Append<ContentmentComponent>()
-            ;
+            if (composition.RuntimeState.Level > RuntimeLevel.Install)
+            {
+                composition
+                    .Components()
+                        .Append<ContentmentComponent>()
+                ;
+            }
         }
     }
 }

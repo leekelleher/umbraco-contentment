@@ -14,7 +14,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var defaultConfig = {
             availableMacros: [],
             maxItems: 0,
-            disableSorting: 0
+            disableSorting: 0,
+            addButtonLabelKey: "defaultdialogs_selectMacro",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -43,6 +44,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     setDirty();
                 }
             };
+
+            vm.addButtonLabelKey = config.addButtonLabelKey || "defaultdialogs_selectMacro";
 
             vm.add = add;
             vm.edit = edit;
