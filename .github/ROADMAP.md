@@ -45,6 +45,10 @@ Initial release. Property Editors are:
 - Configuration Editor
 - Data Table
 
+**Localization**
+
+Remove hard-coded English labels, move them to the language XML file.
+
 **Validation exploration**
 
 None of the editors have explicit validation implemented, (only because I've never researched it).<br>

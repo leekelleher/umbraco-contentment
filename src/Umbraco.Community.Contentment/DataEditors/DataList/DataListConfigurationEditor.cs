@@ -46,6 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
+                    { "addButtonLabelKey", "contentment_configureDataSource" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources }
                 });
 
@@ -56,6 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 configEditorViewPath,
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
+                    { "addButtonLabelKey", "contentment_configureListEditor" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors }
                 });
         }

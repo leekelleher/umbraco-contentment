@@ -12,29 +12,37 @@
     <ul class="unstyled toggle-all" ng-if="vm.toggleAll">
         <li>
             <label class="checkbox umb-form-check umb-form-check--checkbox">
-                <input type="checkbox" ng-change="vm.toggle()" ng-model="vm.toggleChecked" class="umb-form-check__input" />
-                <span class="umb-form-check__state" aria-hidden="true">
-                    <span class="umb-form-check__check">
-                        <i class="umb-form-check__icon icon-check"></i>
+                <span class="umb-form-check__symbol">
+                    <input type="checkbox" ng-change="vm.toggle()" ng-model="vm.toggleChecked" class="umb-form-check__input" />
+                    <span class="umb-form-check__state" aria-hidden="true">
+                        <span class="umb-form-check__check">
+                            <i class="umb-form-check__icon icon-check"></i>
+                        </span>
                     </span>
                 </span>
-                <span class="umb-form-check__text" ng-bind="vm.toggleChecked ? 'Uncheck all' : 'Check all'"></span>
+                <span class="umb-form-check__info">
+                    <span class="umb-form-check__text" ng-bind="vm.toggleChecked ? 'Uncheck all' : 'Check all'"></span>
+                </span>
             </label>
         </li>
     </ul>
     <ul class="unstyled">
         <li ng-repeat="item in vm.items">
             <label class="checkbox umb-form-check umb-form-check--checkbox" ng-class="{ 'umb-form-check--disabled': item.disabled }">
-                <input type="checkbox" ng-change="vm.changed(item)" ng-model="item.checked" value="{{item.value}}" class="umb-form-check__input" ng-disabled="item.disabled" />
-                <span class="umb-form-check__state" aria-hidden="true">
-                    <span class="umb-form-check__check">
-                        <i class="umb-form-check__icon icon-check"></i>
+                <span class="umb-form-check__symbol">
+                    <input type="checkbox" ng-change="vm.changed(item)" ng-model="item.checked" value="{{item.value}}" class="umb-form-check__input" ng-disabled="item.disabled" />
+                    <span class="umb-form-check__state" aria-hidden="true">
+                        <span class="umb-form-check__check">
+                            <i class="umb-form-check__icon icon-check"></i>
+                        </span>
                     </span>
                 </span>
-                <span class="umb-form-check__text">
-                    <i ng-if="vm.showIcons && item.icon" class="icon" ng-class="item.icon"></i>
-                    <span ng-bind-html="item.name | safe_html"></span>
-                    <small ng-if="vm.showDescriptions && item.description" ng-bind-html="item.description | safe_html"></small>
+                <span class="umb-form-check__info">
+                    <span class="umb-form-check__text">
+                        <i ng-if="vm.showIcons && item.icon" class="icon" ng-class="item.icon"></i>
+                        <span ng-bind-html="item.name | safe_html"></span>
+                        <small ng-if="vm.showDescriptions && item.description" ng-bind-html="item.description | safe_html"></small>
+                    </span>
                 </span>
             </label>
         </li>
