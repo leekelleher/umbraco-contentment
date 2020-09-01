@@ -66,7 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "overlayView", IOHelper.ResolveUrl(DataEditorOverlayViewPath) },
+            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(DataEditorOverlayViewPath) },
             { "overlayOrderBy", string.Empty },
         };
 
