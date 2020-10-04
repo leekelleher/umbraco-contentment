@@ -5,6 +5,7 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller", [
     "$scope",
+    "$q",
     "$http",
     "$interpolate",
     "clipboardService",
@@ -16,7 +17,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "overlayService",
     "umbRequestHelper",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, $http, $interpolate, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
+    function ($scope, $q, $http, $interpolate, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
 
         // console.log("content-blocks.model", $scope.model);
 
@@ -55,6 +56,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
+            config.elementTypeScaffoldCache = {}; // because, reasons! ¯\_(ツ)_/¯
             config.elementTypeLookup = {};
             config.nameTemplates = {};
 
@@ -196,10 +198,43 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function copy($index) {
 
-            var tmp = $scope.model.value[$index];
-            var item = Object.assign({}, tmp, { name: populateName(tmp, $index) });
+            var item = $scope.model.value[$index];
+            var elementType = config.elementTypeLookup[item.elementType];
+            var name = populateName(item, $index);
 
-            clipboardService.copy("contentment.element", item.elementType, item);
+            // if it's in the cache, use it, otherwise make the request
+            var getScaffold = config.elementTypeScaffoldCache.hasOwnProperty(elementType.alias) === false
+                ? contentResource.getScaffold(config.currentPageId, elementType.alias)
+                : $q.when(config.elementTypeScaffoldCache[elementType.alias]);
+
+            // NOTE: Let's bloat up the value to be copied (NC needs it all) ¯\_(ツ)_/¯
+            getScaffold.then(function (scaffold) {
+
+                // add to the cache if it isn't already in there
+                if (config.elementTypeScaffoldCache.hasOwnProperty(elementType.alias) === false) {
+                    config.elementTypeScaffoldCache[elementType.alias] = scaffold;
+                }
+
+                scaffold.name = name;
+                scaffold.variants[0].name = name;
+
+                if (item.value) {
+                    for (var t = 0; t < scaffold.variants[0].tabs.length; t++) {
+                        var tab = scaffold.variants[0].tabs[t];
+                        for (var p = 0; p < tab.properties.length; p++) {
+                            var property = tab.properties[p];
+                            if (item.value.hasOwnProperty(property.alias)) {
+                                // NOTE: Gah, NC adds `propertyAlias` to the object! ¯\_(ツ)_/¯
+                                property.propertyAlias = property.alias;
+                                property.value = item.value[property.alias];
+                            }
+                        }
+                    }
+                }
+
+                clipboardService.copy("elementType", elementType.alias, scaffold);
+
+            });
         };
 
         function edit($index) {

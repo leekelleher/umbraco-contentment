@@ -37,7 +37,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                vm.clipboardItems = clipboardService.retriveDataOfType("contentment.element", config.elementTypes.map(function (x) { return x.key }));
+                vm.clipboardItems = clipboardService.retriveDataOfType("elementType", config.elementTypes.map(function (x) { return x.alias }));
 
                 if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
@@ -65,7 +65,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function clearClipboard() {
             vm.clipboardItems = [];
-            clipboardService.clearEntriesOfType("contentment.element", config.elementTypes.map(function (x) { return x.key }));
+            clipboardService.clearEntriesOfType("elementType", config.elementTypes.map(function (x) { return x.alias }));
         };
 
         function showPrompt() {
@@ -123,17 +123,36 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         };
 
-        function paste(element) {
+        function paste(bloat) {
 
             var elementType = _.find(config.elementTypes, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return x.key === element.elementType;
+                return x.alias === bloat.contentTypeAlias;
             });
 
             $scope.model.size = elementType.overlaySize;
 
-            element.key = String.CreateGuid();
+            var item = {
+                elementType: elementType.key,
+                icon: elementType.icon,
+                key: String.CreateGuid(),
+                value: {}
+            };
 
-            edit(elementType, element);
+            // NOTE: De-bloat the copied value (so much bloat from NC) ¯\_(ツ)_/¯
+            if (bloat.variants.length > 0) {
+                for (var t = 0; t < bloat.variants[0].tabs.length; t++) {
+                    var tab = bloat.variants[0].tabs[t];
+                    for (var p = 0; p < tab.properties.length; p++) {
+                        var property = tab.properties[p];
+                        if (typeof property.value !== "function") {
+                            // NOTE: Gah, NC adds `propertyAlias` property! ¯\_(ツ)_/¯
+                            item.value[property.propertyAlias] = property.value;
+                        }
+                    }
+                }
+            }
+
+            edit(elementType, item);
         };
 
         function edit(elementType, element) {
