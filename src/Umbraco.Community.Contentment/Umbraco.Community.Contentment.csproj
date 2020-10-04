@@ -294,7 +294,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Composing\ContentmentComponentComposer.cs" />
+    <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
