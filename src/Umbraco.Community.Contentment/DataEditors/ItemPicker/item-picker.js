@@ -24,7 +24,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             listType: "grid",
             overlayView: "",
             overlayOrderBy: "name",
-            enableDevMode: 0,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -38,33 +37,40 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            vm.icon = config.defaultIcon;
+            vm.defaultIcon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
             vm.allowRemove = true;
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
-
-            vm.sortableOptions = {
-                axis: "y",
-                containment: "parent",
-                cursor: "move",
-                disabled: vm.sortable === false,
-                opacity: 0.7,
-                scroll: true,
-                tolerance: "pointer",
-                stop: function (e, ui) {
-                    $scope.model.value = vm.items.map(function (x) { return x.value });
-                    setDirty();
-                }
-            };
-
-            vm.enableDevMode = Object.toBoolean(config.enableDevMode);
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.add = add;
-            vm.bind = bind;
             vm.remove = remove;
+            vm.sort = function () {
+                $scope.model.value = vm.items.map(function (x) { return x.value });
+            };
 
-            bind();
+            vm.items = [];
+
+            if ($scope.model.value.length > 0 && config.items.length > 0) {
+                var orphaned = [];
+
+                $scope.model.value.forEach(function (v) {
+                    var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    if (item) {
+                        vm.items.push(Object.assign({}, item));
+                    } else {
+                        orphaned.push(v);
+                    }
+                });
+
+                if (orphaned.length > 0) {
+                    $scope.model.value = _.difference($scope.model.value, orphaned); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+
+                    if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                        vm.allowAdd = true;
+                    }
+                }
+            }
         };
 
         function add() {
@@ -73,13 +79,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return _.find(vm.items, function (y) { return x.name === y.name; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
-            ensureIcons(items);
-
-            var itemPicker = {
+            editorService.open({
                 config: {
                     title: "Choose...",
                     enableFilter: Object.toBoolean(config.enableFilter),
                     enableMultiple: Object.toBoolean(config.enableMultiple),
+                    defaultIcon: config.defaultIcon,
                     items: items,
                     listType: config.listType,
                     orderBy: config.overlayOrderBy,
@@ -104,37 +109,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 close: function () {
                     editorService.close();
                 }
-            };
-
-            editorService.open(itemPicker);
-        };
-
-        function bind() {
-
-            vm.items = [];
-
-            if ($scope.model.value.length > 0 && config.items.length > 0) {
-                var orphaned = [];
-
-                $scope.model.value.forEach(function (v) {
-                    var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                    if (item) {
-                        vm.items.push(Object.assign({}, item));
-                    } else {
-                        orphaned.push(v);
-                    }
-                });
-
-                if (orphaned.length > 0) {
-                    $scope.model.value = _.difference($scope.model.value, orphaned); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-
-                    if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                        vm.allowAdd = true;
-                    }
-                }
-
-                ensureIcons(vm.items);
-            }
+            });
         };
 
         function remove($index) {
@@ -165,14 +140,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
             });
         };
-
-        function ensureIcons(items) {
-            items.forEach(function (x) {
-                if (x.hasOwnProperty("icon") === false) {
-                    x.icon = config.defaultIcon;
-                }
-            });
-        }
 
         function setDirty() {
             if ($scope.propertyForm) {

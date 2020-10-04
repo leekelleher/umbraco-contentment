@@ -1,21 +1,21 @@
-﻿<!-- Copyright © 2019 Lee Kelleher.
+﻿<!-- Copyright © 2020 Lee Kelleher.
    - This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment lk-content-blocks" ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <div class="lk-content-blocks__container" ui-sortable="vm.sortableOptions" ng-model="model.value">
-        <div class="lk-content-blocks__block" ng-repeat="item in model.value">
+<div class="contentment lk-content-blocks">
+    <div class="lk-content-blocks__container" ui-sortable="vm.sortableOptions" ng-model="vm.items">
+        <div class="lk-content-blocks__block" ng-repeat="item in vm.items">
 
             <div tabindex="-1" class="lk-content-blocks__preview">
                 <div class="lk-content-blocks__preview--left" ng-if="vm.previews[item.key]">
-                    <i class="icon" ng-class="item.icon"></i>
-                    <span ng-bind="vm.populateName(item, $index)"></span>
+                    <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                    <span ng-bind="vm.populate(item, $index, 'name')"></span>
                 </div>
                 <div class="lk-content-blocks__preview--main">
                     <div class="lk-content-blocks__preview--default" ng-if="!vm.previews[item.key]">
-                        <i class="icon" ng-class="item.icon"></i>
-                        <h5 ng-bind="vm.populateName(item, $index)"></h5>
+                        <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                        <h5 ng-bind="vm.populate(item, $index, 'name')"></h5>
                     </div>
                     <div class="lk-content-blocks__preview--markup" ng-if="vm.previews[item.key]">
                         <umb-load-indicator ng-show="vm.previews[item.key].loading" />
@@ -29,10 +29,10 @@
             </div>
 
             <ul class="lk-content-blocks__actions">
-                <li aria-label="Sort" class="lk-content-blocks__action--item umb-node-preview--sortable" ng-if="vm.sortable">
+                <li aria-label="Sort" class="lk-content-blocks__action--item umb-node-preview--sortable" ng-if="vm.allowSort">
                     <i class="icon icon-navigation"></i>
                 </li>
-                <li class="lk-content-blocks__action--item" ng-if="vm.allowRemove">
+                <li class="lk-content-blocks__action--item" ng-if="vm.canRemove(item, $index)">
                     <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
                 </li>
                 <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[$index]">
@@ -44,24 +44,11 @@
     </div>
     <button type="button"
             class="umb-node-preview-add"
-            id="{{model.alias}}"
+            id="{{vm.propertyAlias}}"
             aria-label="Add content"
-            ng-click="vm.add()"
+            ng-click="vm.onAdd()"
             ng-if="vm.allowAdd">
-        <localize key="grid_addElement">Add content</localize>
+        <span ng-bind="vm.addButtonLabel"></span>
         <span class="sr-only">...</span>
     </button>
-
-    <contentment-stack-editor add-button-label-key="'grid_addElement'"
-                             allow-add="vm.allowAdd"
-                             allow-edit="vm.allowEdit"
-                             allow-remove="vm.allowRemove"
-                             allow-sort="vm.allowSort"
-                             get-item-name="vm.populateName"
-                             on-add="vm.add"
-                             on-edit="vm.edit"
-                             on-remove="vm.remove"
-                             on-sort="vm.sort"
-                             property-actions="vm.propertyActions">
-    </contentment-stack-editor>
 </div>

@@ -71,27 +71,16 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowCopy = Object.toBoolean(config.allowCopy) && clipboardService.isSupported();
             vm.allowEdit = Object.toBoolean(config.allowEdit);
             vm.allowRemove = Object.toBoolean(config.allowRemove);
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
-
-            vm.sortableOptions = {
-                axis: config.sortableAxis,
-                containment: "parent",
-                cursor: "move",
-                disabled: vm.sortable === false,
-                opacity: 0.7,
-                scroll: true,
-                tolerance: "pointer",
-                stop: function (e, ui) {
-                    populatePreviews();
-                    setDirty();
-                }
-            };
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.add = add;
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
             vm.populateName = populateName;
+            vm.sort = function () {
+                populatePreviews();
+            };
 
             vm.previews = [];
             vm.blockActions = [];
@@ -102,38 +91,32 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             populatePreviews();
 
-            if ($scope.umbProperty) {
+            vm.propertyActions = [];
 
-                var propertyActions = [];
-
-                if (vm.allowCopy) {
-                    propertyActions.push({
-                        labelKey: "contentment_copyAllBlocks",
-                        icon: "documents",
-                        method: function () {
-                            for (var i = 0; i < $scope.model.value.length; i++) {
-                                copy(i);
-                            }
+            if (vm.allowCopy) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_copyAllBlocks",
+                    icon: "documents",
+                    method: function () {
+                        for (var i = 0; i < $scope.model.value.length; i++) {
+                            copy(i);
                         }
-                    });
-                }
-
-                if (Object.toBoolean(config.enableDevMode)) {
-                    propertyActions.push({
-                        labelKey: "contentment_editRawValue",
-                        icon: "brackets",
-                        method: function () {
-                            devModeService.editValue($scope.model, function () {
-                                // TODO: [LK:2020-01-02] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
-                            });
-                        }
-                    });
-                }
-
-                if (propertyActions.length > 0) {
-                    $scope.umbProperty.setPropertyActions(propertyActions);
-                }
+                    }
+                });
             }
+
+            if (Object.toBoolean(config.enableDevMode)) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue($scope.model, function () {
+                            // TODO: [LK:2020-01-02] Ensure that the edits are valid! e.g. check min/max items, elementType GUIDs, etc.
+                        });
+                    }
+                });
+            }
+
         };
 
         function actionsFactory($index) {

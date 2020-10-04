@@ -3,27 +3,17 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="umb-contentpicker" ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <div ui-sortable="vm.sortableOptions" ng-model="model.value">
-        <umb-node-preview ng-repeat="item in model.value"
-                          icon="item.icon"
-                          name="vm.populateName(item, $index)"
-                          published="true"
-                          description=""
-                          sortable="vm.sortable"
-                          allow-remove="vm.allowRemove"
-                          allow-edit="vm.allowEdit"
-                          on-remove="vm.remove($index)"
-                          on-edit="vm.edit($index)">
-        </umb-node-preview>
-    </div>
-    <button type="button"
-            class="umb-node-preview-add"
-            id="{{model.alias}}"
-            aria-label="Add content"
-            ng-click="vm.add()"
-            ng-if="vm.allowAdd">
-        <localize key="grid_addElement">Add content</localize>
-        <span class="sr-only">...</span>
-    </button>
+<div ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
+    <contentment-list-editor add-button-label-key="'grid_addElement'"
+                             allow-add="vm.allowAdd"
+                             allow-edit="vm.allowEdit"
+                             allow-remove="vm.allowRemove"
+                             allow-sort="vm.allowSort"
+                             get-item-name="vm.populateName"
+                             on-add="vm.add"
+                             on-edit="vm.edit"
+                             on-remove="vm.remove"
+                             on-sort="vm.sort"
+                             property-actions="vm.propertyActions">
+    </contentment-list-editor>
 </div>

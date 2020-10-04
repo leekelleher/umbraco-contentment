@@ -454,7 +454,10 @@
     <Content Include="DataEditors\RenderMacro\render-macro.js" />
     <Content Include="DataEditors\ReadOnly\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
+    <Content Include="DataEditors\_\_components.js" />
     <Content Include="DataEditors\_\_directives.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\components\list-editor.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\components\stack-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />

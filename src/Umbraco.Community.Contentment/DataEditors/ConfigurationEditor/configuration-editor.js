@@ -46,22 +46,23 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             config.itemLookup = {};
-            vm.allowEdit = {};
+            config.allowEdit = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
-                vm.allowEdit[item.key] = item.fields && item.fields.length > 0;
+                config.allowEdit[item.key] = item.fields && item.fields.length > 0;
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowEdit = function (item, $index) { return config.allowEdit[item.key]; };
             vm.allowRemove = Object.toBoolean(config.allowRemove);
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
-                disabled: vm.sortable === false,
+                disabled: vm.allowSort === false,
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
@@ -77,24 +78,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.populate = populate;
             vm.remove = remove;
 
-            if ($scope.umbProperty) {
+            vm.propertyActions = [];
 
-                var propertyActions = [];
-
-                if (Object.toBoolean(config.enableDevMode)) {
-                    propertyActions.push({
-                        labelKey: "contentment_editRawValue",
-                        icon: "brackets",
-                        method: function () {
-                            devModeService.editValue($scope.model, validate);
-                        }
-                    });
-                }
-
-                if (propertyActions.length > 0) {
-                    $scope.umbProperty.setPropertyActions(propertyActions);
-                }
+            if (Object.toBoolean(config.enableDevMode)) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue($scope.model, validate);
+                    }
+                });
             }
+
         };
 
         function add() {
@@ -160,7 +155,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
-        function populate(item, propertyName) {
+        function populate(item, $index, propertyName) {
             return config.itemLookup[item.key][propertyName];
         };
 
