@@ -63,7 +63,7 @@
                 </umb-button>
                 <div ng-show="vm.showHelp" class="alert alert-form mt3">
                     <p>Use an XPath query to set a start page. For a context-aware query, you can use one of the pre-defined placeholders.</p>
-                    <p>Placeholders finds the nearest published content ID and runs the XPath query from there. For instance:</p>
+                    <p>Placeholders find the nearest published content ID and run the XPath query from there. For instance:</p>
                     <pre><code>$site/newsListingPage</code></pre>
                     <p>This query will try to get the current website page (at level 1), then find the first page of type `newsListingPage`.</p>
                     <dl>
@@ -74,7 +74,7 @@
                         <dd><code>$site</code> - ancestor page located at level 1.</dd>
                     </dl>
                     <hr />
-                    <p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <em>This is a known issue.</em></p>
+                    <p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <a href="https://github.com/leekelleher/umbraco-contentment/issues/30#issuecomment-668684508" target="_blank" rel="noopener"><em>This is a known issue.</em></a></p>
                 </div>
             </div>
         </div>
