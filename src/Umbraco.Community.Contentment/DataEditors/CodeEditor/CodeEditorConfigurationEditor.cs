@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
 
-            Fields.Add(new NotesConfigurationField($@"<div class=""alert alert-info"">
+            Fields.Add(new NotesConfigurationField($@"<div class=""well"">
 <p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
 <p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
 <p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options below.</p>
@@ -44,13 +44,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                         if (filename.StartsWith("mode-"))
                         {
                             var mode = filename.Replace("mode-", string.Empty).ToLower();
-                            modes.Add(new DataListItem { Name = mode.ToFirstUpper(), Value = mode });
+                            modes.Add(new DataListItem { Name = mode.ToFirstUpperInvariant(), Value = mode });
                         }
 
                         if (filename.StartsWith("theme-"))
                         {
                             var theme = filename.Replace("theme-", string.Empty).ToLower();
-                            themes.Add(new DataListItem { Name = theme.ToFirstUpper(), Value = theme });
+                            themes.Add(new DataListItem { Name = theme.ToFirstUpperInvariant(), Value = theme });
                         }
                     }
 
@@ -87,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             DefaultConfiguration.Add(FontSize, "14px");
-            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is '14px'.", "textstring");
+            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is 14 pixels.", "textstring");
 
             Fields.Add(UseWrapMode, "Word wrapping", "Select to enable word wrapping.", "boolean");
 
@@ -103,8 +103,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("enableBasicAutocompletion", "enableBasicAutocompletion", "[A friendly description]", "boolean");// enableBasicAutocompletion: 0,
             //Fields.Add("enableLiveAutocompletion", "enableLiveAutocompletion", "[A friendly description]", "boolean");// enableLiveAutocompletion: 0,
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
-            //Fields.Add("minLines", "minLines", "[A friendly description]", "number"); // minLines: undefined
-            //Fields.Add("maxLines", "maxLines", "[A friendly description]", "number"); // maxLines: undefined
+
+            DefaultConfiguration.Add("minLines", 12);
+            Fields.Add("minLines", "Minimum lines", "Set the minimum number of lines that the editor will be. The default value is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+
+            DefaultConfiguration.Add("maxLines", 30);
+            Fields.Add("maxLines", "Maximum lines", "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
         }
     }
 }
