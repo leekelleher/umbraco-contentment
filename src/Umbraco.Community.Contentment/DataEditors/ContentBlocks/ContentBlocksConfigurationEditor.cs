@@ -63,7 +63,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField());
             Fields.Add(new DisableSortingConfigurationField());
-            Fields.Add(new HideLabelConfigurationField());
             Fields.Add(new EnableDevModeConfigurationField());
         }
 

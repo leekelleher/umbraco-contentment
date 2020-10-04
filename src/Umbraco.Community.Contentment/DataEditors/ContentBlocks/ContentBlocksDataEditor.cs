@@ -69,16 +69,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor(object configuration)
         {
-            var hideLabel = false;
             var view = DataEditorViewPath;
 
             if (configuration is Dictionary<string, object> config)
             {
-                if (config.ContainsKey(HideLabelConfigurationField.HideLabelAlias) == true)
-                {
-                    hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
-                }
-
                 if (config.TryGetValue(ContentBlocksConfigurationEditor.DisplayMode, out var tmp1) == true)
                 {
                     var displayMode = default(IContentBlocksDisplayMode);
@@ -102,7 +96,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value)
             {
                 Configuration = configuration,
-                HideLabel = hideLabel,
                 ValueType = ValueTypes.Json,
                 View = view,
             };
