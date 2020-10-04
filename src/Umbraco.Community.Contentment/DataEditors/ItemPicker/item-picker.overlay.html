@@ -37,10 +37,10 @@
 
                     <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
                         <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                            <a class="umb-card-grid-item" ng-click="vm.select(item)">
-                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon"></i>
+                            <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">
+                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon || vm.defaultIcon" aria-hidden="true"></i>
                                 {{item.name}}
-                            </a>
+                            </button>
                         </li>
                     </ul>
 
@@ -48,7 +48,7 @@
                         <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
                             <a class="umb-action-link" ng-click="vm.select(item)">
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
-                                <i class="large icon" ng-class="item.icon"></i>
+                                <i class="large icon" ng-class="item.icon || vm.defaultIcon"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                     <small ng-bind="item.description"></small>

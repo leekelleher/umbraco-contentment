@@ -13,6 +13,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
             title: "Select...",
             enableFilter: false,
             enableMultiple: false,
+            defaultIcon: "icon-science",
             items: [],
             listType: "grid",
             orderBy: "name",
@@ -26,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
             vm.title = config.title;
             vm.enableFilter = config.enableFilter;
             vm.enableMultiple = config.enableMultiple;
+            vm.defaultIcon = config.defaultIcon;
             vm.items = config.items;
             vm.listType = config.listType;
             vm.orderBy = config.orderBy;
