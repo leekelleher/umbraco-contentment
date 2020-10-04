@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public string Name => "List";
 
-        public string Description => "Blocks will be displayed similar to a content picker.";
+        public string Description => "Blocks will be displayed in a list similar to a content picker.";
 
         public string Icon => DataListDataEditor.DataEditorIcon;
 
