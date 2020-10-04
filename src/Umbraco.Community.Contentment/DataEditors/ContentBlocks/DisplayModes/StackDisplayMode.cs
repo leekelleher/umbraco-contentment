@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -19,7 +18,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { "allowCopy", Constants.Values.True },
+            { "allowCreateContentTemplate", Constants.Values.True },
+        };
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
@@ -37,10 +40,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
                 View = "views/propertyeditors/boolean/boolean.html",
-                Config = new Dictionary<string, object>
-                {
-                    { "default", Constants.Values.True },
-                }
             },
             new ConfigurationField
             {
@@ -48,10 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Allow create content template?",
                 Description = "Select to enable the 'Create content template' feature.",
                 View = "views/propertyeditors/boolean/boolean.html",
-                Config = new Dictionary<string, object>
-                {
-                    { "default", Constants.Values.True },
-                }
             }
         };
 
