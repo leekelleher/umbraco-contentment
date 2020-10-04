@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "overlaySize",
                     Name = "Editor overlay size",
-                    Description = "Select the size of the overlay editing panel. By default this is set to 'large'. However if the editor fields require a smaller panel, select 'small'.",
+                    Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
                     View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>
                     {
