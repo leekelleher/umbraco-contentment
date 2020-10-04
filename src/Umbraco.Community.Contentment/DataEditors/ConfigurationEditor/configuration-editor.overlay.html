@@ -3,7 +3,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment" ng-controller="Umbraco.Community.Contentment.Overlays.ConfigurationEditor.Controller as vm">
+<div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.ConfigurationEditor.Controller as vm">
     <umb-editor-view>
 
         <umb-editor-header name="vm.title"
@@ -77,15 +77,15 @@
             <umb-editor-footer-content-right>
                 <umb-button type="button"
                             button-style="link"
-                            shortcut="esc"
                             label-key="general_close"
+                            shortcut="esc"
                             action="vm.close()">
                 </umb-button>
                 <umb-button ng-if="vm.save"
                             type="button"
                             button-style="success"
-                            shortcut="ctrl+s"
                             label-key="bulk_done"
+                            shortcut="ctrl+s"
                             action="vm.save(vm.editor)">
                 </umb-button>
             </umb-editor-footer-content-right>

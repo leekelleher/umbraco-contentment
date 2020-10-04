@@ -9,7 +9,6 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.ItemPicker.Controller as vm">
-
     <umb-editor-view>
 
         <umb-editor-header name="vm.title"
@@ -77,14 +76,12 @@
                 <umb-button ng-if="vm.enableMultiple"
                             type="button"
                             button-style="success"
-                            shortcut="ctrl+s"
                             label-key="buttons_select"
+                            shortcut="ctrl+s"
                             action="vm.submit()">
                 </umb-button>
             </umb-editor-footer-content-right>
         </umb-editor-footer>
 
     </umb-editor-view>
-
 </div>
-
