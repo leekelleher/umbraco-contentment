@@ -28,3 +28,8 @@
 .umb-action-link .icon-umbraco {
     height: 30px;
 }
+
+/* Anchor links within `.alert-form` are rendered as white, (appearing invisible) */
+.alert-form a {
+    color: #1b264f;
+}
