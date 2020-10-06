@@ -74,6 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = friendlyName == true ? x.SplitPascalCasing().ToFriendlyName() : x,
                 Value = virtualRoot + x,
                 Description = virtualRoot + x,
+                Icon = Core.Constants.Icons.DefaultIcon,
             });
         }
     }
