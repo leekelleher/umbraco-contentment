@@ -6,9 +6,10 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller", [
     "$scope",
     "editorService",
+    "focusService",
     "localizationService",
     "overlayService",
-    function ($scope, editorService, localizationService, overlayService) {
+    function ($scope, editorService, focusService, localizationService, overlayService) {
 
         // console.log("item-picker.model", $scope.model);
 
@@ -87,6 +88,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
+            focusService.rememberFocus();
+
             var items = Object.toBoolean(config.allowDuplicates)
                 ? config.items
                 : config.items.filter(x => vm.items.some(y => x.value === y.value) === false);
@@ -115,17 +118,22 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         vm.allowAdd = false;
                     }
 
-                    setDirty();
-
                     editorService.close();
+
+                    setDirty();
+                    setFocus();
                 },
                 close: function () {
                     editorService.close();
+                    setFocus();
                 }
             });
         };
 
         function remove($index) {
+
+            focusService.rememberFocus();
+
             if (config.confirmRemoval === true) {
                 var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
                 localizationService.localizeMany(keys).then(function (data) {
@@ -141,6 +149,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         },
                         close: function () {
                             overlayService.close();
+                            setFocus();
                         }
                     });
                 });
@@ -165,6 +174,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function setDirty() {
             if ($scope.propertyForm) {
                 $scope.propertyForm.$setDirty();
+            }
+        };
+
+        function setFocus() {
+            var lastKnownFocus = focusService.getLastKnownFocus();
+            if (lastKnownFocus) {
+                lastKnownFocus.focus();
             }
         };
 
