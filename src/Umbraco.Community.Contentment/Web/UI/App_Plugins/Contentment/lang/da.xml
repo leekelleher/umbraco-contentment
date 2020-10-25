@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="da" intName="Danish" localName="Dansk" lcid="" culture="da-DK">
+    <creator>
+        <name>Chriztian Steinmeier</name>
+        <link>https://greystate.dk</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Vælg og konfigurer en visningstype</key>
+        <key alias="configureElementType">Vælg og konfigurer en elementtype</key>
+
+        <key alias="copyAllBlocks">Kopier alle blokke</key>
+        <key alias="editRawValue">Rediger værdi</key>
+
+        <key alias="copyContentBlock">Kopier indholdselement</key>
+        <key alias="createContentTemplate">Opret indholdsskabelon...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Vælg og konfigurer en datakilde</key>
+        <key alias="configureListEditor">Vælg og konfigurer en liste</key>
+
+    </area>
+</language>
