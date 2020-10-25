@@ -24,6 +24,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             listType: "grid",
             overlayView: "",
             overlayOrderBy: "name",
+            overlaySize: "small",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -90,7 +91,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     orderBy: config.overlayOrderBy,
                 },
                 view: config.overlayView,
-                size: "small",
+                size: config.overlaySize || "small",
                 submit: function (selectedItems) {
 
                     selectedItems.forEach(function (x) {
