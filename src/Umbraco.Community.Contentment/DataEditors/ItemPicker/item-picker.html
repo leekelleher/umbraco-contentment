@@ -4,12 +4,13 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller as vm">
-    <contentment-list-editor add-button-label-key="'general_add'" allow-add="vm.allowAdd"
+    <contentment-list-editor ng-model="vm.items"
+                             add-button-label-key="'general_add'"
+                             allow-add="vm.allowAdd"
                              allow-edit="vm.allowEdit"
                              allow-remove="vm.allowRemove"
                              allow-sort="vm.allowSort"
                              default-icon="vm.defaultIcon"
-                             items="vm.items"
                              on-add="vm.add"
                              on-edit="vm.edit"
                              on-remove="vm.remove"

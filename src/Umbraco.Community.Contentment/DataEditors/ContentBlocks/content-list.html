@@ -4,7 +4,8 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <contentment-list-editor add-button-label-key="'grid_addElement'"
+    <contentment-list-editor ng-model="model.value"
+                             add-button-label-key="'grid_addElement'"
                              allow-add="vm.allowAdd"
                              allow-edit="vm.allowEdit"
                              allow-remove="vm.allowRemove"
