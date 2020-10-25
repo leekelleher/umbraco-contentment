@@ -9,10 +9,7 @@ using Umbraco.Web.Models;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public class ContentBlockPreviewModel : ContentBlockPreviewModel<IPublishedContent, IPublishedElement>
-    {
-        public ContentBlockPreviewModel(IPublishedContent content, IPublishedElement element)
-        { }
-    }
+    { }
 
     public class ContentBlockPreviewModel<TPublishedContent, TPublishedElement> : IContentModel
         where TPublishedContent : IPublishedContent

@@ -93,7 +93,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.propertyActions = [];
 
-            if (vm.allowCopy) {
+            if (vm.allowCopy === true) {
                 vm.propertyActions.push({
                     labelKey: "contentment_copyAllBlocks",
                     icon: "documents",
@@ -105,7 +105,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
             }
 
-            if (Object.toBoolean(config.enableDevMode)) {
+            if (Object.toBoolean(config.enableDevMode) === true) {
                 vm.propertyActions.push({
                     labelKey: "contentment_editRawValue",
                     icon: "brackets",
@@ -122,7 +122,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function actionsFactory($index) {
             var actions = [];
 
-            if (vm.allowCopy) {
+            if (vm.allowCopy === true) {
                 actions.push({
                     labelKey: "contentment_copyContentBlock",
                     icon: "documents",
@@ -132,7 +132,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
             }
 
-            if (config.allowCreateContentTemplate) {
+            if (Object.toBoolean(config.allowCreateContentTemplate) === true) {
                 actions.push({
                     labelKey: "contentment_createContentTemplate",
                     icon: "blueprint",
