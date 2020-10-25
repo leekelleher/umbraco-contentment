@@ -45,14 +45,14 @@
 
                     <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
                         <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                            <a class="umb-action-link" ng-click="vm.select(item)">
+                            <button type="button" class="umb-action-link umb-outline btn-reset" ng-click="vm.select(item)">
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
-                                <i class="large icon" ng-class="item.icon || vm.defaultIcon"></i>
+                                <i class="large icon" ng-class="item.icon || vm.defaultIcon" aria-hidden="true"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                     <small ng-bind="item.description"></small>
                                 </span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
 
