@@ -25,6 +25,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayView: "",
             overlayOrderBy: "name",
             overlaySize: "small",
+            addButtonLabelKey: "general_add",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -43,6 +44,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowEdit = false;
             vm.allowRemove = true;
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+
+            vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
 
             vm.add = add;
             vm.remove = remove;

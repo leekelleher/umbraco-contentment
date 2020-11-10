@@ -5,7 +5,7 @@
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller as vm">
     <contentment-list-editor ng-model="vm.items"
-                             add-button-label-key="'general_add'"
+                             add-button-label-key="vm.addButtonLabelKey"
                              allow-add="vm.allowAdd"
                              allow-edit="vm.allowEdit"
                              allow-remove="vm.allowRemove"
