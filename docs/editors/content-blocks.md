@@ -41,7 +41,7 @@ Once you have selected an element type, you will be presented with the configura
 
 The **Name template**  field can be used to enter an AngularJS expression, which is evaluated against each block (of this type) to display its name. If this field is left empty, the default name template will be `"Item {{ $index }}"`.
 
-The **Editor overlay size** option will configure the size (width) of the overlay editing panel. The options are Small, Medium and Large. The default value is "Small", this is typically ideal for consise element types, e.g. with a heading, media picker and intro blurb textarea. For element types with heavier content, e.g. Rich Text editors, then "Medium" or "Large" would be a more suitable option.
+The **Editor overlay size** option will configure the size (width) of the overlay editing panel. The options are Small, Medium and Large. The default value is "Small", this is typically ideal for concise element types, e.g. with a heading, media picker and intro blurb textarea. For element types with heavier content, e.g. Rich Text editors, then "Medium" or "Large" would be a more suitable option.
 
 The **Enable preview?** option can be enabled to render a richer preview of the content block item. The preview mechanism uses a Razor (`.cshtml`) partial-view for rendering.
 
@@ -155,12 +155,12 @@ Here's an example of strongly-typed...
 
 There are several alternative block-based editors that you could use with Umbraco v8, here is a selection...
 
-- [Umbraco's native Block List editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Block-List-Editor/) - available since Umbraco v8.7.0.
-- [Umbraco's native Nested Content editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Nested-Content/) - available since Umbraco v7.7.0, _(since superseded by the Block List editor)._
-- [Bento editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/)
-- [Perplex.ContentBlocks by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming conflict of Content Blocks, naming things is hard)._
+- [Umbraco's **Block List** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Block-List-Editor/) - available since Umbraco v8.7.0.
+- [Umbraco's **Nested Content** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Nested-Content/) - available since Umbraco v7.7.0, _(since superseded by the Block List editor)._
+- [**Bento** editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/)
+- [**Perplex.ContentBlocks** by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming conflict of Content Blocks, naming things is hard)._
 
 For further reading, here's a selection of insights...
 
-- [Paul Marden's Landing Page article on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
-- [Cogworks' post on How to Pick a Block Style Editor](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/)
+- [Paul Marden's **Landing Page article** on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
+- [Cogworks' post on **How to Pick a Block Style Editor**](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/)
