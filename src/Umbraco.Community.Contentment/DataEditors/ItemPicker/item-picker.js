@@ -80,7 +80,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
 
             var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return _.find(vm.items, function (y) { return x.name === y.name; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                return _.find(vm.items, function (y) { return x.value === y.value; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             editorService.open({
