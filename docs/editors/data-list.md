@@ -43,7 +43,7 @@ Once you have configured both the **Data source** and **List editor** you can **
 
 ### How to use the editor?
 
-Once you have added the configured Data Type on your Document Type, the Data List will be displayed.
+Once you have added the configured Data Type on your Document Type, the Data List will be displayed on the content page's property panel.
 
 ![Data List property-editor - displaying the data source with a Checkbox List](data-list--property-editor-01.png)
 

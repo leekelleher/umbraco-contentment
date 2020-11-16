@@ -167,6 +167,7 @@ angular.module("umbraco.directives").component("contentmentStackEditor", {
         onRemove: "<?",
         onSort: "<?",
         propertyActions: "<?",
+        previews: "<?",
     },
     require: {
         propertyForm: "^form",

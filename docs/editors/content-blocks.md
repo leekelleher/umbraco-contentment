@@ -26,6 +26,7 @@ The **Display mode** is pre-configured to use the **Stack** mode, this enables a
 ![Configuration Editor for Content Blocks - the Stack display mode configuration](content-blocks--configuration-editor-02.png)
 
 > **Note:** You can add your own custom display modes by implementing the [`IContentBlocksDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/IContentBlocksDisplayMode.cs) interface.
+> 
 > `// TODO: Write documentation on developing custom display modes.`
 
 Next is to select and configure the **Block types**. By pressing the **Select and configure an element type** button, you will be presented with a selection of element types.
@@ -65,40 +66,101 @@ Once you have configured the Data Type, press the **Save** button and add it to 
 
 ### How to use the editor?
 
-> Press the Add button
-> 
-> Select block from overlay
-> 
-> Edit in panel.
-> 
-> Options - copy block; create content template
+Once you have added the configured Data Type on your Document Type, the Content Blocks editor will be displayed on the content page's property panel.
+
+![Content Blocks property-editor - displaying the empty state, with an Add button](content-blocks--property-editor-01.png)
+
+By pressing the **Add content** button, an overlay with the available content blocks will appear.
+
+![Content Blocks property-editor - displaying the available content blocks overlay](content-blocks--property-editor-02.png)
+
+Selecting one of the available content blocks, you will be presented with the editing panel, (with the properties from the corresponding Element Type).
+
+![Content Blocks property-editor - displaying the content blocks editing panel](content-blocks--property-editor-03.png)
+
+Once you have finished editing the properties, press the **Done** button at the bottom of the overlay. This will close the overlay, with the content block being added to the stack/list.
+
+![Content Blocks property-editor - new content block has been added](content-blocks--property-editor-04.png)
+
+For further options, each content block has its own action menu, initially for sorting and removing content, but additional features for **Copy content block**, and **Create content template...** actions.
+
+![Content Blocks property-editor - content block action menu](content-blocks--property-editor-05.png)
 
 
 #### Previews
 
-> `// TODO: Write documentation about the Razor partial-view templates.`
-> An example can be seen with [the default preview partial-view, `ContentBlockPreview.cshtml`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml).
-> _Advanced usage using the `@inherits ContentBlockPreviewModel<TPublishedContent, TPublishedElement>` declaration._
+An advanced feature of Content Blocks is the ability to have a richer preview for each block item. To do this, make sure that you enable the **Enable preview?** option when you configure the content block.
 
+> **Note:** The preview feature will only work with the **Stack** display mode.
 
-> Razor views, found within the `/Views/Partials/Blocks/` folder
-> 
-> Mention the view-model + view-data properties (icon, index/position)
-> 
-> NOTE: Preview doesn't work on a new unsaved page. As it has no page context.
+Once the preview feature is enabled, the content block item will render the preview using a Razor partial-view template.
+
+The default preview partial-view (that ships with Contentment), will be used. This can be found at [`"~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml). This will render similar to the default (plain) block style, with the exception that the **Name template** value is not available, the content block item's GUID (key) will be displayed instead.
+
+To use your own custom preview partial-views, you must use the following convention; name the partial-view the same as the Element Type alias, and place it in **the `"~/Views/Partials/Blocks/"` folder.** If you would like to re-use the same preview partial-view for multiple content block items, you can create a `"~/Views/Partials/Blocks/Default.cshtml"` template.
+
+When developing your own preview partial-view template, the declaration can be one of the following...
+
+- `@inherits Umbraco.Web.Mvc.ContentBlockPreviewView`
+  This is the default declaration. This will give you access to `@Model.Content` (the current page as `IPublishedContent`), and `@Model.Element` (the content block item as `IPublishedElement`).
+
+- `@inherits ContentBlockPreviewModel<TPublishedContent, TPublishedElement>`
+  This is advanced syntax, _(note, may require some trial-and-error, and sense of play)._ This can be used if you are using Umbraco's ModelsBuilder feature, where you know the object-type of the current Content Type page and Element Type item. As above, you can have strongly-typed access to the current page with `@Model.Content`, and the content block item with `@Model.Element`.
+
+To aid the preview, there are a number of additional properties available in the partial-view's `ViewData` dictionary.
+
+- `ViewData["elementIndex"]` - This is the index (`int`) of the content block item's position in the list.
+- `ViewData["elementIcon"]` - This is the Element Type's icon, _(since the icon is not available on `Model.Element.ContentType`)._
+- `ViewData["contentIcon"]` - This is the Content Type's icon, _(since the icon is not available on `Model.Content.ContentType`)._
+
+> **Note:** The preview feature **does not work** on a freshly created new unsaved page. This is because the preview has no context of the page itself.
 
 
 ### How to get the value?
 
+The value for the Content Blocks will be as `IEnumerable<IPublishedElement>` object-type.
 
-> `IEnumerable<IPublishedElement>`
-> If using ModelsBuilder, it'll be castable to the desired element type model.
+If you are using Umbraco's ModelsBuilder feature, then each content block item will be castable as the intended Element Type model.
+
+In terms of rendering the items, you can do so however you desire. As an example here, I would recommend having a separate partial-view template for each of the Element Types, (using the Element Type's alias as the filename), that way you are able to encapsulate the logic for that particular Element Type.
+
+Using Umbraco's Models Builder...
+
+```cshtml
+<div>
+    @foreach (var item in Model.ContentBlocks)
+    {
+        @Html.Partial(item.ContentType.Alias, item)
+    }
+</div>
+```
+
+Without ModelsBuilder...
+
+The weakly-typed API may give you some headaches, we suggest using strongly-typed, (or preferably Models Builder).
+
+Here's an example of strongly-typed...
+
+```cshtml
+<div>
+    @foreach (var item in @(Model.Value<IEnumerable<IPublishedElement>>("contentBlocks")))
+    {
+        @Html.Partial(item.ContentType.Alias, item)
+    }
+</ul>
+```
 
 
-### Further reading
+### Similar editors and further reading
 
-> Alternative block editor options (for Umbraco v8)
-> - Bento editor
-> - Perplex Content Blocks
+There are several alternative block-based editors that you could use with Umbraco v8, here is a selection...
 
-- [Paul Marden's Landing Page article on Skrift](https://skrift.io/issues/part-1-landing-pages/).
+- [Umbraco's native Block List editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Block-List-Editor/) - available since Umbraco v8.7.0.
+- [Umbraco's native Nested Content editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Nested-Content/) - available since Umbraco v7.7.0, _(since superseded by the Block List editor)._
+- [Bento editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/)
+- [Perplex.ContentBlocks by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming conflict of Content Blocks, naming things is hard)._
+
+For further reading, here's a selection of insights...
+
+- [Paul Marden's Landing Page article on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
+- [Cogworks' post on How to Pick a Block Style Editor](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/)
