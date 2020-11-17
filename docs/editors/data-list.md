@@ -20,7 +20,7 @@ The two main fields are "**Data source**" and "**List editor**".
 
 ![Configuration Editor for Data List - empty state](data-list--configuration-editor-01.png)
 
-Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, SQL, CSV, JSON and XML data.
+Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, Umbraco content, SQL, CSV, JSON and XML data.
 
 ![Configuration Editor for Data List - available data sources](data-list--configuration-editor-02.png)
 
