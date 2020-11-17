@@ -8,7 +8,7 @@
 
 Content Blocks is a property-editor used for creating a list of structured content, with each block configurable using an element type.
 
-> If you are using Umbraco 8.7 (or above), this may sound familiar to the [Block List Editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Block-List-Editor/), and you may be asking yourself why should you use Content Blocks over the built-in Block List Editor? It's a good question, and you'll find no marketing spin from me, I'd recommend that you stick with Umbraco's built-in editors. Content Blocks has subtle differences, it's entirely your choice.
+> If you are using Umbraco 8.7 (or above), this may sound familiar to the [Block List Editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Block-List-Editor/), and you may be asking yourself why should you use Content Blocks over the built-in Block List Editor? It's a good question, and you'll find no marketing spin from me. So if you have any doubts, then I'd recommend that you stick with Umbraco's built-in editors. Content Blocks has subtle differences, it's entirely your choice.
 
 > For long time fans of Umbraco v7.x, if you recall the [Stacked Content](https://our.umbraco.com/packages/backoffice-extensions/stacked-content) editor, then Content Blocks could be considered its spiritual successor.
 
@@ -153,14 +153,14 @@ Here's an example of strongly-typed...
 
 ### Similar editors and further reading
 
-There are several alternative block-based editors that you could use with Umbraco v8, here is a selection...
+There are several alternative block-based editors that you could use with Umbraco v8, here are a selection...
 
 - [Umbraco's **Block List** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Block-List-Editor/) - available since Umbraco v8.7.0.
 - [Umbraco's **Nested Content** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Nested-Content/) - available since Umbraco v7.7.0, _(since superseded by the Block List editor)._
-- [**Bento** editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/)
-- [**Perplex.ContentBlocks** by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming conflict of Content Blocks, naming things is hard)._
+- [**Bento** editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/) - compatible with Umbraco v8.6.0 (and above).
+- [**Perplex.ContentBlocks** by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming clash with Content Blocks, naming things is hard),_ compatible with Umbraco v8.1.0 (and above).
 
-For further reading, here's a selection of insights...
+For further reading, here are a selection of insights...
 
 - [Paul Marden's **Landing Page article** on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
 - [Cogworks' post on **How to Pick a Block Style Editor**](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/)
