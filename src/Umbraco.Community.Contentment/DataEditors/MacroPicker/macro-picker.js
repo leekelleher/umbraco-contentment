@@ -7,7 +7,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$scope",
     "entityResource",
     "editorService",
-    function ($scope, entityResource, editorService) {
+    "localizationService",
+    "overlayService",
+    function ($scope, entityResource, editorService, localizationService, overlayService) {
 
         // console.log("macro-picker.model", $scope.model);
 
@@ -25,31 +27,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || [];
 
-            vm.icon = "icon-settings-alt";
+            vm.defaultIcon = "icon-settings-alt";
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = true;
             vm.allowRemove = true;
-            vm.published = true;
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
-
-            vm.sortableOptions = {
-                axis: "y",
-                containment: "parent",
-                cursor: "move",
-                disabled: vm.sortable === false,
-                opacity: 0.7,
-                scroll: true,
-                tolerance: "pointer",
-                stop: function (e, ui) {
-                    setDirty();
-                }
-            };
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "defaultdialogs_selectMacro";
 
             vm.add = add;
             vm.edit = edit;
             vm.remove = remove;
+            vm.populateDescription = populateDescription;
         };
 
         function add() {
@@ -110,13 +99,35 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
-            $scope.model.value.splice($index, 1);
+            var keys = ["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"];
+            localizationService.localizeMany(keys).then(function (data) {
+                overlayService.open({
+                    title: data[1],
+                    content: data[0],
+                    closeButtonLabel: data[2],
+                    submitButtonLabel: data[3],
+                    submitButtonStyle: "danger",
+                    submit: function () {
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                vm.allowAdd = true;
-            }
+                        $scope.model.value.splice($index, 1);
 
-            setDirty();
+                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                            vm.allowAdd = true;
+                        }
+
+                        setDirty();
+
+                        overlayService.close();
+                    },
+                    close: function () {
+                        overlayService.close();
+                    }
+                });
+            });
+        };
+
+        function populateDescription(item, $index) {
+            return item.alias;
         };
 
         function setDirty() {
