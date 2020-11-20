@@ -25,15 +25,15 @@ namespace Umbraco.Web.Mvc
             if (viewData.TryGetValue("content", out var tmp1) && tmp1 is TPublishedContent t1)
             {
                 model.Content = t1;
-                // TODO: [LK] Remove "content" from ViewData?
-                // viewData.Remove("content");
+
+                viewData.Remove("content");
             }
 
             if (viewData.TryGetValue("element", out var tmp2) && tmp2 is TPublishedElement t2)
             {
                 model.Element = t2;
-                // TODO: [LK] Remove "element" from ViewData?
-                // viewData.Remove("element");
+
+                viewData.Remove("element");
             }
 
             viewData.Model = model;

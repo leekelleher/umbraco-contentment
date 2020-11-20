@@ -2,8 +2,6 @@
 
 ## Contentment for Umbraco
 
-> This documentation is a _**work-in-progress.**_ There will be plot holes and missing pieces. Please bear with me.
-
 ### Content Blocks
 
 Content Blocks is a property-editor used for creating a list of structured content, with each block configurable using an element type.
