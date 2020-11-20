@@ -6,11 +6,13 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ConfigurationEditor.Controller", [
     "$scope",
     "$interpolate",
+    "$timeout",
     "editorService",
+    "eventsService",
     "localizationService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, $interpolate, editorService, localizationService, overlayService, devModeService) {
+    function ($scope, $interpolate, $timeout, editorService, eventsService, localizationService, overlayService, devModeService) {
 
         // console.log("config-editor.model", $scope.model);
 
@@ -102,6 +104,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
             }
 
+            // NOTE: Must wait, otherwise the preview may not be ready to receive the event.
+            $timeout(function () { emit(); }, 100);
         };
 
         function add() {
@@ -165,6 +169,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     editorService.close();
                 }
             });
+        };
+
+        function emit() {
+            eventsService.emit("contentment.config-editor.model", $scope.model);
         };
 
         function populate(item, $index, propertyName) {
@@ -232,6 +240,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             if ($scope.propertyForm) {
                 $scope.propertyForm.$setDirty();
             }
+            emit();
         };
 
         init();
