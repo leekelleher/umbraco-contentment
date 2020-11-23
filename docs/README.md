@@ -4,6 +4,10 @@
 
 ### Documentation
 
+> If there are any parts of the documentation that are unclear, [please do let me know](https://github.com/leekelleher/umbraco-contentment/issues/new/choose).
+> 
+> Sometimes I can be too close to the code to understand how others (e.g. you) will use it. :v::heart::dove:
+
 #### Property-Editors
 
 Here is the documentation for the Contentment property-editors...
