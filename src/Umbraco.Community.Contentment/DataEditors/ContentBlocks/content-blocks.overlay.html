@@ -76,11 +76,11 @@
 
             <umb-box ng-if="vm.selectBlueprint === false && vm.clipboardItems.length > 0">
                 <umb-box-header title-key="content_createFromClipboard">
-                    <div style="position:relative;cursor:pointer;" title="Clear clipboard">
+                    <div style="position:relative;">
                         <button type="button" class="btn-reset" ng-click="vm.showPrompt()">
                             <i class="icon-trash"></i>
                             <span class="sr-only">
-                                <localize key="actions_delete">Delete</localize>
+                                <localize key="clipboard_labelForRemoveAllEntries">Remove all items</localize>
                             </span>
                         </button>
                         <umb-confirm-action ng-if="vm.prompt"
