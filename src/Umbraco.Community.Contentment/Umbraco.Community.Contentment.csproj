@@ -463,7 +463,9 @@
     <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\lang\da.xml" />
     <Content Include="Web\UI\App_Plugins\Contentment\lang\en.xml" />
+    <Content Include="Web\UI\App_Plugins\Contentment\lang\pt-br.xml" />
     <Content Include="Web\UI\backoffice-ui-shim.css" />
     <Content Include="Web\UI\backoffice.js" />
   </ItemGroup>

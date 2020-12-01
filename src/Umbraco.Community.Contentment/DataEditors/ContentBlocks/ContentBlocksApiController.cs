@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var content = UmbracoContext.Content.GetById(true, contentId);
             if (content == null)
             {
-                // TODO: [LK] What to do with an unsaved (new) page?
+                _logger.Debug<ContentBlocksApiController>($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
             }
 
             var element = default(IPublishedElement);

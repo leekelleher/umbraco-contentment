@@ -24,6 +24,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             listType: "grid",
             overlayView: "",
             overlayOrderBy: "name",
+            overlaySize: "small",
+            addButtonLabelKey: "general_add",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -42,6 +44,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowEdit = false;
             vm.allowRemove = true;
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+
+            vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
 
             vm.add = add;
             vm.remove = remove;
@@ -76,7 +80,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
 
             var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return _.find(vm.items, function (y) { return x.name === y.name; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                return _.find(vm.items, function (y) { return x.value === y.value; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
             });
 
             editorService.open({
@@ -90,7 +94,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     orderBy: config.overlayOrderBy,
                 },
                 view: config.overlayView,
-                size: "small",
+                size: config.overlaySize || "small",
                 submit: function (selectedItems) {
 
                     selectedItems.forEach(function (x) {

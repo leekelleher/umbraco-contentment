@@ -4,7 +4,8 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <contentment-stack-editor add-button-label-key="'grid_addElement'"
+    <contentment-stack-editor ng-model="model.value"
+                              add-button-label-key="'grid_addElement'"
                               allow-add="vm.allowAdd"
                               allow-edit="vm.allowEdit"
                               allow-remove="vm.allowRemove"
@@ -15,6 +16,7 @@
                               on-remove="vm.remove"
                               on-sort="vm.sort"
                               block-actions="vm.blockActions"
-                              property-actions="vm.propertyActions">
+                              property-actions="vm.propertyActions"
+                              previews="vm.previews">
     </contentment-stack-editor>
 </div>

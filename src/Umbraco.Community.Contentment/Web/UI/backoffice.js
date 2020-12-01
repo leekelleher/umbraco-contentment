@@ -17,7 +17,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
 
             const alias = "contentment";
 
-            var config = Umbraco.Sys.ServerVariables[alias];
+            var config = Umbraco.Sys.ServerVariables.umbracoPlugins[alias];
 
             vm.title = config.name;
             vm.version = "v" + config.version;
