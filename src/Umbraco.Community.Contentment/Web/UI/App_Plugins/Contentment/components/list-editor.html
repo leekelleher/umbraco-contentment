@@ -4,8 +4,8 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="umb-contentpicker">
-    <div ui-sortable="vm.sortableOptions" ng-model="vm.items">
-        <umb-node-preview ng-repeat="item in vm.items"
+    <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+        <umb-node-preview ng-repeat="item in vm.ngModel"
                           icon="vm.populate(item, $index, 'icon')"
                           name="vm.populate(item, $index, 'name')"
                           description="vm.populate(item, $index, 'description')"

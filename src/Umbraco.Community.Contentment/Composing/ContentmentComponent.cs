@@ -50,9 +50,9 @@ namespace Umbraco.Community.Contentment.Composing
 
         private void ServerVariablesParser_Parsing(object sender, Dictionary<string, object> e)
         {
-            if (e.ContainsKey(Constants.Internals.ProjectAlias) == false)
+            if (e.TryGetValueAs("umbracoPlugins", out Dictionary<string, object> umbracoPlugins) == true && umbracoPlugins.ContainsKey(Constants.Internals.ProjectAlias) == false)
             {
-                e.Add(Constants.Internals.ProjectAlias, new
+                umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
                     version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString()

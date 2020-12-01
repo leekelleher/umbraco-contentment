@@ -17,7 +17,7 @@ angular.module("umbraco.directives").component("contentmentListEditor", {
         getItemIcon: "<?",
         getItemName: "<?",
         getItemDescription: "<?",
-        items: "=?",
+        ngModel: "=",
         onAdd: "<?",
         onEdit: "<?",
         onRemove: "<?",
@@ -41,8 +41,6 @@ angular.module("umbraco.directives").component("contentmentListEditor", {
             vm.$onInit = function () {
 
                 vm.propertyAlias = vm.umbProperty.property.alias;
-
-                vm.items = vm.items || vm.umbProperty.property.value;
 
                 vm.sortableOptions = {
                     axis: "y",
@@ -163,12 +161,13 @@ angular.module("umbraco.directives").component("contentmentStackEditor", {
         defaultIcon: "<?",
         getItemIcon: "<?",
         getItemName: "<?",
-        items: "=?",
+        ngModel: "=?",
         onAdd: "<?",
         onEdit: "<?",
         onRemove: "<?",
         onSort: "<?",
         propertyActions: "<?",
+        previews: "<?",
     },
     require: {
         propertyForm: "^form",
@@ -187,8 +186,6 @@ angular.module("umbraco.directives").component("contentmentStackEditor", {
             vm.$onInit = function () {
 
                 vm.propertyAlias = vm.umbProperty.property.alias;
-
-                vm.items = vm.items || vm.umbProperty.property.value;
 
                 vm.sortableOptions = {
                     axis: "y",

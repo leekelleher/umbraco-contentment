@@ -5,11 +5,12 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ConfigurationEditor.Controller", [
     "$scope",
+    "$interpolate",
     "editorService",
     "localizationService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, editorService, localizationService, overlayService, devModeService) {
+    function ($scope, $interpolate, editorService, localizationService, overlayService, devModeService) {
 
         // console.log("config-editor.model", $scope.model);
 
@@ -47,10 +48,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             config.itemLookup = {};
             config.allowEdit = {};
+            config.nameTemplates = {};
+            config.descriptionTemplates = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
+
                 config.allowEdit[item.key] = item.fields && item.fields.length > 0;
+
+                if (item.nameTemplate) {
+                    config.nameTemplates[item.key] = $interpolate(item.nameTemplate);
+                }
+
+                if (item.descriptionTemplate) {
+                    config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
+                }
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
@@ -156,7 +168,27 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function populate(item, $index, propertyName) {
-            return config.itemLookup[item.key][propertyName];
+            var label = "";
+
+            if (propertyName === 'name' && config.nameTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.nameTemplates[item.key];
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            if (propertyName === 'description' && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.descriptionTemplates[item.key];
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            return label || config.itemLookup[item.key][propertyName];
         };
 
         function remove($index) {
