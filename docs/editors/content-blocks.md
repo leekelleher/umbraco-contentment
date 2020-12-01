@@ -84,6 +84,8 @@ For further options, each content block has its own action menu, initially for s
 
 ![Content Blocks property-editor - content block action menu](content-blocks--property-editor-05.png)
 
+> **Did you know...** you can copy items from Nested Content and paste them into Content Blocks, (and vice-versa)! :dizzy_face:
+
 
 #### Previews
 
