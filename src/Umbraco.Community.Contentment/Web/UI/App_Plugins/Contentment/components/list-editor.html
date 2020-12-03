@@ -1,0 +1,28 @@
+﻿<!-- Copyright © 2020 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="umb-contentpicker">
+    <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+        <umb-node-preview ng-repeat="item in vm.ngModel"
+                          icon="vm.populate(item, $index, 'icon')"
+                          name="vm.populate(item, $index, 'name')"
+                          description="vm.populate(item, $index, 'description')"
+                          sortable="vm.allowSort"
+                          allow-edit="vm.canEdit(item, $index)"
+                          allow-remove="vm.canRemove(item, $index)"
+                          on-edit="vm.edit($index)"
+                          on-remove="vm.remove($index)">
+        </umb-node-preview>
+    </div>
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{vm.propertyAlias}}"
+            aria-label="{{vm.addButtonLabel}}"
+            ng-click="vm.add()"
+            ng-if="vm.allowAdd">
+        <span ng-bind="vm.addButtonLabel"></span>
+        <span class="sr-only">...</span>
+    </button>
+</div>

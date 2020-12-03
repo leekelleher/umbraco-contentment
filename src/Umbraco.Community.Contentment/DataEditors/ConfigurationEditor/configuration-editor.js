@@ -5,11 +5,12 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ConfigurationEditor.Controller", [
     "$scope",
+    "$interpolate",
     "editorService",
     "localizationService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, editorService, localizationService, overlayService, devModeService) {
+    function ($scope, $interpolate, editorService, localizationService, overlayService, devModeService) {
 
         // console.log("config-editor.model", $scope.model);
 
@@ -46,22 +47,34 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             config.itemLookup = {};
-            vm.allowEdit = {};
+            config.allowEdit = {};
+            config.nameTemplates = {};
+            config.descriptionTemplates = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
-                vm.allowEdit[item.key] = item.fields && item.fields.length > 0;
+
+                config.allowEdit[item.key] = item.fields && item.fields.length > 0;
+
+                if (item.nameTemplate) {
+                    config.nameTemplates[item.key] = $interpolate(item.nameTemplate);
+                }
+
+                if (item.descriptionTemplate) {
+                    config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
+                }
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowEdit = function (item, $index) { return config.allowEdit[item.key]; };
             vm.allowRemove = Object.toBoolean(config.allowRemove);
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
 
             vm.sortableOptions = {
                 axis: "y",
                 containment: "parent",
                 cursor: "move",
-                disabled: vm.sortable === false,
+                disabled: vm.allowSort === false,
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
@@ -77,24 +90,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.populate = populate;
             vm.remove = remove;
 
-            if ($scope.umbProperty) {
+            vm.propertyActions = [];
 
-                var propertyActions = [];
-
-                if (Object.toBoolean(config.enableDevMode)) {
-                    propertyActions.push({
-                        labelKey: "contentment_editRawValue",
-                        icon: "brackets",
-                        method: function () {
-                            devModeService.editValue($scope.model, validate);
-                        }
-                    });
-                }
-
-                if (propertyActions.length > 0) {
-                    $scope.umbProperty.setPropertyActions(propertyActions);
-                }
+            if (Object.toBoolean(config.enableDevMode)) {
+                vm.propertyActions.push({
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue($scope.model, validate);
+                    }
+                });
             }
+
         };
 
         function add() {
@@ -160,8 +167,28 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
-        function populate(item, propertyName) {
-            return config.itemLookup[item.key][propertyName];
+        function populate(item, $index, propertyName) {
+            var label = "";
+
+            if (propertyName === 'name' && config.nameTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.nameTemplates[item.key];
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            if (propertyName === 'description' && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.descriptionTemplates[item.key];
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            return label || config.itemLookup[item.key][propertyName];
         };
 
         function remove($index) {

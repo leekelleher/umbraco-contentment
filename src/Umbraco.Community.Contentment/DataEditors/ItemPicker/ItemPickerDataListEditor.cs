@@ -22,6 +22,24 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
+            new ConfigurationField
+            {
+                Key = "overlaySize",
+                Name = "Editor overlay size",
+                Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
+                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Small", Value = "small" },
+                            new DataListItem { Name = "Medium", Value = "medium" },
+                            new DataListItem { Name = "Large", Value = "large" }
+                        }
+                    },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
+                }
+            },
             new DefaultIconConfigurationField(),
             new ConfigurationField
             {
@@ -33,8 +51,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            new DataListItem { Name = "Grid", Value = "grid", Description = "Grid displays as a card based layout, (3 or 4 cards per row)." },
-                            new DataListItem { Name = "List", Value = "list", Description = "List will display as a menu of single items." }
+                            new DataListItem { Name = "Grid", Value = "grid", Description = "Displays as a card based layout, (3 cards per row)." },
+                            new DataListItem { Name = "List", Value = "list", Description = "Displays as a single column menu, (with descriptions, if available)." }
                         }
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
@@ -66,7 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "overlayView", IOHelper.ResolveUrl(DataEditorOverlayViewPath) },
+            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(DataEditorOverlayViewPath) },
             { "overlayOrderBy", string.Empty },
         };
 

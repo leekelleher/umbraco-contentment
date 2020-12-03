@@ -24,22 +24,22 @@ Let's take a look inside...
 ##### Property Editors
 
 - [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
+- [Content Blocks](../docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 
 
-#### Release status
+#### Releases
 
-My aim to have a v1.0 release by end of Q2 (June) 2020.
-
-Downloads will be made available, (in due course), on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
+Downloads are available on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
 
 #### Known issues
 
-_There are currently no known issues with the Contentment package._
+- **Data List**
+  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. See #30 for details.
 
 
 ### Documentation
@@ -101,7 +101,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>746+ hours</b> (between 2019-03-13 to 2020-06-11)</summary>
+<summary>Current development effort: <b>810+ hours</b> (between 2019-03-13 to 2020-08-28)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

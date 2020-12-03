@@ -3,7 +3,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment" ng-controller="Umbraco.Community.Contentment.Overlays.ConfigurationEditor.Controller as vm">
+<div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.ConfigurationEditor.Controller as vm">
     <umb-editor-view>
 
         <umb-editor-header name="vm.title"
@@ -31,13 +31,13 @@
                         </div>
                         <ul class="umb-actions umb-actions-child">
                             <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                                <a class="umb-action-link" ng-click="vm.select(item)">
+                                <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
                                     <i class="large icon" ng-class="item.icon"></i>
                                     <span class="menu-label">
                                         <span ng-bind="item.name"></span>
                                         <small ng-bind="item.description"></small>
                                     </span>
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </umb-box-content>
@@ -77,15 +77,15 @@
             <umb-editor-footer-content-right>
                 <umb-button type="button"
                             button-style="link"
-                            shortcut="esc"
                             label-key="general_close"
+                            shortcut="esc"
                             action="vm.close()">
                 </umb-button>
                 <umb-button ng-if="vm.save"
                             type="button"
                             button-style="success"
-                            shortcut="ctrl+s"
                             label-key="bulk_done"
+                            shortcut="ctrl+s"
                             action="vm.save(vm.editor)">
                 </umb-button>
             </umb-editor-footer-content-right>

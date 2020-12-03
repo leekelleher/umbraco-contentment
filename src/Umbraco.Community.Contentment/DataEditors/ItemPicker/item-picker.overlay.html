@@ -9,7 +9,6 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.ItemPicker.Controller as vm">
-
     <umb-editor-view>
 
         <umb-editor-header name="vm.title"
@@ -37,23 +36,23 @@
 
                     <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
                         <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                            <a class="umb-card-grid-item" ng-click="vm.select(item)">
-                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon"></i>
+                            <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">
+                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon || vm.defaultIcon" aria-hidden="true"></i>
                                 {{item.name}}
-                            </a>
+                            </button>
                         </li>
                     </ul>
 
                     <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
                         <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
-                            <a class="umb-action-link" ng-click="vm.select(item)">
+                            <button type="button" class="umb-action-link umb-outline btn-reset" ng-click="vm.select(item)">
                                 <umb-checkmark ng-if="vm.enableMultiple" checked="item.selected" size="m"></umb-checkmark>
-                                <i class="large icon" ng-class="item.icon"></i>
+                                <i class="large icon" ng-class="item.icon || vm.defaultIcon" aria-hidden="true"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                     <small ng-bind="item.description"></small>
                                 </span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
 
@@ -77,14 +76,12 @@
                 <umb-button ng-if="vm.enableMultiple"
                             type="button"
                             button-style="success"
-                            shortcut="ctrl+s"
                             label-key="buttons_select"
+                            shortcut="ctrl+s"
                             action="vm.submit()">
                 </umb-button>
             </umb-editor-footer-content-right>
         </umb-editor-footer>
 
     </umb-editor-view>
-
 </div>
-

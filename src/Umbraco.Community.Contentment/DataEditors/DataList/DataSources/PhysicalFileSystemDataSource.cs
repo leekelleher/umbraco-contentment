@@ -36,6 +36,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Filename filter",
                 Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>",
                 View = "textstring",
+            },
+            new ConfigurationField
+            {
+                Key = "friendlyName",
+                Name = "Use friendly filenames?",
+                Description = "Enabling this option will remove the file extension and spaces-out any uppercase letters, hyphens and underscores.",
+                View = "boolean",
             }
         };
 
@@ -49,6 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var path = config.GetValueAs("path", string.Empty);
             var filter = config.GetValueAs("filter", string.Empty);
+            var friendlyName = config.GetValueAs("friendlyName", false);
 
             var virtualRoot = string.IsNullOrWhiteSpace(path) == false
                 ? path.EnsureEndsWith("/")
@@ -63,9 +71,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return files.Select(x => new DataListItem
             {
-                Name = x,
+                Name = friendlyName == true ? x.SplitPascalCasing().ToFriendlyName() : x,
                 Value = virtualRoot + x,
                 Description = virtualRoot + x,
+                Icon = Core.Constants.Icons.DefaultIcon,
             });
         }
     }

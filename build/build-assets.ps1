@@ -45,7 +45,14 @@ $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Inc
 foreach($htmlFile in $htmlFiles){
     $contents = Get-Content -Path $htmlFile.FullName;
     $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
-    Set-Content -Path "${pluginFolder}\editors\$($htmlFile.Name)" -Value $minifiedHtml;
+    [IO.File]::WriteAllLines("${pluginFolder}\editors\$($htmlFile.Name)", $minifiedHtml);
+}
+
+# Razor Templates - Copy
+$razorFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.cshtml;
+foreach($razorFile in $razorFiles){
+    $contents = Get-Content -Path $razorFile.FullName;
+    [IO.File]::WriteAllLines("${pluginFolder}\render\$($razorFile.Name)", $contents);
 }
 
 # CSS - Bundle & Minify

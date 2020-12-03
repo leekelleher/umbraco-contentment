@@ -1,0 +1,54 @@
+﻿<!-- Copyright © 2020 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment lk-content-blocks">
+    <div class="lk-content-blocks__container" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+        <div class="lk-content-blocks__block" ng-repeat="item in vm.ngModel">
+
+            <div tabindex="-1" class="lk-content-blocks__preview">
+                <div class="lk-content-blocks__preview--left" ng-if="vm.previews[item.key]">
+                    <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                    <span ng-bind="vm.populate(item, $index, 'name')"></span>
+                </div>
+                <div class="lk-content-blocks__preview--main">
+                    <div class="lk-content-blocks__preview--default" ng-if="!vm.previews[item.key]">
+                        <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                        <h5 ng-bind="vm.populate(item, $index, 'name')"></h5>
+                    </div>
+                    <div class="lk-content-blocks__preview--markup" ng-if="vm.previews[item.key]">
+                        <umb-load-indicator ng-show="vm.previews[item.key].loading" />
+                        <div ng-bind-html="vm.previews[item.key].markup | safe_html"></div>
+                    </div>
+                </div>
+                <button aria-label="Edit content"
+                        type="button"
+                        class="lk-content-blocks__edit"
+                        ng-click="vm.edit($index)"></button>
+            </div>
+
+            <ul class="lk-content-blocks__actions">
+                <li aria-label="Sort" class="lk-content-blocks__action--item umb-node-preview--sortable" ng-if="vm.allowSort">
+                    <i class="icon icon-navigation"></i>
+                </li>
+                <li class="lk-content-blocks__action--item" ng-if="vm.canRemove(item, $index)">
+                    <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
+                </li>
+                <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[$index]">
+                    <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{vm.propertyAlias}}"
+            aria-label="Add content"
+            ng-click="vm.onAdd()"
+            ng-if="vm.allowAdd">
+        <span ng-bind="vm.addButtonLabel"></span>
+        <span class="sr-only">...</span>
+    </button>
+</div>

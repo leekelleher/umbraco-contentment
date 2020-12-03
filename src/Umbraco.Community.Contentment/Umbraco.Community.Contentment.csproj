@@ -294,12 +294,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Composing\ContentmentComponentComposer.cs" />
+    <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
+    <Compile Include="Core\Xml\UmbracoXPathPathSyntaxParser.cs" />
     <Compile Include="DataEditors\ConfigurationEditor\ConfigurationEditorUtility.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlockPreviewView.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksViewHelper.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksApiController.cs" />
     <Compile Include="Composing\ContentmentListItemCollectionBuilder.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlockPreviewModel.cs" />
+    <Compile Include="DataEditors\ContentBlocks\DisplayModes\ListDisplayMode.cs" />
+    <Compile Include="DataEditors\ContentBlocks\DisplayModes\StackDisplayMode.cs" />
+    <Compile Include="DataEditors\ContentBlocks\IContentBlocksDisplayMode.cs" />
+    <Compile Include="DataEditors\ContentPicker\ContentPickerDataEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoContentDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListSourceValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\PhysicalFileSystemDataSource.cs" />
@@ -338,6 +348,14 @@
     <Compile Include="DataEditors\DataTable\DataTableConfigurationEditor.cs" />
     <Compile Include="DataEditors\DataTable\DataTableDataEditor.cs" />
     <Compile Include="DataEditors\DropdownList\DropdownListDataListEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentTypeCacheHelper.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDataValueEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksConfigurationEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksDataEditor.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlock.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlockType.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksTypesConfigurationField.cs" />
+    <Compile Include="DataEditors\ContentBlocks\ContentBlocksValueConverter.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HideLabelConfigurationField.cs" />
     <Compile Include="DataEditors\IconPicker\DefaultIconConfigurationField.cs" />
     <Compile Include="DataEditors\IconPicker\IconPickerConfigurationEditor.cs" />
@@ -365,6 +383,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
+    <Compile Include="Web\Serialization\PublishedContentContractResolver.cs" />
+    <Compile Include="Web\PublishedCache\DetachedPublishedElement.cs" />
+    <Compile Include="Web\PublishedCache\DetachedPublishedProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataEditors\Bytes\README.md" />
@@ -372,6 +393,7 @@
     <None Include="DataEditors\CheckboxList\README.md" />
     <None Include="DataEditors\CodeEditor\README.md" />
     <None Include="DataEditors\ConfigurationEditor\README.md" />
+    <None Include="DataEditors\ContentBlocks\ContentBlockPreview.cshtml" />
     <None Include="DataEditors\DataList\README.md" />
     <None Include="DataEditors\DataTable\README.md" />
     <None Include="DataEditors\DropdownList\README.md" />
@@ -399,10 +421,19 @@
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.js" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.html" />
     <Content Include="DataEditors\ConfigurationEditor\configuration-editor.overlay.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.blueprint.html" />
+    <Content Include="DataEditors\ContentPicker\content-source.html" />
+    <Content Include="DataEditors\ContentPicker\content-source.js" />
     <Content Include="DataEditors\DataTable\data-table.html" />
     <Content Include="DataEditors\DataTable\data-table.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.html" />
+    <Content Include="DataEditors\ContentBlocks\content-list.html" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.html" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.js" />
+    <Content Include="DataEditors\ContentBlocks\content-blocks.css" />
     <Content Include="DataEditors\NumberInput\number-input.html" />
     <None Include="DataEditors\ReadOnly\README.md" />
     <Content Include="DataEditors\IconPicker\icon-picker.css" />
@@ -421,16 +452,25 @@
     <Content Include="DataEditors\RadioButtonList\radio-button-list.js" />
     <Content Include="DataEditors\RenderMacro\render-macro.html" />
     <Content Include="DataEditors\RenderMacro\render-macro.js" />
+    <Content Include="DataEditors\ReadOnly\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
+    <Content Include="DataEditors\_\_components.js" />
     <Content Include="DataEditors\_\_directives.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\components\list-editor.html" />
+    <Content Include="Web\UI\App_Plugins\Contentment\components\stack-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />
     <Content Include="DataEditors\_\_json-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\backoffice\contentment\index.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.css" />
     <Content Include="Web\UI\App_Plugins\Contentment\contentment.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\lang\da.xml" />
     <Content Include="Web\UI\App_Plugins\Contentment\lang\en.xml" />
+    <Content Include="Web\UI\App_Plugins\Contentment\lang\pt-br.xml" />
     <Content Include="Web\UI\backoffice-ui-shim.css" />
     <Content Include="Web\UI\backoffice.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\UI\App_Plugins\Contentment\render\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />

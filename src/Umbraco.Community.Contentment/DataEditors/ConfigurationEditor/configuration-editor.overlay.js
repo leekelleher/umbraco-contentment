@@ -56,7 +56,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function edit(editor, item) {
 
-            if ($scope.model.size !== editor.overlaySize) {
+            if (editor.overlaySize && $scope.model.size !== editor.overlaySize) {
                 $scope.model.size = editor.overlaySize;
             }
 

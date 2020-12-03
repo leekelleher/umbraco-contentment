@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="pt" intName="Portuguese (BR)" localName="Português (BR)" lcid="" culture="pt-BR">
+    <creator>
+        <name>Renan Domingues</name>
+        <link>https://github.com/RenanOD</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentamento</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Selecionar e configurar o modo de exibição</key>
+        <key alias="configureElementType">Selecionar e configurar o tipo de elemento</key>
+
+        <key alias="copyAllBlocks">Copiar todos os blocos</key>
+        <key alias="editRawValue">Alterar o valor original</key>
+
+        <key alias="copyContentBlock">Copiar o conteúdo do bloco</key>
+        <key alias="createContentTemplate">Criar modelo de conteúdo...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Selecionar e configurar a origem dos dados</key>
+        <key alias="configureListEditor">Selecionar e configurar o editor de lista</key>
+
+    </area>
+</language>

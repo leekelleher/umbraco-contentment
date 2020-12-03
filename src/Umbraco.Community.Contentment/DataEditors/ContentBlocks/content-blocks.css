@@ -1,0 +1,133 @@
+﻿/* Copyright © 2019 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.lk-content-blocks__container {
+    max-width: 845px;
+}
+
+.lk-content-blocks__block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+    .lk-content-blocks__block .lk-content-blocks__preview {
+        flex: 1;
+        position: relative;
+    }
+
+        .lk-content-blocks__block .lk-content-blocks__preview:after {
+            content: "";
+            background: rgba(225, 225, 225, 0.5);
+            border-radius: 3px;
+            box-shadow: 0px 1px 1px 0px rgba(33, 33, 66, 0.2);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: opacity .12s;
+        }
+
+        .lk-content-blocks__block .lk-content-blocks__preview:hover:after {
+            opacity: .66;
+        }
+
+        .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--left {
+            background-color: #fff;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: row;
+            font-size: 12px;
+            padding: 0 5px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            z-index: 20;
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--left .icon {
+                padding-right: 3px;
+            }
+
+        .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default {
+            text-align: center;
+            padding: 30px 10px 15px;
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default .icon {
+                display: block;
+                font-size: 40px;
+            }
+
+            .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default h5 {
+                font-size: 14px;
+            }
+
+        .lk-content-blocks__block .lk-content-blocks__preview button.lk-content-blocks__edit {
+            background: transparent;
+            border: none;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 25;
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__preview button.lk-content-blocks__edit:focus {
+                outline: 0;
+                border: 1px solid #bbbabf;
+            }
+
+    .lk-content-blocks__block .lk-content-blocks__actions {
+        flex: 0 0 34px;
+        padding: 10px 0 0 7px;
+        margin: 0;
+        list-style: none;
+    }
+
+        .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item {
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item > .icon {
+                color: #1b264f;
+                font-size: 18px;
+                padding: 5px 10px;
+            }
+
+                .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item > .icon:hover {
+                    color: #2152a3;
+                }
+
+            .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item > button {
+                background: none;
+                border: none;
+                font-size: 18px;
+                cursor: pointer;
+                color: #162335;
+                margin: 0;
+                padding: 5px 10px;
+            }
+
+        .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions {
+            display: block;
+            float: none;
+            margin: 5px 0 0 6px;
+        }
+
+        .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions__toggle {
+            opacity: 1;
+            background-color: transparent;
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions__toggle:hover {
+                background-color: #f9f6f5;
+            }
+
+.lk-content-blocks .umb-node-preview-add {
+    margin-right: 45px;
+}

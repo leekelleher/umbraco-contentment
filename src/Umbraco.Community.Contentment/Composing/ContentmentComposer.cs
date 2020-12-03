@@ -30,6 +30,7 @@ namespace Umbraco.Community.Contentment.Composing
                         .Append<ContentmentComponent>()
                 ;
             }
+
         }
     }
 }
