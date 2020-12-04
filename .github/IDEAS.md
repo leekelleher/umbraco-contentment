@@ -2,6 +2,11 @@
 
 # Ideas for Contentment
 
+## AngularJS Filters
+
+- Something similar to Umbraco's `ncNodeName` filter, with support for multiple items.
+
+
 ## Data Editors
 
 - TinyMCE - push the boundaries beyond Umbraco's defaults?
@@ -13,7 +18,6 @@
 
 - Nested Content - Reimagined. Reach for its heart, imagine a new landscape, another atmosphere, and see how it goes.
 
-- 
 
 ## Tracking
 
