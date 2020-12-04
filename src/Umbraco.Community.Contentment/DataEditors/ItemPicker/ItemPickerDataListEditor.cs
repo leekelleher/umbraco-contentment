@@ -40,7 +40,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
                 }
             },
-            new DefaultIconConfigurationField(),
+            new ConfigurationField
+            {
+                Key = "defaultIcon",
+                Name = "Default icon",
+                Description = "Select an icon to be displayed as the default icon, (for when no icon is available).",
+                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+            },
             new ConfigurationField
             {
                 Key = "listType",
@@ -79,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "listType", "list" },
-            { DefaultIconConfigurationField.DefaultIcon, Core.Constants.Icons.DefaultIcon },
+            { "defaultIcon", Core.Constants.Icons.DefaultIcon },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
