@@ -35,11 +35,28 @@ Let's take a look inside...
 
 Downloads are available on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
+#### Installation
+
+> *Note:* Contentment has been developed against **Umbraco v8.6.1** and will support that version and above.
+
+Contentment can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
+
+##### Our Umbraco package repository
+
+To install from Our Umbraco, please download the package from:
+
+> <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
+
+##### NuGet package repository
+
+To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from within Visual Studio:
+
+    PM> Install-Package Our.Umbraco.Community.Contentment
 
 #### Known issues
 
 - **Data List**
-  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. See #30 for details.
+  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
 
 
 ### Documentation
@@ -101,7 +118,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>810+ hours</b> (between 2019-03-13 to 2020-08-28)</summary>
+<summary>Current development effort: <b>860+ hours</b> (between 2019-03-13 to 2020-12-03)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
