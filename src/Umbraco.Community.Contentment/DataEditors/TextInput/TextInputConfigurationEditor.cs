@@ -61,7 +61,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                 });
 
-            // TODO: [LK:2020-06-01] Consider options for "append" and "prepend", the editor can (currently) support displaying an icon.
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

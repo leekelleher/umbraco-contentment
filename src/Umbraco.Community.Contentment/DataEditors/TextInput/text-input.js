@@ -14,8 +14,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             autocomplete: 0,
             placeholderText: null,
             defaultValue: null,
-            prepend: null,
-            append: null,
             maxChars: 500
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
@@ -34,9 +32,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.placeholderText = config.placeholderText;
             vm.maxChars = parseInt(0 + config.maxChars);
             vm.maxCharsThreshold = vm.maxChars * .8;
-
-            vm.prepend = config.prepend;
-            vm.append = config.append;
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
