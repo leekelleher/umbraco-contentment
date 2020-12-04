@@ -29,6 +29,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
 
             vm.autoComplete = Object.toBoolean(config.autocomplete) ? "on" : "off";
+            vm.spellCheck = Object.toBoolean(config.spellcheck) ? "true" : "false";
             vm.placeholderText = config.placeholderText;
             vm.maxChars = parseInt(0 + config.maxChars);
             vm.maxCharsThreshold = vm.maxChars * .8;

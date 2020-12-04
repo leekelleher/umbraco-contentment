@@ -60,6 +60,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Select to enable autocomplete functionality on the text input.",
                 View = "boolean",
             });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "spellcheck",
+                Name = "Enable spellcheck?",
+                Description = "Select to enable spellcheck functionality on the text input.",
+                View = "boolean",
+            });
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
