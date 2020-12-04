@@ -31,26 +31,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "textstring",
             });
 
-            Fields.Add(new ConfigurationField
-            {
-                Key = "autocomplete",
-                Name = "Enable autocomplete?",
-                Description = "Select to enable autocomplete functionality on the text input.",
-                View = "boolean",
-            });
-
-            Fields.Add(new ConfigurationField
-            {
-                Name = "Maximum allowed characters",
-                Key = "maxChars",
-                Description = "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
-            });
-
             Fields.Add(
                 Constants.Conventions.ConfigurationFieldAliases.Items,
                 "Data list",
-                "<em>(optional)</em> Select and configure the data source to provide a HTML5 &lt;datalist&gt; for this text input.",
+                "<em>(optional)</em> Select and configure a data source to provide a HTML5 &lt;datalist&gt; for this text input.",
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
@@ -61,6 +45,21 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                 });
 
+            Fields.Add(new ConfigurationField
+            {
+                Name = "Maximum allowed characters",
+                Key = "maxChars",
+                Description = "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "autocomplete",
+                Name = "Enable autocomplete?",
+                Description = "Select to enable autocomplete functionality on the text input.",
+                View = "boolean",
+            });
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
