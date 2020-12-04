@@ -38,6 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 new Dictionary<string, object>()
                 {
+                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
