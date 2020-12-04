@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             Key = DefaultIcon;
             Name = "Default icon";
-            Description = "Select an icon to be displayed as the default icon, (for when no icon has been selected).";
+            Description = "Select an icon to be displayed as the default icon, (for when no icon is available).";
             View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {

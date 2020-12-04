@@ -79,6 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "listType", "list" },
+            { DefaultIconConfigurationField.DefaultIcon, Core.Constants.Icons.DefaultIcon },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
