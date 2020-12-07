@@ -25,8 +25,8 @@ Initial release. Property Editors are:
 
 ### v1.2
 
-- Text Input _(a reimagining of the textstring editor)_
-- Number Input _(a reimagining of the numeric editor)_
+- [Text Input](../docs/editors/text-input.md) _(a reimagining of the textstring editor)_
+- [Number Input](../docs/editors/number-input.md) _(a reimagining of the numeric editor)_
 - Data List: Templated List _(use custom AngularJS markup to render items)_
 
 ### v1.3
