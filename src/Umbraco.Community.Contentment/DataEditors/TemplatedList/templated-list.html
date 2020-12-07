@@ -4,12 +4,14 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.TemplatedList.Controller as vm">
-    <div lk-html-attributes="vm.htmlAttributes">
-        <span ng-class="{ 'disabled' : item.disabled, 'selected' : item.selected }"
-              ng-click="vm.select(item)"
-              ng-disabled="item.disabled"
-              ng-repeat="item in vm.items"
-              lk-bind-html-template="vm.template">
-        </span>
+    <div class="btn-group-vertical" lk-html-attributes="vm.htmlAttributes">
+        <button type="button"
+                class="btn btn-reset"
+                ng-repeat="item in vm.items"
+                ng-class="{ 'disabled' : item.disabled, 'btn-selection' : item.selected }"
+                ng-click="vm.select(item)"
+                ng-disabled="item.disabled"
+                lk-bind-html-template="vm.template">
+        </button>
     </div>
 </div>
