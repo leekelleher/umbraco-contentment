@@ -13,7 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
-        ValueType = ValueTypes.Integer,
         Group = Core.Constants.PropertyEditors.Groups.Common,
         Icon = DataEditorIcon)]
     internal sealed class NumberInputDataEditor : DataEditor
@@ -27,6 +26,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base(logger)
         { }
 
-        // TODO: [LK:2020-01-02] Add config options for "size: `umb-property-editor-tiny`, `umb-property-editor-small`, `umb-property-editor--limit-width`, or standard full width".
+        protected override IConfigurationEditor CreateConfigurationEditor() => new NumberInputConfigurationEditor();
     }
 }
