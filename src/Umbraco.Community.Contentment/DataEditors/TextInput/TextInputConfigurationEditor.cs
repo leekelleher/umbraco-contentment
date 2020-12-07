@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "autocomplete",
                 Name = "Enable autocomplete?",
-                Description = "Select to enable autocomplete functionality on the text input.",
+                Description = "Select to enable your web-browser's autocomplete functionality on the text input.",
                 View = "boolean",
             });
 
@@ -66,7 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "spellcheck",
                 Name = "Enable spellcheck?",
-                Description = "Select to enable spellcheck functionality on the text input.",
+                Description = "Select to enable your web-browser's spellcheck functionality on the text input.",
                 View = "boolean",
             });
         }
