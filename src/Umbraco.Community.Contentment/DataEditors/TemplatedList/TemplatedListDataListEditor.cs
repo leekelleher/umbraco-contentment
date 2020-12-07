@@ -21,8 +21,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<div class=""alert alert-info"">
-<p><strong>Help for your custom template.</strong></p>
+            new NotesConfigurationField(@"<details class=""well well-small"">
+<summary><strong>Do you need help with your custom template?</strong></summary>
+<div class=""mt3"">
 <p>Your custom template will be used to display an individual item from your configured data source.</p>
 <p>The data for the item will be in the following format:</p>
 <pre><code>{
@@ -33,9 +34,14 @@ namespace Umbraco.Community.Contentment.DataEditors
   ""disabled"": ""true|false"", // optional
   ""selected"": ""true|false"",
 }</code></pre>
-<p>If you are familiar with AngularJS template syntax, you can display the values using an expression: e.g. <code>{{ item.name }}</code>.</p>
+<p>If you are familiar with AngularJS template syntax, you can display the values using an expression: e.g. <code ng-non-bindable>{{ item.name }}</code>.</p>
 <p>If you need assistance with AngularJS expression syntax, please refer to this resource: <a href=""https://docs.angularjs.org/guide/expression"" target=""_blank""><strong>docs.angularjs.org</strong></a>.</p>
-</div>", true),
+<hr>
+<p>If you would like a starting point for your custom template, here is an example.</p>
+<umb-code-snippet language=""'AngularJS template'"">&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
+&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-snippet>
+</div>
+</details>", true),
             new ConfigurationField
             {
                 Key = "template",
