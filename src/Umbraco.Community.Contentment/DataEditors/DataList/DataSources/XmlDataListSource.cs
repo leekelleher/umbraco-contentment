@@ -41,10 +41,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
                 View = "textstring"
             },
-            new NotesConfigurationField(@"<div class=""alert alert-info"">
-<p><strong>Help with your XPath expressions?</strong></p>
+            new NotesConfigurationField(@"<details class=""well well-small"">
+<summary><strong>Do you need help with XPath expressions?</strong></summary>
+<div class=""mt3"">
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
-</div>", true),
+</div>
+</details>
+<details class=""well well-small"">
+<summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>
+<div class=""mt3"">
+<p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
+</div>
+</details>", true),
             new ConfigurationField
             {
                 Key = "itemsXPath",
@@ -79,12 +87,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Description XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the description from the item.",
                 View = "textstring",
-            },
-            new NotesConfigurationField(@"<div class=""alert alert-form"">
-<p><strong><em>Advanced:</em> A note about XML namespaces.</strong></p>
-<p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
-</div>", true){
-                Key = "notes2"
             },
         };
 

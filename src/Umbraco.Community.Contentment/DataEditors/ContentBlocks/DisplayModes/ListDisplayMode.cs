@@ -29,10 +29,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField($@"<div class=""alert alert-form"">
-<p><strong>A note about block type previews.</strong></p>
+            new NotesConfigurationField($@"<details class=""well well-small"" open>
+<summary><strong>A note about block type previews.</strong></summary>
+<div class=""mt3"">
 <p>Unfortunately, the preview feature for block types is unsupported in {Name} display mode and will be disabled.</p>
-</div>", true)
+</div>
+</details>", true)
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;

@@ -437,6 +437,7 @@
     <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.html" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.overlay.js" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.css" />
+    <Content Include="DataEditors\Notes\notes.css" />
     <Content Include="DataEditors\NumberInput\number-input.html" />
     <None Include="DataEditors\ReadOnly\README.md" />
     <Content Include="DataEditors\TemplatedList\templated-list.html" />
