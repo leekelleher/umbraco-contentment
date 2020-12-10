@@ -100,7 +100,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     return result;
                 }
+                else
+                {
+                    // NOTE: When the `inter` is enumerable, but `hasMultipleValues` is false, take the first item value.
+                    foreach (var item in items)
+                    {
+                        return converter != null
+                            ? converter(valueType, item)
+                            : item;
+                    }
+                }
 
+                // NOTE: This is the last resort. Comma-separated string.
                 return string.Join(",", items);
             }
 
