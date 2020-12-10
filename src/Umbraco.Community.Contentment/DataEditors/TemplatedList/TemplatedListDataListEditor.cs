@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -68,7 +69,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => default;
 
-        public bool HasMultipleValues(Dictionary<string, object> config) => false;
+        public bool HasMultipleValues(Dictionary<string, object> config)
+        {
+            return config.TryGetValueAs("enableMultiple", out bool enableMultiple) == true && enableMultiple == true;
+        }
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
