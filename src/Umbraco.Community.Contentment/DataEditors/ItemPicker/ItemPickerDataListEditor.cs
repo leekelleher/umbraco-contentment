@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
@@ -90,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool HasMultipleValues(Dictionary<string, object> config)
         {
-            return (config.TryGetValue(MaxItemsConfigurationField.MaxItems, out var tmp) && tmp.ToString() == "1") == false;
+            return config.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Small;
