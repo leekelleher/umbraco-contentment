@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$scope",
     function ($scope) {
 
-        console.log("number-input.model", $scope.model);
+        // console.log("number-input.model", $scope.model);
 
         var defaultConfig = {
             placeholderText: null,
@@ -28,13 +28,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.maximum = config.maximum;
             vm.minimum = config.minimum;
+            vm.step = config.step;
 
             vm.pattern = config.umbracoDataValueType === "DECIMAL"
                 ? "[\-0-9]+([,\.][0-9]+)?"
                 : "[\-0-9]*";
 
             vm.placeholderText = config.placeholderText;
-            vm.step = config.step;
 
             var sizes = {
                 "s": "umb-property-editor-tiny",
