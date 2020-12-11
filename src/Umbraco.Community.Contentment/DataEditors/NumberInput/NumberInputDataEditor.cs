@@ -13,6 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         EditorType.PropertyValue,
         DataEditorName,
         DataEditorViewPath,
+        ValueType = ValueTypes.Integer,
         Group = Core.Constants.PropertyEditors.Groups.Common,
         Icon = DataEditorIcon)]
     internal sealed class NumberInputDataEditor : DataEditor
