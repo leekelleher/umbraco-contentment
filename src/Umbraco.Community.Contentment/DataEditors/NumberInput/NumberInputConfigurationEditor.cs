@@ -16,8 +16,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         public NumberInputConfigurationEditor()
             : base()
         {
+            DefaultConfiguration.Add("size", "s");
+
             Fields.Add(
-                "sizeClass",
+                "size",
                 "Numeric size",
                 "How big will the number get?",
                 IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
@@ -25,14 +27,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            new DataListItem { Name = "Small", Value = "umb-property-editor-tiny", Description = "Ideal for numbers under 100; comfortably fits 3 digits." },
-                            new DataListItem { Name = "Medium", Value = "umb-property-editor-small", Description = "Better when dealing with hundreds and thousands; comfortably fits 6 digits." },
-                            new DataListItem { Name = "Large", Value = "umb-property-editor--limit-width", Description = "Did you know a 18 digit number is called a quintillion!" },
-                            new DataListItem { Name = "Massive", Value = "umb-property-editor", Description = "Useful when aligning with full width text inputs. Fits 88 digits - that's over an octovigintillion folks!" },
+                            new DataListItem { Name = "Small", Value = "s", Description = "Ideal for numbers under 100; comfortably fits 3 digits." },
+                            new DataListItem { Name = "Medium", Value = "m", Description = "Better when dealing with hundreds and thousands; comfortably fits 6 digits." },
+                            new DataListItem { Name = "Large", Value = "l", Description = "Did you know a 18 digit number is called a quintillion!" },
+                            new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits - that's over an octovigintillion folks!" },
                         }
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "umb-property-editor-tiny" },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "s" },
                 });
 
             // NOTE: When using the key "umbracoDataValueType", Umbraco will auto-set the database type.

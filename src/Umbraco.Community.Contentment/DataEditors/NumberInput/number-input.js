@@ -14,7 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultValue: null,
             maximum: null,
             minimum: null,
-            sizeClass: "umb-property-editor-tiny",
+            size: "s",
             step: null,
             umbracoDataValueType: "INT",
         };
@@ -34,8 +34,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 : "[\-0-9]*";
 
             vm.placeholderText = config.placeholderText;
-            vm.sizeClass = config.sizeClass;
             vm.step = config.step;
+
+            var sizes = {
+                "s": "umb-property-editor-tiny",
+                "m": "umb-property-editor-small",
+                "l": "umb-property-editor--limit-width",
+                "xl": "umb-property-editor",
+            };
+            vm.sizeClass = sizes[config.size] || sizes[defaultConfig.size];
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
