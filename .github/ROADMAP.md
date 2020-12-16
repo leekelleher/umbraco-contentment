@@ -11,7 +11,7 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 Initial release.
 
-Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release).__
+Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release)._
 
 Property Editors are:
 
@@ -41,7 +41,7 @@ Property Editors are:
 
 ### v2.0
 
-- _(At the time of writing),_ a breaking-change _(following SemVer guidance),_ release of v1.3 features that compiles against Umbraco CMS v8.10.
+- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.3 features that compiles against Umbraco CMS v8.10.
 
 ### v2.1
 
