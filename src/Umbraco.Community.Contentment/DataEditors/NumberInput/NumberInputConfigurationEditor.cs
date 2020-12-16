@@ -25,10 +25,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            new DataListItem { Name = "Small", Value = "s", Description = "Ideal for numbers under 100; comfortably fits 3 digits." },
-                            new DataListItem { Name = "Medium", Value = "m", Description = "Better when dealing with hundreds and thousands; comfortably fits 6 digits." },
+                            new DataListItem { Name = "Small", Value = "s", Description = "Ideal for numbers under 100, comfortably fits 3 digits." },
+                            new DataListItem { Name = "Medium", Value = "m", Description = "Better when dealing with hundreds and thousands, comfortably fits 6 digits." },
                             new DataListItem { Name = "Large", Value = "l", Description = "Did you know a 18 digit number is called a quintillion!" },
-                            new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits - that's over an octovigintillion folks!" },
+                            new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>" },
                         }
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
