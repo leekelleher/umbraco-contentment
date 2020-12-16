@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    interface IContentBlocksDisplayMode : IContentmentEditorItem
+    public interface IContentBlocksDisplayMode : IContentmentEditorItem
     {
         Dictionary<string, object> DefaultConfig { get; }
 

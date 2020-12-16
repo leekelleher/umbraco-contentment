@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -23,8 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "sortableAxis", false },
-            { "enablePreview", false },
+            { "sortableAxis", Constants.Values.False },
+            { "enablePreview", Constants.Values.False },
         };
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
