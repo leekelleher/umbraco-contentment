@@ -35,7 +35,7 @@ Property Editors are:
 
 ### v1.3
 
-- Code Editor _(using ACE bundled with Umbraco)_
+- [Code Editor](../docs/editors/code-editor.md) _(using ACE bundled with Umbraco)_
 - Data List: Preview _(a real time preview of the configured Data Source and List Editor)_
 - Data List: Tags _(list editor, visually similar to Umbraco Tags editor)_
 
