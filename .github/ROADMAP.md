@@ -34,7 +34,7 @@ Property Editors are:
 
 ### v1.3
 
-- Code Editor _(using ACE bundled with Umbraco)_
+- [Code Editor](../docs/editors/code-editor.md) _(using ACE bundled with Umbraco)_
 
 
 ## v2

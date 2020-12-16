@@ -40,6 +40,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\editors\bytes.md = ..\docs\editors\bytes.md
+		..\docs\editors\code-editor.md = ..\docs\editors\code-editor.md
 		..\docs\editors\content-blocks.md = ..\docs\editors\content-blocks.md
 		..\docs\editors\data-list.md = ..\docs\editors\data-list.md
 		..\docs\editors\icon-picker.md = ..\docs\editors\icon-picker.md
