@@ -22,14 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base()
         {
             var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
-
-            Fields.Add(new NotesConfigurationField($@"<div class=""well"">
-<p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
-<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
-<p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options below.</p>
-</div>"));
-
             var aceEditorPath = IOHelper.MapPath(targetPath);
+
             if (Directory.Exists(aceEditorPath))
             {
                 var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
@@ -59,8 +53,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         DefaultConfiguration.Add(Mode, "razor");
                         Fields.Add(
                             Mode,
-                            "Programming language mode",
-                            "Select the programming language mode. By default, 'Razor' mode will be used.",
+                            "Language mode",
+                            "Select the programming language mode. The default mode is 'Razor'.",
                             IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
                             new Dictionary<string, object>
                             {
@@ -75,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Fields.Add(
                             Theme,
                             nameof(Theme),
-                            "Set the theme for the code editor. By default, 'Chrome' theme will be used.",
+                            "Set the theme for the code editor. The default theme is 'Chrome'.",
                             IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
                             new Dictionary<string, object>
                             {
@@ -83,11 +77,24 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
                             });
                     }
+
+                    if (modes.Count > 0 || themes.Count > 0)
+                    {
+                        Fields.Add(new NotesConfigurationField($@"<details class=""well well-small"">
+<summary>Would you like to add more <strong>language modes</strong> and <strong>themes</strong>?</summary>
+<div class=""mt3"">
+<p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> library that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
+<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
+<p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options above.</p>
+</div>
+</details>", true));
+                    }
                 }
             }
 
             DefaultConfiguration.Add(FontSize, "14px");
-            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default value is 14 pixels.", "textstring");
+            // TODO: [LK:2020-12-16] I dislike the use of "textstring" for the font-size input.
+            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default size is 14 pixels.", "textstring");
 
             Fields.Add(UseWrapMode, "Word wrapping", "Select to enable word wrapping.", "boolean");
 
@@ -105,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
 
             DefaultConfiguration.Add("minLines", 12);
-            Fields.Add("minLines", "Minimum lines", "Set the minimum number of lines that the editor will be. The default value is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+            Fields.Add("minLines", "Minimum lines", "Set the minimum number of lines that the editor will be. The default is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
 
             DefaultConfiguration.Add("maxLines", 30);
             Fields.Add("maxLines", "Maximum lines", "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
