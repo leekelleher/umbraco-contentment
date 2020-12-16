@@ -2,10 +2,6 @@
 
 # Ideas for Contentment
 
-## AngularJS Filters
-
-- Something similar to Umbraco's `ncNodeName` filter, with support for multiple items.
-
 
 ## Data Editors
 

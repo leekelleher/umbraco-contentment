@@ -466,6 +466,7 @@
     <Content Include="DataEditors\ReadOnly\readonly-node-preview.html" />
     <Content Include="DataEditors\_\_dev-mode.js" />
     <Content Include="DataEditors\_\_components.js" />
+    <Content Include="DataEditors\_\_filters.js" />
     <Content Include="DataEditors\_\_directives.js" />
     <Content Include="Web\UI\App_Plugins\Contentment\components\list-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\components\stack-editor.html" />
