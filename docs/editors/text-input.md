@@ -52,7 +52,7 @@ Programmatically, you would access the value exactly the same as Umbraco's Textb
 
 ### Further reading
 
-- [Umbraco documentation on built-in property editor **Textbox**](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textbox/)
+- [Umbraco documentation on built-in **Textbox** property editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textbox/)
 - [MDN Web documentation on `<input type="text">` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text)
 - [MDN Web documentation on `<datalist>`: The HTML Data List element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist)
 

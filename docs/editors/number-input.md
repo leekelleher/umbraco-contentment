@@ -36,6 +36,6 @@ Programmatically, you would access the value exactly the same as Umbraco's Numer
 
 ### Further reading
 
-- [Umbraco documentation on built-in property editor **Numeric**](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Numeric/)
+- [Umbraco documentation on built-in **Numeric** property editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Numeric/)
 - [MDN Web documentation on `<input type="number">` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number)
 
