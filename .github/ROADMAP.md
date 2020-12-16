@@ -7,10 +7,13 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 ## v1
 
-
 ### v1.0
 
-Initial release. Property Editors are:
+Initial release.
+
+Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release).__
+
+Property Editors are:
 
 - [Bytes](../docs/editors/bytes.md)
 - [Data List](../docs/editors/data-list.md)
@@ -33,30 +36,21 @@ Initial release. Property Editors are:
 
 - Code Editor _(using ACE bundled with Umbraco)_
 
-### v1.4
-
-- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-
-### v1.x-future
-
-**Internally used editors** that could potentially be made into standalone property editors.
-
-- Checkbox _(includes "Inline Checkbox" option)_
-- Configuration Editor
-- Data Table
-
-**Localization**
-
-Remove hard-coded English labels, move them to the language XML file.
-
-**Validation exploration**
-
-None of the editors have explicit validation implemented, (only because I've never researched it).<br>
-Could be an interesting to explore the validation approaches for the Contentment editors.
-
 
 ## v2
 
-- _Who knows?!_ `¯\_(ツ)_/¯`
-- Let's see if new ideas can be sparked from Umbraco v8.7+!
+### v2.0
+
+- _(At the time of writing),_ a breaking-change _(following SemVer guidance),_ release of v1.3 features that compiles against Umbraco CMS v8.10.
+
+### v2.1
+
+- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
+
+
+## Future feature releases
+
+_Who knows?!_ `¯\_(ツ)_/¯`
+
+**There are [plenty of ideas](IDEAS.md)!**
 
