@@ -67,7 +67,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 var orphaned = [];
 
                 $scope.model.value.forEach(function (v) {
-                    var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    var item = config.items.find(x => x.value === v);
                     if (item) {
                         vm.items.push(Object.assign({}, item));
                     } else {
