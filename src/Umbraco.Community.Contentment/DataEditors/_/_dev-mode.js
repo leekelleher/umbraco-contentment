@@ -11,10 +11,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
             editValue: function (model, callback) {
                 editorService.open({
                     title: "Edit raw value",
-                    value: angular.toJson(model.value, true), // TODO: Replace AngularJS dependency. [LK:2020-03-02]
-                    // https://github.com/leekelleher/umbraco-contentment/issues/38
-                    // https://trello.com/c/UTjBLFQd/17-replace-instances-of-angulartojson
-                    // or wait for the Utility helper in v8.7.0? https://github.com/umbraco/Umbraco-CMS/blob/release-8.7.0/src/Umbraco.Web.UI.Client/src/utilities.js#L89
+                    value: Utilities.toJson(model.value, true),                    
                     ace: {
                         showGutter: true,
                         useWrapMode: true,
@@ -35,11 +32,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
                     size: "medium",
                     submit: function (value) {
 
-                        model.value = angular.fromJson(value); // TODO: Replace AngularJS dependency. [LK:2020-03-02]
-                        // https://github.com/leekelleher/umbraco-contentment/issues/38
-                        // https://trello.com/c/uPQwJmDQ/9-replace-instances-of-angularfromjson
-                        // https://github.com/umbraco/Umbraco-CMS/pull/7952
-
+                        model.value = Utilities.fromJson(value);
                         if (callback) {
                             callback();
                         }
