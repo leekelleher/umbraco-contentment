@@ -34,6 +34,10 @@
                                no-dirty-check />
                     </div>
 
+                    <div ng-if="vm.enableMultiple === true && vm.itemCount > 0 && vm.maxItems > 0 && vm.itemCount > vm.maxItems" class="alert alert-danger">
+                        <span>Too many items selected, please unselect <strong>{{vm.itemCount - vm.maxItems}}</strong> {{vm.itemCount - vm.maxItems === 1 ? 'item' : 'items'}}.</span>
+                    </div>
+
                     <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
                         <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
                             <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">
@@ -75,9 +79,10 @@
                 </umb-button>
                 <umb-button ng-if="vm.enableMultiple"
                             type="button"
-                            button-style="success"
+                            button-style="primary"
                             label-key="buttons_select"
                             shortcut="ctrl+s"
+                            disabled="vm.allowSubmit === false"
                             action="vm.submit()">
                 </umb-button>
             </umb-editor-footer-content-right>
