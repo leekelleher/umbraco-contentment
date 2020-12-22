@@ -14,6 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             allowDuplicates: 0,
+            confirmRemoval: 0,
             defaultIcon: "icon-science",
             defaultValue: [],
             disableSorting: 0,
@@ -39,6 +40,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
+            config.confirmRemoval = Object.toBoolean(config.confirmRemoval);
             vm.defaultIcon = config.defaultIcon;
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
@@ -117,32 +119,40 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
-            var keys = ["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"];
-            localizationService.localizeMany(keys).then(function (data) {
-                overlayService.open({
-                    title: data[1],
-                    content: data[0],
-                    closeButtonLabel: data[2],
-                    submitButtonLabel: data[3],
-                    submitButtonStyle: "danger",
-                    submit: function () {
-
-                        vm.items.splice($index, 1);
-                        $scope.model.value.splice($index, 1);
-
-                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
-                            vm.allowAdd = true;
+            if (config.confirmRemoval === true) {
+                var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
+                localizationService.localizeMany(keys).then(function (data) {
+                    overlayService.open({
+                        title: data[1],
+                        content: data[0],
+                        closeButtonLabel: data[2],
+                        submitButtonLabel: data[3],
+                        submitButtonStyle: "danger",
+                        submit: function () {
+                            removeItem($index);
+                            overlayService.close();
+                        },
+                        close: function () {
+                            overlayService.close();
                         }
-
-                        setDirty();
-
-                        overlayService.close();
-                    },
-                    close: function () {
-                        overlayService.close();
-                    }
+                    });
                 });
-            });
+            } else {
+                removeItem($index);
+            }
+        };
+
+        function removeItem($index) {
+
+            vm.items.splice($index, 1);
+
+            $scope.model.value.splice($index, 1);
+
+            if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                vm.allowAdd = true;
+            }
+
+            setDirty();
         };
 
         function setDirty() {

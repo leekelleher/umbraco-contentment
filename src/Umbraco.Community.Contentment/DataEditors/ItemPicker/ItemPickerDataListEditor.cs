@@ -81,6 +81,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
             },
             new DisableSortingConfigurationField(),
+            new ConfigurationField
+            {
+                Key ="confirmRemoval",
+                Name = "Confirm removals?",
+                Description = "Select to enable a confirmation prompt when removing an item.",
+                View = "boolean",
+            }
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
