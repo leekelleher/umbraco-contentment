@@ -24,6 +24,7 @@ assignees: "leekelleher"
 
 - Contentment version: [1.0.0]
 - Umbraco version: [8.6.1]
+- Umbraco ModelsBuilder _(if applicable?)_ is: [enabled | disabled]
 - Browser _(if applicable?)_: [all | Chrome XX | Firefox XX | Edge XX | Safari XX ]
 
 
