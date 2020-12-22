@@ -17,6 +17,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
             items: [],
             listType: "grid",
             orderBy: "name",
+            maxItems: 0,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -32,6 +33,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
             vm.listType = config.listType;
             vm.orderBy = config.orderBy;
 
+            vm.maxItems = config.maxItems;
+            vm.itemCount = 0;
+            vm.allowSubmit = false;
+
             vm.select = select;
             vm.submit = submit;
             vm.close = close;
@@ -45,6 +50,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
 
             if (vm.enableMultiple === true) {
                 item.selected = !item.selected;
+                vm.itemCount = vm.items.filter(x => x.selected === true).length;
+                vm.allowSubmit = vm.itemCount > 0 && (config.maxItems === 0 || vm.itemCount <= config.maxItems);
             } else {
                 $scope.model.value = item;
                 submit();

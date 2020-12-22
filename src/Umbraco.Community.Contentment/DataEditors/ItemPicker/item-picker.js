@@ -39,11 +39,17 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
+            if (Number.isInteger(config.maxItems) === false) {
+                config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
+            }
+
+            config.enableMultiple = Object.toBoolean(config.enableMultiple) && config.maxItems !== 1;
+
             vm.defaultIcon = config.defaultIcon;
-            vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
             vm.allowRemove = true;
-            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
 
@@ -70,7 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 if (orphaned.length > 0) {
                     $scope.model.value = _.difference($scope.model.value, orphaned); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
 
-                    if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                    if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                         vm.allowAdd = true;
                     }
                 }
@@ -87,22 +93,23 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     title: "Choose...",
                     enableFilter: Object.toBoolean(config.enableFilter),
-                    enableMultiple: Object.toBoolean(config.enableMultiple),
+                    enableMultiple: config.enableMultiple,
                     defaultIcon: config.defaultIcon,
                     items: items,
                     listType: config.listType,
                     orderBy: config.overlayOrderBy,
+                    maxItems: config.maxItems === 0 ? config.maxItems : config.maxItems - vm.items.length
                 },
                 view: config.overlayView,
                 size: config.overlaySize || "small",
                 submit: function (selectedItems) {
 
                     selectedItems.forEach(function (x) {
-                        vm.items.push(Object.assign({}, x));
+                        vm.items.push(angular.copy(x)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
                         $scope.model.value.push(x.value);
                     });
 
-                    if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+                    if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
                     }
 
@@ -130,7 +137,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         vm.items.splice($index, 1);
                         $scope.model.value.splice($index, 1);
 
-                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                        if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
                         }
 
