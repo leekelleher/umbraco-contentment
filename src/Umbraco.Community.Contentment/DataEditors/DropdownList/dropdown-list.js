@@ -28,13 +28,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = config.items.slice();
 
-            vm.allowEmpty = Object.toBoolean(config.allowEmpty);
+            vm.allowEmpty = Object.toBoolean(config.allowEmpty) && vm.items.some(x => x.value === $scope.model.value);
 
             vm.htmlAttributes = config.htmlAttributes;
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
                 : $scope.model.alias;
+
+            vm.change = change;
+        };
+
+        function change() {
+            vm.allowEmpty = Object.toBoolean(config.allowEmpty) && vm.items.some(x => x.value === $scope.model.value);
         };
 
         init();
