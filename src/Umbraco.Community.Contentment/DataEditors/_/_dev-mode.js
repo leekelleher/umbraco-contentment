@@ -11,7 +11,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
             editValue: function (model, callback) {
                 editorService.open({
                     title: "Edit raw value",
-                    value: Utilities.toJson(model.value, true),                    
+                    value: Utilities.toJson(model.value, true),
                     ace: {
                         showGutter: true,
                         useWrapMode: true,
@@ -33,6 +33,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
                     submit: function (value) {
 
                         model.value = Utilities.fromJson(value);
+
                         if (callback) {
                             callback();
                         }
