@@ -79,7 +79,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function select(editor) {
             // If there are no fields, then we can save & close the overlay
-            if (_.isEmpty(editor.fields)) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            if (editor.fields?.length >= 1) {
                 save(editor);
             } else {
                 vm.mode = "edit";
