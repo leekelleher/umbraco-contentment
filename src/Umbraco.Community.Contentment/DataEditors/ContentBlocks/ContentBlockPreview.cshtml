@@ -3,10 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. *@
 @inherits Umbraco.Web.Mvc.ContentBlockPreviewView
-@{
-    var elementIcon = ViewData.ContainsKey("elementIcon") == true ? ViewData["elementIcon"] : "icon-brick";
-}
 <div class="lk-content-blocks__preview--default">
-    <i class="icon @elementIcon"></i>
+    <i class="icon @Model.ElementTypeIcon"></i>
     <h5>@Model.Element.Key</h5>
 </div>
