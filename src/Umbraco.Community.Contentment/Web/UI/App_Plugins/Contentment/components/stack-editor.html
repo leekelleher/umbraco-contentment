@@ -18,7 +18,7 @@
                         <h5 ng-bind="vm.populate(item, $index, 'name')"></h5>
                     </div>
                     <div class="lk-content-blocks__preview--markup" ng-if="vm.previews[item.key]">
-                        <umb-load-indicator ng-show="vm.previews[item.key].loading" />
+                        <umb-load-indicator ng-show="vm.previews[item.key].loading"></umb-load-indicator>
                         <div ng-bind-html="vm.previews[item.key].markup | safe_html"></div>
                     </div>
                 </div>
