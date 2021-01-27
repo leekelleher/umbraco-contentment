@@ -444,6 +444,7 @@
     <Content Include="DataEditors\NumberInput\number-input.js" />
     <Content Include="DataEditors\TemplatedList\templated-list.html" />
     <Content Include="DataEditors\TemplatedList\templated-list.js" />
+    <Content Include="DataEditors\TemplatedList\templated-list.css" />
     <Content Include="DataEditors\TextInput\text-input.css" />
     <Content Include="DataEditors\TextInput\text-input.html" />
     <Content Include="DataEditors\TextInput\text-input.js" />
