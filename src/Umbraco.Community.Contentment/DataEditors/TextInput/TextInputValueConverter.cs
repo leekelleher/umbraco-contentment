@@ -3,19 +3,22 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web.PropertyEditors.ValueConverters;
-using Umbraco.Web.Templates;
+using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TextInputValueConverter : TextStringValueConverter
+    public sealed class TextInputValueConverter : PropertyValueConverterBase
     {
-        public TextInputValueConverter(HtmlLocalLinkParser linkParser, HtmlUrlParser urlParser)
-            : base(linkParser, urlParser)
-        { }
-
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(TextInputDataEditor.DataEditorAlias);
+
+        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(string);
+
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        {
+            return source?.ToString() ?? string.Empty;
+        }
     }
 }
