@@ -101,17 +101,22 @@ To use your own custom preview partial-views, you must use the following convent
 
 When developing your own preview partial-view template, the declaration can be one of the following...
 
+- `@inherits UmbracoViewPage<IPublishedElement>`
+  This uses Umbraco's `UmbracoViewPage` declaration, you must set the type to either be `IPublishedElement` or if you are using Umbraco's ModelsBuilder feature, you can set the Element Type model. _(If you do not set an Element Type, you will get an error!)_ The element is accessible with `@Model`. The current page is available on `@ViewData["content"]`.
+
 - `@inherits Umbraco.Web.Mvc.ContentBlockPreviewView`
   This is the default declaration. This will give you access to `@Model.Content` (the current page as `IPublishedContent`), and `@Model.Element` (the content block item as `IPublishedElement`).
 
 - `@inherits ContentBlockPreviewModel<TPublishedContent, TPublishedElement>`
   This is advanced syntax, _(note, may require some trial-and-error, and sense of play)._ This can be used if you are using Umbraco's ModelsBuilder feature, where you know the object-type of the current Content Type page and Element Type item. As above, you can have strongly-typed access to the current page with `@Model.Content`, and the content block item with `@Model.Element`.
 
-To aid the preview, there are additional properties available on the partial-view's model.
+To aid the preview, when using the `ContentBlockPreviewModel` declaration, there are additional properties available on the partial-view's model.
 
-- `Model.ElementIndex` - This is the index (`int`) of the content block item's position in the list.
-- `Model.ElementTypeIcon` - This is the Element Type's icon, _(since the icon is not available on `Model.Element.ContentType`)._
-- `Model.ContentTypeIcon` - This is the Content Type's icon, _(since the icon is not available on `Model.Content.ContentType`)._
+- `@Model.ElementIndex` - This is the index (`int`) of the content block item's position in the list.
+- `@Model.ElementTypeIcon` - This is the Element Type's icon, _(since the icon is not available on `Model.Element.ContentType`)._
+- `@Model.ContentTypeIcon` - This is the Content Type's icon, _(since the icon is not available on `Model.Content.ContentType`)._
+
+If you are using the `UmbracoViewPage` declaration, the additional properties are available on the `ViewData` object: `@ViewData["elementIndex"]`, `@ViewData["elementIcon"]`, and `@ViewData["contentIcon"]`.
 
 > **Note:** The preview feature **does not work** on a freshly created new unsaved page. This is because the preview has no context of the page itself.
 
