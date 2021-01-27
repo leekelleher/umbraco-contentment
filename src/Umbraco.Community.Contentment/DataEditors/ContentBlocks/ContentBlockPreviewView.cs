@@ -24,13 +24,9 @@ namespace Umbraco.Web.Mvc
         {
             void setProperty<T>(string key, Action<T> action)
             {
-                if (viewData.TryGetValueAs(key, out T tmp) == true)
+                if (viewData.TryGetValueAs(key, out T value) == true)
                 {
-                    action(tmp);
-
-                    // TODO: [LK:2020-12-29] Uncomment the removal in v2.0.
-                    // I'm only keeping the value in the view-data for backwards-compat.
-                    //viewData.Remove(key);
+                    action(value);
                 }
             }
 
@@ -41,6 +37,16 @@ namespace Umbraco.Web.Mvc
             setProperty<int>("elementIndex", (x) => model.ElementIndex = x);
             setProperty<string>("contentIcon", (x) => model.ContentTypeIcon = x);
             setProperty<string>("elementIcon", (x) => model.ElementTypeIcon = x);
+
+            if (model.Element == null && viewData.Model is TPublishedElement element)
+            {
+                model.Element = element;
+            }
+
+            if (model.Content == null && UmbracoContext?.PublishedRequest?.PublishedContent is TPublishedContent content)
+            {
+                model.Content = content;
+            }
 
             viewData.Model = model;
 
