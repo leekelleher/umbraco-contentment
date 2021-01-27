@@ -69,6 +69,11 @@ Please note, you may find other components within Contentment that have not yet 
 _Let's call those "life's little surprises"._
 
 
+### Roadmap
+
+If you would like to know what is coming up in future releases, then take a look at the [roadmap](ROADMAP.md).
+
+
 ### Support
 
 I've been doing open source for a long time. I have suffered my fair share of burnout and empathy fatigue.
