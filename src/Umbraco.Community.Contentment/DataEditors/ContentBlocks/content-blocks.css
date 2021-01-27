@@ -67,6 +67,15 @@
                 font-size: 14px;
             }
 
+        .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--markup pre.error {
+            margin: 35px 10px 10px 10px;
+        }
+
+            .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--markup pre.error code {
+                font-size: small;
+                white-space: pre-wrap;
+            }
+
         .lk-content-blocks__block .lk-content-blocks__preview button.lk-content-blocks__edit {
             background: transparent;
             border: none;

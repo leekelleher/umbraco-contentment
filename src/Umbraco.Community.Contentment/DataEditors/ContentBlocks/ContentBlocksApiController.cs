@@ -99,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (Exception ex)
             {
-                markup = $"<pre><code>{ex}</code></pre>";
+                markup = $"<pre class=\"error\"><code>{ex}</code></pre>";
 
                 _logger.Error<ContentBlocksApiController>(ex, "Error rendering preview view.");
             }
