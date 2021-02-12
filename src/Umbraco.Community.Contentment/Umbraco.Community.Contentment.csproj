@@ -296,6 +296,8 @@
   <ItemGroup>
     <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
+    <Compile Include="Telemetry\CompositionExtensions.cs" />
+    <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
     <Compile Include="Core\Trees\TreeCollectionBuilderExtensions.cs" />
     <Compile Include="Core\Xml\UmbracoXPathPathSyntaxParser.cs" />
