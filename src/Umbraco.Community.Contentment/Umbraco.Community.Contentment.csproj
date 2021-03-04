@@ -385,6 +385,7 @@
     <Compile Include="DataEditors\_\ConfigurationFields\ShowDescriptionsConfigurationField.cs" />
     <Compile Include="Migrations\ContentmentPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trees\CompositionExtensions.cs" />
     <Compile Include="Trees\ContentmentTreeController.cs" />
     <Compile Include="Web\Controllers\EnumDataListSourceApiController.cs" />
     <Compile Include="Web\Serialization\PublishedContentContractResolver.cs" />
