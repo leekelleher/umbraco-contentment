@@ -6,6 +6,8 @@
 using Umbraco.Community.Contentment.Trees;
 using Umbraco.Web;
 
+// NOTE: This extension method class is deliberately using the Umbraco namespace,
+// as to reduce namespace imports and ease the developer experience. [LK]
 namespace Umbraco.Core.Composing
 {
     public static partial class CompositionExtensions
