@@ -31,3 +31,8 @@ If you are unfamiliar with how to do this, then please refer to documentation, g
 - [Our Umbraco - Getting Started - Data](https://our.umbraco.com/Documentation/Getting-Started/Data/)
 - [Our Umbraco - Getting Started - Data - Defining content](https://our.umbraco.com/Documentation/Getting-Started/Data/Defining-content/)
 - [Our Umbraco - Getting Started - Data - Customizing Data Types](https://our.umbraco.com/Documentation/Getting-Started/Data/Data-Types/)
+
+#### Telemetry
+
+Information about Contentment's [telemetry feature](../docs/telemetry.md).
+

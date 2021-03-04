@@ -32,6 +32,9 @@ Let's take a look inside...
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
+##### Telemetry
+
+Information about the [telemetry feature](../docs/telemetry.md).
 
 #### Releases
 
