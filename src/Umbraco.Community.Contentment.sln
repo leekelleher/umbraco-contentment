@@ -35,6 +35,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{9C956438-0434-40DD-BBA0-7F837E8FF1C8}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\README.md = ..\docs\README.md
+		..\docs\telemetry.md = ..\docs\telemetry.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A5294B30-2ED5-4BBA-A2DE-A07103DAE78F}"
