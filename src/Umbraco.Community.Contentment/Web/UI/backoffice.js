@@ -9,8 +9,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
     "navigationService",
     function ($scope, $window, navigationService) {
 
-        // console.log("tree.model", $scope.model);
-
         var vm = this;
 
         function init() {
@@ -59,9 +57,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                 }
             ];
 
-            vm.shareUrl = encodeURIComponent("https://github.com/leekelleher/umbraco-contentment");
-            vm.shareTitle = encodeURIComponent("Check out Contentment, innovative editor components for Umbraco CMS!");
-
             vm.subscribe = function ($event) {
                 $window.open("https://tinyletter.com/umbraco-contentment", "newsletterWindow", "scrollbars=yes,width=840,height=640");
                 return true;
@@ -70,6 +65,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
             vm.vote = function (x) {
                 vm.nggyu = x == false;
             };
+
+            vm.csharp = "csharp";
+            vm.disableTreeCode = `using Umbraco.Core.Composing;
+
+namespace Our.Umbraco.Web
+{
+    public class DisableContentmentTreeComposer : IUserComposer
+    {
+        public void Compose(Composition composition)
+        {
+            composition.DisableContentmentTree();
+        }
+    }
+}`;
         };
 
         init();
