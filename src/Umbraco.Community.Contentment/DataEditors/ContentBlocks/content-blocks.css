@@ -123,10 +123,16 @@
             }
 
         .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions {
-            display: block;
+            position: relative;
+            display: inline-block;
             float: none;
             margin: 5px 0 0 6px;
         }
+
+            .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions .umb-property-actions__menu,
+            .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions .umb-property-actions__menu-open-toggle {
+                right: 0;
+            }
 
         .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions__toggle {
             opacity: 1;
