@@ -31,17 +31,20 @@ Property Editors are:
 - [Text Input](../docs/editors/text-input.md) _(a reimagining of the textstring editor)_
 - [Number Input](../docs/editors/number-input.md) _(a reimagining of the numeric editor)_
 - Data List: Templated List _(use custom AngularJS markup to render items)_
+- Telemetry
 
 ### v1.3
 
 - Code Editor _(using ACE bundled with Umbraco)_
+- Data List: Preview _(a real time preview of the configured Data Source and List Editor)_
+- Data List: Tags _(list editor, visually similar to Umbraco Tags editor)_
 
 
 ## v2
 
 ### v2.0
 
-- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.3 features that compiles against Umbraco CMS v8.10.
+- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.3 features that compiles against Umbraco CMS v8.12.
 
 ### v2.1
 
