@@ -12,11 +12,11 @@ Here is an example of the JSON data that is sent.
 
 ```json
 {
-    dataType = "4E7D6B3A-F959-42E4-921E-081BC0E9E7EE",
-    editorAlias = "DataList",
-    umbracoId = "0403E47E-EFE7-4CF2-8E97-148681DAFC10",
-    umbracoVersion = "8.6.6",
-    contentmentVersion = "1.2.0",
+    "dataType": "4E7D6B3A-F959-42E4-921E-081BC0E9E7EE",
+    "editorAlias": "DataList",
+    "umbracoId": "0403E47E-EFE7-4CF2-8E97-148681DAFC10",
+    "umbracoVersion": "8.6.6",
+    "contentmentVersion": "1.2.0",
 }
 ```
 
