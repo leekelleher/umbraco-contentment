@@ -90,6 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? Enumerable.Empty<DataListItem>()
                 : startNode.Children.Select(x => new DataListItem
                 {
+                    // TODO: [LK:2020-12-03] If multi-lingual is enabled, should the `.Name` take the culture into account?
                     Name = x.Name,
                     Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
                     Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) ? icon : Core.Constants.Icons.Content,

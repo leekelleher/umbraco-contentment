@@ -101,17 +101,22 @@ To use your own custom preview partial-views, you must use the following convent
 
 When developing your own preview partial-view template, the declaration can be one of the following...
 
+- `@inherits UmbracoViewPage<IPublishedElement>`
+  This uses Umbraco's `UmbracoViewPage` declaration, you must set the type to either be `IPublishedElement` or if you are using Umbraco's ModelsBuilder feature, you can set the Element Type model. _(If you do not set an Element Type, you will get an error!)_ The element is accessible with `@Model`. The current page is available on `@ViewData["content"]`.
+
 - `@inherits Umbraco.Web.Mvc.ContentBlockPreviewView`
   This is the default declaration. This will give you access to `@Model.Content` (the current page as `IPublishedContent`), and `@Model.Element` (the content block item as `IPublishedElement`).
 
 - `@inherits ContentBlockPreviewModel<TPublishedContent, TPublishedElement>`
   This is advanced syntax, _(note, may require some trial-and-error, and sense of play)._ This can be used if you are using Umbraco's ModelsBuilder feature, where you know the object-type of the current Content Type page and Element Type item. As above, you can have strongly-typed access to the current page with `@Model.Content`, and the content block item with `@Model.Element`.
 
-To aid the preview, there are a number of additional properties available in the partial-view's `ViewData` dictionary.
+To aid the preview, when using the `ContentBlockPreviewModel` declaration, there are additional properties available on the partial-view's model.
 
-- `ViewData["elementIndex"]` - This is the index (`int`) of the content block item's position in the list.
-- `ViewData["elementIcon"]` - This is the Element Type's icon, _(since the icon is not available on `Model.Element.ContentType`)._
-- `ViewData["contentIcon"]` - This is the Content Type's icon, _(since the icon is not available on `Model.Content.ContentType`)._
+- `@Model.ElementIndex` - This is the index (`int`) of the content block item's position in the list.
+- `@Model.ElementTypeIcon` - This is the Element Type's icon, _(since the icon is not available on `Model.Element.ContentType`)._
+- `@Model.ContentTypeIcon` - This is the Content Type's icon, _(since the icon is not available on `Model.Content.ContentType`)._
+
+If you are using the `UmbracoViewPage` declaration, the additional properties are available on the `ViewData` object: `@ViewData["elementIndex"]`, `@ViewData["elementIcon"]`, and `@ViewData["contentIcon"]`.
 
 > **Note:** The preview feature **does not work** on a freshly created new unsaved page. This is because the preview has no context of the page itself.
 
@@ -163,4 +168,5 @@ There are several alternative block-based editors that you could use with Umbrac
 For further reading, here are a selection of insights...
 
 - [Paul Marden's **Landing Page article** on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
-- [Cogworks' post on **How to Pick a Block Style Editor**](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/)
+- [Building with blocks. Which Umbraco block builder is right for you?](https://24days.in/umbraco-cms/2020/umbraco-block-builders/) - Peter Gregory's 24 Days In Umbraco article.
+- [How to Pick a Block Style Editor](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/) - by Marcin Zajkowski on the Cogworks blog.

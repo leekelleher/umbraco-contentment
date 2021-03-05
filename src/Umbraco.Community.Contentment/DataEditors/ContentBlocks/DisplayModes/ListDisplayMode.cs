@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -23,16 +22,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "sortableAxis", false },
-            { "enablePreview", false },
+            { "sortableAxis", Constants.Values.False },
+            { "enablePreview", Constants.Values.False },
         };
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField($@"<div class=""alert alert-form"">
-<p><strong>A note about block type previews.</strong></p>
+            new NotesConfigurationField($@"<details class=""well well-small"" open>
+<summary><strong>A note about block type previews.</strong></summary>
+<div class=""mt3"">
 <p>Unfortunately, the preview feature for block types is unsupported in {Name} display mode and will be disabled.</p>
-</div>", true)
+</div>
+</details>", true)
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;

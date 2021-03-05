@@ -43,26 +43,28 @@ Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse 
 # HTML (Property Editors) - Copy and Minify (or just remove comments)
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
 foreach($htmlFile in $htmlFiles){
-    $contents = Get-Content -Path $htmlFile.FullName;
-    $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "");
+    $contents = Get-Content -Raw -Path $htmlFile.FullName;
+    $minifiedHtml = [Regex]::Replace($contents, "^<!--.*?-->", "", "Singleline");
+    $minifiedHtml = [Regex]::Replace($minifiedHtml, "^`r`n`r`n", "", "Singleline");
+    $minifiedHtml = [Regex]::Replace($minifiedHtml, "`r`n$", "", "Singleline");
     [IO.File]::WriteAllLines("${pluginFolder}\editors\$($htmlFile.Name)", $minifiedHtml);
 }
 
 # Razor Templates - Copy
 $razorFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.cshtml;
 foreach($razorFile in $razorFiles){
-    $contents = Get-Content -Path $razorFile.FullName;
+    $contents = Get-Content -Raw -Path $razorFile.FullName;
     [IO.File]::WriteAllLines("${pluginFolder}\render\$($razorFile.Name)", $contents);
 }
 
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
-Get-Content -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
 # JS - Bundle & Minify
 $targetJsPath = "${pluginFolder}contentment.js";
-Get-Content -Path "${ProjectDir}**\**\*.js" | Set-Content -Path $targetJsPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Path $targetJsPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
 
 # In debug mode, copy the assets over to the local dev website

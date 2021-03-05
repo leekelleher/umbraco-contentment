@@ -9,8 +9,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
     "navigationService",
     function ($scope, $window, navigationService) {
 
-        // console.log("tree.model", $scope.model);
-
         var vm = this;
 
         function init() {
@@ -30,37 +28,34 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                 {
                     icon: "icon-fa fa-book",
                     name: "Documentation",
-                    url: "https://github.com/leekelleher/umbraco-contentment/tree/master/docs",
-                    description: "How to use each of the property editors."
+                    description: "How to use each of the property editors.",
+                    url: "https://github.com/leekelleher/umbraco-contentment/tree/master/docs"
                 },
                 {
                     icon: "icon-fa fa-comments-o",
                     name: "Support forum",
-                    url: "https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/",
-                    description: "Ask for help, the community is your friend."
+                    description: "Ask for help, the community is your friend.",
+                    url: "https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/"
                 },
                 {
                     icon: "icon-fa fa-code-fork",
                     name: "Source code",
-                    url: "https://github.com/leekelleher/umbraco-contentment",
-                    description: "See the code, all free and open-source."
+                    description: "See the code, all free and open-source.",
+                    url: "https://github.com/leekelleher/umbraco-contentment"
                 },
                 {
                     icon: "icon-fa fa-bug",
                     name: "Issue tracker",
-                    url: "https://github.com/leekelleher/umbraco-contentment/issues/new/choose",
-                    description: "Found a bug? Suggest a feature? Let me know."
+                    description: "Found a bug? Suggest a feature? Let me know.",
+                    url: "https://github.com/leekelleher/umbraco-contentment/issues/new/choose"
                 },
                 {
                     icon: "icon-fa fa-id-card-o",
                     name: "License",
-                    url: "https://opensource.org/licenses/MPL-2.0",
-                    description: "Licensed under the Mozilla Public License."
+                    description: "Licensed under the Mozilla Public License.",
+                    url: "https://opensource.org/licenses/MPL-2.0"
                 }
             ];
-
-            vm.shareUrl = encodeURIComponent("https://github.com/leekelleher/umbraco-contentment");
-            vm.shareTitle = encodeURIComponent("Check out Contentment, innovative editor components for Umbraco CMS!");
 
             vm.subscribe = function ($event) {
                 $window.open("https://tinyletter.com/umbraco-contentment", "newsletterWindow", "scrollbars=yes,width=840,height=640");
@@ -70,6 +65,33 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
             vm.vote = function (x) {
                 vm.nggyu = x == false;
             };
+
+            vm.csharp = "csharp";
+            vm.telemetryEnabled = config.telemetry === true;
+            vm.disableTelemetryCode = `using Umbraco.Core.Composing;
+
+namespace Our.Umbraco.Web
+{
+    public class DisableContentmentTelemetryComposer : IUserComposer
+    {
+        public void Compose(Composition composition)
+        {
+            composition.DisableContentmentTelemetry();
+        }
+    }
+}`;
+            vm.disableTreeCode = `using Umbraco.Core.Composing;
+
+namespace Our.Umbraco.Web
+{
+    public class DisableContentmentTreeComposer : IUserComposer
+    {
+        public void Compose(Composition composition)
+        {
+            composition.DisableContentmentTree();
+        }
+    }
+}`;
         };
 
         init();

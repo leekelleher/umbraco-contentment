@@ -66,11 +66,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            var viewData = new System.Web.Mvc.ViewDataDictionary()
+            var viewData = new System.Web.Mvc.ViewDataDictionary(element)
             {
                 { nameof(content), content },
                 { nameof(element), element },
-                { nameof(elementIndex), elementIndex }
+                { nameof(elementIndex), elementIndex },
             };
 
             if (ContentTypeCacheHelper.TryGetIcon(content.ContentType.Alias, out var contentIcon, Services.ContentTypeService) == true)
@@ -99,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (Exception ex)
             {
-                markup = $"<pre><code>{ex}</code></pre>";
+                markup = $"<pre class=\"error\"><code>{ex}</code></pre>";
 
                 _logger.Error<ContentBlocksApiController>(ex, "Error rendering preview view.");
             }

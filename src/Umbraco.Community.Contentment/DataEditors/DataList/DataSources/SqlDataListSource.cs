@@ -46,8 +46,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<div class=""alert alert-info"">
-<p><strong>A note about your SQL query.</strong></p>
+            new NotesConfigurationField(@"<details class=""well well-small"">
+<summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
+<div class=""mt3"">
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>
 <ol>
@@ -58,7 +59,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 <li>Disabled <em>(optional)</em></li>
 </ol>
 <p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
-</div>", true),
+</div>
+</details>", true),
             new ConfigurationField
             {
                 Key = "query",
@@ -86,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "query", $"-- This query will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
+            { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
             { "connectionString", Core.Constants.System.UmbracoConnectionName }
         };
 

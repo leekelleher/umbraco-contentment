@@ -34,6 +34,8 @@ namespace Umbraco.Community.Contentment
         {
             internal static partial class ConfigurationFieldAliases
             {
+                public const string AddButtonLabelKey = "addButtonLabelKey";
+
                 public const string DefaultValue = "defaultValue";
 
                 public const string Items = "items";

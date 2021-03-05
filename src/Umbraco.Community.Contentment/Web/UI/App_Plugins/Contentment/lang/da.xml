@@ -7,6 +7,10 @@
     <area alias="contentment">
         <key alias="name">Contentment</key>
 
+        <!-- General -->
+        <key alias="removeItemMessage">Er du sikker på, at du vil fjerne denne element?</key>
+        <key alias="removeItemButton">Ja, fjern</key>
+
         <!-- Content Blocks -->
         <key alias="configureDisplayMode">Vælg og konfigurer en visningstype</key>
         <key alias="configureElementType">Vælg og konfigurer en elementtype</key>

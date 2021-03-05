@@ -81,7 +81,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            vm.items.push(angular.copy(config.fields));
+            vm.items.push(angular.copy(config.fields)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
 
             if ((config.maxItems !== 0 && config.maxItems !== "0") && vm.items.length >= config.maxItems) {
                 vm.allowAdd = false;

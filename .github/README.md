@@ -28,18 +28,40 @@ Let's take a look inside...
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
+- [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
+- [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
+##### Telemetry
+
+Information about the [telemetry feature](../docs/telemetry.md).
 
 #### Releases
 
 Downloads are available on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
 
+#### Installation
+
+> *Note:* Contentment has been developed against **Umbraco v8.6.1** and will support that version and above.
+
+Contentment can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
+
+##### Our Umbraco package repository
+
+To install from Our Umbraco, please download the package from:
+
+> <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
+
+##### NuGet package repository
+
+To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from within Visual Studio:
+
+    PM> Install-Package Our.Umbraco.Community.Contentment
 
 #### Known issues
 
 - **Data List**
-  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. See #30 for details.
+  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
 
 
 ### Documentation
@@ -48,6 +70,11 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 Please note, you may find other components within Contentment that have not yet been documented.<br>
 _Let's call those "life's little surprises"._
+
+
+### Roadmap
+
+If you would like to know what is coming up in future releases, then take a look at the [roadmap](ROADMAP.md).
 
 
 ### Support
@@ -101,7 +128,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>810+ hours</b> (between 2019-03-13 to 2020-08-28)</summary>
+<summary>Current development effort: <b>860+ hours</b> (between 2019-03-13 to 2020-12-03)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

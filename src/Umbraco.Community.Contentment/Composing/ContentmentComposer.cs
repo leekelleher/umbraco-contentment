@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.Telemetry;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Web.Runtime;
@@ -28,6 +29,7 @@ namespace Umbraco.Community.Contentment.Composing
                 composition
                     .Components()
                         .Append<ContentmentComponent>()
+                        .Append<ContentmentTelemetryComponent>()
                 ;
             }
 

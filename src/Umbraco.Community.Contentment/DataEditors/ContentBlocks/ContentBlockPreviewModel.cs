@@ -19,6 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public TPublishedContent Content { get; internal set; }
 
+        public string ContentTypeIcon { get; set; }
+
         public TPublishedElement Element { get; internal set; }
+
+        public int ElementIndex { get; set; }
+
+        public string ElementTypeIcon { get; set; }
     }
 }

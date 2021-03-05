@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System.Collections.Generic;
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -12,7 +14,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IconPickerConfigurationEditor()
             : base()
         {
-            Fields.Add(new DefaultIconConfigurationField(string.Empty, IconPickerSizeConfigurationField.Large));
+            Fields.Add(
+                "defaultIcon",
+                "Default icon",
+                "Select an icon to be displayed as the default icon, (for when no icon has been selected).",
+                IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>
+                {
+                    { "defaultIcon", string.Empty },
+                    { "size", "large" },
+                });
         }
     }
 }

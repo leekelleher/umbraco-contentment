@@ -18,13 +18,52 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public ContentBlocksTypesConfigurationField(IEnumerable<IContentType> elementTypes)
         {
-            var fields = new[]
+            var items = elementTypes
+                .OrderBy(x => x.Name)
+                .Select(x => new ConfigurationEditorModel
+                {
+                    Key = x.Key.ToString(),
+                    Name = x.Name,
+                    Description = string.IsNullOrWhiteSpace(x.Description) == false ? x.Description : x.Alias,
+                    Icon = x.Icon,
+                    DefaultValues = new Dictionary<string, object>
+                    {
+                        { "nameTemplate", $"{x.Name} {{{{ $index }}}}" },
+                    },
+                    Fields = GetConfigurationFields(x),
+                    OverlaySize = OverlaySize.Small
+                });
+
+            Key = ContentBlockTypes;
+            Name = "Block types";
+            Description = "Configure the block types to use.";
+            View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
+            Config = new Dictionary<string, object>
+            {
+                { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureElementType" },
+                { "allowDuplicates", Constants.Values.False },
+                { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+            };
+        }
+
+        private IEnumerable<ConfigurationField> GetConfigurationFields(IContentType contentType)
+        {
+            return new[]
             {
                 new ConfigurationField
                 {
                     Key = "elementType",
                     Name = "Element type",
                     View = IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "readonly-node-preview.html"),
+                    Config = new Dictionary<string,object>
+                    {
+                        { "name", contentType.Name },
+                        { "icon", contentType.Icon },
+                        { "description", contentType.GetUdi().ToString() },
+                    },
                     HideLabel = true,
                 },
                 new ConfigurationField
@@ -63,43 +102,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         { "default", Constants.Values.False }
                     }
                 }
-            };
-
-            var items = elementTypes
-                .OrderBy(x => x.Name)
-                .Select(x => new ConfigurationEditorModel
-                {
-                    Key = x.Key.ToString(),
-                    Name = x.Name,
-                    Description = string.IsNullOrWhiteSpace(x.Description) == false ? x.Description : x.Alias,
-                    Icon = x.Icon,
-                    DefaultValues = new Dictionary<string, object>
-                    {
-                        { "elementType", new DataListItem
-                            {
-                                Name = x.Name,
-                                Description = x.GetUdi().ToString(),
-                                Icon = x.Icon
-                            }
-                        },
-                        { "nameTemplate", $"{x.Name} {{{{ $index }}}}" },
-                    },
-                    Fields = fields,
-                    OverlaySize = OverlaySize.Small
-                });
-
-            Key = ContentBlockTypes;
-            Name = "Block types";
-            Description = "Configure the block types to use.";
-            View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
-            Config = new Dictionary<string, object>
-            {
-                { "addButtonLabelKey", "contentment_configureElementType" },
-                { "allowDuplicates", Constants.Values.False },
-                { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
-                { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
         }
     }

@@ -41,7 +41,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
                 }
             },
-            new DefaultIconConfigurationField(),
+            new ConfigurationField
+            {
+                Key = "defaultIcon",
+                Name = "Default icon",
+                Description = "Select an icon to be displayed as the default icon, (for when no icon is available).",
+                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+            },
             new ConfigurationField
             {
                 Key = "listType",
@@ -75,11 +81,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
             },
             new DisableSortingConfigurationField(),
+            new ConfigurationField
+            {
+                Key ="confirmRemoval",
+                Name = "Confirm removals?",
+                Description = "Select to enable a confirmation prompt when removing an item.",
+                View = "boolean",
+            }
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "listType", "list" },
+            { "defaultIcon", Core.Constants.Icons.DefaultIcon },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 

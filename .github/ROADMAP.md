@@ -7,10 +7,13 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 ## v1
 
-
 ### v1.0
 
-Initial release. Property Editors are:
+Initial release.
+
+Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release)._
+
+Property Editors are:
 
 - [Bytes](../docs/editors/bytes.md)
 - [Data List](../docs/editors/data-list.md)
@@ -25,38 +28,32 @@ Initial release. Property Editors are:
 
 ### v1.2
 
-- Text Input _(a reimagining of the textstring editor)_
-- Number Input _(a reimagining of the numeric editor)_
+- [Text Input](../docs/editors/text-input.md) _(a reimagining of the textstring editor)_
+- [Number Input](../docs/editors/number-input.md) _(a reimagining of the numeric editor)_
 - Data List: Templated List _(use custom AngularJS markup to render items)_
+- Telemetry
 
 ### v1.3
 
 - Code Editor _(using ACE bundled with Umbraco)_
-
-### v1.4
-
-- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-
-### v1.x-future
-
-**Internally used editors** that could potentially be made into standalone property editors.
-
-- Checkbox _(includes "Inline Checkbox" option)_
-- Configuration Editor
-- Data Table
-
-**Localization**
-
-Remove hard-coded English labels, move them to the language XML file.
-
-**Validation exploration**
-
-None of the editors have explicit validation implemented, (only because I've never researched it).<br>
-Could be an interesting to explore the validation approaches for the Contentment editors.
+- Data List: Preview _(a real time preview of the configured Data Source and List Editor)_
+- Data List: Tags _(list editor, visually similar to Umbraco Tags editor)_
 
 
 ## v2
 
-- _Who knows?!_ `¯\_(ツ)_/¯`
-- Let's see if new ideas can be sparked from Umbraco v8.7+!
+### v2.0
+
+- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.3 features that compiles against Umbraco CMS v8.12.
+
+### v2.1
+
+- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
+
+
+## Future feature releases
+
+_Who knows?!_ `¯\_(ツ)_/¯`
+
+**There are [plenty of ideas](IDEAS.md)!**
 

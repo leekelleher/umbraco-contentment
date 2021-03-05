@@ -33,11 +33,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<div class=""alert alert-info"">
-<p><strong>A note about using this data source.</strong></p>
+            new NotesConfigurationField(@"<details class=""well well-small"">
+<summary><strong>A note about using this data source.</strong></summary>
+<div class=""mt3"">
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
-</div>", true),
+</div>
+</details>", true),
             new ConfigurationField
             {
                 Key = "url",
