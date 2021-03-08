@@ -13,6 +13,8 @@ namespace Umbraco.Core.Composing
     {
         public static Composition EnableContentmentTelemetry(this Composition composition)
         {
+            ContentmentTelemetryComponent.Disabled = false;
+
             composition
                 .Components()
                     .Append<ContentmentTelemetryComponent>()
@@ -23,6 +25,8 @@ namespace Umbraco.Core.Composing
 
         public static Composition DisableContentmentTelemetry(this Composition composition)
         {
+            ContentmentTelemetryComponent.Disabled = true;
+
             composition
                 .Components()
                     .Remove<ContentmentTelemetryComponent>()
