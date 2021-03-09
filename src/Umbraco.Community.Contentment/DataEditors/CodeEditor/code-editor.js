@@ -20,7 +20,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             theme: "chrome",
             mode: "javascript",
             firstLineNumber: 1,
-            fontSize: "14px",
+            fontSize: "small",
             enableSnippets: 0,
             enableBasicAutocompletion: 0,
             enableLiveAutocompletion: 0,

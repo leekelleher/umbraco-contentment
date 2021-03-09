@@ -92,14 +92,34 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            DefaultConfiguration.Add(FontSize, "14px");
-            // TODO: [LK:2020-12-16] I dislike the use of "textstring" for the font-size input.
-            Fields.Add(FontSize, "Font size", "Set the font size. The value must be a valid CSS font-size. The default size is 14 pixels.", "textstring");
+            DefaultConfiguration.Add(FontSize, "small");
+            Fields.Add(
+                FontSize,
+                "Font size",
+                @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
+                IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[] {
+                        new DataListItem { Name = "Extra extra small", Value = "xx-small" },
+                        new DataListItem { Name = "Extra small", Value = "x-small" },
+                        new DataListItem { Name = "Small", Value = "small" },
+                        new DataListItem { Name = "Medium", Value = "medium" },
+                        new DataListItem { Name = "Large", Value = "large" },
+                        new DataListItem { Name = "Extra large", Value = "x-large" },
+                        new DataListItem { Name = "Extra extra large", Value = "xx-large" },
+                        new DataListItem { Name = "Extra extra extra large", Value = "xxx-large" },
+                        new DataListItem { Name = "Use pixels?", Value = "14px" },
+                        new DataListItem { Name = "Use percentage?", Value = "80%" },
+                        new DataListItem { Name = "Use ems?", Value = "0.8em" },
+                        new DataListItem { Name = "Use rems?", Value = "1.2rem" },
+                    } },
+                });
 
             Fields.Add(UseWrapMode, "Word wrapping", "Select to enable word wrapping.", "boolean");
 
             // NOTE: [LK:2019-06-07] Hidden the advanced options (for now), need to review.
-            //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean"); // TODO: Tempted to reverse the logic here, then use ToValueEditor to negate it? [LK]
+            //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean");
             //Fields.Add("firstLineNumber", "First Line Number", "[A friendly description]", "number");
             //Fields.Add("showInvisibles", "showInvisibles", "[A friendly description]", "boolean");// showInvisibles: 0,
             //Fields.Add("showIndentGuides", "showIndentGuides", "[A friendly description]", "boolean");// showIndentGuides: 0,
