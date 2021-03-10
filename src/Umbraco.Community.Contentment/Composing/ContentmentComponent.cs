@@ -56,7 +56,7 @@ namespace Umbraco.Community.Contentment.Composing
                 {
                     name = Constants.Internals.ProjectName,
                     version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString(),
-                    telemetry = Telemetry.ContentmentTelemetryComponent.Enabled,
+                    telemetry = Telemetry.ContentmentTelemetryComponent.Disabled == false,
                 });
             }
         }

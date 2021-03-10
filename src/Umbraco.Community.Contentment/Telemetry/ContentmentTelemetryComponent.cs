@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.Telemetry
 {
     internal sealed class ContentmentTelemetryComponent : IComponent
     {
-        internal static bool Enabled { get; private set; }
+        internal static bool Disabled { get; set; }
 
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
@@ -35,18 +35,21 @@ namespace Umbraco.Community.Contentment.Telemetry
 
         public void Initialize()
         {
-            Enabled = true;
             DataTypeService.Saved += DataTypeService_Saved;
         }
 
         public void Terminate()
         {
-            Enabled = false;
             DataTypeService.Saved -= DataTypeService_Saved;
         }
 
         private void DataTypeService_Saved(IDataTypeService sender, SaveEventArgs<IDataType> e)
         {
+            if (Disabled == true)
+            {
+                return;
+            }
+
             foreach (var entity in e.SavedEntities)
             {
                 if (entity.EditorAlias.InvariantStartsWith(Constants.Internals.DataEditorAliasPrefix) == true)
