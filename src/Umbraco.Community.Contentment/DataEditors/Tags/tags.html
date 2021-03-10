@@ -1,0 +1,31 @@
+﻿<!-- Copyright © 2021 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment" id="{{vm.uniqueId}}" ng-controller="Umbraco.Community.Contentment.DataEditors.Tags.Controller as vm">
+    <div class="umb-tags umb-tags-editor">
+        <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+        <div ng-if="vm.loading === false">
+            <span class="label label-primary tag"
+                  tabindex="0"
+                  ng-keyup="vm.keyUp($event, $index)"
+                  ng-repeat="item in vm.items">
+                <i class="icon mr2" ng-class="item.icon" ng-if="vm.showIcons && item.icon"></i>
+                <span ng-bind="item.name"></span>
+                <button type="button" class="btn-reset" ng-click="vm.remove($index)">
+                    <i class="icon icon-trash"></i>
+                    <span class="sr-only">
+                        <localize key="general_remove">Remove</localize>
+                    </span>
+                </button>
+            </span>
+            <input type="text"
+                   id="{{model.alias}}"
+                   class="typeahead"
+                   localize="placeholder"
+                   placeholder="@contentment_tagsType"
+                   ng-keydown="vm.keyDown($event)" />
+        </div>
+    </div>
+</div>

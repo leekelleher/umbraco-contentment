@@ -322,6 +322,7 @@
     <Compile Include="DataEditors\NumberInput\NumberInputValueConverter.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputDataEditor.cs" />
     <Compile Include="DataEditors\NumberInput\NumberInputConfigurationEditor.cs" />
+    <Compile Include="DataEditors\Tags\TagsDataListEditor.cs" />
     <Compile Include="DataEditors\TemplatedList\TemplatedListDataListEditor.cs" />
     <Compile Include="DataEditors\TextInput\TextInputValueConverter.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\HtmlAttributesConfigurationField.cs" />
@@ -446,6 +447,9 @@
     <Content Include="DataEditors\NumberInput\number-input.html" />
     <None Include="DataEditors\ReadOnly\README.md" />
     <Content Include="DataEditors\NumberInput\number-input.js" />
+    <Content Include="DataEditors\Tags\tags.css" />
+    <Content Include="DataEditors\Tags\tags.html" />
+    <Content Include="DataEditors\Tags\tags.js" />
     <Content Include="DataEditors\TemplatedList\templated-list.html" />
     <Content Include="DataEditors\TemplatedList\templated-list.js" />
     <Content Include="DataEditors\TemplatedList\templated-list.css" />
