@@ -24,6 +24,9 @@
         <!-- Data List -->
         <key alias="configureDataSource">Select and configure a data source</key>
         <key alias="configureListEditor">Select and configure a list editor</key>
+        <key alias="configurePreviewInit">Please select and configure a data source and list editor.</key>
+        <key alias="configurePreviewDataSource">Please select and configure a data source.</key>
+        <key alias="configurePreviewListEditor">Please select and configure a list editor.</key>
 
         <key alias="tagsType">Type to select an item...</key>
     </area>

@@ -24,6 +24,9 @@
         <!-- Data List -->
         <key alias="configureDataSource">Vælg og konfigurer en datakilde</key>
         <key alias="configureListEditor">Vælg og konfigurer en liste</key>
+        <key alias="configurePreviewInit">Vælg og konfigurer en datakilde og en listeeditor, tak.</key>
+        <key alias="configurePreviewDataSource">Vælg og konfigurer en datakilde, tak.</key>
+        <key alias="configurePreviewListEditor">Vælg og konfigurer en liste, tak.</key>
 
     </area>
 </language>

@@ -312,6 +312,7 @@
     <Compile Include="DataEditors\ContentBlocks\DisplayModes\StackDisplayMode.cs" />
     <Compile Include="DataEditors\ContentBlocks\IContentBlocksDisplayMode.cs" />
     <Compile Include="DataEditors\ContentPicker\ContentPickerDataEditor.cs" />
+    <Compile Include="DataEditors\DataList\DataListApiController.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentDataListSource.cs" />
     <Compile Include="DataEditors\DataList\IDataListSourceValueConverter.cs" />
     <Compile Include="DataEditors\DataList\DataSources\JsonDataListSource.cs" />
@@ -433,6 +434,9 @@
     <Content Include="DataEditors\ContentBlocks\content-blocks.blueprint.html" />
     <Content Include="DataEditors\ContentPicker\content-source.html" />
     <Content Include="DataEditors\ContentPicker\content-source.js" />
+    <Content Include="DataEditors\DataList\data-list.preview.css" />
+    <Content Include="DataEditors\DataList\data-list.preview.html" />
+    <Content Include="DataEditors\DataList\data-list.preview.js" />
     <Content Include="DataEditors\DataTable\data-table.html" />
     <Content Include="DataEditors\DataTable\data-table.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />

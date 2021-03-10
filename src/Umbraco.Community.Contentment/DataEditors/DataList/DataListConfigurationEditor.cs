@@ -60,6 +60,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors }
                 });
+
+            Fields.Add(
+                "preview",
+                "Preview",
+                null,
+                IOHelper.ResolveUrl(DataListDataEditor.DataEditorPreviewViewPath));
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)
