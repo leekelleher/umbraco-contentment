@@ -29,10 +29,16 @@ namespace Umbraco.Community.Contentment.Composing
                 composition
                     .Components()
                         .Append<ContentmentComponent>()
-                        .Append<ContentmentTelemetryComponent>()
                 ;
             }
 
+            if (composition.RuntimeState.Level == RuntimeLevel.Run)
+            {
+                if (ContentmentTelemetryComponent.Disabled == false)
+                {
+                    composition.EnableContentmentTelemetry();
+                }
+            }
         }
     }
 }
