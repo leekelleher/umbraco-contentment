@@ -22,7 +22,7 @@
 [class].icon-umbraco {
     background-image: url(/umbraco/assets/img/application/logo_black.png);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 .umb-action-link .icon-umbraco {
