@@ -14,8 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultValue: [],
             items: [],
             enableMultiple: 0,
-            hideIcon: 0,
-            hideName: 0,
+            labelStyle: "both",
             size: "m",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
@@ -37,8 +36,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = config.items.slice();
 
-            vm.hideIcon = Object.toBoolean(config.hideIcon);
-            vm.hideName = Object.toBoolean(config.hideName);
+            vm.hideIcon = config.labelStyle === 'text';
+            vm.hideName = config.labelStyle === 'icon';
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")

@@ -49,17 +49,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ConfigurationField
             {
-                Key = "hideIcon",
-                Name = "Hide icon?",
-                Description = "Select to hide the item's icon and only display the name.",
-                View = "boolean",
-            },
-            new ConfigurationField
-            {
-                Key = "hideName",
-                Name = "Hide name?",
-                Description = "Select to hide the item's name and only display the icon.<br><em>(Of course, don't hide both the name and icon)</em> 😉",
-                View = "boolean",
+                Key = "labelStyle",
+                Name = "Label style",
+                Description = "Select the style of the button's label.",
+                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Icon and Text", Value = "both", Description = "Displays both the item's icon and name." },
+                            new DataListItem { Name = "Icon only", Value = "icon", Description = "Hides the item's name and only displays the icon." },
+                            new DataListItem { Name = "Text only", Value = "text", Description = "Hides the item's icon and only displays the name." },
+                        }
+                    },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "both" },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                }
             },
             new ConfigurationField
             {
@@ -73,6 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "defaultIcon", Core.Constants.Icons.DefaultIcon },
+            { "labelStyle", "both" },
         };
 
         public Dictionary<string, object> DefaultConfig => default;
