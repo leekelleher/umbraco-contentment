@@ -296,6 +296,7 @@
   <ItemGroup>
     <Compile Include="Composing\ContentmentComposer.cs" />
     <Compile Include="Composing\ContentmentCompositionExtensions.cs" />
+    <Compile Include="DataEditors\Buttons\ButtonsDataListEditor.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />
     <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
@@ -418,6 +419,9 @@
     <None Include="Web\UI\App_Plugins\Contentment\package.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataEditors\Buttons\buttons.css" />
+    <Content Include="DataEditors\Buttons\buttons.html" />
+    <Content Include="DataEditors\Buttons\buttons.js" />
     <Content Include="DataEditors\Bytes\bytes.js" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.html" />
     <Content Include="DataEditors\CascadingDropdownList\cascading-dropdown-list.js" />
