@@ -29,7 +29,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.items = config.items.slice();
 
             vm.allowEmpty = Object.toBoolean(config.allowEmpty) && vm.items.some(x => x.value === $scope.model.value);
-
+            
+            if(vm.allowEmpty === false && $scope.model.value === '' && vm.items.length > 0) {
+                // set to first item in list when no empty values are allowed.
+                $scope.model.value = vm.items[0].value;
+            }
+            
             vm.htmlAttributes = config.htmlAttributes;
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
