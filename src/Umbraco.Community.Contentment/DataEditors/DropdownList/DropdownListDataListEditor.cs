@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = AllowEmpty,
                 Name = "Allow empty?",
-                Description = "Enable to allow an empty option at the top of the dropdown list.",
+                Description = "Enable to allow an empty option at the top of the dropdown list.<br>When disabled, the default value will be set to the first option.",
                 View = "views/propertyeditors/boolean/boolean.html",
                 Config = new Dictionary<string, object>
                 {
@@ -35,7 +35,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             new HtmlAttributesConfigurationField(),
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { AllowEmpty, Constants.Values.True }
+        };
 
         public Dictionary<string, object> DefaultConfig => default;
 

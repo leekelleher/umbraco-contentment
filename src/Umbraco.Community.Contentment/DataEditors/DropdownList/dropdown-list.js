@@ -20,21 +20,22 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var vm = this;
 
         function init() {
+
+            config.showEmpty = Object.toBoolean(config.allowEmpty);
+
+            vm.items = config.items.slice();
+
             $scope.model.value = $scope.model.value || config.defaultValue;
 
             if (Array.isArray($scope.model.value)) {
                 $scope.model.value = $scope.model.value[0];
             }
-
-            vm.items = config.items.slice();
-
-            vm.allowEmpty = Object.toBoolean(config.allowEmpty) && vm.items.some(x => x.value === $scope.model.value);
-            
-            if(vm.allowEmpty === false && $scope.model.value === '' && vm.items.length > 0) {
-                // set to first item in list when no empty values are allowed.
+            else if (config.showEmpty === false && $scope.model.value === '' && vm.items.length > 0) {
                 $scope.model.value = vm.items[0].value;
             }
-            
+
+            vm.showEmpty = config.showEmpty === true && vm.items.some(x => x.value === $scope.model.value);
+
             vm.htmlAttributes = config.htmlAttributes;
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
@@ -45,7 +46,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function change() {
-            vm.allowEmpty = Object.toBoolean(config.allowEmpty) && vm.items.some(x => x.value === $scope.model.value);
+            vm.showEmpty = config.showEmpty === true && vm.items.some(x => x.value === $scope.model.value);
         };
 
         init();
