@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.Composing
 {
     [ComposeAfter(typeof(WebInitialComposer))]
     [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
-    internal sealed class ContentmentComposer : IUserComposer
+    public sealed class ContentmentComposer : IUserComposer
     {
         public void Compose(Composition composition)
         {
