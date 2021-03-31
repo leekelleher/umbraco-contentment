@@ -39,7 +39,7 @@
                                     </a>
                                 </div>
                                 <div class="umb-button">
-                                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="btn umb-button__button btn-danger umb-button--m" ng-click="vm.vote(false)">
+                                    <a href="#" class="btn umb-button__button btn-danger umb-button--m" ng-click="vm.vote(false)" prevent-default>
                                         <span class="umb-button__content">
                                             <i class="umb-button__icon mr0 icon-fa fa-lg fa-thumbs-down fa-flip-horizontal" aria-hidden="true"></i>
                                             <span class="sr-only">Vote down</span>
@@ -47,7 +47,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <img ng-if="vm.nggyu" ng-src="https://media.giphy.com/media/ZE5DmCqNMr3yDXq1Zu/source.gif" style="position:absolute;bottom:0;right:0;z-index:1;" loading="lazy">
+                            <img ng-if="vm.nggyu" ng-src="https://leekelleher.com/umbraco/contentment/assets/rickroll.gif" style="position:absolute;bottom:-20px;right:0;z-index:1;">
                         </umb-box-header>
                     </umb-box>
 
@@ -103,6 +103,8 @@
                                     </details>
                                 </div>
                             </div>
+
+                            <hr />
 
                             <div ng-if="vm.telemetryEnabled === true">
                                 <h5>Telemetry</h5>
