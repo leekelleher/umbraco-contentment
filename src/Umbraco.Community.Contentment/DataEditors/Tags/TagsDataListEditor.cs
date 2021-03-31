@@ -8,7 +8,7 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class TagsDataListEditor : IDataListEditor
+    public sealed class TagsDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
 
