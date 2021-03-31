@@ -17,6 +17,9 @@
         <div ng-switch-when="loading">
             <umb-load-indicator></umb-load-indicator>
         </div>
+        <div ng-switch-when="noItems" class="well well-small well--limit-width">
+            <span>The data source returned no items to preview.</span>
+        </div>
         <div ng-switch-when="loaded">
 
             <umb-tabs-nav ng-if="vm.tabs"
@@ -53,7 +56,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
