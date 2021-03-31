@@ -36,8 +36,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
-            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>();
-            var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>();
+            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>().ToList();
+            var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>().ToList();
 
             Fields.Add(
                 DataSource,
@@ -47,7 +47,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources }
+                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                 });
 
             Fields.Add(
@@ -58,7 +59,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors }
+                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors },
                 });
 
             Fields.Add(
