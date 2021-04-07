@@ -23,6 +23,8 @@ namespace Umbraco.Community.Contentment.Composing
         private readonly IKeyValueService _keyValueService;
         private readonly IProfilingLogger _logger;
 
+        internal static bool Unlocked { get; set; }
+
         public ContentmentComponent(
             IScopeProvider scopeProvider,
             IMigrationBuilder migrationBuilder,
@@ -57,6 +59,7 @@ namespace Umbraco.Community.Contentment.Composing
                     name = Constants.Internals.ProjectName,
                     version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString(),
                     telemetry = Telemetry.ContentmentTelemetryComponent.Disabled == false,
+                    unlocked = Unlocked == true,
                 });
             }
         }
