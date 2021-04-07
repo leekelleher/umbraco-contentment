@@ -56,6 +56,7 @@ namespace Umbraco.Core.Composing
                         .Add<UmbracoContentPropertiesDataListSource>()
                         .Add<UmbracoContentXPathDataListSource>()
                         .Add<UmbracoEntityDataListSource>()
+                        .Add<UmbracoImageCropDataListSource>()
                 ;
             }
 
