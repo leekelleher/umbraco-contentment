@@ -62,10 +62,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.loading = false;
 
                 var engine = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("value"),
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace("name", "value"),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     initialize: false,
-                    local: config.items.filter(x => !x.disabled), // TODO: Review the `filter`, is there a better way?
+                    local: config.items.filter(x => !x.disabled),
                     identify: d => d.value,
                 });
 
