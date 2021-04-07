@@ -27,6 +27,8 @@
         <key alias="configurePreviewInit">Vælg og konfigurer en datakilde og en listeeditor, tak.</key>
         <key alias="configurePreviewDataSource">Vælg og konfigurer en datakilde, tak.</key>
         <key alias="configurePreviewListEditor">Vælg og konfigurer en liste, tak.</key>
+        <key alias="configurePreviewNoItems">Datakilden returnerede ingen elementer til forhåndsvisning.</key>
 
+        <key alias="tagsType">Indtast nøgleord (tryk på Enter efter hvert nøgleord)...</key>
     </area>
 </language>

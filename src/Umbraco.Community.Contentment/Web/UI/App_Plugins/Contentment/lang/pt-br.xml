@@ -27,6 +27,8 @@
         <key alias="configurePreviewInit">Selecionar e configurar a origem dos dados e o editor de lista, por favor.</key>
         <key alias="configurePreviewDataSource">Selecionar e configurar a origem dos dados, por favor.</key>
         <key alias="configurePreviewListEditor">Selecionar e configurar o editor de lista, por favor.</key>
+        <key alias="configurePreviewNoItems">A fonte de dados não retornou nenhum item para visualização.</key>
 
+        <key alias="tagsType">Digite para selecionar um item...</key>
     </area>
 </language>
