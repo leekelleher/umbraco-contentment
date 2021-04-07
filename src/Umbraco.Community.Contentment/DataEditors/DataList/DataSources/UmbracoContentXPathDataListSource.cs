@@ -66,7 +66,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 </details>", true),
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
+        };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
