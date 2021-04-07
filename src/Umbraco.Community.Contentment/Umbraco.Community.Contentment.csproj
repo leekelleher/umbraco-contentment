@@ -298,6 +298,7 @@
     <Compile Include="Composing\CompositionExtensions.cs" />
     <Compile Include="DataEditors\Buttons\ButtonsDataListEditor.cs" />
     <Compile Include="DataEditors\DataList\DataSources\CountriesDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataListSource.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />
     <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />

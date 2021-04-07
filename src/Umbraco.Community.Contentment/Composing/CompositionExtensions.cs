@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using ClientDependency.Core;
 using Umbraco.Community.Contentment.Composing;
+using Umbraco.Community.Contentment.DataEditors;
 
 // NOTE: This extension method class is deliberately using the Umbraco namespace,
 // as to reduce namespace imports and ease the developer experience. [LK]
@@ -50,6 +51,7 @@ namespace Umbraco.Core.Composing
                 composition
                     .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                         .Add<CountriesDataListSource>()
+                        .Add<TimeZoneDataListSource>()
                 ;
             }
 
