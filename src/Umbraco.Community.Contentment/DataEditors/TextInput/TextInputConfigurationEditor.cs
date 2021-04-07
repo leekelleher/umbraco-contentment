@@ -76,10 +76,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray array) && array.Count > 0 && array[0] is JObject item)
+            if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray array) == true && array.Count > 0 && array[0] is JObject item)
             {
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`.
-                if (item.ContainsKey("key") == false && item.ContainsKey("type"))
+                if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
                 {
                     item.Add("key", item["type"]);
                     item.Remove("type");

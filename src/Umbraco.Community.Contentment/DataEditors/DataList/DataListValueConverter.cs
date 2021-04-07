@@ -125,13 +125,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             converter = default;
 
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
-                configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) &&
+                configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) == true &&
                 tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1 &&
-                configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) &&
+                configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) == true &&
                 tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2)
             {
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (obj1.ContainsKey("key") == false && obj1.ContainsKey("type"))
+                if (obj1.ContainsKey("key") == false && obj1.ContainsKey("type") == true)
                 {
                     obj1.Add("key", obj1["type"]);
                     obj1.Remove("type");
@@ -146,7 +146,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (obj2.ContainsKey("key") == false && obj2.ContainsKey("type"))
+                if (obj2.ContainsKey("key") == false && obj2.ContainsKey("type") == true)
                 {
                     obj2.Add("key", obj2["type"]);
                     obj2.Remove("type");

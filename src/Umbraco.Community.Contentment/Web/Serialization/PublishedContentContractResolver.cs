@@ -135,7 +135,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 property.ShouldSerialize = _ => _ignoreFromProperty.Contains(member.Name) == false;
             }
 
-            if (_converterLookup.ContainsKey(property.PropertyType))
+            if (_converterLookup.ContainsKey(property.PropertyType) == true)
             {
                 property.Converter = _converterLookup[property.PropertyType];
             }

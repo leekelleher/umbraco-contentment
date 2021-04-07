@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var url = config.GetValueAs("url", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(url))
+            if (string.IsNullOrWhiteSpace(url) == true)
                 return items;
 
             var path = url.InvariantStartsWith("http") == false
@@ -133,7 +133,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var itemsXPath = config.GetValueAs("itemsXPath", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(itemsXPath))
+            if (string.IsNullOrWhiteSpace(itemsXPath) == true)
             {
                 return items;
             }

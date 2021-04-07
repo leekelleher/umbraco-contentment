@@ -76,10 +76,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var toValueEditor = new Dictionary<string, object>();
 
-            if (config.TryGetValueAs(DataSource, out JArray array1) && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DataSource, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
             {
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (item1.ContainsKey("key") == false && item1.ContainsKey("type"))
+                if (item1.ContainsKey("key") == false && item1.ContainsKey("type") == true)
                 {
                     item1.Add("key", item1["type"]);
                     item1.Remove("type");
@@ -95,10 +95,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (config.TryGetValueAs(ListEditor, out JArray array2) && array2.Count > 0 && array2[0] is JObject item2)
+            if (config.TryGetValueAs(ListEditor, out JArray array2) == true && array2.Count > 0 && array2[0] is JObject item2)
             {
                 // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (item2.ContainsKey("key") == false && item2.ContainsKey("type"))
+                if (item2.ContainsKey("key") == false && item2.ContainsKey("type") == true)
                 {
                     item2.Add("key", item2["type"]);
                     item2.Remove("type");

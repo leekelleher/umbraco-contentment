@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         // TODO: [LK:2020-12-11] Commented out the value-type feature for the time being. Adds additional complexity that I don't currently need.
         //public override Type GetPropertyValueType(IPublishedPropertyType propertyType)
         //{
-        //    if (propertyType.DataType.Configuration is Dictionary<string, object> config && config.TryGetValue(UmbConfigurationKeys.DataValueType, out var tmp) && tmp is string valueType)
+        //    if (propertyType.DataType.Configuration is Dictionary<string, object> config && config.TryGetValueAs(UmbConfigurationKeys.DataValueType, out string valueType) == true)
         //    {
         //        switch (valueType)
         //        {

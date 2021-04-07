@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
             var aceEditorPath = IOHelper.MapPath(targetPath);
 
-            if (Directory.Exists(aceEditorPath))
+            if (Directory.Exists(aceEditorPath) == true)
             {
                 var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
                 if (aceEditorFiles != null && aceEditorFiles.Length > 0)
@@ -35,13 +35,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     foreach (var file in aceEditorFiles)
                     {
                         var filename = Path.GetFileNameWithoutExtension(file);
-                        if (filename.StartsWith("mode-"))
+                        if (filename.StartsWith("mode-") == true)
                         {
                             var mode = filename.Replace("mode-", string.Empty).ToLower();
                             modes.Add(new DataListItem { Name = mode.ToFirstUpperInvariant(), Value = mode });
                         }
 
-                        if (filename.StartsWith("theme-"))
+                        if (filename.StartsWith("theme-") == true)
                         {
                             var theme = filename.Replace("theme-", string.Empty).ToLower();
                             themes.Add(new DataListItem { Name = theme.ToFirstUpperInvariant(), Value = theme });

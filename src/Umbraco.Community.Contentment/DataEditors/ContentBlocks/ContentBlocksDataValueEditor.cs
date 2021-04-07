@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)
         {
             var value = property.GetValue(culture, segment)?.ToString();
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value) == true)
             {
                 return base.ToEditor(property, dataTypeService, culture, segment);
             }
@@ -105,7 +105,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public override object FromEditor(ContentPropertyData editorValue, object currentValue)
         {
             var value = editorValue?.Value?.ToString();
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value) == true)
             {
                 return base.FromEditor(editorValue, currentValue);
             }
