@@ -53,6 +53,7 @@ namespace Umbraco.Core.Composing
                         .Add<CountriesDataListSource>()
                         .Add<TimeZoneDataListSource>()
                         .Add<uCssClassNameDataListSource>()
+                        .Add<UmbracoContentPropertiesDataListSource>()
                 ;
             }
 

@@ -300,6 +300,7 @@
     <Compile Include="DataEditors\DataList\DataSources\CountriesDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\TimeZoneDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\uCssClassNameDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoContentPropertiesDataListSource.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />
     <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
