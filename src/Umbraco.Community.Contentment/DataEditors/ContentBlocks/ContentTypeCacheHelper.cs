@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public static bool TryGetAlias(Guid key, out string alias, IContentTypeService contentTypeService = null)
         {
-            if (_forward.TryGetValue(key, out alias))
+            if (_forward.TryGetValue(key, out alias) == true)
                 return true;
 
             // The alias isn't cached, we can attempt to get it via the content-type service, using the GUID.
@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public static bool TryGetIcon(string alias, out string icon, IContentTypeService contentTypeService = null)
         {
-            if (_icons.TryGetValue(alias, out icon))
+            if (_icons.TryGetValue(alias, out icon) == true)
                 return true;
 
             // The icon isn't cached, we can attempt to get it via the content-type service, using the alias.
@@ -82,7 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public static bool TryGetGuid(string alias, out Guid key, IContentTypeService contentTypeService = null)
         {
-            if (_reverse.TryGetValue(alias, out key))
+            if (_reverse.TryGetValue(alias, out key) == true)
                 return true;
 
             // The GUID isn't cached, we can attempt to get it via the content-type service, using the alias.

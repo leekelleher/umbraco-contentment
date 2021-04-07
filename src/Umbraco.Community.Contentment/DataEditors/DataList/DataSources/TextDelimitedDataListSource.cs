@@ -112,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var iconIndex = config.GetValueAs("iconIndex", -1);
             var descriptionIndex = config.GetValueAs("descriptionIndex", -1);
 
-            if (string.IsNullOrWhiteSpace(url))
+            if (string.IsNullOrWhiteSpace(url) == true)
             {
                 return items;
             }
@@ -129,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             for (var i = 0; i < lines.Length; i++)
             {
-                if (i == 0 && ignoreFirstLine)
+                if (i == 0 && ignoreFirstLine == true)
                 {
                     continue;
                 }
@@ -174,7 +174,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private string[] GetTextLines(string url)
         {
-            if (url.InvariantStartsWith("http"))
+            if (url.InvariantStartsWith("http") == true)
             {
                 try
                 {
@@ -192,7 +192,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 // assume local file
                 var path = IOHelper.MapPath(url);
-                if (File.Exists(path))
+                if (File.Exists(path) == true)
                 {
                     return File.ReadAllLines(path);
                 }

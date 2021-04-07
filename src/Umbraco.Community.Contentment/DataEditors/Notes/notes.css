@@ -11,6 +11,11 @@
     margin-bottom: 10px;
 }
 
+    .umb-readonlyvalue .well blockquote p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
     .umb-readonlyvalue .well hr {
         border-bottom: 1px solid #e0e0e5;
         margin: 15px 0;

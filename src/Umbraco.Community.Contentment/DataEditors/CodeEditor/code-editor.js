@@ -20,7 +20,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             theme: "chrome",
             mode: "javascript",
             firstLineNumber: 1,
-            fontSize: "14px",
+            fontSize: "small",
             enableSnippets: 0,
             enableBasicAutocompletion: 0,
             enableLiveAutocompletion: 0,
@@ -35,6 +35,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
 
             vm.readonly = Object.toBoolean(config.readonly);
+
             vm.options = {
                 autoFocus: false,
                 showGutter: Object.toBoolean(config.showGutter),

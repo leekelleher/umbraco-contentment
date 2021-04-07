@@ -11,7 +11,7 @@ namespace Umbraco.Core
     {
         public static TValueOut GetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, TValueOut defaultValue = default)
         {
-            if (config.TryGetValue(key, out var tmp))
+            if (config.TryGetValue(key, out var tmp) == true)
             {
                 if (tmp is TValueOut value)
                 {
@@ -19,7 +19,7 @@ namespace Umbraco.Core
                 }
 
                 var attempt = tmp.TryConvertTo<TValueOut>();
-                if (attempt.Success)
+                if (attempt.Success == true)
                 {
                     return attempt.Result;
                 }
@@ -30,7 +30,7 @@ namespace Umbraco.Core
 
         public static bool TryGetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, out TValueOut value)
         {
-            if (config.TryGetValue(key, out var tmp1))
+            if (config.TryGetValue(key, out var tmp1) == true)
             {
                 if (tmp1 is TValueOut tmp2)
                 {
@@ -39,7 +39,7 @@ namespace Umbraco.Core
                 }
 
                 var attempt = tmp1.TryConvertTo<TValueOut>();
-                if (attempt.Success)
+                if (attempt.Success == true)
                 {
                     value = attempt.Result;
                     return attempt.Success;

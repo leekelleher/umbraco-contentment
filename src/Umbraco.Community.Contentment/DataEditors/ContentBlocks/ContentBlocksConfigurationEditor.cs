@@ -127,13 +127,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var item = (JObject)array2[i];
 
                     // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                    if (item.ContainsKey("key") == false && item.ContainsKey("type"))
+                    if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
                     {
                         item.Add("key", item["type"]);
                         item.Remove("type");
                     }
 
-                    if (Guid.TryParse(item.Value<string>("key"), out var guid) && _elementTypes.ContainsKey(guid))
+                    if (Guid.TryParse(item.Value<string>("key"), out var guid) && _elementTypes.ContainsKey(guid) == true)
                     {
                         var elementType = _elementTypes[guid];
 

@@ -104,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var url = config.GetValueAs("url", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(url))
+            if (string.IsNullOrWhiteSpace(url) == true)
             {
                 return items;
             }
@@ -118,7 +118,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var itemsJsonPath = config.GetValueAs("itemsJsonPath", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(itemsJsonPath))
+            if (string.IsNullOrWhiteSpace(itemsJsonPath) == true)
             {
                 return items;
             }
@@ -189,7 +189,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var content = string.Empty;
 
-            if (url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+            if (url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase) == true)
             {
                 try
                 {
@@ -207,7 +207,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 // assume local file
                 var path = IOHelper.MapPath(url);
-                if (File.Exists(path))
+                if (File.Exists(path) == true)
                 {
                     content = File.ReadAllText(path);
                 }
@@ -218,7 +218,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(content))
+            if (string.IsNullOrWhiteSpace(content) == true)
             {
                 _logger.Warn<JsonDataListSource>($"The contents of '{url}' was empty. Unable to process JSON data.");
 

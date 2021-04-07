@@ -93,7 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
             }
 
-            if (config.TryGetValueAs("sortAlphabetically", out string boolean) && boolean.Equals("1"))
+            if (config.TryGetValueAs("sortAlphabetically", out string boolean) == true && boolean == "1")
             {
                 return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
             }
@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type GetValueType(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("enumType", out JArray array))
+            if (config.TryGetValueAs("enumType", out JArray array) == true)
             {
                 var enumType = array.ToObject<string[]>();
                 if (enumType?.Length > 1)
@@ -114,7 +114,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         var type = default(Type);
                         try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
-                        if (type != null && type.IsEnum)
+                        if (type != null && type.IsEnum == true)
                         {
                             return type;
                         }

@@ -99,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var query = config.GetValueAs("query", string.Empty);
             var connectionString = config.GetValueAs("connectionString", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(query) || string.IsNullOrWhiteSpace(connectionString))
+            if (string.IsNullOrWhiteSpace(query) == true || string.IsNullOrWhiteSpace(connectionString) == true)
                 return items;
 
             var settings = ConfigurationManager.ConnectionStrings[connectionString];
@@ -107,7 +107,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
 
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            if (settings.ProviderName.InvariantEquals(Core.Constants.DatabaseProviders.SqlCe))
+            if (settings.ProviderName.InvariantEquals(Core.Constants.DatabaseProviders.SqlCe) == true)
             {
                 items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
             }

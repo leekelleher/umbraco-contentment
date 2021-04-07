@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 foreach (var item in items)
                 {
-                    if (item == null || item.ElementType.Equals(Guid.Empty))
+                    if (item == null || item.ElementType == Guid.Empty)
                         continue;
 
                     // NOTE: [LK:2019-09-03] Why `IPublishedCache` doesn't support Guids or UDIs, I do not know!?

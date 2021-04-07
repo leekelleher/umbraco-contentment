@@ -57,7 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 config.Add(Filter, "formatBytes");
 
-                if (config.ContainsKey(Format) == false && config.ContainsKey(Kilo) && config.ContainsKey(Decimals))
+                if (config.ContainsKey(Format) == false && config.ContainsKey(Kilo) == true && config.ContainsKey(Decimals) == true)
                 {
                     config.Add(Format, new
                     {

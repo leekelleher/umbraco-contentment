@@ -63,7 +63,26 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
             };
 
             vm.vote = function (x) {
-                vm.nggyu = x == false;
+                if (x === false && !vm.nggyu) {
+
+                    vm.nggyu = true;
+
+                    // Kudos to Mathieu 'p01' Henri for this snippet:
+                    // Music SoftSynth https://gist.github.com/p01/1285255
+                    var softSynth = function (f) { return eval("for(var t=0,S='RIFF_oO_WAVEfmt " + atob("EAAAAAEAAQBAHwAAQB8AAAEACAA") + "data';++t<3e5;)S+=String.fromCharCode(" + f + ")"); };
+                    var formula = "(t<<3)*[8/9,1,9/8,6/5,4/3,3/2,0][[0xd2d2c8,0xce4088,0xca32c8,0x8e4009][t>>14&3]>>(0x3dbe4688>>((t>>10&15)>9?18:t>>10&15)*3&7)*3&7]&255";
+                    vm.audio = new Audio("data:audio/wav;base64," + btoa(softSynth(formula)));
+                    vm.audio.play();
+
+                } else {
+
+                    vm.nggyu = false;
+
+                    if (vm.audio) {
+                        vm.audio.pause();
+                    }
+
+                }
             };
 
             vm.csharp = "csharp";

@@ -24,7 +24,7 @@ namespace Umbraco.Web.Mvc
         {
             void setProperty<T>(string key, Action<T> action)
             {
-                if (viewData.TryGetValueAs(key, out T tmp))
+                if (viewData.TryGetValueAs(key, out T tmp) == true)
                 {
                     action(tmp);
 

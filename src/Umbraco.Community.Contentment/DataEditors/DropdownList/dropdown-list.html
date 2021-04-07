@@ -10,6 +10,6 @@
             ng-model="model.value"
             ng-change="vm.change()"
             ng-options="item.value as item.name disable when item.disabled for item in vm.items">
-        <option ng-if="vm.allowEmpty" value=""></option>
+        <option ng-if="vm.showEmpty" value=""></option>
     </select>
 </div>
