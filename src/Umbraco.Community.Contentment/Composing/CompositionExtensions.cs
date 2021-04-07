@@ -52,6 +52,7 @@ namespace Umbraco.Core.Composing
                     .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                         .Add<CountriesDataListSource>()
                         .Add<TimeZoneDataListSource>()
+                        .Add<uCssClassNameDataListSource>()
                 ;
             }
 
