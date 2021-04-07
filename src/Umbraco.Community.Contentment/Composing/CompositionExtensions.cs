@@ -55,6 +55,7 @@ namespace Umbraco.Core.Composing
                         .Add<uCssClassNameDataListSource>()
                         .Add<UmbracoContentPropertiesDataListSource>()
                         .Add<UmbracoContentXPathDataListSource>()
+                        .Add<UmbracoEntityDataListSource>()
                 ;
             }
 

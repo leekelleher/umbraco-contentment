@@ -302,6 +302,7 @@
     <Compile Include="DataEditors\DataList\DataSources\uCssClassNameDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentPropertiesDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentXPathDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />
     <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
