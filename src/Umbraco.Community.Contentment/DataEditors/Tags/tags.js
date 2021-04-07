@@ -40,8 +40,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.showIcons = Object.toBoolean(config.showIcons);
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
-                ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
-                : $scope.model.alias;
+                ? ["tags", $scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
+                : ["tags", $scope.model.alias].join("-");
 
             vm.add = add;
             vm.keyDown = keyDown;

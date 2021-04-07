@@ -12,7 +12,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         //console.log("data-list.preview.model", $scope.model);
 
-        var config = Object.assign({}, $scope.model.config);
+        var config = Object.assign({ alias: $scope.model.alias }, $scope.model.config);
         var vm = this;
 
         function init() {

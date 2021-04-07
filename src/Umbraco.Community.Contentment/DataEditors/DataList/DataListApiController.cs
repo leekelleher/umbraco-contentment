@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json.Linq;
+using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
@@ -32,11 +33,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (_propertyEditors.TryGet(DataListDataEditor.DataEditorAlias, out var propertyEditor) == true)
             {
+                var alias = config.GetValueAs("alias", "preview");
                 var configurationEditor = propertyEditor.GetConfigurationEditor();
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);
                 var valueEditor = propertyEditor.GetValueEditor(config);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig, view = valueEditor.View });
+                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig, view = valueEditor.View, alias });
             }
 
             return Request.CreateResponse(HttpStatusCode.NotFound);
