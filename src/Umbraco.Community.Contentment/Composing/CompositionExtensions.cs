@@ -49,6 +49,7 @@ namespace Umbraco.Core.Composing
 
                 composition
                     .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                        .Add<CountriesDataListSource>()
                 ;
             }
 
