@@ -302,10 +302,12 @@
     <Compile Include="DataEditors\DataList\DataSources\uCssClassNameDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentPropertiesDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoContentXPathDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoDictionaryDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoImageCropDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoMemberGroupDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
+    <Compile Include="DataEditors\DictionaryPicker\DictionaryPickerDataEditor.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />
     <Compile Include="Telemetry\ContentmentTelemetryComponent.cs" />
     <Compile Include="Configuration\ContentmentVersion.cs" />
@@ -416,6 +418,7 @@
     <None Include="DataEditors\ContentBlocks\ContentBlockPreview.cshtml" />
     <None Include="DataEditors\DataList\README.md" />
     <None Include="DataEditors\DataTable\README.md" />
+    <None Include="DataEditors\DictionaryPicker\README.md" />
     <None Include="DataEditors\DropdownList\README.md" />
     <None Include="DataEditors\IconPicker\README.md" />
     <None Include="DataEditors\ItemPicker\README.md" />
@@ -452,6 +455,8 @@
     <Content Include="DataEditors\DataList\data-list.preview.js" />
     <Content Include="DataEditors\DataTable\data-table.html" />
     <Content Include="DataEditors\DataTable\data-table.js" />
+    <Content Include="DataEditors\DictionaryPicker\dictionary-picker.html" />
+    <Content Include="DataEditors\DictionaryPicker\dictionary-picker.js" />
     <Content Include="DataEditors\DropdownList\dropdown-list.html" />
     <Content Include="DataEditors\DropdownList\dropdown-list.js" />
     <Content Include="DataEditors\ContentBlocks\content-blocks.html" />

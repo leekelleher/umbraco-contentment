@@ -50,11 +50,13 @@ namespace Umbraco.Core.Composing
 
                 composition
                     .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                        // Data List - Data Sources
                         .Add<CountriesDataListSource>()
                         .Add<TimeZoneDataListSource>()
                         .Add<uCssClassNameDataListSource>()
                         .Add<UmbracoContentPropertiesDataListSource>()
                         .Add<UmbracoContentXPathDataListSource>()
+                        .Add<UmbracoDictionaryDataListSource>()
                         .Add<UmbracoEntityDataListSource>()
                         .Add<UmbracoImageCropDataListSource>()
                         .Add<UmbracoMemberGroupDataListSource>()
