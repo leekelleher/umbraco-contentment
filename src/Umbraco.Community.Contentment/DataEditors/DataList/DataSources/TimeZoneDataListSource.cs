@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    public sealed class TimeZoneDataListSource : IDataListSource
+    public sealed class TimeZoneDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 
@@ -32,8 +32,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .Select(x => new DataListItem
                 {
                     Name = x.DisplayName,
-                    Value = x.BaseUtcOffset.ToString()
+                    Value = x.Id
                 });
         }
+
+        public Type GetValueType(Dictionary<string, object> config) => typeof(TimeZoneInfo);
+
+        public object ConvertValue(Type type, string value) => TimeZoneInfo.FindSystemTimeZoneById(value);
     }
 }
