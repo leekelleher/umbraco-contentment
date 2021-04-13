@@ -73,12 +73,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValue("imageCropper", out var obj) &&
+            if (config.TryGetValue("imageCropper", out var obj) == true &&
                 obj is JArray array &&
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi))
+                GuidUdi.TryParse(str, out var udi) == true)
             {
                 return _dataTypeService
                     .GetDataType(udi.Guid)?

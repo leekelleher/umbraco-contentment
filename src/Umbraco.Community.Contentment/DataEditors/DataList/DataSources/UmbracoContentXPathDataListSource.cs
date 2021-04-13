@@ -83,9 +83,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var umbracoContext = _umbracoContextAccessor.UmbracoContext;
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-                var nodeContextId = int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId)
+                var nodeContextId = int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true
                     ? currentId
-                    : int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId)
+                    : int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true
                         ? parentId
                         : default(int?);
 
@@ -104,16 +104,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Name = x.Name,
                 Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
-                Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) ? icon : Core.Constants.Icons.Content,
+                Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : Core.Constants.Icons.Content,
                 Description = x.TemplateId > 0 ? x.Url : string.Empty,
                 Disabled = x.IsPublished() == false,
             });
         }
 
-        public Type GetValueType(Dictionary<string, object> config)
-        {
-            return typeof(IPublishedContent);
-        }
+        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
 
         public object ConvertValue(Type type, string value)
         {

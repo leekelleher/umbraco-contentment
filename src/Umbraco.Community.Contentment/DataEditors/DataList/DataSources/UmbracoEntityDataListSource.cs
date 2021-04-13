@@ -98,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
             {
-                var icon = EntityTypeIcons.ContainsKey(entityType) ? EntityTypeIcons[entityType] : UmbConstants.Icons.DefaultIcon;
+                var icon = EntityTypeIcons.ContainsKey(entityType) == true ? EntityTypeIcons[entityType] : UmbConstants.Icons.DefaultIcon;
 
                 return _entityService
                     .GetAll(objectType)
