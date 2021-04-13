@@ -13,9 +13,9 @@ namespace Umbraco.Community.Contentment.DataEditors
     [Core.Composing.HideFromTypeFinder]
     public sealed class TimeZoneDataListSource : IDataListSource
     {
-        public string Name => "Time zones";
+        public string Name => ".NET Time Zones (UTC)";
 
-        public string Description => "All the time zones available in the .NET Framework.";
+        public string Description => "All the time zones available in the .NET Framework, (as installed on the web server).";
 
         public string Icon => "icon-globe";
 

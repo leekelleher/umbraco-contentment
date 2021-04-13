@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
-        public string Name => "Umbraco Content: XPath";
+        public string Name => "Umbraco Content by XPath";
 
         public string Description => "Use an XPath query to select Umbraco content to use as a data source.";
 

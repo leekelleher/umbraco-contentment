@@ -14,9 +14,9 @@ namespace Umbraco.Community.Contentment.DataEditors
     [Core.Composing.HideFromTypeFinder]
     public sealed class CountriesDataListSource : IDataListSource
     {
-        public string Name => ".NET ISO 3166 Countries";
+        public string Name => ".NET Countries (ISO 3166)";
 
-        public string Description => "All the countries available in the .NET Framework.";
+        public string Description => "All the countries available in the .NET Framework, (as installed on the web server).";
 
         public string Icon => "icon-globe-inverted-europe-africa";
 
