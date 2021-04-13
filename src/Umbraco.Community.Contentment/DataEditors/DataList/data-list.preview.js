@@ -28,6 +28,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 label: "Data source items",
                 alias: "dataSource",
                 active: false,
+            }, {
+                label: "JSON",
+                alias: "rawJson",
+                active: false,
             }];
 
             // set the first tab to active
