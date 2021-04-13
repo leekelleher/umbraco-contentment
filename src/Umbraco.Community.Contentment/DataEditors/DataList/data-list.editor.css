@@ -1,0 +1,46 @@
+﻿/* Copyright © 2021 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+.contentment .lk-data-list-item {
+    max-width: 770px; /* 800px - (2 x 15px for margins) */
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background: #f3f3f5;
+    margin-bottom: 1px;
+}
+
+    .contentment .lk-data-list-item:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .contentment .lk-data-list-item .lk-data-list-item__handle {
+        font-size: 14px;
+        color: #d8d7d9;
+        margin-right: 15px;
+    }
+
+    .contentment .lk-data-list-item .lk-data-list-item__icon > button {
+        border: 1px solid #d8d7d9;
+        background: #fff;
+        font-size: 30px;
+        padding-top: 5px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .contentment .lk-data-list-item .lk-data-list-item__text {
+        flex: 1;
+        margin: 0 1rem;
+    }
+
+    .contentment .lk-data-list-item .lk-data-list-item__remove {
+        position: relative;
+        cursor: pointer;
+    }
+
+        .contentment .lk-data-list-item .lk-data-list-item__remove > button:focus {
+            outline: auto;
+        }

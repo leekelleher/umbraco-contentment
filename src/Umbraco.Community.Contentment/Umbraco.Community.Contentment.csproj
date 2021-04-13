@@ -450,6 +450,9 @@
     <Content Include="DataEditors\ContentBlocks\content-blocks.blueprint.html" />
     <Content Include="DataEditors\ContentPicker\content-source.html" />
     <Content Include="DataEditors\ContentPicker\content-source.js" />
+    <Content Include="DataEditors\DataList\data-list.editor.css" />
+    <Content Include="DataEditors\DataList\data-list.editor.html" />
+    <Content Include="DataEditors\DataList\data-list.editor.js" />
     <Content Include="DataEditors\DataList\data-list.preview.css" />
     <Content Include="DataEditors\DataList\data-list.preview.html" />
     <Content Include="DataEditors\DataList\data-list.preview.js" />

@@ -15,33 +15,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     [Core.Composing.HideFromTypeFinder]
     public sealed class UserDefinedDataListSource : IDataListSource
     {
-        private readonly ConfigurationField[] _listFields;
-
-        public UserDefinedDataListSource()
-        {
-            _listFields = new[]
-            {
-                new ConfigurationField
-                {
-                    Key = "icon",
-                    Name = "Icon",
-                    View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html")
-                },
-                new ConfigurationField
-                {
-                    Key = "name",
-                    Name = "Name",
-                    View = "textstring"
-                },
-                new ConfigurationField
-                {
-                    Key = "value",
-                    Name = "Value",
-                    View = "textstring"
-                }
-            };
-        }
-
         public string Name => "User-defined List";
 
         public string Description => "Manually configure the items for the data source.";
@@ -54,15 +27,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "items",
                 Name = "Options",
-                Description = "Configure the option items for the data list.<br>If you use duplicate values, then only the first option item will be used.",
-                View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath),
+                Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
+                View = IOHelper.ResolveUrl(DataListDataEditor.DataEditorListEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
-                    { DataTableConfigurationEditor.FieldItems, _listFields },
+                    { "confirmRemoval", Constants.Values.True },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { MaxItemsConfigurationField.MaxItems, 0 },
-                    { DisableSortingConfigurationField.DisableSorting, Constants.Values.False },
-                    { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
-                    { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.True }
                 },
             }
         };
@@ -73,8 +44,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return config.TryGetValueAs("items", out JArray array)
-                ? array.ToObject<IEnumerable<DataListItem>>()
+            return config.TryGetValueAs("items", out JArray array) == true
+                ? array.ToObject<IEnumerable<DataListItem>>().DistinctBy(x => x.Value)
                 : Enumerable.Empty<DataListItem>();
         }
     }
