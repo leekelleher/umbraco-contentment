@@ -11,7 +11,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    internal sealed class TimeZoneDataListSource : IDataListSource
+    public sealed class TimeZoneDataListSource : IDataListSource
     {
         public string Name => "Time zones";
 

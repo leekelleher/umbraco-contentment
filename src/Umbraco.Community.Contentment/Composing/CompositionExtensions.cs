@@ -3,9 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using ClientDependency.Core;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
 
@@ -16,53 +13,28 @@ namespace Umbraco.Core.Composing
     // TODO: [LK:2021-03-04] Rename class to `CompositionExtensions` v2.0.0. For consistency with the other `Composition` extension classes.
     public static partial class ContentmentCompositionExtensions
     {
-        private readonly static HashSet<string> _lookup = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "CAF5E56A2E38ECDA55EF97C348EDDBCA"
-        };
-
         public static ContentmentListItemCollectionBuilder ContentmentListItems(this Composition composition)
         {
             return composition.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
         }
 
-        public static Composition UnlockContentment(this Composition composition, params string[] passcodes)
+        public static Composition UnlockContentment(this Composition composition)
         {
-            if (passcodes?.Length == 0)
-            {
-                return composition;
-            }
-
-            foreach (var passcode in passcodes)
-            {
-                if (string.IsNullOrWhiteSpace(passcode) == true)
-                {
-                    continue;
-                }
-
-                var hashed = passcode.ToLowerInvariant().GenerateMd5();
-                if (_lookup.Contains(hashed) == false)
-                {
-                    continue;
-                }
-
-                ContentmentComponent.Unlocked = true;
-
-                composition
-                    .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                        // Data List - Data Sources
-                        .Add<CountriesDataListSource>()
-                        .Add<TimeZoneDataListSource>()
-                        .Add<uCssClassNameDataListSource>()
-                        .Add<UmbracoContentPropertiesDataListSource>()
-                        .Add<UmbracoContentXPathDataListSource>()
-                        .Add<UmbracoDictionaryDataListSource>()
-                        .Add<UmbracoEntityDataListSource>()
-                        .Add<UmbracoImageCropDataListSource>()
-                        .Add<UmbracoMemberGroupDataListSource>()
-                        .Add<UserDefinedDataListSource>()
-                ;
-            }
+            composition
+                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                    // Data List - Data Sources
+                    .Add<CountriesDataListSource>()
+                    .Add<CurrenciesDataListSource>()
+                    .Add<TimeZoneDataListSource>()
+                    .Add<uCssClassNameDataListSource>()
+                    .Add<UmbracoContentPropertiesDataListSource>()
+                    .Add<UmbracoContentXPathDataListSource>()
+                    .Add<UmbracoDictionaryDataListSource>()
+                    .Add<UmbracoEntityDataListSource>()
+                    .Add<UmbracoImageCropDataListSource>()
+                    .Add<UmbracoMemberGroupDataListSource>()
+                    .Add<UserDefinedDataListSource>()
+            ;
 
             return composition;
         }

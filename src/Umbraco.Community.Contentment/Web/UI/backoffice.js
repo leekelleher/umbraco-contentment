@@ -111,19 +111,6 @@ namespace Our.Umbraco.Web
         }
     }
 }`;
-            vm.unlocked = config.unlocked === true;
-            vm.unlockCode = `using Umbraco.Core.Composing;
-
-namespace Our.Umbraco.Web
-{
-    public class UnlockContentmentComposer : IUserComposer
-    {
-        public void Compose(Composition composition)
-        {
-            composition.UnlockContentment("what's the passcode?");
-        }
-    }
-}`;
         };
 
         init();

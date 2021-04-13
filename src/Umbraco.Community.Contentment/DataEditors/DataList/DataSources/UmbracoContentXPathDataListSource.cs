@@ -16,7 +16,7 @@ using Umbraco.Web;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    internal sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;

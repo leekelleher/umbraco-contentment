@@ -12,7 +12,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    internal sealed class CountriesDataListSource : IDataListSource
+    public sealed class CountriesDataListSource : IDataListSource
     {
         public string Name => ".NET ISO 3166 Countries";
 

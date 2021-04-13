@@ -13,7 +13,7 @@ using Umbraco.Core.PropertyEditors;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    internal sealed class UserDefinedDataListSource : IDataListSource
+    public sealed class UserDefinedDataListSource : IDataListSource
     {
         private readonly ConfigurationField[] _listFields;
 

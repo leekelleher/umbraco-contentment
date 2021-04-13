@@ -64,32 +64,9 @@
                         </umb-box-header>
                     </umb-box>
 
-
                     <umb-box>
                         <umb-box-header title="Feature options"></umb-box-header>
                         <umb-box-content>
-
-                            <div ng-if="vm.unlocked === false">
-                                <h5 class="mt0">Unlock hidden features</h5>
-                                <p>Contentment has a few hidden features. 🤫<br />To unlock them, you'll need to know a passcode, then you can add it to the following code snippet.</p>
-                                <div class="umb-readonlyvalue">
-                                    <details class="well well-small">
-                                        <summary><strong>Code snippet to unlock hidden Contentment features</strong></summary>
-                                        <div class="mt3">
-                                            <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
-                                        </div>
-                                        <umb-code-snippet language="vm.csharp">{{vm.unlockCode}}</umb-code-snippet>
-                                        <p>If you are already using a composer class, you can add the <code>composition.UnlockContentment("what's the passcode?");</code> line to it.</p>
-                                    </details>
-                                </div>
-                                <p><em>How do I find a passcode?</em> If you are already <a href="https://github.com/sponsors/leekelleher?o=esb" target="_blank" rel="noopener">one of my GitHub sponsors</a>, I'll send you a passcode. If not, would you consider <a href="https://github.com/sponsors/leekelleher?frequency=one-time" target="_blank" rel="noopener"><strong>a one-time $1 sponsorship?</strong></a> <em>Quid pro quo.</em> Failing that, if you really want a passcode, then <a href="https://our.umbraco.com/packages/backoffice-extensions/contentment/" target="_blank" rel="noopener"><strong>vote up the package</strong></a> and <a href="https://leekelleher.com/contact/" target="_blank" rel="noopener">drop me a message</a>, I'll let you know.</p>
-                            </div>
-                            <div ng-if="vm.unlocked === true">
-                                <h5 class="mt0">Unlock hidden features</h5>
-                                <p><em>The hidden features have been unlocked!</em> 🎉</p>
-                            </div>
-
-                            <hr />
 
                             <div ng-if="vm.telemetryEnabled === true">
                                 <h5 class="mt0">Telemetry</h5>

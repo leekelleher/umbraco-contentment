@@ -16,7 +16,7 @@ using UmbConstants = Umbraco.Core.Constants;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [Core.Composing.HideFromTypeFinder]
-    internal sealed class UmbracoContentPropertiesDataListSource : IDataListSource
+    public sealed class UmbracoContentPropertiesDataListSource : IDataListSource
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
