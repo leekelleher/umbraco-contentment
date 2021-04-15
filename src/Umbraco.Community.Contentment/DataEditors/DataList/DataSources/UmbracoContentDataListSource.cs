@@ -94,7 +94,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = x.Name,
                     Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
                     Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : Core.Constants.Icons.Content,
-                    Description = x.TemplateId > 0 ? x.Url : string.Empty,
+                    Description = x.TemplateId > 0 ? x.Url() : string.Empty,
                     Disabled = x.IsPublished() == false,
                 });
         }
