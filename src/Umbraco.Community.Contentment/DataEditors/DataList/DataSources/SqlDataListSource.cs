@@ -8,10 +8,12 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -23,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public SqlDataListSource()
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
-            _codeEditorMode = System.IO.File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
+            _codeEditorMode = File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
                 ? "sqlserver"
                 : "razor";
 
@@ -89,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
-            { "connectionString", Core.Constants.System.UmbracoConnectionName }
+            { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
@@ -100,14 +102,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             var connectionString = config.GetValueAs("connectionString", string.Empty);
 
             if (string.IsNullOrWhiteSpace(query) == true || string.IsNullOrWhiteSpace(connectionString) == true)
+            {
                 return items;
+            }
 
             var settings = ConfigurationManager.ConnectionStrings[connectionString];
             if (settings == null)
+            {
                 return items;
+            }
 
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            if (settings.ProviderName.InvariantEquals(Core.Constants.DatabaseProviders.SqlCe) == true)
+            if (settings.ProviderName.InvariantEquals(UmbConstants.DatabaseProviders.SqlCe) == true)
             {
                 items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
             }
@@ -129,7 +135,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (reader.Read() == true)
                     {
                         if (reader.FieldCount > 0)
                         {

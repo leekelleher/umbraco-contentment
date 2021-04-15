@@ -1,0 +1,50 @@
+﻿<!-- Copyright © 2020 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.DataList.Editor.Controller as vm">
+
+    <div ui-sortable="vm.sortableOptions" ng-model="model.value">
+        <div class="lk-data-list-item" ng-repeat="item in model.value">
+
+            <i class="icon-navigation lk-data-list-item__handle" aria-label="Sort"></i>
+
+            <div class="lk-data-list-item__icon">
+                <button type="button" ng-click="vm.open(item)" umb-auto-focus>
+                    <i class="icon" ng-class="item.icon"></i>
+                </button>
+            </div>
+
+            <div class="lk-data-list-item__text">
+                <div class="flex items-between">
+                    <input type="text" ng-model="item.name" placeholder="Enter a name" class="-full-width-input mr1" focus-when="{{ vm.focusName }}" />
+                    <input type="text" ng-model="item.value" placeholder="Enter a value" class="-full-width-input" />
+                </div>
+                <div>
+                    <input type="text" ng-model="item.description" placeholder="Enter a description" class="-full-width-input mt1" />
+                </div>
+            </div>
+
+            <div class="lk-data-list-item__remove">
+                <button aria-label="Delete item"
+                        type="button"
+                        class="btn-icon icon-trash"
+                        ng-click="vm.remove($index)">
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <button type="button"
+            class="umb-node-preview-add"
+            id="{{model.alias}}"
+            aria-label="Add item"
+            ng-click="vm.add()"
+            ng-if="vm.allowAdd">
+        <span>Add item</span>
+        <span class="sr-only">...</span>
+    </button>
+
+</div>

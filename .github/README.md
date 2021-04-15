@@ -33,7 +33,7 @@ Let's take a look inside...
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
-##### Telemetry
+#### Telemetry
 
 Information about the [telemetry feature](../docs/telemetry.md).
 
@@ -84,22 +84,22 @@ I've been doing open source for a long time. I have suffered my fair share of bu
 
 I reserve the right to address bug reports or feature requests in my own time, or ignore them completely.
 
-**Any feedback is warmly welcome.** But please keep in mind, I am not your personal support developer.
+**Any feedback is welcome and appreciated.** But please keep in mind, I am not your personal support developer.
 
-If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.<br>
+If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it. 
 Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
 
-If you would like to contribute to this project, please start a discussion before spending time on a pull request. Your time is precious.
+If you would like to contribute to this project, please start a discussion before spending time and energy on a pull request. Your time is precious too.
 
 Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
 This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go home.** :v::heart::dove:
 
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
-Otherwise you are completely free to not use this software, complain on your favourite social network, or shout into the void.
+Otherwise you are completely free to not use this software, complain on your favourite social network, or go shout into the void.
 
 Unacceptable behaviour towards myself (or contributors) may result in being blocked from accessing this repository.
 
@@ -129,7 +129,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>860+ hours</b> (between 2019-03-13 to 2020-12-03)</summary>
+<summary>Current development effort: <b>920+ hours</b> (between 2019-03-13 to 2021-04-14)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

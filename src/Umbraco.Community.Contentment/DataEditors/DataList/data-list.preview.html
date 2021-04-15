@@ -55,6 +55,9 @@
                         </div>
                     </div>
                 </div>
+                <div ng-switch-when="rawJson" ng-if="vm.property.config.items.length > 0">
+                    <umb-code-snippet language="'JSON'">{{vm.property.config.items | json}}</umb-code-snippet>
+                </div>
             </div>
         </div>
     </div>

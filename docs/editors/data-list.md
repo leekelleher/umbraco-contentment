@@ -212,7 +212,7 @@ Here's an example of strongly-typed...
 
 ```cshtml
 <ul>
-    @foreach (var item in @(Model.Value<IEnumerable<string>>("dataList")))
+    @foreach (var item in Model.Value<IEnumerable<string>>("dataList"))
     {
         <li>@item</li>
     }
