@@ -10,8 +10,7 @@ using Umbraco.Community.Contentment.DataEditors;
 // as to reduce namespace imports and ease the developer experience. [LK]
 namespace Umbraco.Core.Composing
 {
-    // TODO: [LK:2021-03-04] Rename class to `CompositionExtensions` v2.0.0. For consistency with the other `Composition` extension classes.
-    public static partial class ContentmentCompositionExtensions
+    public static partial class CompositionExtensions
     {
         public static ContentmentListItemCollectionBuilder ContentmentListItems(this Composition composition)
         {
