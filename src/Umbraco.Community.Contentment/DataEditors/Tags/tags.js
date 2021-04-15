@@ -150,7 +150,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function keyUp($event, $index) {
-            console.log("keyUp", $event.keyCode, $index);
             if ($event.keyCode === 8 || $event.keyCode === 46) {
                 remove($index);
             }
