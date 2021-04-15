@@ -21,8 +21,7 @@ namespace Umbraco.Community.Contentment.Trees
         TreeTitle = Constants.Internals.ProjectName,
         TreeUse = TreeUse.Main)]
     [PluginController(Constants.Internals.PluginControllerName)]
-    // TODO: [LK:2021-02-18] Mark as internal for v2.0.0. It can be disabled using Composition extension method.
-    public sealed class ContentmentTreeController : TreeController
+    internal sealed class ContentmentTreeController : TreeController
     {
         protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
         {
