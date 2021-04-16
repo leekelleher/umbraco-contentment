@@ -110,9 +110,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return _.find($scope.model.value, function (y) { return x.key === y.key; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-            });
+            var items = Object.toBoolean(config.allowDuplicates)
+                ? config.items
+                : config.items.filter(x => $scope.model.value.some(y => x.key === y.key) === false);
 
             editorService.open({
                 view: config.overlayView,

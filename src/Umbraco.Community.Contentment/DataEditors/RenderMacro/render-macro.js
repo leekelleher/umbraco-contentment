@@ -22,7 +22,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.loading = true;
 
-            if (_.isEmpty($scope.model.config.macro) === false) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+            if (Array.isArray($scope.model.config.macro) && $scope.model.config.macro.length > 0) {
 
                 var macro = $scope.model.config.macro[0];
 

@@ -67,7 +67,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 var orphaned = [];
 
                 $scope.model.value.forEach(function (v) {
-                    var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    var item = config.items.find(x => x.value === v);
                     if (item) {
                         vm.items.push(Object.assign({}, item));
                     } else {
@@ -87,9 +87,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return _.find(vm.items, function (y) { return x.value === y.value; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-            });
+            var items = Object.toBoolean(config.allowDuplicates)
+                ? config.items
+                : config.items.filter(x => vm.items.some(y => x.value === y.value) === false);
 
             editorService.open({
                 config: {
