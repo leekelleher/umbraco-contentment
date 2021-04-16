@@ -87,7 +87,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : config.items.filter(x => vm.items.length === 0 || !vm.items.some(y => x.value === y.value));
+            var items = Object.toBoolean(config.allowDuplicates)
+                ? config.items
+                : config.items.filter(x => vm.items.some(y => x.value === y.value) === false);
 
             editorService.open({
                 config: {

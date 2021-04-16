@@ -109,8 +109,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : config.items.filter(x => $scope.model.value.length === 0 || $scope.model.value.some(y => x.key !== y.key));
+
+            var items = Object.toBoolean(config.allowDuplicates)
+                ? config.items
+                : config.items.filter(x => $scope.model.value.some(y => x.key === y.key) === false);
 
             editorService.open({
                 view: config.overlayView,

@@ -22,7 +22,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.loading = true;
 
-            if ($scope.model.config.macro != null && $scope.model.config.macro.length >= 1) {
+            if (Array.isArray($scope.model.config.macro) && $scope.model.config.macro.length > 0) {
 
                 var macro = $scope.model.config.macro[0];
 

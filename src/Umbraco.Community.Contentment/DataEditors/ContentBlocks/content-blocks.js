@@ -372,7 +372,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             save: true,
                             name: model.blueprintName,
                             tabs: [{
-                                properties: Object.entries(item.value).map(function(x){ return { id: 0, alias: x[0], value: x[1] }; })
+                                properties: Object.entries(item.value).map(x => ({ id: 0, alias: x[0], value: x[1] }))
                             }]
                         };
 
