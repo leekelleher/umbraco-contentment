@@ -512,6 +512,7 @@
     <Content Include="DataEditors\_\_components.js" />
     <Content Include="DataEditors\_\_filters.js" />
     <Content Include="DataEditors\_\_directives.js" />
+    <Content Include="Web\UI\App_Plugins\Contentment\backoffice\icons\icon-umbraco.svg" />
     <Content Include="Web\UI\App_Plugins\Contentment\components\list-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\components\stack-editor.html" />
     <Content Include="Web\UI\App_Plugins\Contentment\editors\_empty.html" />

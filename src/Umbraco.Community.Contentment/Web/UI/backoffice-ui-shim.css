@@ -18,13 +18,6 @@
     width: 20px;
 }
 
-/* Enables the use of the Umbraco icon in the backoffice. */
-[class].icon-umbraco {
-    background-image: url(/umbraco/assets/img/application/logo_black.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
 /* Anchor links within `.alert-form` are rendered as white, (appearing invisible) */
 .alert-form a {
     color: #1b264f;
