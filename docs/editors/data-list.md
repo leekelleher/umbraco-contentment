@@ -122,7 +122,7 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
-#### Providing custom values for published content
+#### Providing custom values for published content models
 
 As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.
 
@@ -183,6 +183,12 @@ For creating your own custom list editor, you will need to create a new C# class
 This interface contains two properties, `View` and `DefaultConfig` _(optional)_, and one method `HasMultipleValues(config)` returning a boolean value for whether the list editor can select multiple or single values.
 
 The `View` property should set the path of the AngularJS view file. This can be whatever you want it to be. The only requirement is that the AngularJS controller (for the view) will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessible by `$scope.model.config.items`.
+
+#### Using dependency injection (IoC/DI)
+
+It is worth noting that both the `IDataListSource` and `IDataListEditor` types support [Umbraco's approach for injecting dependencies](https://our.umbraco.com/documentation/reference/using-ioc/#injecting-dependencies). You can use any registered services, factories, helpers by adding them to the class constructor of your custom data-source/list-editor.
+
+For an example, you can see how this is done with the [`UmbracoContentDataListSource` data-source](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/DataList/DataSources/UmbracoContentDataListSource.cs#L23-L27).
 
 
 ### How to get the value?
