@@ -61,6 +61,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             // TODO: [LK:2021-04-13] Ensure that the edits are valid.
                         });
                     }
+                }, {
+                    labelKey: "clipboard_labelForRemoveAllEntries",
+                    icon: "trash",
+                    method: function () {
+                        $scope.model.value = [];
+                    }
                 }]);
             }
 
