@@ -10,6 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("buttons.model", $scope.model);
 
         var defaultConfig = {
+            allowClear: 0,
             defaultIcon: "icon-science",
             defaultValue: [],
             items: [],
@@ -59,6 +60,27 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             vm.select = select;
+
+            if ($scope.umbProperty) {
+
+                vm.propertyActions = [];
+
+                if (Object.toBoolean(config.allowClear) === true) {
+                    vm.propertyActions.push({
+                        labelKey: "buttons_clearSelection",
+                        icon: "trash",
+                        method: clear
+                    });
+                }
+
+                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+            }
+        };
+
+        function clear() {
+            $scope.model.value = [];
+            vm.items.forEach(x => x.selected = false);
+            setDirty();
         };
 
         function select(item) {

@@ -55,6 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "maxLines", 30 },
                 }
             },
+            new AllowClearConfigurationField(),
             new ConfigurationField
             {
                 Key = "enableMultiple",
@@ -74,7 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return config.TryGetValueAs("enableMultiple", out bool enableMultiple) == true && enableMultiple == true;
         }
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public string View => DataEditorViewPath;
     }

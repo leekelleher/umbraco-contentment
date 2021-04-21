@@ -5,7 +5,8 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.DataTable.Controller", [
     "$scope",
-    function ($scope) {
+    "Umbraco.Community.Contentment.Services.DevMode",
+    function ($scope, devModeService) {
 
         // console.log("datatable.model", $scope.model);
 
@@ -23,6 +24,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
 
             $scope.model.value = $scope.model.value || [];
+
+            if (Number.isInteger(config.maxItems) === false) {
+                config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
+            }
 
             vm.headings = config.fields.map(function (x) { return x.label });
             vm.items = [];
@@ -49,10 +54,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.usePrevalueEditors = Object.toBoolean(config.usePrevalueEditors) ? true : null;
 
-            vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems;
+            vm.allowAdd = config.maxItems === 0 || vm.items.length < config.maxItems;
             vm.allowRemove = true;
 
-            vm.sortable = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.sortable = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
             vm.sortableOptions = {
                 axis: "y",
@@ -81,22 +86,46 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.add = add;
             vm.remove = remove;
+
+            if ($scope.umbProperty) {
+                $scope.umbProperty.setPropertyActions([{
+                    labelKey: "contentment_editRawValue",
+                    icon: "brackets",
+                    method: function () {
+                        devModeService.editValue($scope.model, function () {
+                            // TODO: [LK:2021-04-20] Ensure that the edits are valid.
+                        });
+                    }
+                }, {
+                    labelKey: "clipboard_labelForRemoveAllEntries",
+                    icon: "trash",
+                    method: function () {
+                        clear();
+                    }
+                }]);
+            }
         };
 
         function add() {
             vm.items.push(angular.copy(config.fields)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
 
-            if ((config.maxItems !== 0 && config.maxItems !== "0") && vm.items.length >= config.maxItems) {
+            if (config.maxItems !== 0 && vm.items.length >= config.maxItems) {
                 vm.allowAdd = false;
             }
 
             setDirty();
         };
 
+        function clear() {
+            vm.items = [];
+            $scope.model.value = [];
+            setDirty();
+        };
+
         function remove($index) {
             vm.items.splice($index, 1);
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems) {
+            if (config.maxItems === 0 || vm.items.length < config.maxItems) {
                 vm.allowAdd = true;
             }
 

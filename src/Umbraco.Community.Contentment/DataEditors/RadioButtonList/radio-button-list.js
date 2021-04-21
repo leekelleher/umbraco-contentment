@@ -10,6 +10,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("radiobuttonlist.model", $scope.model);
 
         var defaultConfig = {
+            allowClear: 0,
             items: [],
             showDescriptions: 0,
             showIcons: 0,
@@ -34,6 +35,24 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
                 : $scope.model.alias;
+
+            if ($scope.umbProperty) {
+
+                vm.propertyActions = [];
+
+                if (Object.toBoolean(config.allowClear) === true) {
+                    vm.propertyActions.push({
+                        labelKey: "buttons_clearSelection",
+                        icon: "trash",
+                        method: function () {
+                            $scope.model.value = null;
+                            // setDirty();
+                        }
+                    });
+                }
+
+                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+            }
         };
 
         init();

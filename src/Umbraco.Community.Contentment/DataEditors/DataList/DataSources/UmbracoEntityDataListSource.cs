@@ -55,23 +55,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
-            {
-                Key = NotesConfigurationField.Notes,
-                Name = nameof(NotesConfigurationField.Notes),
-                View = NotesDataEditor.DataEditorViewPath,
-                Config = new Dictionary<string, object>
-                {
-                    { "notes", @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
 <div class=""mt3"">
 <p>Umbraco's `EntityService` API has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
 </div>
-</details>" }
-                },
-                HideLabel = true
-            },
+</details>", true),
             new ConfigurationField
             {
                 Key = "entityType",
