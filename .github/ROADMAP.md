@@ -42,14 +42,14 @@ Property Editors are:
 
 ### v1.4
 
-- 🤫
+- _A bunch of (hidden) extra data-sources._ 🤫
 
 
 ## v2
 
 ### v2.0
 
-- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.3 features that compiles against Umbraco CMS v8.12.
+- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.4.x features that compiles against Umbraco CMS v8.13.
 
 ### v2.1
 

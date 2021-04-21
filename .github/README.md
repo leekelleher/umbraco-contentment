@@ -43,7 +43,8 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 #### Installation
 
-> *Note:* Contentment has been developed against **Umbraco v8.6.1** and will support that version and above.
+> *Note:* Contentment v2.x has been developed against **Umbraco v8.13.0** and will support that version and above.
+> If you are using **Umbraco v8.6.1 (or above)**, you can continue to use Contentment v1.x.
 
 Contentment can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
 

@@ -48,11 +48,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return base.ToEditor(property, dataTypeService, culture, segment);
             }
 
-            // TODO: [LK] Could check if the value has come from NestedContent or StackedContent?
-            // ncContentTypeAlias, icContentTypeAlias
-            // Could use a custom JsonConverter? a la: https://stackoverflow.com/a/43714309/12787
-            // or https://www.jerriepelser.com/blog/deserialize-different-json-object-same-class/
-
             var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             if (blocks == null)
             {

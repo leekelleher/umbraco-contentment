@@ -68,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (nodeContextId == -20)
                 {
-                    // TODO: [LK:2020-08-17] If the ID = -20, then we can assume that it's come from Nested Content. What to do?
+                    // TODO: [UP-FOR-GRABS] If the ID = -20, then we can assume that it's come from Nested Content. What to do? ¯\_(ツ)_/¯
                 }
 
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
