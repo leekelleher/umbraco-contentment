@@ -66,6 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             },
             new MaxItemsConfigurationField(),
+            new AllowClearConfigurationField(),
             new ConfigurationField
             {
                 Key = "allowDuplicates",

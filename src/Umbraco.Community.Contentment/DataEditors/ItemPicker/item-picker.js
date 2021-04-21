@@ -14,6 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
+            allowClear: 0,
             allowDuplicates: 0,
             confirmRemoval: 0,
             defaultIcon: "icon-science",
@@ -84,6 +85,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     }
                 }
             }
+
+            if ($scope.umbProperty) {
+
+                vm.propertyActions = [];
+
+                if (Object.toBoolean(config.allowClear) === true) {
+                    vm.propertyActions.push({
+                        labelKey: "buttons_clearSelection",
+                        icon: "trash",
+                        method: clear
+                    });
+                }
+
+                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+            }
         };
 
         function add() {
@@ -128,6 +144,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     setFocus();
                 }
             });
+        };
+
+        function clear() {
+            vm.items = [];
+            $scope.model.value = [];
+            setDirty();
         };
 
         function remove($index) {

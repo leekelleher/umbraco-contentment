@@ -24,7 +24,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function init() {
 
-            $scope.model.value = $scope.model.value || config.defaultValue;
+            if ($scope.model.value !== 0) {
+                $scope.model.value = $scope.model.value || config.defaultValue;
+            }
 
             vm.maximum = config.maximum;
             vm.minimum = config.minimum;

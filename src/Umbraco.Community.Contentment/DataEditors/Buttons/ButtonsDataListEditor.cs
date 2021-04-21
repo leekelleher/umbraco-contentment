@@ -66,6 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
             },
+            new AllowClearConfigurationField(),
             new ConfigurationField
             {
                 Key = "enableMultiple",

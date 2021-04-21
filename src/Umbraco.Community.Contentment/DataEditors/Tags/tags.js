@@ -16,6 +16,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         //console.log("tags.model", $scope.model);
 
         var defaultConfig = {
+            allowClear: 0,
             confirmRemoval: 0,
             defaultValue: [],
             items: [],
@@ -97,6 +98,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             });
 
+            if ($scope.umbProperty) {
+
+                vm.propertyActions = [];
+
+                if (Object.toBoolean(config.allowClear) === true) {
+                    vm.propertyActions.push({
+                        labelKey: "buttons_clearSelection",
+                        icon: "trash",
+                        method: clear
+                    });
+                }
+
+                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+            }
         };
 
         function add($event, item) {
@@ -110,6 +125,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 setDirty();
             });
+        };
+
+        function clear() {
+            vm.items = [];
+            $scope.model.value = [];
+            setDirty();
         };
 
         function keyDown($event) {

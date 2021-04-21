@@ -21,6 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ShowIconsConfigurationField(),
+            new AllowClearConfigurationField(),
             new ConfigurationField
             {
                 Key ="confirmRemoval",
