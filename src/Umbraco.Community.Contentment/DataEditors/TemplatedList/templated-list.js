@@ -63,7 +63,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     });
                 }
 
-                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+                if (vm.propertyActions.length > 0) {
+                    $scope.umbProperty.setPropertyActions(vm.propertyActions);
+                }
             }
         };
 
