@@ -178,7 +178,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function populate(item, $index, propertyName) {
             var label = "";
 
-            if (propertyName === 'name' && config.nameTemplates.hasOwnProperty(item.key) === true) {
+            // check that the configuration editor exists, if not then return a default label.
+            if (config.itemLookup.hasOwnProperty(item.key) === false) {
+                if (propertyName === "name") {
+                    return "THIS ITEM IS NO LONGER AVAILABLE";
+                } else if (propertyName === "description") {
+                    return "Please remove this configuration and select another item.";
+                } else if (propertyName === "icon") {
+                    return "icon-alert";
+                } else {
+                    return propertyName;
+                }
+            }
+
+            if (propertyName === "name" && config.nameTemplates.hasOwnProperty(item.key) === true) {
                 var expression = config.nameTemplates[item.key];
                 if (expression) {
                     item.value.$index = $index + 1;
@@ -187,7 +200,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             }
 
-            if (propertyName === 'description' && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
+            if (propertyName === "description" && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
                 var expression = config.descriptionTemplates[item.key];
                 if (expression) {
                     item.value.$index = $index + 1;

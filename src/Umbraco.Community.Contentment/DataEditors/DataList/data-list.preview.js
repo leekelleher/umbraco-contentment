@@ -71,7 +71,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     .then(function (result) {
 
                         vm.property = result;
-                        vm.state = result.config.items.length > 0 ? "loaded" : "noItems";
+                        vm.state = result.config.items && result.config.items.length > 0 ? "loaded" : "noItems";
 
                     });
             }
