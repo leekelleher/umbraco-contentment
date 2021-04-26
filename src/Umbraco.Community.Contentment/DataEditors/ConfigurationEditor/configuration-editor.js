@@ -247,6 +247,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             } else {
                 vm.allowAdd = true;
             }
+            emit();
         };
 
         function setDirty() {
