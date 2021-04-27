@@ -34,6 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 : valueType;
         }
 
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Snapshot;
+
         public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
         {
             if (source is string value)
