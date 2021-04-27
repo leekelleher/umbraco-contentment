@@ -52,6 +52,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.allowEdit = {};
             config.nameTemplates = {};
             config.descriptionTemplates = {};
+            config.missingItem = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
@@ -65,6 +66,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 if (item.descriptionTemplate) {
                     config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
                 }
+            });
+
+            localizationService.localizeMany(["contentment_missingItemName", "contentment_missingItemDescription"]).then(function (data) {
+                config.missingItem["name"] = data[0];
+                config.missingItem["description"] = data[1];
+                config.missingItem["icon"] = "icon-alert";
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
@@ -179,16 +186,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var label = "";
 
             // check that the configuration editor exists, if not then return a default label.
-            if (config.itemLookup.hasOwnProperty(item.key) === false) {
-                if (propertyName === "name") {
-                    return "THIS ITEM IS NO LONGER AVAILABLE";
-                } else if (propertyName === "description") {
-                    return "Please remove this configuration and select another item.";
-                } else if (propertyName === "icon") {
-                    return "icon-alert";
-                } else {
-                    return propertyName;
-                }
+            if (config.itemLookup.hasOwnProperty(item.key) === false && config.missingItem) {
+                return config.missingItem[propertyName] || propertyName;
             }
 
             if (propertyName === "name" && config.nameTemplates.hasOwnProperty(item.key) === true) {
@@ -225,6 +224,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         $scope.model.value.splice($index, 1);
 
+                        // TODO: [LK] Add the `maxItem` numeric code.
                         if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
                         }
