@@ -114,12 +114,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            if (type == typeof(IPublishedContent) && Udi.TryParse(value, out var udi))
-            {
-                return _umbracoContextAccessor.UmbracoContext.Content.GetById(udi);
-            }
-
-            return value.TryConvertTo(type).Result;
+            return Udi.TryParse(value, out var udi) == true
+                ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
+                : default;
         }
     }
 }
