@@ -76,8 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValue("contentType", out var obj) == true &&
-                obj is JArray array &&
+            if (config.TryGetValueAs("contentType", out JArray array) == true &&
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
