@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
@@ -52,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     })
                     .ToList();
 
-                return new ConfigurationField[]
+                return new[]
                 {
                     new NotesConfigurationField($@"<details class=""alert alert-danger"">
 <summary><strong>Important note about Umbraco Members.</strong></summary>
@@ -91,6 +92,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
+            DataListItem mapMember(IMember member)
+            {
+                var guidUdi = Udi.Create(UmbConstants.UdiEntityType.Member, member.Key).ToString();
+                return new DataListItem
+                {
+                    Name = member.Name,
+                    Value = guidUdi,
+                    Icon = member.ContentType.Icon ?? UmbConstants.Icons.Member,
+                    Description = guidUdi,
+                };
+            };
+
             if (config.TryGetValueAs("memberType", out JArray array) == true &&
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
@@ -100,28 +113,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var memberType = _memberTypeService.Get(udi.Guid);
                 if (memberType != null)
                 {
-                    return _memberService
-                        .GetMembersByMemberType(memberType.Id)
-                        .Select(x => new DataListItem
-                        {
-                            Name = x.Name,
-                            Value = x.Key.ToString(),
-                            Icon = memberType.Icon ?? UmbConstants.Icons.Member,
-                            Description = Udi.Create(UmbConstants.UdiEntityType.Member, x.Key).ToString()
-                        });
+                    return _memberService.GetMembersByMemberType(memberType.Id).Select(mapMember);
                 }
             }
             else
             {
-                return _memberService
-                    .GetAllMembers()
-                    .Select(x => new DataListItem
-                    {
-                        Name = x.Name,
-                        Value = x.Key.ToString(),
-                        Icon = UmbConstants.Icons.Member,
-                        Description = Udi.Create(UmbConstants.UdiEntityType.Member, x.Key).ToString()
-                    });
+                return _memberService.GetAllMembers().Select(mapMember);
             }
 
             return Enumerable.Empty<DataListItem>();
@@ -131,8 +128,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return Guid.TryParse(value, out var guid) == true
-                ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(guid)
+            return GuidUdi.TryParse(value, out var udi) == true && udi.Guid.Equals(Guid.Empty) == false
+                ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(udi.Guid)
                 : default;
         }
     }
