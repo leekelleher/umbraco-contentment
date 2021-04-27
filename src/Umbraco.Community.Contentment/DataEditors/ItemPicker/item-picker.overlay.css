@@ -47,3 +47,11 @@
     .contentment.lk-overlay .umb-action:not(.-disabled) .umb-checkmark:not(.umb-checkmark--checked).icon-check:before {
         content: none;
     }
+
+.contentment .umb-card-grid .alert {
+    flex: none;
+    font-size: inherit;
+    text-align: inherit;
+    width: 100%;
+    max-width: 100%;
+}
