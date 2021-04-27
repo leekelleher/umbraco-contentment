@@ -25,6 +25,7 @@ namespace Umbraco.Core.Composing
                     // Data List - Data Sources
                     .Add<CountriesDataListSource>()
                     .Add<CurrenciesDataListSource>()
+                    .Add<ExamineDataListSource>()
                     .Add<TimeZoneDataListSource>()
                     .Add<uCssClassNameDataListSource>()
                     .Add<UmbracoContentPropertiesDataListSource>()
