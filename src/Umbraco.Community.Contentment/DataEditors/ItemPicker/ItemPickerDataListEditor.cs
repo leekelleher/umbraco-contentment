@@ -65,6 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
             },
+            new EnableFilterConfigurationField(),
             new MaxItemsConfigurationField(),
             new AllowClearConfigurationField(),
             new ConfigurationField
@@ -95,6 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "listType", "list" },
             { "defaultIcon", Core.Constants.Icons.DefaultIcon },
+            { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 

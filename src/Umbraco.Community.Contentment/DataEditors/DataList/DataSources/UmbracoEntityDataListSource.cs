@@ -22,6 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { nameof(UmbracoObjectTypes.DataType), UmbracoObjectTypes.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbracoObjectTypes.Document },
+            { nameof(UmbracoObjectTypes.DocumentBlueprint), UmbracoObjectTypes.DocumentBlueprint },
             { nameof(UmbracoObjectTypes.DocumentType), UmbracoObjectTypes.DocumentType },
             { nameof(UmbracoObjectTypes.Media), UmbracoObjectTypes.Media },
             { nameof(UmbracoObjectTypes.MediaType), UmbracoObjectTypes.MediaType },
@@ -33,6 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { nameof(UmbracoObjectTypes.DataType), UmbConstants.Icons.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbConstants.Icons.Content },
+            { nameof(UmbracoObjectTypes.DocumentBlueprint), Constants.Icons.ContentTemplate },
             { nameof(UmbracoObjectTypes.DocumentType), UmbConstants.Icons.ContentType },
             { nameof(UmbracoObjectTypes.Media), UmbConstants.Icons.MediaImage },
             { nameof(UmbracoObjectTypes.MediaType), UmbConstants.Icons.MediaType },
@@ -58,7 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
 <div class=""mt3"">
-<p>Umbraco's `EntityService` API has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
+<p>Umbraco's <code>EntityService</code> API (currently) has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
 </div>
 </details>", true),
@@ -82,13 +84,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var entityType = config.TryGetValue("entityType", out var obj) == true && obj is string value
-                ? value
-                : string.Empty;
-
-            if (SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
+            if (config.TryGetValueAs("entityType", out string entityType) == true && SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
             {
-                var icon = EntityTypeIcons.ContainsKey(entityType) == true ? EntityTypeIcons[entityType] : UmbConstants.Icons.DefaultIcon;
+                var icon = EntityTypeIcons.GetValueAs(entityType, UmbConstants.Icons.DefaultIcon);
 
                 return _entityService
                     .GetAll(objectType)

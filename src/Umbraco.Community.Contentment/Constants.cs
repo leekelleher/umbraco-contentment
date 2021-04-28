@@ -81,6 +81,11 @@ namespace Umbraco.Community.Contentment
             }
         }
 
+        internal static partial class Icons
+        {
+            public const string ContentTemplate = "icon-blueprint";
+        }
+
         internal static partial class Package
         {
             public const string Author = "Lee Kelleher";

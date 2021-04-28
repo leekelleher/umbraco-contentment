@@ -30,7 +30,7 @@
                         </umb-search-filter>
 
                         <ul class="umb-actions umb-actions-child">
-                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm">
+                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                                 <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
                                     <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
                                     <span class="menu-label">
@@ -38,6 +38,9 @@
                                         <small ng-bind="item.description"></small>
                                     </span>
                                 </button>
+                            </li>
+                            <li class="alert alert-danger" ng-if="results.length == 0">
+                                <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
                             </li>
                         </ul>
                     </umb-box-content>

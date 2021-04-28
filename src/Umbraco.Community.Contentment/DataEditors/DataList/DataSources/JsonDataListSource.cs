@@ -100,27 +100,25 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = new List<DataListItem>();
-
             var url = config.GetValueAs("url", string.Empty);
 
             if (string.IsNullOrWhiteSpace(url) == true)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             var json = GetJson(url);
 
             if (json == null)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             var itemsJsonPath = config.GetValueAs("itemsJsonPath", string.Empty);
 
             if (string.IsNullOrWhiteSpace(itemsJsonPath) == true)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             try
@@ -130,7 +128,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (tokens.Any() == false)
                 {
                     _logger.Warn<JsonDataListSource>($"The JSONPath '{itemsJsonPath}' did not match any items in the JSON.");
-                    return items;
+                    return Enumerable.Empty<DataListItem>();
                 }
 
                 // TODO: [UP-FOR-GRABS] How would you get the string-value from a "key"?
@@ -141,6 +139,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var valueJsonPath = config.GetValueAs("valueJsonPath", string.Empty);
                 var iconJsonPath = config.GetValueAs("iconJsonPath", string.Empty);
                 var descriptionJsonPath = config.GetValueAs("descriptionJsonPath", string.Empty);
+
+                var items = new List<DataListItem>();
 
                 foreach (var token in tokens)
                 {
@@ -176,13 +176,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Description = description?.ToString() ?? string.Empty
                     });
                 }
+
+                return items;
             }
             catch (Exception ex)
             {
                 _logger.Error<JsonDataListSource>(ex, "Error finding items in the JSON. Please check the syntax of your JSONPath expressions.");
             }
 
-            return items;
+            return Enumerable.Empty<DataListItem>();
         }
 
         private JToken GetJson(string url)

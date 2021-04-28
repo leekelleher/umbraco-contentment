@@ -11,6 +11,10 @@
         <key alias="removeItemMessage">Are you sure you want to remove this item?</key>
         <key alias="removeItemButton">Yes, remove</key>
 
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">This item is no longer available</key>
+        <key alias="missingItemDescription">Please remove this configuration and select another item.</key>
+
         <!-- Content Blocks -->
         <key alias="configureDisplayMode">Select and configure a display mode</key>
         <key alias="configureElementType">Select and configure an element type</key>

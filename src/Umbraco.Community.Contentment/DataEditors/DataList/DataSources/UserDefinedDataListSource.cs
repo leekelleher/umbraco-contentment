@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -28,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                View = IOHelper.ResolveUrl(DataListDataEditor.DataEditorListEditorViewPath),
+                View = DataListDataEditor.DataEditorListEditorViewPath,
                 Config = new Dictionary<string, object>()
                 {
                     { "confirmRemoval", Constants.Values.True },
