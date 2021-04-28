@@ -12,6 +12,7 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Xml;
 using Umbraco.Web;
+using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -73,21 +74,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = new List<IPublishedContent>();
-
             var xpath = config.GetValueAs("xpath", string.Empty);
 
             if (string.IsNullOrWhiteSpace(xpath) == false)
             {
+                var nodeContextId = default(int?);
                 var preview = true;
                 var umbracoContext = _umbracoContextAccessor.UmbracoContext;
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-                var nodeContextId = int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true
-                    ? currentId
-                    : int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true
-                        ? parentId
-                        : default(int?);
+                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+                {
+                    nodeContextId = currentId;
+                }
+                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
+                {
+                    nodeContextId = parentId;
+                }
 
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
@@ -96,18 +99,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
-                    items.AddRange(umbracoContext.Content.GetByXPath(preview, parsed));
+                    return umbracoContext.Content.GetByXPath(preview, parsed)
+                        .Select(x => new DataListItem
+                        {
+                            Name = x.Name,
+                            Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
+                            Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
+                            Description = x.TemplateId > 0 ? x.Url : string.Empty,
+                            Disabled = x.IsPublished() == false,
+                        });
                 }
             }
 
-            return items.Select(x => new DataListItem
-            {
-                Name = x.Name,
-                Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
-                Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : Core.Constants.Icons.Content,
-                Description = x.TemplateId > 0 ? x.Url : string.Empty,
-                Disabled = x.IsPublished() == false,
-            });
+            return Enumerable.Empty<DataListItem>();
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
