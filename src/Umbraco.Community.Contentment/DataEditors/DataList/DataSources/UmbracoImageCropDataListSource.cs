@@ -5,9 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
@@ -43,8 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Description = x.EditorAlias,
                         Name = x.Name,
                         Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
-                    })
-                    .ToList();
+                    });
 
                 return new ConfigurationField[]
                 {
@@ -53,14 +50,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "imageCropper",
                         Name = "Image Cropper",
                         Description = "Select a Data Type that uses the Image Cropper.",
-                        View = ItemPickerDataListEditor.DataEditorViewPath,
+                        View = RadioButtonListDataListEditor.DataEditorViewPath,
                         Config = new Dictionary<string, object>
                         {
-                            { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                            { "items", items },
-                            { "listType", "list" },
-                            { "overlayView", IOHelper.ResolveUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
-                            { "maxItems", 1 },
+                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+                            { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                            { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
+                            { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value }
                         }
                     }
                 };
@@ -74,9 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             if (config.TryGetValue("imageCropper", out var obj) == true &&
-                obj is JArray array &&
-                array.Count > 0 &&
-                array[0].Value<string>() is string str &&
+                obj is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
                 GuidUdi.TryParse(str, out var udi) == true)
             {
