@@ -52,6 +52,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.allowEdit = {};
             config.nameTemplates = {};
             config.descriptionTemplates = {};
+            config.missingItem = {};
 
             config.items.forEach(function (item) {
                 config.itemLookup[item.key] = item;
@@ -65,6 +66,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 if (item.descriptionTemplate) {
                     config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
                 }
+            });
+
+            localizationService.localizeMany(["contentment_missingItemName", "contentment_missingItemDescription"]).then(function (data) {
+                config.missingItem["name"] = data[0];
+                config.missingItem["description"] = data[1];
+                config.missingItem["icon"] = "icon-alert";
             });
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
@@ -178,7 +185,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function populate(item, $index, propertyName) {
             var label = "";
 
-            if (propertyName === 'name' && config.nameTemplates.hasOwnProperty(item.key) === true) {
+            // check that the configuration editor exists, if not then return a default label.
+            if (config.itemLookup.hasOwnProperty(item.key) === false && config.missingItem) {
+                return config.missingItem[propertyName] || propertyName;
+            }
+
+            if (propertyName === "name" && config.nameTemplates.hasOwnProperty(item.key) === true) {
                 var expression = config.nameTemplates[item.key];
                 if (expression) {
                     item.value.$index = $index + 1;
@@ -187,7 +199,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             }
 
-            if (propertyName === 'description' && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
+            if (propertyName === "description" && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
                 var expression = config.descriptionTemplates[item.key];
                 if (expression) {
                     item.value.$index = $index + 1;
@@ -212,6 +224,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         $scope.model.value.splice($index, 1);
 
+                        // TODO: [LK] Add the `maxItem` numeric code.
                         if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
                         }
@@ -234,6 +247,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             } else {
                 vm.allowAdd = true;
             }
+            emit();
         };
 
         function setDirty() {

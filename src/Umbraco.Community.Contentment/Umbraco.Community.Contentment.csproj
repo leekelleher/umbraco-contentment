@@ -306,8 +306,10 @@
     <Compile Include="DataEditors\DataList\DataSources\UmbracoDictionaryDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoEntityDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoImageCropDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\UmbracoMembersDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UmbracoMemberGroupDataListSource.cs" />
     <Compile Include="DataEditors\DataList\DataSources\UserDefinedDataListSource.cs" />
+    <Compile Include="DataEditors\DataList\DataSources\ExamineDataListSource.cs" />
     <Compile Include="DataEditors\DictionaryPicker\DictionaryPickerDataEditor.cs" />
     <Compile Include="DataEditors\_\ConfigurationFields\AllowClearConfigurationField.cs" />
     <Compile Include="Telemetry\CompositionExtensions.cs" />

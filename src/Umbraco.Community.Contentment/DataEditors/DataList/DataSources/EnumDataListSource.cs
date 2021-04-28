@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enumType",
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
-                View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+                View = CascadingDropdownListDataEditor.DataEditorViewPath,
                 Config = new Dictionary<string, object>
                 {
                     { CascadingDropdownListDataEditor.APIs, new[]
@@ -65,15 +65,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = new List<DataListItem>();
-
             var type = GetValueType(config);
             if (type == null)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
+            var items = new List<DataListItem>();
+
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
             foreach (var field in fields)
             {
                 var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
@@ -83,6 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 var attr2 = field.GetCustomAttribute<DescriptionAttribute>(false);
+
                 items.Add(new DataListItem
                 {
                     Description = attr?.Description ?? attr2?.Description,
@@ -93,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
             }
 
-            if (config.TryGetValueAs("sortAlphabetically", out string boolean) == true && boolean == "1")
+            if (config.TryGetValueAs("sortAlphabetically", out bool boolean) == true && boolean == true)
             {
                 return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
             }

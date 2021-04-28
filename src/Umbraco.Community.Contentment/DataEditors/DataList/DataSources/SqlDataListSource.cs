@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Large;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -68,10 +68,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "query",
                 Name = "SQL query",
                 Description = "Enter your SQL query.",
-                View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath),
+                View = CodeEditorDataEditor.DataEditorViewPath,
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
+                    { CodeEditorConfigurationEditor.MinLines, 20 },
+                    { CodeEditorConfigurationEditor.MaxLines, 40 },
                 }
             },
             new ConfigurationField
@@ -79,13 +81,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "connectionString",
                 Name = "Connection string",
                 Description = "Select the connection string.",
-                View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                View = DropdownListDataListEditor.DataEditorViewPath,
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _connectionStrings },
                 }
-            }
+            },
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>

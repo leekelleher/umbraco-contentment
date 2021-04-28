@@ -12,6 +12,7 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Xml;
 using Umbraco.Web;
+using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -50,21 +51,23 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var preview = true;
-
-            var startNode = default(IPublishedContent);
-
             var parentNode = config.GetValueAs("parentNode", string.Empty);
+            var startNode = default(IPublishedContent);
 
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
+                var nodeContextId = default(int?);
                 var umbracoContext = _umbracoContextAccessor.UmbracoContext;
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-                var nodeContextId = int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true
-                    ? currentId
-                    : int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true
-                        ? parentId
-                        : default(int?);
+                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+                {
+                    nodeContextId = currentId;
+                }
+                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
+                {
+                    nodeContextId = parentId;
+                }
 
                 if (nodeContextId == -20)
                 {
@@ -86,29 +89,29 @@ namespace Umbraco.Community.Contentment.DataEditors
                 startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(preview, udi.Guid);
             }
 
-            return startNode == null
-                ? Enumerable.Empty<DataListItem>()
-                : startNode.Children.Select(x => new DataListItem
+            if (startNode != null)
+            {
+                return startNode.Children.Select(x => new DataListItem
                 {
                     // TODO: [LK:2020-12-03] If multi-lingual is enabled, should the `.Name` take the culture into account?
                     Name = x.Name,
-                    Value = Udi.Create(Core.Constants.UdiEntityType.Document, x.Key).ToString(),
-                    Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : Core.Constants.Icons.Content,
+                    Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
+                    Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
                     Description = x.TemplateId > 0 ? x.Url : string.Empty,
                     Disabled = x.IsPublished() == false,
                 });
+            }
+
+            return Enumerable.Empty<DataListItem>();
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
 
         public object ConvertValue(Type type, string value)
         {
-            if (type == typeof(IPublishedContent) && Udi.TryParse(value, out var udi) == true)
-            {
-                return _umbracoContextAccessor.UmbracoContext.Content.GetById(udi);
-            }
-
-            return value.TryConvertTo(type).Result;
+            return Udi.TryParse(value, out var udi) == true
+                ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
+                : default;
         }
     }
 }

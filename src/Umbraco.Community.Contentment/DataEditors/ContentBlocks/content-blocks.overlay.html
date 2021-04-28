@@ -41,7 +41,7 @@
                 <umb-box-content>
 
                     <ul class="umb-actions umb-actions-child" ng-show="vm.selectBlueprint === false">
-                        <li class="umb-action" ng-repeat="item in vm.items | filter:vm.searchTerm">
+                        <li class="umb-action" ng-repeat="item in vm.items | filter:vm.searchTerm as results">
                             <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
                                 <i class="large icon" ng-class="item.icon"></i>
                                 <span class="menu-label">
@@ -49,6 +49,9 @@
                                     <small ng-bind="item.description"></small>
                                 </span>
                             </button>
+                        </li>
+                        <li class="alert alert-danger" ng-if="results.length == 0">
+                            <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
                         </li>
                     </ul>
 
@@ -92,13 +95,16 @@
                 </umb-box-header>
                 <umb-box-content>
                     <ul class="umb-actions umb-actions-child">
-                        <li class="umb-action" ng-repeat="item in vm.clipboardItems | orderBy:vm.orderBy | filter:vm.searchTerm">
+                        <li class="umb-action" ng-repeat="item in vm.clipboardItems | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                             <button class="btn-reset umb-action-link" ng-click="vm.paste(item)">
                                 <i class="large icon" ng-class="item.icon"></i>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                 </span>
                             </button>
+                        </li>
+                        <li class="alert alert-danger" ng-if="results.length == 0">
+                            <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
                         </li>
                     </ul>
                 </umb-box-content>

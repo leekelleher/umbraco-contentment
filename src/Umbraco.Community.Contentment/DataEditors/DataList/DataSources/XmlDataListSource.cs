@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Xml;
 using System.Xml.XPath;
@@ -99,12 +100,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = new List<DataListItem>();
-
             var url = config.GetValueAs("url", string.Empty);
 
             if (string.IsNullOrWhiteSpace(url) == true)
-                return items;
+            {
+                return Enumerable.Empty<DataListItem>();
+            }
 
             var path = url.InvariantStartsWith("http") == false
                 ? IOHelper.MapPath(url)
@@ -119,7 +120,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             catch (WebException ex)
             {
                 _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
-                return items;
             }
             catch (XmlException ex)
             {
@@ -128,14 +128,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (doc == null)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             var itemsXPath = config.GetValueAs("itemsXPath", string.Empty);
 
             if (string.IsNullOrWhiteSpace(itemsXPath) == true)
             {
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             var nav = doc.CreateNavigator();
@@ -158,13 +158,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (nodes.Count == 0)
             {
                 _logger.Warn<XmlDataListSource>($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
-                return items;
+                return Enumerable.Empty<DataListItem>();
             }
 
             var nameXPath = config.GetValueAs("nameXPath", "text()");
             var valueXPath = config.GetValueAs("valueXPath", "text()");
             var iconXPath = config.GetValueAs("iconXPath", string.Empty);
             var descriptionXPath = config.GetValueAs("descriptionXPath", string.Empty);
+
+            var items = new List<DataListItem>();
 
             foreach (XPathNavigator node in nodes)
             {

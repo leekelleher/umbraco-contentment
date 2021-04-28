@@ -17,6 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string Mode = "mode";
         internal const string Theme = "theme";
         internal const string UseWrapMode = "useWrapMode";
+        internal const string MinLines = "minLines";
+        internal const string MaxLines = "maxLines";
 
         public CodeEditorConfigurationEditor()
             : base()
@@ -131,11 +133,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("enableLiveAutocompletion", "enableLiveAutocompletion", "[A friendly description]", "boolean");// enableLiveAutocompletion: 0,
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
 
-            DefaultConfiguration.Add("minLines", 12);
-            Fields.Add("minLines", "Minimum lines", "Set the minimum number of lines that the editor will be. The default is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+            DefaultConfiguration.Add(MinLines, 12);
+            Fields.Add(MinLines, "Minimum lines", "Set the minimum number of lines that the editor will be. The default is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
 
-            DefaultConfiguration.Add("maxLines", 30);
-            Fields.Add("maxLines", "Maximum lines", "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+            DefaultConfiguration.Add(MaxLines, 30);
+            Fields.Add(MaxLines, "Maximum lines", "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
         }
     }
 }
