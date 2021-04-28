@@ -85,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _connectionStrings },
                 }
-            }
+            },
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
