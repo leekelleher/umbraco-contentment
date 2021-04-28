@@ -66,28 +66,28 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameIndex",
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = NumberInputDataEditor.DataEditorViewPath
             },
             new ConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = NumberInputDataEditor.DataEditorViewPath
             },
             new ConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = NumberInputDataEditor.DataEditorViewPath
             },
             new ConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = NumberInputDataEditor.DataEditorViewPath
             }
         };
 

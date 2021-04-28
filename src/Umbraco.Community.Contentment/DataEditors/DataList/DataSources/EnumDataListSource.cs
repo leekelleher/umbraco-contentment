@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enumType",
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
-                View = IOHelper.ResolveUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+                View = CascadingDropdownListDataEditor.DataEditorViewPath,
                 Config = new Dictionary<string, object>
                 {
                     { CascadingDropdownListDataEditor.APIs, new[]

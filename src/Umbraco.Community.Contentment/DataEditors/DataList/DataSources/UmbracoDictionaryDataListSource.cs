@@ -37,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "item",
                 Name = "Dictionary item",
                 Description = "Select a parent dictionary item to display the child items.",
-                View = IOHelper.ResolveUrl(DictionaryPickerDataEditor.DataEditorViewPath),
+                View = DictionaryPickerDataEditor.DataEditorViewPath,
                 Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }
