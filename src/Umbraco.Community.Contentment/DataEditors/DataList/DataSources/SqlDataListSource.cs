@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Large;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -72,6 +72,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
+                    { CodeEditorConfigurationEditor.MinLines, 20 },
+                    { CodeEditorConfigurationEditor.MaxLines, 40 },
                 }
             },
             new ConfigurationField
