@@ -1,13 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Product>Umbraco.Community.Contentment</Product>
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
-    <Description>Contentment, a collection of components for Umbraco 8.</Description>
+    <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco</PackageTags>
-    <Version>2.1.0-develop</Version>
+    <Version>3.0.0-develop</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
@@ -17,9 +16,12 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="UmbracoCms.Web" Version="8.14.0" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-beta001.20210427.20" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-beta001.20210427.20" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
-  </Target>
+<!--
+  <PropertyGroup>
+    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -TargetDevWebsite "$(TargetDevWebsite)" -ConfigurationName $(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
+-->
 </Project>
