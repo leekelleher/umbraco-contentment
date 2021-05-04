@@ -73,11 +73,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var umbracoContext = _umbracoContextAccessor.UmbracoContext;
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
                 {
                     nodeContextId = currentId;
                 }
-                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
+                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
                 {
                     nodeContextId = parentId;
                 }
