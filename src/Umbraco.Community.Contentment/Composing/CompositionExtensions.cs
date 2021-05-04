@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
 
@@ -12,14 +13,14 @@ namespace Umbraco.Core.Composing
 {
     public static partial class CompositionExtensions
     {
-        public static ContentmentListItemCollectionBuilder ContentmentListItems(this Composition composition)
+        public static ContentmentListItemCollectionBuilder ContentmentListItems(this IUmbracoBuilder builder)
         {
-            return composition.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
+            return builder.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
         }
 
-        public static Composition UnlockContentment(this Composition composition)
+        public static IUmbracoBuilder UnlockContentment(this IUmbracoBuilder builder)
         {
-            composition
+            builder
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     // Data List - Data Sources
                     .Add<CountriesDataListSource>()
@@ -37,7 +38,7 @@ namespace Umbraco.Core.Composing
                     .Add<UmbracoMemberGroupDataListSource>()
             ;
 
-            return composition;
+            return builder;
         }
     }
 }

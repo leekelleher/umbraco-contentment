@@ -10,8 +10,7 @@
 
 using System;
 using System.Reflection;
-using Semver;
-using Umbraco.Core;
+using Umbraco.Cms.Core.Semver;
 
 namespace Umbraco.Community.Contentment.Configuration
 {

@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Umbraco.Cms.Core.Composing;
 using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Composing
 {

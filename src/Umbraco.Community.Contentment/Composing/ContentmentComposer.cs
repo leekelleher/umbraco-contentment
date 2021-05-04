@@ -3,41 +3,46 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Infrastructure.WebAssets;
 using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Community.Contentment.Telemetry;
-using Umbraco.Core;
 using Umbraco.Core.Composing;
-using Umbraco.Web.Runtime;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Composing
 {
-    [ComposeAfter(typeof(WebInitialComposer))]
-    [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
+    // TODO: [LK:2021-04-03] v9 Review this.
+    //[ComposeAfter(typeof(WebInitialComposer))]
     internal sealed class ContentmentComposer : IUserComposer
     {
-        public void Compose(Composition composition)
+        public void Compose(IUmbracoBuilder builder)
         {
-            composition
+            builder
                 .ContentmentListItems()
-                    .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
+                    .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            composition.RegisterUnique<ConfigurationEditorUtility>();
+            builder.Services.AddUnique<ConfigurationEditorUtility>();
 
-            if (composition.RuntimeState.Level > RuntimeLevel.Install)
+            //if (_runtimeState.Level > RuntimeLevel.Install)
             {
-                composition
+                builder
                     .Components()
                         .Append<ContentmentComponent>()
                 ;
+
+                builder.AddNotificationHandler<ServerVariablesParsing, ContentmentServerVariablesParsing>();
             }
 
-            if (composition.RuntimeState.Level == RuntimeLevel.Run)
+            //if (_runtimeState.Level == RuntimeLevel.Run)
             {
-                if (ContentmentTelemetryComponent.Disabled == false)
-                {
-                    composition.EnableContentmentTelemetry();
-                }
+                //    if (ContentmentTelemetryComponent.Disabled == false)
+                //    {
+                //        builder.EnableContentmentTelemetry();
+                //    }
             }
         }
     }
