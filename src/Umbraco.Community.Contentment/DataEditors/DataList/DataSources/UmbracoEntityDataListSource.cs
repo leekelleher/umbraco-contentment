@@ -106,7 +106,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         Icon = icon,
                         Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.FromUmbracoObjectType(objectType), x.Key).ToString(),
+                        Value = Udi.Create(objectType.GetUdiType(), x.Key).ToString(),
                     });
             }
 
