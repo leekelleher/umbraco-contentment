@@ -18,6 +18,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Disabled { get; set; }
 
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Group { get; set; }
+
         public string Icon { get; set; }
 
         public string Name { get; set; }
