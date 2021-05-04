@@ -39,26 +39,9 @@ namespace Umbraco.Community.Contentment.Composing
         {
             var upgrader = new Upgrader(new ContentmentPlan());
             upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
-
-            ServerVariablesParser.Parsing += ServerVariablesParser_Parsing;
         }
 
         public void Terminate()
-        {
-            ServerVariablesParser.Parsing -= ServerVariablesParser_Parsing;
-        }
-
-        private void ServerVariablesParser_Parsing(object sender, Dictionary<string, object> e)
-        {
-            if (e.TryGetValueAs("umbracoPlugins", out Dictionary<string, object> umbracoPlugins) == true && umbracoPlugins.ContainsKey(Constants.Internals.ProjectAlias) == false)
-            {
-                umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
-                {
-                    name = Constants.Internals.ProjectName,
-                    version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString(),
-                    telemetry = Telemetry.ContentmentTelemetryComponent.Disabled == false,
-                });
-            }
-        }
+        { }
     }
 }
