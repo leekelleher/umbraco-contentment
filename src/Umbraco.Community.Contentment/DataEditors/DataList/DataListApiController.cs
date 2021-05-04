@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         [HttpPost]
-        public HttpResponseMessage GetPreview([FromBody] JObject data)
+        public ActionResult GetPreview([FromBody] JObject data)
         {
             var config = data.ToObject<Dictionary<string, object>>();
 
@@ -35,10 +35,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);
                 var valueEditor = propertyEditor.GetValueEditor(config);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig, view = valueEditor.View, alias });
+                return new ObjectResult(new { config = valueEditorConfig, view = valueEditor.View, alias });
             }
 
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            return new NotFoundResult();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
+    [Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
     public sealed class EnumDataSourceApiController : UmbracoAuthorizedJsonController
     {
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
@@ -32,6 +33,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             _shortStringHelper = shortStringHelper;
         }
 
+        [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
             const string App_Code = "App_Code";
@@ -77,6 +79,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             return options.Values;
         }
 
+        [HttpGet]
         public IEnumerable<DataListItem> GetEnums(string assembly)
         {
             var options = new SortedDictionary<string, DataListItem>();

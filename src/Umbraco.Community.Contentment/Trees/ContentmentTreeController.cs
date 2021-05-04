@@ -26,20 +26,27 @@ namespace Umbraco.Community.Contentment.Trees
     [PluginController(Constants.Internals.PluginControllerName)]
     internal sealed class ContentmentTreeController : TreeController
     {
-        protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
+        public ContentmentTreeController(
+            ILocalizedTextService localizedTextService,
+            UmbracoApiControllerTypeCollection umbracoApiControllerTypeCollection,
+            IEventAggregator eventAggregator)
+            : base(localizedTextService, umbracoApiControllerTypeCollection, eventAggregator)
+        { }
+
+        protected override ActionResult<TreeNode> CreateRootNode(FormCollection queryStrings)
         {
             var root = base.CreateRootNode(queryStrings);
 
-            root.Icon = "icon-fa fa-cube";
-            root.HasChildren = false;
-            root.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
-            root.MenuUrl = null;
+            root.Value.Icon = "icon-fa fa-cube";
+            root.Value.HasChildren = false;
+            root.Value.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
+            root.Value.MenuUrl = null;
 
-            return root;
+            return root.Value;
         }
 
-        protected override MenuItemCollection GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
+        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
 
-        protected override TreeNodeCollection GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
+        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
     }
 }
