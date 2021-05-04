@@ -8,9 +8,10 @@ param(
     [string]$TargetDir,
     [string]$ProjectName,
     [string]$ProjectDir,
-    [string]$TargetDevWebsite,
     [string]$ConfigurationName
 );
+
+. "${SolutionDir}_vars.ps1";
 
 Write-Host $ConfigurationName;
 
