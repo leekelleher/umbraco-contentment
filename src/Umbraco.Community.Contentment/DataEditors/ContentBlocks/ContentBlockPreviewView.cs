@@ -21,11 +21,17 @@ namespace Umbraco.Web.Mvc
         where TPublishedContent : IPublishedContent
         where TPublishedElement : IPublishedElement
     {
-        protected override void SetViewData(ViewDataDictionary viewData)
+        public override ViewContext ViewContext
+        {
+            get => base.ViewContext;
+            set => base.ViewContext = SetViewData(value);
+        }
+
+        protected ViewContext SetViewData(ViewContext viewCtx)
         {
             void setProperty<T>(string key, Action<T> action)
             {
-                if (viewData.TryGetValueAs(key, out T value) == true)
+                if (viewCtx.ViewData.TryGetValueAs(key, out T value) == true)
                 {
                     action(value);
                 }
@@ -39,7 +45,7 @@ namespace Umbraco.Web.Mvc
             setProperty<string>("contentIcon", (x) => model.ContentTypeIcon = x);
             setProperty<string>("elementIcon", (x) => model.ElementTypeIcon = x);
 
-            if (model.Element == null && viewData.Model is TPublishedElement element)
+            if (model.Element == null && viewCtx.ViewData.Model is TPublishedElement element)
             {
                 model.Element = element;
             }
@@ -49,9 +55,9 @@ namespace Umbraco.Web.Mvc
                 model.Content = content;
             }
 
-            viewData.Model = model;
+            viewCtx.ViewData.Model = model;
 
-            base.SetViewData(viewData);
+            return viewCtx;
         }
     }
 }
