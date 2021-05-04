@@ -14,6 +14,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string AllowEmpty = "allowEmpty";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
 
+        private readonly IIOHelper _ioHelper;
+
+        public DropdownListDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Dropdown List";
 
         public string Description => "Select a single value from a dropdown select list.";
@@ -35,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "default", Constants.Values.True }
                 }
             },
-            new HtmlAttributesConfigurationField(),
+            new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>

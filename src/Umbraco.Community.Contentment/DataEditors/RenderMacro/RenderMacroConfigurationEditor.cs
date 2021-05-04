@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Macro = "macro";
 
-        public RenderMacroConfigurationEditor()
+        public RenderMacroConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             Fields.Add(new ConfigurationField
@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Macro,
                 Name = nameof(Macro),
                 Description = "Select and configure the macro to be displayed.",
-                View = IOHelper.ResolveUrl(MacroPickerDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(MacroPickerDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }

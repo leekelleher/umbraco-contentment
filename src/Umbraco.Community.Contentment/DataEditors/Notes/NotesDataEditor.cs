@@ -21,6 +21,29 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "notes.html";
         internal const string DataEditorIcon = "icon-fa fa-sticky-note-o";
 
+        private readonly IDataTypeService _dataTypeService;
+        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IJsonSerializer _jsonSerializer;
+        private readonly IIOHelper _ioHelper;
+
+        public NotesDataEditor(
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            IIOHelper ioHelper)
+        {
+            _dataTypeService = dataTypeService;
+            _localizationService = localizationService;
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+            _ioHelper = ioHelper;
+        }
+
         public string Alias => DataEditorAlias;
 
         public EditorType Type => EditorType.PropertyValue;
@@ -37,11 +60,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new NotesConfigurationEditor();
+        public IConfigurationEditor GetConfigurationEditor() => new NotesConfigurationEditor(_ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new ReadOnlyDataValueEditor
+            return new ReadOnlyDataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 ValueType = ValueTypes.Integer,
                 View = DataEditorViewPath,
@@ -57,7 +85,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
             }
 
-            return new ReadOnlyDataValueEditor
+            return new ReadOnlyDataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,

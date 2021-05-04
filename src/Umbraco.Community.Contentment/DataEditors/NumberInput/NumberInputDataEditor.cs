@@ -26,11 +26,29 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Number Input";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "number-input.html";
         internal const string DataEditorIcon = "icon-coin";
+        private readonly IIOHelper _ioHelper;
 
-        public NumberInputDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        public NumberInputDataEditor(
+            ILoggerFactory loggerFactory,
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            IIOHelper ioHelper,
+            EditorType type = EditorType.PropertyValue)
+            : base(
+                  loggerFactory,
+                  dataTypeService,
+                  localizationService,
+                  localizedTextService,
+                  shortStringHelper,
+                  jsonSerializer,
+                  type)
+        {
+            _ioHelper = ioHelper;
+        }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new NumberInputConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new NumberInputConfigurationEditor(_ioHelper);
     }
 }

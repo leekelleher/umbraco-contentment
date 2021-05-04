@@ -19,7 +19,30 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Render Macro";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "render-macro.html";
-        internal const string DataEditorIcon = Core.Constants.Icons.Macro;
+        internal const string DataEditorIcon = Cms.Core.Constants.Icons.Macro;
+
+        private readonly IDataTypeService _dataTypeService;
+        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IJsonSerializer _jsonSerializer;
+        private readonly IIOHelper _ioHelper;
+
+        public RenderMacroDataEditor(
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            IIOHelper ioHelper)
+        {
+            _dataTypeService = dataTypeService;
+            _localizationService = localizationService;
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+            _ioHelper = ioHelper;
+        }
 
         public string Alias => DataEditorAlias;
 
@@ -37,11 +60,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new RenderMacroConfigurationEditor();
+        public IConfigurationEditor GetConfigurationEditor() => new RenderMacroConfigurationEditor(_ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new ReadOnlyDataValueEditor
+            return new ReadOnlyDataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 ValueType = ValueTypes.Integer,
                 View = DataEditorViewPath,
@@ -57,7 +85,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
             }
 
-            return new ReadOnlyDataValueEditor
+            return new ReadOnlyDataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,

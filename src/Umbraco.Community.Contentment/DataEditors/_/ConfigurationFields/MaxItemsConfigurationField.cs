@@ -13,13 +13,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string MaxItems = "maxItems";
 
-        public MaxItemsConfigurationField()
+        public MaxItemsConfigurationField(IIOHelper ioHelper)
             : base()
         {
             Key = MaxItems;
             Name = "Maximum items";
             Description = "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.";
-            View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath);
+            View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath);
         }
     }
 }

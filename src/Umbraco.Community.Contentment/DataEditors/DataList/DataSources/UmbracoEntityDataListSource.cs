@@ -47,10 +47,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         private readonly IEntityService _entityService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoEntityDataListSource(IEntityService entityService)
+        public UmbracoEntityDataListSource(
+            IEntityService entityService,
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
         {
             _entityService = entityService;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Entities";
@@ -63,7 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
 <p>Umbraco's <code>EntityService</code> API (currently) has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
@@ -77,7 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>()
                 {
                     { "allowEmpty", Constants.Values.False },
-                    { "items", SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x }) },
+                    { "items", SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(_shortStringHelper), Value = x }) },
                 }
             }
         };

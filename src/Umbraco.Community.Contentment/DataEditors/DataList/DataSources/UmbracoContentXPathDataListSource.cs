@@ -23,12 +23,20 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
+        private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoContentXPathDataListSource(IContentTypeService contentTypeService, IUmbracoContextAccessor umbracoContextAccessor)
+        public UmbracoContentXPathDataListSource(
+            IContentTypeService contentTypeService,
+            IRequestAccessor requestAccessor,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
+            _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content by XPath";
@@ -50,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the XPath expression to select the content.",
                 View = "textstring",
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax in general, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 <hr>

@@ -18,12 +18,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ConfigurationEditorUtility _utility;
 
-        public TextInputConfigurationEditor(ConfigurationEditorUtility utility)
+        public TextInputConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
             : base()
         {
             _utility = utility;
 
-            var dataSources = _utility.GetConfigurationEditorModels<IDataListSource>().ToList();
+            var dataSources = _utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper).ToList();
 
             Fields.Add(new ConfigurationField
             {
@@ -38,13 +38,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Constants.Conventions.ConfigurationFieldAliases.Items,
                 Name = "Data list",
                 Description = "<em>(optional)</em> Select and configure a data source to provide a HTML5 &lt;datalist&gt; for this text input.",
-                View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
@@ -56,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Maximum allowed characters",
                 Key = "maxChars",
                 Description = "Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             });
 
             Fields.Add(new ConfigurationField

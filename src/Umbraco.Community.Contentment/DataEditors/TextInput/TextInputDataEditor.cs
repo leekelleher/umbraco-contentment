@@ -29,13 +29,26 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-autofill";
 
         private readonly ConfigurationEditorUtility _utility;
+        private readonly IIOHelper _ioHelper;
+        private readonly IShortStringHelper _shortStringHelper;
 
-        public TextInputDataEditor(ILogger logger, ConfigurationEditorUtility utility)
-            : base(logger)
+        public TextInputDataEditor(
+            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper,
+            ILoggerFactory loggerFactory,
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            EditorType type = EditorType.PropertyValue)
+            : base(loggerFactory, dataTypeService, localizationService, localizedTextService, shortStringHelper, jsonSerializer, type)
         {
             _utility = utility;
+            _ioHelper = ioHelper;
+            _shortStringHelper = shortStringHelper;
         }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility);
+        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility, _ioHelper, _shortStringHelper);
     }
 }

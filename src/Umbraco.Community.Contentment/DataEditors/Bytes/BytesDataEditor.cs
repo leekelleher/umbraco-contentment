@@ -27,10 +27,29 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = "readonlyvalue";
         internal const string DataEditorIcon = "icon-binarycode";
 
-        public BytesDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        private readonly IIOHelper _ioHelper;
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new BytesConfigurationEditor();
+        public BytesDataEditor(
+            IIOHelper ioHelper,
+            ILoggerFactory loggerFactory,
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            EditorType type = EditorType.PropertyValue)
+            : base(
+                  loggerFactory,
+                  dataTypeService,
+                  localizationService,
+                  localizedTextService,
+                  shortStringHelper,
+                  jsonSerializer,
+                  type)
+        {
+            _ioHelper = ioHelper;
+        }
+
+        protected override IConfigurationEditor CreateConfigurationEditor() => new BytesConfigurationEditor(_ioHelper);
     }
 }

@@ -23,11 +23,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
+        private readonly IIOHelper _ioHelper;
 
-        public SqlDataListSource()
+        public SqlDataListSource(
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
-            _codeEditorMode = File.Exists(IOHelper.MapPath("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
+            _codeEditorMode = File.Exists(hostingEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
                 ? "sqlserver"
                 : "razor";
 
@@ -38,6 +41,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = x.Name,
                     Value = x.Name
                 });
+
+            _ioHelper = ioHelper;
         }
 
         public string Name => "SQL Data";
@@ -52,7 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>
@@ -70,7 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "query",
                 Name = "SQL query",
                 Description = "Enter your SQL query.",
-                View = CodeEditorDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
@@ -83,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "connectionString",
                 Name = "Connection string",
                 Description = "Select the connection string.",
-                View = DropdownListDataListEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -94,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{Core.Constants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
+            { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
             { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 

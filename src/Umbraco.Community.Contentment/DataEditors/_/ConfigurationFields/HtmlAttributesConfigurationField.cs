@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string HtmlAttributes = "htmlAttributes";
 
-        public HtmlAttributesConfigurationField()
+        public HtmlAttributesConfigurationField(IIOHelper ioHelper)
             : base()
         {
             var listFields = new[]
@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = HtmlAttributes;
             Name = "HTML attributes";
             Description = "<em>(optional)</em> Use this field to add any HTML attributes to the list editor.";
-            View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath);
+            View = ioHelper.ResolveRelativeOrVirtualUrl(DataTableDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>()
             {
                 { DataTableConfigurationEditor.FieldItems, listFields },

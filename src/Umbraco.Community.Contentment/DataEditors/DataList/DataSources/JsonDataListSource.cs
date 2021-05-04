@@ -20,11 +20,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class JsonDataListSource : IDataListSource
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<JsonDataListSource> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
 
-        public JsonDataListSource(ILogger logger)
+        public JsonDataListSource(
+            ILogger<JsonDataListSource> logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "JSON Data";
@@ -39,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
 <p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
 <p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank""><strong>goessner.net/articles/JsonPath</strong></a>.</p>
@@ -128,7 +135,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (tokens.Any() == false)
                 {
-                    _logger.Warn<JsonDataListSource>($"The JSONPath '{itemsJsonPath}' did not match any items in the JSON.");
+                    _logger.LogWarning($"The JSONPath '{itemsJsonPath}' did not match any items in the JSON.");
                     return Enumerable.Empty<DataListItem>();
                 }
 
@@ -159,13 +166,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     // How should we log if either name or value is empty? Note that empty or missing values are totally legal according to json
                     if (name == null)
                     {
-                        _logger.Warn<JsonDataListSource>($"The JSONPath '{nameJsonPath}' did not match a 'name' in the item JSON.");
+                        _logger.LogWarning($"The JSONPath '{nameJsonPath}' did not match a 'name' in the item JSON.");
                     }
 
                     // If value is missing we'll skip this specific item and log as a warning
                     if (value == null)
                     {
-                        _logger.Warn<JsonDataListSource>($"The JSONPath '{valueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
+                        _logger.LogWarning($"The JSONPath '{valueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
                         continue;
                     }
 
@@ -182,7 +189,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (Exception ex)
             {
-                _logger.Error<JsonDataListSource>(ex, "Error finding items in the JSON. Please check the syntax of your JSONPath expressions.");
+                _logger.LogError(ex, "Error finding items in the JSON. Please check the syntax of your JSONPath expressions.");
             }
 
             return Enumerable.Empty<DataListItem>();
@@ -203,27 +210,27 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-                    _logger.Error<JsonDataListSource>(ex, $"Unable to fetch remote data from URL: {url}");
+                    _logger.LogError(ex, $"Unable to fetch remote data from URL: {url}");
                 }
             }
             else
             {
                 // assume local file
-                var path = IOHelper.MapPath(url);
+                var path = _hostingEnvironment.MapPathWebRoot(url);
                 if (File.Exists(path) == true)
                 {
                     content = File.ReadAllText(path);
                 }
                 else
                 {
-                    _logger.Error<JsonDataListSource>(new FileNotFoundException(), $"Unable to find the local file path: {url}");
+                    _logger.LogError(new FileNotFoundException(), $"Unable to find the local file path: {url}");
                     return null;
                 }
             }
 
             if (string.IsNullOrWhiteSpace(content) == true)
             {
-                _logger.Warn<JsonDataListSource>($"The contents of '{url}' was empty. Unable to process JSON data.");
+                _logger.LogWarning($"The contents of '{url}' was empty. Unable to process JSON data.");
 
                 return default;
             }
@@ -237,7 +244,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             catch (Exception ex)
             {
                 var trimmed = content.Substring(0, Math.Min(400, content.Length));
-                _logger.Error<JsonDataListSource>(ex, $"Error parsing string to JSON: {trimmed}");
+                _logger.LogError(ex, $"Error parsing string to JSON: {trimmed}");
             }
 
             return default;

@@ -25,6 +25,13 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
         internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
 
+        private readonly IShortStringHelper _shortStringHelper;
+
+        public EnumDataSourceApiController(IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+        }
+
         public IEnumerable<DataListItem> GetAssemblies()
         {
             const string App_Code = "App_Code";
@@ -80,7 +87,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                 if (type.IsEnum == false)
                     continue;
 
-                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(), Value = type.FullName });
+                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(_shortStringHelper), Value = type.FullName });
             }
 
             return options.Values;

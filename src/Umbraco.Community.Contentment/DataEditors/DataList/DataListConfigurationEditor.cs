@@ -23,23 +23,24 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EditorView = "editorView";
 
         private readonly ConfigurationEditorUtility _utility;
+        private readonly IIOHelper _ioHelper;
 
-        public DataListConfigurationEditor(ConfigurationEditorUtility utility)
+        public DataListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
             : base()
         {
             _utility = utility;
-
-            var configEditorViewPath = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
+            _ioHelper = ioHelper;
+            var configEditorViewPath = _ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
-            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>().ToList();
-            var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>().ToList();
+            var dataSources = utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper).ToList();
+            var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>(shortStringHelper).ToList();
 
             Fields.Add(new ConfigurationField
             {
@@ -73,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "preview",
                 Name = "Preview",
-                View = IOHelper.ResolveUrl(DataListDataEditor.DataEditorPreviewViewPath)
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
             });
         }
 

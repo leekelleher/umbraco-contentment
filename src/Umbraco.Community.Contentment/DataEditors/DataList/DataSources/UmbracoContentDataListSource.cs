@@ -22,12 +22,20 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoContentDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
+        private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoContentDataListSource(IContentTypeService contentTypeService, IUmbracoContextAccessor umbracoContextAccessor)
+        public UmbracoContentDataListSource(
+            IContentTypeService contentTypeService,
+            IRequestAccessor requestAccessor,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
+            _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content";
@@ -47,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "parentNode",
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
-                View = ContentPickerDataEditor.DataEditorSourceViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
             }
         };
 

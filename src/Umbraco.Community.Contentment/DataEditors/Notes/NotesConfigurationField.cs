@@ -14,12 +14,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Notes = "notes";
 
-        public NotesConfigurationField(string notes, bool hideLabel = true)
+        public NotesConfigurationField(IIOHelper ioHelper, string notes, bool hideLabel = true)
             : base()
         {
             Key = Notes;
             Name = nameof(Notes);
-            View = NotesDataEditor.DataEditorViewPath;
+            View = ioHelper.ResolveRelativeOrVirtualUrl(NotesDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object> { { Notes, notes } };
             HideLabel = hideLabel;
         }

@@ -22,22 +22,25 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly Dictionary<Guid, IContentType> _elementTypes;
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
         private readonly ConfigurationEditorUtility _utility;
-
+        private readonly IIOHelper _ioHelper;
         internal const string DisplayMode = "displayMode";
 
         public ContentBlocksConfigurationEditor(
             IContentService contentService,
             IContentTypeService contentTypeService,
-            ConfigurationEditorUtility utility)
+            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper,
+            IShortStringHelper shortStringHelper)
             : base()
         {
             _utility = utility;
+            _ioHelper = ioHelper;
 
             // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
             _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
-            var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
+            var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>(shortStringHelper);
 
             // NOTE: Sets the default display mode to be the Blocks.
             var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(BlocksDisplayMode).GetFullNameWithAssembly()));
@@ -51,21 +54,21 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = DisplayMode,
                 Name = "Display mode",
                 Description = "Select and configure how to display the blocks in the editor.",
-                View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDisplayMode" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                 }
             });
 
-            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values));
+            Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, ioHelper));
             Fields.Add(new EnableFilterConfigurationField());
-            Fields.Add(new MaxItemsConfigurationField());
+            Fields.Add(new MaxItemsConfigurationField(ioHelper));
             Fields.Add(new DisableSortingConfigurationField());
             Fields.Add(new EnableDevModeConfigurationField());
         }
@@ -167,7 +170,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
             {
-                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath));
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath));
             }
 
             return config;

@@ -22,12 +22,17 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
+        private readonly IIOHelper _ioHelper;
         private Dictionary<string, string> _icons;
 
-        public UmbracoContentPropertiesDataListSource(IContentTypeService contentTypeService, Lazy<PropertyEditorCollection> dataEditors)
+        public UmbracoContentPropertiesDataListSource(
+            IContentTypeService contentTypeService,
+            Lazy<PropertyEditorCollection> dataEditors,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _dataEditors = dataEditors;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content Properties";
@@ -66,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { "items", items },
                             { "listType", "list" },
-                            { "overlayView", IOHelper.ResolveUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { "overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { "maxItems", 1 },
                         }
                     }

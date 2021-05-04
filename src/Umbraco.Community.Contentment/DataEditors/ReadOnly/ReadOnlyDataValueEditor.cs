@@ -12,6 +12,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ReadOnlyDataValueEditor : DataValueEditor
     {
+        public ReadOnlyDataValueEditor(
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer)
+            : base(
+                  dataTypeService,
+                  localizationService,
+                  localizedTextService,
+                  shortStringHelper,
+                  jsonSerializer)
+        { }
+
         public override bool IsReadOnly => true;
     }
 }

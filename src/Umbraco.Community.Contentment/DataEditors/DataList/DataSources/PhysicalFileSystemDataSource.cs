@@ -17,6 +17,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class PhysicalFileSystemDataSource : IDataListSource
     {
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIOHelper _ioHelper;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILogger<PhysicalFileSystem> _logger;
+
+        public PhysicalFileSystemDataSource(
+            IIOHelper ioHelper,
+            IHostingEnvironment hostingEnvironment,
+            ILogger<PhysicalFileSystem> logger,
+            IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
+            _hostingEnvironment = hostingEnvironment;
+            _logger = logger;
+        }
+
         public string Name => "File System";
 
         public string Description => "Select file paths from the file system as the data source.";
@@ -72,15 +89,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? filter
                 : "*.*";
 
-            var fs = new PhysicalFileSystem(virtualRoot);
+            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathContentRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
             var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem
             {
-                Name = friendlyName == true ? x.SplitPascalCasing().ToFriendlyName() : x,
+                Name = friendlyName == true ? x.SplitPascalCasing(_shortStringHelper).ToFriendlyName() : x,
                 Value = virtualRoot + x,
                 Description = virtualRoot + x,
-                Icon = Core.Constants.Icons.DefaultIcon,
+                Icon = Cms.Core.Constants.Icons.DefaultIcon,
             });
         }
     }

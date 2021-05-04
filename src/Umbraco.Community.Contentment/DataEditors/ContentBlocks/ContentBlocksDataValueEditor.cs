@@ -33,27 +33,31 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
+            PropertyEditorCollection propertyEditors,
             IDataTypeService dataTypeService,
-            PropertyEditorCollection propertyEditors)
-            : base()
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer)
+            : base(dataTypeService, localizationService, localizedTextService, shortStringHelper, jsonSerializer)
         {
             _dataTypeService = dataTypeService;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
         }
 
-        public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)
+        public override object ToEditor(IProperty property, string culture = null, string segment = null)
         {
             var value = property.GetValue(culture, segment)?.ToString();
             if (string.IsNullOrWhiteSpace(value) == true)
             {
-                return base.ToEditor(property, dataTypeService, culture, segment);
+                return base.ToEditor(property, culture, segment);
             }
 
             var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             if (blocks == null)
             {
-                return base.ToEditor(property, dataTypeService, culture, segment);
+                return base.ToEditor(property, culture, segment);
             }
 
             foreach (var block in blocks)
@@ -88,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         continue;
                     }
 
-                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, dataTypeService);
+                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
 
                     block.Value[key] = convertedValue != null
                         ? JToken.FromObject(convertedValue)
@@ -144,7 +148,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         ContentKey = block.Key,
                         PropertyTypeKey = propertyType.Key,
-                        Files = new ContentPropertyFile[0]
+                        Files = Array.Empty<ContentPropertyFile>()
                     };
                     var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, block.Value[key]);
 

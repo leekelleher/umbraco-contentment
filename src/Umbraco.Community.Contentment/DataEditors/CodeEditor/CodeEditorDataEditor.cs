@@ -29,12 +29,45 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "code-editor.html";
         internal const string DataEditorIcon = "icon-fa fa-code";
 
-        public CodeEditorDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
+        private readonly IDataTypeService _dataTypeService;
+        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IJsonSerializer _jsonSerializer;
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new CodeEditorConfigurationEditor();
+        public CodeEditorDataEditor(
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper,
+            ILoggerFactory loggerFactory,
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            EditorType type = EditorType.PropertyValue)
+            : base(loggerFactory, dataTypeService, localizationService, localizedTextService, shortStringHelper, jsonSerializer, type)
+        {
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+            _dataTypeService = dataTypeService;
+            _localizationService = localizationService;
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+        }
 
-        protected override IDataValueEditor CreateValueEditor() => new TextOnlyValueEditor(Attribute);
+        protected override IConfigurationEditor CreateConfigurationEditor() => new CodeEditorConfigurationEditor(
+            _hostingEnvironment,
+            _ioHelper);
+
+        protected override IDataValueEditor CreateValueEditor() => new TextOnlyValueEditor(
+            _dataTypeService,
+            _localizationService,
+            Attribute,
+            _localizedTextService,
+            _shortStringHelper,
+            _jsonSerializer);
     }
 }

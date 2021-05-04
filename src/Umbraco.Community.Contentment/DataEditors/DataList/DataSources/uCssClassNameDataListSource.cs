@@ -18,6 +18,17 @@ namespace Umbraco.Community.Contentment.DataEditors
     [Cms.Core.Composing.HideFromTypeFinder]
     public class uCssClassNameDataListSource : IDataListSource
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
+
+        public uCssClassNameDataListSource(
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
+        {
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "uCssClassName";
 
         public string Description => "A homage to @marcemarc's bingo-famous uCssClassNameDropdown package!";
@@ -28,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
 <p>Welcome to a piece of Umbraco package history.</p>
 <p>First released back in 2013 by <a href=""https://twitter.com/marcemarc"" target=""_blank"">Marc Goodson</a>, <a href=""https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/"" target=""_blank""><strong>uCssClassNameDropdown</strong></a> became one of the most popular packages for Umbraco v4.11.3.</p>
@@ -89,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var items = new HashSet<string>();
 
-            var path = IOHelper.MapPath(cssPath);
+            var path = _hostingEnvironment.MapPathWebRoot(cssPath);
 
             if (File.Exists(path) == true)
             {

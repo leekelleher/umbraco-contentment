@@ -26,11 +26,22 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Icon Picker";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "icon-picker.html";
         internal const string DataEditorIcon = "icon-fa fa-circle-o";
+        private readonly IIOHelper _ioHelper;
 
-        public IconPickerDataEditor(ILogger logger)
-            : base(logger)
-        { }
+        public IconPickerDataEditor(
+            IIOHelper ioHelper,
+            ILoggerFactory loggerFactory,
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            EditorType type = EditorType.PropertyValue)
+            : base(loggerFactory, dataTypeService, localizationService, localizedTextService, shortStringHelper, jsonSerializer, type)
+        {
+            _ioHelper = ioHelper;
+        }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new IconPickerConfigurationEditor();
+        protected override IConfigurationEditor CreateConfigurationEditor() => new IconPickerConfigurationEditor(_ioHelper);
     }
 }

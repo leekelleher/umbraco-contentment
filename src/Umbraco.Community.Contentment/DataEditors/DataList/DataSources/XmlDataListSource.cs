@@ -21,11 +21,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class XmlDataListSource : IDataListSource
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<XmlDataListSource> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
 
-        public XmlDataListSource(ILogger logger)
+        public XmlDataListSource(
+            ILogger<XmlDataListSource> logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "XML Data";
@@ -47,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
                 View = "textstring"
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 </details>
@@ -109,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             var path = url.InvariantStartsWith("http") == false
-                ? IOHelper.MapPath(url)
+                ? _hostingEnvironment.MapPathWebRoot(url)
                 : url;
 
             var doc = default(XPathDocument);
@@ -120,11 +127,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (WebException ex)
             {
-                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
             }
             catch (XmlException ex)
             {
-                _logger.Error<XmlDataListSource>(ex, "Unable to load XML data.");
+                _logger.LogError(ex, "Unable to load XML data.");
             }
 
             if (doc == null)
@@ -158,7 +165,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (nodes.Count == 0)
             {
-                _logger.Warn<XmlDataListSource>($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+                _logger.LogWarning($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
                 return Enumerable.Empty<DataListItem>();
             }
 
@@ -198,12 +205,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (name == null)
                     {
-                        _logger.Warn<XmlDataListSource>($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
+                        _logger.LogWarning($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
                     }
 
                     if (value == null)
                     {
-                        _logger.Warn<XmlDataListSource>($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
+                        _logger.LogWarning($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
                     }
                 }
             }

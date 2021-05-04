@@ -12,7 +12,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class NumberInputConfigurationEditor : ConfigurationEditor
     {
-        public NumberInputConfigurationEditor()
+        public NumberInputConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             DefaultConfiguration.Add("size", "s");
@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "size",
                 Name = "Numeric size",
                 Description = "How big will the number get?",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]

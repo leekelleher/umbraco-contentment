@@ -26,12 +26,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoMembersDataListSource(IMemberTypeService memberTypeService, IMemberService memberService, IPublishedSnapshotAccessor publishedSnapshotAccessor)
+        public UmbracoMembersDataListSource(
+            IMemberTypeService memberTypeService,
+            IMemberService memberService,
+            IPublishedSnapshotAccessor publishedSnapshotAccessor,
+            IIOHelper ioHelper)
         {
             _memberTypeService = memberTypeService;
             _memberService = memberService;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Members";
@@ -59,7 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new[]
                 {
-                    new NotesConfigurationField($@"<details class=""alert alert-danger"">
+                    new NotesConfigurationField(_ioHelper, $@"<details class=""alert alert-danger"">
 <summary><strong>Important note about Umbraco Members.</strong></summary>
 <p>This data source is ideal for smaller number of members, e.g. under 50. Upwards of that, you will notice an unpleasant editor experience and rapidly diminished performance.</p>
 <p>Remember...</p>
@@ -80,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { "items", items },
                             { "listType", "list" },
-                            { "overlayView", IOHelper.ResolveUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { "overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { "maxItems", 1 },
                         }
                     }

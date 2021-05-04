@@ -18,11 +18,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TextDelimitedDataListSource : IDataListSource
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<TextDelimitedDataListSource> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
 
-        public TextDelimitedDataListSource(ILogger logger)
+        public TextDelimitedDataListSource(
+            ILogger<TextDelimitedDataListSource> logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Text Delimited Data";
@@ -37,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about using this data source.</strong></summary>
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
@@ -68,28 +75,28 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameIndex",
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             }
         };
 
@@ -187,20 +194,20 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-                    _logger.Error<TextDelimitedDataListSource>(ex, "Unable to fetch remote data.");
+                    _logger.LogError(ex, "Unable to fetch remote data.");
                 }
             }
             else
             {
                 // assume local file
-                var path = IOHelper.MapPath(url);
+                var path = _hostingEnvironment.MapPathWebRoot(url);
                 if (File.Exists(path) == true)
                 {
                     return File.ReadAllLines(path);
                 }
                 else
                 {
-                    _logger.Warn<TextDelimitedDataListSource>("Unable to find the local file path.");
+                    _logger.LogWarning("Unable to find the local file path.");
                 }
             }
 

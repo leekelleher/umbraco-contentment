@@ -16,9 +16,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class ContentBlocksTypesConfigurationField : ConfigurationField
     {
         internal const string ContentBlockTypes = "contentBlockTypes";
+        private readonly IIOHelper _ioHelper;
 
-        public ContentBlocksTypesConfigurationField(IEnumerable<IContentType> elementTypes)
+        public ContentBlocksTypesConfigurationField(IEnumerable<IContentType> elementTypes, IIOHelper ioHelper)
         {
+            _ioHelper = ioHelper;
+
             var items = elementTypes
                 .OrderBy(x => x.Name)
                 .Select(x => new ConfigurationEditorModel
@@ -38,13 +41,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = ContentBlockTypes;
             Name = "Block types";
             Description = "Configure the block types to use.";
-            View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
+            View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
                 { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureElementType" },
                 { "allowDuplicates", Constants.Values.False },
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
@@ -58,7 +61,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "elementType",
                     Name = "Element type",
-                    View = IOHelper.ResolveUrl(Constants.Internals.EditorsPathRoot + "readonly-node-preview.html"),
+                    View = _ioHelper.ResolveRelativeOrVirtualUrl(Constants.Internals.EditorsPathRoot + "readonly-node-preview.html"),
                     Config = new Dictionary<string,object>
                     {
                         { "name", contentType.Name },
@@ -79,7 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Key = "overlaySize",
                     Name = "Editor overlay size",
                     Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
-                    View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                    View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                     Config = new Dictionary<string, object>
                     {
                         { Constants.Conventions.ConfigurationFieldAliases.Items, new[]

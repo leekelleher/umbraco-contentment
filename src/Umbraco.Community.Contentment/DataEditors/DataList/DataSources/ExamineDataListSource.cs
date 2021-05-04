@@ -22,7 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;
-
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIOHelper _ioHelper;
         private const string _defaultNameField = "nodeName";
         private const string _defaultValueField = UmbracoExamineIndex.NodeKeyFieldName;
         private const string _defaultIconField = UmbracoExamineIndex.IconFieldName;
@@ -60,9 +61,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public ExamineDataListSource(IExamineManager examineManager)
+        public ExamineDataListSource(
+            IExamineManager examineManager,
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
         {
             _examineManager = examineManager;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Examine Query";
@@ -86,10 +92,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem { Name = x.Name.SplitPascalCasing(), Value = x.Name }) },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem { Name = x.Name.SplitPascalCasing(_shortStringHelper), Value = x.Name }) },
                 }
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),

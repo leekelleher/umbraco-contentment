@@ -24,9 +24,31 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorListEditorViewPath = Constants.Internals.EditorsPathRoot + "data-list.editor.html";
         internal const string DataEditorIcon = "icon-fa fa-list-ul";
 
+        private readonly IDataTypeService _dataTypeService;
+        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly ConfigurationEditorUtility _utility;
+        private readonly IIOHelper _ioHelper;
 
-        public DataListDataEditor(ConfigurationEditorUtility utility) => _utility = utility;
+        public DataListDataEditor(
+            IDataTypeService dataTypeService,
+            ILocalizationService localizationService,
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper)
+        {
+            _dataTypeService = dataTypeService;
+            _localizationService = localizationService;
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+            _utility = utility;
+            _ioHelper = ioHelper;
+        }
 
         public string Alias => DataEditorAlias;
 
@@ -36,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DataEditorIcon;
 
-        public string Group => Core.Constants.PropertyEditors.Groups.Lists;
+        public string Group => Cms.Core.Constants.PropertyEditors.Groups.Lists;
 
         public bool IsDeprecated => false;
 
@@ -44,11 +66,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility);
+        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility, _ioHelper, _shortStringHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor
+            return new DataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
                 View = DataEditorViewPath,
@@ -78,7 +105,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            return new DataValueEditor
+            return new DataValueEditor(
+                _dataTypeService,
+                _localizationService,
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
