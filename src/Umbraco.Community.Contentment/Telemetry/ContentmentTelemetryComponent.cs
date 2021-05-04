@@ -9,50 +9,43 @@ using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Configuration;
+using Umbraco.Cms.Core.Configuration.Models;
+using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Configuration;
-using Umbraco.Core.Configuration.UmbracoSettings;
-using Umbraco.Core.Events;
-using Umbraco.Core.Models;
-using Umbraco.Core.Services;
-using Umbraco.Core.Services.Implement;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Telemetry
 {
-    internal sealed class ContentmentTelemetryComponent : IComponent
+    // TODO: [LK:2021-04-30] v9 Maybe renamed this to `ContentmentTelemetryHandler`
+    // Currently keeping as `ContentmentTelemetryComponent` for version-control tracking.
+    internal sealed class ContentmentTelemetryComponent : INotificationHandler<SavedNotification<IDataType>>
     {
+        private readonly IUmbracoVersion _umbracoVersion;
+        private readonly IOptions<GlobalSettings> _globalSettings;
+
         internal static bool Disabled { get; set; }
 
-        private readonly IUmbracoSettingsSection _umbracoSettings;
-
-        public ContentmentTelemetryComponent(IUmbracoSettingsSection umbracoSettings)
+        public ContentmentTelemetryComponent(IOptions<GlobalSettings> globalSettings, IUmbracoVersion umbracoVersion)
         {
-            _umbracoSettings = umbracoSettings;
+            _globalSettings = globalSettings;
+            _umbracoVersion = umbracoVersion;
         }
 
-        public void Initialize()
-        {
-            DataTypeService.Saved += DataTypeService_Saved;
-        }
-
-        public void Terminate()
-        {
-            DataTypeService.Saved -= DataTypeService_Saved;
-        }
-
-        private void DataTypeService_Saved(IDataTypeService sender, SaveEventArgs<IDataType> e)
+        public void Handle(SavedNotification<IDataType> notification)
         {
             if (Disabled == true)
             {
                 return;
             }
 
-            foreach (var entity in e.SavedEntities)
+            foreach (var entity in notification.SavedEntities)
             {
                 if (entity.EditorAlias.InvariantStartsWith(Constants.Internals.DataEditorAliasPrefix) == true)
                 {
@@ -103,7 +96,7 @@ namespace Umbraco.Community.Contentment.Telemetry
                             }
                         }
 
-                        var umbracoId = Guid.TryParse(_umbracoSettings.BackOffice.Id, out var telemetrySiteIdentifier) == true
+                        var umbracoId = Guid.TryParse(_globalSettings.Value.Id, out var telemetrySiteIdentifier) == true
                             ? telemetrySiteIdentifier
                             : Guid.Empty;
 
@@ -113,7 +106,7 @@ namespace Umbraco.Community.Contentment.Telemetry
                             dataType = entity.Key,
                             editorAlias = entity.EditorAlias.Substring(Constants.Internals.DataEditorAliasPrefix.Length),
                             umbracoId = umbracoId,
-                            umbracoVersion = UmbracoVersion.SemanticVersion.ToString(),
+                            umbracoVersion = _umbracoVersion.SemanticVersion.ToString(),
                             contentmentVersion = ContentmentVersion.SemanticVersion.ToString(),
                             dataTypeConfig = dataTypeConfig,
                         };
