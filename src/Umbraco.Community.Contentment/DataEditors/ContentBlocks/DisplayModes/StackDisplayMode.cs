@@ -16,6 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => ContentBlocksDataEditor.DataEditorIcon;
 
+        public string Group => default;
+
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>

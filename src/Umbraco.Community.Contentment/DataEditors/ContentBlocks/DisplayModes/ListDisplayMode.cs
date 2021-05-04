@@ -16,6 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DataListDataEditor.DataEditorIcon;
 
+        public string Group => default;
+
         public string View => Constants.Internals.EditorsPathRoot + "content-list.html";
 
         public Dictionary<string, object> DefaultValues => default;

@@ -34,6 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields
         {
             get

@@ -38,6 +38,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => UmbConstants.Icons.Member;
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields
         {
             get

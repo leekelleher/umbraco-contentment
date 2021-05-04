@@ -21,6 +21,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-mouse-pointer";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField

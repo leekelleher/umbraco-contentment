@@ -20,6 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => Core.Constants.Icons.DataType;
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField

@@ -33,6 +33,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]

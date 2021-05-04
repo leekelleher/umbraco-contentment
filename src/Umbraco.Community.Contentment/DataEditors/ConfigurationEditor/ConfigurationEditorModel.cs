@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class ConfigurationEditorModel
+    public sealed class ConfigurationEditorModel : IConfigurationEditorItem
     {
         public string Key { get; set; }
 
@@ -22,6 +22,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public string Description { get; set; }
 
         public string Icon { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Group { get; set; }
 
         public IEnumerable<ConfigurationField> Fields { get; set; }
 

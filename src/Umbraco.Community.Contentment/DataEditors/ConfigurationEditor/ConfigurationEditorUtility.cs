@@ -61,6 +61,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = item.Name ?? type.Name.SplitPascalCasing(),
                 Description = item.Description,
                 Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
+                Group = item.Group,
                 Fields = fields,
                 DefaultValues = item.DefaultValues,
                 OverlaySize = item.OverlaySize,

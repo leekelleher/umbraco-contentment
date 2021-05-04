@@ -29,6 +29,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-file-text-o";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new[]

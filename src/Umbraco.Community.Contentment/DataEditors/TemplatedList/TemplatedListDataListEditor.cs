@@ -20,6 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-code";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new NotesConfigurationField(@"<details class=""well well-small"">

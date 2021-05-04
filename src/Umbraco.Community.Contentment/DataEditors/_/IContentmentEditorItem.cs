@@ -16,6 +16,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         IEnumerable<ConfigurationField> Fields { get; }
 
+        string Group { get; }
+
         OverlaySize OverlaySize { get; }
     }
 }

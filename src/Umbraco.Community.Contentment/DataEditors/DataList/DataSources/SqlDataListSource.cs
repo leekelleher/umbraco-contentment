@@ -44,6 +44,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-server-alt";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Large;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
