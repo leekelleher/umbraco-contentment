@@ -53,31 +53,35 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (modes.Count > 0)
                     {
                         DefaultConfiguration.Add(Mode, "razor");
-                        Fields.Add(
-                            Mode,
-                            "Language mode",
-                            "Select the programming language mode. The default mode is 'Razor'.",
-                            IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
-                            new Dictionary<string, object>
+                        Fields.Add(new ConfigurationField
+                        {
+                            Key = Mode,
+                            Name = "Language mode",
+                            Description = "Select the programming language mode. The default mode is 'Razor'.",
+                            View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                            Config = new Dictionary<string, object>
                             {
                                 { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
                                 { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
-                            });
+                            }
+                        });
                     }
 
                     if (themes.Count > 0)
                     {
                         DefaultConfiguration.Add(Theme, "chrome");
-                        Fields.Add(
-                            Theme,
-                            nameof(Theme),
-                            "Set the theme for the code editor. The default theme is 'Chrome'.",
-                            IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
-                            new Dictionary<string, object>
+                        Fields.Add(new ConfigurationField
+                        {
+                            Key = Theme,
+                            Name = nameof(Theme),
+                            Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
+                            View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                            Config = new Dictionary<string, object>
                             {
                                 { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
                                 { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
-                            });
+                            }
+                        });
                     }
 
                     if (modes.Count > 0 || themes.Count > 0)
@@ -95,12 +99,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             DefaultConfiguration.Add(FontSize, "small");
-            Fields.Add(
-                FontSize,
-                "Font size",
-                @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
-                IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = FontSize,
+                Name = "Font size",
+                Description = @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
+                View = IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[] {
                         new DataListItem { Name = "Extra extra small", Value = "xx-small" },
@@ -116,9 +121,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                         new DataListItem { Name = "Use ems?", Value = "0.8em" },
                         new DataListItem { Name = "Use rems?", Value = "1.2rem" },
                     } },
-                });
+                }
+            });
 
-            Fields.Add(UseWrapMode, "Word wrapping", "Select to enable word wrapping.", "boolean");
+            Fields.Add(new ConfigurationField
+            {
+                Key = UseWrapMode,
+                Name = "Word wrapping",
+                Description = "Select to enable word wrapping.",
+                View = "boolean"
+            });
 
             // NOTE: [LK:2019-06-07] Hidden the advanced options (for now), need to review.
             //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean");
@@ -134,10 +146,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
 
             DefaultConfiguration.Add(MinLines, 12);
-            Fields.Add(MinLines, "Minimum lines", "Set the minimum number of lines that the editor will be. The default is 12 lines.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+            Fields.Add(new ConfigurationField
+            {
+                Key = MinLines,
+                Name = "Minimum lines",
+                Description = "Set the minimum number of lines that the editor will be. The default is 12 lines.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+            });
 
             DefaultConfiguration.Add(MaxLines, 30);
-            Fields.Add(MaxLines, "Maximum lines", "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.", IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath));
+            Fields.Add(new ConfigurationField
+            {
+                Key = MaxLines,
+                Name = "Maximum lines",
+                Description = "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.",
+                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+            });
         }
     }
 }

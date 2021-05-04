@@ -16,12 +16,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             DefaultConfiguration.Add("size", "s");
 
-            Fields.Add(
-                "size",
-                "Numeric size",
-                "How big will the number get?",
-                IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = "size",
+                Name = "Numeric size",
+                Description = "How big will the number get?",
+                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
@@ -33,7 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "s" },
-                });
+                }
+            });
 
             // TODO: [LK:2020-12-11] Commented out the value-type feature for the time being. Adds additional complexity that I don't currently need.
             //// NOTE: When using the key "umbracoDataValueType", Umbraco will auto-set the database type.
@@ -57,12 +59,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             // TODO: [LK:2020-12-11] Add "min/max" and "step" fields.
 
-            Fields.Add(
-                "placeholderText",
-                "Placeholder text",
-                "Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.",
-                "textstring"
-            );
+            Fields.Add(new ConfigurationField
+            {
+                Key = "placeholderText",
+                Name = "Placeholder text",
+                Description = "Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.",
+                View = "textstring",
+            });
         }
     }
 }

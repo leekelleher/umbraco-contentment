@@ -39,35 +39,40 @@ namespace Umbraco.Community.Contentment.DataEditors
             var dataSources = utility.GetConfigurationEditorModels<IDataListSource>().ToList();
             var listEditors = utility.GetConfigurationEditorModels<IDataListEditor>().ToList();
 
-            Fields.Add(
-                DataSource,
-                "Data source",
-                "Select and configure a data source.",
-                configEditorViewPath,
-                new Dictionary<string, object>(defaultConfigEditorConfig)
+            Fields.Add(new ConfigurationField
+            {
+                Key = DataSource,
+                Name = "Data source",
+                Description = "Select and configure a data source.",
+                View = configEditorViewPath,
+                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
-                });
+                }
+            });
 
-            Fields.Add(
-                ListEditor,
-                "List editor",
-                "Select and configure a list editor.",
-                configEditorViewPath,
-                new Dictionary<string, object>(defaultConfigEditorConfig)
+            Fields.Add(new ConfigurationField
+            {
+                Key = ListEditor,
+                Name = "List editor",
+                Description = "Select and configure a list editor.",
+                View = configEditorViewPath,
+                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors },
-                });
+                }
+            });
 
-            Fields.Add(
-                "preview",
-                "Preview",
-                null,
-                IOHelper.ResolveUrl(DataListDataEditor.DataEditorPreviewViewPath));
+            Fields.Add(new ConfigurationField
+            {
+                Key = "preview",
+                Name = "Preview",
+                View = IOHelper.ResolveUrl(DataListDataEditor.DataEditorPreviewViewPath)
+            });
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

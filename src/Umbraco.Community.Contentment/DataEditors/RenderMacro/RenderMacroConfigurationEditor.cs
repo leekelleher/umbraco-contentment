@@ -16,15 +16,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         public RenderMacroConfigurationEditor()
             : base()
         {
-            Fields.Add(
-                Macro,
-                nameof(Macro),
-                "Select and configure the macro to be displayed.",
-                IOHelper.ResolveUrl(MacroPickerDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = Macro,
+                Name = nameof(Macro),
+                Description = "Select and configure the macro to be displayed.",
+                View = IOHelper.ResolveUrl(MacroPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }
-                });
+                }
+            });
 
             Fields.Add(new HideLabelConfigurationField());
         }
