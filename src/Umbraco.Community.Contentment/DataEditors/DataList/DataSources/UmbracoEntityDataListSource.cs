@@ -117,7 +117,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return GuidUdi.TryParse(value, out var udi) == true && udi.Guid.Equals(Guid.Empty) == false
+            return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
                 ? _entityService.Get(udi.Guid)
                 : default;
         }

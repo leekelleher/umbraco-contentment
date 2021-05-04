@@ -72,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (config.TryGetValue("imageCropper", out var obj) == true &&
                 obj is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 return _dataTypeService
                     .GetDataType(udi.Guid)?

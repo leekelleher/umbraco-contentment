@@ -129,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return Udi.TryParse(value, out var udi) == true
+            return UdiParser.TryParse(value, out var udi) == true
                 ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
                 : default;
         }

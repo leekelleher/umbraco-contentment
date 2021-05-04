@@ -116,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 var memberType = _memberTypeService.Get(udi.Guid);
                 if (memberType != null)
@@ -136,9 +136,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return GuidUdi.TryParse(value, out var udi) == true && udi.Guid.Equals(Guid.Empty) == false
-                ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(udi.Guid)
-                : default;
+            // TODO: [LK:2021-04-30] v9 Review this, as why would it only have `Get(IMember)` odd.
+            //return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
+            //    ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(udi.Guid)
+            //    : default;
+            return default;
         }
     }
 }

@@ -97,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
                 }
             }
-            else if (GuidUdi.TryParse(parentNode, out var udi) == true && udi.Guid != Guid.Empty)
+            else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
             {
                 startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(preview, udi.Guid);
             }
@@ -122,7 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return Udi.TryParse(value, out var udi) == true
+            return UdiParser.TryParse(value, out var udi) == true
                 ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
                 : default;
         }

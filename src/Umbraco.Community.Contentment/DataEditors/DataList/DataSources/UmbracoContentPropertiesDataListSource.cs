@@ -89,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 var contentType = _contentTypeService.Get(udi.Guid);
                 if (contentType != null)
