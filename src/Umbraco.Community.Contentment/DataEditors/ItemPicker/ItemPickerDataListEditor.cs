@@ -65,7 +65,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
             },
-            new EnableFilterConfigurationField(),
+            new EnableFilterConfigurationField
+            {
+                View = "views/propertyeditors/boolean/boolean.html",
+                Config = new Dictionary<string, object>
+                {
+                    { "default", Constants.Values.True }
+                },
+            },
             new MaxItemsConfigurationField(),
             new AllowClearConfigurationField(),
             new ConfigurationField
