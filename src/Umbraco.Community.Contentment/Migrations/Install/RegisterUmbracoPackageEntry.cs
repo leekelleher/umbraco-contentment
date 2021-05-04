@@ -4,9 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Linq;
-using Umbraco.Core.Migrations;
-using Umbraco.Core.Models.Packaging;
-using Umbraco.Core.Services;
+using Umbraco.Cms.Core.Packaging;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Infrastructure.Migrations;
 
 namespace Umbraco.Community.Contentment.Migrations
 {

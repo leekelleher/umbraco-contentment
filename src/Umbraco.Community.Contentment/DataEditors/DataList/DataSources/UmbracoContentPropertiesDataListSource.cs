@@ -8,14 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+using Umbraco.Cms.Core;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoContentPropertiesDataListSource : IDataListSource
     {
         private readonly IContentTypeService _contentTypeService;

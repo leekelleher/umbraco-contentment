@@ -10,9 +10,12 @@ using System.Net;
 using System.Xml;
 using System.Xml.XPath;
 using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Logging;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.Hosting;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

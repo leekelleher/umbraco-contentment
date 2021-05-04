@@ -9,7 +9,9 @@ using System.ComponentModel;
 using System.Linq;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

@@ -3,8 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -14,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         DataEditorName,
         DataEditorViewPath,
         ValueType = ValueTypes.Integer,
-        Group = Core.Constants.PropertyEditors.Groups.Common,
+        Group = Cms.Core.Constants.PropertyEditors.Groups.Common,
         Icon = DataEditorIcon)]
     internal sealed class NumberInputDataEditor : DataEditor
     {

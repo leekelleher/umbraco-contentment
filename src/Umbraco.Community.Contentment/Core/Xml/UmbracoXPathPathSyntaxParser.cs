@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Umbraco.Cms.Core.Xml;
 
 namespace Umbraco.Core.Xml
 {

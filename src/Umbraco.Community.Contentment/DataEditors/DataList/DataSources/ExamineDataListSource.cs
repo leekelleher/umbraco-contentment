@@ -8,15 +8,17 @@ using System.Linq;
 using Examine;
 using Examine.LuceneEngine.Providers;
 using Examine.Search;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Strings;
 using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 using Umbraco.Examine;
-using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;

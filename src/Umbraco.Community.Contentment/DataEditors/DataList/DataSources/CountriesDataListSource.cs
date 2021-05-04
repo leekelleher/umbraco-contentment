@@ -6,12 +6,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class CountriesDataListSource : IDataListSource
     {
         public string Name => ".NET Countries (ISO 3166)";

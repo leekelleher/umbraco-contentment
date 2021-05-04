@@ -7,17 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UserDefinedDataListSource : IDataListSource
     {
         public string Name => "User-defined List";
 
         public string Description => "Manually configure the items for the data source.";
 
-        public string Icon => Core.Constants.Icons.DataType;
+        public string Icon => Cms.Core.Constants.Icons.DataType;
 
         public string Group => default;
 

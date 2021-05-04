@@ -4,10 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Web.Common.Views;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
 
 namespace Umbraco.Web.Mvc
 {

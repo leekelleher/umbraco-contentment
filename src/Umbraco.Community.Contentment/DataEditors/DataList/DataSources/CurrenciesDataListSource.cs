@@ -6,12 +6,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Extensions;
+using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class CurrenciesDataListSource : IDataListSource
     {
         public string Name => ".NET Currencies (ISO 4217)";

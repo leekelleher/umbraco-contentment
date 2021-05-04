@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

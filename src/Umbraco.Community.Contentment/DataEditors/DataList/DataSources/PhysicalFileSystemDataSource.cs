@@ -6,8 +6,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Core.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
