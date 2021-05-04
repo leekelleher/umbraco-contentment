@@ -122,14 +122,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            if (settings.ProviderName.InvariantEquals(UmbConstants.DatabaseProviders.SqlCe) == true)
-            {
-                items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
-            }
-            else
-            {
+            //if (settings.ProviderName.InvariantEquals(UmbConstants.DatabaseProviders.SqlCe) == true)
+            //{
+            //    items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
+            //}
+            //else
+            //{
                 items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
-            }
+            //}
 
             return items;
         }
