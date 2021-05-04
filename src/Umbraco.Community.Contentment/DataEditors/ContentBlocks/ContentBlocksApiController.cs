@@ -3,108 +3,116 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Newtonsoft.Json.Linq;
-using Umbraco.Community.Contentment.Web.PublishedCache;
-using Umbraco.Core.Logging;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
+// TODO: [LK:2021-05-03] v9 Commenting out, as I'm (currently) unsure how to do the `RazorViewEngine` bits.
+// Feel that I need more understanding of .NET Core RazorPages.
 
-namespace Umbraco.Community.Contentment.DataEditors
-{
-    [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
-    public sealed class ContentBlocksApiController : UmbracoAuthorizedJsonController
-    {
-        private readonly ILogger _logger;
-        private readonly IPublishedModelFactory _publishedModelFactory;
+//using System;
+//using System.Collections.Generic;
+//using System.Net;
+//using System.Net.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.Extensions.Logging;
+//using Newtonsoft.Json.Linq;
+//using Umbraco.Cms.Core.Models.PublishedContent;
+//using Umbraco.Cms.Core.Services;
+//using Umbraco.Cms.Web.BackOffice.Controllers;
+//using Umbraco.Cms.Web.Common.Attributes;
+//using Umbraco.Community.Contentment.Web.PublishedCache;
 
-        public ContentBlocksApiController(ILogger logger, IPublishedModelFactory publishedModelFactory)
-        {
-            _logger = logger;
-            _publishedModelFactory = publishedModelFactory;
-        }
+//namespace Umbraco.Community.Contentment.DataEditors
+//{
+//    [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
+//    public sealed class ContentBlocksApiController : UmbracoAuthorizedJsonController
+//    {
+//        private readonly ILogger<ContentBlocksApiController> _logger;
+//        private readonly IPublishedModelFactory _publishedModelFactory;
+//        private readonly IContentTypeService _contentTypeService;
 
-        [HttpPost]
-        public HttpResponseMessage GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
-        {
-            var preview = true;
+//        public ContentBlocksApiController(
+//            ILogger<ContentBlocksApiController> logger,
+//            IPublishedModelFactory publishedModelFactory,
+//            IContentTypeService contentTypeService)
+//        {
+//            _logger = logger;
+//            _publishedModelFactory = publishedModelFactory;
+//            _contentTypeService = contentTypeService;
+//        }
 
-            var content = UmbracoContext.Content.GetById(true, contentId);
-            if (content == null)
-            {
-                _logger.Debug<ContentBlocksApiController>($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
-            }
+//        [HttpPost]
+//        public HttpResponseMessage GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
+//        {
+//            var preview = true;
 
-            var element = default(IPublishedElement);
-            var block = item.ToObject<ContentBlock>();
-            if (block != null && block.ElementType.Equals(Guid.Empty) == false)
-            {
-                if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, Services.ContentTypeService) == true)
-                {
-                    var contentType = UmbracoContext.PublishedSnapshot.Content.GetContentType(alias);
-                    if (contentType != null && contentType.IsElement == true)
-                    {
-                        var properties = new List<IPublishedProperty>();
+//            var content = UmbracoContext.Content.GetById(true, contentId);
+//            if (content == null)
+//            {
+//                _logger.LogDebug($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
+//            }
 
-                        foreach (var thing in block.Value)
-                        {
-                            var propType = contentType.GetPropertyType(thing.Key);
-                            if (propType != null)
-                            {
-                                properties.Add(new DetachedPublishedProperty(propType, null, thing.Value, preview));
-                            }
-                        }
+//            var element = default(IPublishedElement);
+//            var block = item.ToObject<ContentBlock>();
+//            if (block != null && block.ElementType.Equals(Guid.Empty) == false)
+//            {
+//                if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, _contentTypeService) == true)
+//                {
+//                    var contentType = UmbracoContext.PublishedSnapshot.Content.GetContentType(alias);
+//                    if (contentType != null && contentType.IsElement == true)
+//                    {
+//                        var properties = new List<IPublishedProperty>();
 
-                        element = _publishedModelFactory.CreateModel(new DetachedPublishedElement(block.Key, contentType, properties));
-                    }
-                }
-            }
+//                        foreach (var thing in block.Value)
+//                        {
+//                            var propType = contentType.GetPropertyType(thing.Key);
+//                            if (propType != null)
+//                            {
+//                                properties.Add(new DetachedPublishedProperty(propType, null, thing.Value, preview));
+//                            }
+//                        }
 
-            var viewData = new System.Web.Mvc.ViewDataDictionary(element)
-            {
-                { nameof(content), content },
-                { nameof(element), element },
-                { nameof(elementIndex), elementIndex },
-            };
+//                        element = _publishedModelFactory.CreateModel(new DetachedPublishedElement(block.Key, contentType, properties));
+//                    }
+//                }
+//            }
 
-            if (ContentTypeCacheHelper.TryGetIcon(content.ContentType.Alias, out var contentIcon, Services.ContentTypeService) == true)
-            {
-                viewData.Add(nameof(contentIcon), contentIcon);
-            }
+//            var viewData = new System.Web.Mvc.ViewDataDictionary(element)
+//            {
+//                { nameof(content), content },
+//                { nameof(element), element },
+//                { nameof(elementIndex), elementIndex },
+//            };
 
-            if (ContentTypeCacheHelper.TryGetIcon(element.ContentType.Alias, out var elementIcon, Services.ContentTypeService) == true)
-            {
-                viewData.Add(nameof(elementIcon), elementIcon);
-            }
+//            if (ContentTypeCacheHelper.TryGetIcon(content.ContentType.Alias, out var contentIcon, _contentTypeService) == true)
+//            {
+//                viewData.Add(nameof(contentIcon), contentIcon);
+//            }
 
-            var markup = default(string);
+//            if (ContentTypeCacheHelper.TryGetIcon(element.ContentType.Alias, out var elementIcon, _contentTypeService) == true)
+//            {
+//                viewData.Add(nameof(elementIcon), elementIcon);
+//            }
 
-            try
-            {
-                markup = ContentBlocksViewHelper.RenderPartial(element.ContentType.Alias, viewData);
-            }
-            catch (InvalidCastException icex)
-            {
-                // NOTE: This type of exception happens on a new (unsaved) page, when the context becomes the parent page,
-                // and the preview view is strongly typed to the current page's model type.
-                markup = "<p class=\"text-center mt4\">Unable to render the preview until the page has been saved.</p>";
+//            var markup = default(string);
 
-                _logger.Error<ContentBlocksApiController>(icex, "Error rendering preview view.");
-            }
-            catch (Exception ex)
-            {
-                markup = $"<pre class=\"error\"><code>{ex}</code></pre>";
+//            try
+//            {
+//                markup = ContentBlocksViewHelper.RenderPartial(element.ContentType.Alias, viewData);
+//            }
+//            catch (InvalidCastException icex)
+//            {
+//                // NOTE: This type of exception happens on a new (unsaved) page, when the context becomes the parent page,
+//                // and the preview view is strongly typed to the current page's model type.
+//                markup = "<p class=\"text-center mt4\">Unable to render the preview until the page has been saved.</p>";
 
-                _logger.Error<ContentBlocksApiController>(ex, "Error rendering preview view.");
-            }
+//                _logger.LogError(icex, "Error rendering preview view.");
+//            }
+//            catch (Exception ex)
+//            {
+//                markup = $"<pre class=\"error\"><code>{ex}</code></pre>";
 
-            return Request.CreateResponse(HttpStatusCode.OK, new { elementKey, markup });
-        }
-    }
-}
+//                _logger.LogError(ex, "Error rendering preview view.");
+//            }
+
+//            return Request.CreateResponse(HttpStatusCode.OK, new { elementKey, markup });
+//        }
+//    }
+//}
