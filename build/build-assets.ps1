@@ -31,7 +31,7 @@ if (Test-Path -Path $targetFolder) {
 }
 
 # Copy DLL / PDB
-$binFolder = "${targetFolder}\bin";
+$binFolder = "${targetFolder}\bin\Debug\net5.0";
 
 if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
 Copy-Item -Path "${TargetDir}${ProjectName}.*" -Destination $binFolder;
