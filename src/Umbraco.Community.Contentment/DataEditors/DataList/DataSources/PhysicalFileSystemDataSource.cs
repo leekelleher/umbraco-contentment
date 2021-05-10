@@ -12,6 +12,7 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -50,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "path",
                 Name = "Folder Path",
-                Description = "Enter the relative path of the folder. e.g. <code>~/css</code>",
+                Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
                 View = "textstring",
             },
             new ConfigurationField
@@ -89,7 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? filter
                 : "*.*";
 
-            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathContentRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
+            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
             var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem
@@ -97,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = friendlyName == true ? x.SplitPascalCasing(_shortStringHelper).ToFriendlyName() : x,
                 Value = virtualRoot + x,
                 Description = virtualRoot + x,
-                Icon = Cms.Core.Constants.Icons.DefaultIcon,
+                Icon = UmbConstants.Icons.DefaultIcon,
             });
         }
     }
