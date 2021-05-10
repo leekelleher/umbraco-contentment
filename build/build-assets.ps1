@@ -4,26 +4,25 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 param(
-    [string]$SolutionDir,
     [string]$TargetDir,
     [string]$ProjectName,
     [string]$ProjectDir,
     [string]$ConfigurationName
 );
 
-. "${SolutionDir}_vars.ps1";
+$rootDir = "${ProjectDir}..\..";
+. "${rootDir}\src\_vars.ps1";
 
 Write-Host $ConfigurationName;
 
 if ($ConfigurationName -eq 'Debug') {
-    Write-Host $SolutionDir;
     Write-Host $TargetDir;
     Write-Host $ProjectName;
     Write-Host $ProjectDir;
     Write-Host $TargetDevWebsite;
 }
 
-$targetFolder = "${SolutionDir}..\build\assets";
+$targetFolder = "${rootDir}\build\assets";
 
 # If it already exists, delete it
 if (Test-Path -Path $targetFolder) {
@@ -61,12 +60,12 @@ foreach($razorFile in $razorFiles){
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
 Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
-& "${SolutionDir}..\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
+& "${rootDir}\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
 # JS - Bundle & Minify
 $targetJsPath = "${pluginFolder}contentment.js";
 Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -Path $targetJsPath;
-& "${SolutionDir}..\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
+& "${rootDir}\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
 
 # In debug mode, copy the assets over to the local dev website
 if ($ConfigurationName -eq 'Debug' -AND -NOT($TargetDevWebsite -eq '')) {
