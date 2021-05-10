@@ -46,12 +46,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             { nameof(UmbracoObjectTypes.MemberType), UmbConstants.Icons.MemberType },
         };
 
-        private readonly IEntityService _entityService;
+        private readonly Lazy<IEntityService> _entityService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoEntityDataListSource(
-            IEntityService entityService,
+            Lazy<IEntityService> entityService,
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
@@ -99,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var icon = EntityTypeIcons.GetValueAs(entityType, UmbConstants.Icons.DefaultIcon);
 
-                return _entityService
+                return _entityService.Value
                     .GetAll(objectType)
                     .OrderBy(x => x.Name)
                     .Select(x => new DataListItem
@@ -118,7 +118,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public object ConvertValue(Type type, string value)
         {
             return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
-                ? _entityService.Get(udi.Guid)
+                ? _entityService.Value.Get(udi.Guid)
                 : default;
         }
     }
