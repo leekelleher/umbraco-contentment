@@ -123,7 +123,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             try
             {
+                // TODO: [LK:2021-05-07] Doesn't work for HTTPS URLs, throws a `HttpRequestException`.
                 doc = new XPathDocument(path);
+            }
+            catch(HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
             }
             catch (WebException ex)
             {
@@ -131,7 +136,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (XmlException ex)
             {
-                _logger.LogError(ex, "Unable to load XML data.");
+                _logger.LogError(ex, $"Unable to load XML data from '{path}'.");
             }
 
             if (doc == null)
