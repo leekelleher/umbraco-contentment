@@ -26,25 +26,29 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
         private readonly IIOHelper _ioHelper;
+        private readonly IConfiguration _configuration;
 
         public SqlDataListSource(
             IHostingEnvironment hostingEnvironment,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper,
+            IConfiguration configuration)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
             _codeEditorMode = File.Exists(hostingEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
                 ? "sqlserver"
                 : "razor";
 
-            _connectionStrings = ConfigurationManager.ConnectionStrings
-                .Cast<ConnectionStringSettings>()
+            _connectionStrings = configuration
+                .GetSection("ConnectionStrings")
+                .GetChildren()
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
-                    Value = x.Name
+                    Name = x.Key,
+                    Value = x.Key
                 });
 
             _ioHelper = ioHelper;
+            _configuration = configuration;
         }
 
         public string Name => "SQL Data";
@@ -110,27 +114,38 @@ namespace Umbraco.Community.Contentment.DataEditors
             var items = new List<DataListItem>();
 
             var query = config.GetValueAs("query", string.Empty);
-            var connectionString = config.GetValueAs("connectionString", string.Empty);
+            var connectionStringName = config.GetValueAs("connectionString", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(query) == true || string.IsNullOrWhiteSpace(connectionString) == true)
+            if (string.IsNullOrWhiteSpace(query) == true || string.IsNullOrWhiteSpace(connectionStringName) == true)
             {
                 return items;
             }
 
-            var settings = ConfigurationManager.ConnectionStrings[connectionString];
-            if (settings == null)
+            var connectionString = _configuration.GetConnectionString(connectionStringName);
+            if (string.IsNullOrWhiteSpace(connectionString) == true)
             {
                 return items;
             }
 
+            var configConnectionString = new ConfigConnectionString(connectionStringName, connectionString);
+            if (configConnectionString.IsConnectionStringConfigured() == false)
+            {
+                return items;
+            }
+
+            // TODO: [LK:2021-05-07] Review SQLCE
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
+            // I've tried digging around Umbraco's `IUmbracoDatabase` layer, but I couldn't get my head around it.
+            // At the end of the day, if the user has SQLCE configured, it'd be nice for them to query it.
+            // But I don't want to add an assembly dependency (for SQLCE) to Contentment itself. I'd like to leverage Umbraco's code.
+
             //if (settings.ProviderName.InvariantEquals(UmbConstants.DatabaseProviders.SqlCe) == true)
             //{
             //    items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
             //}
             //else
             //{
-                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
+            items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
             //}
 
             return items;
