@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Infrastructure.WebAssets;
-using Umbraco.Core;
+using Umbraco.Cms.Core;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Composing

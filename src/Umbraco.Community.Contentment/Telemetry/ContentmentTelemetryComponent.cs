@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Configuration;
 using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Core;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Telemetry

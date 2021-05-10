@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Umbraco.Extensions;
 
-namespace Umbraco.Core
+namespace Umbraco.Cms.Core
 {
     internal static class DictionaryExtensions
     {

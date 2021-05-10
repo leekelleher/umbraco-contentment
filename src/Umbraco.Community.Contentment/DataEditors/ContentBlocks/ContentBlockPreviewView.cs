@@ -5,10 +5,10 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Web.Common.Views;
 using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Core;
 
 namespace Umbraco.Web.Mvc
 {

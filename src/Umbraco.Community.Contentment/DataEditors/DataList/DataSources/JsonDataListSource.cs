@@ -11,10 +11,10 @@ using System.Net;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Core;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

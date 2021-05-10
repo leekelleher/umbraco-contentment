@@ -15,7 +15,7 @@ using System.Reflection;
 using Umbraco.Cms.Core.Trees;
 using Umbraco.Cms.Web.BackOffice.Trees;
 
-namespace Umbraco.Web
+namespace Umbraco.Cms.Web
 {
     public static class TreeCollectionBuilderExtensions
     {

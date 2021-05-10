@@ -5,13 +5,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core;
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Cms.Core.Hosting;
-using Microsoft.Extensions.Logging;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

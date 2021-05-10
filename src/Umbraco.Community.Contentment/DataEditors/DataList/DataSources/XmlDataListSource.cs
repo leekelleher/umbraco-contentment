@@ -7,15 +7,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Xml;
 using System.Xml.XPath;
-using Umbraco.Core;
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core.Hosting;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

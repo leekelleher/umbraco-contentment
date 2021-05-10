@@ -10,10 +10,12 @@ using System.Data.SqlClient;
 //using System.Data.SqlServerCe;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Configuration;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Core;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 

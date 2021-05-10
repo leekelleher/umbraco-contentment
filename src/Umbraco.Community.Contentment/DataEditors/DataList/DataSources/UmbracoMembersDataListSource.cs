@@ -14,7 +14,6 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Core;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 

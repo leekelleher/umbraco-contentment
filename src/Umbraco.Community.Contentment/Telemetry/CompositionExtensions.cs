@@ -10,7 +10,7 @@ using Umbraco.Community.Contentment.Telemetry;
 
 // NOTE: This extension method class is deliberately using the Umbraco namespace,
 // as to reduce namespace imports and ease the developer experience. [LK]
-namespace Umbraco.Core.Composing
+namespace Umbraco.Cms.Core.Composing
 {
     public static partial class CompositionExtensions
     {
