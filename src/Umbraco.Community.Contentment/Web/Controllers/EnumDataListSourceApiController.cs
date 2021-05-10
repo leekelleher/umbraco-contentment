@@ -6,13 +6,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
-using Umbraco.Cms.Web.Common.Authorization;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
@@ -20,7 +19,6 @@ namespace Umbraco.Community.Contentment.Web.Controllers
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
-    [Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
     public sealed class EnumDataSourceApiController : UmbracoAuthorizedJsonController
     {
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
@@ -41,28 +39,37 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             var options = new SortedDictionary<string, DataListItem>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            if (assemblies?.Length > 0)
+            if (assemblies?.Any() == true)
             {
                 foreach (var assembly in assemblies)
                 {
                     if (options.ContainsKey(assembly.FullName) == true || assembly.IsDynamic == true)
+                    {
                         continue;
+                    }
 
                     var hasEnums = false;
-                    if (assembly.ExportedTypes != null)
+                    try
                     {
-                        foreach (var exportedType in assembly.ExportedTypes)
+                        var exportedTypes = assembly.GetExportedTypes();
+                        if (exportedTypes != null)
                         {
-                            if (exportedType.IsEnum == true)
+                            foreach (var exportedType in exportedTypes)
                             {
-                                hasEnums = true;
-                                break;
+                                if (exportedType.IsEnum == true)
+                                {
+                                    hasEnums = true;
+                                    break;
+                                }
                             }
                         }
                     }
+                    catch (TypeLoadException) { /* ¯\_(ツ)_/¯ */ }
 
                     if (hasEnums == false)
+                    {
                         continue;
+                    }
 
                     if (assembly.FullName.StartsWith(App_Code) == true && options.ContainsKey(App_Code) == false)
                     {
@@ -85,10 +92,13 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             var options = new SortedDictionary<string, DataListItem>();
 
             var types = Assembly.Load(assembly).GetTypes();
+
             foreach (var type in types)
             {
                 if (type.IsEnum == false)
+                {
                     continue;
+                }
 
                 options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(_shortStringHelper), Value = type.FullName });
             }
