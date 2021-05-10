@@ -19,10 +19,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoDictionaryDataListSource : IDataListSource
     {
         private readonly ILocalizationService _localizationService;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoDictionaryDataListSource(ILocalizationService localizationService)
+        public UmbracoDictionaryDataListSource(
+            ILocalizationService localizationService,
+            IIOHelper ioHelper)
         {
             _localizationService = localizationService;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Dictionary Items";
@@ -40,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "item",
                 Name = "Dictionary item",
                 Description = "Select a parent dictionary item to display the child items.",
-                View = DictionaryPickerDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DictionaryPickerDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }

@@ -101,6 +101,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => DataEditorViewPath;
+        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
     }
 }

@@ -14,6 +14,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
 
+        private readonly IIOHelper _ioHelper;
+
+        public CheckboxListDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Checkbox List";
 
         public string Description => "Select multiple values from a list of checkboxes.";
@@ -43,6 +50,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => DataEditorViewPath;
+        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
     }
 }

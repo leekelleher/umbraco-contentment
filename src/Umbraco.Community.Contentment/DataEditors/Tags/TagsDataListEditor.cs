@@ -14,6 +14,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
 
+        private readonly IIOHelper _ioHelper;
+
+        public TagsDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Tags";
 
         public string Description => "Select items from an Umbraco Tags-like interface.";
@@ -43,6 +50,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => DataEditorViewPath;
+        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
     }
 }

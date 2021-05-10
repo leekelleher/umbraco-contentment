@@ -14,6 +14,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
 
+        private readonly IIOHelper _ioHelper;
+
+        public RadioButtonListDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Radio Button List";
 
         public string Description => "Select a single value from a list of radio buttons.";
@@ -37,6 +44,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => DataEditorViewPath;
+        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
     }
 }

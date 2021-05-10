@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "entityType",
                 Name = "Entity type",
                 Description = "Select the Umbraco entity type to use.",
-                View = DropdownListDataListEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { "allowEmpty", Constants.Values.False },

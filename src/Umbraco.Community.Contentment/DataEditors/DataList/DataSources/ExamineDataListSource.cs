@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "examineIndex",
                 Name = "Examine Index",
                 Description = "Select the Examine index.",
-                View = DropdownListDataListEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -104,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.",
-                View = CodeEditorDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "text" },

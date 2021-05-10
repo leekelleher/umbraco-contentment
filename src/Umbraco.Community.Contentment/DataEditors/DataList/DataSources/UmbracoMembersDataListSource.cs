@@ -78,7 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "memberType",
                         Name = "Member Type",
                         Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        View = ItemPickerDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
