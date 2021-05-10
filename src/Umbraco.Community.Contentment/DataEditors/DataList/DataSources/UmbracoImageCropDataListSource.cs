@@ -18,10 +18,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoImageCropDataListSource : IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoImageCropDataListSource(IDataTypeService dataTypeService)
+        public UmbracoImageCropDataListSource(IDataTypeService dataTypeService, IIOHelper ioHelper)
         {
             _dataTypeService = dataTypeService;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Image Crops";
@@ -52,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "imageCropper",
                         Name = "Image Cropper",
                         Description = "Select a Data Type that uses the Image Cropper.",
-                        View = RadioButtonListDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
