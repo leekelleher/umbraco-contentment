@@ -8,11 +8,19 @@ using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Infrastructure.WebAssets;
 using Umbraco.Cms.Core;
 using Umbraco.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Umbraco.Community.Contentment.Composing
 {
     internal sealed class ContentmentServerVariablesParsing : INotificationHandler<ServerVariablesParsing>
     {
+        private readonly ContentmentSettings _contentmentSettings;
+
+        public ContentmentServerVariablesParsing(IOptions<ContentmentSettings> contentmentSettings)
+        {
+            _contentmentSettings = contentmentSettings.Value;
+        }
+
         public void Handle(ServerVariablesParsing notification)
         {
             if (notification.ServerVariables.TryGetValueAs("umbracoPlugins", out Dictionary<string, object> umbracoPlugins) == true &&
@@ -21,8 +29,8 @@ namespace Umbraco.Community.Contentment.Composing
                 umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
-                    telemetry = Telemetry.ContentmentTelemetryComponent.Disabled == false,
                     version = ContentmentVersion.SemanticVersion.ToSemanticString(),
+                    telemetry = _contentmentSettings.DisableTelemetry == false,
                 });
             }
         }
