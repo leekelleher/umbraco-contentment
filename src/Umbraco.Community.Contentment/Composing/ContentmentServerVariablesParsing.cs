@@ -21,8 +21,8 @@ namespace Umbraco.Community.Contentment.Composing
                 umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
-                    version = Configuration.ContentmentVersion.SemanticVersion.ToSemanticString(),
                     telemetry = Telemetry.ContentmentTelemetryComponent.Disabled == false,
+                    version = ContentmentVersion.SemanticVersion.ToSemanticString(),
                 });
             }
         }

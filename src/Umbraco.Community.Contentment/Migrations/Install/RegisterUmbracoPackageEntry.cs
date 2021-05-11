@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.Migrations
                     License = Constants.Package.License,
                     LicenseUrl = Constants.Package.LicenseUrl,
                     UmbracoVersion = Constants.Package.MinimumSupportedUmbracoVersion,
-                    Version = Configuration.ContentmentVersion.Version.ToString(),
+                    Version = ContentmentVersion.Version.ToString(),
                     Readme = "",
                 });
             }
