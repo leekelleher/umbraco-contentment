@@ -34,8 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .GetCultures(CultureTypes.SpecificCultures)
                 .Select(x => new RegionInfo(x.Name))
                 .Where(x => x.GeoId != 39070) // Excludes "World/001"
-                .DistinctBy(x => x.DisplayName)
-                .OrderBy(x => x.DisplayName)
+                .DistinctBy(x => x.TwoLetterISORegionName)
+                .OrderBy(x => x.EnglishName)
                 .Select(x => new DataListItem
                 {
                     Name = x.EnglishName,
