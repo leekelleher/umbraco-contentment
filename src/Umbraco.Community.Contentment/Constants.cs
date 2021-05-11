@@ -28,6 +28,8 @@ namespace Umbraco.Community.Contentment
             internal const string BackOfficePathRoot = PackagePathRoot + "backoffice/" + TreeAlias + "/";
 
             internal const string TreeAlias = ProjectAlias;
+
+            internal const string ConfigurationSection = "Umbraco:Contentment";
         }
 
         internal static partial class Conventions
