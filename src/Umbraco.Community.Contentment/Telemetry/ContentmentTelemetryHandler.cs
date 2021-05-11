@@ -17,30 +17,30 @@ using Umbraco.Cms.Core.Configuration;
 using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Telemetry
 {
-    // TODO: [LK:2021-04-30] v9 Maybe renamed this to `ContentmentTelemetryHandler`
-    // Currently keeping as `ContentmentTelemetryComponent` for version-control tracking.
-    internal sealed class ContentmentTelemetryComponent : INotificationHandler<SavedNotification<IDataType>>
+    internal sealed class ContentmentTelemetryHandler : INotificationHandler<SavedNotification<IDataType>>
     {
+        private readonly ContentmentSettings _contentmentSettings;
+        private readonly GlobalSettings _globalSettings;
         private readonly IUmbracoVersion _umbracoVersion;
-        private readonly IOptions<GlobalSettings> _globalSettings;
 
-        internal static bool Disabled { get; set; }
-
-        public ContentmentTelemetryComponent(IOptions<GlobalSettings> globalSettings, IUmbracoVersion umbracoVersion)
+        public ContentmentTelemetryHandler(
+            IOptions<ContentmentSettings> contentmentSettings,
+            IOptions<GlobalSettings> globalSettings,
+            IUmbracoVersion umbracoVersion)
         {
-            _globalSettings = globalSettings;
+            _contentmentSettings = contentmentSettings.Value;
+            _globalSettings = globalSettings.Value;
             _umbracoVersion = umbracoVersion;
         }
 
         public void Handle(SavedNotification<IDataType> notification)
         {
-            if (Disabled == true)
+            if (_contentmentSettings.DisableTelemetry == true)
             {
                 return;
             }
@@ -96,7 +96,7 @@ namespace Umbraco.Community.Contentment.Telemetry
                             }
                         }
 
-                        var umbracoId = Guid.TryParse(_globalSettings.Value.Id, out var telemetrySiteIdentifier) == true
+                        var umbracoId = Guid.TryParse(_globalSettings.Id, out var telemetrySiteIdentifier) == true
                             ? telemetrySiteIdentifier
                             : Guid.Empty;
 
