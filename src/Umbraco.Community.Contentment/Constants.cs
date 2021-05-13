@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment
 
             internal const string EditorsPathRoot = PackagePathRoot + "editors/";
 
-            internal const string PackagePathRoot = "~/App_Plugins/" + ProjectName + "/";
+            internal const string PackagePathRoot = "/App_Plugins/" + ProjectName + "/"; // TODO: [v9] [LK:2021-05-11] Add the ~/ back in later.
 
             internal const string PluginControllerName = ProjectName;
 
