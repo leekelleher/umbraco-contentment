@@ -16,13 +16,13 @@ using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Configuration;
 using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Telemetry
 {
-    internal sealed class ContentmentTelemetryHandler : INotificationHandler<SavedNotification<IDataType>>
+    internal sealed class ContentmentTelemetryHandler : INotificationHandler<DataTypeSavedNotification>
     {
         private readonly ContentmentSettings _contentmentSettings;
         private readonly GlobalSettings _globalSettings;
@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.Telemetry
             _umbracoVersion = umbracoVersion;
         }
 
-        public void Handle(SavedNotification<IDataType> notification)
+        public void Handle(DataTypeSavedNotification notification)
         {
             if (_contentmentSettings.DisableTelemetry == true)
             {
