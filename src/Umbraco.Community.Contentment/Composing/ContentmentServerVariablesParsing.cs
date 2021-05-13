@@ -5,14 +5,14 @@
 
 using System.Collections.Generic;
 using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Infrastructure.WebAssets;
+using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Core;
 using Umbraco.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace Umbraco.Community.Contentment.Composing
 {
-    internal sealed class ContentmentServerVariablesParsing : INotificationHandler<ServerVariablesParsing>
+    internal sealed class ContentmentServerVariablesParsing : INotificationHandler<ServerVariablesParsingNotification>
     {
         private readonly ContentmentSettings _contentmentSettings;
 
@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.Composing
             _contentmentSettings = contentmentSettings.Value;
         }
 
-        public void Handle(ServerVariablesParsing notification)
+        public void Handle(ServerVariablesParsingNotification notification)
         {
             if (notification.ServerVariables.TryGetValueAs("umbracoPlugins", out Dictionary<string, object> umbracoPlugins) == true &&
                 umbracoPlugins.ContainsKey(Constants.Internals.ProjectAlias) == false)

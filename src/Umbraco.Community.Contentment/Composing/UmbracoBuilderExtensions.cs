@@ -6,9 +6,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Infrastructure.WebAssets;
+using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
@@ -20,7 +18,7 @@ namespace Umbraco.Extensions
     {
         public static IUmbracoBuilder AddContentment(this IUmbracoBuilder builder, Action<ContentmentSettings> configure = default)
         {
-            // TODO: [LK:2021-05-10] Is there a way to combine these? e.g. `configure` will fallback on values from appSettings?
+            // TODO: [v9] [LK:2021-05-10] Is there a way to combine these? e.g. `configure` will fallback on values from appSettings?
             _ = configure is not null
                 ? builder.Services.Configure(configure)
                 : builder.Services.Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection));
@@ -34,7 +32,7 @@ namespace Umbraco.Extensions
 
             builder.Components().Append<ContentmentComponent>();
 
-            builder.AddNotificationHandler<ServerVariablesParsing, ContentmentServerVariablesParsing>();
+            builder.AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsing>();
             builder.AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryHandler>();
 
             return builder;
