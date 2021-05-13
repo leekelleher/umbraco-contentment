@@ -123,7 +123,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             try
             {
-                // TODO: [LK:2021-05-07] Doesn't work for HTTPS URLs, throws a `HttpRequestException`.
+                // TODO: [v9] [LK:2021-05-07] Doesn't work for HTTPS URLs, throws a `HttpRequestException`.
                 doc = new XPathDocument(path);
             }
             catch(HttpRequestException ex)

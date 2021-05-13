@@ -133,7 +133,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
             }
 
-            // TODO: [LK:2021-05-07] Review SQLCE
+            // TODO: [v9] [LK:2021-05-07] Review SQLCE
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
             // I've tried digging around Umbraco's `IUmbracoDatabase` layer, but I couldn't get my head around it.
             // At the end of the day, if the user has SQLCE configured, it'd be nice for them to query it.
