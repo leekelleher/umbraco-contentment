@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Web.Serialization
 {
@@ -31,6 +32,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
         private readonly HashSet<string> _ignoreFromContent;
         private readonly HashSet<string> _ignoreFromProperty;
         private readonly HashSet<string> _systemProperties;
+        private readonly Dictionary<string, Func<IPublishedContent, object>> _systemMethods;
 
         public PublishedContentContractResolver()
             : base()
@@ -73,10 +75,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             _systemProperties = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
                 nameof(IPublishedContent.CreateDate),
-// TODO: [LK:2021-04-30] v9 Review this.
-//#pragma warning disable CS0618 // Type or member is obsolete
-//                nameof(IPublishedContent.CreatorName),
-//#pragma warning restore CS0618 // Type or member is obsolete
+                nameof(FriendlyPublishedContentExtensions.CreatorName),
                 nameof(IPublishedContent.Id),
                 nameof(IPublishedContent.ItemType),
                 nameof(IPublishedElement.Key),
@@ -85,15 +84,16 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 nameof(IPublishedContent.Path),
                 nameof(IPublishedContent.SortOrder),
                 nameof(IPublishedContent.UpdateDate),
-// TODO: [LK:2021-04-30] v9 Review this.
-//#pragma warning disable CS0618 // Type or member is obsolete
-//                nameof(IPublishedContent.Url),
-//#pragma warning restore CS0618 // Type or member is obsolete
+                nameof(FriendlyPublishedContentExtensions.Url),
                 nameof(IPublishedContent.UrlSegment),
-// TODO: [LK:2021-04-30] v9 Review this.
-//#pragma warning disable CS0618 // Type or member is obsolete
-//                nameof(IPublishedContent.WriterName),
-//#pragma warning restore CS0618 // Type or member is obsolete
+                nameof(FriendlyPublishedContentExtensions.WriterName),
+            };
+
+            _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>
+            {
+                { nameof(FriendlyPublishedContentExtensions.CreatorName), x => x.CreatorName() },
+                { nameof(FriendlyPublishedContentExtensions.Url), x => x.Url() },
+                { nameof(FriendlyPublishedContentExtensions.WriterName), x => x.WriterName() },
             };
         }
 
@@ -120,7 +120,28 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-            return base.CreateProperties(type, memberSerialization).OrderBy(p => p.PropertyName).ToList();
+            var properties = base.CreateProperties(type, memberSerialization).OrderBy(p => p.PropertyName).ToList();
+
+            if (typeof(IPublishedContent).IsAssignableFrom(type) == true)
+            {
+                var noAttributeProvider = new NoAttributeProvider();
+
+                properties.AddRange(_systemMethods.Select(x => new JsonProperty
+                {
+                    DeclaringType = type,
+                    PropertyName = ResolvePropertyName(x.Key),
+                    UnderlyingName = x.Key,
+                    PropertyType = typeof(string),
+                    ValueProvider = new PublishedContentValueProvider(x.Value),
+                    AttributeProvider = noAttributeProvider,
+                    Readable = true,
+                    Writable = false,
+                    ItemIsReference = false,
+                    TypeNameHandling = TypeNameHandling.None,
+                }));
+            }
+
+            return properties;
         }
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
@@ -155,6 +176,31 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
 
             return property;
+        }
+
+        protected override string ResolvePropertyName(string propertyName)
+        {
+            return PrefixSystemPropertyNamesWithUnderscore == true && _systemProperties.Contains(propertyName) == true
+                ? "_" + base.ResolvePropertyName(propertyName)
+                : base.ResolvePropertyName(propertyName);
+        }
+
+        private class PublishedContentValueProvider : IValueProvider
+        {
+            private readonly Func<IPublishedContent, object> _func;
+
+            public PublishedContentValueProvider(Func<IPublishedContent, object> func) => _func = func;
+
+            public object GetValue(object target) => _func((IPublishedContent)target);
+
+            public void SetValue(object target, object value) => throw new NotImplementedException();
+        }
+
+        private class NoAttributeProvider : IAttributeProvider
+        {
+            public IList<Attribute> GetAttributes(bool inherit) => Array.Empty<Attribute>();
+
+            public IList<Attribute> GetAttributes(Type attributeType, bool inherit) => Array.Empty<Attribute>();
         }
     }
 }
