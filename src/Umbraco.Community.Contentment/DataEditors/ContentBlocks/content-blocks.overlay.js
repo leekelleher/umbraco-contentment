@@ -112,6 +112,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 key: String.CreateGuid()
             };
 
+            // TODO: [v9] [LK] Review this, get error with blueprint API request, 404.
+            // "Failed to retrieve blueprint for id 1082"
+            // e.g. /umbraco/backoffice/umbracoapi/content/GetEmpty?blueprintId=1082&parentId=1076
             var getScaffold = blueprint && blueprint.id > 0
                 ? contentResource.getBlueprintScaffold(config.currentPageId, blueprint.id)
                 : contentResource.getScaffold(config.currentPageId, elementType.alias);

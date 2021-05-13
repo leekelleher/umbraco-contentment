@@ -7,10 +7,9 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Web.Common.Views;
 using Umbraco.Community.Contentment.DataEditors;
 
-namespace Umbraco.Web.Mvc
+namespace Umbraco.Cms.Web.Common.Views
 {
     public abstract class ContentBlockPreviewView
         : ContentBlockPreviewView<IPublishedContent, IPublishedElement>
