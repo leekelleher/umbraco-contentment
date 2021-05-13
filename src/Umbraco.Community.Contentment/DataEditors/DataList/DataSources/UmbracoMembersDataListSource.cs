@@ -135,11 +135,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            // TODO: [LK:2021-04-30] v9 Review this, as why would it only have `Get(IMember)` odd.
-            //return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
-            //    ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(udi.Guid)
-            //    : default;
-            return default;
+            // TODO: [v9] [LK:2021-04-30] Review this, as why would it only have `Get(IMember)`?
+            return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
+                ? _publishedSnapshotAccessor.PublishedSnapshot.Members.Get(_memberService.GetByKey(udi.Guid))
+                : default;
         }
     }
 }
