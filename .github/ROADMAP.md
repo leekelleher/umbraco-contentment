@@ -56,6 +56,13 @@ Property Editors are:
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
 
 
+## v3
+
+### v3.0
+
+- _Under active development!_ [See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105) A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against Umbraco CMS v9.0.0.
+
+
 ## Future feature releases
 
 _Who knows?!_ `¯\_(ツ)_/¯`

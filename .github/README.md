@@ -1,3 +1,9 @@
+:warning: **`v3.0.0-develop` (aka migration to Umbraco v9, .NET Core) is under active development!** :warning:
+
+[See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
+
+---
+
 <img src="../docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Contentment for Umbraco
