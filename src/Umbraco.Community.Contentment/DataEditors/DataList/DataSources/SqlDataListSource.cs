@@ -52,7 +52,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
-<div class=""mt3"">
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>
 <ol>
@@ -63,7 +62,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 <li>Disabled <em>(optional)</em></li>
 </ol>
 <p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
-</div>
 </details>", true),
             new ConfigurationField
             {

@@ -59,14 +59,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     new NotesConfigurationField($@"<details class=""alert alert-danger"">
 <summary><strong>Important note about Umbraco Members.</strong></summary>
-<div class=""mt3"">
 <p>This data source is ideal for smaller number of members, e.g. under 50. Upwards of that, you will notice an unpleasant editor experience and rapidly diminished performance.</p>
 <p>Remember...</p>
 <blockquote cite=""https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility"">
 <p>&ldquo;With great power comes great responsibility!&rdquo;</p>
 </blockquote>
 <p class=""text-right"">—Benjamin Franklin Parker</p>
-</div>
 </details>", true),
                     new ConfigurationField
                     {

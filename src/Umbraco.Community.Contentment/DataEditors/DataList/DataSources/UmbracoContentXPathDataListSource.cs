@@ -49,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
-<div class=""mt3"">
 <p>If you need assistance with XPath syntax in general, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 <hr>
 <p>For querying Umbraco content with XPath, you can make it context-aware queries by using one of the pre-defined placeholders.</p>
@@ -65,7 +64,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 </dl>
 <hr />
 <p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <a href=""https://github.com/leekelleher/umbraco-contentment/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener""><em>This is a known issue.</em></a></p>
-</div>
 </details>", true),
         };
 

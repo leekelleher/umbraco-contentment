@@ -54,9 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
-<div class=""mt3"">
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
-</div>
 </details>", true),
             new ConfigurationField
             {

@@ -32,9 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new NotesConfigurationField($@"<details class=""well well-small"" open>
 <summary><strong>A note about block type previews.</strong></summary>
-<div class=""mt3"">
 <p>Unfortunately, the preview feature for block types is unsupported in {Name} display mode and will be disabled.</p>
-</div>
 </details>", true)
         };
 

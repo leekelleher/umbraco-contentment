@@ -26,7 +26,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with your custom template?</strong></summary>
-<div class=""mt3"">
 <p>Your custom template will be used to display an individual item from your configured data source.</p>
 <p>The data for the item will be in the following format:</p>
 <pre><code>{
@@ -43,7 +42,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>If you would like a starting point for your custom template, here is an example.</p>
 <umb-code-snippet language=""'AngularJS template'"">&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
 &lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-snippet>
-</div>
 </details>", true),
             new ConfigurationField
             {

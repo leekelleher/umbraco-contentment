@@ -28,7 +28,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
-<div class=""mt3"">
 <p>Welcome to a piece of Umbraco package history.</p>
 <p>First released back in 2013 by <a href=""https://twitter.com/marcemarc"" target=""_blank"">Marc Goodson</a>, <a href=""https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/"" target=""_blank""><strong>uCssClassNameDropdown</strong></a> became one of the most popular packages for Umbraco v4.11.3.</p>
 <p>This was Marc's vision...</p>
@@ -38,7 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 </blockquote>
 <p>As a mark of respect to the loyal fans of the original package, I hereby offer this data source as tribute.</p>
 <p class=""text-center""><img ng-src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName""></p>
-</div>
 </details>", true),
             new ConfigurationField
             {

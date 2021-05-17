@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+    .umb-readonlyvalue details summary + * {
+        margin-top: .5rem;
+    }
+
 .umb-readonlyvalue .well {
     margin-bottom: 10px;
 }
