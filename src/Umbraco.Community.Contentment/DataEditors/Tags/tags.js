@@ -119,6 +119,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add($event, item) {
             angularHelper.safeApply($rootScope, function () {
 
+                // NOTE: Edge-case, if the value isn't set and the content is saved, the value becomes an empty string. ¯\_(ツ)_/¯
+                if (typeof $scope.model.value === "string") {
+                    $scope.model.value = $scope.model.value.length > 0 ? [$scope.model.value] : config.defaultValue;
+                }
+
                 vm.items.push(Object.assign({}, item));
 
                 $scope.model.value.push(item.value);
