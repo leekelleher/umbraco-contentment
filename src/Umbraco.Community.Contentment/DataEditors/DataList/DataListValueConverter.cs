@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -73,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 if (hasMultipleValues == true)
                 {
-                    var objects = new List<object>();
+                    var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
 
                     foreach (var item in items)
                     {
@@ -83,29 +84,27 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                         if (obj != null)
                         {
-                            objects.Add(obj);
-                        }
-                    }
-
-                    var result = Array.CreateInstance(valueType, objects.Count);
-                    for (var i = 0; i < objects.Count; i++)
-                    {
-                        var attempt = objects[i].TryConvertTo(valueType);
-                        if (attempt.Success == true)
-                        {
-                            result.SetValue(attempt.Result, i);
-                        }
-                        else
-                        {
-                            // NOTE: At this point `TryConvertTo` can't convert to the `valueType`.
-                            // This may be a case where the `valueType` is an interface.
-                            // We can attempt to cast it directly, as a last resort.
-                            if (valueType.IsInstanceOfType(objects[i]) == true)
+                            var attempt = obj.TryConvertTo(valueType);
+                            if (attempt.Success == true)
                             {
-                                result.SetValue(objects[i], i);
+                                list.Add(attempt.Result);
+                            }
+                            else
+                            {
+                                // NOTE: At this point `TryConvertTo` can't convert to the `valueType`.
+                                // This may be a case where the `valueType` is an interface.
+                                // We can attempt to cast it directly, as a last resort.
+                                if (valueType.IsInstanceOfType(obj) == true)
+                                {
+                                    list.Add(obj);
+                                }
                             }
                         }
                     }
+
+                    // Converts the list to an array. For backwards-compatibility.
+                    var result = Array.CreateInstance(valueType, list.Count);
+                    list.CopyTo(result, 0);
 
                     return result;
                 }
