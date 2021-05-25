@@ -31,9 +31,9 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
 
             _sourceValue = value;
 
-            _interValue = new Lazy<object>(() => PropertyType.ConvertSourceToInter(owner, _sourceValue, preview));
-            _objectValue = new Lazy<object>(() => PropertyType.ConvertInterToObject(owner, PropertyCacheLevel.Unknown, _interValue.Value, preview));
-            _xpathValue = new Lazy<object>(() => PropertyType.ConvertInterToXPath(owner, PropertyCacheLevel.Unknown, _interValue.Value, preview));
+            _interValue = new Lazy<object>(() => propertyType.ConvertSourceToInter(owner, _sourceValue, preview));
+            _objectValue = new Lazy<object>(() => propertyType.ConvertInterToObject(owner, PropertyCacheLevel.Unknown, _interValue.Value, preview));
+            _xpathValue = new Lazy<object>(() => propertyType.ConvertInterToXPath(owner, PropertyCacheLevel.Unknown, _interValue.Value, preview));
         }
 
         public IPublishedPropertyType PropertyType { get; }
