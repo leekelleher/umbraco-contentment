@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Core;
@@ -86,6 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 var attr2 = field.GetCustomAttribute<DescriptionAttribute>(false);
+                var attr3 = field.GetCustomAttribute<EnumMemberAttribute>(false);
 
                 items.Add(new DataListItem
                 {
@@ -93,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(),
-                    Value = attr?.Value ?? field.Name
+                    Value = attr3?.Value ?? attr?.Value ?? field.Name
                 });
             }
 
@@ -141,7 +143,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 foreach (var field in fields)
                 {
                     var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
-                    if (value.InvariantEquals(attr?.Value) == true)
+                    var attr2 = field.GetCustomAttribute<EnumMemberAttribute>(false);
+                    if (value.InvariantEquals(attr2?.Value ?? attr?.Value) == true)
                     {
                         return Enum.Parse(type, field.Name);
                     }
