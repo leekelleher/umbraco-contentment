@@ -60,6 +60,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     : value;
             }
 
+            // EDGE-CASE: To work around Umbraco `PublishedElementPropertyBase` not calling `ConvertSourceToIntermediate()` [LK:2021-05-25]
+            // ref: https://github.com/leekelleher/umbraco-contentment/issues/111#issuecomment-847780287
+            if (inter is JArray array)
+            {
+                inter = array.ToObject<IEnumerable<string>>();
+            }
+
             if (inter is IEnumerable<string> items)
             {
                 if (hasMultipleValues == true)
