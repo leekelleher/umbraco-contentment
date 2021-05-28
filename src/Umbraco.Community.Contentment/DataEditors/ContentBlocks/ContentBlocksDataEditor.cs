@@ -27,7 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
-        private readonly ILocalizationService _localizationService;
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
@@ -40,7 +39,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             Lazy<PropertyEditorCollection> propertyEditors,
             IDataTypeService dataTypeService,
-            ILocalizationService localizationService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
@@ -50,7 +48,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeService = dataTypeService;
-            _localizationService = localizationService;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
@@ -88,7 +85,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _contentTypeService,
                 _propertyEditors.Value,
                 _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
@@ -128,7 +124,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _contentTypeService,
                 _propertyEditors.Value,
                 _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)

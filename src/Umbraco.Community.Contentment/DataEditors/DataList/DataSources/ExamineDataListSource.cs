@@ -170,7 +170,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var descriptionField = config.GetValueAs("descriptionField", string.Empty);
 
                     var results = index
-                        .GetSearcher()
+                        .Searcher
                         .CreateQuery()
                         .NativeQuery(luceneQuery)
                         // NOTE: For any `OrderBy` complaints, refer to: https://github.com/Shazwazza/Examine/issues/126

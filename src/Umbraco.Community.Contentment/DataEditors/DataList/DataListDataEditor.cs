@@ -71,8 +71,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IDataValueEditor GetValueEditor()
         {
             return new DataValueEditor(
-                _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
@@ -106,8 +104,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return new DataValueEditor(
-                _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)

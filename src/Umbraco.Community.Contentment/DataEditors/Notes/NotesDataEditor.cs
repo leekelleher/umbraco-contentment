@@ -21,23 +21,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "notes.html";
         internal const string DataEditorIcon = "icon-fa fa-sticky-note-o";
 
-        private readonly IDataTypeService _dataTypeService;
-        private readonly ILocalizationService _localizationService;
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IIOHelper _ioHelper;
 
         public NotesDataEditor(
-            IDataTypeService dataTypeService,
-            ILocalizationService localizationService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IIOHelper ioHelper)
         {
-            _dataTypeService = dataTypeService;
-            _localizationService = localizationService;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
@@ -65,8 +59,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IDataValueEditor GetValueEditor()
         {
             return new ReadOnlyDataValueEditor(
-                _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
@@ -86,8 +78,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return new ReadOnlyDataValueEditor(
-                _dataTypeService,
-                _localizationService,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)

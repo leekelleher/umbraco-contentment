@@ -36,7 +36,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IModelMetadataProvider _modelMetadataProvider;
         private readonly IRazorViewEngine _viewEngine;
         private readonly ITempDataProvider _tempDataProvider;
-        private readonly IHtmlHelper _htmlHelper;
 
         public ContentBlocksApiController(
             ILogger<ContentBlocksApiController> logger,

@@ -29,21 +29,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
 
         public NumberInputDataEditor(
-            ILoggerFactory loggerFactory,
-            IDataTypeService dataTypeService,
-            ILocalizationService localizationService,
-            ILocalizedTextService localizedTextService,
-            IShortStringHelper shortStringHelper,
-            IJsonSerializer jsonSerializer,
             IIOHelper ioHelper,
+            IDataValueEditorFactory dataValueEditorFactory,
             EditorType type = EditorType.PropertyValue)
             : base(
-                  loggerFactory,
-                  dataTypeService,
-                  localizationService,
-                  localizedTextService,
-                  shortStringHelper,
-                  jsonSerializer,
+                  dataValueEditorFactory,
                   type)
         {
             _ioHelper = ioHelper;
