@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Content Properties";
 
-        public string Description => "Populate the data source from a Content Type's properties.";
+        public string Description => "Populate a data source using a Content Type's properties.";
 
         public string Icon => "icon-umbraco";
 
