@@ -38,7 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     .Select(x => new DataListItem
                     {
                         Icon = Icon,
-                        Description = x.EditorAlias,
                         Name = x.Name,
                         Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
                     });
@@ -54,7 +53,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Config = new Dictionary<string, object>
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                             { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
                             { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value }
                         }
