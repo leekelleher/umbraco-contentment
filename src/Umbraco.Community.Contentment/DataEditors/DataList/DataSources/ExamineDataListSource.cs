@@ -6,10 +6,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Examine;
+using Examine.LuceneEngine.Providers;
 using Examine.Search;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Examine;
 using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -20,8 +22,41 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IExamineManager _examineManager;
 
         private const string _defaultNameField = "nodeName";
-        private const string _defaultValueField = "__Key";
-        private const string _defaultIconField = "__Icon";
+        private const string _defaultValueField = UmbracoExamineIndex.NodeKeyFieldName;
+        private const string _defaultIconField = UmbracoExamineIndex.IconFieldName;
+
+        private readonly Dictionary<string, object> _examineFieldConfig = new Dictionary<string, object>
+        {
+            {
+                Constants.Conventions.ConfigurationFieldAliases.Items,
+                new[]
+                {
+                    LuceneIndex.CategoryFieldName,
+                    LuceneIndex.ItemIdFieldName,
+                    LuceneIndex.ItemTypeFieldName,
+                    UmbracoExamineIndex.IconFieldName,
+                    UmbracoExamineIndex.IndexPathFieldName,
+                    UmbracoExamineIndex.NodeKeyFieldName,
+                    UmbracoExamineIndex.PublishedFieldName,
+                    UmbracoExamineIndex.UmbracoFileFieldName,
+                    "createDate",
+                    "creatorID",
+                    "creatorName",
+                    "icon",
+                    "id",
+                    "level",
+                    _defaultNameField,
+                    "nodeType",
+                    "parentID",
+                    "path",
+                    "templateID",
+                    "updateDate",
+                    "urlName",
+                    "writerID",
+                    "writerName",
+                }.Select(x => new DataListItem { Name = x, Value = x })
+            },
+        };
 
         public ExamineDataListSource(IExamineManager examineManager)
         {
@@ -74,28 +109,32 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                View =  "textstring",
+                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                Config = _examineFieldConfig
             },
             new ConfigurationField
             {
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                View =  "textstring",
+                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                Config = _examineFieldConfig
             },
             new ConfigurationField
             {
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                View = "textstring",
+                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                Config = _examineFieldConfig
             },
             new ConfigurationField
             {
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                View = "textstring",
+                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                Config = _examineFieldConfig
             },
         };
 
