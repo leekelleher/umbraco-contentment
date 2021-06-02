@@ -34,7 +34,6 @@ namespace Umbraco.Core.Composing
                     .Add<UmbracoImageCropDataListSource>()
                     .Add<UmbracoMembersDataListSource>()
                     .Add<UmbracoMemberGroupDataListSource>()
-                    .Add<UserDefinedDataListSource>()
             ;
 
             return composition;

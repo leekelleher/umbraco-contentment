@@ -11,7 +11,6 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UserDefinedDataListSource : IDataListSource
     {
         public string Name => "User-defined List";
