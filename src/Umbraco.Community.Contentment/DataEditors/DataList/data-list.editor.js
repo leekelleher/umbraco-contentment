@@ -18,6 +18,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultIcon: "icon-stop",
             enableDevMode: 0,
             maxItems: 0,
+            notes: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -48,7 +49,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             };
 
+            vm.notes = config.notes;
+
             vm.add = add;
+            vm.edit = edit;
             vm.open = open;
             vm.remove = remove;
 
@@ -56,11 +60,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.umbProperty.setPropertyActions([{
                     labelKey: "contentment_editRawValue",
                     icon: "brackets",
-                    method: function () {
-                        devModeService.editValue($scope.model, function () {
-                            // TODO: [LK:2021-04-13] Ensure that the edits are valid.
-                        });
-                    }
+                    method: edit
                 }, {
                     labelKey: "clipboard_labelForRemoveAllEntries",
                     icon: "trash",
@@ -85,6 +85,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             setDirty();
 
+        };
+
+        function edit() {
+            devModeService.editValue($scope.model, function () {
+                // NOTE: Any future validation can be done here.
+            });
         };
 
         function open(item) {
