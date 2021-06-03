@@ -46,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Large;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
