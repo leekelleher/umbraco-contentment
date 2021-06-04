@@ -12,7 +12,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal static class ContentBlocksViewHelper
     {
-        private class FakeController : Controller { }
+        [Core.Composing.HideFromTypeFinder]
+        private class ContentBlocksFakeController : ControllerBase { protected override void ExecuteCore() { } }
 
         private static readonly RazorViewEngine _viewEngine = new RazorViewEngine
         {
@@ -30,9 +31,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
 
-                var routeData = new RouteData { Values = { { "controller", nameof(FakeController) } } };
+                var routeData = new RouteData { Values = { { "controller", nameof(ContentBlocksFakeController) } } };
 
-                var controllerContext = new ControllerContext(new RequestContext(httpContext, routeData), new FakeController());
+                var controllerContext = new ControllerContext(new RequestContext(httpContext, routeData), new ContentBlocksFakeController());
 
                 var viewResult = _viewEngine.FindPartialView(controllerContext, partialName, false);
 
