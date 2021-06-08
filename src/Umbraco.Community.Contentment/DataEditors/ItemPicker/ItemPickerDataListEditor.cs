@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
-                Description = "Select an icon to be displayed as the default icon, (for when no icon is available).",
+                Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
                 View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
             new ConfigurationField

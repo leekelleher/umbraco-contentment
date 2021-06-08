@@ -5,6 +5,8 @@
 
 <div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.DataList.Editor.Controller as vm">
 
+    <div ng-if="vm.notes" class="umb-readonlyvalue" lk-bind-html-template="vm.notes"></div>
+
     <div ui-sortable="vm.sortableOptions" ng-model="model.value">
         <div class="lk-data-list-item" ng-repeat="item in model.value">
 

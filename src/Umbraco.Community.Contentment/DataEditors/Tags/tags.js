@@ -110,7 +110,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     });
                 }
 
-                $scope.umbProperty.setPropertyActions(vm.propertyActions);
+                if (vm.propertyActions.length > 0) {
+                    $scope.umbProperty.setPropertyActions(vm.propertyActions);
+                }
             }
         };
 
@@ -150,7 +152,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function keyUp($event, $index) {
-            console.log("keyUp", $event.keyCode, $index);
             if ($event.keyCode === 8 || $event.keyCode === 46) {
                 remove($index);
             }

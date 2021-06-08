@@ -259,3 +259,10 @@ For the **List editor**, select **Item Picker**, _maybe configure it with a nice
 ![Country picker example, using Data List property-editor, with remote XML data source and Item Picker editor](data-list--example-02-countries.png)
 
 
+### Further reading
+
+If you are interesting in real-world usage of Data List, here are some articles for further inspiration...
+
+- [Content Editor defined dropdowns/checkboxlists and radiobuttonlists in Umbraco v8 with Contentment](https://dev.to/timgeyssens/content-editor-defined-dropdowns-checkboxlists-and-radiobuttonlists-in-umbraco-v8-with-contentment-123f) - a post by Tim Geyssens.
+- [Umbraco Image Crop Picker using Contentment Data List](https://dev.to/leekelleher/umbraco-image-crop-picker-using-contentment-data-list-5coi) - a post by Lee Kelleher (me).
+- [Creating an Author Picker Using Contentment](https://skrift.io/issues/creating-an-author-picker-using-contentment/) - Paul Seal's article for Skrift magazine, June 2021.
