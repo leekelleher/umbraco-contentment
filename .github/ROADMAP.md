@@ -49,7 +49,7 @@ Property Editors are:
 
 ### v2.0
 
-- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.4.x features that compiles against Umbraco CMS v8.13.
+- _(At the time of writing),_ a breaking-change release _(following SemVer guidelines),_ of v1.4.x features that compiles against Umbraco CMS v8.14.
 
 ### v2.1
 
