@@ -6,15 +6,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Examine;
-using Examine.LuceneEngine.Providers;
 using Examine.Search;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Infrastructure.Examine;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-using Umbraco.Examine;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -25,8 +24,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
         private const string _defaultNameField = "nodeName";
-        private const string _defaultValueField = UmbracoExamineIndex.NodeKeyFieldName;
-        private const string _defaultIconField = UmbracoExamineIndex.IconFieldName;
+        private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
+        private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
         private readonly Dictionary<string, object> _examineFieldConfig = new Dictionary<string, object>
         {
@@ -34,14 +33,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Constants.Conventions.ConfigurationFieldAliases.Items,
                 new[]
                 {
-                    LuceneIndex.CategoryFieldName,
-                    LuceneIndex.ItemIdFieldName,
-                    LuceneIndex.ItemTypeFieldName,
-                    UmbracoExamineIndex.IconFieldName,
-                    UmbracoExamineIndex.IndexPathFieldName,
-                    UmbracoExamineIndex.NodeKeyFieldName,
-                    UmbracoExamineIndex.PublishedFieldName,
-                    UmbracoExamineIndex.UmbracoFileFieldName,
+                    ExamineFieldNames.CategoryFieldName,
+                    ExamineFieldNames.ItemIdFieldName,
+                    ExamineFieldNames.ItemTypeFieldName,
+                    UmbracoExamineFieldNames.IconFieldName,
+                    UmbracoExamineFieldNames.IndexPathFieldName,
+                    UmbracoExamineFieldNames.NodeKeyFieldName,
+                    UmbracoExamineFieldNames.PublishedFieldName,
+                    UmbracoExamineFieldNames.UmbracoFileFieldName,
                     "createDate",
                     "creatorID",
                     "creatorName",
@@ -117,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -125,7 +124,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -133,7 +132,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -141,7 +140,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
         };

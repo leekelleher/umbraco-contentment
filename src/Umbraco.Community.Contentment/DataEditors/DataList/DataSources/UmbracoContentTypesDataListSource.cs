@@ -7,27 +7,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Core.Xml;
-using Umbraco.Web;
-using UmbConstants = Umbraco.Core.Constants;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Web;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
+    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoContentTypesDataListSource(IContentTypeService contentTypeService, IUmbracoContextAccessor umbracoContextAccessor)
+        public UmbracoContentTypesDataListSource(
+            IContentTypeService contentTypeService,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content Types";
@@ -46,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "contentTypes",
                 Name = "Content types",
-                View = IOHelper.ResolveUrl(CheckboxListDataListEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CheckboxListDataListEditor.DataEditorViewPath),
                 Description = "Select the types to use.",
                 Config = new Dictionary<string, object>
                 {
@@ -129,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            if (GuidUdi.TryParse(value, out var udi) == true && ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true)
+            if (UdiParser.TryParse(value, out GuidUdi udi) == true && ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true)
             {
                 return _umbracoContextAccessor.UmbracoContext.Content.GetContentType(alias);
             }

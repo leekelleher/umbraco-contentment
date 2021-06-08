@@ -61,13 +61,13 @@ namespace Umbraco.Extensions
                     .Add<TimeZoneDataListSource>()
                     .Add<uCssClassNameDataListSource>()
                     .Add<UmbracoContentPropertiesDataListSource>()
+                    .Add<UmbracoContentTypesDataListSource>()
                     .Add<UmbracoContentXPathDataListSource>()
                     .Add<UmbracoDictionaryDataListSource>()
                     .Add<UmbracoEntityDataListSource>()
                     .Add<UmbracoImageCropDataListSource>()
                     .Add<UmbracoMembersDataListSource>()
                     .Add<UmbracoMemberGroupDataListSource>()
-                    .Add<UserDefinedDataListSource>()
             ;
 
             return builder;

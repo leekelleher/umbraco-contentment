@@ -13,7 +13,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UserDefinedDataListSource : IDataListSource
     {
         private readonly IIOHelper _ioHelper;
