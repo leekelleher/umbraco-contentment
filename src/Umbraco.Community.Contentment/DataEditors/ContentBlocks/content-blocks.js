@@ -33,7 +33,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             maxItems: 0,
             overlayView: "",
             enableDevMode: 0,
-            sortableAxis: "y",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 

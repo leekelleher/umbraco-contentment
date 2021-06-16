@@ -28,7 +28,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "sortableAxis", 'y' },
             { "enablePreview", Constants.Values.True },
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
