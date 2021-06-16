@@ -37,8 +37,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
 
-            // NOTE: Sets the default display mode to be the Stack.
-            var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(StackDisplayMode).GetFullNameWithAssembly()));
+            // NOTE: Sets the default display mode to be the Blocks.
+            var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(BlocksDisplayMode).GetFullNameWithAssembly()));
             if (defaultDisplayMode != null)
             {
                 DefaultConfiguration.Add(DisplayMode, new[] { new { key = defaultDisplayMode.Key, value = defaultDisplayMode.DefaultValues } });
