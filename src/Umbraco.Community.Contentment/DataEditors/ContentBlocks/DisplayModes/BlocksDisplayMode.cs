@@ -5,20 +5,21 @@
 
 using System.Collections.Generic;
 using Umbraco.Core.PropertyEditors;
+using UmbIcons = Umbraco.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class StackDisplayMode : IContentBlocksDisplayMode
+    internal class BlocksDisplayMode : IContentBlocksDisplayMode
     {
-        public string Name => "Stack";
+        public string Name => "Blocks";
 
-        public string Description => "Blocks will be displayed in a single column stack.";
+        public string Description => "Blocks will be displayed in a list similar to the Block List editor.";
 
-        public string Icon => ContentBlocksDataEditor.DataEditorIcon;
+        public string Icon => UmbIcons.ListView;
 
         public string Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-stack.html";
+        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
@@ -28,14 +29,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "sortableAxis", 'y' },
-            { "enablePreview", Constants.Values.True },
+            { "enablePreview", Constants.Values.False },
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
         };
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
+            new NotesConfigurationField($@"<details class=""well well-small"" open>
+<summary><strong>A note about block type previews.</strong></summary>
+<p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
+</details>", true),
             new ConfigurationField
             {
                 Key = "allowCopy",
