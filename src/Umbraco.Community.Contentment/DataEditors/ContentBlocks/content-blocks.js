@@ -219,6 +219,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
+        // TODO: [UP-FOR-GRABS] Add a Copy All feature.
+
         function edit($index) {
 
             var item = $scope.model.value[$index];
