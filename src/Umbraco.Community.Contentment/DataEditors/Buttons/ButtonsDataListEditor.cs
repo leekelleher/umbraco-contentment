@@ -20,6 +20,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-tab";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField

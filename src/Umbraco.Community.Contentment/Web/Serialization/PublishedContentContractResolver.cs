@@ -73,7 +73,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             _systemProperties = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             {
                 nameof(IPublishedContent.CreateDate),
+#pragma warning disable CS0618 // Type or member is obsolete
                 nameof(IPublishedContent.CreatorName),
+#pragma warning restore CS0618 // Type or member is obsolete
                 nameof(IPublishedContent.Id),
                 nameof(IPublishedContent.ItemType),
                 nameof(IPublishedElement.Key),
@@ -82,9 +84,13 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 nameof(IPublishedContent.Path),
                 nameof(IPublishedContent.SortOrder),
                 nameof(IPublishedContent.UpdateDate),
+#pragma warning disable CS0618 // Type or member is obsolete
                 nameof(IPublishedContent.Url),
+#pragma warning restore CS0618 // Type or member is obsolete
                 nameof(IPublishedContent.UrlSegment),
+#pragma warning disable CS0618 // Type or member is obsolete
                 nameof(IPublishedContent.WriterName),
+#pragma warning restore CS0618 // Type or member is obsolete
             };
         }
 

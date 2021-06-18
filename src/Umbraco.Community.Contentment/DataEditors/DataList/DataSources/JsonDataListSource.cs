@@ -32,18 +32,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
-<div class=""mt3"">
 <p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
 <p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank""><strong>goessner.net/articles/JsonPath</strong></a>.</p>
 <hr>
 <p><em>Alternatively, if you are a developer and have an idea on how to achieve this. Please do let me know on <a href=""https://github.com/leekelleher/umbraco-contentment/issues/40"" target=""_blank""><strong>GitHub issue: #40</strong></a>.</em></p>
-</div>
 </details>", true),
             new ConfigurationField
             {

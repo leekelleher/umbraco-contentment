@@ -75,9 +75,7 @@
                                 <div class="umb-readonlyvalue">
                                     <details class="well well-small">
                                         <summary><strong>Code snippet to disable Contentment telemetry</strong></summary>
-                                        <div class="mt3">
-                                            <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
-                                        </div>
+                                        <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
                                         <umb-code-snippet language="vm.csharp">{{vm.disableTelemetryCode}}</umb-code-snippet>
                                         <p>If you are already using a composer class, you can add the <code>composition.DisableContentmentTelemetry();</code> line to it.</p>
                                     </details>
@@ -96,9 +94,7 @@
                                 <div class="umb-readonlyvalue">
                                     <details class="well well-small">
                                         <summary><strong>Code snippet to disable Contentment tree dashboard</strong></summary>
-                                        <div class="mt3">
-                                            <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
-                                        </div>
+                                        <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
                                         <umb-code-snippet language="vm.csharp">{{vm.disableTreeCode}}</umb-code-snippet>
                                         <p>If you are already using a composer class, you can add the <code>composition.DisableContentmentTree();</code> line to it.</p>
                                     </details>
@@ -108,26 +104,18 @@
                         </umb-box-content>
                     </umb-box>
 
-                    <umb-box>
-                        <umb-box-header title="Video demonstrations, guides and tutorials about Contentment on YouTube">
+                    <div class="umb-box">
+                        <div class="umb-box-header">
+                            <div class="umb-box-header-title">
+                                <a href="https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M" target="_blank" rel="noopener">
+                                    Video demonstrations, guides and tutorials about Contentment on YouTube
+                                </a>
+                            </div>
                             <a href="https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M" target="_blank" rel="noopener">
                                 <i class="icon medium icon-fa fa-youtube mr0" aria-hidden="true"></i>
                             </a>
-                        </umb-box-header>
-                        <umb-box-content>
-                            <!-- Inspiration taken from https://css-tricks.com/lazy-load-embedded-youtube-videos/ -->
-                            <iframe loading="lazy"
-                                    width="640"
-                                    height="360"
-                                    src="https://www.youtube-nocookie.com/embed/videoseries?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M&rel=0"
-                                    srcdoc="<style>*{padding:0;margin:0;overflow:hidden;}html,body{height:100%;}body{background-color:black;}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto;}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black;}</style><a href='https://www.youtube-nocookie.com/embed/videoseries?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M&rel=0'><span>&#x25BA;</span></a>"
-                                    frameborder="0"
-                                    allow="autoplay; encrypted-media"
-                                    allowfullscreen
-                                    title="Contentment for Umbraco videos">
-                            </iframe>
-                        </umb-box-content>
-                    </umb-box>
+                        </div>
+                    </div>
 
                 </div>
 

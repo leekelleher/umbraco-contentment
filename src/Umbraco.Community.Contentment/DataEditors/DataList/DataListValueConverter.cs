@@ -31,9 +31,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             TryGetPropertyTypeConfiguration(propertyType, out var hasMultipleValues, out var valueType, out _);
 
             return hasMultipleValues == true
-                ? typeof(IEnumerable<>).MakeGenericType(valueType)
+                ? typeof(List<>).MakeGenericType(valueType)
                 : valueType;
         }
+
+        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Snapshot;
 
         public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
         {
@@ -72,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 if (hasMultipleValues == true)
                 {
-                    var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
+                    var result = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
 
                     foreach (var item in items)
                     {
@@ -85,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var attempt = obj.TryConvertTo(valueType);
                             if (attempt.Success == true)
                             {
-                                list.Add(attempt.Result);
+                                result.Add(attempt.Result);
                             }
                             else
                             {
@@ -94,15 +96,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 // We can attempt to cast it directly, as a last resort.
                                 if (valueType.IsInstanceOfType(obj) == true)
                                 {
-                                    list.Add(obj);
+                                    result.Add(obj);
                                 }
                             }
                         }
                     }
-
-                    // Converts the list to an array. For backwards-compatibility.
-                    var result = Array.CreateInstance(valueType, list.Count);
-                    list.CopyTo(result, 0);
 
                     return result;
                 }

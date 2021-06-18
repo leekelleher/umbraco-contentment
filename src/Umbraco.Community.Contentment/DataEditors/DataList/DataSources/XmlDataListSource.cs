@@ -31,6 +31,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-code";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
@@ -44,15 +46,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
-<div class=""mt3"">
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
-</div>
 </details>
 <details class=""well well-small"">
 <summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>
-<div class=""mt3"">
 <p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
-</div>
 </details>", true),
             new ConfigurationField
             {

@@ -146,3 +146,7 @@
 .lk-content-blocks .umb-node-preview-add {
     margin-right: 45px;
 }
+
+.contentment.umb-block-list .umb-block-list__wrapper {
+    max-width: 800px;
+}

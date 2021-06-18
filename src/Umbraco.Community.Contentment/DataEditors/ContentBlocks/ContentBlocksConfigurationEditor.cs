@@ -37,19 +37,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
 
-            // NOTE: Sets the default display mode to be the Stack.
-            var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(StackDisplayMode).GetFullNameWithAssembly()));
+            // NOTE: Sets the default display mode to be the Blocks.
+            var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(BlocksDisplayMode).GetFullNameWithAssembly()));
             if (defaultDisplayMode != null)
             {
                 DefaultConfiguration.Add(DisplayMode, new[] { new { key = defaultDisplayMode.Key, value = defaultDisplayMode.DefaultValues } });
             }
 
-            Fields.Add(
-                DisplayMode,
-                "Display mode",
-                "Select and configure how to display the blocks in the editor.",
-                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>()
+            Fields.Add(new ConfigurationField
+            {
+                Key = DisplayMode,
+                Name = "Display mode",
+                Description = "Select and configure how to display the blocks in the editor.",
+                View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDisplayMode" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
@@ -57,7 +58,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
-                });
+                }
+            });
 
             Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values));
             Fields.Add(new EnableFilterConfigurationField());

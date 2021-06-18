@@ -34,6 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
@@ -47,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
-<div class=""mt3"">
 <p>If you need assistance with XPath syntax in general, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 <hr>
 <p>For querying Umbraco content with XPath, you can make it context-aware queries by using one of the pre-defined placeholders.</p>
@@ -63,7 +64,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 </dl>
 <hr />
 <p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <a href=""https://github.com/leekelleher/umbraco-contentment/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener""><em>This is a known issue.</em></a></p>
-</div>
 </details>", true),
         };
 
@@ -105,7 +105,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Name = x.Name,
                             Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
                             Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                            Description = x.TemplateId > 0 ? x.Url : string.Empty,
+                            Description = x.TemplateId > 0 ? x.Url() : string.Empty,
                             Disabled = x.IsPublished() == false,
                         });
                 }

@@ -8,9 +8,10 @@ param(
     [string]$TargetDir,
     [string]$ProjectName,
     [string]$ProjectDir,
-    [string]$TargetDevWebsite,
     [string]$ConfigurationName
 );
+
+. "${SolutionDir}_vars.ps1";
 
 Write-Host $ConfigurationName;
 
@@ -59,12 +60,12 @@ foreach($razorFile in $razorFiles){
 
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Path $targetCssPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
 # JS - Bundle & Minify
 $targetJsPath = "${pluginFolder}contentment.js";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Path $targetJsPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -Path $targetJsPath;
 & "${SolutionDir}..\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
 
 # In debug mode, copy the assets over to the local dev website

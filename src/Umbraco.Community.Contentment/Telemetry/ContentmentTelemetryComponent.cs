@@ -9,7 +9,6 @@ using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
-using ClientDependency.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Configuration;
@@ -17,11 +16,11 @@ using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Configuration;
+using Umbraco.Core.Configuration.UmbracoSettings;
 using Umbraco.Core.Events;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Core.Services.Implement;
-using Umbraco.Web;
 
 namespace Umbraco.Community.Contentment.Telemetry
 {
@@ -29,11 +28,11 @@ namespace Umbraco.Community.Contentment.Telemetry
     {
         internal static bool Disabled { get; set; }
 
-        private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IUmbracoSettingsSection _umbracoSettings;
 
-        public ContentmentTelemetryComponent(IUmbracoContextAccessor umbracoContextAccessor)
+        public ContentmentTelemetryComponent(IUmbracoSettingsSection umbracoSettings)
         {
-            _umbracoContextAccessor = umbracoContextAccessor;
+            _umbracoSettings = umbracoSettings;
         }
 
         public void Initialize()
@@ -104,9 +103,8 @@ namespace Umbraco.Community.Contentment.Telemetry
                             }
                         }
 
-                        // TODO: [LK] After v8.10.0 bump, switch this to use `IUmbracoSettingsSection.BackOffice.Id`.
-                        var umbracoId = _umbracoContextAccessor.UmbracoContext?.HttpContext?.Server != null
-                            ? new Guid(_umbracoContextAccessor.UmbracoContext.HttpContext.Server.MachineName.GenerateMd5())
+                        var umbracoId = Guid.TryParse(_umbracoSettings.BackOffice.Id, out var telemetrySiteIdentifier) == true
+                            ? telemetrySiteIdentifier
                             : Guid.Empty;
 
                         // No identifiable details, just a quick call home.

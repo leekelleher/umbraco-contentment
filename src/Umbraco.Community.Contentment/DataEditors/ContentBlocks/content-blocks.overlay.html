@@ -10,7 +10,7 @@
         <div class="umb-editor-header">
             <div class="flex items-center" style="height: 100%;">
                 <div class="umb-editor-header__icon mr2">
-                    <i class="icon large" ng-class="vm.icon"></i>
+                    <umb-icon icon="{{vm.icon}}" class="icon large" ng-class="vm.icon"></umb-icon>
                 </div>
                 <div class="umb-editor-header__name-and-description">
                     <div class="umb-panel-header-name" ng-bind="vm.title"></div>
@@ -23,16 +23,13 @@
 
             <umb-box ng-if="vm.enableFilter && vm.items.length > 0">
                 <umb-box-content>
-                    <div class="form-search">
-                        <i class="icon-search"></i>
-                        <input type="text"
-                               ng-model="vm.searchTerm"
-                               class="umb-search-field search-query input-block-level -full-width-input"
-                               localize="placeholder"
-                               placeholder="@placeholders_filter"
-                               umb-auto-focus
-                               no-dirty-check />
-                    </div>
+                    <umb-search-filter input-id="contentment-contentblocks-search"
+                                       model="vm.searchTerm"
+                                       label-key="placeholders_filter"
+                                       text="Type to filter..."
+                                       css-class="w-100"
+                                       auto-focus="true">
+                    </umb-search-filter>
                 </umb-box-content>
             </umb-box>
 
@@ -43,7 +40,7 @@
                     <ul class="umb-actions umb-actions-child" ng-show="vm.selectBlueprint === false">
                         <li class="umb-action" ng-repeat="item in vm.items | filter:vm.searchTerm as results">
                             <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
-                                <i class="large icon" ng-class="item.icon"></i>
+                                <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                     <small ng-bind="item.description"></small>
@@ -58,7 +55,7 @@
                     <ul class="umb-actions umb-actions-child" ng-show="vm.selectBlueprint === true">
                         <li class="umb-action" ng-repeat="blueprint in vm.selectedElementType.blueprints | orderBy:vm.orderBy | filter:vm.searchTerm">
                             <button type="button" class="btn-reset umb-action-link" ng-click="vm.create(vm.selectedElementType, blueprint)">
-                                <i class="large icon" ng-class="vm.selectedElementType.icon"></i>
+                                <umb-icon icon="{{vm.selectedElementType.icon}}" class="large icon" ng-class="vm.selectedElementType.icon"></umb-icon>
                                 <span class="menu-label">
                                     <span ng-bind="blueprint.name"></span>
                                 </span>
@@ -66,7 +63,7 @@
                         </li>
                         <li class="umb-action sep" ng-show="vm.blueprintAllowBlank">
                             <button type="button" class="btn-reset umb-action-link" ng-click="vm.create(vm.selectedElementType)">
-                                <i class="large icon" ng-class="vm.selectedElementType.icon"></i>
+                                <umb-icon icon="{{vm.selectedElementType.icon}}" class="large icon" ng-class="vm.selectedElementType.icon"></umb-icon>
                                 <span class="menu-label">
                                     <span><localize key="blueprints_blankBlueprint">Blank</localize></span>
                                 </span>
@@ -81,9 +78,9 @@
                 <umb-box-header title-key="content_createFromClipboard">
                     <div style="position:relative;">
                         <button type="button" class="btn-reset" ng-click="vm.showPrompt()">
-                            <i class="icon-trash"></i>
+                            <umb-icon icon="icon-trash" class="icon-trash"></umb-icon>
                             <span class="sr-only">
-                                <localize key="clipboard_labelForRemoveAllEntries">Remove all items</localize>
+                                <localize key="actions_delete">Delete</localize>
                             </span>
                         </button>
                         <umb-confirm-action ng-if="vm.prompt"
@@ -97,7 +94,7 @@
                     <ul class="umb-actions umb-actions-child">
                         <li class="umb-action" ng-repeat="item in vm.clipboardItems | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                             <button class="btn-reset umb-action-link" ng-click="vm.paste(item)">
-                                <i class="large icon" ng-class="item.icon"></i>
+                                <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
                                 <span class="menu-label">
                                     <span ng-bind="item.name"></span>
                                 </span>

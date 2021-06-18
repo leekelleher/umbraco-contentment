@@ -33,6 +33,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-indent";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public Dictionary<string, object> DefaultValues => default;

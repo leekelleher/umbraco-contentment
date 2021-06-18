@@ -29,16 +29,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-file-text-o";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>A note about using this data source.</strong></summary>
-<div class=""mt3"">
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
-</div>
 </details>", true),
             new ConfigurationField
             {

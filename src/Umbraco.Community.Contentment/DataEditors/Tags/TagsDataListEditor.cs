@@ -18,6 +18,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-tags";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ShowIconsConfigurationField(),

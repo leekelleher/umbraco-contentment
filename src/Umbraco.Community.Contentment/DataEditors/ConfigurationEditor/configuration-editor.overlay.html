@@ -19,20 +19,20 @@
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content>
-                        <div class="form-search" ng-if="vm.enableFilter">
-                            <i class="icon-search"></i>
-                            <input type="text"
-                                   ng-model="vm.searchTerm"
-                                   class="umb-search-field search-query input-block-level -full-width-input"
-                                   localize="placeholder"
-                                   placeholder="@placeholders_filter"
-                                   umb-auto-focus
-                                   no-dirty-check />
-                        </div>
+
+                        <umb-search-filter ng-if="vm.enableFilter"
+                                           input-id="contentment-config-search"
+                                           model="vm.searchTerm"
+                                           label-key="placeholders_filter"
+                                           text="Type to filter..."
+                                           css-class="w-100 mb3"
+                                           auto-focus="true">
+                        </umb-search-filter>
+
                         <ul class="umb-actions umb-actions-child">
                             <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                                 <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
-                                    <i class="large icon" ng-class="item.icon"></i>
+                                    <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
                                     <span class="menu-label">
                                         <span ng-bind="item.name"></span>
                                         <small ng-bind="item.description"></small>

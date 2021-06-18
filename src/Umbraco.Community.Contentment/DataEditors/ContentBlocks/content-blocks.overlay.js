@@ -125,9 +125,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function paste(bloat) {
 
-            var elementType = _.find(config.elementTypes, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return x.alias === bloat.contentTypeAlias;
-            });
+            var elementType = config.elementTypes.find(x => x.alias === bloat.contentTypeAlias);
 
             $scope.model.size = elementType.overlaySize;
 

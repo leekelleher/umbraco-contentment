@@ -1,0 +1,47 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - Parts of this Source Code has been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.14.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/blocklist/umb-block-list-property-editor.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2021 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-block-list">
+    <div class="umb-block-list__wrapper">
+        <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+            <div class="umb-block-list__block" ng-repeat="item in vm.ngModel">
+                <div class="umb-block-list__block--view">
+                    <button type="button"
+                            class="btn-reset umb-outline blockelement-labelblock-editor blockelement__draggable-element"
+                            ng-click="vm.edit($index)">
+                        <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                        <span ng-bind="vm.populate(item, $index, 'name')"></span>
+                    </button>
+                </div>
+                <div class="umb-block-list__block--actions">
+                    <button ng-repeat="btn in vm.blockActions[$index]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
+                        <i class="icon icon-{{btn.icon}}" aria-hidden="true"></i>
+                        <span class="sr-only" ng-bind="btn.label"></span>
+                    </button>
+                    <button type="button" class="btn-reset umb-outline action --delete" localize="title" title="general_remove" ng-click="vm.remove($index)">
+                        <i class="icon icon-trash" aria-hidden="true"></i>
+                        <span class="sr-only">
+                            <localize key="general_remove">Remove</localize>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button type="button"
+                class="umb-node-preview-add"
+                id="{{vm.propertyAlias}}"
+                aria-label="Add content"
+                ng-click="vm.onAdd()"
+                ng-if="vm.allowAdd">
+            <span ng-bind="vm.addButtonLabel"></span>
+            <span class="sr-only">...</span>
+        </button>
+    </div>
+</div>

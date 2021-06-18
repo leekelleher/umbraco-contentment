@@ -33,7 +33,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             maxItems: 0,
             overlayView: "",
             enableDevMode: 0,
-            sortableAxis: "y",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -220,6 +219,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         };
 
+        // TODO: [UP-FOR-GRABS] Add a Copy All feature.
+
         function edit($index) {
 
             var item = $scope.model.value[$index];
@@ -372,9 +373,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             save: true,
                             name: model.blueprintName,
                             tabs: [{
-                                properties: _.map(_.pairs(item.value), function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                                    return { id: 0, alias: x[0], value: x[1] };
-                                })
+                                properties: Object.entries(item.value).map(x => ({ id: 0, alias: x[0], value: x[1] }))
                             }]
                         };
 

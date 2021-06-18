@@ -43,7 +43,8 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 #### Installation
 
-> *Note:* Contentment has been developed against **Umbraco v8.6.1** and will support that version and above.
+> *Note:* Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that version and above.
+> If you are using **Umbraco v8.6.1 (or above)**, you can continue to use Contentment v1.x.
 
 Contentment can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
 
@@ -129,7 +130,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>920+ hours</b> (between 2019-03-13 to 2021-04-14)</summary>
+<summary>Current development effort: <b>1010+ hours</b> (between 2019-03-13 to 2021-06-08)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

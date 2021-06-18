@@ -18,12 +18,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public BytesConfigurationEditor()
         {
-            Fields.Add(
-                Kilo,
-                "Kilobytes?",
-                "How many bytes do you prefer in your kilobyte?",
-                IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = Kilo,
+                Name = "Kilobytes?",
+                Description = "How many bytes do you prefer in your kilobyte?",
+                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
@@ -33,20 +34,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "1024" },
-                });
+                }
+            });
 
-            Fields.Add(
-                Decimals,
-                "Decimal places",
-                "How many decimal places would you like?",
-                IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = Decimals,
+                Name = "Decimal places",
+                Description = "How many decimal places would you like?",
+                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+                Config = new Dictionary<string, object>
                 {
                     { "initVal1", 2 },
                     { "minVal", 0 },
                     { "maxVal", 10 },
                     { "step", 1 }
-                });
+                }
+            });
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

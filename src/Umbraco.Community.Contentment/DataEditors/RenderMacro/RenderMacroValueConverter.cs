@@ -18,6 +18,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(object);
 
-        public override bool HasValue(IPublishedProperty property, string culture, string segment) => false;
+        public override bool? IsValue(object value, PropertyValueLevel level) => false;
     }
 }

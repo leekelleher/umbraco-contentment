@@ -4,26 +4,6 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 
-# https://gist.github.com/jageall/c5119d5ba26fa33602d1
-Function parseSemVer($version) {
-    $version -match "^(?<major>\d+)(\.(?<minor>\d+))?(\.(?<patch>\d+))?(\-(?<pre>[0-9A-Za-z\-\.]+))?(\+(?<build>[0-9A-Za-z\-\.]+))?$" | Out-Null;
-    $major = [int]$matches['major'];
-    $minor = [int]$matches['minor'];
-    $patch = [int]$matches['patch'];
-    $pre = [string]$matches['pre'];
-    $build = [string]$matches['build'];
-
-    New-Object PSObject -Property @{
-        Major = $major
-        Minor = $minor
-        Patch = $patch
-        Pre = $pre
-        Build = $build
-        VersionString = $version
-    };
-}
-
-
 # Set various variables / folder paths
 
 $nugetPackageId = 'Our.Umbraco.Community.Contentment';
@@ -37,7 +17,7 @@ $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = parseSemVer('8.6.1');
+$minUmbracoVersion = 8,14,0;
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
@@ -46,22 +26,10 @@ $assetsFolder = Join-Path -Path $buildFolder -ChildPath 'assets';
 $srcFolder = Join-Path -Path $rootFolder -ChildPath 'src';
 
 
-# Get some package metadata - name, description, links, etc.
-
-$version = Get-Content -Path "${rootFolder}\VERSION";
-$semver = parseSemVer($version);
-
-
-# Update the assembly version number
-
-Set-Content -Path "${srcFolder}\${projectNamespace}\Properties\VersionInfo.cs" -Value @"
-using System.Reflection;
-
-[assembly: AssemblyVersion("$($semver.Major).$($semver.Minor)")]
-[assembly: AssemblyFileVersion("$($semver.Major).$($semver.Minor).$($semver.Patch)")]
-[assembly: AssemblyInformationalVersion("$($semver.VersionString)")]
-"@ -Encoding UTF8;
-
+# Get package version number
+$csprojXml = [xml](Get-Content -Path "${srcFolder}\${projectNamespace}\${projectNamespace}.csproj");
+$version = $csprojXml.Project.PropertyGroup.Version;
+Write-Host "Package version: $version";
 
 # Build the VS project
 
@@ -92,25 +60,25 @@ if (-NOT $?) {
 
 # Populate the Umbraco package manifest
 
-$umbFolder = Join-Path -Path $buildFolder -ChildPath '__umb';
+$umbFolder = Join-Path -Path $buildFolder -ChildPath "__umb";
 if (!(Test-Path -Path $umbFolder)) {New-Item -Path $umbFolder -Type Directory;}
 
-$umbracoManifest = Join-Path -Path $buildFolder -ChildPath 'manifest-umbraco.xml';
+$umbracoManifest = Join-Path -Path $buildFolder -ChildPath "manifest-umbraco.xml";
 $umbracoPackageXml = [xml](Get-Content $umbracoManifest);
-$umbracoPackageXml.umbPackage.info.package.version = "$($semver.VersionString)";
+$umbracoPackageXml.umbPackage.info.package.version = "$($version)";
 $umbracoPackageXml.umbPackage.info.package.name = $packageName;
 $umbracoPackageXml.umbPackage.info.package.iconUrl = $iconUrl;
 $umbracoPackageXml.umbPackage.info.package.license.set_InnerText($licenseName);
 $umbracoPackageXml.umbPackage.info.package.license.url = $licenseUrl;
 $umbracoPackageXml.umbPackage.info.package.url = $packageUrl;
-$umbracoPackageXml.umbPackage.info.package.requirements.major = "$($minUmbracoVersion.Major)";
-$umbracoPackageXml.umbPackage.info.package.requirements.minor = "$($minUmbracoVersion.Minor)";
-$umbracoPackageXml.umbPackage.info.package.requirements.patch = "$($minUmbracoVersion.Patch)";
+$umbracoPackageXml.umbPackage.info.package.requirements.major = "$($minUmbracoVersion[0])";
+$umbracoPackageXml.umbPackage.info.package.requirements.minor = "$($minUmbracoVersion[1])";
+$umbracoPackageXml.umbPackage.info.package.requirements.patch = "$($minUmbracoVersion[2])";
 $umbracoPackageXml.umbPackage.info.author.name = $authorName;
 $umbracoPackageXml.umbPackage.info.author.website = $authorUrl;
-$umbracoPackageXml.umbPackage.info.readme.'#cdata-section' = $packageDescription;
+$umbracoPackageXml.umbPackage.info.readme."#cdata-section" = $packageDescription;
 
-$filesXml = $umbracoPackageXml.CreateElement('files');
+$filesXml = $umbracoPackageXml.CreateElement("files");
 
 $assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse;
 foreach($assetFile in $assetFiles){
@@ -129,16 +97,16 @@ foreach($assetFile in $assetFiles){
 $umbracoPackageXml.umbPackage.ReplaceChild($filesXml, $umbracoPackageXml.SelectSingleNode("/umbPackage/files")) | Out-Null;
 $umbracoPackageXml.Save("${umbFolder}\package.xml");
 
-$artifactsFolder = Join-Path -Path $rootFolder -ChildPath 'artifacts';
+$artifactsFolder = Join-Path -Path $rootFolder -ChildPath "artifacts";
 if (!(Test-Path -Path $artifactsFolder)) {New-Item -Path $artifactsFolder -Type Directory;}
-Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Contentment_$($semver.VersionString).zip" -Force;
+Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Contentment_$version.zip" -Force;
 
 
 # Populate the NuGet package manifest
 
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
-& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$nugetPackageId;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
-& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$($semver.VersionString)" -Properties "id=$nugetPackageId;version=$($semver.VersionString);title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion.VersionString);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion[0]).$($minUmbracoVersion[1]).$($minUmbracoVersion[2]);repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=umbraco;minUmbracoVersion=$($minUmbracoVersion[0]).$($minUmbracoVersion[1]).$($minUmbracoVersion[2]);repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders

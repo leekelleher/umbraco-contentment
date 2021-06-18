@@ -33,6 +33,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
+        public string Group => default;
+
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
@@ -71,7 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (nodeContextId == -20)
                 {
-                    // TODO: [LK:2020-08-17] If the ID = -20, then we can assume that it's come from Nested Content. What to do?
+                    // TODO: [UP-FOR-GRABS] If the ID = -20, then we can assume that it's come from Nested Content. What to do? ¯\_(ツ)_/¯
                 }
 
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
@@ -97,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = x.Name,
                     Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
                     Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                    Description = x.TemplateId > 0 ? x.Url : string.Empty,
+                    Description = x.TemplateId > 0 ? x.Url() : string.Empty,
                     Disabled = x.IsPublished() == false,
                 });
             }

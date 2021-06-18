@@ -31,12 +31,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "textstring",
             });
 
-            Fields.Add(
-                Constants.Conventions.ConfigurationFieldAliases.Items,
-                "Data list",
-                "<em>(optional)</em> Select and configure a data source to provide a HTML5 &lt;datalist&gt; for this text input.",
-                IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>()
+            Fields.Add(new ConfigurationField
+            {
+                Key = Constants.Conventions.ConfigurationFieldAliases.Items,
+                Name = "Data list",
+                Description = "<em>(optional)</em> Select and configure a data source to provide a HTML5 &lt;datalist&gt; for this text input.",
+                View = IOHelper.ResolveUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
@@ -45,7 +46,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
-                });
+                }
+            });
 
             Fields.Add(new ConfigurationField
             {

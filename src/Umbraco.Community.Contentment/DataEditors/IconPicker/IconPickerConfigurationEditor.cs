@@ -14,16 +14,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IconPickerConfigurationEditor()
             : base()
         {
-            Fields.Add(
-                "defaultIcon",
-                "Default icon",
-                "Select an icon to be displayed as the default icon, (for when no icon has been selected).",
-                IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = "defaultIcon",
+                Name = "Default icon",
+                Description = "Select an icon to be displayed as the default icon, (for when no icon has been selected).",
+                View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
                 {
                     { "defaultIcon", string.Empty },
                     { "size", "large" },
-                });
+                }
+            });
         }
     }
 }

@@ -20,6 +20,7 @@
 
 - Nested Content - Reimagined. Reach for its heart, imagine a new landscape, another atmosphere, and see how it goes.
 
+
 ### Internally used editors
 
 Could these internally used editors have potential as standalone property editors?
@@ -28,6 +29,7 @@ Could these internally used editors have potential as standalone property editor
 - Configuration Editor
 - Data Table
 - Macro Picker
+
 
 ### Validation
 

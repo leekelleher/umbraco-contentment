@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Community.Contentment", "Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj", "{7D440D19-44D0-474F-8BAB-A7DDF4062994}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4F87338-D989-4C50-BF8E-EF4AF179B459}"
 	ProjectSection(SolutionItems) = preProject
+		_vars.ps1 = _vars.ps1
 		..\LICENSE = ..\LICENSE
 		..\VERSION = ..\VERSION
 	EndProjectSection

@@ -11,7 +11,6 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UserDefinedDataListSource : IDataListSource
     {
         public string Name => "User-defined List";
@@ -19,6 +18,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public string Description => "Manually configure the items for the data source.";
 
         public string Icon => Core.Constants.Icons.DataType;
+
+        public string Group => default;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
@@ -63,7 +64,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Large;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {

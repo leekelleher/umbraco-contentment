@@ -43,7 +43,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public static bool TryGetAlias(Guid key, out string alias, IContentTypeService contentTypeService = null)
         {
             if (_forward.TryGetValue(key, out alias) == true)
+            {
                 return true;
+            }
 
             // The alias isn't cached, we can attempt to get it via the content-type service, using the GUID.
             if (contentTypeService != null)
@@ -63,7 +65,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public static bool TryGetIcon(string alias, out string icon, IContentTypeService contentTypeService = null)
         {
             if (_icons.TryGetValue(alias, out icon) == true)
+            {
                 return true;
+            }
 
             // The icon isn't cached, we can attempt to get it via the content-type service, using the alias.
             if (contentTypeService != null)
@@ -83,7 +87,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public static bool TryGetGuid(string alias, out Guid key, IContentTypeService contentTypeService = null)
         {
             if (_reverse.TryGetValue(alias, out key) == true)
+            {
                 return true;
+            }
 
             // The GUID isn't cached, we can attempt to get it via the content-type service, using the alias.
             if (contentTypeService != null)
@@ -110,18 +116,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public static bool TryRemove(Guid guid)
         {
-            return _forward.TryRemove(guid, out var alias)
-                ? _reverse.TryRemove(alias, out _)
-                : false;
+            return _forward.TryRemove(guid, out var alias) && _reverse.TryRemove(alias, out _);
         }
 
         public static bool TryRemove(string alias)
         {
             _icons.TryRemove(alias, out _);
 
-            return _reverse.TryRemove(alias, out var guid)
-                ? _forward.TryRemove(guid, out _)
-                : false;
+            return _reverse.TryRemove(alias, out var guid) && _forward.TryRemove(guid, out _);
         }
     }
 }

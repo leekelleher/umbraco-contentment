@@ -167,6 +167,7 @@ There are several alternative block-based editors that you could use with Umbrac
 
 For further reading, here are a selection of insights...
 
+- [Poornima Nayar's article about **Content Blocks**, from her series about the various block editors for Umbraco](https://poornimanayar.co.uk/blog/contentment-content-blocks/)
 - [Paul Marden's **Landing Page article** on Skrift](https://skrift.io/issues/part-1-landing-pages/) - part of a wider series on exploring common practices.
 - [Building with blocks. Which Umbraco block builder is right for you?](https://24days.in/umbraco-cms/2020/umbraco-block-builders/) - Peter Gregory's 24 Days In Umbraco article.
 - [How to Pick a Block Style Editor](https://www.wearecogworks.com/blog/umbraco-v8-how-to-pick-a-block-style-editor/) - by Marcin Zajkowski on the Cogworks blog.

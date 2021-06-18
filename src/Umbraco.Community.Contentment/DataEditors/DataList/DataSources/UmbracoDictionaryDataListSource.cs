@@ -30,6 +30,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-book-alt";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField

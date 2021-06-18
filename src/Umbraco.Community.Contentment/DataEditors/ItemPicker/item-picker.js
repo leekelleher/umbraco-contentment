@@ -6,9 +6,10 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller", [
     "$scope",
     "editorService",
+    "focusService",
     "localizationService",
     "overlayService",
-    function ($scope, editorService, localizationService, overlayService) {
+    function ($scope, editorService, focusService, localizationService, overlayService) {
 
         // console.log("item-picker.model", $scope.model);
 
@@ -68,7 +69,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 var orphaned = [];
 
                 $scope.model.value.forEach(function (v) {
-                    var item = _.find(config.items, function (x) { return x.value === v }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    var item = config.items.find(x => x.value === v);
                     if (item) {
                         vm.items.push(Object.assign({}, item));
                     } else {
@@ -105,9 +106,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            var items = Object.toBoolean(config.allowDuplicates) ? config.items : _.reject(config.items, function (x) { // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-                return _.find(vm.items, function (y) { return x.value === y.value; }); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
-            });
+            focusService.rememberFocus();
+
+            var items = Object.toBoolean(config.allowDuplicates)
+                ? config.items
+                : config.items.filter(x => vm.items.some(y => x.value === y.value) === false);
 
             editorService.open({
                 config: {
@@ -138,12 +141,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         vm.allowAdd = false;
                     }
 
-                    setDirty();
-
                     editorService.close();
+
+                    setDirty();
+                    setFocus();
                 },
                 close: function () {
                     editorService.close();
+                    setFocus();
                 }
             });
         };
@@ -155,6 +160,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function remove($index) {
+
+            focusService.rememberFocus();
+
             if (config.confirmRemoval === true) {
                 var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
                 localizationService.localizeMany(keys).then(function (data) {
@@ -170,6 +178,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         },
                         close: function () {
                             overlayService.close();
+                            setFocus();
                         }
                     });
                 });
@@ -194,6 +203,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function setDirty() {
             if ($scope.propertyForm) {
                 $scope.propertyForm.$setDirty();
+            }
+        };
+
+        function setFocus() {
+            var lastKnownFocus = focusService.getLastKnownFocus();
+            if (lastKnownFocus) {
+                lastKnownFocus.focus();
             }
         };
 

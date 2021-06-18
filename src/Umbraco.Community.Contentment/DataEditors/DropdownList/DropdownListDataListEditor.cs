@@ -19,6 +19,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-caret-square-o-down";
 
+        public string Group => default;
+
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField

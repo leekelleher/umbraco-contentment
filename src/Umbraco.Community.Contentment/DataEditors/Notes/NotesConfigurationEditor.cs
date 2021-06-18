@@ -16,15 +16,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         public NotesConfigurationEditor()
             : base()
         {
-            Fields.Add(
-                Notes,
-                nameof(Notes),
-                "Enter the notes to be displayed for the content editor.",
-                IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
-                new Dictionary<string, object>
+            Fields.Add(new ConfigurationField
+            {
+                Key = Notes,
+                Name = nameof(Notes),
+                Description = "Enter the notes to be displayed for the content editor.",
+                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
+                Config = new Dictionary<string, object>
                 {
                     { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
-                });
+                }
+            });
 
             Fields.Add(new HideLabelConfigurationField());
         }

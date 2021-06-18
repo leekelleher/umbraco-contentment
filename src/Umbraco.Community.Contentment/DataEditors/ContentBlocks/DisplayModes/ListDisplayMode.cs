@@ -16,13 +16,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DataListDataEditor.DataEditorIcon;
 
+        public string Group => default;
+
         public string View => Constants.Internals.EditorsPathRoot + "content-list.html";
 
         public Dictionary<string, object> DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "sortableAxis", Constants.Values.False },
             { "enablePreview", Constants.Values.False },
         };
 
@@ -30,10 +31,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new NotesConfigurationField($@"<details class=""well well-small"" open>
 <summary><strong>A note about block type previews.</strong></summary>
-<div class=""mt3"">
-<p>Unfortunately, the preview feature for block types is unsupported in {Name} display mode and will be disabled.</p>
-</div>
-</details>", true)
+<p>Unfortunately, the preview feature for block types is unsupported in the {Name} display mode and will be disabled.</p>
+</details>", true),
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;
