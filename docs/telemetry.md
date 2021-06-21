@@ -40,11 +40,11 @@ using Umbraco.Core.Composing;
 
 namespace Our.Umbraco.Web
 {
-    public class DisableContentmentTreeComposer : IUserComposer
+    public class DisableContentmentTelemetryComposer : IUserComposer
     {
         public void Compose(Composition composition)
         {
-            composition.DisableContentmentTree();
+            composition.DisableContentmentTelemetry();
         }
     }
 }
