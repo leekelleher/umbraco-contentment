@@ -1,4 +1,0 @@
-﻿{
-    "css": [ "~/App_Plugins/Contentment/contentment.css" ],
-    "javascript": [ "~/App_Plugins/Contentment/contentment.js" ]
-}

@@ -7,6 +7,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.WebAssets;
 using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
@@ -24,6 +25,12 @@ namespace Umbraco.Extensions
                 : builder.Services.Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection));
 
             builder
+                .BackOfficeAssets()
+                    .Append<ContentmentCssFile>()
+                    .Append<ContentmentJsFile>()
+            ;
+
+            builder
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
@@ -32,8 +39,10 @@ namespace Umbraco.Extensions
 
             builder.Components().Append<ContentmentComponent>();
 
-            builder.AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsing>();
-            builder.AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryHandler>();
+            builder
+                .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsing>()
+                .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryHandler>()
+            ;
 
             return builder;
         }
