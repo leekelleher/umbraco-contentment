@@ -16,8 +16,8 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-beta003" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-beta003" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-beta004" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-beta004" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
