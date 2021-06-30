@@ -64,6 +64,7 @@ To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Con
 
 - **Data List**
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
+  - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
 
 
 ### Documentation
