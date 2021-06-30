@@ -48,6 +48,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             });
 
+            if (Number.isInteger(config.maxItems) === false) {
+                config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
+            }
+
             config.itemLookup = {};
             config.allowEdit = {};
             config.nameTemplates = {};
@@ -74,10 +78,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.missingItem["icon"] = "icon-alert";
             });
 
-            vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.allowEdit = function (item, $index) { return config.allowEdit[item.key]; };
             vm.allowRemove = Object.toBoolean(config.allowRemove);
-            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
             vm.sortableOptions = {
                 axis: "y",
@@ -137,7 +141,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     $scope.model.value.push(model);
 
-                    if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+                    if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
                     }
 
@@ -224,8 +228,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         $scope.model.value.splice($index, 1);
 
-                        // TODO: [LK] Add the `maxItem` numeric code.
-                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                        if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
                         }
 
@@ -242,7 +245,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function validate() {
             // TODO: [LK:2019-06-30] Need to remove any extra items.
-            if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+            if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
                 vm.allowAdd = false;
             } else {
                 vm.allowAdd = true;

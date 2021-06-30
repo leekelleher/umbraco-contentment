@@ -43,6 +43,17 @@ namespace Umbraco.Community.Contentment
                 public const string OverlayView = "overlayView";
             }
 
+            internal static partial class DataSourceGroups
+            {
+                public const string Data = nameof(Data);
+
+                public const string DotNet = ".NET";
+
+                public const string Umbraco = nameof(Umbraco);
+
+                public const string Web = nameof(Web);
+            }
+
             internal static partial class DefaultConfiguration
             {
                 public static readonly object RichTextEditor = new
@@ -75,9 +86,9 @@ namespace Umbraco.Community.Contentment
 
             internal static partial class PropertyGroups
             {
-                public const string Code = "Code";
+                public const string Code = nameof(Code);
 
-                public const string Display = "Display";
+                public const string Display = nameof(Display);
             }
         }
 

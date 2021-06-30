@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-brackets";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Data;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

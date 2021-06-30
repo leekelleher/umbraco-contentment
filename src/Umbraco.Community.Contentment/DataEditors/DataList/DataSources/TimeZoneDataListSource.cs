@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-globe";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public IEnumerable<ConfigurationField> Fields => default;
 

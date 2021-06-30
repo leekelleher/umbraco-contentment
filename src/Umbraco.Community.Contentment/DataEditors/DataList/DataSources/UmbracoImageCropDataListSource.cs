@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-crop";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields
         {
