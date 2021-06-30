@@ -20,6 +20,8 @@
 
 - Nested Content - Reimagined. Reach for its heart, imagine a new landscape, another atmosphere, and see how it goes.
 
+- Wizard - overlay panel with a step wizard, each containing multiple fields, that populate the next set of fields. (A bit like the cascading one.)
+  https://github.com/umbraco/Umbraco-CMS/search?q=general_previous
 
 ### Internally used editors
 
