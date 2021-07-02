@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Populate a data source using a Content Type's properties.";
 
-        public string Icon => "icon-umbraco";
+        public string Icon => "icon-fa fa-tasks";
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 

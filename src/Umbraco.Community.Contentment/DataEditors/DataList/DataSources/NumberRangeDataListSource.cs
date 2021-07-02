@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-sort-numeric-asc";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Data;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {

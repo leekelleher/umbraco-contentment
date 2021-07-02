@@ -24,9 +24,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Populate a data source with langauges configured in Umbraco.";
 
-        public string Icon => "icon-umbraco";
+        public string Icon => UmbConstants.Icons.Language;
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields => default;
 

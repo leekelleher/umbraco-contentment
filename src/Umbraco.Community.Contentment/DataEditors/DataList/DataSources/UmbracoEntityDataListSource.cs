@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select an Umbraco entity type to populate the data source.";
 
-        public string Icon => "icon-umbraco";
+        public string Icon => "icon-lab";
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 

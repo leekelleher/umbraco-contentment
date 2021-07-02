@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-tags";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
