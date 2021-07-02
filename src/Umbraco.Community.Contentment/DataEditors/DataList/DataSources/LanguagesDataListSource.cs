@@ -1,22 +1,23 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+﻿/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TimeZoneDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class LanguagesDataListSource : IDataListSource
     {
-        public string Name => ".NET Time Zones (UTC)";
+        public string Name => ".NET Languages (ISO 639)";
 
-        public string Description => "All the time zones available in the .NET Framework.";
+        public string Description => "All the languages available in the .NET Framework, (as installed on the web server).";
 
-        public string Icon => "icon-globe";
+        public string Icon => "icon-fa fa-language";
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
@@ -28,17 +29,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return TimeZoneInfo
-                .GetSystemTimeZones()
+            return CultureInfo
+                .GetCultures(CultureTypes.SpecificCultures)
+                .DistinctBy(x => x.DisplayName)
+                .OrderBy(x => x.DisplayName)
                 .Select(x => new DataListItem
                 {
                     Name = x.DisplayName,
-                    Value = x.Id
+                    Value = x.TwoLetterISOLanguageName
                 });
         }
-
-        public Type GetValueType(Dictionary<string, object> config) => typeof(TimeZoneInfo);
-
-        public object ConvertValue(Type type, string value) => TimeZoneInfo.FindSystemTimeZoneById(value);
     }
 }

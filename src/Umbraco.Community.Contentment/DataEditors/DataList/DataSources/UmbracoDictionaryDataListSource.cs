@@ -8,13 +8,11 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoDictionaryDataListSource : IDataListSource
     {
         private readonly ILocalizationService _localizationService;
@@ -30,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-book-alt";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {

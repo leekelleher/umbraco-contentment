@@ -16,7 +16,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;
@@ -69,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-search";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

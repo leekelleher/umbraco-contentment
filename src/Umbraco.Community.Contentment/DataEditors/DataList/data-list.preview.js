@@ -73,6 +73,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         vm.property = result;
                         vm.state = result.config.items && result.config.items.length > 0 ? "loaded" : "noItems";
 
+                        // HACK: Replaces data sources label to include the item count. Could be a nicer way of doing this.
+                        vm.tabs[1].label = "Data source items (" + result.config.items.length + ")";
                     });
             }
             else if (_.isEmpty(config.dataSource) === false) {

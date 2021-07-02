@@ -11,7 +11,6 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class CurrenciesDataListSource : IDataListSource
     {
         public string Name => ".NET Currencies (ISO 4217)";
@@ -20,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-bills-euro";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public IEnumerable<ConfigurationField> Fields => default;
 

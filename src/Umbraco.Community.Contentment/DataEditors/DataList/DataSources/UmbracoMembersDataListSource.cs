@@ -18,7 +18,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoMembersDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IMemberTypeService _memberTypeService;
@@ -34,11 +33,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Members";
 
-        public string Description => "Populate a data source with Umbraco members.";
+        public string Description => "Use Umbraco members to populate the data source.";
 
         public string Icon => UmbConstants.Icons.Member;
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields
         {

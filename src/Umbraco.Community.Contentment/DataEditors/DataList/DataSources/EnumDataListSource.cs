@@ -12,7 +12,6 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
@@ -33,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-indent";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

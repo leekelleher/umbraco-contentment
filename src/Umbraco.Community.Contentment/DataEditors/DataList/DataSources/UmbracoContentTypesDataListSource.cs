@@ -18,7 +18,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
@@ -32,11 +31,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Content Types";
 
-        public string Description => "Populate a data source using Content Types.";
+        public string Description => "Populate the data source using Content Types.";
 
-        public string Icon => "icon-umbraco";
+        public string Icon => UmbConstants.Icons.ContentType;
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

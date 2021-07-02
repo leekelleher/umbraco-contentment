@@ -13,9 +13,9 @@
                            hide-description="true">
         </umb-editor-header>
 
-        <umb-editor-container>
+        <umb-editor-container ng-switch="vm.mode">
 
-            <div ng-if="vm.mode == 'select'">
+            <div ng-switch-when="select">
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content>
@@ -25,26 +25,38 @@
                                            model="vm.searchTerm"
                                            label-key="placeholders_filter"
                                            text="Type to filter..."
-                                           css-class="w-100 mb3"
+                                           css-class="w-100 mb4"
                                            auto-focus="true">
                         </umb-search-filter>
 
-                        <ul class="umb-actions umb-actions-child">
-                            <li class="umb-action" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
-                                <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
-                                    <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
-                                    <span class="menu-label">
-                                        <span ng-bind="item.name"></span>
-                                        <small ng-bind="item.description"></small>
-                                    </span>
-                                </button>
-                            </li>
-                            <li class="alert alert-danger" ng-if="results.length == 0">
-                                <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
-                            </li>
-                        </ul>
+                        <div ng-repeat="(label, items) in vm.items | lkGroupBy:'group'">
+                            <h5 ng-if="label != 'undefined' && results.length > 0" ng-bind="label"></h5>
+                            <ul class="umb-actions umb-actions-child">
+                                <li class="umb-action" ng-repeat="item in items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
+                                    <button type="button" class="btn-reset umb-action-link" ng-click="vm.select(item)">
+                                        <umb-icon icon="{{item.icon}}" class="large icon" ng-class="item.icon"></umb-icon>
+                                        <span class="menu-label">
+                                            <span ng-bind="item.name"></span>
+                                            <small ng-bind="item.description"></small>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-danger" ng-if="(vm.items | filter:vm.searchTerm).length == 0">
+                            <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
+                        </div>
+
                     </umb-box-content>
                 </umb-box>
+
+                <div class="umb-readonlyvalue" ng-if="vm.help">
+                    <details open ng-class="vm.help.class">
+                        <summary><strong ng-bind="vm.help.title"></strong></summary>
+                        <div lk-bind-html-template="vm.help.notes"></div>
+                    </details>
+                </div>
 
                 <umb-empty-state ng-if="vm.items.length == 0" position="center">
                     <p>There are no items available to add.</p>
@@ -52,7 +64,7 @@
 
             </div>
 
-            <div ng-if="vm.mode == 'edit'">
+            <div ng-switch-when="edit">
 
                 <umb-empty-state ng-if="vm.editor === undefined" position="center">
                     <p>Unable to find the editor for this configuration value.</p>

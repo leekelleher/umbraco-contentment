@@ -13,7 +13,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoImageCropDataListSource : IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;
@@ -25,11 +24,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Image Crops";
 
-        public string Description => "Select an Umbraco Image Cropper to populate the data source.";
+        public string Description => "Select an Image Cropper data-type to use its defined crops to populate the data source.";
 
         public string Icon => "icon-crop";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields
         {
