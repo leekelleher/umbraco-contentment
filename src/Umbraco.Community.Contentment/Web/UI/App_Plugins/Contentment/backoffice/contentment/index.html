@@ -29,25 +29,23 @@
                     <umb-box>
                         <umb-box-header title="Vote for the package"
                                         description="If you enjoy using this package, please do vote up on the project page, thank you.">
-                            <div style="width: 150px;">
-                                <div class="umb-button">
-                                    <a href="https://our.umbraco.com/packages/backoffice-extensions/contentment/" target="_blank" rel="noopener" class="btn umb-button__button btn-success umb-button--m" ng-click="vm.vote(true)">
-                                        <span class="umb-button__content">
-                                            <i class="umb-button__icon mr0 icon-fa fa-lg fa-thumbs-up" aria-hidden="true"></i>
-                                            <span class="sr-only">Vote up</span>
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="umb-button">
-                                    <a href="#" class="btn umb-button__button btn-danger umb-button--m" ng-click="vm.vote(false)" prevent-default>
-                                        <span class="umb-button__content">
-                                            <i class="umb-button__icon mr0 icon-fa fa-lg fa-thumbs-down fa-flip-horizontal" aria-hidden="true"></i>
-                                            <span class="sr-only">Vote down</span>
-                                        </span>
-                                    </a>
-                                </div>
+                            <div class="umb-button">
+                                <a href="https://our.umbraco.com/packages/backoffice-extensions/contentment/" target="_blank" rel="noopener" class="btn umb-button__button btn-success umb-button--m" ng-click="vm.vote(true)">
+                                    <span class="umb-button__content">
+                                        <umb-icon icon="icon-fa fa-lg fa-thumbs-up" class="umb-button__icon mr0"></umb-icon>
+                                        <span class="sr-only">Vote up</span>
+                                    </span>
+                                </a>
                             </div>
-                            <img ng-if="vm.nggyu" ng-src="https://leekelleher.com/umbraco/contentment/assets/rickroll.gif" style="position:absolute;bottom:-20px;right:0;z-index:1;">
+                            <div class="umb-button">
+                                <a href="#" class="btn umb-button__button btn-danger umb-button--m" ng-click="vm.vote(false)" prevent-default>
+                                    <span class="umb-button__content">
+                                        <umb-icon icon="icon-fa fa-lg fa-thumbs-down fa-flip-horizontal" class="umb-button__icon mr0"></umb-icon>
+                                        <span class="sr-only">Vote down</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <img ng-if="vm.nggyu" ng-src="https://leekelleher.com/umbraco/contentment/assets/rickroll.gif" style="position:absolute;bottom:0;right:0;z-index:1;">
                         </umb-box-header>
                     </umb-box>
 
@@ -112,7 +110,7 @@
                                 </a>
                             </div>
                             <a href="https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M" target="_blank" rel="noopener">
-                                <i class="icon medium icon-fa fa-youtube mr0" aria-hidden="true"></i>
+                                <umb-icon icon="medium icon-fa fa-youtube" class="icon medium mr0"></umb-icon>
                             </a>
                         </div>
                     </div>
@@ -141,7 +139,7 @@
                         <umb-box-content>
                             <div class="umb-node-preview" ng-repeat="item in vm.links">
                                 <div class="flex">
-                                    <i class="umb-node-preview__icon" ng-class="item.icon" aria-hidden="true"></i>
+                                    <umb-icon icon="{{item.icon}}" class="umb-node-preview__icon" ng-class="item.icon"></umb-icon>
                                     <div class="umb-node-preview__content">
                                         <div class="umb-node-preview__name">
                                             <a ng-href="{{item.url}}" ng-attr-target="_blank" ng-attr-rel="noopener" ng-bind="item.name"></a>

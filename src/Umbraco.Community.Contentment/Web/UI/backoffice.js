@@ -26,31 +26,31 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
 
             vm.links = [
                 {
-                    icon: "icon-fa fa-book",
+                    icon: "icon-fa fa-fw fa-book ",
                     name: "Documentation",
                     description: "How to use each of the property editors.",
                     url: "https://github.com/leekelleher/umbraco-contentment/tree/master/docs"
                 },
                 {
-                    icon: "icon-fa fa-comments-o",
+                    icon: "icon-fa fa-fw fa-comments-o",
                     name: "Support forum",
                     description: "Ask for help, the community is your friend.",
                     url: "https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/"
                 },
                 {
-                    icon: "icon-fa fa-code-fork",
+                    icon: "icon-fa fa-fw fa-code-fork",
                     name: "Source code",
                     description: "See the code, all free and open-source.",
                     url: "https://github.com/leekelleher/umbraco-contentment"
                 },
                 {
-                    icon: "icon-fa fa-bug",
+                    icon: "icon-fa fa-fw fa-bug",
                     name: "Issue tracker",
                     description: "Found a bug? Suggest a feature? Let me know.",
                     url: "https://github.com/leekelleher/umbraco-contentment/issues/new/choose"
                 },
                 {
-                    icon: "icon-fa fa-id-card-o",
+                    icon: "icon-fa fa-fw fa-id-card-o",
                     name: "License",
                     description: "Licensed under the Mozilla Public License.",
                     url: "https://opensource.org/licenses/MPL-2.0"
