@@ -13,7 +13,6 @@ using Umbraco.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public class uCssClassNameDataListSource : IDataListSource
     {
         public string Name => "uCssClassName";

@@ -13,7 +13,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoMemberGroupDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         private readonly IMemberGroupService _memberGroupService;

@@ -13,7 +13,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoImageCropDataListSource : IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;

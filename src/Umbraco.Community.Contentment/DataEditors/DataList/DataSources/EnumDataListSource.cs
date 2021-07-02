@@ -12,7 +12,6 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Core;
-using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 
