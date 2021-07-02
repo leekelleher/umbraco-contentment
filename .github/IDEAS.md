@@ -20,13 +20,19 @@
 
 - Nested Content - Reimagined. Reach for its heart, imagine a new landscape, another atmosphere, and see how it goes.
 
+- Cascade - conceptually similar to Cascading Dropdown List, but compatible with any single-value editor(s).
+
+- Wizard - overlay panel with a step wizard, each containing multiple fields, that populate the next set of fields. (A bit like the cascading one.)
+  https://github.com/umbraco/Umbraco-CMS/search?q=general_previous
+
 
 ### Internally used editors
 
 Could these internally used editors have potential as standalone property editors?
 
-- Cascading Dropdown List - _(try replacing the DropdownList with any Data List editor)__
+- Cascading Dropdown List - _(try replacing the DropdownList with any Data List editor?)__
 - Configuration Editor
+- Data List Item editor
 - Data Table
 - Macro Picker
 
@@ -46,9 +52,15 @@ Remove hard-coded English labels, move them to the language XML file.
 - v8.6+ `IDataValueReferenceFactory`, `IDataValueReference`
 
 
+## Support for Umbraco Deploy?
+
+- Implement artifact dependency logic for `IValueConnector`, `IDataTypeConfigurationConnector`?
+
+
 ## Deprecation considerations
 
 It's good to re-evaluate whether certain features are still relevant.
 
 - Icon Picker editor. The more I think about it, the more I don't see it being relevant as a standalone editor.
   - For internal Umbraco use - yes; For external public (outside Umbraco) use - no.
+  - Although the [telemetry stats](https://leekelleher.com/umbraco/contentment/telemetry/) do show some usage of it.

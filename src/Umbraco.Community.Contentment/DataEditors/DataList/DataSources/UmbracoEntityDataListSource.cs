@@ -19,7 +19,6 @@ using Umbraco.Cms.Core.IO;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoEntityDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
@@ -64,9 +63,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select an Umbraco entity type to populate the data source.";
 
-        public string Icon => "icon-umbraco";
+        public string Icon => "icon-lab";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {

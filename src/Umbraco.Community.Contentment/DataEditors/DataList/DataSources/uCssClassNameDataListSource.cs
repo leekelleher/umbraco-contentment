@@ -15,7 +15,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public class uCssClassNameDataListSource : IDataListSource
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -35,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-css3";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Web;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {

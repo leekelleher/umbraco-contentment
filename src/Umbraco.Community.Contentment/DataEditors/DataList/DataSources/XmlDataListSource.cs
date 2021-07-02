@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-code";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Data;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -123,7 +123,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             try
             {
-                // TODO: [v9] [LK:2021-05-07] Doesn't work for HTTPS URLs, throws a `HttpRequestException`.
                 doc = new XPathDocument(path);
             }
             catch(HttpRequestException ex)

@@ -15,7 +15,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class UmbracoDictionaryDataListSource : IDataListSource
     {
         private readonly ILocalizationService _localizationService;
@@ -35,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-book-alt";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {

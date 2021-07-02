@@ -37,11 +37,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "File System";
 
-        public string Description => "Select file paths from the file system as the data source.";
+        public string Description => "Select paths from the physical file system as the data source.";
 
         public string Icon => "icon-folder-close";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.Data;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             new ConfigurationField
             {
                 Key = "path",
-                Name = "Folder Path",
+                Name = "Folder path",
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
                 View = "textstring",
             },
@@ -65,15 +65,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "friendlyName",
                 Name = "Use friendly filenames?",
-                Description = "Enabling this option will remove the file extension and spaces-out any uppercase letters, hyphens and underscores.",
+                Description = "Enabling this option will remove the file extension and spaces-out any uppercase letters, hyphens and underscores from the item name.",
                 View = "boolean",
             }
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "path", "~/" },
-            { "filter", "*.*" },
+            { "path", "~/css" },
+            { "filter", "*.css" },
         };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)

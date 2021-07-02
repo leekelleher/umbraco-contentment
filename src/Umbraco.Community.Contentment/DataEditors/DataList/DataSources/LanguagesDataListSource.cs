@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+﻿/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -11,13 +11,13 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class CurrenciesDataListSource : IDataListSource
+    public sealed class LanguagesDataListSource : IDataListSource
     {
-        public string Name => ".NET Currencies (ISO 4217)";
+        public string Name => ".NET Languages (ISO 639)";
 
-        public string Description => "All the currencies available in the .NET Framework, (as installed on the web server).";
+        public string Description => "All the languages available in the .NET Framework, (as installed on the web server).";
 
-        public string Icon => "icon-bills-euro";
+        public string Icon => "icon-fa fa-language";
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
@@ -31,14 +31,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             return CultureInfo
                 .GetCultures(CultureTypes.SpecificCultures)
-                .Select(x => new RegionInfo(x.Name))
-                .Where(x => x.GeoId != 39070) // Excludes "World/001"
-                .DistinctBy(x => x.ISOCurrencySymbol)
-                .OrderBy(x => x.CurrencyEnglishName)
+                .DistinctBy(x => x.DisplayName)
+                .OrderBy(x => x.DisplayName)
                 .Select(x => new DataListItem
                 {
-                    Name = x.CurrencyEnglishName,
-                    Value = x.ISOCurrencySymbol
+                    Name = x.DisplayName,
+                    Value = x.TwoLetterISOLanguageName
                 });
         }
     }

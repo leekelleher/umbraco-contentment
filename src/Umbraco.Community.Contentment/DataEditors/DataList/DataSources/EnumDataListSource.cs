@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-indent";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

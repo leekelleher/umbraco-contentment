@@ -11,7 +11,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class CountriesDataListSource : IDataListSource
     {
         public string Name => ".NET Countries (ISO 3166)";
@@ -20,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-globe-inverted-europe-africa";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public IEnumerable<ConfigurationField> Fields => default;
 

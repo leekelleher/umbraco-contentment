@@ -14,6 +14,11 @@ namespace Umbraco.Cms.Core
         {
             if (config.TryGetValue(key, out var tmp) == true)
             {
+                if (tmp == null)
+                {
+                    return defaultValue;
+                }
+
                 if (tmp is TValueOut value)
                 {
                     return value;

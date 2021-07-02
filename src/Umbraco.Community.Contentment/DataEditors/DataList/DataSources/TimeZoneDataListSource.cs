@@ -10,16 +10,15 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Cms.Core.Composing.HideFromTypeFinder]
     public sealed class TimeZoneDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 
-        public string Description => "All the time zones available in the .NET Framework, (as installed on the web server).";
+        public string Description => "All the time zones available in the .NET Framework.";
 
         public string Icon => "icon-globe";
 
-        public string Group => default;
+        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
         public IEnumerable<ConfigurationField> Fields => default;
 

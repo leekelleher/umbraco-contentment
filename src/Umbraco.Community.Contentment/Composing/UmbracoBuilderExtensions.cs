@@ -61,24 +61,7 @@ namespace Umbraco.Extensions
 
         public static IUmbracoBuilder UnlockContentment(this IUmbracoBuilder builder)
         {
-            builder
-                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                    // Data List - Data Sources
-                    .Add<CountriesDataListSource>()
-                    .Add<CurrenciesDataListSource>()
-                    .Add<ExamineDataListSource>()
-                    .Add<TimeZoneDataListSource>()
-                    .Add<uCssClassNameDataListSource>()
-                    .Add<UmbracoContentPropertiesDataListSource>()
-                    .Add<UmbracoContentTypesDataListSource>()
-                    .Add<UmbracoContentXPathDataListSource>()
-                    .Add<UmbracoDictionaryDataListSource>()
-                    .Add<UmbracoEntityDataListSource>()
-                    .Add<UmbracoImageCropDataListSource>()
-                    .Add<UmbracoMembersDataListSource>()
-                    .Add<UmbracoMemberGroupDataListSource>()
-            ;
-
+            // NOTE: All of the Data List Sources have now been unlocked, this extension method is redundant.
             return builder;
         }
     }
