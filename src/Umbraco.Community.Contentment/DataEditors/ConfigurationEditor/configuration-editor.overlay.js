@@ -17,7 +17,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             items: [],
             editor: null,
             enableFilter: false,
-            orderBy: "name"
+            orderBy: "name",
+            help: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -37,6 +38,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 } else {
 
                     vm.title = "Select " + config.label.toLowerCase() + "...";
+                    vm.help = config.help;
                     vm.items = config.items;
                     vm.enableFilter = config.enableFilter;
                     vm.orderBy = config.orderBy;

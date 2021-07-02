@@ -13,9 +13,9 @@
                            hide-description="true">
         </umb-editor-header>
 
-        <umb-editor-container>
+        <umb-editor-container ng-switch="vm.mode">
 
-            <div ng-if="vm.mode == 'select'">
+            <div ng-switch-when="select">
 
                 <umb-box ng-if="vm.items.length > 0">
                     <umb-box-content>
@@ -51,13 +51,20 @@
                     </umb-box-content>
                 </umb-box>
 
+                <div class="umb-readonlyvalue" ng-if="vm.help">
+                    <details open ng-class="vm.help.class">
+                        <summary><strong ng-bind="vm.help.title"></strong></summary>
+                        <div lk-bind-html-template="vm.help.notes"></div>
+                    </details>
+                </div>
+
                 <umb-empty-state ng-if="vm.items.length == 0" position="center">
                     <p>There are no items available to add.</p>
                 </umb-empty-state>
 
             </div>
 
-            <div ng-if="vm.mode == 'edit'">
+            <div ng-switch-when="edit">
 
                 <umb-empty-state ng-if="vm.editor === undefined" position="center">
                     <p>Unable to find the editor for this configuration value.</p>

@@ -27,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayView: "",
             enableDevMode: 0,
             addButtonLabelKey: "general_add",
+            help: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -135,6 +136,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     items: items,
                     enableFilter: Object.toBoolean(config.enableFilter),
                     orderBy: config.orderBy,
+                    help: config.help,
                 },
                 value: {},
                 submit: function (model) {
