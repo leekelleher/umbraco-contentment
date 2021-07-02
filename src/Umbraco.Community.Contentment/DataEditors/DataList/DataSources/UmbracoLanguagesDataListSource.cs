@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Languages";
 
-        public string Description => "Populate a data source with langauges configured in Umbraco.";
+        public string Description => "Populate the data source with langauges configured in Umbraco.";
 
         public string Icon => UmbConstants.Icons.Language;
 

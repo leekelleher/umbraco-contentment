@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Members";
 
-        public string Description => "Populate a data source with Umbraco members.";
+        public string Description => "Use Umbraco members to populate the data source.";
 
         public string Icon => UmbConstants.Icons.Member;
 

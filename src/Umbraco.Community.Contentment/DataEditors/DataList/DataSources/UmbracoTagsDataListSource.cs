@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Tags";
 
-        public string Description => "Use Umbraco Tags as a data source.";
+        public string Description => "Populate the data source using already defined tags.";
 
         public string Icon => "icon-tags";
 

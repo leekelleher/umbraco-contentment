@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Image Crops";
 
-        public string Description => "Select an Umbraco Image Cropper to populate the data source.";
+        public string Description => "Select an Image Cropper data-type to use its defined crops to populate the data source.";
 
         public string Icon => "icon-crop";
 

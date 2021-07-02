@@ -13,7 +13,6 @@ using UmbConstants = Umbraco.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Core.Composing.HideFromTypeFinder]
     public sealed class NumberRangeDataListSource : IDataListSource, IDataListSourceValueConverter
     {
         public string Name => "Number Range";

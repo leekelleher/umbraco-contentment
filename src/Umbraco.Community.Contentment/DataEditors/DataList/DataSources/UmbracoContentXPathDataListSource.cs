@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Content by XPath";
 
-        public string Description => "Use an XPath query to select Umbraco content to use as a data source.";
+        public string Description => "Use an XPath query to select Umbraco content to use as the data source.";
 
         public string Icon => "icon-fa fa-file-code-o";
 

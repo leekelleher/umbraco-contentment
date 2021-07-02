@@ -40,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "SQL Data";
 
-        public string Description => "Use a SQL Server database as the data source.";
+        public string Description => "Use a SQL Server database query as the data source.";
 
         public string Icon => "icon-server-alt";
 

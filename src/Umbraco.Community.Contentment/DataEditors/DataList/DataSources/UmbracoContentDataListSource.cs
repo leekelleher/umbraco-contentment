@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Content";
 
-        public string Description => "Select Umbraco content to use its children as a data source.";
+        public string Description => "Select a start node to use its children as the data source.";
 
         public string Icon => "icon-umbraco";
 

@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Umbraco Member Groups";
 
-        public string Description => "Populate a data source with Umbraco member groups.";
+        public string Description => "Populate the data source with Umbraco member groups.";
 
         public string Icon => UmbConstants.Icons.MemberGroup;
 

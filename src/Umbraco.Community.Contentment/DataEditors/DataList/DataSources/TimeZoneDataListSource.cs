@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public string Name => ".NET Time Zones (UTC)";
 
-        public string Description => "All the time zones available in the .NET Framework, (as installed on the web server).";
+        public string Description => "All the time zones available in the .NET Framework.";
 
         public string Icon => "icon-globe";
 
