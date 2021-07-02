@@ -46,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the XPath expression to select the content.",
                 View = "textstring",
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField($@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax in general, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 <hr>
@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 <dd><code>$site</code> - ancestor page located at level 1.</dd>
 </dl>
 <hr />
-<p><strong>Please note,</strong> when using an XPath query, this data source will not work if used within a Nested Content element type. <a href=""https://github.com/leekelleher/umbraco-contentment/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener""><em>This is a known issue.</em></a></p>
+<p><strong>Please note,</strong> this data source will not work if used within a 'Nested Content' element type. <strong><em>This is a known issue.</em></strong> <a href=""{Constants.Package.RepositoryUrl}/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener"">Please see GitHub issue #30 for details.</a></p>
 </details>", true),
         };
 
