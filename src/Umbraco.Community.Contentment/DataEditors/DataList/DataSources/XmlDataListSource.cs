@@ -91,9 +91,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "itemsXPath", "//*" },
-            { "nameXPath", "text()" },
-            { "valueXPath", "text()" },
+            { "url", "https://leekelleher.com/umbraco/contentment/data.xml" },
+            { "itemsXPath", "/items/item" },
+            { "nameXPath", "@name" },
+            { "valueXPath", "@value" },
+            { "iconXPath", "@icon" },
+            { "descriptionXPath", "@description" },
         };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
