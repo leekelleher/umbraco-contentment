@@ -99,11 +99,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "url", "~/config/grid.editors.config.js"},
+            { "url", "https://leekelleher.com/umbraco/contentment/data.json" },
             { "itemsJsonPath", "$[*]" },
             { "nameJsonPath", "$.name" },
-            { "valueJsonPath", "$.alias" },
+            { "valueJsonPath", "$.value" },
             { "iconJsonPath", "$.icon" },
+            { "descriptionJsonPath", "$.description" },
         };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)

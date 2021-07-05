@@ -102,11 +102,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
+            { "url", "https://leekelleher.com/umbraco/contentment/data.csv" },
             { "delimiter", "," },
             { "nameIndex", 0 },
             { "valueIndex", 1 },
-            { "iconIndex", -1 },
-            { "descriptionIndex", -1 },
+            { "iconIndex", 2 },
+            { "descriptionIndex", 3 },
         };
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
