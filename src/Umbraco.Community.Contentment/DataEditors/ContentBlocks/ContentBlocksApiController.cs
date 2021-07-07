@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -111,7 +110,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 viewData.Add(nameof(elementIcon), elementIcon);
             }
 
-            var markup = default(string);
+            string markup;
 
             try
             {

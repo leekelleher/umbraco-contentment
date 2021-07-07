@@ -7,11 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Umbraco.Community.Contentment.Composing;
-using Umbraco.Core;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Community.Contentment.Composing;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

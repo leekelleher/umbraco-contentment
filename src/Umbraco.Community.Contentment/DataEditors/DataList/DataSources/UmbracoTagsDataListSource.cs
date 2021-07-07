@@ -9,7 +9,6 @@ using System.Linq;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Web;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

@@ -128,7 +128,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 doc = new XPathDocument(path);
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
             }

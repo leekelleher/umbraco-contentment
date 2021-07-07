@@ -5,11 +5,10 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Umbraco.Core;
+using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-using Umbraco.Cms.Core.Hosting;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

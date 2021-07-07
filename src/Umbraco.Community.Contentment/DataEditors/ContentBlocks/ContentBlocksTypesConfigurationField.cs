@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;

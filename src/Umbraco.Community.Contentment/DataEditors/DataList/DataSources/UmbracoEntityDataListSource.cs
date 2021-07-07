@@ -6,16 +6,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Entities;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-using Umbraco.Extensions;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Cms.Core.IO;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

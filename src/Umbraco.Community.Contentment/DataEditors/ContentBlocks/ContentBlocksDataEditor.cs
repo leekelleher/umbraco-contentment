@@ -16,6 +16,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    // TODO: [v9] [LK:2021-07-06] Implement the `ComplexPropertyEditorContentNotificationHandler` abstraction class.
     public sealed class ContentBlocksDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
