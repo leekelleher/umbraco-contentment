@@ -10,7 +10,5 @@ namespace Umbraco.Community.Contentment
         public bool DisableTree { get; set; } = false;
 
         public bool DisableTelemetry { get; set; } = false;
-
-        public bool UnlockFeatures { get; set; } = false;
     }
 }
