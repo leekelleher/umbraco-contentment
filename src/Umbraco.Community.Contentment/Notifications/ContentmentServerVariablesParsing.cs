@@ -10,7 +10,7 @@ using Umbraco.Cms.Core;
 using Umbraco.Extensions;
 using Microsoft.Extensions.Options;
 
-namespace Umbraco.Community.Contentment.Composing
+namespace Umbraco.Community.Contentment.Notifications
 {
     internal sealed class ContentmentServerVariablesParsing : INotificationHandler<ServerVariablesParsingNotification>
     {

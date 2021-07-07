@@ -20,7 +20,7 @@ using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
-namespace Umbraco.Community.Contentment.Telemetry
+namespace Umbraco.Community.Contentment.Notifications
 {
     internal sealed class ContentmentTelemetryHandler : INotificationHandler<DataTypeSavedNotification>
     {
