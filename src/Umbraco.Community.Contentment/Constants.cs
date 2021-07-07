@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment
 
             internal const string EditorsPathRoot = PackagePathRoot + "editors/";
 
-            internal const string PackagePathRoot = "/App_Plugins/" + ProjectName + "/"; // TODO: [v9] [LK:2021-05-11] Add the ~/ back in later.
+            internal const string PackagePathRoot = "~/App_Plugins/" + ProjectName + "/";
 
             internal const string PluginControllerName = ProjectName;
 
@@ -111,7 +111,7 @@ namespace Umbraco.Community.Contentment
 
             public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 6, 1);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(9, 0, 0);
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
