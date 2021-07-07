@@ -6,56 +6,28 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Notifications;
-using Umbraco.Cms.Core.WebAssets;
 using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.Composing;
-using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Community.Contentment.Telemetry;
 
 namespace Umbraco.Extensions
 {
     public static partial class UmbracoBuilderExtensions
     {
-        public static IUmbracoBuilder AddContentment(this IUmbracoBuilder builder, Action<ContentmentSettings> configure = default)
+        public static IUmbracoBuilder AddContentment(
+            this IUmbracoBuilder builder,
+            Action<ContentmentSettings> settings = default,
+            Action<ContentmentListItemCollectionBuilder> listItems = default)
         {
-            // TODO: [v9] [LK:2021-05-10] Is there a way to combine these? e.g. `configure` will fallback on values from appSettings?
-            _ = configure is not null
-                ? builder.Services.Configure(configure)
-                : builder.Services.Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection));
-
-            builder
-                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                    .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
-            ;
-
-            builder.Services.AddUnique<ConfigurationEditorUtility>();
-
-            builder.Components().Append<ContentmentComponent>();
-
-            builder
-                .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsing>()
-                .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryHandler>()
-            ;
-
-            return builder;
-        }
-
-        public static IUmbracoBuilder WithContentmentListItems(this IUmbracoBuilder builder, Action<ContentmentListItemCollectionBuilder> configure)
-        {
-            var items = builder.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
-
-            if (configure is not null)
+            if (settings is not null)
             {
-                configure(items);
+                _ = builder.Services.PostConfigure(settings);
             }
 
-            return builder;
-        }
+            if (listItems is not null)
+            {
+                listItems(builder.WithCollectionBuilder<ContentmentListItemCollectionBuilder>());
+            }
 
-        public static IUmbracoBuilder UnlockContentment(this IUmbracoBuilder builder)
-        {
-            // NOTE: All of the Data List Sources have now been unlocked, this extension method is redundant.
             return builder;
         }
     }

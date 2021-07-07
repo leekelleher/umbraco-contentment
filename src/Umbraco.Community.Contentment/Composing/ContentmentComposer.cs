@@ -3,8 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Composing
@@ -13,7 +17,28 @@ namespace Umbraco.Community.Contentment.Composing
     {
         public void Compose(IUmbracoBuilder builder)
         {
-            builder.AddContentment();
+            builder
+                .Services
+                    .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
+            ;
+
+            builder
+                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                    .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
+            ;
+
+            builder.Services.AddUnique<ConfigurationEditorUtility>();
+
+            builder
+                .Components()
+                    .Append<ContentmentComponent>()
+            ;
+
+            builder
+                .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryHandler>()
+                .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsing>()
+                .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
+            ;
         }
     }
 }
