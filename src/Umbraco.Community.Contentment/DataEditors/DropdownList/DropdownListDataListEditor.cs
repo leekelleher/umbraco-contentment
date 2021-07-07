@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -57,6 +56,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
+        public string View => DataEditorViewPath;
     }
 }

@@ -4,22 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class RadioButtonListDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
-
-        private readonly IIOHelper _ioHelper;
-
-        public RadioButtonListDataListEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
 
         public string Name => "Radio Button List";
 
@@ -44,6 +35,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
+        public string View => DataEditorViewPath;
     }
 }

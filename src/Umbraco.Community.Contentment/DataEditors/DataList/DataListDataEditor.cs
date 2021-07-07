@@ -12,6 +12,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -76,7 +77,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
@@ -99,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("key"));
                 if (editor != null)
                 {
-                    view = editor.View;
+                    view = _ioHelper.ResolveRelativeOrVirtualUrl(editor.View);
                 }
             }
 
@@ -110,7 +111,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
-                View = view ?? DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

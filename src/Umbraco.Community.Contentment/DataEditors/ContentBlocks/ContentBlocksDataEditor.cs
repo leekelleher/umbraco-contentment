@@ -91,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
@@ -116,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (displayMode != null)
                     {
-                        view = displayMode.View;
+                        view = _ioHelper.ResolveRelativeOrVirtualUrl(displayMode.View);
                     }
                 }
             }
@@ -131,7 +131,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
-                View = view,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(view),
             };
         }
     }

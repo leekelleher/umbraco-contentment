@@ -4,22 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TagsDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
-
-        private readonly IIOHelper _ioHelper;
-
-        public TagsDataListEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
 
         public string Name => "Tags";
 
@@ -50,6 +41,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string View => _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
+        public string View => DataEditorViewPath;
     }
 }
