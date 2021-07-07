@@ -85,32 +85,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                 }
             };
 
-            vm.csharp = "csharp";
+            vm.codeSnippetLanguage = "JSON";
             vm.telemetryEnabled = config.telemetry === true;
-            vm.disableTelemetryCode = `using Umbraco.Core.Composing;
-
-namespace Our.Umbraco.Web
-{
-    public class DisableContentmentTelemetryComposer : IUserComposer
-    {
-        public void Compose(Composition composition)
-        {
-            composition.DisableContentmentTelemetry();
-        }
-    }
-}`;
-            vm.disableTreeCode = `using Umbraco.Core.Composing;
-
-namespace Our.Umbraco.Web
-{
-    public class DisableContentmentTreeComposer : IUserComposer
-    {
-        public void Compose(Composition composition)
-        {
-            composition.DisableContentmentTree();
-        }
-    }
-}`;
+            vm.disableTelemetryCode = { "Umbraco": { "Contentment": { "DisableTelemetry": true } } };
+            vm.disableTreeCode = { "Umbraco": { "Contentment": { "DisableTree": true } } };
         };
 
         init();

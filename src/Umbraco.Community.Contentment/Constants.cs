@@ -122,12 +122,5 @@ namespace Umbraco.Community.Contentment
 
             public const string False = "0";
         }
-
-        internal static partial class WebAssets
-        {
-            internal const string CssPath = Internals.PackagePathRoot + Internals.ProjectAlias + ".css";
-
-            internal const string JsPath = Internals.PackagePathRoot + Internals.ProjectAlias + ".js";
-        }
     }
 }

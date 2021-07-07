@@ -69,13 +69,13 @@
                             <div ng-if="vm.telemetryEnabled === true">
                                 <h5 class="mt0">Telemetry</h5>
                                 <p>By default, the package sends telemetry data about which property-editors are being used (from Contentment only). For more details about the data being captured and transparency on the analysis, please visit <a href="https://leekelleher.com/umbraco/contentment/telemetry/" target="_blank" rel="noopener"><strong>leekelleher.com/umbraco/contentment/telemetry</strong></a>.</p>
-                                <p>If you would prefer to opt-out and disable the telemetry feature, you can use the following code snippet to do so.</p>
+                                <p>If you would prefer to opt-out and disable the telemetry feature, you can set an option to do so.</p>
                                 <div class="umb-readonlyvalue">
                                     <details class="well well-small">
-                                        <summary><strong>Code snippet to disable Contentment telemetry</strong></summary>
-                                        <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
-                                        <umb-code-snippet language="vm.csharp">{{vm.disableTelemetryCode}}</umb-code-snippet>
-                                        <p>If you are already using a composer class, you can add the <code>composition.DisableContentmentTelemetry();</code> line to it.</p>
+                                        <summary><strong>Configuration to disable Contentment telemetry</strong></summary>
+                                        <p>In your <code>appsettings.json</code> file, add this option inside the <code>"Umbraco"</code> section, add the following.</p>
+                                        <umb-code-snippet language="vm.codeSnippetLanguage">{{vm.disableTelemetryCode | json}}</umb-code-snippet>
+                                        <p>If you prefer to use a strongly-typed configuration in C# code, you can do this with the <code>.AddContentment(opts => { opts.DisableTelemetry = true; })</code> extension method in your <code>Startup.cs</code> file <code>ConfigureServices()</code> method.</p>
                                     </details>
                                 </div>
                             </div>
@@ -88,13 +88,13 @@
 
                             <div>
                                 <h5 class="mt0">Tree dashboard</h5>
-                                <p>If you would like to remove this page and tree item from the Settings section, you can use the following code snippet to do so.</p>
+                                <p>If you would like to remove this page and tree item from the Settings section, you can set an option to do so.</p>
                                 <div class="umb-readonlyvalue">
                                     <details class="well well-small">
-                                        <summary><strong>Code snippet to disable Contentment tree dashboard</strong></summary>
-                                        <p>Copy the C# class below. You can either save this to your <code>~/App_Code/</code> folder, or add it to your own code library.</p>
-                                        <umb-code-snippet language="vm.csharp">{{vm.disableTreeCode}}</umb-code-snippet>
-                                        <p>If you are already using a composer class, you can add the <code>composition.DisableContentmentTree();</code> line to it.</p>
+                                        <summary><strong>Configuration to disable Contentment tree dashboard</strong></summary>
+                                        <p>In your <code>appsettings.json</code> file, add this option inside the <code>"Umbraco"</code> section, add the following.</p>
+                                        <umb-code-snippet language="vm.codeSnippetLanguage">{{vm.disableTreeCode | json}}</umb-code-snippet>
+                                        <p>If you prefer to use a strongly-typed configuration in C# code, you can do this with the <code>.AddContentment(opts => { opts.DisableTree = true; })</code> extension method in your <code>Startup.cs</code> file <code>ConfigureServices()</code> method.</p>
                                     </details>
                                 </div>
                             </div>

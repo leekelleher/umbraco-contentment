@@ -25,12 +25,6 @@ namespace Umbraco.Extensions
                 : builder.Services.Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection));
 
             builder
-                .BackOfficeAssets()
-                    .Append<ContentmentCssFile>()
-                    .Append<ContentmentJsFile>()
-            ;
-
-            builder
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;

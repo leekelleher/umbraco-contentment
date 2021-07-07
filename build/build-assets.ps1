@@ -57,15 +57,19 @@ foreach($razorFile in $razorFiles){
     [IO.File]::WriteAllLines("${pluginFolder}\render\$($razorFile.Name)", $contents);
 }
 
-# CSS - Bundle & Minify
-$targetCssPath = "${pluginFolder}contentment.css";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
-& "${rootDir}\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
+# CSS (Property Editors) - Copy
+$cssFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.css;
+foreach($cssFile in $cssFiles){
+    $contents = Get-Content -Raw -Path $cssFile.FullName;
+    [IO.File]::WriteAllLines("${pluginFolder}\editors\$($cssFile.Name)", $contents);
+}
 
-# JS - Bundle & Minify
-$targetJsPath = "${pluginFolder}contentment.js";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -Path $targetJsPath;
-& "${rootDir}\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
+# JS (Property Editors) - Copy
+$jsFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.js;
+foreach($jsFile in $jsFiles){
+    $contents = Get-Content -Raw -Path $jsFile.FullName;
+    [IO.File]::WriteAllLines("${pluginFolder}\editors\$($jsFile.Name)", $contents);
+}
 
 # In debug mode, copy the assets over to the local dev website
 if ($ConfigurationName -eq 'Debug' -AND -NOT($TargetDevWebsite -eq '')) {
