@@ -29,12 +29,6 @@ if (Test-Path -Path $targetFolder) {
     Remove-Item -Recurse -Force $targetFolder;
 }
 
-# Copy DLL / PDB
-$binFolder = "${targetFolder}\bin\Debug\net5.0";
-
-if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
-Copy-Item -Path "${TargetDir}${ProjectName}.*" -Destination $binFolder;
-
 # Copy package front-end files assets
 $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}

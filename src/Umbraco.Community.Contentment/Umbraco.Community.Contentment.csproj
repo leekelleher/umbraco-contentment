@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0</TargetFrameworks>
     <Product>Umbraco.Community.Contentment</Product>
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
