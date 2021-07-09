@@ -58,6 +58,10 @@ Property Editors are:
 
 ### v2.2
 
+- [Templated Label](https://github.com/leekelleher/umbraco-contentment/discussions/100)
+
+### v2.3
+
 - [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
 
 
@@ -65,7 +69,7 @@ Property Editors are:
 
 ### v3.0
 
-- A breaking-change release of latest v2.x features that compiles against Umbraco CMS v9.0 (.NET 5). _**Currently under development,** [see my developer's journal for the latest updates](https://github.com/leekelleher/umbraco-contentment/discussions/105)._
+- A breaking-change release of latest v2.x features that compiles against Umbraco CMS v9.0 (.NET 5).
 
 
 ## Future feature releases
@@ -73,7 +77,6 @@ Property Editors are:
 _Who knows?!_ `¯\_(ツ)_/¯`
 
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-- [Templated Label](https://github.com/leekelleher/umbraco-contentment/discussions/100)
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
 **There are [plenty of ideas](IDEAS.md)!**
