@@ -6,7 +6,7 @@
 
 ### What is it?
 
-This is a collection of Umbraco components that I have developed for use on my own **Umbraco 8** implementation projects.
+This is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
 
 Some components may be innovative, others may be a reimagining of existing components, property-editors, features and other community packages.
 
@@ -43,10 +43,20 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 #### Installation
 
-> *Note:* Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that version and above.
-> If you are using **Umbraco v8.6.1 (or above)**, you can continue to use Contentment v1.x.
 
-Contentment can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
+https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0-alpha001
+:warning: **`v3.0.0-develop` (aka migration to Umbraco v9, .NET Core) is under active development!** :warning:
+
+https://github.com/leekelleher/umbraco-contentment/tree/dev/v3.0
+
+[See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
+
+> _**Notes**_
+> - Contentment v3.x has been developed against **Umbraco v9.0-RC** and will support that version and above.
+> - Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that and future Umbraco v8.x releases.
+> - Contentment v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
+
+With Contentment v3.x (Umbraco v9.0 / .NET 5), you can only install a package from the NuGet package repository. For previous Contentment versions, the package can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
 
 ##### Our Umbraco package repository
 
@@ -131,7 +141,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1010+ hours</b> (between 2019-03-13 to 2021-06-08)</summary>
+<summary>Current development effort: <b>1050+ hours</b> (between 2019-03-13 to 2021-07-09)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
