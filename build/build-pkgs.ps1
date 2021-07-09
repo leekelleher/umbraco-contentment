@@ -30,6 +30,7 @@ Write-Host "Package version: $version";
 
 # Build the VS project
 Write-Host 'Cleaning Visual Studio solution.';
+Remove-Item -Recurse -Force "${srcFolder}\${projectNamespace}\obj";
 & dotnet clean "${srcFolder}\${projectNamespace}.sln";
 
 Write-Host 'Compiling Visual Studio solution.';
@@ -58,5 +59,6 @@ If (-NOT(Test-Path -Path $nuget_exe)) {
 
 # Populate the NuGet package manifest
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
+Copy-Item -Path "${buildFolder}\_nuget-post-install.targets" -Destination "${assetsFolder}\${nugetPackageId}.targets";
 & $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;minUmbracoVersion=$minUmbracoVersion;repositoryUrl=$packageUrl;"
 & $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;minUmbracoVersion=$minUmbracoVersion;repositoryUrl=$packageUrl;"
