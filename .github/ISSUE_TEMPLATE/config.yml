@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Umbraco Community forum
-    url: https://our.umbraco.com/
+    url: https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/
     about: "For community (free) support questions, please use the Umbraco Community forum."
   - name: "Commericial support"
     url: https://umbrellainc.co.uk/
