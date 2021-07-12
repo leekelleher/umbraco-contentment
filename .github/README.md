@@ -43,16 +43,8 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 #### Installation
 
-
-https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0-alpha001
-:warning: **`v3.0.0-develop` (aka migration to Umbraco v9, .NET Core) is under active development!** :warning:
-
-https://github.com/leekelleher/umbraco-contentment/tree/dev/v3.0
-
-[See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
-
 > _**Notes**_
-> - Contentment v3.x has been developed against **Umbraco v9.0-RC** and will support that version and above.
+> - Contentment v3.x has been developed against **Umbraco v9.0-RC** (.NET 5) and will support that version and above.
 > - Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that and future Umbraco v8.x releases.
 > - Contentment v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
 
