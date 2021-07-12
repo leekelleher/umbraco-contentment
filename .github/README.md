@@ -43,24 +43,25 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 #### Installation
 
-> _**Notes**_
-> - Contentment v3.x has been developed against **Umbraco v9.0-RC** (.NET 5) and will support that version and above.
-> - Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that and future Umbraco v8.x releases.
-> - Contentment v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
+_**Please note...**_
 
-With Contentment v3.x (Umbraco v9.0 / .NET 5), you can only install a package from the NuGet package repository. For previous Contentment versions, the package can be installed from either Our Umbraco or NuGet package repositories, or build manually from the source-code:
+- Contentment v3.x has been developed against **Umbraco v9.0-RC** (.NET 5) and will support that version and above.
+- Contentment v2.x has been developed against **Umbraco v8.14.0** and will support that and future Umbraco v8.x releases.
+- Contentment v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
 
-##### Our Umbraco package repository
-
-To install from Our Umbraco, please download the package from:
-
-> <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
+With Contentment v3.x (Umbraco v9.0 / .NET 5), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For previous Contentment versions, the package can be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories, or build manually from the source-code:
 
 ##### NuGet package repository
 
 To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from within Visual Studio:
 
     PM> Install-Package Our.Umbraco.Community.Contentment
+
+##### Our Umbraco package repository
+
+For Contentment v1.x and v2.x, you can install from Our Umbraco, please download the package from:
+
+> <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
 
 #### Known issues
 
