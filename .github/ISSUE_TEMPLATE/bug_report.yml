@@ -1,4 +1,4 @@
-name: Bug report
+name: "Bug report"
 description: "File a bug report to help us improve."
 labels: "bug-report"
 assignees:
@@ -8,55 +8,32 @@ body:
   attributes:
     value: |
       **Note: for support questions, please use the [Umbraco Community forum](https://our.umbraco.com)**. This repository's issues are reserved for bug reports and feature requests.
-- type: dropdown
+- type: input
   id: "contentmentVersion"
   attributes:
     label: "Which Contentment version are you using?"
-    options:
-      - 3.0.0-alpha
-      - 2.1.0
-      - 2.0.0
-      - 1.4.4
-      - 1.4.3
-      - 1.4.2
-      - 1.4.1
-      - 1.4.0
-      - 1.3.0
-      - 1.2.1
-      - 1.2.0
-      - 1.1.3
-      - 1.1.2
-      - 1.1.1
-      - 1.1.0
-      - 1.0.1
-      - 1.0.0
+    description: "If you are unsure, we'll assume it's the latest version."
   validations:
     required: true
 - type: input
   id: "umbracoVersion"
   attributes:
-    label: "Which *exact* Umbraco version are you using? For example: 8.14.1 - don't just write v8"
-    description: "Use the help icon in the Umbraco backoffice to find the version you're using"
+    label: "Which Umbraco version are you using? For example: 8.14.1 - don't just write v8"
+    description: "Use the help icon in the Umbraco backoffice to find the version you're using."
   validations:
     required: true
 - type: textarea
   id: "summary"
   attributes:
     label: "Bug summary"
-    description: "Write a short summary of the bug."
+    description: "Write a summary of the bug."
+    description: "Remember that you can format code and logs nicely with the `<>` button"
     placeholder: >
       Try to pinpoint it as much as possible.
       
       Try to state the actual problem, and not just what you think the solution might be.
   validations:
     required: true
-- type: textarea
-  attributes:
-    label: "Specifics"
-    id: "specifics"
-    description: "Remember that you can format code and logs nicely with the `<>` button"
-    placeholder: >
-      Please include any links, screenshots, stack-traces, etc.
 - type: textarea
   attributes:
     label: "Steps to reproduce"
@@ -79,7 +56,7 @@ body:
   id: umbracoModelsBuilder
   attributes:
     label: Do you have Umbraco ModelsBuilder enabled?
-    description: _(if applicable?)_
+    description: "Select only if applicable."
     options:
       - label: Yes, it is enabled.
 - type: dropdown
