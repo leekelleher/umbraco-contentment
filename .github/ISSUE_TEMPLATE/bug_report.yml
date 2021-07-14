@@ -1,12 +1,13 @@
----
 name: Bug report
 description: "File a bug report to help us improve."
 labels: "bug-report"
-assignees: "leekelleher"
+assignees:
+  - leekelleher
 body:
 - type: markdown
   attributes:
-    value: **Note: for support questions, please use the [Umbraco Community forum](https://our.umbraco.com)**. This repository's issues are reserved for bug reports and feature requests.
+    value: |
+      **Note: for support questions, please use the [Umbraco Community forum](https://our.umbraco.com)**. This repository's issues are reserved for bug reports and feature requests.
 - type: dropdown
   id: "contentmentVersion"
   attributes:
