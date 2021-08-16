@@ -23,7 +23,7 @@ In your new Data Type, selected the "[Contentment] Bytes" option. You will see t
 
 The first field is **Kilobytes?**, this lets you define how many bytes are in a kilobyte - either `1000` or `1024`, (the default is `1024`).
 
-> _Fun fact: In decimal, there are 1000 bytes in a kilobyte, whereas in binary, there are 1024 bytes. This is also know as a kibibyte._
+> _Fun fact: In decimal, there are 1000 bytes in a kilobyte, whereas in binary, there are 1024 bytes. This is also known as a kibibyte._
 
 The second field is **Decimal places**, used to set how many numbers are displayed after the decimal place. The default is `2`.
 
