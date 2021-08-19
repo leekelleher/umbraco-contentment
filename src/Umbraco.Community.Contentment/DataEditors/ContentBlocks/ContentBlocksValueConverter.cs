@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
                         continue;
 
-                    var contentType = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetContentType(alias);
+                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content.GetContentType(alias);
                     if (contentType == null || contentType.IsElement == false)
                         continue;
 

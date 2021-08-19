@@ -69,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
                 var nodeContextId = default(int?);
-                var umbracoContext = _umbracoContextAccessor.UmbracoContext;
+                var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
                 if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
@@ -98,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
             {
-                startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(preview, udi.Guid);
+                startNode = _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(preview, udi.Guid);
             }
 
             if (startNode != null)
@@ -122,7 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public object ConvertValue(Type type, string value)
         {
             return UdiParser.TryParse(value, out var udi) == true
-                ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
+                ? _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(udi)
                 : default;
         }
     }

@@ -22,6 +22,7 @@ using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
 using Umbraco.Community.Contentment.Web.PublishedCache;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -58,7 +59,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ActionResult GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
         {
             var preview = true;
-            var umbracoContext = _umbracoContextAccessor.UmbracoContext;
+            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
             var content = umbracoContext.Content.GetById(true, contentId);
             if (content == null)
