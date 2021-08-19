@@ -139,7 +139,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var member = _memberService.GetByKey(udi.Guid);
                 if (member != null)
                 {
-                    return _publishedSnapshotAccessor.PublishedSnapshot?.Members.Get(_memberService.GetByKey(udi.Guid));
+                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.Get(_memberService.GetByKey(udi.Guid));
                 }
             }
 

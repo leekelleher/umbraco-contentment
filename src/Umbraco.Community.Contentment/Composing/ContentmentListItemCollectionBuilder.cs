@@ -24,7 +24,7 @@ namespace Umbraco.Community.Contentment.Composing
     {
         private readonly Dictionary<string, IContentmentListItem> _lookup;
 
-        public ContentmentListItemCollection(IEnumerable<IContentmentListItem> items)
+        public ContentmentListItemCollection(Func<IEnumerable<IContentmentListItem>> items)
             : base(items)
         {
             _lookup = new Dictionary<string, IContentmentListItem>(StringComparer.OrdinalIgnoreCase);
