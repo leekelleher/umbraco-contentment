@@ -65,11 +65,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             var preview = true;
             var parentNode = config.GetValueAs("parentNode", string.Empty);
             var startNode = default(IPublishedContent);
+            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
                 var nodeContextId = default(int?);
-                var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
                 if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
@@ -98,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
             {
-                startNode = _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(preview, udi.Guid);
+                startNode = umbracoContext.Content.GetById(preview, udi.Guid);
             }
 
             if (startNode != null)
