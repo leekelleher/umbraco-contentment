@@ -12,7 +12,7 @@ $nugetTitle = "Contentment for Umbraco";
 $packageDescription = "Contentment, a collection of components for Umbraco.";
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
 $authorName = 'Lee Kelleher';
-$minUmbracoVersion = "9.0.0-rc001";
+$minUmbracoVersion = "9.0.0-rc002";
 $copyright = "" + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 $tags = "umbraco";
 
