@@ -89,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var nodeContextId = default(int?);
                 var preview = true;
-                var umbracoContext = _umbracoContextAccessor.UmbracoContext;
+                var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
                 if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
@@ -128,7 +128,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public object ConvertValue(Type type, string value)
         {
             return UdiParser.TryParse(value, out var udi) == true
-                ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
+                ? _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(udi)
                 : default;
         }
     }

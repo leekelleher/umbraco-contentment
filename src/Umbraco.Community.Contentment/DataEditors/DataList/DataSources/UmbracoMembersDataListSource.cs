@@ -137,9 +137,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false)
             {
                 var member = _memberService.GetByKey(udi.Guid);
-                if (member != null)
+                if (member != null && _publishedSnapshotAccessor.TryGetPublishedSnapshot(out var snapshot))
                 {
-                    return _publishedSnapshotAccessor.PublishedSnapshot?.Members.Get(_memberService.GetByKey(udi.Guid));
+                    return snapshot.Members.Get(_memberService.GetByKey(udi.Guid));
                 }
             }
 

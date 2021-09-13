@@ -135,7 +135,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (UdiParser.TryParse(value, out GuidUdi udi) == true && ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true)
             {
-                return _umbracoContextAccessor.UmbracoContext.Content.GetContentType(alias);
+                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetContentType(alias);
             }
 
             return default;
