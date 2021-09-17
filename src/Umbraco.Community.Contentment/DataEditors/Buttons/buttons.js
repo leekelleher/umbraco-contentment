@@ -53,7 +53,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.size = config.size;
 
             vm.defaultIcon = config.defaultIcon;
-            vm.iconExtras = sizes[config.size] + (vm.hideName === false ? " mr2 " : " mr0 ");
+            vm.iconExtras = (vm.hideName === false ? " mr2 " : " mr0 ") + sizes[config.size];
 
             vm.items.forEach(function (item) {
                 item.selected = $scope.model.value.indexOf(item.value) > -1;
