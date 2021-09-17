@@ -46,11 +46,11 @@
                             <div class="umb-table-row"
                                  ng-class="{ '-light': item.disabled }"
                                  ng-repeat="item in vm.property.config.items">
-                                <div class="umb-table-cell"><i class="umb-table-body__icon" ng-class="item.icon"></i></div>
+                                <div class="umb-table-cell"><umb-icon icon="{{item.icon}}" class="umb-table-body__icon"></umb-icon></div>
                                 <div class="umb-table-cell umb-table__name"><span ng-bind="item.name"></span></div>
                                 <div class="umb-table-cell"><span ng-bind="item.value"></span></div>
                                 <div class="umb-table-cell"><span ng-bind="item.description"></span></div>
-                                <div class="umb-table-cell"><i class="icon" ng-class="{ 'icon-check': !item.disabled , 'icon-wrong': item.disabled }"></i></div>
+                                <div class="umb-table-cell"><umb-icon icon="{{ item.disabled ? 'icon-wrong' : 'icon-check' }}" class="icon"></umb-icon></div>
                             </div>
                         </div>
                     </div>

@@ -10,11 +10,11 @@
     <div ui-sortable="vm.sortableOptions" ng-model="model.value">
         <div class="lk-data-list-item" ng-repeat="item in model.value">
 
-            <i class="icon-navigation lk-data-list-item__handle" aria-label="Sort"></i>
+            <umb-icon icon="icon-navigation" class="lk-data-list-item__handle" aria-label="Sort"></umb-icon>
 
             <div class="lk-data-list-item__icon">
                 <button type="button" ng-click="vm.open(item)" umb-auto-focus>
-                    <i class="icon" ng-class="item.icon"></i>
+                    <umb-icon icon="{{item.icon}}" class="icon"></umb-icon>
                 </button>
             </div>
 
@@ -31,8 +31,9 @@
             <div class="lk-data-list-item__remove">
                 <button aria-label="Delete item"
                         type="button"
-                        class="btn-icon icon-trash"
+                        class="btn-reset umb-outline"
                         ng-click="vm.remove($index)">
+                    <umb-icon icon="icon-trash" class="icon"></umb-icon>
                 </button>
             </div>
 
