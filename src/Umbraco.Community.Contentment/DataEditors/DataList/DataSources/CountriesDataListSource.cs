@@ -33,6 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .GetCultures(CultureTypes.SpecificCultures)
                 .Select(x => new RegionInfo(x.Name))
                 .DistinctBy(x => x.DisplayName)
+                .Where(x => x.TwoLetterISORegionName.Length == 2) // NOTE: Removes odd "countries" such as Caribbean (029), Europe (150), Latin America (419) and World (001).
                 .OrderBy(x => x.DisplayName)
                 .Select(x => new DataListItem
                 {
