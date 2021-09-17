@@ -59,7 +59,6 @@
         }
 
             .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default .icon {
-                display: block;
                 font-size: 40px;
             }
 
@@ -102,13 +101,13 @@
         .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item {
         }
 
-            .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item > .icon {
+            .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item .icon {
                 color: #1b264f;
                 font-size: 18px;
                 padding: 5px 10px;
             }
 
-                .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item > .icon:hover {
+                .lk-content-blocks__block .lk-content-blocks__actions .lk-content-blocks__action--item .icon:hover {
                     color: #2152a3;
                 }
 
@@ -119,14 +118,14 @@
                 cursor: pointer;
                 color: #162335;
                 margin: 0;
-                padding: 5px 10px;
+                padding: 7px 0;
             }
 
         .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions {
             position: relative;
             display: inline-block;
             float: none;
-            margin: 5px 0 0 6px;
+            margin: 3px 0 0 7px;
         }
 
             .lk-content-blocks__block .lk-content-blocks__actions .umb-property-actions .umb-property-actions__menu,
