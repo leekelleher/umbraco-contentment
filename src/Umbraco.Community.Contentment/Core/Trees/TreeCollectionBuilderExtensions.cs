@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Umbraco.Web.Trees;
 
@@ -46,10 +45,10 @@ namespace Umbraco.Web
                 throw new ArgumentException($"Type {controllerType} does not inherit from {nameof(TreeControllerBase)}.");
             }
 
-            var exists = trees.FirstOrDefault(x => x.TreeControllerType == controllerType);
-            if (exists != null)
+            var exists = trees.FindIndex(x => x.TreeControllerType == controllerType);
+            if (exists > -1)
             {
-                trees.Remove(exists);
+                trees.RemoveAt(exists);
             }
 
             return collection;
