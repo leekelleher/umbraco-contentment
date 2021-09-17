@@ -11,10 +11,10 @@
                   tabindex="0"
                   ng-keyup="vm.keyUp($event, $index)"
                   ng-repeat="item in vm.items">
-                <i class="icon mr2" ng-class="item.icon" ng-if="vm.showIcons && item.icon"></i>
+                <umb-icon icon="{{item.icon}}" class="icon mr2" ng-class="item.icon" ng-if="vm.showIcons && item.icon"></umb-icon>
                 <span ng-bind="item.name"></span>
                 <button type="button" class="btn-reset" ng-click="vm.remove($index)">
-                    <i class="icon icon-trash"></i>
+                    <umb-icon icon="icon-trash" class="icon ml1"></umb-icon>
                     <span class="sr-only">
                         <localize key="general_remove">Remove</localize>
                     </span>
