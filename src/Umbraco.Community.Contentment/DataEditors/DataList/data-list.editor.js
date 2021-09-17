@@ -144,7 +144,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value.splice($index, 1);
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems) {
+            if (config.maxItems === 0 || vm.items.length < config.maxItems) {
                 vm.allowAdd = true;
             }
 
