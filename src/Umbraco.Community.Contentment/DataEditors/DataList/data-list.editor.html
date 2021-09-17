@@ -20,7 +20,7 @@
 
             <div class="lk-data-list-item__text">
                 <div class="flex items-between">
-                    <input type="text" ng-model="item.name" placeholder="Enter a name" class="-full-width-input mr1" focus-when="{{ vm.focusName }}" />
+                    <input type="text" ng-model="item.name" placeholder="Enter a name" class="-full-width-input mr1" focus-when="{{ vm.focusName }}" ng-blur="vm.blur(item)" />
                     <input type="text" ng-model="item.value" placeholder="Enter a value" class="-full-width-input" />
                 </div>
                 <div>
