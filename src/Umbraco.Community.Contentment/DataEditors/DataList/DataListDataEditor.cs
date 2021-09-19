@@ -5,8 +5,23 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,9 +35,37 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-fa fa-list-ul";
 
         private readonly ConfigurationEditorUtility _utility;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIOHelper _ioHelper;
 
-        public DataListDataEditor(ConfigurationEditorUtility utility) => _utility = utility;
+#if NET472
+        public DataListDataEditor(
+            ConfigurationEditorUtility utility,
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
+        {
+            _utility = utility;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
+        }
+#else
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IJsonSerializer _jsonSerializer;
 
+        public DataListDataEditor(
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper)
+        {
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+            _utility = utility;
+            _ioHelper = ioHelper;
+        }
+#endif
         public string Alias => DataEditorAlias;
 
         public EditorType Type => EditorType.PropertyValue;
@@ -31,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DataEditorIcon;
 
-        public string Group => Core.Constants.PropertyEditors.Groups.Lists;
+        public string Group => UmbConstants.PropertyEditors.Groups.Lists;
 
         public bool IsDeprecated => false;
 
@@ -39,14 +82,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility);
+        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility, _shortStringHelper, _ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
+#if NET472
             return new DataValueEditor
+#else
+            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+#endif
             {
                 ValueType = ValueTypes.Json,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
@@ -73,11 +120,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
+#if NET472
             return new DataValueEditor
+#else
+            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+#endif
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
-                View = view ?? DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

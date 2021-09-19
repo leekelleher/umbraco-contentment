@@ -3,13 +3,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using System.Linq;
 using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;
+#else
+using Umbraco.Cms.Infrastructure.Migrations;
+#endif
 
 namespace Umbraco.Community.Contentment.Migrations
 {
+#if NET472
     internal sealed class RegisterUmbracoPackageEntry : MigrationBase
     {
         private readonly IPackagingService _packagingService;
@@ -39,10 +44,26 @@ namespace Umbraco.Community.Contentment.Migrations
                     License = Constants.Package.License,
                     LicenseUrl = Constants.Package.LicenseUrl,
                     UmbracoVersion = Constants.Package.MinimumSupportedUmbracoVersion,
-                    Version = Configuration.ContentmentVersion.Version.ToString(),
+                    Version = ContentmentVersion.Version.ToString(),
                     Readme = "",
                 });
             }
         }
     }
+#else
+    internal sealed class RegisterUmbracoPackageEntry : MigrationBase
+    {
+        public const string State = "{contentment-reg-umb-pkg-entry}";
+
+        public RegisterUmbracoPackageEntry(IMigrationContext context)
+            : base(context)
+        { }
+
+        protected override void Migrate()
+        {
+            // NOTE: This migration does nothing. It is a left over from code targeting Umbraco 8.
+            // It needs to remain, as Umbraco instances that have been upgraded from v8 to v9 will have reached this migrated state.
+        }
+    }
+#endif
 }

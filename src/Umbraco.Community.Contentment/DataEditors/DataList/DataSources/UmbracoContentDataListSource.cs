@@ -6,13 +6,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Xml;
 using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Core.Xml;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,12 +33,33 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoContentDataListSource(IContentTypeService contentTypeService, IUmbracoContextAccessor umbracoContextAccessor)
+#if NET472
+        public UmbracoContentDataListSource(
+            IContentTypeService contentTypeService,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _ioHelper = ioHelper;
         }
+#else
+        private readonly IRequestAccessor _requestAccessor;
+
+        public UmbracoContentDataListSource(
+            IContentTypeService contentTypeService,
+            IRequestAccessor requestAccessor,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IIOHelper ioHelper)
+        {
+            _contentTypeService = contentTypeService;
+            _requestAccessor = requestAccessor;
+            _umbracoContextAccessor = umbracoContextAccessor;
+            _ioHelper = ioHelper;
+        }
+#endif
 
         public string Name => "Umbraco Content";
 
@@ -44,7 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "parentNode",
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
-                View = ContentPickerDataEditor.DataEditorSourceViewPath,
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
             }
         };
 
@@ -55,18 +89,26 @@ namespace Umbraco.Community.Contentment.DataEditors
             var preview = true;
             var parentNode = config.GetValueAs("parentNode", string.Empty);
             var startNode = default(IPublishedContent);
+            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
                 var nodeContextId = default(int?);
-                var umbracoContext = _umbracoContextAccessor.UmbracoContext;
 
                 // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
+#if NET472
                 if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+#else
+                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
+#endif
                 {
                     nodeContextId = currentId;
                 }
+#if NET472
                 else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
+#else
+                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
+#endif
                 {
                     nodeContextId = parentId;
                 }
@@ -86,9 +128,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
                 }
             }
-            else if (GuidUdi.TryParse(parentNode, out var udi) == true && udi.Guid != Guid.Empty)
+            else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
             {
-                startNode = _umbracoContextAccessor.UmbracoContext.Content.GetById(preview, udi.Guid);
+                startNode = umbracoContext.Content.GetById(preview, udi.Guid);
             }
 
             if (startNode != null)
@@ -111,8 +153,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return Udi.TryParse(value, out var udi) == true
-                ? _umbracoContextAccessor.UmbracoContext.Content.GetById(udi)
+            return UdiParser.TryParse(value, out GuidUdi udi) == true
+                ? _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(udi)
                 : default;
         }
     }

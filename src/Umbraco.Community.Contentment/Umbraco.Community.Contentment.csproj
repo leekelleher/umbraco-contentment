@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;net50</TargetFrameworks>
     <Product>Umbraco.Community.Contentment</Product>
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
-    <Description>Contentment, a collection of components for Umbraco 8.</Description>
+    <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco</PackageTags>
-    <Version>2.2.0</Version>
+    <Version>3.0.0-beta001</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
@@ -16,10 +16,19 @@
     <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="UmbracoCms.Web" Version="8.14.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="UmbracoCms.Web" Version="8.17.0" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
+  </ItemGroup>
+  <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
+    </ItemGroup>
+  </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(SolutionDir)..\build\build-assets.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -TargetFramework $(TargetFramework) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
   </Target>
 </Project>

@@ -6,18 +6,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UserDefinedDataListSource : IDataListSource
     {
+        private readonly IIOHelper _ioHelper;
+
+        public UserDefinedDataListSource(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "User-defined List";
 
         public string Description => "Manually configure the items for the data source.";
 
-        public string Icon => Core.Constants.Icons.DataType;
+        public string Icon => UmbConstants.Icons.DataType;
 
         public string Group => Constants.Conventions.DataSourceGroups.Data;
 
@@ -28,18 +44,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                View = DataListDataEditor.DataEditorListEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorListEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { "confirmRemoval", Constants.Values.True },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { MaxItemsConfigurationField.MaxItems, 0 },
-                    { NotesConfigurationField.Notes, @"
-<details class=""well well-small"">
-    <summary><strong><em>Advanced:</em> Paste in the raw JSON?</strong></summary>
-    <p>If you have copied the raw JSON from the Data List preview panel, <button class=""btn-reset"" ng-click=""vm.edit()""><strong>you can paste it in here</strong></button>.</p>
-    <p>The JSON format must be an array of the Data List item structure.<br />For example...</p>
-    <umb-code-snippet language=""'JSON'"">[
+                    { NotesConfigurationField.Notes, @"<details class=""well well-small"">
+<summary><strong><em>Advanced:</em> Paste in the raw JSON?</strong></summary>
+<p>If you have copied the raw JSON from the Data List preview panel, <button class=""btn-reset"" ng-click=""vm.edit()""><strong>you can paste it in here</strong></button>.</p>
+<p>The JSON format must be an array of the Data List item structure.<br />For example...</p>
+<umb-code-snippet language=""'JSON'"">[
   {
     ""name"": ""Ready"",
     ""value"": ""value1"",
@@ -57,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     ""description"": ""Three to get ready. Now go, cat, go.""
   }
 ]</umb-code-snippet>
-        </details>" },
+</details>" },
                 },
             }
         };

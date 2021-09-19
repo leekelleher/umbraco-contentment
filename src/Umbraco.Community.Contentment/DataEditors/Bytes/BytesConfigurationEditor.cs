@@ -4,8 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -16,14 +22,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string Format = "format";
         internal const string Kilo = "kilo";
 
-        public BytesConfigurationEditor()
+        public BytesConfigurationEditor(IIOHelper ioHelper)
         {
             Fields.Add(new ConfigurationField
             {
                 Key = Kilo,
                 Name = "Kilobytes?",
                 Description = "How many bytes do you prefer in your kilobyte?",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -42,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Decimals,
                 Name = "Decimal places",
                 Description = "How many decimal places would you like?",
-                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+                View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
                 Config = new Dictionary<string, object>
                 {
                     { "initVal1", 2 },

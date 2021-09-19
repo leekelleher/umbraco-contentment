@@ -4,8 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Macro = "macro";
 
-        public RenderMacroConfigurationEditor()
+        public RenderMacroConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             Fields.Add(new ConfigurationField
@@ -21,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Macro,
                 Name = nameof(Macro),
                 Description = "Select and configure the macro to be displayed.",
-                View = IOHelper.ResolveUrl(MacroPickerDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(MacroPickerDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }

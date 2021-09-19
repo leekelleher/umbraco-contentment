@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using Umbraco.Community.Contentment.Composing;
 
 // NOTE: This extension method class is deliberately using the Umbraco namespace,
@@ -23,3 +24,4 @@ namespace Umbraco.Core.Composing
         }
     }
 }
+#endif

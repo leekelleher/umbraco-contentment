@@ -5,9 +5,17 @@
 
 using System.Collections.Generic;
 using System.IO;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.Hosting;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,11 +28,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string MinLines = "minLines";
         internal const string MaxLines = "maxLines";
 
-        public CodeEditorConfigurationEditor()
+        public CodeEditorConfigurationEditor(
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
             : base()
         {
             var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
-            var aceEditorPath = IOHelper.MapPath(targetPath);
+            var aceEditorPath = hostingEnvironment.MapPathWebRoot(targetPath);
 
             if (Directory.Exists(aceEditorPath) == true)
             {
@@ -58,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = Mode,
                             Name = "Language mode",
                             Description = "Select the programming language mode. The default mode is 'Razor'.",
-                            View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                            View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                             Config = new Dictionary<string, object>
                             {
                                 { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -75,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = Theme,
                             Name = nameof(Theme),
                             Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
-                            View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                            View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                             Config = new Dictionary<string, object>
                             {
                                 { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -86,7 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (modes.Count > 0 || themes.Count > 0)
                     {
-                        Fields.Add(new NotesConfigurationField($@"<details class=""well well-small"">
+                        Fields.Add(new NotesConfigurationField(ioHelper, $@"<details class=""well well-small"">
 <summary>Would you like to add more <strong>language modes</strong> and <strong>themes</strong>?</summary>
 <p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> library that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
 <p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
@@ -102,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = FontSize,
                 Name = "Font size",
                 Description = @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
-                View = IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[] {
@@ -149,7 +159,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = MinLines,
                 Name = "Minimum lines",
                 Description = "Set the minimum number of lines that the editor will be. The default is 12 lines.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
             });
 
             DefaultConfiguration.Add(MaxLines, 30);
@@ -158,7 +168,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = MaxLines,
                 Name = "Maximum lines",
                 Description = "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath)
+                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
             });
         }
     }

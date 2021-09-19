@@ -4,9 +4,17 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -14,6 +22,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
+
+        private readonly IIOHelper _ioHelper;
+
+        public ItemPickerDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
 
         public string Name => "Item Picker";
 
@@ -30,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "overlaySize",
                 Name = "Editor overlay size",
                 Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -48,14 +63,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
             new ConfigurationField
             {
                 Key = "listType",
                 Name = "List type",
                 Description = "Select the style of list to be displayed in the overlay.",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -75,7 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "default", Constants.Values.True }
                 },
             },
-            new MaxItemsConfigurationField(),
+            new MaxItemsConfigurationField(_ioHelper),
             new AllowClearConfigurationField(),
             new ConfigurationField
             {
@@ -104,14 +119,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "listType", "list" },
-            { "defaultIcon", Core.Constants.Icons.DefaultIcon },
+            { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, IOHelper.ResolveUrl(DataEditorOverlayViewPath) },
+            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) },
             { "overlayOrderBy", string.Empty },
         };
 

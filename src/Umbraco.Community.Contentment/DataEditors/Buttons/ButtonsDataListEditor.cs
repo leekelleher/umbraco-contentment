@@ -3,10 +3,20 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using System.Collections.Generic;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using System.Collections.Generic;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -14,7 +24,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
-        public string Name => "Buttons";
+        private readonly IIOHelper _ioHelper;
+
+        public ButtonsDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
+    public string Name => "Buttons";
 
         public string Description => "Select multiple values from a group of buttons.";
 
@@ -29,14 +46,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
             new ConfigurationField
             {
                 Key = "size",
                 Name = "Size",
                 Description = "Select the button size. By default this is set to 'medium'.",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -54,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "labelStyle",
                 Name = "Label style",
                 Description = "Select the style of the button's label.",
-                View = IOHelper.ResolveUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -80,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "defaultIcon", Core.Constants.Icons.DefaultIcon },
+            { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },
         };
 

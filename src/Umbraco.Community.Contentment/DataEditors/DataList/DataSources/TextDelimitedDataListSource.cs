@@ -7,21 +7,53 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
+#else
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Hosting;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TextDelimitedDataListSource : IDataListSource
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
+
+#if NET472
         private readonly ILogger _logger;
 
-        public TextDelimitedDataListSource(ILogger logger)
+        public TextDelimitedDataListSource(
+            ILogger logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
         }
+#else
+        private readonly ILogger<TextDelimitedDataListSource> _logger;
+
+        public TextDelimitedDataListSource(
+            ILogger<TextDelimitedDataListSource> logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
+        {
+            _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+        }
+#endif
 
         public string Name => "Text Delimited Data";
 
@@ -35,7 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about using this data source.</strong></summary>
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
@@ -66,28 +98,28 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameIndex",
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = NumberInputDataEditor.DataEditorViewPath
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             }
         };
 
@@ -186,20 +218,28 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
+#if NET472
                     _logger.Error<TextDelimitedDataListSource>(ex, "Unable to fetch remote data.");
+#else
+                    _logger.LogError(ex, "Unable to fetch remote data.");
+#endif
                 }
             }
             else
             {
                 // assume local file
-                var path = IOHelper.MapPath(url);
+                var path = _hostingEnvironment.MapPathWebRoot(url);
                 if (File.Exists(path) == true)
                 {
                     return File.ReadAllLines(path);
                 }
                 else
                 {
+#if NET472
                     _logger.Warn<TextDelimitedDataListSource>("Unable to find the local file path.");
+#else
+                    _logger.LogWarning("Unable to find the local file path.");
+#endif
                 }
             }
 

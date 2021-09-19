@@ -6,12 +6,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
+using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.Entities;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -41,11 +55,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             { nameof(UmbracoObjectTypes.MemberType), UmbConstants.Icons.MemberType },
         };
 
-        private readonly IEntityService _entityService;
+        private readonly IIOHelper _ioHelper;
+        private readonly Lazy<IEntityService> _entityService;
+        private readonly IShortStringHelper _shortStringHelper;
 
-        public UmbracoEntityDataListSource(IEntityService entityService)
+        public UmbracoEntityDataListSource(
+            Lazy<IEntityService> entityService,
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
         {
             _entityService = entityService;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Entities";
@@ -58,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
 <p>Umbraco's <code>EntityService</code> API (currently) has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
@@ -68,11 +89,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "entityType",
                 Name = "Entity type",
                 Description = "Select the Umbraco entity type to use.",
-                View = DropdownListDataListEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { "allowEmpty", Constants.Values.False },
-                    { "items", SupportedEntityTypes.Keys.Select(x => new DataListItem { Name = x.SplitPascalCasing(), Value = x }) },
+                    { "items", SupportedEntityTypes.Keys.Select(x => new DataListItem
+                        {
+                            Name = x.SplitPascalCasing(_shortStringHelper),
+                            Value = x
+                        })
+                    },
                 }
             }
         };
@@ -88,13 +114,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var icon = EntityTypeIcons.GetValueAs(entityType, UmbConstants.Icons.DefaultIcon);
 
                 return _entityService
+                    .Value
                     .GetAll(objectType)
                     .OrderBy(x => x.Name)
                     .Select(x => new DataListItem
                     {
                         Icon = icon,
                         Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.FromUmbracoObjectType(objectType), x.Key).ToString(),
+                        Value = Udi.Create(objectType.GetUdiType(), x.Key).ToString(),
                     });
             }
 
@@ -105,8 +132,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return GuidUdi.TryParse(value, out var udi) == true && udi.Guid.Equals(Guid.Empty) == false
-                ? _entityService.Get(udi.Guid)
+            return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
+                ? _entityService.Value.Get(udi.Guid)
                 : default;
         }
     }
