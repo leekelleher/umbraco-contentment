@@ -17,21 +17,27 @@ namespace Umbraco.Community.Contentment.Composing
         private readonly IMigrationPlanExecutor _migrationPlanExecutor;
         private readonly IScopeProvider _scopeProvider;
         private readonly IKeyValueService _keyValueService;
+        private readonly IRuntimeState _runtimeState;
 
         public ContentmentComponent(
             IMigrationPlanExecutor migrationPlanExecutor,
             IScopeProvider scopeProvider,
-            IKeyValueService keyValueService)
+            IKeyValueService keyValueService,
+            IRuntimeState runtimeState)
         {
             _migrationPlanExecutor = migrationPlanExecutor;
             _scopeProvider = scopeProvider;
             _keyValueService = keyValueService;
+            _runtimeState = runtimeState;
         }
 
         public void Initialize()
         {
-            var upgrader = new Upgrader(new ContentmentPlan());
-            upgrader.Execute(_migrationPlanExecutor, _scopeProvider, _keyValueService);
+            if (_runtimeState.Level == Cms.Core.RuntimeLevel.Upgrade || _runtimeState.Level == Cms.Core.RuntimeLevel.Run)
+            {
+                var upgrader = new Upgrader(new ContentmentPlan());
+                upgrader.Execute(_migrationPlanExecutor, _scopeProvider, _keyValueService);
+            }
         }
 
         public void Terminate()
