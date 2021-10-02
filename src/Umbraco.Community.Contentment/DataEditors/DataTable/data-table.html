@@ -15,7 +15,7 @@
         <tbody ui-sortable="vm.sortableOptions" ng-model="vm.items">
             <tr ng-repeat="item in vm.items">
                 <td ng-if="vm.sortable" style="vertical-align: top;">
-                    <i class="icon icon-navigation handle"></i>
+                    <umb-icon icon="icon-navigation" class="icon handle" aria-label="Sort"></umb-icon>
                 </td>
                 <td ng-repeat="field in item" style="vertical-align: top;">
                     <umb-property-editor model="field" is-pre-value="{{vm.usePrevalueEditors}}"></umb-property-editor>

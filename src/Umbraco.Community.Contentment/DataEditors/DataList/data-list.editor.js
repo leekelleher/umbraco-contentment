@@ -52,6 +52,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.notes = config.notes;
 
             vm.add = add;
+            vm.blur = blur;
             vm.edit = edit;
             vm.open = open;
             vm.remove = remove;
@@ -85,6 +86,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             setDirty();
 
+        };
+
+        function blur(item) {
+            if (item.name && item.value == null || item.value === "") {
+                item.value = item.name.toCamelCase();
+            }
         };
 
         function edit() {
@@ -144,7 +151,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value.splice($index, 1);
 
-            if ((config.maxItems === 0 || config.maxItems === "0") || vm.items.length < config.maxItems) {
+            if (config.maxItems === 0 || vm.items.length < config.maxItems) {
                 vm.allowAdd = true;
             }
 
