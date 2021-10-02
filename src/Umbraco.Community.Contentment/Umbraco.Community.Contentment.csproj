@@ -6,7 +6,7 @@
     <Title>Contentment for Umbraco</Title>
     <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco</PackageTags>
-    <Version>3.0.0-alpha005</Version>
+    <Version>3.0.0-alpha006</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
@@ -16,8 +16,8 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-rc003" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-rc003" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
