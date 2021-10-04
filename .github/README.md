@@ -31,6 +31,7 @@ Let's take a look inside...
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
+- [Templated Label](../docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
 #### Telemetry
