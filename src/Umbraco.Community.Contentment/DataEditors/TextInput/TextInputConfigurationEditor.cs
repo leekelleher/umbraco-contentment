@@ -3,8 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _utility = utility;
 
-            var dataSources = _utility.GetConfigurationEditorModels<IDataListSource>().ToList();
+            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>());
 
             Fields.Add(new ConfigurationField
             {
@@ -91,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (source != null)
                 {
                     var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Enumerable.Empty<DataListItem>();
+                    var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
                     config[Constants.Conventions.ConfigurationFieldAliases.Items] = items;
                 }

@@ -9,12 +9,12 @@
 
             <div tabindex="-1" class="lk-content-blocks__preview">
                 <div class="lk-content-blocks__preview--left" ng-if="vm.previews[item.key]">
-                    <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                    <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" class="icon" ng-class="_icon"></umb-icon>
                     <span ng-bind="vm.populate(item, $index, 'name')"></span>
                 </div>
                 <div class="lk-content-blocks__preview--main">
                     <div class="lk-content-blocks__preview--default" ng-if="!vm.previews[item.key]">
-                        <i class="icon" ng-class="vm.populate(item, $index, 'icon')"></i>
+                        <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" class="icon" ng-class="_icon"></umb-icon>
                         <h5 ng-bind="vm.populate(item, $index, 'name')"></h5>
                     </div>
                     <div class="lk-content-blocks__preview--markup" ng-if="vm.previews[item.key]">
@@ -30,10 +30,12 @@
 
             <ul class="lk-content-blocks__actions">
                 <li aria-label="Sort" class="lk-content-blocks__action--item umb-node-preview--sortable" ng-if="vm.allowSort">
-                    <i class="icon icon-navigation"></i>
+                    <umb-icon icon="icon-navigation" class="icon"></umb-icon>
                 </li>
                 <li class="lk-content-blocks__action--item" ng-if="vm.canRemove(item, $index)">
-                    <button aria-label="Delete content block" type="button" class="icon icon-trash" ng-click="vm.remove($index)"></button>
+                    <button aria-label="Delete content block" type="button" class="btn-reset umb-outline" ng-click="vm.remove($index)">
+                        <umb-icon icon="icon-trash" class="icon"></umb-icon>
+                    </button>
                 </li>
                 <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[$index]">
                     <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>

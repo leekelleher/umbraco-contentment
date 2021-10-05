@@ -22,6 +22,8 @@ The two main fields are "**Data source**" and "**List editor**".
 
 Selecting the **Data source**, you will be presented with a selection of data sources, including .NET enumeration, file system, Umbraco content, SQL, CSV, JSON and XML data.
 
+> [An extensive list of all the **built-in data-sources** is available](../data-sources/README.md).
+
 ![Configuration Editor for Data List - available data sources](data-list--configuration-editor-02.png)
 
 For our example, let's choose **File System**. You will then be presented with configuration options for this data source.

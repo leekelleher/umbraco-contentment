@@ -55,7 +55,8 @@ Remove hard-coded English labels, move them to the language XML file.
 ## Support for Umbraco Deploy?
 
 - Implement artifact dependency logic for `IValueConnector`, `IDataTypeConfigurationConnector`?
-
+- Implement uSync's `ISyncMapper.GetDependencies`?
+  https://github.com/KevinJump/uSyncDataSync.Example/blob/deeedfe8180c2d9e4eb6e57ad6bb1cd6814bebe7/uSync.Example.DataSync/Mappers/ExampleDataMapper.cs#L93
 
 ## Deprecation considerations
 

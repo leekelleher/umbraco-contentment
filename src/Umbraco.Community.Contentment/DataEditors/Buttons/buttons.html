@@ -11,7 +11,7 @@
                 ng-class="{ 'umb-button--selected' : item.selected }"
                 label="{{vm.hideName === false ? item.name : null}}"
                 title="{{item.name}}"
-                icon="{{vm.hideIcon === false ? vm.iconExtras + (item.icon || vm.defaultIcon) : null}}"
+                icon="{{vm.hideIcon === false ? (item.icon || vm.defaultIcon) + vm.iconExtras : null}}"
                 disabled="item.disabled">
     </umb-button>
 </div>

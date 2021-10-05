@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
-                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, "DECIMAL" }
+                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
             new ConfigurationField
@@ -46,10 +46,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
-                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, "DECIMAL" }
+                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
-
             new ConfigurationField
             {
                 Key = "step",
@@ -59,9 +58,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
-                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, "DECIMAL" }
+                    { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
+            new ConfigurationField
+            {
+                Key = "decimals",
+                Name = "Decimal places",
+                Description = "How many decimal places would you like?",
+                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+                Config = new Dictionary<string, object>
+                {
+                    { "initVal1", 0 },
+                    { "minVal", 0 },
+                    { "maxVal", 10 },
+                    { "step", 1 }
+                }
+            }
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
@@ -69,6 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "start", 1 },
             { "end", 10 },
             { "step", 1 },
+            { "decimals", 0 },
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;
@@ -78,16 +92,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             var start = config.GetValueAs("start", defaultValue: default(double));
             var end = config.GetValueAs("end", defaultValue: default(double));
             var step = config.GetValueAs("step", defaultValue: default(double));
+            var decimals = config.GetValueAs("decimals", defaultValue: default(int));
+            var format = string.Concat("N", decimals);
 
-            return GetRange(start, end, step).Select(x => new DataListItem { Name = x.ToString(), Value = x.ToString() });
-        }
+            DataListItem newItem(double i) => new DataListItem { Name = i.ToString(format), Value = i.ToString(format) };
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(double);
-
-        public object ConvertValue(Type type, string value) => value.TryConvertTo(type).ResultOr(default(double));
-
-        private IEnumerable<double> GetRange(double start, double end, double step)
-        {
             if (step <= default(double))
             {
                 step = step == default ? 1D : -step;
@@ -97,16 +106,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 for (var i = start; i <= end; i += step)
                 {
-                    yield return i;
+                    yield return newItem(i);
                 }
             }
             else
             {
                 for (var i = start; i >= end; i -= step)
                 {
-                    yield return i;
+                    yield return newItem(i);
                 }
             }
         }
+
+        public Type GetValueType(Dictionary<string, object> config) => typeof(double);
+
+        public object ConvertValue(Type type, string value) => value.TryConvertTo(type).ResultOr(default(double));
     }
 }

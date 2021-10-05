@@ -17,4 +17,5 @@ src/packages/*/**
 /tools/*.exe
 /build/__umb/*
 /build/__nuget/*
-/build/build-push.ps1
+/build/build-push-nuget.ps1
+/build/build-push-umb.ps1

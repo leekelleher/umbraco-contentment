@@ -34,7 +34,9 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                 foreach (var assembly in assemblies)
                 {
                     if (options.ContainsKey(assembly.FullName) == true || assembly.IsDynamic == true)
+                    {
                         continue;
+                    }
 
                     var hasEnums = false;
                     if (assembly.ExportedTypes != null)
@@ -50,7 +52,9 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                     }
 
                     if (hasEnums == false)
+                    {
                         continue;
+                    }
 
                     if (assembly.FullName.StartsWith(App_Code) == true && options.ContainsKey(App_Code) == false)
                     {
@@ -75,7 +79,9 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             foreach (var type in types)
             {
                 if (type.IsEnum == false)
+                {
                     continue;
+                }
 
                 options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(), Value = type.FullName });
             }

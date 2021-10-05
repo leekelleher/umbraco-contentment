@@ -13,12 +13,8 @@
         <div class="flex flex-wrap error">
             <ul class="umb-sortable-thumbnails">
                 <li class="umb-sortable-thumbnails__wrapper" ng-if="vm.allowAdd === false">
-                    <span class="umb-file-icon">
-                        <span class="file-icon">
-                            <i class="icon" ng-class="model.value" aria-hidden="true"></i>
-                        </span>
-                        <small ng-bind-html="vm.label"></small>
-                    </span>
+                    <umb-icon icon="{{model.value}}" class="icon mb2" ng-class="model.value"></umb-icon>
+                    <small ng-bind-html="vm.label"></small>
                     <div class="umb-sortable-thumbnails__actions">
                         <button aria-label="Edit icon" type="button" class="umb-sortable-thumbnails__action btn-reset" ng-click="vm.pick()">
                             <i class="icon icon-edit" aria-hidden="true"></i>
