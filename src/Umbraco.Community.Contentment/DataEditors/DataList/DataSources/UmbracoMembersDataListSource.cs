@@ -122,12 +122,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     return _memberService.GetMembersByMemberType(memberType.Id).Select(mapMember);
                 }
             }
-            else
-            {
-                return _memberService.GetAllMembers().Select(mapMember);
-            }
 
-            return Enumerable.Empty<DataListItem>();
+            return _memberService.GetAllMembers().Select(mapMember);
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
