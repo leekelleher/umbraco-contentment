@@ -4,8 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -15,6 +20,23 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Templated Label";
         internal const string DataEditorViewPath = NotesDataEditor.DataEditorViewPath;
         internal const string DataEditorIcon = "icon-fa fa-codepen";
+
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IJsonSerializer _jsonSerializer;
+        private readonly IIOHelper _ioHelper;
+
+        public TemplatedLabelDataEditor(
+            ILocalizedTextService localizedTextService,
+            IShortStringHelper shortStringHelper,
+            IJsonSerializer jsonSerializer,
+            IIOHelper ioHelper)
+        {
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _jsonSerializer = jsonSerializer;
+            _ioHelper = ioHelper;
+        }
 
         public string Alias => DataEditorAlias;
 
@@ -32,13 +54,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new TemplatedLabelConfigurationEditor();
+        public IConfigurationEditor GetConfigurationEditor() => new TemplatedLabelConfigurationEditor(_ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor
+            return new DataValueEditor(
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
@@ -51,11 +76,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
             }
 
-            return new DataValueEditor
+            return new DataValueEditor(
+                _localizedTextService,
+                _shortStringHelper,
+                _jsonSerializer)
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
     }
