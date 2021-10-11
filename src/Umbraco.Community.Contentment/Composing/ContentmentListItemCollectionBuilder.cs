@@ -7,8 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Umbraco.Community.Contentment.DataEditors;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.Composing;
+#else
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.Composing
 {
@@ -23,8 +28,11 @@ namespace Umbraco.Community.Contentment.Composing
     public sealed class ContentmentListItemCollection : BuilderCollectionBase<IContentmentListItem>
     {
         private readonly Dictionary<string, IContentmentListItem> _lookup;
-
+#if NET472
         public ContentmentListItemCollection(IEnumerable<IContentmentListItem> items)
+#else
+        public ContentmentListItemCollection(Func<IEnumerable<IContentmentListItem>> items)
+#endif
             : base(items)
         {
             _lookup = new Dictionary<string, IContentmentListItem>(StringComparer.OrdinalIgnoreCase);

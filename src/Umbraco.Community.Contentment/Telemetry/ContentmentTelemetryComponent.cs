@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Community.Contentment.Configuration;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
@@ -134,3 +134,4 @@ namespace Umbraco.Community.Contentment.Telemetry
         }
     }
 }
+#endif

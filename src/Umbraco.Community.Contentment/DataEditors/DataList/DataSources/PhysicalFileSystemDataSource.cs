@@ -5,14 +5,52 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.Hosting;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class PhysicalFileSystemDataSource : IDataListSource
     {
+        private readonly IShortStringHelper _shortStringHelper;
+
+#if NET472
+        public PhysicalFileSystemDataSource(
+            IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+        }
+#else
+        private readonly IIOHelper _ioHelper;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILogger<PhysicalFileSystem> _logger;
+
+        public PhysicalFileSystemDataSource(
+            IIOHelper ioHelper,
+            IHostingEnvironment hostingEnvironment,
+            ILogger<PhysicalFileSystem> logger,
+            IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
+            _hostingEnvironment = hostingEnvironment;
+            _logger = logger;
+        }
+#endif
+
         public string Name => "File System";
 
         public string Description => "Select paths from the physical file system as the data source.";
@@ -29,7 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "path",
                 Name = "Folder path",
-                Description = "Enter the relative path of the folder. e.g. <code>~/css</code>",
+                Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
                 View = "textstring",
             },
             new ConfigurationField
@@ -68,15 +106,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? filter
                 : "*.*";
 
+#if NET472
             var fs = new PhysicalFileSystem(virtualRoot);
+#else
+            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
+#endif
             var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem
             {
-                Name = friendlyName == true ? x.SplitPascalCasing().ToFriendlyName() : x,
+                Name = friendlyName == true ? x.SplitPascalCasing(_shortStringHelper).ToFriendlyName() : x,
                 Value = virtualRoot + x,
                 Description = virtualRoot + x,
-                Icon = Core.Constants.Icons.DefaultIcon,
+                Icon = UmbConstants.Icons.DefaultIcon,
             });
         }
     }

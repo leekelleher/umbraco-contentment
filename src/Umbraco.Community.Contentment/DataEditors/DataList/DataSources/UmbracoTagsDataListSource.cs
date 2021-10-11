@@ -6,9 +6,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Web;
+#else
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -51,7 +57,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var tagGroup = config.GetValueAs("tagGroup", defaultValue: string.Empty);
 
-            return _tagQuery.Value
+            // TODO: [LK:2021-09-20] Error with Tags data source on v9.
+            // FIXME: Cannot resolve scoped service 'Umbraco.Cms.Core.PublishedCache.ITagQuery' from root provider.
+
+            return _tagQuery
+                .Value
                 .GetAllTags(tagGroup)
                 .OrderBy(x => x.Text)
                 .Select(x => new DataListItem

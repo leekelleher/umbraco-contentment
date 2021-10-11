@@ -8,8 +8,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Umbraco.Community.Contentment.Composing;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -40,13 +50,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             return default;
         }
 
-        public ConfigurationEditorModel GetConfigurationEditorModel<T>(bool ignoreFields = false)
+        public ConfigurationEditorModel GetConfigurationEditorModel<T>(IShortStringHelper shortStringHelper, bool ignoreFields = false)
             where T : IContentmentEditorItem
         {
-            return GetConfigurationEditorModel(GetConfigurationEditor<T>(typeof(T).GetFullNameWithAssembly()), ignoreFields);
+            return GetConfigurationEditorModel(GetConfigurationEditor<T>(typeof(T).GetFullNameWithAssembly()), shortStringHelper, ignoreFields);
         }
 
-        public ConfigurationEditorModel GetConfigurationEditorModel<T>(T item, bool ignoreFields = false)
+        public ConfigurationEditorModel GetConfigurationEditorModel<T>(T item, IShortStringHelper shortStringHelper, bool ignoreFields = false)
             where T : IContentmentEditorItem
         {
             var type = item.GetType();
@@ -58,9 +68,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new ConfigurationEditorModel
             {
                 Key = type.GetFullNameWithAssembly(),
-                Name = item.Name ?? type.Name.SplitPascalCasing(),
+                Name = item.Name ?? type.Name.SplitPascalCasing(shortStringHelper),
                 Description = item.Description,
-                Icon = item.Icon ?? Core.Constants.Icons.DefaultIcon,
+                Icon = item.Icon ?? UmbConstants.Icons.DefaultIcon,
                 Group = item.Group,
                 Fields = fields,
                 DefaultValues = item.DefaultValues,
@@ -68,8 +78,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditorModels<T>(bool ignoreFields = false)
-           where T : IContentmentEditorItem
+        public IEnumerable<ConfigurationEditorModel> GetConfigurationEditorModels<T>(IShortStringHelper shortStringHelper, bool ignoreFields = false)
+            where T : IContentmentEditorItem
         {
             var models = new List<ConfigurationEditorModel>();
 
@@ -77,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 if (item is T editorItem)
                 {
-                    models.Add(GetConfigurationEditorModel(editorItem, ignoreFields));
+                    models.Add(GetConfigurationEditorModel(editorItem, shortStringHelper, ignoreFields));
                 }
             }
 

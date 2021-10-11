@@ -6,15 +6,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class NumberRangeDataListSource : IDataListSource, IDataListSourceValueConverter
     {
+        private readonly IIOHelper _ioHelper;
+
+        public NumberRangeDataListSource(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Number Range";
 
         public string Description => "Generates a sequence of numbers within a specified range.";
@@ -30,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "start",
                 Name = "Start",
                 Description = "The value of the first number in the sequence.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -42,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "end",
                 Name = "End",
                 Description = "The value of the last number in the sequence.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -54,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "step",
                 Name = "Step",
                 Description = "The number of steps between each number.",
-                View = IOHelper.ResolveUrl(NumberInputDataEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -66,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "decimals",
                 Name = "Decimal places",
                 Description = "How many decimal places would you like?",
-                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
                 Config = new Dictionary<string, object>
                 {
                     { "initVal1", 0 },

@@ -4,13 +4,27 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbIcons = Umbraco.Core.Constants.Icons;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using UmbIcons = Umbraco.Cms.Core.Constants.Icons;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class BlocksDisplayMode : IContentBlocksDisplayMode
     {
+        private readonly IIOHelper _ioHelper;
+
+        public BlocksDisplayMode(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
         public string Name => "Blocks";
 
         public string Description => "Blocks will be displayed in a list similar to the Block List editor.";
@@ -36,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField($@"<details class=""well well-small"" open>
+            new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"" open>
 <summary><strong>A note about block type previews.</strong></summary>
 <p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
 </details>", true),

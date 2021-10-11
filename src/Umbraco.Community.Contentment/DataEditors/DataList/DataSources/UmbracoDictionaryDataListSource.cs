@@ -7,19 +7,31 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoDictionaryDataListSource : IDataListSource
     {
         private readonly ILocalizationService _localizationService;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoDictionaryDataListSource(ILocalizationService localizationService)
+        public UmbracoDictionaryDataListSource(
+            ILocalizationService localizationService,
+            IIOHelper ioHelper)
         {
             _localizationService = localizationService;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Dictionary Items";
@@ -37,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "item",
                 Name = "Dictionary item",
                 Description = "Select a parent dictionary item to display the child items.",
-                View = DictionaryPickerDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DictionaryPickerDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { MaxItemsConfigurationField.MaxItems, 1 }

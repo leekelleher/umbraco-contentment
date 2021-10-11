@@ -6,12 +6,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using Umbraco.Community.Contentment.DataEditors;
+#if NET472
+using System.Web.Http;
 using Umbraco.Core;
+using Umbraco.Core.Strings;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
+#else
+using Microsoft.AspNetCore.Mvc;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Web.BackOffice.Controllers;
+using Umbraco.Cms.Web.Common.Attributes;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.Web.Controllers
 {
@@ -22,6 +33,14 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
         internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
 
+        private readonly IShortStringHelper _shortStringHelper;
+
+        public EnumDataSourceApiController(IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+        }
+
+        [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
             const string App_Code = "App_Code";
@@ -39,17 +58,23 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                     }
 
                     var hasEnums = false;
-                    if (assembly.ExportedTypes != null)
+                    try
                     {
-                        foreach (var exportedType in assembly.ExportedTypes)
+                        var exportedTypes = assembly.GetExportedTypes();
+                        if (exportedTypes != null)
                         {
-                            if (exportedType.IsEnum == true)
+                            foreach (var exportedType in exportedTypes)
                             {
-                                hasEnums = true;
-                                break;
+                                if (exportedType.IsEnum == true)
+                                {
+                                    hasEnums = true;
+                                    break;
+                                }
                             }
                         }
                     }
+                    catch (FileLoadException) { /* (╯°□°）╯︵ ┻━┻ */ }
+                    catch (TypeLoadException) { /* ¯\_(ツ)_/¯ */ }
 
                     if (hasEnums == false)
                     {
@@ -71,11 +96,13 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             return options.Values;
         }
 
+        [HttpGet]
         public IEnumerable<DataListItem> GetEnums(string assembly)
         {
             var options = new SortedDictionary<string, DataListItem>();
 
             var types = Assembly.Load(assembly).GetTypes();
+
             foreach (var type in types)
             {
                 if (type.IsEnum == false)
@@ -83,7 +110,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                     continue;
                 }
 
-                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(), Value = type.FullName });
+                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(_shortStringHelper), Value = type.FullName });
             }
 
             return options.Values;

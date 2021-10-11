@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
@@ -15,6 +16,17 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Web.PublishedCache;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -23,12 +35,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoMembersDataListSource(IMemberTypeService memberTypeService, IMemberService memberService, IPublishedSnapshotAccessor publishedSnapshotAccessor)
+        public UmbracoMembersDataListSource(
+            IMemberTypeService memberTypeService,
+            IMemberService memberService,
+            IPublishedSnapshotAccessor publishedSnapshotAccessor,
+            IIOHelper ioHelper)
         {
             _memberTypeService = memberTypeService;
             _memberService = memberService;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Members";
@@ -56,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new[]
                 {
-                    new NotesConfigurationField($@"<details class=""alert alert-danger"">
+                    new NotesConfigurationField(_ioHelper, $@"<details class=""alert alert-danger"">
 <summary><strong>Important note about Umbraco Members.</strong></summary>
 <p>This data source is ideal for smaller number of members, e.g. under 50. Upwards of that, you will notice an unpleasant editor experience and rapidly diminished performance.</p>
 <p>Remember...</p>
@@ -70,14 +88,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "memberType",
                         Name = "Member Type",
                         Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        View = ItemPickerDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { "items", items },
                             { "listType", "list" },
-                            { "overlayView", IOHelper.ResolveUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { "overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { "maxItems", 1 },
                         }
                     }
@@ -107,7 +125,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 var memberType = _memberTypeService.Get(udi.Guid);
                 if (memberType != null)
@@ -123,9 +141,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return GuidUdi.TryParse(value, out var udi) == true && udi.Guid.Equals(Guid.Empty) == false
-                ? _publishedSnapshotAccessor.PublishedSnapshot.Members.GetByProviderKey(udi.Guid)
-                : default;
+            if (UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false)
+            {
+#if NET472
+                return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.GetByProviderKey(udi.Guid);
+#else
+                var member = _memberService.GetByKey(udi.Guid);
+                if (member != null)
+                {
+                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.Get(_memberService.GetByKey(udi.Guid));
+                }
+#endif
+            }
+
+            return default(IPublishedContent);
         }
     }
 }

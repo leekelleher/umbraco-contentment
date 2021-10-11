@@ -6,10 +6,19 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+#if NET472
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.ModelsBuilder.Embedded;
+#else
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Infrastructure.ModelsBuilder;
+#endif
 
+#if NET472
 namespace Umbraco.Web
+#else
+namespace Umbraco.Extensions
+#endif
 {
     public static class PublishedElementExtensions
     {

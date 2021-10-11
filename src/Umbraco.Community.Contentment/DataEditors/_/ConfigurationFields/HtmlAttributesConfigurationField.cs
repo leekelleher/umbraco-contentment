@@ -4,8 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string HtmlAttributes = "htmlAttributes";
 
-        public HtmlAttributesConfigurationField()
+        public HtmlAttributesConfigurationField(IIOHelper ioHelper)
             : base()
         {
             var listFields = new[]
@@ -35,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = HtmlAttributes;
             Name = "HTML attributes";
             Description = "<em>(optional)</em> Use this field to add any HTML attributes to the list editor.";
-            View = IOHelper.ResolveUrl(DataTableDataEditor.DataEditorViewPath);
+            View = ioHelper.ResolveRelativeOrVirtualUrl(DataTableDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>()
             {
                 { DataTableConfigurationEditor.FieldItems, listFields },

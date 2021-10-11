@@ -7,11 +7,19 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Umbraco.Community.Contentment.Web.PublishedCache;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Web.PublishedCache;
+#else
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -62,7 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
                         continue;
 
-                    var contentType = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetContentType(alias);
+                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content.GetContentType(alias);
                     if (contentType == null || contentType.IsElement == false)
                         continue;
 

@@ -4,8 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Notes = NotesConfigurationField.Notes;
 
-        public NotesConfigurationEditor()
+        public NotesConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             Fields.Add(new ConfigurationField
@@ -21,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Notes,
                 Name = nameof(Notes),
                 Description = "Enter the notes to be displayed for the content editor.",
-                View = IOHelper.ResolveUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
+                View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 Config = new Dictionary<string, object>
                 {
                     { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }

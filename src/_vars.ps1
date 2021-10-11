@@ -4,4 +4,4 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 # Sets the path for development site.
-$TargetDevWebsite = "C:\path\to\umbraco";
+$TargetDevWebsite = "";

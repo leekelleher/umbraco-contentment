@@ -7,23 +7,56 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Xml;
 using System.Xml.XPath;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
+#else
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Hosting;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class XmlDataListSource : IDataListSource
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IIOHelper _ioHelper;
+
+#if NET472
         private readonly ILogger _logger;
 
-        public XmlDataListSource(ILogger logger)
+        public XmlDataListSource(
+            ILogger logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
         }
+#else
+        private readonly ILogger<XmlDataListSource> _logger;
+
+        public XmlDataListSource(
+            ILogger<XmlDataListSource> logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
+        {
+            _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+        }
+#endif
 
         public string Name => "XML Data";
 
@@ -44,7 +77,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
                 View = "textstring"
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
 </details>
@@ -109,7 +142,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             var path = url.InvariantStartsWith("http") == false
-                ? IOHelper.MapPath(url)
+                ? _hostingEnvironment.MapPathWebRoot(url)
                 : url;
 
             var doc = default(XPathDocument);
@@ -118,13 +151,29 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 doc = new XPathDocument(path);
             }
+            catch (HttpRequestException ex)
+            {
+#if NET472
+                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+#else
+                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+#endif
+            }
             catch (WebException ex)
             {
+#if NET472
                 _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+#else
+                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+#endif
             }
             catch (XmlException ex)
             {
+#if NET472
                 _logger.Error<XmlDataListSource>(ex, "Unable to load XML data.");
+#else
+                _logger.LogError(ex, $"Unable to load XML data from '{path}'.");
+#endif
             }
 
             if (doc == null)
@@ -158,7 +207,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (nodes.Count == 0)
             {
+#if NET472
                 _logger.Warn<XmlDataListSource>($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+#else
+                _logger.LogWarning($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+#endif
                 return Enumerable.Empty<DataListItem>();
             }
 
@@ -198,12 +251,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (name == null)
                     {
+#if NET472
                         _logger.Warn<XmlDataListSource>($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
+#else
+                        _logger.LogWarning($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
+#endif
                     }
 
                     if (value == null)
                     {
+#if NET472
                         _logger.Warn<XmlDataListSource>($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
+#else
+                        _logger.LogWarning($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
+#endif
                     }
                 }
             }
