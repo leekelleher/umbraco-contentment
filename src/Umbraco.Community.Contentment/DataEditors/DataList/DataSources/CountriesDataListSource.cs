@@ -6,8 +6,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.PropertyEditors;
+#else
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -34,10 +39,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .Select(x => new RegionInfo(x.Name))
                 .DistinctBy(x => x.DisplayName)
                 .Where(x => x.TwoLetterISORegionName.Length == 2) // NOTE: Removes odd "countries" such as Caribbean (029), Europe (150), Latin America (419) and World (001).
-                .OrderBy(x => x.EnglishName)
+                .OrderBy(x => x.DisplayName)
                 .Select(x => new DataListItem
                 {
-                    Name = x.EnglishName,
+                    Name = x.DisplayName,
                     Value = x.TwoLetterISORegionName
                 });
         }

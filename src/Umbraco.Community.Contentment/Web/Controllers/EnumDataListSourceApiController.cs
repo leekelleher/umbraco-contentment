@@ -6,14 +6,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.IO;
 using System.Reflection;
+using Umbraco.Community.Contentment.DataEditors;
+#if NET472
+using System.Web.Http;
+using Umbraco.Core;
+using Umbraco.Core.Strings;
+using Umbraco.Web.Editors;
+using Umbraco.Web.Mvc;
+using Umbraco.Web.WebApi;
+#else
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
-using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.Web.Controllers
 {
@@ -39,7 +48,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
             var options = new SortedDictionary<string, DataListItem>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            if (assemblies?.Any() == true)
+            if (assemblies?.Length > 0)
             {
                 foreach (var assembly in assemblies)
                 {
@@ -64,6 +73,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                             }
                         }
                     }
+                    catch (FileLoadException) { /* (╯°□°）╯︵ ┻━┻ */ }
                     catch (TypeLoadException) { /* ¯\_(ツ)_/¯ */ }
 
                     if (hasEnums == false)

@@ -9,25 +9,41 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
+using Umbraco.Community.Contentment.Web.Controllers;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+#else
+using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
     {
-        private readonly ILogger<EnumDataListSource> _logger;
-        private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
+        private readonly IShortStringHelper _shortStringHelper;
+
+#if NET472
+        private readonly ILogger _logger;
+#else
+        private readonly ILogger<EnumDataListSource> _logger;
+#endif
 
         public EnumDataListSource(
+#if NET472
+            ILogger logger,
+#else
             ILogger<EnumDataListSource> logger,
+#endif
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
@@ -35,6 +51,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             _shortStringHelper = shortStringHelper;
             _ioHelper = ioHelper;
         }
+
+
 
         public string Name => ".NET Enumeration";
 
@@ -124,11 +142,35 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (enumType?.Length > 1)
                 {
                     var assembly = default(Assembly);
-                    try { assembly = Assembly.Load(enumType[0]); } catch (Exception ex) { _logger.LogError(ex, "Unable to load target type."); }
+                    try
+                    {
+                        assembly = Assembly.Load(enumType[0]);
+                    }
+                    catch (Exception ex)
+                    {
+#if NET472
+                        _logger.Error<EnumDataListSource>(ex);
+#else
+                        _logger.LogError(ex, "Unable to load target type.");
+#endif
+                    }
+
                     if (assembly != null)
                     {
                         var type = default(Type);
-                        try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.LogError(ex, "Unable to retrieve target type."); }
+                        try
+                        {
+                            type = assembly.GetType(enumType[1]);
+                        }
+                        catch (Exception ex)
+                        {
+#if NET472
+                            _logger.Error<EnumDataListSource>(ex);
+#else
+                            _logger.LogError(ex, "Unable to retrieve target type.");
+#endif
+                        }
+
                         if (type != null && type.IsEnum == true)
                         {
                             return type;
@@ -145,7 +187,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
             {
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
-                try { return Enum.Parse(type, value, true); } catch (Exception ex) { _logger.LogError(ex, "Unable to parse Enum."); }
+                try
+                {
+                    return Enum.Parse(type, value, true);
+                }
+                catch (Exception ex)
+                {
+#if NET472
+                    _logger.Error<EnumDataListSource>(ex);
+#else
+                    _logger.LogError(ex, "Unable to parse Enum.");
+#endif
+                }
 
                 // If the value doesn't match the Enum field, then it is most likely set with `DataListItemAttribute.Value`.
                 var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
@@ -159,7 +212,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
+#if NET472
+                _logger.Debug<EnumDataListSource>($"Unable to find value '{value}' in enum '{type.FullName}'.");
+#else
                 _logger.LogDebug($"Unable to find value '{value}' in enum '{type.FullName}'.");
+#endif
             }
 
             return type.GetDefaultValue();

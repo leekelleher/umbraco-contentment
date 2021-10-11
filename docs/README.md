@@ -38,3 +38,6 @@ If you are unfamiliar with how to do this, then please refer to documentation, g
 
 Information about Contentment's [telemetry feature](../docs/telemetry.md).
 
+#### Tree Dashboard
+
+Information about Contentment's [tree dashboard](../docs/tree-dashboard.md).

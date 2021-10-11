@@ -7,13 +7,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.Models.Membership;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.Membership;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -58,7 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "userGroup",
                         Name = "User Group",
                         Description = "Select a user group to filter the users by. If left empty, all users will be used.",
-                        View = ItemPickerDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },

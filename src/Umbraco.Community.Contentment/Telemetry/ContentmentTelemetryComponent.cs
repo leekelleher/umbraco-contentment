@@ -3,49 +3,56 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Configuration;
-using Umbraco.Cms.Core.Configuration.Models;
-using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Extensions;
+using Umbraco.Core;
+using Umbraco.Core.Composing;
+using Umbraco.Core.Configuration;
+using Umbraco.Core.Configuration.UmbracoSettings;
+using Umbraco.Core.Events;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+using Umbraco.Core.Services.Implement;
 
-namespace Umbraco.Community.Contentment.Notifications
+namespace Umbraco.Community.Contentment.Telemetry
 {
-    internal sealed class ContentmentTelemetryHandler : INotificationHandler<DataTypeSavedNotification>
+    internal sealed class ContentmentTelemetryComponent : IComponent
     {
-        private readonly ContentmentSettings _contentmentSettings;
-        private readonly GlobalSettings _globalSettings;
-        private readonly IUmbracoVersion _umbracoVersion;
+        internal static bool Disabled { get; set; }
 
-        public ContentmentTelemetryHandler(
-            IOptions<ContentmentSettings> contentmentSettings,
-            IOptions<GlobalSettings> globalSettings,
-            IUmbracoVersion umbracoVersion)
+        private readonly IUmbracoSettingsSection _umbracoSettings;
+
+        public ContentmentTelemetryComponent(IUmbracoSettingsSection umbracoSettings)
         {
-            _contentmentSettings = contentmentSettings.Value;
-            _globalSettings = globalSettings.Value;
-            _umbracoVersion = umbracoVersion;
+            _umbracoSettings = umbracoSettings;
         }
 
-        public void Handle(DataTypeSavedNotification notification)
+        public void Initialize()
         {
-            if (_contentmentSettings.DisableTelemetry == true)
+            DataTypeService.Saved += DataTypeService_Saved;
+        }
+
+        public void Terminate()
+        {
+            DataTypeService.Saved -= DataTypeService_Saved;
+        }
+
+        private void DataTypeService_Saved(IDataTypeService sender, SaveEventArgs<IDataType> e)
+        {
+            if (Disabled == true)
             {
                 return;
             }
 
-            foreach (var entity in notification.SavedEntities)
+            foreach (var entity in e.SavedEntities)
             {
                 if (entity.EditorAlias.InvariantStartsWith(Constants.Internals.DataEditorAliasPrefix) == true)
                 {
@@ -96,7 +103,7 @@ namespace Umbraco.Community.Contentment.Notifications
                             }
                         }
 
-                        var umbracoId = Guid.TryParse(_globalSettings.Id, out var telemetrySiteIdentifier) == true
+                        var umbracoId = Guid.TryParse(_umbracoSettings.BackOffice.Id, out var telemetrySiteIdentifier) == true
                             ? telemetrySiteIdentifier
                             : Guid.Empty;
 
@@ -106,7 +113,7 @@ namespace Umbraco.Community.Contentment.Notifications
                             dataType = entity.Key,
                             editorAlias = entity.EditorAlias.Substring(Constants.Internals.DataEditorAliasPrefix.Length),
                             umbracoId = umbracoId,
-                            umbracoVersion = _umbracoVersion.SemanticVersion.ToString(),
+                            umbracoVersion = UmbracoVersion.SemanticVersion.ToString(),
                             contentmentVersion = ContentmentVersion.SemanticVersion.ToString(),
                             dataTypeConfig = dataTypeConfig,
                         };
@@ -127,3 +134,4 @@ namespace Umbraco.Community.Contentment.Notifications
         }
     }
 }
+#endif

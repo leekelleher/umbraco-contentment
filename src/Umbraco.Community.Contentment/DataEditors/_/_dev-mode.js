@@ -3,48 +3,49 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-angular.module("umbraco.directives.html").directive("lkHtmlAttributes", [
-    function () {
+angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Services.DevMode", [
+    "$timeout",
+    "editorService",
+    function ($timeout, editorService) {
         return {
-            restrict: "A",
-            scope: {
-                attributes: "&lkHtmlAttributes"
-            },
-            link: function (scope, element, attrs) {
-                var attributes = scope.attributes();
-                if (Array.isArray(attributes) && attributes.length > 0) {
-                    attributes.forEach(function (x) {
-                        if (x.name === "class") {
-                            // NOTE: Slight bug, it did not account for existing class values.
-                            element.addClass(x.value);
-                        } else {
-                            element.attr(x.name, x.value);
-                        }
-                    });
-                }
-            }
-        };
-    }
-]);
-
-angular.module("umbraco.directives.html").directive("lkBindHtmlTemplate", [
-    "$compile",
-    function ($compile) {
-        return {
-            restrict: "A",
-            replace: true,
-            link: function (scope, element, attrs) {
-                scope.$watch(
-                    function (scope) {
-                        return scope.$eval(attrs.lkBindHtmlTemplate);
+            editValue: function (model, callback) {
+                editorService.open({
+                    title: "Edit raw value",
+                    value: Utilities.toJson(model.value, true),
+                    ace: {
+                        showGutter: true,
+                        useWrapMode: true,
+                        useSoftTabs: true,
+                        theme: "chrome",
+                        mode: "javascript",
+                        advanced: {
+                            fontSize: "14px",
+                            wrap: true
+                        },
+                        onLoad: function (_editor) {
+                            $timeout(function () {
+                                _editor.focus();
+                            });
+                        },
                     },
-                    function (value) {
-                        element.html(value);
-                        $compile(element.contents())(scope);
+                    view: "/App_Plugins/Contentment/editors/_json-editor.html",
+                    size: "medium",
+                    submit: function (value) {
+
+                        model.value = Utilities.fromJson(value);
+
+                        if (callback) {
+                            callback();
+                        }
+
+                        editorService.close();
+                    },
+                    close: function () {
+                        editorService.close();
                     }
-                );
+                });
             }
-        };
+        }
     }
 ]);
 

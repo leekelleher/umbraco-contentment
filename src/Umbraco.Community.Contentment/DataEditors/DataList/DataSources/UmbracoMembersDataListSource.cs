@@ -7,6 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
+using Umbraco.Web.PublishedCache;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
@@ -16,6 +26,7 @@ using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -132,11 +143,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false)
             {
+#if NET472
+                return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.GetByProviderKey(udi.Guid);
+#else
                 var member = _memberService.GetByKey(udi.Guid);
                 if (member != null)
                 {
                     return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.Get(_memberService.GetByKey(udi.Guid));
                 }
+#endif
             }
 
             return default(IPublishedContent);

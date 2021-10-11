@@ -5,11 +5,18 @@
 
 using System;
 using System.Collections.Generic;
-using Umbraco.Cms.Core;
+using System.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -102,12 +109,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             var decimals = config.GetValueAs("decimals", defaultValue: default(int));
             var format = string.Concat("N", decimals);
 
+            DataListItem newItem(double i) => new DataListItem { Name = i.ToString(format), Value = i.ToString(format) };
+
             if (step <= default(double))
             {
                 step = step == default ? 1D : -step;
             }
-
-            DataListItem newItem(double i) => new DataListItem { Name = i.ToString(format), Value = i.ToString(format) };
 
             if (start <= end)
             {

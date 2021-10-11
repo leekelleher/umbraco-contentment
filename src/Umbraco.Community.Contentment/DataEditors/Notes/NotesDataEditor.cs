@@ -4,13 +4,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+#else
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -21,10 +27,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "notes.html";
         internal const string DataEditorIcon = "icon-fa fa-sticky-note-o";
 
+        private readonly IIOHelper _ioHelper;
+
+#if NET472
+        public NotesDataEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+#else
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
-        private readonly IIOHelper _ioHelper;
 
         public NotesDataEditor(
             ILocalizedTextService localizedTextService,
@@ -37,6 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _jsonSerializer = jsonSerializer;
             _ioHelper = ioHelper;
         }
+#endif
 
         public string Alias => DataEditorAlias;
 
@@ -58,13 +72,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
+#if NET472
+            return new ReadOnlyDataValueEditor
+#else
             return new ReadOnlyDataValueEditor(
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
+#endif
             {
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+                View = DataEditorViewPath,
             };
         }
 
@@ -77,15 +95,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
             }
 
+#if NET472
+            return new ReadOnlyDataValueEditor
+#else
             return new ReadOnlyDataValueEditor(
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
+#endif
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+                View = DataEditorViewPath,
             };
         }
     }

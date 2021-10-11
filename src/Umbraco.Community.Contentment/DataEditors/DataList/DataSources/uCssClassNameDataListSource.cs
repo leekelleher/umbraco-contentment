@@ -7,11 +7,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.Hosting;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

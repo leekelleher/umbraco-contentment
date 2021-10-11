@@ -5,20 +5,35 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class PhysicalFileSystemDataSource : IDataListSource
     {
         private readonly IShortStringHelper _shortStringHelper;
+
+#if NET472
+        public PhysicalFileSystemDataSource(
+            IShortStringHelper shortStringHelper)
+        {
+            _shortStringHelper = shortStringHelper;
+        }
+#else
         private readonly IIOHelper _ioHelper;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILogger<PhysicalFileSystem> _logger;
@@ -34,6 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
         }
+#endif
 
         public string Name => "File System";
 
@@ -90,7 +106,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? filter
                 : "*.*";
 
+#if NET472
+            var fs = new PhysicalFileSystem(virtualRoot);
+#else
             var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
+#endif
             var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem

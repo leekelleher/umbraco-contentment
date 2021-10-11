@@ -15,5 +15,6 @@ artifacts/
 build/assets/
 src/packages/*/**
 /tools/*.exe
+/build/__umb/*
 /build/build-push-nuget.ps1
 /build/build-push-umb.ps1

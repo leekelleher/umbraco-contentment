@@ -20,8 +20,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="*.targets" target="buildTransitive\" />
     <file src="App_Plugins\**\*.*" target="content\App_Plugins" />
+    <file src="*.targets" target="buildTransitive\" />
     <file src="icon.png" target="" />
   </files>
 </package>

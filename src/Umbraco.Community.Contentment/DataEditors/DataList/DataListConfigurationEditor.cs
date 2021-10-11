@@ -6,11 +6,17 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -23,24 +29,27 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EditorView = "editorView";
 
         private readonly ConfigurationEditorUtility _utility;
-        private readonly IIOHelper _ioHelper;
 
-        public DataListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
+        public DataListConfigurationEditor(
+            ConfigurationEditorUtility utility,
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
             : base()
         {
             _utility = utility;
-            _ioHelper = ioHelper;
-            var configEditorViewPath = _ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
+
+            var configEditorViewPath = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             var defaultConfigEditorConfig = new Dictionary<string, object>
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
             var listEditors = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListEditor>(shortStringHelper));
+
 
             Fields.Add(new ConfigurationField
             {
@@ -79,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "preview",
                 Name = "Preview",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
+                View = ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
             });
         }
 

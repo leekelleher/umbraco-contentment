@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472 == false
 namespace Umbraco.Community.Contentment
 {
     public class ContentmentSettings
@@ -12,3 +13,4 @@ namespace Umbraco.Community.Contentment
         public bool DisableTelemetry { get; set; } = false;
     }
 }
+#endif

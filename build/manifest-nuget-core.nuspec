@@ -16,14 +16,18 @@
     <tags>$tags$</tags>
     <repository type="git" url="$repositoryUrl$" />
     <dependencies>
-      <group targetFramework="net5.0">
-        <dependency id="Umbraco.Cms.Web.BackOffice" version="[$minUmbracoVersion$, 10.0.0)" />
-        <dependency id="Umbraco.Cms.Web.Website" version="[$minUmbracoVersion$, 10.0.0)" />
+      <group targetFramework="net472">
+        <dependency id="UmbracoCms.Web" version="[8.17.0, 9.0.0)" />
+      </group>
+      <group targetFramework="net50">
+        <dependency id="Umbraco.Cms.Web.Website" version="[9.0.0, 10.0.0)" />
+        <dependency id="Umbraco.Cms.Web.BackOffice" version="[9.0.0, 10.0.0)" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\*.*" target="lib\net5.0" />
+    <file src="bin\*.dll" target="lib\net472" />
+    <file src="net50\*.dll" target="lib\net5.0" />
     <file src="icon.png" target="" />
   </files>
 </package>

@@ -7,13 +7,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.Models;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
+using Umbraco.Core.Strings;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -22,20 +30,21 @@ namespace Umbraco.Community.Contentment.DataEditors
         // TODO: expire the local cache `_elementTypes` when a new element type is added. [LK:2021-08-16]
         private readonly Dictionary<Guid, IContentType> _elementTypes;
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
-        private readonly ConfigurationEditorUtility _utility;
         private readonly IIOHelper _ioHelper;
+        private readonly ConfigurationEditorUtility _utility;
+
         internal const string DisplayMode = "displayMode";
 
         public ContentBlocksConfigurationEditor(
             IContentService contentService,
             IContentTypeService contentTypeService,
             ConfigurationEditorUtility utility,
-            IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper)
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
             : base()
         {
-            _utility = utility;
             _ioHelper = ioHelper;
+            _utility = utility;
 
             // NOTE: Gets all the elementTypes and blueprints upfront, rather than several hits inside the loop.
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);

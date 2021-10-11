@@ -4,9 +4,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Extensions;
 
-namespace Umbraco.Cms.Core
+#if NET472
+namespace Umbraco.Core
+#else
+namespace Umbraco.Extensions
+#endif
 {
     internal static class DictionaryExtensions
     {

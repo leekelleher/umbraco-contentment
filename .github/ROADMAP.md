@@ -60,23 +60,16 @@ Property Editors are:
 
 - [Templated Label](https://github.com/leekelleher/umbraco-contentment/discussions/100)
 
-### v2.3
+
+## v3
+
+### v3.0
+
+- _Under active development!_ [See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105) A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0.
+
+### v3.1
 
 - [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
-
-
-## v3
-
-### v3.0
-
-- A breaking-change release of latest v2.x features that compiles against Umbraco CMS v9.0 (.NET 5).
-
-
-## v3
-
-### v3.0
-
-- _Under active development!_ [See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105) A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against Umbraco CMS v9.0.0.
 
 
 ## Future feature releases

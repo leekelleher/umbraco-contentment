@@ -6,6 +6,14 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
+using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -13,10 +21,11 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    // TODO: [v9] [LK:2021-07-06] Implement the `ComplexPropertyEditorContentNotificationHandler` abstraction class.
     public sealed class ContentBlocksDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ContentBlocks";
@@ -28,12 +37,32 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeService _dataTypeService;
-        private readonly ILocalizedTextService _localizedTextService;
-        private readonly IShortStringHelper _shortStringHelper;
-        private readonly IJsonSerializer _jsonSerializer;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
+        private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
         private readonly IIOHelper _ioHelper;
+
+#if NET472
+        public ContentBlocksDataEditor(
+            IContentService contentService,
+            IContentTypeService contentTypeService,
+            IDataTypeService dataTypeService,
+            Lazy<PropertyEditorCollection> propertyEditors,
+            IShortStringHelper shortStringHelper,
+            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper)
+        {
+            _contentService = contentService;
+            _contentTypeService = contentTypeService;
+            _dataTypeService = dataTypeService;
+            _propertyEditors = propertyEditors;
+            _shortStringHelper = shortStringHelper;
+            _utility = utility;
+            _ioHelper = ioHelper;
+        }
+#else
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IJsonSerializer _jsonSerializer;
 
         public ContentBlocksDataEditor(
             IContentService contentService,
@@ -56,6 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _utility = utility;
             _ioHelper = ioHelper;
         }
+#endif
 
         public string Alias => DataEditorAlias;
 
@@ -65,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => DataEditorIcon;
 
-        public string Group => Cms.Core.Constants.PropertyEditors.Groups.RichContent;
+        public string Group => UmbConstants.PropertyEditors.Groups.RichContent;
 
         public bool IsDeprecated => false;
 
@@ -73,15 +103,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(
-            _contentService,
-            _contentTypeService,
-            _utility,
-            _ioHelper,
-            _shortStringHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(_contentService, _contentTypeService, _utility, _shortStringHelper, _ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
+#if NET472
+            return new ContentBlocksDataValueEditor(
+                _contentTypeService,
+                _dataTypeService,
+                _propertyEditors.Value)
+#else
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
@@ -89,6 +120,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
+#endif
             {
                 ValueType = ValueTypes.Json,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
@@ -97,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor(object configuration)
         {
-            var view = DataEditorViewPath;
+            var view = default(string);
 
             if (configuration is Dictionary<string, object> config)
             {
@@ -116,11 +148,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (displayMode != null)
                     {
-                        view = _ioHelper.ResolveRelativeOrVirtualUrl(displayMode.View);
+                        view = displayMode.View;
                     }
                 }
             }
 
+#if NET472
+            return new ContentBlocksDataValueEditor(_contentTypeService, _dataTypeService, _propertyEditors.Value)
+#else
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
@@ -128,10 +163,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
+#endif
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(view),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

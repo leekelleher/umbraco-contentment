@@ -3,12 +3,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472 == false
 using System;
 using System.Reflection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.Trees;
+using Umbraco.Cms.Web.BackOffice.Trees;
 
-namespace Umbraco.Cms.Web.BackOffice.Trees
+namespace Umbraco.Extensions
 {
     internal static class TreeCollectionExtensions
     {
@@ -18,7 +20,7 @@ namespace Umbraco.Cms.Web.BackOffice.Trees
             var controllerType = typeof(TController);
             var type = typeof(BuilderCollectionBase<Tree>);
 
-            // https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0-beta004/src/Umbraco.Core/Composing/BuilderCollectionBase.cs#L13
+            // https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Core/Composing/BuilderCollectionBase.cs#L14
             var field = type.GetField("_items", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
             if (field == null)
             {
@@ -57,3 +59,5 @@ namespace Umbraco.Cms.Web.BackOffice.Trees
         }
     }
 }
+
+#endif

@@ -6,8 +6,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.PropertyEditors;
+#else
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -32,9 +37,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             return CultureInfo
                 .GetCultures(CultureTypes.SpecificCultures)
                 .Select(x => new RegionInfo(x.Name))
-                .Where(x => x.GeoId != 39070) // Excludes "World/001"
                 .DistinctBy(x => x.ISOCurrencySymbol)
-                .OrderBy(x => x.CurrencyEnglishName)
+                .OrderBy(x => x.ISOCurrencySymbol)
                 .Select(x => new DataListItem
                 {
                     Name = x.CurrencyEnglishName,

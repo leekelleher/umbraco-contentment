@@ -32,7 +32,7 @@
                             <div class="umb-button">
                                 <a href="https://our.umbraco.com/packages/backoffice-extensions/contentment/" target="_blank" rel="noopener" class="btn umb-button__button btn-success umb-button--m" ng-click="vm.vote(true)">
                                     <span class="umb-button__content">
-                                        <umb-icon icon="icon-fa fa-lg fa-thumbs-up" class="umb-button__icon mr0"></umb-icon>
+                                        <umb-icon icon="icon-fa fa-thumbs-up" class="umb-button__icon mr0"></umb-icon>
                                         <span class="sr-only">Vote up</span>
                                     </span>
                                 </a>
@@ -40,7 +40,7 @@
                             <div class="umb-button">
                                 <a href="#" class="btn umb-button__button btn-danger umb-button--m" ng-click="vm.vote(false)" prevent-default>
                                     <span class="umb-button__content">
-                                        <umb-icon icon="icon-fa fa-lg fa-thumbs-down fa-flip-horizontal" class="umb-button__icon mr0"></umb-icon>
+                                        <umb-icon icon="icon-fa fa-thumbs-down fa-flip-horizontal" class="umb-button__icon mr0"></umb-icon>
                                         <span class="sr-only">Vote down</span>
                                     </span>
                                 </a>
@@ -69,15 +69,7 @@
                             <div ng-if="vm.telemetryEnabled === true">
                                 <h5 class="mt0">Telemetry</h5>
                                 <p>By default, the package sends telemetry data about which property-editors are being used (from Contentment only). For more details about the data being captured and transparency on the analysis, please visit <a href="https://leekelleher.com/umbraco/contentment/telemetry/" target="_blank" rel="noopener"><strong>leekelleher.com/umbraco/contentment/telemetry</strong></a>.</p>
-                                <p>If you would prefer to opt-out and disable the telemetry feature, you can set an option to do so.</p>
-                                <div class="umb-readonlyvalue">
-                                    <details class="well well-small">
-                                        <summary><strong>Configuration to disable Contentment telemetry</strong></summary>
-                                        <p>In your <code>appsettings.json</code> file, add this option inside the <code>"Umbraco"</code> section, add the following.</p>
-                                        <umb-code-snippet language="vm.codeSnippetLanguage">{{vm.disableTelemetryCode | json}}</umb-code-snippet>
-                                        <p>If you prefer to use a strongly-typed configuration in C# code, you can do this with the <code>.AddContentment(opts => { opts.DisableTelemetry = true; })</code> extension method in your <code>Startup.cs</code> file <code>ConfigureServices()</code> method.</p>
-                                    </details>
-                                </div>
+                                <p>If you would prefer to opt-out and disable the telemetry feature, you can <a href="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/telemetry.md#disable-telemetry-feature" target="_blank" rel="noopener" ><strong>find a code snippet</strong> on the telemetry documentation page</a>.</p>
                             </div>
                             <div ng-if="vm.telemetryEnabled === false">
                                 <h5 class="mt0">Telemetry</h5>
@@ -88,15 +80,7 @@
 
                             <div>
                                 <h5 class="mt0">Tree dashboard</h5>
-                                <p>If you would like to remove this page and tree item from the Settings section, you can set an option to do so.</p>
-                                <div class="umb-readonlyvalue">
-                                    <details class="well well-small">
-                                        <summary><strong>Configuration to disable Contentment tree dashboard</strong></summary>
-                                        <p>In your <code>appsettings.json</code> file, add this option inside the <code>"Umbraco"</code> section, add the following.</p>
-                                        <umb-code-snippet language="vm.codeSnippetLanguage">{{vm.disableTreeCode | json}}</umb-code-snippet>
-                                        <p>If you prefer to use a strongly-typed configuration in C# code, you can do this with the <code>.AddContentment(opts => { opts.DisableTree = true; })</code> extension method in your <code>Startup.cs</code> file <code>ConfigureServices()</code> method.</p>
-                                    </details>
-                                </div>
+                                <p>If you would like to remove this page and tree item from the Settings section, you can <a href="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/tree-dashboard.md#disable-tree-dashboard" target="_blank" rel="noopener" ><strong>find a code snippet</strong> on the tree dashboard documentation page</a>.</p>
                             </div>
 
                         </umb-box-content>

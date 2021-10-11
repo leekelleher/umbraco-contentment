@@ -1,5 +1,5 @@
 # This .editorconfig has been taken from Umbraco CMS, licensed under MIT.
-# https://github.com/umbraco/Umbraco-CMS/blob/v9/dev/.editorconfig
+# https://raw.githubusercontent.com/umbraco/Umbraco-CMS/v9/dev/.editorconfig
 
 # top-most EditorConfig file
 root = true

@@ -4,6 +4,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 param(
+    [string]$TargetFramework,
     [string]$TargetDir,
     [string]$ProjectName,
     [string]$ProjectDir,
@@ -16,6 +17,7 @@ $rootDir = "${ProjectDir}..\..";
 Write-Host $ConfigurationName;
 
 if ($ConfigurationName -eq 'Debug') {
+    Write-Host $TargetFramework;
     Write-Host $TargetDir;
     Write-Host $ProjectName;
     Write-Host $ProjectDir;
@@ -28,6 +30,14 @@ $targetFolder = "${rootDir}\build\assets";
 if (Test-Path -Path $targetFolder) {
     Remove-Item -Recurse -Force $targetFolder;
 }
+
+# Copy DLL / PDB
+$binFolder = "${targetFolder}\bin";
+if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
+Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net472\${ProjectName}.*" -Destination $binFolder;
+$net50Folder = "${targetFolder}\net50";
+if (!(Test-Path -Path $net50Folder)) {New-Item -Path $net50Folder -Type Directory;}
+Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net50\${ProjectName}.*" -Destination $net50Folder;
 
 # Copy package front-end files assets
 $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
@@ -51,21 +61,17 @@ foreach($razorFile in $razorFiles){
     [IO.File]::WriteAllLines("${pluginFolder}\render\$($razorFile.Name)", $contents);
 }
 
-# CSS (Property Editors) - Copy
-$cssFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.css;
-foreach($cssFile in $cssFiles){
-    $contents = Get-Content -Raw -Path $cssFile.FullName;
-    [IO.File]::WriteAllLines("${pluginFolder}\editors\$($cssFile.Name)", $contents);
-}
+# CSS - Bundle & Minify
+$targetCssPath = "${pluginFolder}contentment.css";
+Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
+& "${rootDir}\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
-# JS (Property Editors) - Copy
-$jsFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.js;
-foreach($jsFile in $jsFiles){
-    $contents = Get-Content -Raw -Path $jsFile.FullName;
-    [IO.File]::WriteAllLines("${pluginFolder}\editors\$($jsFile.Name)", $contents);
-}
+# JS - Bundle & Minify
+$targetJsPath = "${pluginFolder}contentment.js";
+Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -Path $targetJsPath;
+& "${rootDir}\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath
 
 # In debug mode, copy the assets over to the local dev website
 if ($ConfigurationName -eq 'Debug' -AND -NOT($TargetDevWebsite -eq '')) {
-    Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite;
+    Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite | Where { $_.FullName -NotLike "*\net50\*" };
 }

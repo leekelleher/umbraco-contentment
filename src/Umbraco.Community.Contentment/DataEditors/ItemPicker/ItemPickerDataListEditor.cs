@@ -4,10 +4,17 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Cms.Core;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using UmbConstants = Umbraco.Core.Constants;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -15,6 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
+
         private readonly IIOHelper _ioHelper;
 
         public ItemPickerDataListEditor(IIOHelper ioHelper)
@@ -111,7 +119,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "listType", "list" },
-            { "defaultIcon", Cms.Core.Constants.Icons.DefaultIcon },
+            { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };

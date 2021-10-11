@@ -3,20 +3,20 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472 == false
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Notifications
 {
-    internal sealed class ContentmentServerVariablesParsing : INotificationHandler<ServerVariablesParsingNotification>
+    internal sealed class ContentmentServerVariablesParsingNotification : INotificationHandler<ServerVariablesParsingNotification>
     {
         private readonly ContentmentSettings _contentmentSettings;
 
-        public ContentmentServerVariablesParsing(IOptions<ContentmentSettings> contentmentSettings)
+        public ContentmentServerVariablesParsingNotification(IOptions<ContentmentSettings> contentmentSettings)
         {
             _contentmentSettings = contentmentSettings.Value;
         }
@@ -36,3 +36,4 @@ namespace Umbraco.Community.Contentment.Notifications
         }
     }
 }
+#endif

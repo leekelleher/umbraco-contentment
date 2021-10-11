@@ -10,20 +10,42 @@ using System.Net;
 using System.Net.Http;
 using System.Xml;
 using System.Xml.XPath;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.Hosting;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+using Umbraco.Core.PropertyEditors;
+#else
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class XmlDataListSource : IDataListSource
     {
-        private readonly ILogger<XmlDataListSource> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IIOHelper _ioHelper;
+
+#if NET472
+        private readonly ILogger _logger;
+
+        public XmlDataListSource(
+            ILogger logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
+        {
+            _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+        }
+#else
+        private readonly ILogger<XmlDataListSource> _logger;
 
         public XmlDataListSource(
             ILogger<XmlDataListSource> logger,
@@ -34,6 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _hostingEnvironment = hostingEnvironment;
             _ioHelper = ioHelper;
         }
+#endif
 
         public string Name => "XML Data";
 
@@ -130,15 +153,27 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (HttpRequestException ex)
             {
+#if NET472
+                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+#else
                 _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+#endif
             }
             catch (WebException ex)
             {
+#if NET472
+                _logger.Error<XmlDataListSource>(ex, $"Unable to retrieve data from '{path}'.");
+#else
                 _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+#endif
             }
             catch (XmlException ex)
             {
+#if NET472
+                _logger.Error<XmlDataListSource>(ex, "Unable to load XML data.");
+#else
                 _logger.LogError(ex, $"Unable to load XML data from '{path}'.");
+#endif
             }
 
             if (doc == null)
@@ -172,7 +207,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (nodes.Count == 0)
             {
+#if NET472
+                _logger.Warn<XmlDataListSource>($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+#else
                 _logger.LogWarning($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
+#endif
                 return Enumerable.Empty<DataListItem>();
             }
 
@@ -212,12 +251,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (name == null)
                     {
+#if NET472
+                        _logger.Warn<XmlDataListSource>($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
+#else
                         _logger.LogWarning($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
+#endif
                     }
 
                     if (value == null)
                     {
+#if NET472
+                        _logger.Warn<XmlDataListSource>($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
+#else
                         _logger.LogWarning($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
+#endif
                     }
                 }
             }

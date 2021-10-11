@@ -6,11 +6,17 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -19,6 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly ConfigurationEditorUtility _utility;
 
         public TextInputConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
+
             : base()
         {
             _utility = utility;

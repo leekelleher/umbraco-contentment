@@ -7,20 +7,42 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+#if NET472
+using Umbraco.Core;
+using Umbraco.Core.Hosting;
+using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
+using Umbraco.Core.PropertyEditors;
+#else
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TextDelimitedDataListSource : IDataListSource
     {
-        private readonly ILogger<TextDelimitedDataListSource> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IIOHelper _ioHelper;
+
+#if NET472
+        private readonly ILogger _logger;
+
+        public TextDelimitedDataListSource(
+            ILogger logger,
+            IHostingEnvironment hostingEnvironment,
+            IIOHelper ioHelper)
+        {
+            _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _ioHelper = ioHelper;
+        }
+#else
+        private readonly ILogger<TextDelimitedDataListSource> _logger;
 
         public TextDelimitedDataListSource(
             ILogger<TextDelimitedDataListSource> logger,
@@ -31,6 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _hostingEnvironment = hostingEnvironment;
             _ioHelper = ioHelper;
         }
+#endif
 
         public string Name => "Text Delimited Data";
 
@@ -195,7 +218,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
+#if NET472
+                    _logger.Error<TextDelimitedDataListSource>(ex, "Unable to fetch remote data.");
+#else
                     _logger.LogError(ex, "Unable to fetch remote data.");
+#endif
                 }
             }
             else
@@ -208,7 +235,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
+#if NET472
+                    _logger.Warn<TextDelimitedDataListSource>("Unable to find the local file path.");
+#else
                     _logger.LogWarning("Unable to find the local file path.");
+#endif
                 }
             }
 

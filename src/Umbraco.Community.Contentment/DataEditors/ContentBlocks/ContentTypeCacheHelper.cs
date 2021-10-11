@@ -8,10 +8,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
+using System;
+using System.Collections.Concurrent;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+#else
 using System;
 using System.Collections.Concurrent;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Services;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

@@ -85,10 +85,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                 }
             };
 
-            vm.codeSnippetLanguage = "JSON";
             vm.telemetryEnabled = config.telemetry === true;
-            vm.disableTelemetryCode = { "Umbraco": { "Contentment": { "DisableTelemetry": true } } };
-            vm.disableTreeCode = { "Umbraco": { "Contentment": { "DisableTree": true } } };
         };
 
         init();
