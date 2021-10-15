@@ -135,7 +135,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
             {
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
-                try { return Enum.Parse(type, value, true); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+                try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
 
                 // If the value doesn't match the Enum field, then it is most likely set with `DataListItemAttribute.Value`.
                 var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
