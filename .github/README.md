@@ -50,7 +50,7 @@ _**Please note...**_
 - v2.x has been developed against **Umbraco v8.14.0** and it will still work on current Umbraco v8.x releases.
 - v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
 
-With Contentment v3.x (Umbraco v9.0 / .NET 5), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For previous Contentment versions, the package can be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories, or build manually from the source-code:
+With Contentment v3.x on Umbraco v9.0 (.NET 5), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
 
 ##### NuGet package repository
 
@@ -58,9 +58,13 @@ To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Con
 
     PM> Install-Package Our.Umbraco.Community.Contentment
 
+...or if you are using the `dotnet` command line interface?
+
+    dotnet add package Our.Umbraco.Community.Contentment
+
 ##### Our Umbraco package repository
 
-For Contentment v1.x and v2.x, you can install from Our Umbraco, please download the package from:
+If you are using Umbraco v8.x, and prefer to install Contentment from the backoffice, the package can be downloaded from the Our Umbraco package repository:
 
 > <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
 
@@ -69,6 +73,7 @@ For Contentment v1.x and v2.x, you can install from Our Umbraco, please download
 - **Data List**
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
+  - With Umbraco v9 (Contentment v3), SQL data source does not support querying SQL CE. [See #172 for details.]()
 
 
 ### Documentation
@@ -135,7 +140,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1050+ hours</b> (between 2019-03-13 to 2021-07-09)</summary>
+<summary>Current development effort: <b>1097+ hours</b> (between 2019-03-13 to 2021-10-15)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
