@@ -10,14 +10,14 @@ $nugetPackageId = 'Our.Umbraco.Community.Contentment';
 $projectNamespace = 'Umbraco.Community.Contentment';
 $packageName = 'Contentment';
 $nugetTitle = "${packageName} for Umbraco";
-$packageDescription = "${packageName}, a collection of components for Umbraco 8.";
+$packageDescription = "${packageName}, a collection of components for Umbraco.";
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
 $iconUrl = 'https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png';
 $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = 8,14,0;
+$minUmbracoVersion = 8,17,0;
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 $tags = "umbraco";
 
@@ -81,7 +81,7 @@ $umbracoPackageXml.umbPackage.info.readme."#cdata-section" = $packageDescription
 
 $filesXml = $umbracoPackageXml.CreateElement("files");
 
-$assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse;
+$assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse | Where { $_.FullName -NotLike "*\net50\*" };
 foreach($assetFile in $assetFiles){
 
     $hash = Get-FileHash -Path $assetFile.FullName -Algorithm MD5;
@@ -106,8 +106,9 @@ Compress-Archive -Path "${umbFolder}\*" -DestinationPath "${artifactsFolder}\Con
 # Populate the NuGet package manifest
 
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
-& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;minUmbracoVersion=$($minUmbracoVersion[0]).$($minUmbracoVersion[1]).$($minUmbracoVersion[2]);repositoryUrl=$packageUrl;"
-& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;minUmbracoVersion=$($minUmbracoVersion[0]).$($minUmbracoVersion[1]).$($minUmbracoVersion[2]);repositoryUrl=$packageUrl;"
+Copy-Item -Path "${buildFolder}\_nuget-post-install.targets" -Destination "${assetsFolder}\${nugetPackageId}.targets";
+& $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders

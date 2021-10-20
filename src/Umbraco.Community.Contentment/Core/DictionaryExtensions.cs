@@ -5,7 +5,11 @@
 
 using System.Collections.Generic;
 
+#if NET472
 namespace Umbraco.Core
+#else
+namespace Umbraco.Extensions
+#endif
 {
     internal static class DictionaryExtensions
     {
@@ -13,6 +17,11 @@ namespace Umbraco.Core
         {
             if (config.TryGetValue(key, out var tmp) == true)
             {
+                if (tmp == null)
+                {
+                    return defaultValue;
+                }
+
                 if (tmp is TValueOut value)
                 {
                     return value;

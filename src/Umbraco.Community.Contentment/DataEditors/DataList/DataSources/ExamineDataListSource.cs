@@ -6,23 +6,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using Examine;
-using Examine.LuceneEngine.Providers;
 using Examine.Search;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Examine;
+using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
+using UmbracoExamineFieldNames = Umbraco.Examine.UmbracoExamineIndex;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Infrastructure.Examine;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIOHelper _ioHelper;
 
         private const string _defaultNameField = "nodeName";
-        private const string _defaultValueField = UmbracoExamineIndex.NodeKeyFieldName;
-        private const string _defaultIconField = UmbracoExamineIndex.IconFieldName;
+        private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
+        private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
         private readonly Dictionary<string, object> _examineFieldConfig = new Dictionary<string, object>
         {
@@ -30,14 +41,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Constants.Conventions.ConfigurationFieldAliases.Items,
                 new[]
                 {
-                    LuceneIndex.CategoryFieldName,
-                    LuceneIndex.ItemIdFieldName,
-                    LuceneIndex.ItemTypeFieldName,
-                    UmbracoExamineIndex.IconFieldName,
-                    UmbracoExamineIndex.IndexPathFieldName,
-                    UmbracoExamineIndex.NodeKeyFieldName,
-                    UmbracoExamineIndex.PublishedFieldName,
-                    UmbracoExamineIndex.UmbracoFileFieldName,
+                    UmbracoExamineFieldNames.CategoryFieldName,
+                    UmbracoExamineFieldNames.ItemIdFieldName,
+                    UmbracoExamineFieldNames.ItemTypeFieldName,
+                    UmbracoExamineFieldNames.IconFieldName,
+                    UmbracoExamineFieldNames.IndexPathFieldName,
+                    UmbracoExamineFieldNames.NodeKeyFieldName,
+                    UmbracoExamineFieldNames.PublishedFieldName,
+                    UmbracoExamineFieldNames.UmbracoFileFieldName,
                     "createDate",
                     "creatorID",
                     "creatorName",
@@ -57,9 +68,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public ExamineDataListSource(IExamineManager examineManager)
+        public ExamineDataListSource(IExamineManager examineManager, IShortStringHelper shortStringHelper, IIOHelper ioHelper)
         {
             _examineManager = examineManager;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Examine Query";
@@ -79,14 +92,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "examineIndex",
                 Name = "Examine Index",
                 Description = "Select the Examine index.",
-                View = DropdownListDataListEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem { Name = x.Name.SplitPascalCasing(), Value = x.Name }) },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem
+                        {
+                            Name = x.Name.SplitPascalCasing(_shortStringHelper),
+                            Value = x.Name
+                        }) },
                 }
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),
@@ -95,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.",
-                View = CodeEditorDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "text" },
@@ -108,7 +125,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -116,7 +133,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -124,7 +141,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
             new ConfigurationField
@@ -132,7 +149,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                View =  IOHelper.ResolveUrl(TextInputDataEditor.DataEditorViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
         };
@@ -161,7 +178,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var descriptionField = config.GetValueAs("descriptionField", string.Empty);
 
                     var results = index
+#if NET472
                         .GetSearcher()
+#else
+                        .Searcher
+#endif
                         .CreateQuery()
                         .NativeQuery(luceneQuery)
                         // NOTE: For any `OrderBy` complaints, refer to: https://github.com/Shazwazza/Examine/issues/126

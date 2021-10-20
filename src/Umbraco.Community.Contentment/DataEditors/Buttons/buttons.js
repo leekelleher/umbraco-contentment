@@ -87,6 +87,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function select(item) {
 
+            // TODO: [LK] Stop mutating the `items`. Have a `selectedValues` lookup.
+
             item.selected = item.selected === false;
             $scope.model.value = [];
 

@@ -4,7 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -12,12 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Notes = "notes";
 
-        public NotesConfigurationField(string notes, bool hideLabel = true)
+        public NotesConfigurationField(IIOHelper ioHelper, string notes, bool hideLabel = true)
             : base()
         {
             Key = Notes;
             Name = nameof(Notes);
-            View = NotesDataEditor.DataEditorViewPath;
+            View = ioHelper.ResolveRelativeOrVirtualUrl(NotesDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object> { { Notes, notes } };
             HideLabel = hideLabel;
         }

@@ -4,9 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -14,7 +20,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
 
-        public string Name => "Templated List";
+        private readonly IIOHelper _ioHelper;
+
+        public TemplatedListDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
+    public string Name => "Templated List";
 
         public string Description => "Select items from a list rendered with custom markup.";
 
@@ -24,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with your custom template?</strong></summary>
 <p>Your custom template will be used to display an individual item from your configured data source.</p>
 <p>The data for the item will be in the following format:</p>
@@ -47,7 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "template",
                 Name = "Template",
-                View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "razor" },
@@ -63,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Select to enable picking multiple items.",
                 View = "boolean",
             },
-            new HtmlAttributesConfigurationField(),
+            new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object> DefaultConfig => default;

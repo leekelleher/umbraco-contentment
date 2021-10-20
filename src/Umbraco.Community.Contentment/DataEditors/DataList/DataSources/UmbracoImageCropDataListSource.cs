@@ -5,21 +5,36 @@
 
 using System.Collections.Generic;
 using System.Linq;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoImageCropDataListSource : IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;
+        private readonly IIOHelper _ioHelper;
 
-        public UmbracoImageCropDataListSource(IDataTypeService dataTypeService)
+        public UmbracoImageCropDataListSource(
+            IDataTypeService dataTypeService,
+            IIOHelper ioHelper)
         {
             _dataTypeService = dataTypeService;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Image Crops";
@@ -50,7 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "imageCropper",
                         Name = "Image Cropper",
                         Description = "Select a Data Type that uses the Image Cropper.",
-                        View = RadioButtonListDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
@@ -71,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (config.TryGetValue("imageCropper", out var obj) == true &&
                 obj is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 return _dataTypeService
                     .GetDataType(udi.Guid)?

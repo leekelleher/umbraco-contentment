@@ -11,19 +11,45 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
+#if NET472
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Strings;
+#else
+using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
     {
-        private readonly ILogger _logger;
+        private readonly IIOHelper _ioHelper;
+        private readonly IShortStringHelper _shortStringHelper;
 
-        public EnumDataListSource(ILogger logger)
+#if NET472
+        private readonly ILogger _logger;
+#else
+        private readonly ILogger<EnumDataListSource> _logger;
+#endif
+
+        public EnumDataListSource(
+#if NET472
+            ILogger logger,
+#else
+            ILogger<EnumDataListSource> logger,
+#endif
+            IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper)
         {
             _logger = logger;
+            _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
         }
 
         public string Name => ".NET Enumeration";
@@ -45,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enumType",
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
-                View = CascadingDropdownListDataEditor.DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CascadingDropdownListDataEditor.APIs, new[]
@@ -93,7 +119,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Description = attr?.Description ?? attr2?.Description,
                     Disabled = attr?.Disabled ?? false,
                     Icon = attr?.Icon,
-                    Name = attr?.Name ?? field.Name.SplitPascalCasing(),
+                    Name = attr?.Name ?? field.Name.SplitPascalCasing(_shortStringHelper),
                     Value = attr3?.Value ?? attr?.Value ?? field.Name
                 });
             }
@@ -114,11 +140,35 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (enumType?.Length > 1)
                 {
                     var assembly = default(Assembly);
-                    try { assembly = Assembly.Load(enumType[0]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+                    try
+                    {
+                        assembly = Assembly.Load(enumType[0]);
+                    }
+                    catch (Exception ex)
+                    {
+#if NET472
+                        _logger.Error<EnumDataListSource>(ex);
+#else
+                        _logger.LogError(ex, "Unable to load target type.");
+#endif
+                    }
+
                     if (assembly != null)
                     {
                         var type = default(Type);
-                        try { type = assembly.GetType(enumType[1]); } catch (Exception ex) { _logger.Error<EnumDataListSource>(ex); }
+                        try
+                        {
+                            type = assembly.GetType(enumType[1]);
+                        }
+                        catch (Exception ex)
+                        {
+#if NET472
+                            _logger.Error<EnumDataListSource>(ex);
+#else
+                            _logger.LogError(ex, "Unable to retrieve target type.");
+#endif
+                        }
+
                         if (type != null && type.IsEnum == true)
                         {
                             return type;
@@ -149,7 +199,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
+#if NET472
                 _logger.Debug<EnumDataListSource>($"Unable to find value '{value}' in enum '{type.FullName}'.");
+#else
+                _logger.LogDebug($"Unable to find value '{value}' in enum '{type.FullName}'.");
+#endif
             }
 
             return type.GetDefaultValue();

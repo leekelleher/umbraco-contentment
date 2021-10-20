@@ -4,7 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
+using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,7 +19,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string AllowEmpty = "allowEmpty";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
 
-        public string Name => "Dropdown List";
+        private readonly IIOHelper _ioHelper;
+
+        public DropdownListDataListEditor(IIOHelper ioHelper)
+        {
+            _ioHelper = ioHelper;
+        }
+
+    public string Name => "Dropdown List";
 
         public string Description => "Select a single value from a dropdown select list.";
 
@@ -34,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "default", Constants.Values.True }
                 }
             },
-            new HtmlAttributesConfigurationField(),
+            new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>

@@ -4,15 +4,22 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class TemplatedLabelConfigurationEditor : ConfigurationEditor
     {
-        public TemplatedLabelConfigurationEditor()
+        public TemplatedLabelConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             var valueTypes = new[]
@@ -36,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType,
                 Name = "Value type",
                 Description = "Select the value's type. This defines how the underlying value is stored in the database.",
-                View = IOHelper.ResolveUrl(DropdownListDataListEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -44,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new NotesConfigurationField(@"<details class=""well well-small umb-property-editor--limit-width"">
+            Fields.Add(new NotesConfigurationField(ioHelper, @"<details class=""well well-small umb-property-editor--limit-width"">
 <summary><strong>Do you need help with your custom template?</strong></summary>
 <p>Your custom template will be used to display the label on the property from the underlying value.</p>
 <p>If you are familiar with AngularJS template syntax, you can display the value using an expression: e.g. <code ng-non-bindable>{{ model.value }}</code>.</p>
@@ -62,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "notes",
                 Name = "Template",
                 Description = "Enter the AngularJS template to be displayed for the label.",
-                View = IOHelper.ResolveUrl(CodeEditorDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "razor" },

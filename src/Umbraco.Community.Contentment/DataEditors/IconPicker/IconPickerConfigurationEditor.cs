@@ -4,14 +4,20 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+#if NET472
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+#else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class IconPickerConfigurationEditor : ConfigurationEditor
     {
-        public IconPickerConfigurationEditor()
+        public IconPickerConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
             Fields.Add(new ConfigurationField
@@ -19,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon, (for when no icon has been selected).",
-                View = IOHelper.ResolveUrl(IconPickerDataEditor.DataEditorViewPath),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "defaultIcon", string.Empty },

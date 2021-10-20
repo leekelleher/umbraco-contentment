@@ -7,11 +7,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+#if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using UmbConstants = Umbraco.Core.Constants;
+#else
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -19,12 +28,17 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
+        private readonly IIOHelper _ioHelper;
         private Dictionary<string, string> _icons;
 
-        public UmbracoContentPropertiesDataListSource(IContentTypeService contentTypeService, Lazy<PropertyEditorCollection> dataEditors)
+        public UmbracoContentPropertiesDataListSource(
+            IContentTypeService contentTypeService,
+            Lazy<PropertyEditorCollection> dataEditors,
+            IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _dataEditors = dataEditors;
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content Properties";
@@ -57,13 +71,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "contentType",
                         Name = "Content Type",
                         Description = "Select a Content Type to list the properties from.",
-                        View = ItemPickerDataListEditor.DataEditorViewPath,
+                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
                         Config = new Dictionary<string, object>
                         {
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { "items", items },
                             { "listType", "list" },
-                            { "overlayView", IOHelper.ResolveUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { "overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { "maxItems", 1 },
                         }
                     }
@@ -81,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                GuidUdi.TryParse(str, out var udi) == true)
+                UdiParser.TryParse(str, out GuidUdi udi) == true)
             {
                 var contentType = _contentTypeService.Get(udi.Guid);
                 if (contentType != null)
