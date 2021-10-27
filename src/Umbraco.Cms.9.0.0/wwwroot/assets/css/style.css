@@ -1,0 +1,38 @@
+﻿/* Contentment Demo Website styles */
+
+/* new.css overrides */
+/*:root {
+    --nc-bg-1: #f8fff8;
+    --nc-bg-2: #efe;
+    --nc-bg-3: #8f8;
+    --nc-ac-1: #df0;
+    --nc-ac-tx: #000;
+}*/
+
+/* Style for the Umbraco backoffice link. */
+body > header > p {
+    font-size: small;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+}
+
+/*
+    Additional to new.css - as it doesn't have styles for <footer>.
+    https://github.com/xz/new.css/pull/72
+*/
+body > footer {
+    background: var(--nc-bg-2);
+    border-top: 1px solid var(--nc-bg-3);
+    padding: 2rem calc(50vw - 50%);
+    margin: 2rem calc(0px - (50vw - 50%)) -2rem;
+}
+
+    body > footer > *:first-child {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    body > footer > *:last-child {
+        margin-bottom: 0;
+    }

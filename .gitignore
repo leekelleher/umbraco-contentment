@@ -12,9 +12,12 @@ Thumbs.db
 .vs
 
 artifacts/
+build/__umb/*
 build/assets/
+build/build-push-nuget.ps1
+build/build-push-umb.ps1
 src/packages/*/**
-/tools/*.exe
-/build/__umb/*
-/build/build-push-nuget.ps1
-/build/build-push-umb.ps1
+src/Umbraco.Cms.9.0.0/App_Plugins/*/**
+src/Umbraco.Cms.9.0.0/Views/Partials/[Bb]lock[Ll]ist/*
+src/Umbraco.Cms.9.0.0/Views/Partials/[Gg]rid/*
+tools/*.exe
