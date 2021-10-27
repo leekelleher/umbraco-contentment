@@ -81,7 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _jsonSerializer)
 #endif
             {
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
 
@@ -105,7 +105,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
     }

@@ -84,7 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
             {
                 ValueType = ValueTypes.Integer,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
 
@@ -109,7 +109,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Configuration = configuration,
                 HideLabel = hideLabel,
                 ValueType = ValueTypes.Integer,
-                View = DataEditorViewPath,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
     }
