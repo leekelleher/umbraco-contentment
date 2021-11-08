@@ -45,6 +45,15 @@ namespace Umbraco.Community.Contentment.Notifications
                 return;
             }
 
+            var umbracoId = Guid.TryParse(_globalSettings.Id, out var telemetrySiteIdentifier) == true
+                ? telemetrySiteIdentifier
+                : Guid.Empty;
+
+            if (umbracoId.Equals(Guid.Empty) == true)
+            {
+                return;
+            }
+
             foreach (var entity in notification.SavedEntities)
             {
                 if (entity.EditorAlias.InvariantStartsWith(Constants.Internals.DataEditorAliasPrefix) == true)
@@ -95,10 +104,6 @@ namespace Umbraco.Community.Contentment.Notifications
                                     break;
                             }
                         }
-
-                        var umbracoId = Guid.TryParse(_globalSettings.Id, out var telemetrySiteIdentifier) == true
-                            ? telemetrySiteIdentifier
-                            : Guid.Empty;
 
                         // No identifiable details, just a quick call home.
                         var data = new
