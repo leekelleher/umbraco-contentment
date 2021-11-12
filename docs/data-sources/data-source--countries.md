@@ -4,14 +4,14 @@
 
 ### Data Sources
 
-#### .NET Countries (ISO 3166)
+#### .NET Countries (ISO 3166-1)
 
 All the countries available in the .NET Framework, (as installed on the web server).
 
 
 ##### How to configure the editor?
 
-In your new Data Type, selected the `[Contentment] Data List` option and then the `.NET Countries (ISO 3166)` Data source. You will see the following configuration fields.
+In your new Data Type, selected the `[Contentment] Data List` option and then the `.NET Countries (ISO 3166-1)` Data source. You will see the following configuration fields.
 
 ![Configuration Editor for Data List - empty state](data-source--countries--configuration-editor-01.png)
 
@@ -19,7 +19,7 @@ Please see the [Data List editor page](../editors/data-list.md) for more informa
 
 ##### What is the value's object-type?
 
-The value of the editor will always be the 2 letter ISO code (e.g. UK or US) as a `string` but depending on the `List editor` used, this may be wrapped in a `List<string>`.
+The value of the editor will always be the 2 letter ISO code (ISO 3166-1 alpha-2), e.g. UK or US, as a `string` but depending on the `List editor` used, this may be wrapped in a `List<string>`.
 
 ###### String Value List Editors
 

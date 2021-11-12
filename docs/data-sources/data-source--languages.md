@@ -4,7 +4,7 @@
 
 ### Data Sources
 
-#### .NET Languages (ISO 639)
+#### .NET Languages (ISO 639-1)
 
 All the languages available in the .NET Framework, (as installed on the web server).
 
