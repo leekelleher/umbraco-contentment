@@ -106,7 +106,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
                             Description = x.TemplateId > 0 ? x.Url() : string.Empty,
                             Disabled = x.IsPublished() == false,
-                        });
+                        })
+                        .ToList();
                 }
             }
 
