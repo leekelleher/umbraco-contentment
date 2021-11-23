@@ -52,6 +52,15 @@ namespace Umbraco.Community.Contentment.Telemetry
                 return;
             }
 
+            var umbracoId = Guid.TryParse(_umbracoSettings.BackOffice.Id, out var telemetrySiteIdentifier) == true
+                ? telemetrySiteIdentifier
+                : Guid.Empty;
+
+            if (umbracoId.Equals(Guid.Empty) == true)
+            {
+                return;
+            }
+
             foreach (var entity in e.SavedEntities)
             {
                 if (entity.EditorAlias.InvariantStartsWith(Constants.Internals.DataEditorAliasPrefix) == true)
@@ -102,10 +111,6 @@ namespace Umbraco.Community.Contentment.Telemetry
                                     break;
                             }
                         }
-
-                        var umbracoId = Guid.TryParse(_umbracoSettings.BackOffice.Id, out var telemetrySiteIdentifier) == true
-                            ? telemetrySiteIdentifier
-                            : Guid.Empty;
 
                         // No identifiable details, just a quick call home.
                         var data = new
