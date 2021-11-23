@@ -11,6 +11,8 @@ using Umbraco.Core;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Web;
 #else
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Extensions;
@@ -20,12 +22,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoTagsDataListSource : IDataListSource
     {
+#if NET472
         private readonly Lazy<ITagQuery> _tagQuery;
 
         public UmbracoTagsDataListSource(Lazy<ITagQuery> tagQuery)
         {
             _tagQuery = tagQuery;
         }
+#else
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UmbracoTagsDataListSource(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+#endif
 
         public string Name => "Umbraco Tags";
 
@@ -57,11 +68,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var tagGroup = config.GetValueAs("tagGroup", defaultValue: string.Empty);
 
-            // TODO: [LK:2021-09-20] Error with Tags data source on v9.
-            // FIXME: Cannot resolve scoped service 'Umbraco.Cms.Core.PublishedCache.ITagQuery' from root provider.
+#if NET472
+            return _tagQuery.Value
+#else
+            // NOTE: Code smell. Turns out that `ITagQuery` is scoped, so unable to use it within a singleton.
+            // Otherwise we get an error: `Cannot resolve scoped service 'Umbraco.Cms.Core.PublishedCache.ITagQuery' from root provider.`
+            var tagQuery = _httpContextAccessor.HttpContext.RequestServices.GetRequiredService<ITagQuery>();
 
-            return _tagQuery
-                .Value
+            return tagQuery
+#endif
                 .GetAllTags(tagGroup)
                 .OrderBy(x => x.Text)
                 .Select(x => new DataListItem
