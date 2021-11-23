@@ -64,3 +64,11 @@ It's good to re-evaluate whether certain features are still relevant.
 - Icon Picker editor. The more I think about it, the more I don't see it being relevant as a standalone editor.
   - For internal Umbraco use - yes; For external public (outside Umbraco) use - no.
   - Although the [telemetry stats](https://leekelleher.com/umbraco/contentment/telemetry/) do show some usage of it.
+
+
+## Asset bundling/minification
+
+- Consider replacing Powershell/AjaxMinifier.exe with BundlerMinifier?
+  https://github.com/madskristensen/BundlerMinifier
+  https://blog.elmah.io/how-we-do-bundling-and-minification-in-asp-net-core/
+
