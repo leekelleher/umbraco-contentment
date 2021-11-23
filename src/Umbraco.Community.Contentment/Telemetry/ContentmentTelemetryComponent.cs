@@ -118,7 +118,7 @@ namespace Umbraco.Community.Contentment.Telemetry
                             dataType = entity.Key,
                             editorAlias = entity.EditorAlias.Substring(Constants.Internals.DataEditorAliasPrefix.Length),
                             umbracoId = umbracoId,
-                            umbracoVersion = UmbracoVersion.SemanticVersion.ToString(),
+                            umbracoVersion = UmbracoVersion.SemanticVersion.ToSemanticString(),
                             contentmentVersion = ContentmentVersion.SemanticVersion.ToString(),
                             dataTypeConfig = dataTypeConfig,
                         };
