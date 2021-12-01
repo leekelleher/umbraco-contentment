@@ -74,7 +74,6 @@ If you are using Umbraco v8.x, and prefer to install Contentment from the backof
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
   - With Umbraco v9 (Contentment v3), SQL data source does not support querying SQL CE. [See #172 for details.](https://github.com/leekelleher/umbraco-contentment/issues/172)
-  - With Umbraco v9, (Contentment v3), Umbraco Tags data source throws a `Cannot resolve scoped service` error. [See #179 for details.](https://github.com/leekelleher/umbraco-contentment/issues/179)
 
 
 ### Documentation
@@ -141,7 +140,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1105+ hours</b> (between 2019-03-13 to 2021-10-25)</summary>
+<summary>Current development effort: <b>1120+ hours</b> (between 2019-03-13 to 2021-12-01)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
