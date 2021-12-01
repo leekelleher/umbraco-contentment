@@ -65,7 +65,7 @@ Property Editors are:
 
 ### v3.0
 
-- _Under active development!_ [See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105) A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0.
+- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
 ### v3.1
 
@@ -79,5 +79,5 @@ _Who knows?!_ `¯\_(ツ)_/¯`
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
-**There are [plenty of ideas](IDEAS.md)!**
+**I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
 
