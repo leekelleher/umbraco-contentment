@@ -47,3 +47,34 @@ angular.module("umbraco.directives.html").directive("lkBindHtmlTemplate", [
         };
     }
 ]);
+
+angular.module("umbraco.directives.html").directive("lkHidePropertyGroup", [
+    function () {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                if (attrs.lkHidePropertyGroup === "true") {
+
+                    /* Copyright © 2020 Perplex Digital
+                     * Parts of this Source Code has been derived from Perplex.ContentBlocks.
+                     * https://github.com/PerplexDigital/Perplex.ContentBlocks/blob/v2.1.0/src/Perplex.ContentBlocks/App_Plugins/Perplex.ContentBlocks/perplex.content-blocks.controller.js#L1137-L1156
+                     * Modified under the permissions of the MIT License.
+                     * Modifications are licensed under the Mozilla Public License. */
+                    var propertyContainer = element.closest(".umb-property-editor");
+                    var isNestedProperty = propertyContainer.parent().closest(".umb-property-editor").length > 0;
+                    if (isNestedProperty) {
+                        // NOTE: Do not hide the containing property group if we are nested in some other property editor like NestedContent.
+                        return;
+                    }
+
+                    // Starting from Umbraco 8.17 (and 9.0) it is possible to put properties in tabs again and not in a group at all. So we check for either.
+                    var container = element.closest(".umb-group-panel,.umb-box");
+                    if (container) {
+                        container.addClass("umb-group-panel--hide");
+                    }
+
+                }
+            }
+        };
+    }
+]);
