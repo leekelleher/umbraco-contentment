@@ -12,6 +12,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             enableDevMode: 0,
+            hidePropertyGroup: 0
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -28,6 +29,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     }
                 }]);
             }
+
+            vm.hidePropertyGroup = Object.toBoolean(config.hidePropertyGroup);
 
         };
 

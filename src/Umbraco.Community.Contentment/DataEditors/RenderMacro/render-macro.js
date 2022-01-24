@@ -14,6 +14,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             return;
         }
 
+        var defaultConfig = {
+            hidePropertyGroup: 0
+        };
+        var config = Object.assign({}, defaultConfig, $scope.model.config);
+
         // console.log("render-macro.model", $scope.model);
 
         var vm = this;
@@ -58,6 +63,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.loading = false;
 
             }
+
+            vm.hidePropertyGroup = Object.toBoolean(config.hidePropertyGroup);
+
         };
 
         init();

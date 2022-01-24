@@ -79,6 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
 
             Fields.Add(new HideLabelConfigurationField());
+            Fields.Add(new HidePropertyGroupConfigurationField());
             Fields.Add(new EnableDevModeConfigurationField());
         }
     }
