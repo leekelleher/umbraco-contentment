@@ -118,6 +118,14 @@ To aid the preview, when using the `ContentBlockPreviewModel` declaration, there
 
 If you are using the `UmbracoViewPage` declaration, the additional properties are available on the `ViewData` object: `@ViewData["elementIndex"]`, `@ViewData["elementIcon"]`, and `@ViewData["contentIcon"]`.
 
+You can add a custom stylesheet to the backoffice to 'style' your block previews, by adding a folder in /app_plugins/ called 'ContentBlockStyles' and adding a 'package.manifest' file in there with the following:
+
+{
+    "css": [ "~/App_Plugins/ContentmentBlockStyles/mycustomblockstylesheet.css" ]
+}
+
+You can then add your mycustomblockstylessheet.css file in there with your custom stylings. (Note these will effect the entire backoffice!)
+
 > **Note:** The preview feature **does not work** on a freshly created new unsaved page. This is because the preview has no context of the page itself.
 
 
