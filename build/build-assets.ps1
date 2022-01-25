@@ -44,6 +44,8 @@ $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}
 Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse -Destination "${pluginFolder}";
 
+# // TODO: Update version number in package.manifest file. [LK]
+
 # HTML (Property Editors) - Copy and Minify (or just remove comments)
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
 foreach($htmlFile in $htmlFiles){
