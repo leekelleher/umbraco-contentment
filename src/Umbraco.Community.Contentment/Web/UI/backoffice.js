@@ -5,9 +5,8 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Controller", [
     "$scope",
-    "$window",
     "navigationService",
-    function ($scope, $window, navigationService) {
+    function ($scope, navigationService) {
 
         var vm = this;
 
@@ -56,11 +55,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                     url: "https://opensource.org/licenses/MPL-2.0"
                 }
             ];
-
-            vm.subscribe = function ($event) {
-                $window.open("https://tinyletter.com/umbraco-contentment", "newsletterWindow", "scrollbars=yes,width=840,height=640");
-                return true;
-            };
 
             vm.vote = function (x) {
                 if (x === false && !vm.nggyu) {

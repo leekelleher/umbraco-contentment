@@ -50,19 +50,6 @@
                     </umb-box>
 
                     <umb-box>
-                        <umb-box-header title="Do you want to stay up to date with Contentment?"
-                                        description="Sign up for my newsletter about latest Contentment package releases and community news.">
-                            <umb-button action="vm.subscribe()"
-                                        button-style="action"
-                                        icon="icon-fa fa-envelope mr2"
-                                        label="Sign up"
-                                        size="m"
-                                        type="button">
-                            </umb-button>
-                        </umb-box-header>
-                    </umb-box>
-
-                    <umb-box>
                         <umb-box-header title="Feature options"></umb-box-header>
                         <umb-box-content>
 
@@ -131,17 +118,6 @@
                                         <div class="umb-node-preview__description" ng-bind="item.description"></div>
                                     </div>
                                 </div>
-                            </div>
-                        </umb-box-content>
-                    </umb-box>
-
-                    <umb-box>
-                        <umb-box-content>
-                            <div class="text-center">
-                                <a href="https://umbrellainc.co.uk/" target="_blank" rel="noopener">
-                                    <img alt="Umbrella logo" src="data:image/png;base64,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" />
-                                </a>
-                                <small><a href="https://umbrellainc.co.uk/" target="_blank" rel="noopener">Development supported by <strong>Umbrella</strong>.</a></small>
                             </div>
                         </umb-box-content>
                     </umb-box>
