@@ -27,6 +27,10 @@
   e.g. similar to https://our.umbraco.com/packages/backoffice-extensions/multilanguage-textbox/
   Could be useful for social networks, e.g. facebook, twitter links.
 
+- Editor Note
+  https://github.com/leekelleher/umbraco-contentment/discussions/187
+  https://our.umbraco.com/packages/backoffice-extensions/informative-label/
+
 
 ### Internally used editors
 
