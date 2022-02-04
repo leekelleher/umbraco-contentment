@@ -6,6 +6,10 @@
 @section body
 {
     <h1>@Model.Name</h1>
+
+    <h3>Quick test...</h3>
+    <p><code>@Model.CustomValueConverter</code></p>
+
     <h3>@nameof(Model.Properties)</h3>
     @foreach (var property in Model.Properties)
     {
