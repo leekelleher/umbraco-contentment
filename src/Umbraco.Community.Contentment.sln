@@ -93,6 +93,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Sources", "Data Source
 		..\docs\data-sources\data-source--umbraco-member-group.md = ..\docs\data-sources\data-source--umbraco-member-group.md
 		..\docs\data-sources\data-source--umbraco-members.md = ..\docs\data-sources\data-source--umbraco-members.md
 		..\docs\data-sources\data-source--umbraco-tags.md = ..\docs\data-sources\data-source--umbraco-tags.md
+		..\docs\data-sources\data-source--umbraco-user-groups.md = ..\docs\data-sources\data-source--umbraco-user-groups.md
 		..\docs\data-sources\data-source--user-defined.md = ..\docs\data-sources\data-source--user-defined.md
 		..\docs\data-sources\data-source--xml-sitemap-change-frequency.md = ..\docs\data-sources\data-source--xml-sitemap-change-frequency.md
 		..\docs\data-sources\data-source--xml-sitemap-priority.md = ..\docs\data-sources\data-source--xml-sitemap-priority.md
