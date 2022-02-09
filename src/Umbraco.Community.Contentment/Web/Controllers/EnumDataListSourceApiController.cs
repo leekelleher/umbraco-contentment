@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Umbraco.Community.Contentment.DataEditors;
 #if NET472
@@ -43,16 +44,19 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
+#if NET472
             const string App_Code = "App_Code";
+#endif
 
-            var options = new SortedDictionary<string, DataListItem>();
+            var options = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             if (assemblies?.Length > 0)
             {
                 foreach (var assembly in assemblies)
                 {
-                    if (options.ContainsKey(assembly.FullName) == true || assembly.IsDynamic == true)
+                    var assemblyName = assembly.GetName();
+                    if (options.Contains(assemblyName.Name) == true || assembly.IsDynamic == true)
                     {
                         continue;
                     }
@@ -81,19 +85,20 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                         continue;
                     }
 
-                    if (assembly.FullName.StartsWith(App_Code) == true && options.ContainsKey(App_Code) == false)
+#if NET472
+                    if (assembly.FullName.StartsWith(App_Code) == true && options.Contains(App_Code) == false)
                     {
-                        options.Add(App_Code, new DataListItem { Name = App_Code, Value = App_Code });
+                        options.Add(App_Code);
                     }
                     else
+#endif
                     {
-                        var assemblyName = assembly.GetName();
-                        options.Add(assemblyName.FullName, new DataListItem { Name = assemblyName.Name, Value = assemblyName.FullName });
+                        options.Add(assemblyName.Name);
                     }
                 }
             }
 
-            return options.Values;
+            return options.Select(x => new DataListItem { Name = x, Value = x });
         }
 
         [HttpGet]
