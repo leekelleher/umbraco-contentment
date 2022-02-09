@@ -6,15 +6,15 @@
 
 #### Umbraco Tags
 
-Populate the data source using already defined tags.
+This data-source uses tags that have already been defined in Umbraco content to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the Umbraco Tags data-source has one option, to enter a **Tag Group** to filter the tags that are listed. If left empty, then all tags will be listed.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the  Umbraco Tags data-source item is a `string`.
 
