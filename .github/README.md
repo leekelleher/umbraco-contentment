@@ -68,20 +68,26 @@ If you are using Umbraco v8.x, and prefer to install Contentment from the backof
 
 > <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
 
+
+#### Demo website
+
+[A demo website is available for testing purposes.](src/Umbraco.Cms.9.0.0/README.md)
+
+
+### Documentation
+
+[Documentation for each of the components - with screenshots, use-cases and code examples](../docs/) - can be found in the `/docs` folder.
+
+Please note, you may find other components within Contentment that have not yet been documented.<br>
+_Let's call those "life's little surprises"._
+
+
 #### Known issues
 
 - **Data List**
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
   - With Umbraco v9 (Contentment v3), SQL data source does not support querying SQL CE. [See #172 for details.](https://github.com/leekelleher/umbraco-contentment/issues/172)
-
-
-### Documentation
-
-[Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the /docs folder](../docs/).
-
-Please note, you may find other components within Contentment that have not yet been documented.<br>
-_Let's call those "life's little surprises"._
 
 
 ### Roadmap
@@ -130,7 +136,7 @@ _More give, less take._
 
 If you do not to intend to modify the source code, then you will still have the same freedoms as when using the MIT license.
 
-For more information about the Mozilla Public License, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
+For more information about the **Mozilla Public License**, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
 
 ### Acknowledgements
@@ -140,7 +146,7 @@ For more information about the Mozilla Public License, please visit: <https://ww
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1120+ hours</b> (between 2019-03-13 to 2021-12-01)</summary>
+<summary>Current development effort: <b>1145+ hours</b> (between 2019-03-13 to 2022-02-10)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
@@ -149,7 +155,7 @@ _To give you an idea of how much human developer time/effort has been put into m
 
 #### Special thanks
 
-- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me develop this project.
+- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me initiate this project.
 
 
 #### Logo

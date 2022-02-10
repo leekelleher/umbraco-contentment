@@ -1,12 +1,18 @@
-## README
+<img src="assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
-This is a demo website to showcase the features of the Contentment package.
+## Contentment for Umbraco
+
+### Demo Umbraco website
+
+This is a demo website, using Umbraco v9.0.0, to showcase the features of the Contentment package.
 
 It should be considered as a continual work-in-progress.
 
-It does have the potential to be serve as a starter kit, however it is opinionated, in that it used uSync and ModelsBuilder configurations.
+It could have the potential to be serve as a starter kit, however it is opinionated, in that it used uSync and ModelsBuilder configurations.
 
-Feel free to use it, modify it, don't use it, I don't care. Just don't ask me to support your use of it.
+Umbraco vversion `9.0.0` is intentionally used, as that is the minimum version of Umbraco that Contentment supports.
+
+Feel free to use it, modify it, or don't use it, I don't care. Only please don't ask me to support your use of it.
 
 
 ### Installation
@@ -16,9 +22,9 @@ The `appsettings.Development.json` is configured to perform an unattended instal
 Username: `test@test.com`
 Password: `test123456`
 
-uSync has been configured to import all schema/settings and content at start-up. If this doesn't automagically happen, you can try the uSync dashboard in the CMS backoffice.
+uSync has been configured to import all schema/settings and content at start-up. If this doesn't automagically happen, you can try the import feature on the uSync dashboard in the CMS backoffice.
 
 
 ### Contributions
 
-Whilst I am open to contributions, please keep in mind that I am using this demo website for my own testing purposes, so any suggestions would need to serve in my interest.
+Whilst I am open to contributions, please keep in mind that I am using this demo website is primarily for my own testing purposes, any suggestions would need to serve in my interest.
