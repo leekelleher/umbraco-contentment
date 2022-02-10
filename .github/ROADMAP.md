@@ -78,6 +78,8 @@ _Who knows?!_ `¯\_(ツ)_/¯`
 
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
+- [Textbox List](https://github.com/leekelleher/umbraco-contentment/pull/195)
+- [Custom Value Converter](https://github.com/leekelleher/umbraco-contentment/pull/196) editor wrapper
 
 **I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
 

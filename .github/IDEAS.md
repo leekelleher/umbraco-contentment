@@ -26,6 +26,7 @@
 - Data Source powered Multiple Textbox. Lists out a textbox for each items in the data source.
   e.g. similar to https://our.umbraco.com/packages/backoffice-extensions/multilanguage-textbox/
   Could be useful for social networks, e.g. facebook, twitter links.
+  https://github.com/leekelleher/umbraco-contentment/pull/195
 
 - Editor Note
   https://github.com/leekelleher/umbraco-contentment/discussions/187
