@@ -23,10 +23,6 @@
 - Wizard - overlay panel with a step wizard, each containing multiple fields, that populate the next set of fields. (Similar to the cascading editor, above.)
   Making use of the [`<umb-pagination>` directive](https://github.com/umbraco/Umbraco-CMS/search?q=general_previous)?
 
-- Data Source powered Multiple Textbox. Lists out a textbox for each items in the data source.
-  e.g. similar to https://our.umbraco.com/packages/backoffice-extensions/multilanguage-textbox/
-  Could be useful for social networks, e.g. facebook, twitter links.
-  https://github.com/leekelleher/umbraco-contentment/pull/195
 
 - Editor Note
   https://github.com/leekelleher/umbraco-contentment/discussions/187
