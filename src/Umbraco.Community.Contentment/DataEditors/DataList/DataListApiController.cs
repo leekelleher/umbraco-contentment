@@ -41,10 +41,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ActionResult GetPreview([FromBody] JObject data)
 #endif
         {
-            var config = data.ToObject<Dictionary<string, object>>();
-
             if (_propertyEditors.TryGet(DataListDataEditor.DataEditorAlias, out var propertyEditor) == true)
             {
+                var config = data.ToObject<Dictionary<string, object>>();
                 var alias = config.GetValueAs("alias", "preview");
                 var configurationEditor = propertyEditor.GetConfigurationEditor();
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);

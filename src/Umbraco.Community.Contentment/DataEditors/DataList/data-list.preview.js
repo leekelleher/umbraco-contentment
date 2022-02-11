@@ -34,15 +34,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 active: false,
             }];
 
-            // set the first tab to active
-            vm.tabs[0].active = true;
-            vm.activeTab = vm.tabs[0].alias;
+            if (Object.toBoolean($scope.model.config.hideListEditor) === true) {
+                vm.tabs.shift();
+            }
 
             vm.changeTab = function (tab) {
-                vm.tabs.forEach(function (x) { x.active = false; });
+                vm.tabs.forEach(x => x.active = false);
                 vm.activeTab = tab.alias;
                 tab.active = true;
             };
+
+            // set the first tab to active
+            vm.changeTab(vm.tabs[0]);
 
             var events = [];
 
@@ -60,7 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function fetch() {
-            if (_.isEmpty(config.dataSource) === false && _.isEmpty(config.listEditor) === false) {
+            if (_.isEmpty(config.dataSource) === false) {
 
                 vm.state = "loading";
                 vm.property = null;
@@ -73,15 +76,16 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         vm.property = result;
                         vm.state = result.config.items && result.config.items.length > 0 ? "loaded" : "noItems";
 
-                        // HACK: Replaces data sources label to include the item count. Could be a nicer way of doing this.
-                        vm.tabs[1].label = "Data source items (" + result.config.items.length + ")";
+                        var idx = vm.tabs.length === 3 ? 1 : 0;
+
+                        // HACK: Replaces data sources label to include the item count. Could there be a nicer way of doing this?
+                        vm.tabs[idx].label = "Data source items (" + result.config.items.length + ")";
+
+                        if (_.isEmpty(config.listEditor) === true) {
+                            vm.changeTab(vm.tabs[idx]);
+                        }
+
                     });
-            }
-            else if (_.isEmpty(config.dataSource) === false) {
-                vm.state = "dataSourceConfigured";
-            }
-            else if (_.isEmpty(config.listEditor) === false) {
-                vm.state = "listEditorConfigured";
             }
             else {
                 vm.state = "init";
