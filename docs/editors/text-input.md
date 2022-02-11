@@ -19,9 +19,11 @@ The first field is **Placeholder text**, which is used to add initial instructio
 
 The next field is **Data list**, this is used to provide a list of predefined values to suggest to the user for the text input.
 
+> For technical users, this is the [`<input>`'s `list` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text#list), making use of the [`<datalist>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist).
+
 The configuration of the data source uses the same approach as the **Data List** editor, [please see the documentation for example data source options](data-list.md#how-to-configure-the-editor).
 
-> For technical users, this is the [`<input>`'s `list` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text#list), making use of the [`<datalist>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist).
+> [An extensive list of all the **built-in data-sources** is available](../data-sources/README.md).
 
 The **Maximum allowed characters** field is used to limit the number of characters that can be entered in the text input. The default limit is 500 characters.
 
