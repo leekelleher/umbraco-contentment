@@ -62,5 +62,32 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new NotFoundResult();
 #endif
         }
+
+        [HttpPost]
+#if NET472
+        public HttpResponseMessage GetDataSourceItems([FromBody] JObject data)
+#else
+        public ActionResult GetDataSourceItems([FromBody] JObject data)
+#endif
+        {
+            if (_propertyEditors.TryGet(DataListDataEditor.DataEditorAlias, out var propertyEditor) == true)
+            {
+                var config = data.ToObject<Dictionary<string, object>>();
+                var configurationEditor = propertyEditor.GetConfigurationEditor();
+                var valueEditorConfig = configurationEditor.ToValueEditor(config);
+
+#if NET472
+                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig });
+#else
+                return new ObjectResult(new { config = valueEditorConfig });
+#endif
+            }
+
+#if NET472
+            return Request.CreateResponse(HttpStatusCode.NotFound);
+#else
+            return new NotFoundResult();
+#endif
+        }
     }
 }
