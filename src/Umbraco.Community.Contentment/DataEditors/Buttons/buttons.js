@@ -37,8 +37,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.items = config.items.slice();
 
-            vm.hideIcon = config.labelStyle === 'text';
-            vm.hideName = config.labelStyle === 'icon';
+            vm.hideIcon = config.labelStyle === "text";
+            vm.hideName = config.labelStyle === "icon";
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")

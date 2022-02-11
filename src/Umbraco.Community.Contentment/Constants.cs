@@ -30,6 +30,8 @@ namespace Umbraco.Community.Contentment
             internal const string TreeAlias = ProjectAlias;
 
             internal const string ConfigurationSection = "Umbraco:Contentment";
+
+            internal const string EmptyEditorViewPath = EditorsPathRoot + "_empty.html";
         }
 
         internal static partial class Conventions

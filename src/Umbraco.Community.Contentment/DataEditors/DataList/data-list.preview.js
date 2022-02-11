@@ -34,15 +34,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 active: false,
             }];
 
-            // set the first tab to active
-            vm.tabs[0].active = true;
-            vm.activeTab = vm.tabs[0].alias;
-
             vm.changeTab = function (tab) {
-                vm.tabs.forEach(function (x) { x.active = false; });
+                vm.tabs.forEach(x => x.active = false);
                 vm.activeTab = tab.alias;
                 tab.active = true;
             };
+
+            // set the first tab to active
+            vm.changeTab(vm.tabs[0]);
 
             var events = [];
 

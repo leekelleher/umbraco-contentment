@@ -38,6 +38,8 @@ The following data-sources are available by default with the Contentment package
 - [Umbraco Member Groups](data-source--umbraco-member-group.md) - Populate the data source with Umbraco member groups.
 - [Umbraco Members](data-source--umbraco-members.md) - Use Umbraco members to populate the data source.
 - [Umbraco Tags](data-source--umbraco-tags.md) - Populate the data source using already defined tags.
+- [Umbraco User Groups](data-source--umbraco-user-groups.md) - Populate the data source with Umbraco user groups.
+- [Umbraco Users](data-source--umbraco-users.md) - Use Umbraco users to populate the data source.
 
 
 #### Web

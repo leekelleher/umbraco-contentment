@@ -22,6 +22,19 @@ namespace Umbraco.Extensions
 {
     public static class PublishedElementExtensions
     {
+        public static TValue ValueOrDefault<TModel, TValue>(this TModel model, string alias, string culture = null, string segment = null, TValue defaultValue = default)
+            where TModel : IPublishedElement
+        {
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+        }
+
+        public static TValue ValueOrDefaultFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null, TValue defaultValue = default)
+            where TModel : IPublishedElement
+        {
+            var alias = GetAlias(model, property);
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+        }
+
         public static bool HasValueFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null)
             where TModel : IPublishedElement
         {

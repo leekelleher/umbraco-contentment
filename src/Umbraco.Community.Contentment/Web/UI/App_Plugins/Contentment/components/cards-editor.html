@@ -1,0 +1,45 @@
+﻿<!-- Copyright © 2013-present Umbraco.
+   - Parts of this Source Code has been derived from Umbraco CMS.
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Web.UI.Client/src/views/components/umb-grid-selector.html
+   - Modified under the permissions of the MIT License.
+   - Modifications are licensed under the Mozilla Public License.
+   - Copyright © 2021 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<div class="contentment umb-grid-selector">
+    <div class="umb-grid-selector__items" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+        <div class="umb-grid-selector__item -sortable" ng-repeat="item in vm.ngModel">
+            <button type="button"
+                    class="btn-reset umb-grid-selector__item-content"
+                    aria-label="Edit content"
+                    ng-click="vm.edit($index)">
+                <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" class="umb-grid-selector__item-icon" ng-class="_icon"></umb-icon>
+                <div class="umb-grid-selector__item-label" ng-bind="vm.populate(item, $index, 'name')"></div>
+            </button>
+            <button type="button"
+                    class="btn-reset umb-outline"
+                    aria-label="Remove content block"
+                    ng-if="vm.canRemove(item, $index)"
+                    ng-click="vm.remove($index)">
+                <umb-icon icon="icon-trash" class="umb-grid-selector__item-remove"></umb-icon>
+                <span class="sr-only">Remove content block</span>
+            </button>
+        </div>
+        <button type="button"
+                class="umb-grid-selector__item -placeholder"
+                id="{{vm.propertyAlias}}"
+                aria-label="Add content"
+                ng-if="vm.allowAdd"
+                ng-click="vm.onAdd()">
+            <div class="umb-grid-selector__item-content">
+                <umb-icon icon="icon-add" class="umb-grid-selector__item-icon"></umb-icon>
+                <div class="umb-grid-selector__item-default-label -blue">
+                    <span ng-bind="vm.addButtonLabel"></span>
+                    <span class="sr-only">...</span>
+                </div>
+            </div>
+        </button>
+    </div>
+</div>

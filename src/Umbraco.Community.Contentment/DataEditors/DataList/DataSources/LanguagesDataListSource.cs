@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class LanguagesDataListSource : IDataListSource
     {
-        public string Name => ".NET Languages (ISO 639)";
+        public string Name => ".NET Languages (ISO 639-1)";
 
         public string Description => "All the languages available in the .NET Framework, (as installed on the web server).";
 
@@ -35,12 +35,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return CultureInfo
-                .GetCultures(CultureTypes.SpecificCultures)
-                .DistinctBy(x => x.DisplayName)
-                .OrderBy(x => x.DisplayName)
+                .GetCultures(CultureTypes.AllCultures)
+                .DistinctBy(x => x.TwoLetterISOLanguageName)
+                .Where(x => x.TwoLetterISOLanguageName.Length == 2) // NOTE: Removes any odd languages.
+                .OrderBy(x => x.EnglishName)
                 .Select(x => new DataListItem
                 {
-                    Name = x.DisplayName,
+                    Name = x.EnglishName,
                     Value = x.TwoLetterISOLanguageName
                 });
         }

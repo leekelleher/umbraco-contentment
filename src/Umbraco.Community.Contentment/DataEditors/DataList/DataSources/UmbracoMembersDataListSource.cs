@@ -93,9 +93,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                            { "items", items },
+                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { "overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { "maxItems", 1 },
                         }
                     }

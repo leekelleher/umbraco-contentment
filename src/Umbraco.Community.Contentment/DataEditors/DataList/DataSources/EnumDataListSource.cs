@@ -182,6 +182,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
+            // TODO: [LK:2022-01-24] Review enum code with @benjaminc's suggestion.
+            // https://github.com/leekelleher/umbraco-contentment/issues/191#issuecomment-1012412006
+
             if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
             {
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.

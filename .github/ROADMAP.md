@@ -65,11 +65,16 @@ Property Editors are:
 
 ### v3.0
 
-- _Under active development!_ [See my developer's journal for the latest updates.](https://github.com/leekelleher/umbraco-contentment/discussions/105) A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0.
+- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
 ### v3.1
 
-- [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
+- [Content Blocks](../docs/editors/content-blocks.md) ["Cards" display mode](https://github.com/leekelleher/umbraco-contentment/pull/194)
+- [Textbox List](https://github.com/leekelleher/umbraco-contentment/pull/195)
+
+### v3.2
+
+- `╰(*°▽°*)╯` _I haven't decided yet._
 
 
 ## Future feature releases
@@ -77,7 +82,9 @@ Property Editors are:
 _Who knows?!_ `¯\_(ツ)_/¯`
 
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
+- [Custom Value Converter](https://github.com/leekelleher/umbraco-contentment/pull/196) editor wrapper
+- [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
-**There are [plenty of ideas](IDEAS.md)!**
+**I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
 

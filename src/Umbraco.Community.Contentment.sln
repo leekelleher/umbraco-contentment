@@ -53,6 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A529
 		..\docs\editors\render-macro.md = ..\docs\editors\render-macro.md
 		..\docs\editors\templated-label.md = ..\docs\editors\templated-label.md
 		..\docs\editors\text-input.md = ..\docs\editors\text-input.md
+		..\docs\editors\textbox-list.md = ..\docs\editors\textbox-list.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{02357F6B-DA34-47CC-BA3E-A737CEC66B0D}"
@@ -93,12 +94,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Sources", "Data Source
 		..\docs\data-sources\data-source--umbraco-member-group.md = ..\docs\data-sources\data-source--umbraco-member-group.md
 		..\docs\data-sources\data-source--umbraco-members.md = ..\docs\data-sources\data-source--umbraco-members.md
 		..\docs\data-sources\data-source--umbraco-tags.md = ..\docs\data-sources\data-source--umbraco-tags.md
+		..\docs\data-sources\data-source--umbraco-user-groups.md = ..\docs\data-sources\data-source--umbraco-user-groups.md
+		..\docs\data-sources\data-source--umbraco-users.md = ..\docs\data-sources\data-source--umbraco-users.md
 		..\docs\data-sources\data-source--user-defined.md = ..\docs\data-sources\data-source--user-defined.md
 		..\docs\data-sources\data-source--xml-sitemap-change-frequency.md = ..\docs\data-sources\data-source--xml-sitemap-change-frequency.md
 		..\docs\data-sources\data-source--xml-sitemap-priority.md = ..\docs\data-sources\data-source--xml-sitemap-priority.md
 		..\docs\data-sources\data-source--xml.md = ..\docs\data-sources\data-source--xml.md
 		..\docs\data-sources\README.md = ..\docs\data-sources\README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umbraco.Cms.9.0.0", "Umbraco.Cms.9.0.0\Umbraco.Cms.9.0.0.csproj", "{1646D40F-3951-4075-8891-1A4DCC6119FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +115,10 @@ Global
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1646D40F-3951-4075-8891-1A4DCC6119FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1646D40F-3951-4075-8891-1A4DCC6119FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1646D40F-3951-4075-8891-1A4DCC6119FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1646D40F-3951-4075-8891-1A4DCC6119FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

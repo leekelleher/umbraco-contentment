@@ -22,3 +22,27 @@
 .alert-form a {
     color: #1b264f;
 }
+
+/* Copyright © 2020 Perplex Digital
+ * Parts of this Source Code has been derived from Perplex.ContentBlocks.
+ * https://github.com/PerplexDigital/Perplex.ContentBlocks/blob/v2.1.0/src/Perplex.ContentBlocks/App_Plugins/Perplex.ContentBlocks/perplex.content-blocks.less#L120-L136
+ * Modified under the permissions of the MIT License.
+ * Modifications are licensed under the Mozilla Public License. */
+/* Hides the container property group (tab), see `lk-hide-property-group` directive */
+.umb-group-panel--hide {
+    all: unset;
+    background: none;
+    box-shadow: none !important;
+}
+
+    .umb-group-panel--hide .umb-group-panel__header {
+        display: none;
+    }
+
+    .umb-group-panel--hide .umb-group-panel__content {
+        padding: 0;
+    }
+
+    .umb-group-panel--hide .umb-box-content {
+        padding: 0;
+    }

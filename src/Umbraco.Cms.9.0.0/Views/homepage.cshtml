@@ -1,0 +1,15 @@
+﻿@inherits UmbracoViewPage<HomePage>
+@{
+    Layout = "_layout.cshtml";
+}
+
+@section body
+{
+    @if (Model.PageBlocks != null)
+    {
+        foreach (var block in Model.PageBlocks)
+        {
+            @await Html.PartialAsync($"blocks/{block.ContentType.Alias}", block)
+        }
+    }
+}

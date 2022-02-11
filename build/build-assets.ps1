@@ -32,17 +32,21 @@ if (Test-Path -Path $targetFolder) {
 }
 
 # Copy DLL / PDB
-$binFolder = "${targetFolder}\bin";
-if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
-Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net472\${ProjectName}.*" -Destination $binFolder;
-$net50Folder = "${targetFolder}\net50";
-if (!(Test-Path -Path $net50Folder)) {New-Item -Path $net50Folder -Type Directory;}
-Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net50\${ProjectName}.*" -Destination $net50Folder;
+if (-NOT($ConfigurationName -eq 'Debug')) {
+    $binFolder = "${targetFolder}\bin";
+    if (!(Test-Path -Path $binFolder)) {New-Item -Path $binFolder -Type Directory;}
+    Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net472\${ProjectName}.*" -Destination $binFolder;
+    $net50Folder = "${targetFolder}\net50";
+    if (!(Test-Path -Path $net50Folder)) {New-Item -Path $net50Folder -Type Directory;}
+    Copy-Item -Path "${ProjectDir}\bin\${ConfigurationName}\net50\${ProjectName}.*" -Destination $net50Folder;
+}
 
 # Copy package front-end files assets
 $pluginFolder = "${targetFolder}\App_Plugins\Contentment\";
 if (!(Test-Path -Path $pluginFolder)) {New-Item -Path $pluginFolder -Type Directory;}
 Copy-Item -Path "${ProjectDir}Web\UI\App_Plugins\Contentment\*" -Force -Recurse -Destination "${pluginFolder}";
+
+# // TODO: Update version number in package.manifest file. [LK]
 
 # HTML (Property Editors) - Copy and Minify (or just remove comments)
 $htmlFiles = Get-ChildItem -Path "${ProjectDir}DataEditors" -Recurse -Force -Include *.html;
@@ -73,5 +77,5 @@ Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -P
 
 # In debug mode, copy the assets over to the local dev website
 if ($ConfigurationName -eq 'Debug' -AND -NOT($TargetDevWebsite -eq '')) {
-    Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite | Where { $_.FullName -NotLike "*\net50\*" };
+    Copy-Item -Path "${targetFolder}\*" -Force -Recurse -Destination $TargetDevWebsite;
 }

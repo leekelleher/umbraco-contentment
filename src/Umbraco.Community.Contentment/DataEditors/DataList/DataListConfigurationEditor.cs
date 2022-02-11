@@ -23,10 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class DataListConfigurationEditor : ConfigurationEditor
     {
         internal const string DataSource = "dataSource";
-        internal const string Items = "items";
         internal const string ListEditor = "listEditor";
-        internal const string EditorConfig = "editorConfig";
-        internal const string EditorView = "editorView";
 
         private readonly ConfigurationEditorUtility _utility;
 
@@ -49,7 +46,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
             var listEditors = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListEditor>(shortStringHelper));
-
 
             Fields.Add(new ConfigurationField
             {
@@ -113,7 +109,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var sourceConfig = item1["value"].ToObject<Dictionary<string, object>>();
                     var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
-                    toValueEditor.Add(Items, items);
+                    toValueEditor.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
                 }
             }
 
