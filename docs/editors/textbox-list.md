@@ -27,9 +27,9 @@ For our example, let's choose **User-defined List**. You will then be presented 
 
 ![Configuration Editor for Textbox List - data source configuration (for User-defined List)](textbox-list--configuration-editor-02.png)
 
-![Configuration Editor for Textbox List - data source configuration (for User-defined List)](textbox-list--configuration-editor-03.png)
-
 Once you have configured the data source, press the **Done** button at the bottom of the overlay. You should notice that the **Preview** for the data source has been updated.
+
+![Configuration Editor for Textbox List - data source configuration (for User-defined List)](textbox-list--configuration-editor-03.png)
 
 The next fields, **Default icon** and **Label style** are for the presentation of the icon and label that is associated with each textbox in the list.
 
