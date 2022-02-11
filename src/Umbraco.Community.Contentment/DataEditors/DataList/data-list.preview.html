@@ -6,6 +6,12 @@
 <div class="contentment" ng-controller="Umbraco.Community.Contentment.DataEditors.DataList.Preview.Controller as vm">
     <div ng-switch="vm.state">
         <div ng-switch-default class="well well-small well--limit-width">
+            <localize key="contentment_configurePreviewInit">Please select and configure a data source and list editor.</localize>
+        </div>
+        <div ng-switch-when="dataSourceConfigured" class="well well-small well--limit-width">
+            <localize key="contentment_configurePreviewListEditor">Please select and configure a list editor.</localize>
+        </div>
+        <div ng-switch-when="listEditorConfigured" class="well well-small well--limit-width">
             <localize key="contentment_configurePreviewDataSource">Please select and configure a data source.</localize>
         </div>
         <div ng-switch-when="loading">
@@ -23,9 +29,6 @@
 
             <div ng-switch="vm.activeTab">
                 <div ng-switch-when="listEditor" ng-if="vm.property">
-                    <div class="well well-small well--limit-width" ng-if="vm.property.view.endsWith('_empty.html')">
-                        <localize key="contentment_configurePreviewListEditor">Please select and configure a list editor.</localize>
-                    </div>
                     <umb-property-editor model="vm.property"></umb-property-editor>
                 </div>
                 <div ng-switch-when="dataSource" ng-if="vm.property.config.items.length > 0">
