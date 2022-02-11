@@ -7,7 +7,7 @@
     <Title>Contentment for Umbraco</Title>
     <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco</PackageTags>
-    <Version>3.1.0-develop</Version>
+    <Version>3.1.0</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
