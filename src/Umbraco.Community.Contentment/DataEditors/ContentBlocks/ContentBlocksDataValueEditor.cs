@@ -190,7 +190,7 @@ public ContentBlocksDataValueEditor(
                 }
             }
 
-            return JsonConvert.SerializeObject(blocks);
+            return JsonConvert.SerializeObject(blocks, Formatting.None);
         }
     }
 }

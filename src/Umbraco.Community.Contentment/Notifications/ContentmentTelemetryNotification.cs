@@ -119,7 +119,7 @@ namespace Umbraco.Community.Contentment.Notifications
                         using (var client = new WebClient())
                         {
                             var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
-                            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                            var json = JsonConvert.SerializeObject(data, Formatting.None);
                             var payload = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
 
                             client.Headers.Add("Content-Type", MediaTypeNames.Text.Plain);
