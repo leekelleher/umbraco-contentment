@@ -58,9 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A529
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{02357F6B-DA34-47CC-BA3E-A737CEC66B0D}"
 	ProjectSection(SolutionItems) = preProject
+		..\.github\ISSUE_TEMPLATE\bug_report.yml = ..\.github\ISSUE_TEMPLATE\bug_report.yml
 		..\.github\ISSUE_TEMPLATE\config.yml = ..\.github\ISSUE_TEMPLATE\config.yml
-		..\.github\ISSUE_TEMPLATE\ISSUE_BUG_REPORT.md = ..\.github\ISSUE_TEMPLATE\ISSUE_BUG_REPORT.md
-		..\.github\ISSUE_TEMPLATE\ISSUE_FEATURE_REQUEST.md = ..\.github\ISSUE_TEMPLATE\ISSUE_FEATURE_REQUEST.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{7E3CB058-A757-42C9-9277-EB949E1D7D0E}"
