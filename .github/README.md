@@ -72,7 +72,7 @@ If you are using Umbraco v8.x, and prefer to install Contentment from the backof
 
 #### Demo website
 
-[A demo website is available for testing purposes.](src/Umbraco.Cms.9.0.0/README.md)
+[A demo website is available for testing purposes.](../src/Umbraco.Cms.9.0.0/README.md) _(Please note, you will need to clone the repository and run locally.)_
 
 
 ### Documentation
