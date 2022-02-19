@@ -17,7 +17,7 @@ $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = 8,17,0;
+$minUmbracoVersion = 8,18,0;
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 $tags = "umbraco";
 
@@ -53,7 +53,7 @@ Write-Host 'Restoring NuGet packages...';
 & $nuget_exe restore "${srcFolder}\${projectNamespace}.sln";
 
 Write-Host 'Compiling Visual Studio solution.';
-& $msbuild_exe "${srcFolder}\${projectNamespace}.sln" /p:Configuration=Release
+& $msbuild_exe "${srcFolder}\${projectNamespace}\${projectNamespace}.csproj" /p:Configuration=Release
 if (-NOT $?) {
     throw 'The MSBuild process returned an error code.';
 }
@@ -63,10 +63,12 @@ if (-NOT $?) {
 $net472Folder = "${assetsFolder}\bin";
 if (!(Test-Path -Path $net472Folder)) {New-Item -Path $net472Folder -Type Directory;}
 Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net472\${projectNamespace}.*" -Destination $net472Folder;
-$net50Folder = "${assetsFolder}\net50";
+$net50Folder = "${assetsFolder}\net5.0";
 if (!(Test-Path -Path $net50Folder)) {New-Item -Path $net50Folder -Type Directory;}
-Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net50\${projectNamespace}.*" -Destination $net50Folder;
-
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net5.0\${projectNamespace}.*" -Destination $net50Folder;
+$net60Folder = "${assetsFolder}\net6.0";
+if (!(Test-Path -Path $net60Folder)) {New-Item -Path $net60Folder -Type Directory;}
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net6.0\${projectNamespace}.*" -Destination $net60Folder;
 
 # Populate the Umbraco package manifest
 
@@ -90,7 +92,7 @@ $umbracoPackageXml.umbPackage.info.readme."#cdata-section" = $packageDescription
 
 $filesXml = $umbracoPackageXml.CreateElement("files");
 
-$assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse | Where { $_.FullName -NotLike "*\net50\*" };
+$assetFiles = Get-ChildItem -Path $assetsFolder -File -Recurse | Where { $_.FullName -NotLike "*\net*\*" };
 foreach($assetFile in $assetFiles){
 
     $hash = Get-FileHash -Path $assetFile.FullName -Algorithm MD5;

@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Xml;
 using System.Xml.XPath;
+using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.Hosting;
@@ -29,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class XmlDataListSource : IDataListSource
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
 #if NET472
@@ -37,11 +38,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public XmlDataListSource(
             ILogger logger,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
         {
             _logger = logger;
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 #else
@@ -49,11 +50,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public XmlDataListSource(
             ILogger<XmlDataListSource> logger,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
         {
             _logger = logger;
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 #endif
@@ -142,7 +143,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             var path = url.InvariantStartsWith("http") == false
-                ? _hostingEnvironment.MapPathWebRoot(url)
+                ? _webHostEnvironment.MapPathWebRoot(url)
                 : url;
 
             var doc = default(XPathDocument);

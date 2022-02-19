@@ -5,13 +5,12 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
-using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 #else
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
@@ -29,12 +28,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string MaxLines = "maxLines";
 
         public CodeEditorConfigurationEditor(
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
             : base()
         {
             var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
-            var aceEditorPath = hostingEnvironment.MapPathWebRoot(targetPath);
+            var aceEditorPath = webHostEnvironment.MapPathWebRoot(targetPath);
 
             if (Directory.Exists(aceEditorPath) == true)
             {

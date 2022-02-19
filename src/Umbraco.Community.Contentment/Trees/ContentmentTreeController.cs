@@ -12,6 +12,8 @@ using Umbraco.Web.Trees;
 using Umbraco.Web.WebApi.Filters;
 using UmbConstants = Umbraco.Core.Constants;
 #else
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;
@@ -83,9 +85,17 @@ namespace Umbraco.Community.Contentment.Trees
             return root.Value;
         }
 
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
+        [Obsolete("See GetMenuForNode")]
         protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
 
+        [Obsolete("See GetTreeNodesAsync")]
         protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
+
+        protected override Task<ActionResult<MenuItemCollection>> GetMenuForNodeAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
+
+        protected override Task<ActionResult<TreeNodeCollection>> GetTreeNodesAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
     }
 #endif
 }

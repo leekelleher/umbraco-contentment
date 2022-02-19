@@ -5,11 +5,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Strings;
+using IHostingEnvironment = Umbraco.Core.Hosting.IHostingEnvironment;
 using UmbConstants = Umbraco.Core.Constants;
 #else
 using Microsoft.Extensions.Logging;
@@ -18,6 +20,7 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
@@ -36,17 +39,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 #else
         private readonly IIOHelper _ioHelper;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<PhysicalFileSystem> _logger;
 
         public PhysicalFileSystemDataSource(
             IIOHelper ioHelper,
             IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             ILogger<PhysicalFileSystem> logger,
             IShortStringHelper shortStringHelper)
         {
             _shortStringHelper = shortStringHelper;
             _ioHelper = ioHelper;
             _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
 #endif
@@ -113,7 +119,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #if NET472
             var fs = new PhysicalFileSystem(virtualRoot);
 #else
-            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _hostingEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
+            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _webHostEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
 #endif
             var files = fs.GetFiles(".", fileFilter);
 

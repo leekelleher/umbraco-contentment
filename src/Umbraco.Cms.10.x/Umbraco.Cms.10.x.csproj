@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Umbraco.Cms.v10_x</RootNamespace>
+        <DefaultItemExcludes>$(DefaultItemExcludes);App_Plugins/**;</DefaultItemExcludes>
+        <DefaultItemExcludes>$(DefaultItemExcludes);umbraco/**;</DefaultItemExcludes>
+        <DefaultItemExcludes>$(DefaultItemExcludes);wwwroot/media/**;</DefaultItemExcludes>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+        <PackageReference Include="Umbraco.Cms" Version="10.0.0-rc1" />
+        <PackageReference Include="uSync" Version="10.0.0-alpha001.20220314.1" />
+        <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="App_Plugins/**" CopyToOutputDirectory="Always" />
+        <Content Include="umbraco/**" CopyToOutputDirectory="Always" />
+        <Content Remove="umbraco/Data/**" />
+        <Content Remove="umbraco/Logs/**" />
+        <Content Remove="umbraco/mediacache/**" />
+        <Content Remove="umbraco/models/**" />
+        <Compile Include="umbraco/models/**" Exclude="**/*.flag" />
+    </ItemGroup>
+
+    <Import Project="..\..\build\_vs-copy-assets.targets" />
+
+    <ItemGroup>
+        <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
+    </ItemGroup>
+
+    <!-- Set this to true if ModelsBuilder mode is not InMemoryAuto-->
+    <PropertyGroup>
+        <RazorCompileOnBuild>false</RazorCompileOnBuild>
+        <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    </PropertyGroup>
+
+</Project>

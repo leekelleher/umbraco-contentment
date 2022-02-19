@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
@@ -28,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class JsonDataListSource : IDataListSource
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
 #if NET472
@@ -36,19 +37,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public JsonDataListSource(
             ILogger logger,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
 #else
         private readonly ILogger<JsonDataListSource> _logger;
 
         public JsonDataListSource(
             ILogger<JsonDataListSource> logger,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
 #endif
         {
             _logger = logger;
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 
@@ -238,10 +239,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 try
                 {
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
                     using (var client = new WebClient() { Encoding = Encoding.UTF8 })
                     {
                         content = client.DownloadString(url);
                     }
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
                 }
                 catch (WebException ex)
                 {
@@ -255,7 +258,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             else
             {
                 // assume local file
-                var path = _hostingEnvironment.MapPathWebRoot(url);
+                var path = _webHostEnvironment.MapPathWebRoot(url);
                 if (File.Exists(path) == true)
                 {
                     content = File.ReadAllText(path);

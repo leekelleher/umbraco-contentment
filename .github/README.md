@@ -48,11 +48,12 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 _**Please note...**_
 
-- v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0** and will support those versions and above.
-- v2.x has been developed against **Umbraco v8.14.0** and it will still work on current Umbraco v8.x releases.
-- v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
+- v4.x has been developed against **Umbraco v8.18.0**, **Umbraco v9.4.0** and **Umbraco v10.0.0**, it will support those versions and above.
+- v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
+- v2.x has been developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
+- v1.x has been developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
 
-With Contentment v3.x on Umbraco v9.0 (.NET 5), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
+With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
 
 ##### NuGet package repository
 

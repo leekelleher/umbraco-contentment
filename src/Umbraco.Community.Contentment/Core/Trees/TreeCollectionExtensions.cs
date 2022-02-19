@@ -5,6 +5,8 @@
 
 #if NET472 == false
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.Trees;
@@ -27,11 +29,13 @@ namespace Umbraco.Extensions
                 return collection;
             }
 
-            var trees = (Tree[])field.GetValue(collection);
-            if (trees == null)
+            var lazy = (LazyReadOnlyCollection<Tree>)field.GetValue(collection);
+            if (lazy?.Value == null)
             {
                 return collection;
             }
+
+            var trees = lazy.Value.ToArray();
 
             if (typeof(TreeControllerBase).IsAssignableFrom(controllerType) == false)
             {
@@ -52,7 +56,7 @@ namespace Umbraco.Extensions
                     Array.Copy(trees, idx + 1, tmp, idx, trees.Length - idx - 1);
                 }
 
-                field.SetValue(collection, tmp);
+                field.SetValue(collection, new LazyReadOnlyCollection<Tree>(() => tmp));
             }
 
             return collection;

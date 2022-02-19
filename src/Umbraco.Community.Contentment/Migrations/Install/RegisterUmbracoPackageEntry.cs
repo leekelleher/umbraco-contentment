@@ -9,6 +9,8 @@ using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;
 #else
+using Microsoft.Extensions.Options;
+using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -67,7 +69,8 @@ namespace Umbraco.Community.Contentment.Migrations
             MediaUrlGeneratorCollection mediaUrlGenerators,
             IShortStringHelper shortStringHelper,
             IContentTypeBaseServiceProvider contentTypeBaseServiceProvider,
-            IMigrationContext context)
+            IMigrationContext context,
+            IOptions<PackageMigrationSettings> packageMigrationsSettings)
             : base(
                   packagingService,
                   mediaService,
@@ -75,7 +78,8 @@ namespace Umbraco.Community.Contentment.Migrations
                   mediaUrlGenerators,
                   shortStringHelper,
                   contentTypeBaseServiceProvider,
-                  context)
+                  context,
+                  packageMigrationsSettings)
         { }
 
         protected override void Migrate()
