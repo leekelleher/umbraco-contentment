@@ -17,7 +17,8 @@ build/assets/
 build/build-push-nuget.ps1
 build/build-push-umb.ps1
 src/packages/*/**
-src/Umbraco.Cms.9.0.0/App_Plugins/*/**
-src/Umbraco.Cms.9.0.0/Views/Partials/[Bb]lock[Ll]ist/*
-src/Umbraco.Cms.9.0.0/Views/Partials/[Gg]rid/*
+src/Umbraco.Cms.8.x/App_Data/*/**
+src/Umbraco.Cms.[89].x/App_Plugins/*/**
+src/Umbraco.Cms.[89].x/Views/Partials/[Bb]lock[Ll]ist/*
+src/Umbraco.Cms.[89].x/Views/Partials/[Gg]rid/*
 tools/*.exe

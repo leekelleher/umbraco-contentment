@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Extensions;
 
-namespace Umbraco.Cms.v9_0_0
+namespace Umbraco.Cms.v9_x
 {
     public class Startup
     {
