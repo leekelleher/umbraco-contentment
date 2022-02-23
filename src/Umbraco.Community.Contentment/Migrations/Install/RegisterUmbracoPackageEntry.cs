@@ -9,7 +9,12 @@ using Umbraco.Core.Migrations;
 using Umbraco.Core.Models.Packaging;
 using Umbraco.Core.Services;
 #else
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Infrastructure.Migrations;
+using Umbraco.Cms.Infrastructure.Packaging;
 #endif
 
 namespace Umbraco.Community.Contentment.Migrations
@@ -51,18 +56,33 @@ namespace Umbraco.Community.Contentment.Migrations
         }
     }
 #else
-    internal sealed class RegisterUmbracoPackageEntry : MigrationBase
+    internal sealed class RegisterUmbracoPackageEntry : PackageMigrationBase
     {
         public const string State = "{contentment-reg-umb-pkg-entry}";
 
-        public RegisterUmbracoPackageEntry(IMigrationContext context)
-            : base(context)
+        public RegisterUmbracoPackageEntry(
+            IPackagingService packagingService,
+            IMediaService mediaService,
+            MediaFileManager mediaFileManager,
+            MediaUrlGeneratorCollection mediaUrlGenerators,
+            IShortStringHelper shortStringHelper,
+            IContentTypeBaseServiceProvider contentTypeBaseServiceProvider,
+            IMigrationContext context)
+            : base(
+                  packagingService,
+                  mediaService,
+                  mediaFileManager,
+                  mediaUrlGenerators,
+                  shortStringHelper,
+                  contentTypeBaseServiceProvider,
+                  context)
         { }
 
         protected override void Migrate()
         {
-            // NOTE: This migration does nothing. It is a left over from code targeting Umbraco 8.
-            // It needs to remain, as Umbraco instances that have been upgraded from v8 to v9 will have reached this migrated state.
+            // NOTE: This migration does nothing.
+            // By inheriting from `PackageMigrationBase`, the package will be included in the backoffice listing.
+            // ref: https://dev.to/kevinjump/put-your-package-in-the-installed-package-list-in-umbraco-9-11cg
         }
     }
 #endif
