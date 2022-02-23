@@ -19,6 +19,7 @@ build/build-push-umb.ps1
 src/packages/*/**
 src/Umbraco.Cms.8.x/App_Data/*/**
 src/Umbraco.Cms.[89].x/App_Plugins/*/**
+src/Umbraco.Cms.8.x/Umbraco/*
 src/Umbraco.Cms.[89].x/Views/Partials/[Bb]lock[Ll]ist/*
 src/Umbraco.Cms.[89].x/Views/Partials/[Gg]rid/*
 tools/*.exe
