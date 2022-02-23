@@ -4,6 +4,13 @@
 
 ### Data Sources
 
+
+> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
+> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
+> Any discussion, guidance or feedback can be had on issue #151.
+> https://github.com/leekelleher/umbraco-contentment/issues/151
+
+
 #### uCssClassName
 
 A homage to @marcemarc's bingo-famous [uCssClassNameDropdown](https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/) package!
