@@ -14,14 +14,14 @@ param(
 $rootDir = "${ProjectDir}..\..";
 . "${rootDir}\src\_vars.ps1";
 
-Write-Host $ConfigurationName;
+Write-Host "ConfigurationName = $ConfigurationName";
 
 if ($ConfigurationName -eq 'Debug') {
-    Write-Host $TargetFramework;
-    Write-Host $TargetDir;
-    Write-Host $ProjectName;
-    Write-Host $ProjectDir;
-    Write-Host $TargetDevWebsite;
+    Write-Host "TargetFramework = $TargetFramework";
+    Write-Host "TargetDir = $TargetDir";
+    Write-Host "ProjectName = $ProjectName";
+    Write-Host "ProjectDir = $ProjectDir";
+    Write-Host "TargetDevWebsite = $TargetDevWebsite";
 }
 
 $targetFolder = "${rootDir}\build\assets";
