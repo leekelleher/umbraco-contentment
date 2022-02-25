@@ -592,6 +592,7 @@
     <Content Include="uSync\v8\Templates\testmiscpage.config" />
     <Content Include="uSync\v8\Templates\testnotespage.config" />
     <Content Include="uSync\v8\Templates\_layout.config" />
+    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\img\" />
