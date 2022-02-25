@@ -77,7 +77,7 @@ namespace Umbraco.Web.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("dataListFileSystem")]
-		public virtual string DataListFileSystem => this.Value<string>("dataListFileSystem");
+		public virtual global::System.Collections.Generic.List<string> DataListFileSystem => this.Value<global::System.Collections.Generic.List<string>>("dataListFileSystem");
 
 		///<summary>
 		/// Data List JSON
