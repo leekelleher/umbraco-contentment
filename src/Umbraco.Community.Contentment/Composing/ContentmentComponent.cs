@@ -14,19 +14,9 @@ using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
 using Umbraco.Web.JavaScript;
-#else
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Composing;
-using Umbraco.Cms.Core.Migrations;
-using Umbraco.Cms.Core.Scoping;
-using Umbraco.Cms.Core.Services;
-using Umbraco.Cms.Infrastructure.Migrations.Upgrade;
-using Umbraco.Community.Contentment.Migrations;
-#endif
 
 namespace Umbraco.Community.Contentment.Composing
 {
-#if NET472
     internal sealed class ContentmentComponent : IComponent
     {
         private readonly IScopeProvider _scopeProvider;
@@ -72,37 +62,5 @@ namespace Umbraco.Community.Contentment.Composing
             }
         }
     }
-#else
-    internal sealed class ContentmentComponent : IComponent
-    {
-        private readonly IMigrationPlanExecutor _migrationPlanExecutor;
-        private readonly IScopeProvider _scopeProvider;
-        private readonly IKeyValueService _keyValueService;
-        private readonly IRuntimeState _runtimeState;
-
-        public ContentmentComponent(
-            IMigrationPlanExecutor migrationPlanExecutor,
-            IScopeProvider scopeProvider,
-            IKeyValueService keyValueService,
-            IRuntimeState runtimeState)
-        {
-            _migrationPlanExecutor = migrationPlanExecutor;
-            _scopeProvider = scopeProvider;
-            _keyValueService = keyValueService;
-            _runtimeState = runtimeState;
-        }
-
-        public void Initialize()
-        {
-            if (_runtimeState.Level > RuntimeLevel.Install)
-            {
-                var upgrader = new Upgrader(new ContentmentPlan());
-                upgrader.Execute(_migrationPlanExecutor, _scopeProvider, _keyValueService);
-            }
-        }
-
-        public void Terminate()
-        { }
-    }
-#endif
 }
+#endif
