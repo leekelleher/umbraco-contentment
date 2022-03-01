@@ -29,6 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
     {
+        private readonly Dictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
@@ -47,6 +48,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
+            _lookup = new Dictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
+
             _logger = logger;
             _shortStringHelper = shortStringHelper;
             _ioHelper = ioHelper;
@@ -91,17 +94,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public void PopulateLookup(Type type)
         {
-            var type = GetValueType(config);
-            if (type == null)
+            if (_lookup.ContainsKey(type) == true)
             {
-                return Enumerable.Empty<DataListItem>();
+                return;
             }
 
-            var items = new List<DataListItem>();
-
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+
+            var items = new List<DataListItem>(fields.Length);
+            var values = new Dictionary<string, object>(fields.Length);
 
             foreach (var field in fields)
             {
@@ -113,6 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 var attr2 = field.GetCustomAttribute<DescriptionAttribute>(false);
                 var attr3 = field.GetCustomAttribute<EnumMemberAttribute>(false);
+                var value = attr3?.Value ?? attr?.Value ?? field.Name;
 
                 items.Add(new DataListItem
                 {
@@ -122,7 +126,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(_shortStringHelper),
                     Value = attr3?.Value ?? attr?.Value ?? field.Name
                 });
+
+                values.Add(value, Enum.Parse(type, field.Name));
             }
+
+            _lookup.Add(type, (items, values));
+        }
+
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        {
+            var type = GetValueType(config);
+
+            if (type == null || _lookup.ContainsKey(type) == false)
+            {
+                return Enumerable.Empty<DataListItem>();
+            }
+
+            var items = _lookup[type].Item1;
 
             if (config.TryGetValueAs("sortAlphabetically", out bool boolean) == true && boolean == true)
             {
@@ -171,6 +191,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                         if (type != null && type.IsEnum == true)
                         {
+                            PopulateLookup(type);
+
                             return type;
                         }
                     }
@@ -182,25 +204,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            // TODO: [LK:2022-01-24] Review enum code with @benjaminc's suggestion.
-            // https://github.com/leekelleher/umbraco-contentment/issues/191#issuecomment-1012412006
-
             if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
             {
+                if (_lookup.TryGetValue(type, out var enumLookup) == true &&
+                    enumLookup.Item2.TryGetValue(value, out var enumValue) == true)
+                {
+                    return enumValue;
+                }
+
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
                 try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
-
-                // If the value doesn't match the Enum field, then it is most likely set with `DataListItemAttribute.Value`.
-                var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-                foreach (var field in fields)
-                {
-                    var attr = field.GetCustomAttribute<DataListItemAttribute>(false);
-                    var attr2 = field.GetCustomAttribute<EnumMemberAttribute>(false);
-                    if (value.InvariantEquals(attr2?.Value ?? attr?.Value) == true)
-                    {
-                        return Enum.Parse(type, field.Name);
-                    }
-                }
 
 #if NET472
                 _logger.Debug<EnumDataListSource>($"Unable to find value '{value}' in enum '{type.FullName}'.");
