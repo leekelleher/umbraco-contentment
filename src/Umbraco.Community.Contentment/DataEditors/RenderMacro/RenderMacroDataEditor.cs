@@ -92,9 +92,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var hideLabel = false;
 
-            if (configuration is Dictionary<string, object> config && config.ContainsKey(HideLabelConfigurationField.HideLabelAlias) == true)
+            if (configuration is Dictionary<string, object> config && config.TryGetValue(HideLabelConfigurationField.HideLabelAlias, out var obj) == true)
             {
-                hideLabel = config[HideLabelConfigurationField.HideLabelAlias].TryConvertTo<bool>().Result;
+                hideLabel = obj.TryConvertTo<bool>().Result;
             }
 
 #if NET472

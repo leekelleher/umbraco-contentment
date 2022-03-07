@@ -375,7 +375,6 @@ angular.module("umbraco.directives").component("contentmentBlocksEditor", {
                 }
 
                 if (vm.blockActions && vm.blockActions.length > 0) {
-                    // TODO: [LK:2021-06-16] Can be optimised. Duplicate localize lookups happening here.
                     vm.blockActions.forEach(function (x) {
                         x.forEach(function (y) {
                             localizationService.localize(y.labelKey).then(function (label) {

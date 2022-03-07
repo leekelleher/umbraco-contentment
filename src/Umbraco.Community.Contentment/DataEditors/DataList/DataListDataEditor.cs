@@ -12,7 +12,6 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
 #else
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
