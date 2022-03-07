@@ -19,49 +19,50 @@ using Umbraco.ModelsBuilder.Embedded;
 
 namespace Umbraco.Web.PublishedModels
 {
-	// Mixin Content Type with alias "componentLinkProperty"
-	/// <summary>[Component] Link Property</summary>
-	public partial interface IComponentLinkProperty : IPublishedElement
-	{
-		/// <summary>Link</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
-		global::Umbraco.Web.Models.Link Link { get; }
-	}
-
-	/// <summary>[Component] Link Property</summary>
-	[PublishedModel("componentLinkProperty")]
-	public partial class ComponentLinkProperty : PublishedElementModel, IComponentLinkProperty
+	/// <summary>Call To Action Block</summary>
+	[PublishedModel("callToActionBlock")]
+	public partial class CallToActionBlock : PublishedElementModel, IComponentHeadingProperty, IComponentIntroProperty, IComponentLinkProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
-		public new const string ModelTypeAlias = "componentLinkProperty";
+		public new const string ModelTypeAlias = "callToActionBlock";
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		public new static IPublishedContentType GetModelContentType()
 			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
-		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ComponentLinkProperty, TValue>> selector)
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<CallToActionBlock, TValue>> selector)
 			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 #pragma warning restore 0109
 
 		// ctor
-		public ComponentLinkProperty(IPublishedElement content)
+		public CallToActionBlock(IPublishedElement content)
 			: base(content)
 		{ }
 
 		// properties
 
 		///<summary>
+		/// Heading
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("heading")]
+		public virtual string Heading => global::Umbraco.Web.PublishedModels.ComponentHeadingProperty.GetHeading(this);
+
+		///<summary>
+		/// Intro
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("intro")]
+		public virtual global::System.Web.IHtmlString Intro => global::Umbraco.Web.PublishedModels.ComponentIntroProperty.GetIntro(this);
+
+		///<summary>
 		/// Link
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("link")]
-		public virtual global::Umbraco.Web.Models.Link Link => GetLink(this);
-
-		/// <summary>Static getter for Link</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
-		public static global::Umbraco.Web.Models.Link GetLink(IComponentLinkProperty that) => that.Value<global::Umbraco.Web.Models.Link>("link");
+		public virtual global::Umbraco.Web.Models.Link Link => global::Umbraco.Web.PublishedModels.ComponentLinkProperty.GetLink(this);
 	}
 }

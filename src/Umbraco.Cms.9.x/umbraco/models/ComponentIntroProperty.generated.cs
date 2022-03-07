@@ -18,9 +18,19 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
+	// Mixin Content Type with alias "componentIntroProperty"
+	/// <summary>[Component] Intro Property</summary>
+	public partial interface IComponentIntroProperty : IPublishedElement
+	{
+		/// <summary>Intro</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Intro { get; }
+	}
+
 	/// <summary>[Component] Intro Property</summary>
 	[PublishedModel("componentIntroProperty")]
-	public partial class ComponentIntroProperty : PublishedElementModel
+	public partial class ComponentIntroProperty : PublishedElementModel, IComponentIntroProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -55,6 +65,11 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("intro")]
-		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Intro => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "intro");
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Intro => GetIntro(this, _publishedValueFallback);
+
+		/// <summary>Static getter for Intro</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
+		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		public static global::Umbraco.Cms.Core.Strings.IHtmlEncodedString GetIntro(IComponentIntroProperty that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(publishedValueFallback, "intro");
 	}
 }

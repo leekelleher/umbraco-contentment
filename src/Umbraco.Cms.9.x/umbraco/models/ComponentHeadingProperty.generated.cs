@@ -18,9 +18,19 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
+	// Mixin Content Type with alias "componentHeadingProperty"
+	/// <summary>[Component] Heading Property</summary>
+	public partial interface IComponentHeadingProperty : IPublishedElement
+	{
+		/// <summary>Heading</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		string Heading { get; }
+	}
+
 	/// <summary>[Component] Heading Property</summary>
 	[PublishedModel("componentHeadingProperty")]
-	public partial class ComponentHeadingProperty : PublishedElementModel
+	public partial class ComponentHeadingProperty : PublishedElementModel, IComponentHeadingProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -55,6 +65,11 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("heading")]
-		public virtual string Heading => this.Value<string>(_publishedValueFallback, "heading");
+		public virtual string Heading => GetHeading(this, _publishedValueFallback);
+
+		/// <summary>Static getter for Heading</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
+		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		public static string GetHeading(IComponentHeadingProperty that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "heading");
 	}
 }

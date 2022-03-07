@@ -445,6 +445,7 @@
     <Content Include="App_Code\PublishedContentModels\UmbracoMediaAudio.generated.cs" />
     <Content Include="App_Code\PublishedContentModels\UmbracoMediaVectorGraphics.generated.cs" />
     <Content Include="App_Code\PublishedContentModels\UmbracoMediaVideo.generated.cs" />
+    <Content Include="App_Code\PublishedContentModels\CallToActionBlock.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -593,6 +594,8 @@
     <Content Include="uSync\v8\Templates\testnotespage.config" />
     <Content Include="uSync\v8\Templates\_layout.config" />
     <Content Include="README.md" />
+    <Content Include="Views\Partials\Blocks\callToActionBlock.cshtml" />
+    <Content Include="Views\Partials\Blocks\htmlEmbedBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\img\" />

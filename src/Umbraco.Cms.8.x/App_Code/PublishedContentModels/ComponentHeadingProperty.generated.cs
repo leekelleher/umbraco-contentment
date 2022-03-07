@@ -19,9 +19,18 @@ using Umbraco.ModelsBuilder.Embedded;
 
 namespace Umbraco.Web.PublishedModels
 {
+	// Mixin Content Type with alias "componentHeadingProperty"
+	/// <summary>[Component] Heading Property</summary>
+	public partial interface IComponentHeadingProperty : IPublishedElement
+	{
+		/// <summary>Heading</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		string Heading { get; }
+	}
+
 	/// <summary>[Component] Heading Property</summary>
 	[PublishedModel("componentHeadingProperty")]
-	public partial class ComponentHeadingProperty : PublishedElementModel
+	public partial class ComponentHeadingProperty : PublishedElementModel, IComponentHeadingProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -49,6 +58,10 @@ namespace Umbraco.Web.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("heading")]
-		public virtual string Heading => this.Value<string>("heading");
+		public virtual string Heading => GetHeading(this);
+
+		/// <summary>Static getter for Heading</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		public static string GetHeading(IComponentHeadingProperty that) => that.Value<string>("heading");
 	}
 }

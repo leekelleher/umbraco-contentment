@@ -19,9 +19,18 @@ using Umbraco.ModelsBuilder.Embedded;
 
 namespace Umbraco.Web.PublishedModels
 {
+	// Mixin Content Type with alias "componentIntroProperty"
+	/// <summary>[Component] Intro Property</summary>
+	public partial interface IComponentIntroProperty : IPublishedElement
+	{
+		/// <summary>Intro</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		global::System.Web.IHtmlString Intro { get; }
+	}
+
 	/// <summary>[Component] Intro Property</summary>
 	[PublishedModel("componentIntroProperty")]
-	public partial class ComponentIntroProperty : PublishedElementModel
+	public partial class ComponentIntroProperty : PublishedElementModel, IComponentIntroProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -49,6 +58,10 @@ namespace Umbraco.Web.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("intro")]
-		public virtual global::System.Web.IHtmlString Intro => this.Value<global::System.Web.IHtmlString>("intro");
+		public virtual global::System.Web.IHtmlString Intro => GetIntro(this);
+
+		/// <summary>Static getter for Intro</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		public static global::System.Web.IHtmlString GetIntro(IComponentIntroProperty that) => that.Value<global::System.Web.IHtmlString>("intro");
 	}
 }
