@@ -27,6 +27,7 @@ Let's take a look inside...
 - [Code Editor](../docs/editors/code-editor.md) - a code snippet editor, _(using the ACE library that is bundled with Umbraco)._
 - [Content Blocks](../docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Editor Notes](../docs/editors/editor-notes.md) - Similar to [Notes](../docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.

@@ -45,6 +45,13 @@ namespace Umbraco.Web.PublishedModels
 		// properties
 
 		///<summary>
+		/// Editor Notes
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("editorNotes")]
+		public virtual object EditorNotes => this.Value("editorNotes");
+
+		///<summary>
 		/// Notes Rich Text
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
