@@ -10,7 +10,7 @@ It should be considered as a continual work-in-progress.
 
 It could have the potential to be serve as a starter kit, however it is opinionated, in that it used uSync and ModelsBuilder configurations.
 
-Umbraco vversion `8.17.0` is intentionally used, as that is the minimum version of Umbraco that latest version of Contentment supports.
+Umbraco version `8.17.0` is intentionally used, as that is the minimum version of Umbraco that latest version of Contentment supports.
 
 Feel free to use it, modify it, or don't use it, I don't care. Only please don't ask me to support your use of it.
 
