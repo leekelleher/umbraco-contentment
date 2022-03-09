@@ -5,22 +5,21 @@
 ### Data Sources
 
 
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #147.
-> https://github.com/leekelleher/umbraco-contentment/issues/147
-
-
 #### Number Range
 
-Generates a sequence of numbers within a specified range.
+This data-source enables you to enter the Number Range data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the Number Range data-source has the following options:
 
+![image](https://user-images.githubusercontent.com/85704521/157073520-84829cba-d469-45a9-b7f4-8dec4a211766.png)
+
+The first  and second fields are to enter the values of the first and end of the sequence.
+
+The third and forth fields are to configure the number of steps between each number and the amount of decimal places you want.
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the XML data-source item is a `integer` and `float`.
