@@ -4,23 +4,22 @@
 
 ### Data Sources
 
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #163.
-> https://github.com/leekelleher/umbraco-contentment/issues/163
+#### #### User-defined List
 
-
-#### User-defined List
-
-Manually configure the items for the data source.
+This data-source enables you to enter the URL of an #### User-defined List data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the User-defined List data-source has the following options:
 
+![image](https://user-images.githubusercontent.com/85704521/157446782-cbae8ced-93ad-46cb-99be-de613fc57775.png)
+
+Press "Add item" button and fill the feilds manually, or choose the advanced option to paste in the raw JSON.
+
+![image](https://user-images.githubusercontent.com/85704521/157456133-5ab1f1db-913a-4a3a-b0fb-d370b01692e0.png)
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the XML data-source item is a `string`.
 
