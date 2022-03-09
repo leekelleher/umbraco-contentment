@@ -4,22 +4,23 @@
 
 ### Data Sources
 
-#### #### User-defined List
+#### User-defined List
 
-This data-source enables you to enter the URL of an #### User-defined List data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
+This data-source enables you to manually configure the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
 The configuration of the User-defined List data-source has the following options:
 
-![image](https://user-images.githubusercontent.com/85704521/157446782-cbae8ced-93ad-46cb-99be-de613fc57775.png)
+![Configuration Editor for User-defined List](data-source--user-defined--configuration-editor-01.png)
 
-Press "Add item" button and fill the feilds manually, or choose the advanced option to paste in the raw JSON.
+Press "Add item" button and fill the fields manually, or choose the advanced option to paste in the raw JSON.
 
-![image](https://user-images.githubusercontent.com/85704521/157456133-5ab1f1db-913a-4a3a-b0fb-d370b01692e0.png)
+![Configuration Editor for User-defined List](data-source--user-defined--configuration-editor-02.png)
+
 
 ##### What is the value's object-type?
 
-The value for the XML data-source item is a `string`.
+The value for the User-defined List data-source item is a `string`.
 
