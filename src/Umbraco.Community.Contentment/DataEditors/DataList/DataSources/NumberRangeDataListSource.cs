@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;

@@ -1,0 +1,9 @@
+﻿@inherits UmbracoViewPage<CallToActionBlock>
+<section>
+    <h3>@Model.Heading</h3>
+    @Model.Intro
+    @if (Model.Link != null)
+    {
+        <p><a href="@Model.Link.Url" target="@Model.Link.Target">@Model.Link.Name</a></p>
+    }
+</section>

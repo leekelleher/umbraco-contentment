@@ -21,7 +21,7 @@ The main field is "**Notes**", here you can enter any instructional messages usi
 
 > _Fun fact: The rich-text editor uses Umbraco's TinyMCE integration, meaning that you can link to Umbraco content and embed Umbraco media._
 
-There is also an option to **hide the label** on the property itself. Selecting this option will enable the notes to be displayed in full width of the content property panel.
+There are also options to **hide the label** on the property itself, and to **hide the property group container**. Selecting these option will enable the notes to be displayed in full width and outside of the content property panel.
 
 
 ### How to use the editor?

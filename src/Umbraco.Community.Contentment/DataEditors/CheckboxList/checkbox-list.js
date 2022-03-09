@@ -27,10 +27,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            vm.items = config.items.slice();
+            vm.items = [];
 
-            vm.items.forEach(function (item) {
+            config.items.forEach(x => {
+                var item = Object.assign({}, x);
                 item.checked = $scope.model.value.indexOf(item.value) > -1;
+                vm.items.push(item);
             });
 
             vm.showDescriptions = Object.toBoolean(config.showDescriptions);
@@ -54,15 +56,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function changed(item) {
 
-            vm.toggleChecked = vm.items.every(function (item) {
+            vm.toggleChecked = vm.items.every(item => {
                 return item.checked;
             });
 
             $scope.model.value = [];
 
-            vm.items.forEach(function (x) {
-                if (x.checked) {
-                    $scope.model.value.push(x.value);
+            vm.items.forEach(item => {
+                if (item.checked) {
+                    $scope.model.value.push(item.value);
                 }
             });
 
@@ -72,7 +74,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function toggle() {
             $scope.model.value = [];
 
-            vm.items.forEach(function (item) {
+            vm.items.forEach(item => {
                 if (!item.disabled) {
 
                     item.checked = vm.toggleChecked;

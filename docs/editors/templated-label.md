@@ -32,7 +32,7 @@ If you need a starting point, here is an example you can use:
 </details>
 ```
 
-Also available is an option to **hide the label** on the property itself. Selecting this option will enable the notes to be displayed in full width of the content property panel.
+There are also options to **hide the label** on the property itself, and to **hide the property group container**. Selecting these option will enable the notes to be displayed in full width and outside of the content property panel.
 
 Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw value of the editor. Enabling this option will add a [property action](https://our.umbraco.com/Documentation/Extending/Property-Editors/Property-Actions/) called **Edit raw value**.
 

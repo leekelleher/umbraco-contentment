@@ -28,7 +28,7 @@ In your new Data Type, selected the "[Contentment] Render Macro" option. You wil
 
 The main field is "**Macro**", here you can select and configure the Macro to be rendered.
 
-There is also an option to **hide the label** on the property itself. Selecting this option will enable the rendered macro to be displayed in full width of the content property panel.
+There are also options to **hide the label** on the property itself, and to **hide the property group container**. Selecting these option will enable the notes to be displayed in full width and outside of the content property panel.
 
 
 ### How to use the editor?

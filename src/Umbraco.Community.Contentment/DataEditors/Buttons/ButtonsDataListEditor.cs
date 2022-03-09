@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-    public string Name => "Buttons";
+        public string Name => "Buttons";
 
         public string Description => "Select multiple values from a group of buttons.";
 

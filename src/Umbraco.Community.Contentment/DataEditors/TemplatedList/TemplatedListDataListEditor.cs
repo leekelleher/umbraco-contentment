@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-    public string Name => "Templated List";
+        public string Name => "Templated List";
 
         public string Description => "Select items from a list rendered with custom markup.";
 

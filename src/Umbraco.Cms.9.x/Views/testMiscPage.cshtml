@@ -1,0 +1,18 @@
+﻿@inherits UmbracoViewPage<TestMiscPage>
+@{
+    Layout = "_layout.cshtml";
+}
+
+@section body
+{
+    <h1>@Model.Name</h1>
+    <h3>@nameof(Model.Properties)</h3>
+    @foreach (var property in Model.Properties)
+    {
+        <div>
+            <h4>@property.Alias</h4>
+            <div><code>@property.PropertyType.ClrType</code></div>
+            <pre><code>@property.GetSourceValue()</code></pre>
+        </div>
+    }
+}

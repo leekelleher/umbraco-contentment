@@ -24,11 +24,6 @@
   Making use of the [`<umb-pagination>` directive](https://github.com/umbraco/Umbraco-CMS/search?q=general_previous)?
 
 
-- Editor Note
-  https://github.com/leekelleher/umbraco-contentment/discussions/187
-  https://our.umbraco.com/packages/backoffice-extensions/informative-label/
-
-
 ### Internally used editors
 
 Could these internally used editors have potential as standalone property editors?

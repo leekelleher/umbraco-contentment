@@ -30,8 +30,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }]);
             }
 
-            vm.hidePropertyGroup = Object.toBoolean(config.hidePropertyGroup);
-
+            // NOTE: If previewing in the Content Type Editor's property preview panel,
+            // we'll ignore the hide property group container.
+            vm.hidePropertyGroup = $scope.model.hasOwnProperty("contentTypeId") === false
+                && Object.toBoolean(config.hidePropertyGroup);
         };
 
         function setDirty() {

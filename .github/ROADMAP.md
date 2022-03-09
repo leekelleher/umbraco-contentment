@@ -74,6 +74,10 @@ Property Editors are:
 
 ### v3.2
 
+- [Editor Notes](https://github.com/leekelleher/umbraco-contentment/discussions/187)
+
+### v3.3
+
 - `╰(*°▽°*)╯` _I haven't decided yet._
 
 

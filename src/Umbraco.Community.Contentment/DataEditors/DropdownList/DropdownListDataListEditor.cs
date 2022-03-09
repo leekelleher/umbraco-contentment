@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-    public string Name => "Dropdown List";
+        public string Name => "Dropdown List";
 
         public string Description => "Select a single value from a dropdown select list.";
 

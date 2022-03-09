@@ -35,8 +35,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value.splice(1);
             }
 
-            vm.items = config.items.slice();
-
             vm.hideIcon = config.labelStyle === "text";
             vm.hideName = config.labelStyle === "icon";
 
@@ -55,8 +53,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.defaultIcon = config.defaultIcon;
             vm.iconExtras = (vm.hideName === false ? " mr2 " : " mr0 ") + sizes[config.size];
 
-            vm.items.forEach(function (item) {
+            vm.items = [];
+
+            config.items.forEach(x => {
+                var item = Object.assign({}, x);
                 item.selected = $scope.model.value.indexOf(item.value) > -1;
+                vm.items.push(item);
             });
 
             vm.select = select;
@@ -81,18 +83,17 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function clear() {
             $scope.model.value = [];
-            vm.items.forEach(x => x.selected = false);
+            vm.items.forEach(item => item.selected = false);
             setDirty();
         };
 
         function select(item) {
 
-            // TODO: [LK] Stop mutating the `items`. Have a `selectedValues` lookup.
-
             item.selected = item.selected === false;
+
             $scope.model.value = [];
 
-            vm.items.forEach(function (x) {
+            vm.items.forEach(x => {
 
                 if (vm.multiple === false) {
                     x.selected = x.value === item.value;
