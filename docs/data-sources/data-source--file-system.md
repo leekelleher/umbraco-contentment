@@ -2,25 +2,22 @@
 
 ## Contentment for Umbraco
 
-### Data Sources
-
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #144.
-> https://github.com/leekelleher/umbraco-contentment/issues/144
-
-
 #### File System
 
-Select paths from the physical file system as the data source.
-
+This data-source enables you to enter the URL of a file system data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the file system data-source has the following options:
 
+![image](https://user-images.githubusercontent.com/85704521/157051866-1b3b4cfb-9a86-4c13-97fa-a96bd62cde0b.png)
+
+The first field is **URL** folder path, here you can enter either a remote URL, or a local relative folder path.
+
+e.g. `https://leekelleher.com/umbraco/contentment/` or `~/umbraco/config/lang/`
+
+The next set of fields to enter Filename filter. e.g. `*.css`.
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the file system data-source item is a `string`.
