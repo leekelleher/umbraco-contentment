@@ -4,23 +4,24 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #149.
-> https://github.com/leekelleher/umbraco-contentment/issues/149
-
-
 #### Text Delimited Data
 
-Configure text-delimited data to populate the data source.
+This data-source enables you to enter the URL of an Text Delimited data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the Text Delimited data-source has the following options:
 
+![image](https://user-images.githubusercontent.com/85704521/157444166-89af3ede-75ef-4417-951d-a815180d58d4.png)
+
+The first field is **URL**, here you can enter either a remote URL, or a local relative file path.
+
+e.g. `https://leekelleher.com/umbraco/contentment/data.csv` or `~/umbraco/config/lang/en.csv`
+
+You can keep the other fields into their default values, or change them as you need.
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the Text Delimited data-source item is a `string`.
+
