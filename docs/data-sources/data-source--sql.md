@@ -4,23 +4,19 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #148.
-> https://github.com/leekelleher/umbraco-contentment/issues/148
-
-
-#### SQL Data
-
-Use a SQL Server database query as the data source.
+This data-source enables you to enter the URL of an SQL data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the SQL data-source has the following options:
+
+![image](https://user-images.githubusercontent.com/85704521/157441947-658dbe66-91a2-4d37-8dea-e216c556ce20.png)
+
+
+The first field is enter your SQL query or paste it. The second field is to select the connection string.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the SQL data-source item is a `string`.
