@@ -81,6 +81,13 @@ Property Editors are:
 - `╰(*°▽°*)╯` _I haven't decided yet._
 
 
+## v4
+
+### v4.0
+
+- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.18, v9.4 and v10.0.
+
+
 ## Future feature releases
 
 _Who knows?!_ `¯\_(ツ)_/¯`

@@ -22,4 +22,5 @@ src/Umbraco.Cms.[89].x/App_Plugins/*/**
 src/Umbraco.Cms.8.x/Umbraco/*
 src/Umbraco.Cms.[89].x/Views/Partials/[Bb]lock[Ll]ist/*
 src/Umbraco.Cms.[89].x/Views/Partials/[Gg]rid/*
+src/Umbraco.Cms.10.x/*/**
 tools/*.exe
