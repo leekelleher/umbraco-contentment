@@ -59,6 +59,15 @@ if (-NOT $?) {
 }
 
 
+# Copy the assemblies (DLL / PDB)
+$net472Folder = "${assetsFolder}\bin";
+if (!(Test-Path -Path $net472Folder)) {New-Item -Path $net472Folder -Type Directory;}
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net472\${projectNamespace}.*" -Destination $net472Folder;
+$net50Folder = "${assetsFolder}\net50";
+if (!(Test-Path -Path $net50Folder)) {New-Item -Path $net50Folder -Type Directory;}
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net50\${projectNamespace}.*" -Destination $net50Folder;
+
+
 # Populate the Umbraco package manifest
 
 $umbFolder = Join-Path -Path $buildFolder -ChildPath "__umb";

@@ -28,7 +28,7 @@
       <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
     </ItemGroup>
   </Target>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -TargetFramework $(TargetFramework) -TargetDir $(TargetDir) -ProjectName $(ProjectName) -ProjectDir $(ProjectDir) -ConfigurationName $(ConfigurationName)" />
+  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net50'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -ProjectDir $(ProjectDir)" />
   </Target>
 </Project>
