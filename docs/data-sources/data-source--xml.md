@@ -23,7 +23,7 @@ The next set of fields are the XPath expressions used to populate the data-sourc
 
 **Items XPath** is to used to populate the item. **Name XPath** is to select the item's name. Note that this XPath is used within the context of the item, so only needs to be relative to the item' XML node itself, e.g. `@name` will select the item's `name` attribute. The same follows for the **Value XPath**, **Icon XPath**, and **Description XPath** fields.
 
-> If you need help with XPath expressions and syntax, please refer to this resource: <https://www.w3schools.com/xml/xpath_intro.asp>.
+> If you need help with XPath expressions and syntax, please refer to this resource: <https://developer.mozilla.org/en-US/docs/Web/XPath>.
 
 > **An advanced note about XML namespaces.** If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with `ns` followed by a number, e.g. first will be `ns1`, second will be `ns2`, and so forth.
 
