@@ -37,6 +37,9 @@ foreach($razorFile in $razorFiles){
     [IO.File]::WriteAllLines("${pluginFolder}\render\$($razorFile.Name)", $contents);
 }
 
+# NOTE: If you need to download "AjaxMinifier.exe", you can get it from here:
+# https://github.com/microsoft/ajaxmin/releases/download/v5.14/Microsoft.Ajax.Minifier.v5.14.zip
+
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
 Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
