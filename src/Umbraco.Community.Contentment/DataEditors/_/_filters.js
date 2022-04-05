@@ -22,11 +22,9 @@ angular.module("umbraco.filters").filter("lkNodeName", [
 
 angular.module("umbraco.filters").filter("lkGroupBy", [
     function () {
-        return _.memoize(function (items, field) {
-            return _.chain(items)
-                .sortBy(field)
-                .groupBy(field)
-                .value();
-        });
+        return _.memoize(
+            (items, field, cacheKey) => _.chain(items).sortBy(field).groupBy(field).value(),
+            (items, field, cacheKey) => [cacheKey, field].join("_")
+        );
     }
 ]);

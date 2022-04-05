@@ -19,6 +19,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             enableFilter: false,
             orderBy: "name",
             help: null,
+            cacheKey: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -43,6 +44,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     vm.enableFilter = config.enableFilter;
                     vm.orderBy = config.orderBy;
                     vm.select = select;
+                    vm.cacheKey = config.cacheKey;
 
                 }
 

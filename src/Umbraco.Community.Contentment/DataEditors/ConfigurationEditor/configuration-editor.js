@@ -137,6 +137,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     enableFilter: Object.toBoolean(config.enableFilter),
                     orderBy: config.orderBy,
                     help: config.help,
+                    cacheKey: $scope.model.alias,
                 },
                 value: {},
                 submit: function (model) {
@@ -168,6 +169,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     mode: "edit",
                     editor: editor,
+                    cacheKey: $scope.model.alias,
                 },
                 value: value,
                 submit: function (model) {

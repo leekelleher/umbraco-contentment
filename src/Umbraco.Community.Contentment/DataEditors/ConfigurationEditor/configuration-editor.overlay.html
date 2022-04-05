@@ -29,7 +29,7 @@
                                            auto-focus="true">
                         </umb-search-filter>
 
-                        <div ng-repeat="(label, items) in vm.items | lkGroupBy:'group'">
+                        <div ng-repeat="(label, items) in vm.items | lkGroupBy:'group':vm.cacheKey">
                             <h5 ng-if="label != 'undefined' && results.length > 0" ng-bind="label"></h5>
                             <ul class="umb-actions umb-actions-child">
                                 <li class="umb-action" ng-repeat="item in items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
