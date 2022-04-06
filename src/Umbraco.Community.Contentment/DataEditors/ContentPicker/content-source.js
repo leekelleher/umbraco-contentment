@@ -23,7 +23,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             if ($scope.model.value && $scope.model.value.startsWith("umb://document/")) {
                 vm.node = {};
                 vm.loading = true;
-                entityResource.getById($scope.model.value, "Document").then(function (item) {
+                entityResource.getById($scope.model.value, "Document").then(item => {
                     populate(item);
                     vm.loading = false;
                 })
@@ -92,7 +92,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function populate(item) {
             vm.node = item;
-            entityResource.getUrl(item.id, "Document").then(function (data) {
+            entityResource.getUrl(item.id, "Document").then(data => {
                 vm.node.path = data;
             });
         }

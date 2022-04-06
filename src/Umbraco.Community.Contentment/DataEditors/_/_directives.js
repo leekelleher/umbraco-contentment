@@ -13,12 +13,12 @@ angular.module("umbraco.directives.html").directive("lkHtmlAttributes", [
             link: function (scope, element, attrs) {
                 var attributes = scope.attributes();
                 if (Array.isArray(attributes) && attributes.length > 0) {
-                    attributes.forEach(function (x) {
-                        if (x.name === "class") {
+                    attributes.forEach(attr => {
+                        if (attr.name === "class") {
                             // NOTE: Slight bug, it did not account for existing class values.
-                            element.addClass(x.value);
+                            element.addClass(attr.value);
                         } else {
-                            element.attr(x.name, x.value);
+                            element.attr(attr.name, attr.value);
                         }
                     });
                 }

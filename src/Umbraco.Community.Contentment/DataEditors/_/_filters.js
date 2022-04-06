@@ -12,9 +12,7 @@ angular.module("umbraco.filters").filter("lkNodeName", [
                 return $filter("ncNodeName")(input);
             }
 
-            return input.map(function (x) {
-                return $filter("ncNodeName")(x);
-            }).join(", ");
+            return input.map(item => $filter("ncNodeName")(item)).join(", ");
 
         };
     }

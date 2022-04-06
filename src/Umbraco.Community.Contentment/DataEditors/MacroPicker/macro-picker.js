@@ -54,7 +54,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; })) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value])) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     });
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
@@ -85,7 +85,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, function (p) { return [p.alias, p.value]; })) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value])) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
                     };
 
                     setDirty();
@@ -100,7 +100,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function remove($index) {
             var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
-            localizationService.localizeMany(keys).then(function (data) {
+            localizationService.localizeMany(keys).then(data => {
                 overlayService.open({
                     title: data[1],
                     content: data[0],

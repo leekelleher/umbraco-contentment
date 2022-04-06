@@ -38,8 +38,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.$on("formSubmitting", function (ev, args) {
                 if (vm.editor.fields && vm.editor.fields.length > 0) {
-                    vm.editor.fields.forEach(x => {
-                        $scope.model.value.value[x.key] = x.value;
+                    vm.editor.fields.forEach(item => {
+                        $scope.model.value.value[item.key] = item.value;
                     });
                 }
             });

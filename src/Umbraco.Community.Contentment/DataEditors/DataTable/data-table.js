@@ -29,14 +29,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }
 
-            vm.headings = config.fields.map(function (x) { return x.label });
+            vm.headings = config.fields.map(item => item.label);
             vm.items = [];
 
-            $scope.model.value.forEach(function (value, row) {
+            $scope.model.value.forEach((value, row) => {
 
                 var fields = [];
 
-                config.fields.forEach(function (field, cell) {
+                config.fields.forEach((field, cell) => {
                     fields.push(Object.assign({
                         alias: [$scope.model.alias, row, cell].join("_"),
                         value: value[field.key]
@@ -76,9 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
-                stop: function (e, ui) {
-                    setDirty();
-                }
+                stop: (e, ui) => setDirty()
             };
 
             vm.showPrompt = showPrompt;
@@ -92,7 +90,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     labelKey: "contentment_editRawValue",
                     icon: "brackets",
                     method: function () {
-                        devModeService.editValue($scope.model, function () {
+                        devModeService.editValue($scope.model, () => {
                             // TODO: [LK:2021-04-20] Ensure that the edits are valid.
                         });
                     }
@@ -150,11 +148,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = [];
 
-            vm.items.forEach(function (row) {
+            vm.items.forEach(row => {
 
                 var obj = {};
 
-                row.forEach(function (cell) {
+                row.forEach(cell => {
                     obj[cell.key] = cell.value;
                 });
 
@@ -163,9 +161,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
         });
 
-        $scope.$on("$destroy", function () {
-            unsubscribe();
-        });
+        $scope.$on("$destroy", () => unsubscribe());
 
         init();
     }

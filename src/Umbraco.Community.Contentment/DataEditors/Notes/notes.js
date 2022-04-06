@@ -24,9 +24,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.umbProperty.setPropertyActions([{
                     labelKey: "contentment_editRawValue",
                     icon: "brackets",
-                    method: function () {
-                        devModeService.editValue($scope.model, setDirty);
-                    }
+                    method: () => devModeService.editValue($scope.model, setDirty)
                 }]);
             }
 

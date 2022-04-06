@@ -44,9 +44,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
-                stop: function (e, ui) {
-                    setDirty();
-                }
+                stop: (e, ui) => setDirty()
             };
 
             vm.notes = config.notes;
@@ -65,7 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }, {
                     labelKey: "clipboard_labelForRemoveAllEntries",
                     icon: "trash",
-                    method: function () {
+                    method: () => {
                         $scope.model.value = [];
                     }
                 }]);
@@ -95,7 +93,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function edit() {
-            devModeService.editValue($scope.model, function () {
+            devModeService.editValue($scope.model, () => {
                 // NOTE: Any future validation can be done here.
             });
         };
@@ -126,7 +124,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function remove($index) {
             if (config.confirmRemoval === true) {
                 var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
-                localizationService.localizeMany(keys).then(function (data) {
+                localizationService.localizeMany(keys).then(data => {
                     overlayService.open({
                         title: data[1],
                         content: data[0],
