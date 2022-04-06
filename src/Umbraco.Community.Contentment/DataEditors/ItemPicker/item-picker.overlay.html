@@ -45,7 +45,7 @@
                             <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">                              
                                 <span>
                                     <umb-icon icon="{{item.selected ? 'icon-check color-green' : item.icon || vm.defaultIcon}}" class="large icon"></umb-icon>
-                                    {{item.name}}
+                                    <span ng-bind="item.name"></span>
                                 </span>
                             </button>
                         </li>
