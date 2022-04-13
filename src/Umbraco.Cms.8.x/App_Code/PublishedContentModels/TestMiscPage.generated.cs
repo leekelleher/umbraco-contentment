@@ -57,5 +57,12 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("textboxList")]
 		public virtual global::System.Collections.Specialized.NameValueCollection TextboxList => this.Value<global::System.Collections.Specialized.NameValueCollection>("textboxList");
+
+		///<summary>
+		/// Text Input
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("textInput")]
+		public virtual string TextInput => this.Value<string>("textInput");
 	}
 }

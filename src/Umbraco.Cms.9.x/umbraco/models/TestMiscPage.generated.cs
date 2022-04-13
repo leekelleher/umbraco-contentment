@@ -64,5 +64,13 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("textboxList")]
 		public virtual global::System.Collections.Specialized.NameValueCollection TextboxList => this.Value<global::System.Collections.Specialized.NameValueCollection>(_publishedValueFallback, "textboxList");
+
+		///<summary>
+		/// Text Input
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "9.0.0+5bfab13dc5a268714aad2426a2b68ab5561a6407")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("textInput")]
+		public virtual string TextInput => this.Value<string>(_publishedValueFallback, "textInput");
 	}
 }
