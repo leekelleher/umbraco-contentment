@@ -9,7 +9,10 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div class="contentment" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.TextInput.Controller as vm">
-    <div class="text-input">
+    <div class="text-input" ng-class="{ 'input-prepend': vm.prepend, 'input-append': vm.append }">
+        <span class="add-on" ng-if="vm.prepend">
+            <umb-icon icon="{{vm.prepend}}" class="icon medium"></umb-icon>
+        </span>
         <input ng-model="model.value"
                ng-trim="false"
                id="{{model.alias}}"
@@ -19,6 +22,9 @@
                autocomplete="{{vm.autoComplete}}"
                spellcheck="{{vm.spellCheck}}"
                placeholder="{{vm.placeholderText}}" />
+        <span class="add-on" ng-if="vm.append">
+            <umb-icon icon="{{vm.append}}" class="icon medium"></umb-icon>
+        </span>
     </div>
     <div class="help" ng-if="model.value.length >= vm.maxCharsThreshold && model.value.length <= vm.maxChars">
         <p tabindex="0">
