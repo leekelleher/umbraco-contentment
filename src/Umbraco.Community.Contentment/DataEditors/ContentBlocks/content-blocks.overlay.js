@@ -5,16 +5,21 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.ContentBlocks.Controller", [
     "$scope",
+    "$http",
     "blueprintConfig",
     "clipboardService",
     "contentResource",
-    function ($scope, blueprintConfig, clipboardService, contentResource) {
+    "editorService",
+    "editorState",
+    "umbRequestHelper",
+    function ($scope, $http, blueprintConfig, clipboardService, contentResource, editorService, editorState, umbRequestHelper) {
 
         // console.log("content-blocks-overlay.model", $scope.model, blueprintConfig);
 
         var defaultConfig = {
             elementType: null,
             elementTypes: [],
+            reusableItems: [],
             enableFilter: true,
             currentPage: null,
             currentPageId: -2,
@@ -39,6 +44,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                 vm.mode = "select";
                 vm.items = config.elementTypes;
+                vm.reusableItems = config.reusableItems;
                 vm.selectedElementType = null;
 
                 // NOTE: Corrected `retriveDataOfType` typo, but kept backwards-compatibility for v8.17.x.
@@ -47,7 +53,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     ? clipboardService.retrieveDataOfType("elementType", config.elementTypes.map(item => item.alias))
                     : clipboardService.retriveDataOfType("elementType", config.elementTypes.map(item => item.alias));
 
-                if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
+                if (config.elementTypes.length + vm.clipboardItems.length + vm.reusableItems.length > 1) {
 
                     vm.title = "Add content";
                     vm.description = "Select a content type...";
@@ -57,6 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                     vm.select = select;
                     vm.paste = paste;
+                    vm.tree = tree;
 
                     vm.clearClipboard = clearClipboard;
                     vm.prompt = false;
@@ -66,6 +73,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 } else if (config.elementTypes.length === 1) {
 
                     select(config.elementTypes[0]);
+
+                } else if (config.reusableItems.length === 1) {
+
+                    tree(config.reusableItems[0])
 
                 }
             }
@@ -192,6 +203,52 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                 Object.assign(vm.content, data.variants[0]);
                 vm.loading = false;
+            });
+
+        };
+
+        function tree(item) {
+
+            //console.log("content-blocks-overlay.tree", item);
+
+            editorService.contentPicker({
+                multiPicker: false,
+                size: "small",
+                startNodeId: item.parentNode,
+                currentNode: editorState.getCurrent(),
+                submit: function (model) {
+
+                    var item = model.selection[0];
+
+                    console.log("content-blocks-overlay.contentPicker.submit", item);
+
+                    umbRequestHelper.resourcePromise(
+                        $http.get(
+                            "backoffice/Contentment/ContentBlocksApi/GetContentTypeByAlias",
+                            { params: { alias: item.metaData.ContentTypeAlias } }
+                        ),
+                        "Failed to retrieve content type by alias")
+                        .then(result => {
+                            if (result && result.contentTypeKey) {
+
+                                console.log("content-blocks-overlay.contentResource.getScaffold", result);
+
+                                $scope.model.submit({
+                                    name: item.name,
+                                    elementType: result.contentTypeKey,
+                                    icon: item.icon,
+                                    key: item.key,
+                                    value: {} // TODO: [LK:2022-04-14] You got to here. Might need to pass more data through, to help with the lookups, etc.
+                                });
+
+                            }
+                        });
+
+                    editorService.close();
+                },
+                close: function () {
+                    editorService.close();
+                }
             });
 
         };

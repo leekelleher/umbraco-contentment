@@ -161,6 +161,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             _tempDataProvider = tempDataProvider;
         }
 
+        [HttpGet]
+        public ActionResult GetContentTypeByAlias(string alias)
+        {
+            var contentType = _contentTypeService.Get(alias);
+
+            return contentType != null
+                ? new JsonResult(new { contentTypeKey = contentType.Key })
+                : NotFound();
+        }
+
         [HttpPost]
         public ActionResult GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
         {
@@ -247,6 +257,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         // https://gist.github.com/ahmad-moussawi/1643d703c11699a6a4046e57247b4d09
         // https://weblog.west-wind.com/posts/2022/Jun/21/Back-to-Basics-Rendering-Razor-Views-to-String-in-ASPNET-Core
         // https://gist.github.com/Matthew-Wise/80626bbf9c9590228fc317774f15222a
+        // RenderViewComponent: https://gist.github.com/pauldotknopf/b424e9b8b03d31d67f3cce59f09ab17f
+        // https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components?view=aspnetcore-6.0#invoking-a-view-component-directly-from-a-controller
         private string RenderPartialViewToString(string viewName, ViewDataDictionary viewData)
         {
             IView view = default;

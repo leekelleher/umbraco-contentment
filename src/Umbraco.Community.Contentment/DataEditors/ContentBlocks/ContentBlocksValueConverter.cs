@@ -70,22 +70,35 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
                         continue;
 
-                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content.GetContentType(alias);
-                    if (contentType == null || contentType.IsElement == false)
+                    var contentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
+
+                    var contentType = contentCache.GetContentType(alias);
+                    if (contentType == null)
                         continue;
 
-                    var properties = new List<IPublishedProperty>();
-
-                    foreach (var thing in item.Value)
+                    if (contentType.IsElement == false)
                     {
-                        var propType = contentType.GetPropertyType(thing.Key);
-                        if (propType != null)
+                        var content = contentCache.GetById(item.Key);
+                        if (content != null)
                         {
-                            properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+                            elements.Add(_publishedModelFactory.CreateModel(content));
                         }
                     }
+                    else
+                    {
+                        var properties = new List<IPublishedProperty>();
 
-                    elements.Add(_publishedModelFactory.CreateModel(new DetachedPublishedElement(item.Key, contentType, properties)));
+                        foreach (var thing in item.Value)
+                        {
+                            var propType = contentType.GetPropertyType(thing.Key);
+                            if (propType != null)
+                            {
+                                properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+                            }
+                        }
+
+                        elements.Add(_publishedModelFactory.CreateModel(new DetachedPublishedElement(item.Key, contentType, properties)));
+                    }
                 }
 
                 return elements;

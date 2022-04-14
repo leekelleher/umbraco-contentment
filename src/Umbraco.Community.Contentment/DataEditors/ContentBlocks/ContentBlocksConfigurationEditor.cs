@@ -14,6 +14,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
+using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
@@ -21,6 +22,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -34,6 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly ConfigurationEditorUtility _utility;
 
         internal const string DisplayMode = "displayMode";
+        internal const string ReusableContent = "reusableContent";
 
         public ContentBlocksConfigurationEditor(
             IContentService contentService,
@@ -77,6 +80,107 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
 
             Fields.Add(new ContentBlocksTypesConfigurationField(_elementTypes.Values, ioHelper));
+
+            var reusableContent = new[]
+            {
+                new ConfigurationEditorModel
+                {
+                    Key = "reusableContent",
+                    Name = "Reusable Content",
+                    NameTemplate = "{{name}}",
+                    Description = default,
+                    DescriptionTemplate = "{{description}}",
+                    Icon = UmbConstants.Icons.ContentType,
+                    IconTemplate = "{{icon}}",
+                    DefaultValues = new Dictionary<string, object>
+                    {
+                        { "icon", UmbConstants.Icons.ContentType },
+                        { "nameTemplate", "{{ udi | ncNodeName }}" },
+                        { "overlaySize", "small" },
+                        { "enablePreview", Constants.Values.False },
+                    },
+                    Fields = new[]
+                    {
+                        new ConfigurationField
+                        {
+                            Key = "name",
+                            Name = "Name",
+                            Description = "",
+                            View = "textstring",
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "description",
+                            Name = "Description",
+                            Description = "",
+                            View = "textstring",
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "icon",
+                            Name = "Icon",
+                            Description = "",
+                            View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "parentNode",
+                            Name = "Parent node",
+                            Description = "Set a parent node to use its child nodes as reusable content.",
+                            View =  ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "nameTemplate",
+                            Name = "Name template",
+                            Description = "Enter an AngularJS expression to evaluate against each block for its name.",
+                            View = "textstring",
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "overlaySize",
+                            Name = "Editor overlay size",
+                            Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
+                            View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                            Config = new Dictionary<string, object>
+                            {
+                                { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                                    {
+                                        new DataListItem { Name = "Small", Value = "small" },
+                                        new DataListItem { Name = "Medium", Value = "medium" },
+                                        new DataListItem { Name = "Large", Value = "large" }
+                                    }
+                                }
+                            }
+                        },
+                        new ConfigurationField
+                        {
+                            Key = "enablePreview",
+                            Name = "Enable preview?",
+                            Description = "Select to enable a rich preview for this content block type.",
+                            View = "views/propertyeditors/boolean/boolean.html"
+                        }
+                    },
+                    OverlaySize = OverlaySize.Medium,
+                }
+            };
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = ReusableContent,
+                Name = "Reusable content",
+                Description = "<em>(optional)</em> Configure library repositories to reuse content pages as blocks.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "defaultdialogs_selectContentStartNode" },
+                    { "allowDuplicates", Constants.Values.True },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, reusableContent },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+                }
+            });
+
             Fields.Add(new EnableFilterConfigurationField());
             Fields.Add(new MaxItemsConfigurationField(ioHelper));
             Fields.Add(new DisableSortingConfigurationField());
@@ -183,6 +287,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 config[ContentBlocksTypesConfigurationField.ContentBlockTypes] = elementTypes;
+            }
+
+            if (config.TryGetValueAs(ReusableContent, out JArray array3) == true && array3.Count > 0)
+            {
+                var items3 = new List<JToken>();
+
+                for (var i = 0; i < array3.Count; i++)
+                {
+                    items3.Add(array3[i]["value"]);
+                }
+
+                config[ReusableContent] = items3;
             }
 
             if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)

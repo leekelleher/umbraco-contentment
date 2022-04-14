@@ -57,6 +57,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.itemLookup = {};
             config.allowEdit = {};
             config.expressions = {};
+            config.iconTemplates = {};
             config.missingItem = {};
 
             config.items.forEach(item => {
@@ -88,6 +89,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             }
                         }
                     }
+                }
+
+                if (item.iconTemplate) {
+                    config.iconTemplates[item.key] = $interpolate(item.iconTemplate);
                 }
             });
 
@@ -226,6 +231,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         delete item.value.$index;
                     }
                 }
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            if (propertyName === "icon" && config.iconTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.iconTemplates[item.key];
             }
 
             return label || config.itemLookup[item.key][propertyName];
