@@ -165,9 +165,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ActionResult GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
         {
             var preview = true;
-            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
+            var contentCache = _umbracoContextAccessor.GetRequiredUmbracoContext().Content;
 
-            var content = umbracoContext.Content.GetById(true, contentId);
+            var content = contentCache.GetById(true, contentId);
             if (content == null)
             {
                 _logger.LogDebug($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
@@ -179,7 +179,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, _contentTypeService) == true)
                 {
-                    var contentType = umbracoContext.PublishedSnapshot.Content.GetContentType(alias);
+                    var contentType = contentCache.GetContentType(alias);
                     if (contentType != null && contentType.IsElement == true)
                     {
                         var properties = new List<IPublishedProperty>();

@@ -50,7 +50,8 @@
         }
 
             .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--left .icon {
-                padding-right: 3px;
+                padding-top: 4px;
+                padding-right: 4px;
             }
 
         .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default {
