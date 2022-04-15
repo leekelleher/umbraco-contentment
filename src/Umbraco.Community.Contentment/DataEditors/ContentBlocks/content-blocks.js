@@ -76,6 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
+            vm.populateIcon = populateIcon;
             vm.populateName = populateName;
             vm.sort = () => populatePreviews();
 
@@ -278,6 +279,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     preview(i);
                 }
             }
+        };
+
+        function populateIcon(item, $index) {
+
+            if (item.hasOwnProperty("icon") === true) {
+                return item.icon;
+            }
+
+            if (item.elementType) {
+                return config.elementTypeLookup[item.elementType].icon;
+            }
+
+            return "icon-document";
         };
 
         function populateName(item, $index) {

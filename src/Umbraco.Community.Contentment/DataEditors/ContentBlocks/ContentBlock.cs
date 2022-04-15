@@ -17,8 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Guid Key { get; set; }
 
-        public string Icon { get; set; }
-
         public Dictionary<string, object> Value { get; set; }
     }
 }

@@ -108,7 +108,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             vm.content = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: String.CreateGuid()
             };
 
@@ -134,7 +133,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             var item = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: String.CreateGuid(),
                 value: {}
             };
@@ -167,7 +165,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             vm.content = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: element.key
             };
 
@@ -200,7 +197,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 var item = {
                     elementType: vm.content.elementType,
                     key: vm.content.key,
-                    icon: vm.content.icon,
                     value: {},
                 };
 
