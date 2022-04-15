@@ -43,17 +43,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "enablePreview", Constants.Values.False },
+            { "enablePreview", Constants.Values.True },
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
         };
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"" open>
-<summary><strong>A note about block type previews.</strong></summary>
-<p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
-</details>", true),
             new ConfigurationField
             {
                 Key = "allowCopy",
