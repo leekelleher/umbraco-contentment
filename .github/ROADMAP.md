@@ -78,6 +78,11 @@ Property Editors are:
 
 ### v3.3
 
+- [Content Blocks](../docs/editors/content-blocks.md) previews on "Blocks" display mode
+- [Text Input](../docs/editors/text-input.md): adds prepend/append icon options
+
+### v3.4
+
 - `╰(*°▽°*)╯` _I haven't decided yet._
 
 
@@ -86,6 +91,10 @@ Property Editors are:
 ### v4.0
 
 - A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.18, v9.4 and v10.0.
+
+### v4.1
+
+- `(⊙_⊙;)` _I haven't decided yet._
 
 
 ## Future feature releases
