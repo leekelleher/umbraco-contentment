@@ -30,7 +30,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 active: false,
             }];
 
-            vm.changeTab = function (tab) {
+            vm.changeTab = tab => {
                 vm.tabs.forEach(x => x.active = false);
                 vm.activeTab = tab.alias;
                 tab.active = true;
@@ -41,12 +41,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var events = [];
 
-            events.push(eventsService.on("contentment.config-editor.model", function (event, args) {
+            events.push(eventsService.on("contentment.config-editor.model", (event, args) => {
                 config[args.alias] = args.value;
                 fetch();
             }));
 
-            $scope.$on("$destroy", function () {
+            $scope.$on("$destroy", () => {
                 for (var event in events) {
                     eventsService.unsubscribe(events[event]);
                 }
@@ -63,7 +63,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 umbRequestHelper.resourcePromise(
                     $http.post("backoffice/Contentment/DataListApi/GetDataSourceItems", config),
                     "Failed to retrieve data source items.")
-                    .then(function (result) {
+                    .then(result => {
 
                         vm.items = result.config.items;
 

@@ -43,8 +43,10 @@
                     <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
                         <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                             <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">
-                                <i class="icon" ng-class="item.selected ? 'icon-check color-green' : item.icon || vm.defaultIcon" aria-hidden="true"></i>
-                                {{item.name}}
+                                <span>
+                                    <umb-icon icon="{{item.selected ? 'icon-check color-green' : item.icon || vm.defaultIcon}}" class="large icon"></umb-icon>
+                                    <span ng-bind="item.name"></span>
+                                </span>
                             </button>
                         </li>
                         <li class="alert alert-danger" ng-if="results.length == 0">

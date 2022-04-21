@@ -25,6 +25,8 @@
         <Compile Include="umbraco/models/**" Exclude="**/*.flag" />
     </ItemGroup>
 
+    <Import Project="..\..\build\_vs-copy-assets.targets" />
+    
     <ItemGroup>
       <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>

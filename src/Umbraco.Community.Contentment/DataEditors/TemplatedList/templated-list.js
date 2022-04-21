@@ -35,10 +35,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value.splice(1);
             }
 
-            vm.items = config.items.slice();
+            vm.items = [];
 
-            vm.items.forEach(function (item) {
+            config.items.forEach(x => {
+                var item = Object.assign({}, x);
                 item.selected = $scope.model.value.indexOf(item.value) > -1;
+                vm.items.push(item);
             });
 
             vm.htmlAttributes = config.htmlAttributes;
@@ -71,7 +73,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function clear() {
             $scope.model.value = [];
-            vm.items.forEach(x => x.selected = false);
+            vm.items.forEach(item => item.selected = false);
             setDirty();
         };
 
@@ -81,7 +83,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = [];
 
-            vm.items.forEach(function (x) {
+            vm.items.forEach(x => {
 
                 if (vm.multiple === false) {
                     x.selected = x.value === item.value;

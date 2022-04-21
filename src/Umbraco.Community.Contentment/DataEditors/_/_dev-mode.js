@@ -23,9 +23,7 @@ angular.module("umbraco.services").factory("Umbraco.Community.Contentment.Servic
                             wrap: true
                         },
                         onLoad: function (_editor) {
-                            $timeout(function () {
-                                _editor.focus();
-                            });
+                            $timeout(() => _editor.focus());
                         },
                     },
                     view: "/App_Plugins/Contentment/editors/_json-editor.html",

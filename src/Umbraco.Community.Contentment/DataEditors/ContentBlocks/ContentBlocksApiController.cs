@@ -165,9 +165,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ActionResult GetPreviewMarkup([FromBody] JObject item, int elementIndex, Guid elementKey, int contentId)
         {
             var preview = true;
-            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
+            var contentCache = _umbracoContextAccessor.GetRequiredUmbracoContext().Content;
 
-            var content = umbracoContext.Content.GetById(true, contentId);
+            var content = contentCache.GetById(true, contentId);
             if (content == null)
             {
                 _logger.LogDebug($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
@@ -179,7 +179,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, _contentTypeService) == true)
                 {
-                    var contentType = umbracoContext.PublishedSnapshot.Content.GetContentType(alias);
+                    var contentType = contentCache.GetContentType(alias);
                     if (contentType != null && contentType.IsElement == true)
                     {
                         var properties = new List<IPublishedProperty>();
@@ -249,14 +249,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             IView view = default;
 
-            // TODO: [v9] [LK:2021-05-13] Implement the custom partial-view paths.
-            // e.g. "~/Views/Partials/Blocks/{0}.cshtml", "~/Views/Partials/Blocks/Default.cshtml", "~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"
-
-            var getViewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
-            if (getViewResult.Success)
+            // HACK: I couldn't figure out how to add custom view locations to the Razor view engine, so this is my hack.
+            // If anyone knows of a better approach, the code is open to contributions. [LK:2022-04-15]
+            var locations = new[]
             {
-                view = getViewResult.View;
-            }
+                $"/Views/Partials/Blocks/{viewName}.cshtml",
+                "/Views/Partials/Blocks/Default.cshtml",
+                "/App_Plugins/Contentment/render/ContentBlockPreview.cshtml",
+            };
 
             var actionContext = new ActionContext(HttpContext, new RouteData(), new ActionDescriptor());
             var findViewResult = _viewEngine.FindView(actionContext, viewName, isMainPage: true);
@@ -264,21 +264,31 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 view = findViewResult.View;
             }
+            else
+            {
+                foreach (var location in locations)
+                {
+                    var getViewResult = _viewEngine.GetView(executingFilePath: null, viewPath: location, isMainPage: true);
+                    if (getViewResult.Success)
+                    {
+                        view = getViewResult.View;
+                        break;
+                    }
+                }
+            }
 
             if (view == default)
             {
                 var messages = new List<string> { $"Unable to find view '{viewName}'. The following locations were searched:" };
-                messages.AddRange(getViewResult.SearchedLocations);
                 messages.AddRange(findViewResult.SearchedLocations);
+                messages.AddRange(locations);
 
-                var errorMessage = string.Join(Environment.NewLine, messages);
-
-                throw new InvalidOperationException(errorMessage);
+                throw new InvalidOperationException(string.Join(Environment.NewLine, messages));
             }
 
             using var output = new StringWriter();
 
-            var tempDataDictionary = new TempDataDictionary(actionContext.HttpContext, _tempDataProvider);
+            var tempDataDictionary = new TempDataDictionary(HttpContext, _tempDataProvider);
             var viewContext = new ViewContext(actionContext, view, viewData, tempDataDictionary, output, new HtmlHelperOptions());
 
             view.RenderAsync(viewContext).GetAwaiter().GetResult();

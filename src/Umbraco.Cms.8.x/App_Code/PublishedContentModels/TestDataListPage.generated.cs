@@ -105,7 +105,7 @@ namespace Umbraco.Web.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("dataListSql")]
-		public virtual string DataListSql => this.Value<string>("dataListSql");
+		public virtual global::System.Collections.Generic.List<string> DataListSql => this.Value<global::System.Collections.Generic.List<string>>("dataListSql");
 
 		///<summary>
 		/// Data List Time Zones

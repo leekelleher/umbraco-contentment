@@ -24,7 +24,7 @@
                 </div>
                 <button aria-label="Edit content"
                         type="button"
-                        class="lk-content-blocks__edit"
+                        class="btn-reset umb-outline lk-content-blocks__edit"
                         ng-click="vm.edit($index)"></button>
             </div>
 
@@ -33,7 +33,7 @@
                     <umb-icon icon="icon-navigation" class="icon"></umb-icon>
                 </li>
                 <li class="lk-content-blocks__action--item" ng-if="vm.canRemove(item, $index)">
-                    <button aria-label="Delete content block" type="button" class="btn-reset umb-outline" ng-click="vm.remove($index)">
+                    <button aria-label="Delete content block" type="button" class="btn-icon btn-reset umb-outline" ng-click="vm.remove($index)">
                         <umb-icon icon="icon-trash" class="icon"></umb-icon>
                     </button>
                 </li>

@@ -12,7 +12,8 @@
     <div class="umb-block-list__wrapper">
         <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
             <div class="umb-block-list__block" ng-repeat="item in vm.ngModel">
-                <div class="umb-block-list__block--view">
+
+                <div class="umb-block-list__block--view" ng-if="!vm.previews[item.key]">
                     <button type="button"
                             class="btn-reset umb-outline blockelement-labelblock-editor blockelement__draggable-element"
                             ng-click="vm.edit($index)">
@@ -20,6 +21,16 @@
                         <span ng-bind="vm.populate(item, $index, 'name')"></span>
                     </button>
                 </div>
+
+                <div class="umb-block-list__block--view" ng-if="vm.previews[item.key]">
+                    <umb-load-indicator ng-show="vm.previews[item.key].loading"></umb-load-indicator>
+                    <div ng-bind-html="vm.previews[item.key].markup | safe_html"></div>
+                    <button aria-label="Edit content"
+                            type="button"
+                            class="btn-reset umb-outline lk-content-blocks__edit"
+                            ng-click="vm.edit($index)"></button>
+                </div>
+
                 <div class="umb-block-list__block--actions">
                     <button ng-repeat="btn in vm.blockActions[$index]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
                         <umb-icon icon="icon-{{btn.icon}}" class="icon"></umb-icon>

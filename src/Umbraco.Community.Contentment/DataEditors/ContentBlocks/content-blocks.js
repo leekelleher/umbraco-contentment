@@ -59,7 +59,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.elementTypeLookup = {};
             config.nameTemplates = {};
 
-            config.contentBlockTypes.forEach(function (blockType) {
+            config.contentBlockTypes.forEach(blockType => {
                 config.elementTypeLookup[blockType.key] = blockType;
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
@@ -76,10 +76,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
+            vm.populateIcon = populateIcon;
             vm.populateName = populateName;
-            vm.sort = function () {
-                populatePreviews();
-            };
+            vm.sort = () => populatePreviews();
 
             vm.previews = [];
             vm.blockActions = [];
@@ -125,9 +124,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 actions.push({
                     labelKey: "contentment_copyContentBlock",
                     icon: "documents",
-                    method: function () {
-                        copy($index);
-                    }
+                    method: () => copy($index)
                 });
             }
 
@@ -135,9 +132,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 actions.push({
                     labelKey: "contentment_createContentTemplate",
                     icon: "blueprint",
-                    method: function () {
-                        saveBlueprint($index);
-                    }
+                    method: () => saveBlueprint($index)
                 });
             }
 
@@ -190,7 +185,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 : $q.when(config.elementTypeScaffoldCache[elementType.alias]);
 
             // NOTE: Let's bloat up the value to be copied (NC needs it all) ¯\_(ツ)_/¯
-            getScaffold.then(function (scaffold) {
+            getScaffold.then(scaffold => {
 
                 // add to the cache if it isn't already in there
                 if (config.elementTypeScaffoldCache.hasOwnProperty(elementType.alias) === false) {
@@ -266,7 +261,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             { params: { elementIndex: $index, elementKey: item.key, contentId: config.currentPageId } }
                         ),
                         "Failed to retrieve preview markup")
-                        .then(function (result) {
+                        .then(result => {
                             if (result && result.elementKey && result.markup) {
                                 vm.previews[result.elementKey] = {
                                     loading: false,
@@ -284,6 +279,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     preview(i);
                 }
             }
+        };
+
+        function populateIcon(item, $index) {
+
+            if (item.hasOwnProperty("icon") === true) {
+                return item.icon;
+            }
+
+            if (item.elementType) {
+                return config.elementTypeLookup[item.elementType].icon;
+            }
+
+            return "icon-document";
         };
 
         function populateName(item, $index) {
@@ -309,7 +317,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function remove($index) {
             var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
-            localizationService.localizeMany(keys).then(function (data) {
+            localizationService.localizeMany(keys).then(data => {
                 overlayService.open({
                     title: data[1],
                     content: data[0],
@@ -349,7 +357,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 "general_create"
             ];
 
-            localizationService.localizeMany(keys).then(function (labels) {
+            localizationService.localizeMany(keys).then(labels => {
 
                 var item = $scope.model.value[$index];
                 var itemName = populateName(item, $index);
@@ -390,22 +398,25 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         contentResource
                             .saveBlueprint(content, true, [], false)
-                            .then(function (data) {
+                            .then(
+                                data => {
 
-                                model.submitButtonState = "success";
+                                    model.submitButtonState = "success";
 
-                                notificationsService.success(labels[2], localizationService.tokenReplace(labels[3], [itemName]));
+                                    notificationsService.success(labels[2], localizationService.tokenReplace(labels[3], [itemName]));
 
-                                elementType.blueprints.push({ id: data.id, name: data.variants[0].name });
+                                    elementType.blueprints.push({ id: data.id, name: data.variants[0].name });
 
-                                overlayService.close();
+                                    overlayService.close();
 
-                            }, function (error) {
+                                },
+                                error => {
 
-                                model.submitButtonState = "error";
-                                model.error = error.data.ModelState.Name[0];
+                                    model.submitButtonState = "error";
+                                    model.error = error.data.ModelState.Name[0];
 
-                            });
+                                }
+                            );
                     },
                     close: function () {
                         overlayService.close();

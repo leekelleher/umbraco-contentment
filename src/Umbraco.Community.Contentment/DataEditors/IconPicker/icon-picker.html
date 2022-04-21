@@ -33,6 +33,6 @@
         </div>
     </div>
     <a class="lk-icon-picker-small" href="" ng-if="vm.size === 'small'" ng-click="vm.pick()" prevent-default>
-        <i class="icon" ng-class="[{ 'medium': vm.allowAdd === false }, { 'small icon-add': vm.allowAdd }, model.value]"></i>
+        <umb-icon icon="{{model.value}}" class="icon" ng-class="{ 'medium': vm.allowAdd === false, 'small icon-add': vm.allowAdd }"></umb-icon>
     </a>
 </div>

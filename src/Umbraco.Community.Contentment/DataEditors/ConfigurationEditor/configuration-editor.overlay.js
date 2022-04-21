@@ -19,6 +19,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             enableFilter: false,
             orderBy: "name",
             help: null,
+            cacheKey: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -43,6 +44,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                     vm.enableFilter = config.enableFilter;
                     vm.orderBy = config.orderBy;
                     vm.select = select;
+                    vm.cacheKey = config.cacheKey;
 
                 }
 
@@ -70,9 +72,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             vm.editor = Object.assign({}, editor);
 
             if (vm.editor.fields && vm.editor.fields.length > 0) {
-                vm.editor.fields.forEach(function (x) {
-                    x.alias = x.key;
-                    x.value = item.value[x.key];
+                vm.editor.fields.forEach(field => {
+                    field.alias = field.key;
+                    field.value = item.value[field.key];
                 });
             }
 
@@ -107,8 +109,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             };
 
             if (item.fields) {
-                item.fields.forEach(function (x) {
-                    obj.value[x.key] = x.value;
+                item.fields.forEach(item => {
+                    obj.value[item.key] = item.value;
                 });
             }
 

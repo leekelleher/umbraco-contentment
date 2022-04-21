@@ -601,6 +601,7 @@
     <Folder Include="assets\img\" />
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
+  <Import Project="..\..\build\_vs-copy-assets.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj">
       <Project>{7d440d19-44d0-474f-8bab-a7ddf4062994}</Project>

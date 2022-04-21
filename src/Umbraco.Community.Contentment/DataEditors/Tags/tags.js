@@ -51,9 +51,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.loading = true;
 
-            assetsService.loadJs("lib/typeahead.js/typeahead.bundle.min.js").then(function () {
+            assetsService.loadJs("lib/typeahead.js/typeahead.bundle.min.js").then(() => {
 
-                $scope.model.value.forEach(function (v) {
+                $scope.model.value.forEach(v => {
                     var item = config.items.find(x => x.value === v);
                     if (item) {
                         vm.items.push(Object.assign({}, item));
@@ -70,7 +70,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     identify: d => d.value,
                 });
 
-                engine.initialize().then(function () {
+                engine.initialize().then(() => {
 
                     var opts = {
                         hint: true,
@@ -81,7 +81,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     var sources = {
                         display: "name",
                         minLength: 0,
-                        source: function (q, sync) {
+                        source: (q, sync) => {
                             if (q && q.length > 0) {
                                 engine.search(q, sync);
                             } else {
@@ -160,7 +160,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function remove($index) {
             if (config.confirmRemoval === true) {
                 var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
-                localizationService.localizeMany(keys).then(function (data) {
+                localizationService.localizeMany(keys).then(data => {
                     overlayService.open({
                         title: data[1],
                         content: data[0],

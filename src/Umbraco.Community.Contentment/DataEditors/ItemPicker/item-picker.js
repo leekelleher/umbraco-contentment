@@ -59,8 +59,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.add = add;
             vm.remove = remove;
-            vm.sort = function () {
-                $scope.model.value = vm.items.map(function (x) { return x.value });
+            vm.sort = () => {
+                $scope.model.value = vm.items.map(item => item.value);
             };
 
             vm.items = [];
@@ -68,7 +68,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             if ($scope.model.value.length > 0 && config.items.length > 0) {
                 var orphaned = [];
 
-                $scope.model.value.forEach(function (v) {
+                $scope.model.value.forEach(v => {
                     var item = config.items.find(x => x.value === v);
                     if (item) {
                         vm.items.push(Object.assign({}, item));
@@ -132,9 +132,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         $scope.model.value = $scope.model.value.length > 0 ? [$scope.model.value] : config.defaultValue;
                     }
 
-                    selectedItems.forEach(function (x) {
-                        vm.items.push(angular.copy(x)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
-                        $scope.model.value.push(x.value);
+                    selectedItems.forEach(item => {
+                        vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
+                        $scope.model.value.push(item.value);
                     });
 
                     if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
@@ -165,7 +165,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (config.confirmRemoval === true) {
                 var keys = ["contentment_removeItemMessage", "general_remove", "general_cancel", "contentment_removeItemButton"];
-                localizationService.localizeMany(keys).then(function (data) {
+                localizationService.localizeMany(keys).then(data => {
                     overlayService.open({
                         title: data[1],
                         content: data[0],

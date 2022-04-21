@@ -81,6 +81,32 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Select to enable your web-browser's spellcheck functionality on the text input.",
                 View = "boolean",
             });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "prepend",
+                Name = "Prepend icon",
+                Description = "<em>(optional)</em> Select an icon to prepend to (before) the text input.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { "defaultIcon", string.Empty },
+                    { "size", "large" },
+                }
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "append",
+                Name = "Append icon",
+                Description = "<em>(optional)</em> Select an icon to append to (after) the text input.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { "defaultIcon", string.Empty },
+                    { "size", "large" },
+                }
+            });
         }
 
         public override IDictionary<string, object> ToValueEditor(object configuration)

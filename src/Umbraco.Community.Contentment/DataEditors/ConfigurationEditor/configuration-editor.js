@@ -42,7 +42,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
 
             // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-            $scope.model.value.forEach(function (item) {
+            $scope.model.value.forEach(item => {
                 if (item.hasOwnProperty("type")) {
                     item.key = item.type;
                     delete item.type;
@@ -59,7 +59,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.descriptionTemplates = {};
             config.missingItem = {};
 
-            config.items.forEach(function (item) {
+            config.items.forEach(item => {
                 config.itemLookup[item.key] = item;
 
                 config.allowEdit[item.key] = item.fields && item.fields.length > 0;
@@ -73,14 +73,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             });
 
-            localizationService.localizeMany(["contentment_missingItemName", "contentment_missingItemDescription"]).then(function (data) {
+            localizationService.localizeMany(["contentment_missingItemName", "contentment_missingItemDescription"]).then(data => {
                 config.missingItem["name"] = data[0];
                 config.missingItem["description"] = data[1];
                 config.missingItem["icon"] = "icon-alert";
             });
 
             vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
-            vm.allowEdit = function (item, $index) { return config.allowEdit[item.key]; };
+            vm.allowEdit = (item, $index) => config.allowEdit[item.key];
             vm.allowRemove = Object.toBoolean(config.allowRemove);
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
@@ -92,7 +92,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 opacity: 0.7,
                 scroll: true,
                 tolerance: "pointer",
-                stop: function (e, ui) {
+                stop: (e, ui) => {
                     setDirty();
                 }
             };
@@ -110,14 +110,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.propertyActions.push({
                     labelKey: "contentment_editRawValue",
                     icon: "brackets",
-                    method: function () {
-                        devModeService.editValue($scope.model, validate);
-                    }
+                    method: () => devModeService.editValue($scope.model, validate)
                 });
             }
 
             // NOTE: Must wait, otherwise the preview may not be ready to receive the event.
-            $timeout(function () { emit(); }, 100);
+            $timeout(() => emit(), 100);
         };
 
         function add() {
@@ -137,6 +135,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     enableFilter: Object.toBoolean(config.enableFilter),
                     orderBy: config.orderBy,
                     help: config.help,
+                    cacheKey: $scope.model.alias,
                 },
                 value: {},
                 submit: function (model) {
@@ -168,6 +167,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     mode: "edit",
                     editor: editor,
+                    cacheKey: $scope.model.alias,
                 },
                 value: value,
                 submit: function (model) {

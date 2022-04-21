@@ -33,7 +33,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.defaultIcon = config.defaultIcon;
 
-            config.items.forEach(function (item) {
+            config.items.forEach(item => {
 
                 vm.keys.push(item.value);
                 vm.names[item.value] = item.name;
@@ -67,9 +67,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     vm.propertyActions.push({
                         labelKey: "contentment_editRawValue",
                         icon: "brackets",
-                        method: function () {
-                            devModeService.editValue($scope.model, function () { });
-                        }
+                        method: () => devModeService.editValue($scope.model, function () { })
                     });
                 }
 

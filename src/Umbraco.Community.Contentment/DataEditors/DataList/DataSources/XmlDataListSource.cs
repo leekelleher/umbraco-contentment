@@ -79,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
-<p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://www.w3schools.com/xml/xpath_intro.asp"" target=""_blank""><strong>w3schools.com/xml</strong></a>.</p>
+<p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://developer.mozilla.org/en-US/docs/Web/XPath"" target=""_blank""><strong>MDN Web Docs</strong></a>.</p>
 </details>
 <details class=""well well-small"">
 <summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>

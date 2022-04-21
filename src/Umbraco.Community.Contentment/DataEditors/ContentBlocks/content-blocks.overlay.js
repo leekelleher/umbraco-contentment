@@ -37,7 +37,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                vm.clipboardItems = clipboardService.retriveDataOfType("elementType", config.elementTypes.map(function (x) { return x.alias }));
+                vm.clipboardItems = clipboardService.retriveDataOfType("elementType", config.elementTypes.map(item => item.alias));
 
                 if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
@@ -65,7 +65,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function clearClipboard() {
             vm.clipboardItems = [];
-            clipboardService.clearEntriesOfType("elementType", config.elementTypes.map(function (x) { return x.alias }));
+            clipboardService.clearEntriesOfType("elementType", config.elementTypes.map(item => item.alias));
         };
 
         function showPrompt() {
@@ -108,7 +108,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             vm.content = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: String.CreateGuid()
             };
 
@@ -119,7 +118,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 ? contentResource.getBlueprintScaffold(config.currentPageId, blueprint.id)
                 : contentResource.getScaffold(config.currentPageId, elementType.alias);
 
-            getScaffold.then(function (data) {
+            getScaffold.then(data => {
                 Object.assign(vm.content, data.variants[0]);
                 vm.loading = false;
             });
@@ -134,7 +133,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             var item = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: String.CreateGuid(),
                 value: {}
             };
@@ -167,11 +165,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
             vm.content = {
                 elementType: elementType.key,
-                icon: elementType.icon,
                 key: element.key
             };
 
-            contentResource.getScaffold(config.currentPageId, elementType.alias).then(function (data) {
+            contentResource.getScaffold(config.currentPageId, elementType.alias).then(data => {
 
                 if (element.value) {
                     for (var t = 0; t < data.variants[0].tabs.length; t++) {
@@ -200,7 +197,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 var item = {
                     elementType: vm.content.elementType,
                     key: vm.content.key,
-                    icon: vm.content.icon,
                     value: {},
                 };
 

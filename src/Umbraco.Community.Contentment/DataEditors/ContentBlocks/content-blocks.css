@@ -50,7 +50,8 @@
         }
 
             .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--left .icon {
-                padding-right: 3px;
+                padding-top: 4px;
+                padding-right: 4px;
             }
 
         .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--default {
@@ -73,22 +74,6 @@
             .lk-content-blocks__block .lk-content-blocks__preview .lk-content-blocks__preview--markup pre.error code {
                 font-size: small;
                 white-space: pre-wrap;
-            }
-
-        .lk-content-blocks__block .lk-content-blocks__preview button.lk-content-blocks__edit {
-            background: transparent;
-            border: none;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 25;
-        }
-
-            .lk-content-blocks__block .lk-content-blocks__preview button.lk-content-blocks__edit:focus {
-                outline: 0;
-                border: 1px solid #bbbabf;
             }
 
     .lk-content-blocks__block .lk-content-blocks__actions {
@@ -144,6 +129,17 @@
 
 .lk-content-blocks .umb-node-preview-add {
     margin-right: 45px;
+}
+
+.contentment button.lk-content-blocks__edit {
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 25;
 }
 
 .contentment.umb-block-list .umb-block-list__wrapper {

@@ -31,9 +31,23 @@ namespace Umbraco.Cms.Web.Common.Views
         where TPublishedContent : IPublishedContent
         where TPublishedElement : IPublishedElement
     {
+
+#if NET472 == false
+        public override ViewContext ViewContext
+        {
+            get => base.ViewContext;
+            set => base.ViewContext = SetViewData(value);
+        }
+#endif
+
 #if NET472
         protected override void SetViewData(ViewDataDictionary viewData)
         {
+#else
+        protected ViewContext SetViewData(ViewContext viewCtx)
+        {
+            var viewData = viewCtx.ViewData;
+#endif
             void setProperty<T>(string key, Action<T> action)
             {
                 if (viewData.TryGetValueAs(key, out T value) == true)
@@ -62,47 +76,11 @@ namespace Umbraco.Cms.Web.Common.Views
 
             viewData.Model = model;
 
+#if NET472
             base.SetViewData(viewData);
-        }
 #else
-        public override ViewContext ViewContext
-        {
-            get => base.ViewContext;
-            set => base.ViewContext = SetViewData(value);
-        }
-
-        protected ViewContext SetViewData(ViewContext viewCtx)
-        {
-            void setProperty<T>(string key, Action<T> action)
-            {
-                if (viewCtx.ViewData.TryGetValueAs(key, out T value) == true)
-                {
-                    action(value);
-                }
-            }
-
-            var model = new ContentBlockPreviewModel<TPublishedContent, TPublishedElement>();
-
-            setProperty<TPublishedContent>("content", (x) => model.Content = x);
-            setProperty<TPublishedElement>("element", (x) => model.Element = x);
-            setProperty<int>("elementIndex", (x) => model.ElementIndex = x);
-            setProperty<string>("contentIcon", (x) => model.ContentTypeIcon = x);
-            setProperty<string>("elementIcon", (x) => model.ElementTypeIcon = x);
-
-            if (model.Element == null && viewCtx.ViewData.Model is TPublishedElement element)
-            {
-                model.Element = element;
-            }
-
-            if (model.Content == null && UmbracoContext?.PublishedRequest?.PublishedContent is TPublishedContent content)
-            {
-                model.Content = content;
-            }
-
-            viewCtx.ViewData.Model = model;
-
             return viewCtx;
-        }
 #endif
+        }
     }
 }

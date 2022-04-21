@@ -64,10 +64,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Ite
                 var selectedItems = [];
 
                 if (vm.enableMultiple === true) {
-                    vm.items.forEach(function (x) {
-                        if (x.selected) {
-                            delete x.selected;
-                            selectedItems.push(x);
+                    vm.items.forEach(item => {
+                        if (item.selected) {
+                            delete item.selected;
+                            selectedItems.push(item);
                         }
                     });
                 } else {

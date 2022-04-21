@@ -19,7 +19,6 @@
     </author>
     <readme><![CDATA[]]></readme>
   </info>
-
   <DocumentTypes />
   <Templates />
   <Stylesheets />
@@ -27,11 +26,7 @@
   <DictionaryItems />
   <Languages />
   <DataTypes />
-
   <Actions />
-
   <control />
-
   <files />
-
 </umbPackage>

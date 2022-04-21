@@ -47,12 +47,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Key = ContentBlockTypes;
             Name = "Block types";
-            Description = "Configure the block types to use.";
+            Description = "Configure the element types to be used as blocks.";
             View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
             Config = new Dictionary<string, object>
             {
                 { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureElementType" },
-                { "allowDuplicates", Constants.Values.False },
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
                 { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
                 { Constants.Conventions.ConfigurationFieldAliases.Items, items },
@@ -81,8 +80,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "nameTemplate",
                     Name = "Name template",
+                    Description = "Enter an AngularJS expression to evaluate against each block for its name.",
                     View = "textstring",
-                    Description = "Enter an AngularJS expression to evaluate against each block for its name."
                 },
                 new ConfigurationField
                 {

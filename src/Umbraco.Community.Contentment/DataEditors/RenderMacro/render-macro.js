@@ -41,11 +41,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
 
                 macroResource.getMacroResultAsHtmlForEditor(macro.alias, $routeParams.id, macro.params).then(
-                    function (result) {
+                    result => {
                         vm.html = result;
                         vm.loading = false;
                     },
-                    function (error) {
+                    error => {
                         vm.error = {
                             title: error.data.Message + " " + error.errorMsg,
                             message: error.data.ExceptionMessage

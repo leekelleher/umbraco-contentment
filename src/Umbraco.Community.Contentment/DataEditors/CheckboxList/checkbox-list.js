@@ -48,17 +48,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (vm.toggleAll) {
                 vm.toggle = toggle;
-                vm.toggleChecked = vm.items.every(function (item) {
-                    return item.checked;
-                });
+                vm.toggleChecked = vm.items.every(item => item.checked);
             }
         };
 
         function changed(item) {
 
-            vm.toggleChecked = vm.items.every(item => {
-                return item.checked;
-            });
+            vm.toggleChecked = vm.items.every(item => item.checked);
 
             $scope.model.value = [];
 
