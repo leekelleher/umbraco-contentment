@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84
 		..\build\manifest-nuget-core.nuspec = ..\build\manifest-nuget-core.nuspec
 		..\build\manifest-nuget-web.nuspec = ..\build\manifest-nuget-web.nuspec
 		..\build\manifest-umbraco.xml = ..\build\manifest-umbraco.xml
+		..\build\readme-nuget.md = ..\build\readme-nuget.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}"
