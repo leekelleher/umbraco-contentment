@@ -102,7 +102,6 @@ Property Editors are:
 _Who knows?!_ `¯\_(ツ)_/¯`
 
 - Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-- [Custom Value Converter](https://github.com/leekelleher/umbraco-contentment/pull/196) editor wrapper
 - [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 

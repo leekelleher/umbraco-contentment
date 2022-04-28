@@ -11,8 +11,6 @@
 
 - [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
 
-- [Data List: Value Converters](https://github.com/leekelleher/umbraco-contentment/discussions/89)
-
 - Text Input - Change Font-Size within Input Field Based on Length (similar to Facebook's post experience, after 85 chars)
   - https://web-design-weekly.com/snippets/change-font-size-within-input-field-based-on-length/
 
