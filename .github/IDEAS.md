@@ -57,9 +57,3 @@ Remove hard-coded English labels, move them to the language XML file.
 
 It's good to re-evaluate whether certain features are still relevant. Review the [telemetry stats](https://leekelleher.com/umbraco/contentment/telemetry/) for usage data.
 
-
-## Asset bundling/minification
-
-- Consider replacing Powershell/AjaxMinifier.exe with [BundlerMinifier](https://github.com/madskristensen/BundlerMinifier)?
-  e.g. https://blog.elmah.io/how-we-do-bundling-and-minification-in-asp-net-core/
-
