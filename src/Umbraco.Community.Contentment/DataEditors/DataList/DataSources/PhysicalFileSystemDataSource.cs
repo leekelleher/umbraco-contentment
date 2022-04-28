@@ -67,7 +67,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "path",
                 Name = "Folder path",
+#if NET472
+                Description = "Enter the relative path of the folder. e.g. <code>~/css</code>",
+#else
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
+#endif
                 View = "textstring",
             },
             new ConfigurationField
