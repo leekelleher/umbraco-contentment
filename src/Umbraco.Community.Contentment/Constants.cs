@@ -116,7 +116,7 @@ namespace Umbraco.Community.Contentment
 #if NET472
             public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 18, 0);
 #elif NET5_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(9, 4, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(9, 5, 0);
 #else
             public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(10, 0, 0);
 #endif
