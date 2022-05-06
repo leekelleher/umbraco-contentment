@@ -33,9 +33,6 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            composition.RegisterUnique<Core.Hosting.IHostingEnvironment, Polyfill.ContenmentHostingEnvironment>();
-            composition.RegisterUnique<Microsoft.AspNetCore.Hosting.IWebHostEnvironment, Polyfill.ContenmentWebHostEnvironment>();
-            composition.RegisterUnique<Core.IO.IIOHelper, Polyfill.ContenmentIOHelper>();
             composition.RegisterUnique<ConfigurationEditorUtility>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)

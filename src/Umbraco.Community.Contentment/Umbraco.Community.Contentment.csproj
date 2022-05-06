@@ -18,12 +18,16 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" />
+    <PackageReference Include="Our.Umbraco.Community.Polyfill" Version="1.2.0-rc2" />
     <PackageReference Include="UmbracoCms.Web" Version="8.18.0" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.5.0" />
     <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.5.0" />
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0-rc1" />
     <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0-rc1" />
@@ -35,7 +39,22 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net5.0'">
+  <Target Name="ILRepack" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net472'">
+    <PropertyGroup>
+      <WorkingDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)</WorkingDirectory>
+    </PropertyGroup>
+    <ItemGroup>
+      <InputAssemblies Include="Umbraco.Community.Polyfill.dll" />
+    </ItemGroup>
+    <ILRepack
+      InputAssemblies="@(InputAssemblies)"
+      MainAssembly="$(AssemblyName).dll"
+      OutputType="Library"
+      OutputAssembly="$(AssemblyName).dll"
+      WorkingDirectory="$(WorkingDirectory)" />
+  </Target>
+
+  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net6.0'">
     <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -ProjectDir $(ProjectDir)" />
   </Target>
 
