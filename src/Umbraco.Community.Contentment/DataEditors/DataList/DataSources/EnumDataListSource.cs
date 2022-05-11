@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
     {
-        private readonly Dictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
+        private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
@@ -48,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
-            _lookup = new Dictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
+            _lookup = new ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
 
             _logger = logger;
             _shortStringHelper = shortStringHelper;
@@ -94,13 +95,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public void PopulateLookup(Type type)
+        private (List<DataListItem>, Dictionary<string, object>) EnumValueFactory(Type type)
         {
-            if (_lookup.ContainsKey(type) == true)
-            {
-                return;
-            }
-
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
 
             var items = new List<DataListItem>(fields.Length);
@@ -130,19 +126,26 @@ namespace Umbraco.Community.Contentment.DataEditors
                 values.Add(value, Enum.Parse(type, field.Name));
             }
 
-            _lookup.Add(type, (items, values));
+            return (items, values);
         }
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var type = GetValueType(config);
 
-            if (type == null || _lookup.ContainsKey(type) == false)
+            if (type == null)
             {
                 return Enumerable.Empty<DataListItem>();
             }
 
-            var items = _lookup[type].Item1;
+            var entry = _lookup.GetOrAdd(type, EnumValueFactory);
+
+            if (entry.Item1 == null)
+            {
+                return Enumerable.Empty<DataListItem>();
+            }
+
+            var items = entry.Item1;
 
             if (config.TryGetValueAs("sortAlphabetically", out bool boolean) == true && boolean == true)
             {
@@ -191,8 +194,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                         if (type != null && type.IsEnum == true)
                         {
-                            PopulateLookup(type);
-
                             return type;
                         }
                     }
@@ -206,8 +207,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
             {
-                if (_lookup.TryGetValue(type, out var enumLookup) == true &&
-                    enumLookup.Item2.TryGetValue(value, out var enumValue) == true)
+                var entry = _lookup.GetOrAdd(type, EnumValueFactory);
+                if (entry.Item2 != null && entry.Item2.TryGetValue(value, out var enumValue) == true)
                 {
                     return enumValue;
                 }
