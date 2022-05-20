@@ -7,7 +7,7 @@
     <Title>Contentment for Umbraco</Title>
     <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco</PackageTags>
-    <Version>4.0.0-alpha002</Version>
+    <Version>4.0.0-alpha003</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0-rc1" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0-rc1" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0-rc2" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0-rc2" />
   </ItemGroup>
 
   <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
