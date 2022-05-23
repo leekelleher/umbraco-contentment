@@ -142,6 +142,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
         }
 
+        public string SystemPropertyNamePrefix { private get; set; }
+
+        [Obsolete("Please use `SystemPropertyNamePrefix = \"_\"` instead.")]
         public bool PrefixSystemPropertyNamesWithUnderscore { private get; set; }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -200,9 +203,16 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 property.Converter = _converterLookup[property.PropertyType];
             }
 
-            if (PrefixSystemPropertyNamesWithUnderscore == true && _systemProperties.Contains(member.Name) == true)
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == true && PrefixSystemPropertyNamesWithUnderscore == true)
             {
-                property.PropertyName = "_" + property.PropertyName;
+                SystemPropertyNamePrefix = "_";
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(member.Name) == true)
+            {
+                property.PropertyName = SystemPropertyNamePrefix + property.PropertyName;
             }
 
             return property;
@@ -211,7 +221,14 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 #if NET472 == false
         protected override string ResolvePropertyName(string propertyName)
         {
-            return PrefixSystemPropertyNamesWithUnderscore == true && _systemProperties.Contains(propertyName) == true
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == true && PrefixSystemPropertyNamesWithUnderscore == true)
+            {
+                SystemPropertyNamePrefix = "_";
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(propertyName) == true
                 ? "_" + base.ResolvePropertyName(propertyName)
                 : base.ResolvePropertyName(propertyName);
         }
