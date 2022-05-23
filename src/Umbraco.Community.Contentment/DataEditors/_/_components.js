@@ -494,9 +494,10 @@ angular.module("umbraco.directives").component("contentmentCardsEditor", {
                 vm.propertyAlias = vm.umbProperty.property.alias;
 
                 vm.sortableOptions = {
-                    axis: false,
-                    containment: "parent",
-                    cursor: "move",
+                    "ui-floating": true,
+                    items: ".umb-block-card",
+                    cursor: "grabbing",
+                    placeholder: "umb-block-card --sortable-placeholder",
                     disabled: vm.allowSort === false,
                     opacity: 0.7,
                     scroll: true,
@@ -528,6 +529,16 @@ angular.module("umbraco.directives").component("contentmentCardsEditor", {
 
                 if (vm.propertyActions && vm.propertyActions.length > 0) {
                     vm.umbProperty.setPropertyActions(vm.propertyActions);
+                }
+
+                if (vm.blockActions && vm.blockActions.length > 0) {
+                    vm.blockActions.forEach(function (x) {
+                        x.forEach(function (y) {
+                            localizationService.localize(y.labelKey).then(function (label) {
+                                y.label = label;
+                            });
+                        });
+                    });
                 }
             };
 

@@ -1,6 +1,7 @@
 ﻿<!-- Copyright © 2013-present Umbraco.
    - Parts of this Source Code has been derived from Umbraco CMS.
-   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Web.UI.Client/src/views/components/umb-grid-selector.html
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/blocklist/prevalue/blocklist.blockconfiguration.html
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Web.UI.Client/src/views/components/blockcard/umb-block-card.html
    - Modified under the permissions of the MIT License.
    - Modifications are licensed under the Mozilla Public License.
    - Copyright © 2021 Lee Kelleher.
@@ -8,38 +9,43 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
-<div class="contentment umb-grid-selector">
-    <div class="umb-grid-selector__items" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
-        <div class="umb-grid-selector__item -sortable" ng-repeat="item in vm.ngModel">
-            <button type="button"
-                    class="btn-reset umb-grid-selector__item-content"
-                    aria-label="Edit content"
-                    ng-click="vm.edit($index)">
-                <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" class="umb-grid-selector__item-icon" ng-class="_icon"></umb-icon>
-                <div class="umb-grid-selector__item-label" ng-bind="vm.populate(item, $index, 'name')"></div>
-            </button>
-            <button type="button"
-                    class="btn-reset umb-outline"
-                    aria-label="Remove content block"
-                    ng-if="vm.canRemove(item, $index)"
-                    ng-click="vm.remove($index)">
-                <umb-icon icon="icon-trash" class="umb-grid-selector__item-remove"></umb-icon>
-                <span class="sr-only">Remove content block</span>
-            </button>
-        </div>
-        <button type="button"
-                class="umb-grid-selector__item -placeholder"
-                id="{{vm.propertyAlias}}"
-                aria-label="Add content"
-                ng-if="vm.allowAdd"
-                ng-click="vm.onAdd()">
-            <div class="umb-grid-selector__item-content">
-                <umb-icon icon="icon-add" class="umb-grid-selector__item-icon"></umb-icon>
-                <div class="umb-grid-selector__item-default-label -blue">
-                    <span ng-bind="vm.addButtonLabel"></span>
-                    <span class="sr-only">...</span>
+<div class="contentment umb-block-list-block-configuration">
+    <div class="umb-block-card-grid" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
+        <div class="umb-block-card" ng-repeat="item in vm.ngModel" ng-click="vm.edit($index)">
+            <div class="__showcase">
+                <div class="__icon">
+                    <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" ng-class="_icon"></umb-icon>
                 </div>
             </div>
+            <div class="__info">
+                <div class="__name" ng-bind="vm.populate(item, $index, 'name')"></div>
+                <!--<div class="__subname" ng-bind="vm.populate(item, $index, 'description')"></div>-->
+            </div>
+            <div class="__actions">
+                <button type="button"
+                        class="btn-reset __action umb-outline"
+                        title="{{btn.label}}"
+                        ng-click="btn.method(); $event.stopPropagation();"
+                        ng-repeat="btn in vm.blockActions[$index]">
+                    <umb-icon icon="icon-{{btn.icon}}" class="icon"></umb-icon>
+                    <span class="sr-only" ng-bind="btn.label"></span>
+                </button>
+                <button type="button"
+                        class="btn-reset __action umb-outline"
+                        ng-if="vm.canRemove(item, $index)"
+                        ng-click="vm.remove($index); $event.stopPropagation();">
+                    <umb-icon icon="icon-trash" class="icon"></umb-icon>
+                    <localize key="general_delete" class="sr-only">Remove</localize>
+                </button>
+            </div>
+        </div>
+        <button type="button"
+                class="btn-reset __add-button"
+                id="{{vm.propertyAlias}}"
+                ng-if="vm.allowAdd"
+                ng-click="vm.onAdd()">
+            <span ng-bind="vm.addButtonLabel"></span>
+            <span class="sr-only">...</span>
         </button>
     </div>
 </div>
