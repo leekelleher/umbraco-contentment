@@ -23,6 +23,12 @@
     color: #1b264f;
 }
 
+/* Block List Configuration Card, fixes icon position of action buttons. */
+.contentment .umb-block-card .__actions > button {
+    padding-top: 3px;
+}
+
+
 /* Copyright © 2020 Perplex Digital
  * Parts of this Source Code has been derived from Perplex.ContentBlocks.
  * https://github.com/PerplexDigital/Perplex.ContentBlocks/blob/v2.1.0/src/Perplex.ContentBlocks/App_Plugins/Perplex.ContentBlocks/perplex.content-blocks.less#L120-L136
