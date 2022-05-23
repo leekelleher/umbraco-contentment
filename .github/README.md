@@ -87,6 +87,9 @@ _Let's call those "life's little surprises"._
 
 #### Known issues
 
+- **Compatibility with Umbraco v9 running .NET 6.0**
+  - Due to how the .NET multi-targetting support has been implemented in Contentment, if you are running Umbraco v9 on .NET 6.0 and want to install the Contentment package, you may experience an error. I haven't yet established a workaround for this. If you have any ideas, please let me know.
+
 - **Data List**
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
