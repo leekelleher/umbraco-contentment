@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
@@ -32,77 +33,51 @@ namespace Umbraco.Community.Contentment.DataEditors
             IIOHelper ioHelper)
             : base()
         {
-            var targetPath = "~/umbraco/lib/ace-builds/src-min-noconflict/";
-            var aceEditorPath = webHostEnvironment.MapPathWebRoot(targetPath);
+            var targetPath = "umbraco/lib/ace-builds/src-min-noconflict";
+            var (modes, themes) = GetAceOptions(webHostEnvironment, targetPath);
 
-            if (Directory.Exists(aceEditorPath) == true)
+            if (modes.Count > 0)
             {
-                var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
-                if (aceEditorFiles != null && aceEditorFiles.Length > 0)
+                DefaultConfiguration.Add(Mode, "razor");
+                Fields.Add(new ConfigurationField
                 {
-                    var modes = new List<DataListItem>();
-                    var themes = new List<DataListItem>();
-
-                    foreach (var file in aceEditorFiles)
+                    Key = Mode,
+                    Name = "Language mode",
+                    Description = "Select the programming language mode. The default mode is 'Razor'.",
+                    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                    Config = new Dictionary<string, object>
                     {
-                        var filename = Path.GetFileNameWithoutExtension(file);
-                        if (filename.StartsWith("mode-") == true)
-                        {
-                            var mode = filename.Replace("mode-", string.Empty).ToLower();
-                            modes.Add(new DataListItem { Name = mode.ToFirstUpperInvariant(), Value = mode });
-                        }
-
-                        if (filename.StartsWith("theme-") == true)
-                        {
-                            var theme = filename.Replace("theme-", string.Empty).ToLower();
-                            themes.Add(new DataListItem { Name = theme.ToFirstUpperInvariant(), Value = theme });
-                        }
+                        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                        { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
                     }
+                });
+            }
 
-                    if (modes.Count > 0)
+            if (themes.Count > 0)
+            {
+                DefaultConfiguration.Add(Theme, "chrome");
+                Fields.Add(new ConfigurationField
+                {
+                    Key = Theme,
+                    Name = nameof(Theme),
+                    Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
+                    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                    Config = new Dictionary<string, object>
                     {
-                        DefaultConfiguration.Add(Mode, "razor");
-                        Fields.Add(new ConfigurationField
-                        {
-                            Key = Mode,
-                            Name = "Language mode",
-                            Description = "Select the programming language mode. The default mode is 'Razor'.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
-                            Config = new Dictionary<string, object>
-                            {
-                                { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                                { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
-                            }
-                        });
+                        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                        { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
                     }
+                });
+            }
 
-                    if (themes.Count > 0)
-                    {
-                        DefaultConfiguration.Add(Theme, "chrome");
-                        Fields.Add(new ConfigurationField
-                        {
-                            Key = Theme,
-                            Name = nameof(Theme),
-                            Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
-                            Config = new Dictionary<string, object>
-                            {
-                                { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                                { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
-                            }
-                        });
-                    }
-
-                    if (modes.Count > 0 || themes.Count > 0)
-                    {
-                        Fields.Add(new NotesConfigurationField(ioHelper, $@"<details class=""well well-small"">
+            if (modes.Count > 0 || themes.Count > 0)
+            {
+                Fields.Add(new NotesConfigurationField(ioHelper, $@"<details class=""well well-small"">
 <summary>Would you like to add more <strong>language modes</strong> and <strong>themes</strong>?</summary>
 <p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> library that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
-<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>{targetPath}</code> folder in this Umbraco installation.</p>
+<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>~/{targetPath}/</code> folder in the web root of this Umbraco installation.</p>
 <p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options above.</p>
 </details>", true));
-                    }
-                }
             }
 
             DefaultConfiguration.Add(FontSize, "small");
@@ -169,6 +144,56 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.",
                 View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
             });
+        }
+
+        private (List<DataListItem>, List<DataListItem>) GetAceOptions(
+            IWebHostEnvironment webHostEnvironment,
+            string aceEditorPath)
+        {
+            var modes = new List<DataListItem>();
+            var themes = new List<DataListItem>();
+
+            void checkFile(string filename)
+            {
+                if (filename.StartsWith("mode-") == true)
+                {
+                    var mode = filename.Replace("mode-", string.Empty).ToLower();
+                    modes.Add(new DataListItem { Name = mode.ToFirstUpperInvariant(), Value = mode });
+                }
+
+                if (filename.StartsWith("theme-") == true)
+                {
+                    var theme = filename.Replace("theme-", string.Empty).ToLower();
+                    themes.Add(new DataListItem { Name = theme.ToFirstUpperInvariant(), Value = theme });
+                }
+            };
+
+#if NET472
+            var path = webHostEnvironment.MapPathWebRoot($"~/{aceEditorPath}/");
+
+            if (Directory.Exists(aceEditorPath) == true)
+            {
+                var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
+                if (aceEditorFiles != null && aceEditorFiles.Length > 0)
+                {
+                    foreach (var file in aceEditorFiles)
+                    {
+                        checkFile(Path.GetFileNameWithoutExtension(file));
+                    }
+                }
+            }
+#else
+            var directoryContents = webHostEnvironment.WebRootFileProvider.GetDirectoryContents(aceEditorPath);
+            if (directoryContents.Exists == true)
+            {
+                foreach (var file in directoryContents)
+                {
+                    checkFile(Path.GetFileNameWithoutExtension(file.Name));
+                }
+            }
+#endif
+
+            return (modes, themes);
         }
     }
 }
