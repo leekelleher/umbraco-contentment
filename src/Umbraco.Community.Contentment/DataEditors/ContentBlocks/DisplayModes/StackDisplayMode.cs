@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-stack.html";
+        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
@@ -32,9 +32,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "enablePreview", Constants.Values.True },
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
+            { "displayMode", "stack" },
+            { "enablePreview", Constants.Values.True },
         };
 
         public IEnumerable<ConfigurationField> Fields => new[]

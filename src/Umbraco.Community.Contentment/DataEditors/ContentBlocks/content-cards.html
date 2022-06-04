@@ -4,12 +4,13 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.ContentBlocks.Controller as vm">
-    <contentment-cards-editor ng-model="model.value"
-                              add-button-label-key="'grid_addElement'"
+    <contentment-items-editor ng-model="model.value"
+                              add-button-label-key="vm.addButtonLabelKey"
                               allow-add="vm.allowAdd"
                               allow-edit="vm.allowEdit"
                               allow-remove="vm.allowRemove"
                               allow-sort="vm.allowSort"
+                              display-mode="vm.displayMode"
                               get-item-icon="vm.populateIcon"
                               get-item-name="vm.populateName"
                               on-add="vm.add"
@@ -19,5 +20,5 @@
                               block-actions="vm.blockActions"
                               property-actions="vm.propertyActions"
                               previews="vm.previews">
-    </contentment-cards-editor>
+    </contentment-items-editor>
 </div>
