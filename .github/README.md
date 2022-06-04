@@ -48,7 +48,7 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 _**Please note...**_
 
-- v4.x has been developed against **Umbraco v8.18.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
+- v4.x has been developed against **Umbraco v8.18.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0 only) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
 - v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x has been developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x has been developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
@@ -87,7 +87,7 @@ _Let's call those "life's little surprises"._
 
 #### Known issues
 
-- **Compatibility with Umbraco v9 running .NET 6.0**
+- **Compatibility with Umbraco v9 running .NET 6.0** (on Contentment v4)
   - Due to how the .NET multi-targeting support has been implemented in Contentment, if you are running Umbraco v9 on .NET 6.0 and want to install the Contentment package, you may experience an `NU1107: Version conflict detected` error. At present, the workarounds are to either upgrade to Umbraco v10, or use Contentment v3.x. If you have an alternative workaround suggestion, please do let me know. [See #223 for details.](https://github.com/leekelleher/umbraco-contentment/issues/223) _(Note: v9 on .NET 5.0 is totally fine.)_
 
 - **Data List**
