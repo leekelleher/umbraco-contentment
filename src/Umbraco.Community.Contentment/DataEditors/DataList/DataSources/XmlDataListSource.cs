@@ -19,7 +19,6 @@ using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 #else
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -28,7 +27,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlDataListSource : IDataListSource
+    public sealed class XmlDataListSource : IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -61,7 +60,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "XML Data";
 
+        public string NameTemplate => default;
+
         public string Description => "Configure XML data to populate the data source.";
+
+        public string DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-code";
 

@@ -25,7 +25,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TextDelimitedDataListSource : IDataListSource
+    public sealed class TextDelimitedDataListSource : IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -58,7 +58,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Text Delimited Data";
 
+        public string NameTemplate => default;
+
         public string Description => "Configure text-delimited data to populate the data source.";
+
+        public string DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-fa fa-file-text-o";
 

@@ -45,6 +45,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var currentNode = editorState.getCurrent();
             config.currentPageId = currentNode.id > 0 ? currentNode.id : currentNode.parentId;
 
+            // Support Content not in Content / Media Tree
+            if (!config.currentPageId) {
+                config.currentPageId = -1;
+            }
+
             $scope.model.value = $scope.model.value || [];
 
             if ($scope.model.value === "") {

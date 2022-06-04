@@ -27,7 +27,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class JsonDataListSource : IDataListSource
+    public sealed class JsonDataListSource : IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -55,7 +55,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "JSON Data";
 
+        public string NameTemplate => default;
+
         public string Description => "Configure JSON data to populate the data source.";
+
+        public string DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-brackets";
 

@@ -28,7 +28,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;
@@ -58,7 +58,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => ".NET Enumeration";
 
+        public string NameTemplate => default;
+
         public string Description => "Select an enumeration from a .NET assembly as the data source.";
+
+        public string DescriptionTemplate => "{{ enumType[1] }}";
 
         public string Icon => "icon-indent";
 
