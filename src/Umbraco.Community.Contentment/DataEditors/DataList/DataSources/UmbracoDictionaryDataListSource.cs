@@ -7,17 +7,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

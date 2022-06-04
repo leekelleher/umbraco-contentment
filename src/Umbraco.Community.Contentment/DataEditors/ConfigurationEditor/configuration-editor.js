@@ -42,14 +42,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-            $scope.model.value.forEach(item => {
-                if (item.hasOwnProperty("type")) {
-                    item.key = item.type;
-                    delete item.type;
-                }
-            });
-
             if (Number.isInteger(config.maxItems) === false) {
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }

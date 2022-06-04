@@ -5,13 +5,6 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -20,7 +13,6 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -38,17 +30,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
 
-#if NET472
-        public DataListDataEditor(
-            ConfigurationEditorUtility utility,
-            IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
-        {
-            _utility = utility;
-            _shortStringHelper = shortStringHelper;
-            _ioHelper = ioHelper;
-        }
-#else
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
 
@@ -65,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _utility = utility;
             _ioHelper = ioHelper;
         }
-#endif
+
         public string Alias => DataEditorAlias;
 
         public EditorType Type => EditorType.PropertyValue;
@@ -86,11 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-#if NET472
-            return new DataValueEditor
-#else
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
             {
                 ValueType = ValueTypes.Json,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
@@ -106,13 +83,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array.Count > 0 &&
                 array[0] is JObject item)
             {
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
-                {
-                    item.Add("key", item["type"]);
-                    item.Remove("type");
-                }
-
                 var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("key"));
                 if (editor != null)
                 {
@@ -120,11 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-#if NET472
-            return new DataValueEditor
-#else
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,

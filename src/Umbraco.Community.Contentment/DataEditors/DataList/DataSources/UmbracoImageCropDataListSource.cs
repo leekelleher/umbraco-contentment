@@ -5,22 +5,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

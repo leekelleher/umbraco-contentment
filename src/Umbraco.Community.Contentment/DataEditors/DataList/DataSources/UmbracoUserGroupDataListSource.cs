@@ -6,17 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET472
-using Umbraco.Core.Models.Membership;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.Models.Membership;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

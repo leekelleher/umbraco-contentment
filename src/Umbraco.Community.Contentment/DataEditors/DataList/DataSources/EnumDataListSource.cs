@@ -12,19 +12,11 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.Controllers;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-#else
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -34,18 +26,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
-#if NET472
-        private readonly ILogger _logger;
-#else
         private readonly ILogger<EnumDataListSource> _logger;
-#endif
 
         public EnumDataListSource(
-#if NET472
-            ILogger logger,
-#else
             ILogger<EnumDataListSource> logger,
-#endif
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
@@ -173,11 +157,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                     catch (Exception ex)
                     {
-#if NET472
-                        _logger.Error<EnumDataListSource>(ex);
-#else
                         _logger.LogError(ex, "Unable to load target type.");
-#endif
                     }
 
                     if (assembly != null)
@@ -189,11 +169,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                         catch (Exception ex)
                         {
-#if NET472
-                            _logger.Error<EnumDataListSource>(ex);
-#else
                             _logger.LogError(ex, "Unable to retrieve target type.");
-#endif
                         }
 
                         if (type != null && type.IsEnum == true)
@@ -220,11 +196,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
                 try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
 
-#if NET472
-                _logger.Debug<EnumDataListSource>($"Unable to find value '{value}' in enum '{type.FullName}'.");
-#else
                 _logger.LogDebug($"Unable to find value '{value}' in enum '{type.FullName}'.");
-#endif
             }
 
             return type.GetDefaultValue();

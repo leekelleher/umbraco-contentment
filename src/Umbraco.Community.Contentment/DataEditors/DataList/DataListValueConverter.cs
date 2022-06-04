@@ -8,15 +8,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -149,26 +143,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) == true &&
                 tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2)
             {
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (obj1.ContainsKey("key") == false && obj1.ContainsKey("type") == true)
-                {
-                    obj1.Add("key", obj1["type"]);
-                    obj1.Remove("type");
-                }
-
                 var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(obj1.Value<string>("key"));
                 if (source != null)
                 {
                     var config = obj1["value"].ToObject<Dictionary<string, object>>();
                     valueType = source.GetValueType(config);
                     converter = source.ConvertValue;
-                }
-
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (obj2.ContainsKey("key") == false && obj2.ContainsKey("type") == true)
-                {
-                    obj2.Add("key", obj2["type"]);
-                    obj2.Remove("type");
                 }
 
                 var editor = _utility.GetConfigurationEditor<IDataListEditor>(obj2.Value<string>("key"));

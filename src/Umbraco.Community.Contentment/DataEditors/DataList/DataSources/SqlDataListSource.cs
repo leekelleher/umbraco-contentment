@@ -4,24 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-#if NET6_0_OR_GREATER
 using Microsoft.Data.SqlClient;
-#else
-using System.Data.SqlClient;
-#endif
 using System.Data.Common;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using System.Configuration;
-using System.Data.SqlServerCe;
-using Umbraco.Core;
-using Umbraco.Core.Hosting;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Microsoft.Extensions.Configuration;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Configuration;
@@ -30,7 +17,6 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -39,15 +25,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
         private readonly IIOHelper _ioHelper;
-#if NET472 == false
         private readonly IConfiguration _configuration;
-#endif
 
         public SqlDataListSource(
             IWebHostEnvironment webHostEnvironment,
-#if NET472 == false
             IConfiguration configuration,
-#endif
             IIOHelper ioHelper)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
@@ -55,15 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? "sqlserver"
                 : "razor";
 
-#if NET472
-            _connectionStrings = ConfigurationManager.ConnectionStrings
-                .Cast<ConnectionStringSettings>()
-                .Select(x => new DataListItem
-                {
-                    Name = x.Name,
-                    Value = x.Name
-                });
-#else
             _connectionStrings = configuration
                 .GetSection("ConnectionStrings")
                 .GetChildren()
@@ -74,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
 
             _configuration = configuration;
-#endif
+
             _ioHelper = ioHelper;
         }
 
@@ -150,38 +123,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
             }
 
-#if NET472
-            var settings = ConfigurationManager.ConnectionStrings[connectionStringName];
-            if (settings == null)
-#else
             var connectionString = _configuration.GetConnectionString(connectionStringName);
             if (string.IsNullOrWhiteSpace(connectionString) == true)
-#endif
             {
                 return items;
             }
 
-#if NET472
-            // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            if (settings.ProviderName.InvariantEquals(UmbConstants.DatabaseProviders.SqlCe) == true)
-            {
-                items.AddRange(GetSqlItems<SqlCeConnection, SqlCeCommand>(query, settings.ConnectionString));
-            }
-            else
-            {
-                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
-            }
-#else
             // TODO: [v10] [LK:2022-04-06] Add support for querying SQLite database.
 
-            // TODO: [v9] [LK:2021-05-07] Review SQLCE
-            // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
-            // I've tried digging around Umbraco's `IUmbracoDatabase` layer, but I couldn't get my head around it.
-            // At the end of the day, if the user has SQLCE configured, it'd be nice for them to query it.
-            // But I don't want to add an assembly dependency (for SQLCE) to Contentment itself. I'd like to leverage Umbraco's code.
-
             items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
-#endif
 
             return items;
         }

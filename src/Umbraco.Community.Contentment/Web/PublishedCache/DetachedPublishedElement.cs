@@ -11,11 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
-#endif
 
 namespace Umbraco.Community.Contentment.Web.PublishedCache
 {

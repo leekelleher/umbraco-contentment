@@ -5,19 +5,11 @@
 
 using System;
 using System.Collections.Generic;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.PropertyEditors.ValueConverters;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

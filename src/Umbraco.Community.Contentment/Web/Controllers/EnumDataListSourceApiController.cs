@@ -10,20 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Community.Contentment.DataEditors;
-#if NET472
-using System.Web.Http;
-using Umbraco.Core;
-using Umbraco.Core.Strings;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
-#else
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.Web.Controllers
 {
@@ -44,10 +35,6 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
-#if NET472
-            const string App_Code = "App_Code";
-#endif
-
             var options = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -85,16 +72,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                         continue;
                     }
 
-#if NET472
-                    if (assembly.FullName.StartsWith(App_Code) == true && options.Contains(App_Code) == false)
-                    {
-                        options.Add(App_Code);
-                    }
-                    else
-#endif
-                    {
-                        options.Add(assemblyName.Name);
-                    }
+                    options.Add(assemblyName.Name);
                 }
             }
 

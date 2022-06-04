@@ -6,19 +6,10 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.ModelsBuilder.Embedded;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Infrastructure.ModelsBuilder;
-#endif
 
-#if NET472
-namespace Umbraco.Web
-#else
 namespace Umbraco.Extensions
-#endif
 {
     public static class PublishedElementExtensions
     {
@@ -50,11 +41,7 @@ namespace Umbraco.Extensions
             try
             {
                 var assembly = typeof(ApiVersion).Assembly;
-#if NET472
-                var type = assembly.GetType("Umbraco.Web.PublishedElementExtensions");
-#else
                 var type = assembly.GetType("Umbraco.Extensions.PublishedElementExtensions");
-#endif
                 var method = type.GetMethod(nameof(GetAlias), BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
                 var generic = method.MakeGenericMethod(typeof(TModel), typeof(TValue));
                 return generic.Invoke(null, new object[] { model, property }) as string;

@@ -5,11 +5,7 @@
 
 using System.Collections.Generic;
 
-#if NET472
-namespace Umbraco.Core
-#else
 namespace Umbraco.Extensions
-#endif
 {
     internal static class DictionaryExtensions
     {

@@ -10,12 +10,7 @@
 
 using System;
 using System.Reflection;
-#if NET472
-using Semver;
-using Umbraco.Core;
-#else
 using Umbraco.Cms.Core.Semver;
-#endif
 
 namespace Umbraco.Community.Contentment
 {

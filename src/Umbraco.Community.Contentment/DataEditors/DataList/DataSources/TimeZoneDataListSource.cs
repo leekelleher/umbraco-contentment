@@ -6,11 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET472
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.PropertyEditors;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

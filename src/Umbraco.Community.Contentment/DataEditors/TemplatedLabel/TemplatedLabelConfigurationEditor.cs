@@ -4,16 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-#if NET472
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

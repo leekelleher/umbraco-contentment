@@ -4,23 +4,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
-#if NET472
-using System.Web.Mvc;
-using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-#else
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
-#endif
 
-#if NET472
-namespace Umbraco.Web.Mvc
-#else
 namespace Umbraco.Cms.Web.Common.Views
-#endif
 {
     public abstract class ContentBlockPreviewView
         : ContentBlockPreviewView<IPublishedContent, IPublishedElement>
@@ -32,22 +21,16 @@ namespace Umbraco.Cms.Web.Common.Views
         where TPublishedElement : IPublishedElement
     {
 
-#if NET472 == false
         public override ViewContext ViewContext
         {
             get => base.ViewContext;
             set => base.ViewContext = SetViewData(value);
         }
-#endif
 
-#if NET472
-        protected override void SetViewData(ViewDataDictionary viewData)
-        {
-#else
         protected ViewContext SetViewData(ViewContext viewCtx)
         {
             var viewData = viewCtx.ViewData;
-#endif
+
             void setProperty<T>(string key, Action<T> action)
             {
                 if (viewData.TryGetValueAs(key, out T value) == true)
@@ -76,11 +59,7 @@ namespace Umbraco.Cms.Web.Common.Views
 
             viewData.Model = model;
 
-#if NET472
-            base.SetViewData(viewData);
-#else
             return viewCtx;
-#endif
         }
     }
 }

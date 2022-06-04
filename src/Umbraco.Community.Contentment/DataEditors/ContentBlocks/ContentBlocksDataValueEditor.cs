@@ -15,13 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Editors;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-#else
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -29,7 +22,6 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -39,13 +31,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
-#if NET472
-public ContentBlocksDataValueEditor(
-            IContentTypeService contentTypeService,
-            IDataTypeService dataTypeService,
-            PropertyEditorCollection propertyEditors)
-            : base()
-#else
         public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
             PropertyEditorCollection propertyEditors,
@@ -54,38 +39,24 @@ public ContentBlocksDataValueEditor(
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
             : base(localizedTextService, shortStringHelper, jsonSerializer)
-#endif
         {
             _dataTypeService = dataTypeService;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
         }
 
-
-#if NET472
-        public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)
-#else
         public override object ToEditor(IProperty property, string culture = null, string segment = null)
-#endif
         {
             var value = property.GetValue(culture, segment)?.ToString();
             if (string.IsNullOrWhiteSpace(value) == true)
             {
-#if NET472
-                return base.ToEditor(property, dataTypeService, culture, segment);
-#else
                 return base.ToEditor(property, culture, segment);
-#endif
             }
 
             var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             if (blocks == null)
             {
-#if NET472
-                return base.ToEditor(property, dataTypeService, culture, segment);
-#else
                 return base.ToEditor(property, culture, segment);
-#endif
             }
 
             foreach (var block in blocks)
@@ -120,11 +91,7 @@ public ContentBlocksDataValueEditor(
                         continue;
                     }
 
-#if NET472
-                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, dataTypeService);
-#else
                     var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
-#endif
 
                     block.Value[key] = convertedValue != null
                         ? JToken.FromObject(convertedValue)

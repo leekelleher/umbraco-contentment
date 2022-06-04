@@ -4,11 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.ComponentModel;
-#if NET472
-using Umbraco.Core.Composing;
-#else
 using Umbraco.Cms.Core.Composing;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

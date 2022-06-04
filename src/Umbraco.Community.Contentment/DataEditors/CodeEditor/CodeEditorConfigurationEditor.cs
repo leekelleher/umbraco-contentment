@@ -5,17 +5,10 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -168,21 +161,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             };
 
-#if NET472
-            var path = webHostEnvironment.MapPathWebRoot($"~/{aceEditorPath}/");
-
-            if (Directory.Exists(aceEditorPath) == true)
-            {
-                var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
-                if (aceEditorFiles != null && aceEditorFiles.Length > 0)
-                {
-                    foreach (var file in aceEditorFiles)
-                    {
-                        checkFile(Path.GetFileNameWithoutExtension(file));
-                    }
-                }
-            }
-#else
             var directoryContents = webHostEnvironment.WebRootFileProvider.GetDirectoryContents(aceEditorPath);
             if (directoryContents.Exists == true)
             {
@@ -191,7 +169,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     checkFile(Path.GetFileNameWithoutExtension(file.Name));
                 }
             }
-#endif
 
             return (modes, themes);
         }

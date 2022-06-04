@@ -7,21 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Core.Strings;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -145,13 +136,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 for (var i = 0; i < array2.Count; i++)
                 {
                     var item = (JObject)array2[i];
-
-                    // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                    if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
-                    {
-                        item.Add("key", item["type"]);
-                        item.Remove("type");
-                    }
 
                     if (Guid.TryParse(item.Value<string>("key"), out var guid) && _elementTypes.ContainsKey(guid) == true)
                     {

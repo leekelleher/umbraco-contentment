@@ -6,17 +6,10 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -115,13 +108,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray array) == true && array.Count > 0 && array[0] is JObject item)
             {
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`.
-                if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
-                {
-                    item.Add("key", item["type"]);
-                    item.Remove("type");
-                }
-
                 var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("key"));
                 if (source != null)
                 {

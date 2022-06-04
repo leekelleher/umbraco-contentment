@@ -8,20 +8,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Hosting;
-using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
-#else
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -30,19 +20,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
-#if NET472
-        private readonly ILogger _logger;
-
-        public TextDelimitedDataListSource(
-            ILogger logger,
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
-        {
-            _logger = logger;
-            _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
-        }
-#else
         private readonly ILogger<TextDelimitedDataListSource> _logger;
 
         public TextDelimitedDataListSource(
@@ -54,7 +31,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
-#endif
 
         public string Name => "Text Delimited Data";
 
@@ -225,11 +201,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-#if NET472
-                    _logger.Error<TextDelimitedDataListSource>(ex, "Unable to fetch remote data.");
-#else
                     _logger.LogError(ex, "Unable to fetch remote data.");
-#endif
                 }
             }
             else
@@ -242,11 +214,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-#if NET472
-                    _logger.Warn<TextDelimitedDataListSource>("Unable to find the local file path.");
-#else
                     _logger.LogWarning("Unable to find the local file path.");
-#endif
                 }
             }
 

@@ -7,21 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Examine;
 using Examine.Search;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-using UmbracoExamineFieldNames = Umbraco.Examine.UmbracoExamineIndex;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Infrastructure.Examine;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -178,11 +169,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var descriptionField = config.GetValueAs("descriptionField", string.Empty);
 
                     var results = index
-#if NET472
-                        .GetSearcher()
-#else
                         .Searcher
-#endif
                         .CreateQuery()
                         .NativeQuery(luceneQuery)
                         // NOTE: For any `OrderBy` complaints, refer to: https://github.com/Shazwazza/Examine/issues/126

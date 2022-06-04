@@ -8,18 +8,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Umbraco.Community.Contentment.Composing;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
