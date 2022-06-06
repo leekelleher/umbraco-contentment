@@ -112,9 +112,5 @@ Property Editors are:
 
 _Who knows?!_ `¯\_(ツ)_/¯`
 
-- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-- [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
-- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
-
 **I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
 

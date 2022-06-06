@@ -21,16 +21,21 @@
 - Wizard - overlay panel with a step wizard, each containing multiple fields, that populate the next set of fields. (Similar to the cascading editor, above.)
   Making use of the [`<umb-pagination>` directive](https://github.com/umbraco/Umbraco-CMS/search?q=general_previous)?
 
+- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks).
+
+- Griddle - a lightweight version of the Grid, (think a stacked block editor with the richness of Grid editors).
+
 
 ### Internally used editors
 
 Could these internally used editors have potential as standalone property editors?
 
-- Cascading Dropdown List
+- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
 - Configuration Editor
 - Data List Item editor
 - Data Table
 - Macro Picker
+- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
 
 ### Validation
