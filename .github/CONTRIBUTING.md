@@ -2,9 +2,12 @@ This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### General gist
 
-First, before writing any code, [please open an issue](https://github.com/leekelleher/umbraco-contentment/issues), or [let's have a discussion](https://github.com/leekelleher/umbraco-contentment/discussions) about any features or ideas that you may have.
+Before writing any code, [please open an issue](https://github.com/leekelleher/umbraco-contentment/issues), or [let's have a discussion](https://github.com/leekelleher/umbraco-contentment/discussions) about any features or ideas that you may have.
 
-Once the feature or idea is fleshed out, it's hacking time!
+> **No-nos!** Saying this upfront, please do not upgrade any NuGet dependencies and please do not modify any licensing information, e.g. do not update the copyright year.
+> I have strong opinions on how I like these to be managed.
+
+Okay, once you have the feature or idea is fleshed out, it's hacking time!
 
 1. Fork it
 2. Branch it
