@@ -97,6 +97,17 @@ Property Editors are:
 - `(⊙_⊙;)` _I haven't decided yet._
 
 
+## v5
+
+### v5.0
+
+- A breaking-change release _(following SemVer guidelines),_ dropping support for Umbraco v8 and v9, to only compile against Umbraco v10.0. This would have the same features as v4.x.
+
+### v5.1
+
+- `(⌐■_■)` _I haven't decided yet._
+
+
 ## Future feature releases
 
 _Who knows?!_ `¯\_(ツ)_/¯`
