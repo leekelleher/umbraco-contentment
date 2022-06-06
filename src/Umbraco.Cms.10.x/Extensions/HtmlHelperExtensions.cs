@@ -21,7 +21,9 @@ namespace Umbraco.Extensions
             var requestServices = helper.ViewContext.HttpContext.RequestServices;
             var viewEngine = requestServices.GetService<ICompositeViewEngine>();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var viewEngineResult = viewEngine.FindView(helper.ViewContext, partialViewName, isMainPage: false);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return viewEngineResult.Success;
         }
