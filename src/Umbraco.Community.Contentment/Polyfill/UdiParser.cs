@@ -11,6 +11,11 @@ namespace Umbraco.Core
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal sealed class UdiParser
     {
+        public static bool TryParse(string s, out Udi udi)
+        {
+            return Udi.TryParse(s, out udi);
+        }
+
         public static bool TryParse(string s, out GuidUdi udi)
         {
             return GuidUdi.TryParse(s, out udi);

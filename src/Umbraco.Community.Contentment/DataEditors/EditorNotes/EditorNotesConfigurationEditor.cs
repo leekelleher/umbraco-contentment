@@ -17,6 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class EditorNotesConfigurationEditor : ConfigurationEditor
     {
+        internal const string Message = "message";
+
         public EditorNotesConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
@@ -62,8 +64,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new ConfigurationField
             {
-                Key = "message",
-                Name = "Message",
+                Key = Message,
+                Name = nameof(Message),
                 Description = "Enter the notes to be displayed for the content editor.",
                 View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
                 Config = new Dictionary<string, object>
