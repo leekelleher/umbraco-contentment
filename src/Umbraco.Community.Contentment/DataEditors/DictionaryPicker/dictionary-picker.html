@@ -4,15 +4,16 @@
    - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
 
 <div ng-controller="Umbraco.Community.Contentment.DataEditors.DictionaryPicker.Controller as vm">
-    <contentment-list-editor ng-model="model.value"
-                             add-button-label-key="'general_add'"
-                             allow-add="vm.allowAdd"
-                             allow-edit="false"
-                             allow-remove="true"
-                             allow-sort="vm.allowSort"
-                             default-icon="'icon-book-alt'"
-                             on-add="vm.add"
-                             on-remove="vm.remove"
-                             on-sort="vm.sort">
-    </contentment-list-editor>
+    <contentment-items-editor ng-model="model.value"
+                              add-button-label-key="vm.addButtonLabelKey"
+                              allow-add="vm.allowAdd"
+                              allow-edit="false"
+                              allow-remove="true"
+                              allow-sort="vm.allowSort"
+                              default-icon="vm.defaultIcon"
+                              display-mode="vm.displayMode"
+                              on-add="vm.add"
+                              on-remove="vm.remove"
+                              on-sort="vm.sort">
+    </contentment-items-editor>
 </div>

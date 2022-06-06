@@ -14,10 +14,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("macro-picker.model", $scope.model);
 
         var defaultConfig = {
-            availableMacros: [],
-            maxItems: 0,
-            disableSorting: 0,
             addButtonLabelKey: "defaultdialogs_selectMacro",
+            availableMacros: [],
+            disableSorting: 0,
+            maxItems: 0,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -28,6 +28,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             $scope.model.value = $scope.model.value || [];
 
             vm.defaultIcon = "icon-settings-alt";
+            vm.displayMode = "list";
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowEdit = true;
             vm.allowRemove = true;

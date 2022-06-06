@@ -31,19 +31,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-cards.html";
+        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "allowCopy", Constants.Values.True },
-            { "allowCreateContentTemplate", Constants.Values.True },
+            { "allowCreateContentTemplate", Constants.Values.False },
         };
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "enablePreview", Constants.Values.False },
             { "allowCopy", Constants.Values.True },
-            { "allowCreateContentTemplate", Constants.Values.True },
+            { "allowCreateContentTemplate", Constants.Values.False },
+            { "displayMode", "cards" },
+            { "enablePreview", Constants.Values.False },
         };
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]

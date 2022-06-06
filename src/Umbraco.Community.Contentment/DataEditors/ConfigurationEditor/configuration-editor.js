@@ -17,17 +17,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("config-editor.model", $scope.model);
 
         var defaultConfig = {
+            addButtonLabelKey: "general_add",
             allowDuplicates: 0,
+            allowRemove: 1,
+            disableSorting: 0,
+            displayMode: "list",
+            enableDevMode: 0,
+            enableFilter: 0,
+            help: null,
             items: [],
             maxItems: 0,
-            disableSorting: 0,
-            allowRemove: 1,
-            enableFilter: 0,
             orderBy: "name",
             overlayView: "",
-            enableDevMode: 0,
-            addButtonLabelKey: "general_add",
-            help: null,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -83,6 +84,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowEdit = (item, $index) => config.allowEdit[item.key];
             vm.allowRemove = Object.toBoolean(config.allowRemove);
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
+
+            vm.displayMode = config.displayMode;
 
             vm.sortableOptions = {
                 axis: "y",
