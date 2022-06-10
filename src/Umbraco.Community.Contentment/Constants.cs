@@ -114,7 +114,7 @@ namespace Umbraco.Community.Contentment
             public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
 #if NET472
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 18, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(8, 17, 0);
 #elif NET5_0
             public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(9, 5, 0);
 #else

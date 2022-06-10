@@ -48,7 +48,7 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 _**Please note...**_
 
-- v4.x has been developed against **Umbraco v8.18.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0 only) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
+- v4.x has been developed against **Umbraco v8.17.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0 only) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
 - v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x has been developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x has been developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.

@@ -90,7 +90,7 @@ Property Editors are:
 
 ### v4.0
 
-- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.18.0, v9.5.0 and v10.0.
+- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.17.0, v9.5.0 and v10.0.0.
 
 ### v4.1
 
@@ -101,7 +101,7 @@ Property Editors are:
 
 ### v5.0
 
-- A breaking-change release _(following SemVer guidelines),_ dropping support for Umbraco v8 and v9, to only compile against Umbraco v10.0. This would have the same features as v4.x.
+- A breaking-change release _(following SemVer guidelines),_ dropping support for Umbraco v8 and v9, to only compile against Umbraco v10.0.0. This would have the same features as v4.x.
 
 ### v5.1
 

@@ -17,7 +17,7 @@ $licenseName = 'Mozilla Public License Version 2.0';
 $licenseUrl = 'https://mozilla.org/MPL/2.0/';
 $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
-$minUmbracoVersion = 8,18,0;
+$minUmbracoVersion = 8,17,0;
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
 $tags = "umbraco";
 
