@@ -21,7 +21,8 @@
                     </span>
                 </span>
                 <span class="umb-form-check__info">
-                    <span class="umb-form-check__text" ng-bind="vm.toggleChecked ? 'Uncheck all' : 'Check all'"></span>
+                    <span class="umb-form-check__text" ng-if="!vm.toggleChecked"><localize key="contentment_checkboxListEditorCheckAll">Check all</localize></span>
+                    <span class="umb-form-check__text" ng-if="vm.toggleChecked"><localize key="contentment_checkboxListEditorUncheckAll">Uncheck all</localize></span>
                 </span>
             </label>
         </li>

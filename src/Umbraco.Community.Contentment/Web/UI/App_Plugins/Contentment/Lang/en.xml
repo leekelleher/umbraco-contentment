@@ -34,5 +34,9 @@
         <key alias="configurePreviewNoItems">The data source returned no items to preview.</key>
 
         <key alias="tagsType">Type to select an item...</key>
+
+        <!--List Editor-->
+        <key alias="checkboxListEditorCheckAll">Check all</key>
+        <key alias="checkboxListEditorUncheckAll">Uncheck all</key>
     </area>
 </language>
