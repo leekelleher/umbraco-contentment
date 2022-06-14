@@ -29,6 +29,9 @@
         <key alias="configurePreviewListEditor">Selecionar e configurar o editor de lista, por favor.</key>
         <key alias="configurePreviewNoItems">A fonte de dados não retornou nenhum item para visualização.</key>
 
+        <key alias="checkboxListCheckAll">Verificar tudo</key>
+        <key alias="checkboxListUncheckAll">Desmarcar todos</key>
+
         <key alias="tagsType">Digite para selecionar um item...</key>
     </area>
 </language>
