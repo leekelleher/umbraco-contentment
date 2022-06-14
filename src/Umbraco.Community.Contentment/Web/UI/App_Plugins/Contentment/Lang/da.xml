@@ -29,6 +29,9 @@
         <key alias="configurePreviewListEditor">Vælg og konfigurer en liste, tak.</key>
         <key alias="configurePreviewNoItems">Datakilden returnerede ingen elementer til forhåndsvisning.</key>
 
+        <key alias="checkboxListCheckAll">Tjek alle</key>
+        <key alias="checkboxListUncheckAll">Fjern markeringen af ​​alle</key>
+
         <key alias="tagsType">Indtast nøgleord (tryk på Enter efter hvert nøgleord)...</key>
     </area>
 </language>

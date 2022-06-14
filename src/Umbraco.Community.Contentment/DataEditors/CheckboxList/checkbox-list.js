@@ -5,7 +5,8 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.CheckboxList.Controller", [
     "$scope",
-    function ($scope) {
+    "localizationService",
+    function ($scope, localizationService) {
 
         // console.log("checkboxlist.model", $scope.model);
 
@@ -43,6 +44,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 : $scope.model.alias;
 
             vm.changed = changed;
+
+            vm.labelCheckAll = "Check all";
+            vm.labelUncheckAll = "Uncheck all";
+
+            var labelKeys = ["contentment_checkboxListCheckAll", "contentment_checkboxListUncheckAll"];
+            localizationService.localizeMany(labelKeys).then(function (data) {
+                vm.labelCheckAll = data[0];
+                vm.labelUncheckAll = data[1];
+            });
 
             vm.toggleAll = Object.toBoolean(config.checkAll);
 
