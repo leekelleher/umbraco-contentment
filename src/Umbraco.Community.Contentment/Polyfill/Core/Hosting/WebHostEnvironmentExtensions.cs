@@ -1,4 +1,8 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+﻿/* This Source Code has been copied from Lee Kelleher's Umbraco Polyfill library.
+ * https://github.com/leekelleher/umbraco-polyfill/blob/main/src/Core/Hosting/WebHostEnvironmentExtensions.cs
+ * Modified under the permissions of the MIT License.
+ * Modifications are licensed under the Mozilla Public License.
+ * Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -9,9 +13,7 @@ using Umbraco.Cms.Web.Common.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Hosting
 {
-    // NOTE: A polfill for:
-    // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.Common/Extensions/WebHostEnvironmentExtensions.cs
-    public static class WebHostEnvironmentExtensions
+    internal static class WebHostEnvironmentExtensions
     {
         public static string MapPathWebRoot(this IWebHostEnvironment webHostEnvironment, string path)
         {
