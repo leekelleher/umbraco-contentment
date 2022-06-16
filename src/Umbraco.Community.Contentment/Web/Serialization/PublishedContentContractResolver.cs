@@ -2,13 +2,19 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-/* This code was originally based on code by Rasmus Fjord,
- * supplied on an Our Umbraco forum post:
+/* This code was originally based on code posted by Rasmus Fjord (@rasmusfjord) on the Our Umbraco forum:
  * https://our.umbraco.com/forum/umbraco-8/98381-serializing-an-publishedcontentmodel-modelsbuilder-model-in-v8#comment-310148
- * From searching GitHub, I also found René Pjengaard's code:
- * https://github.com/rpjengaard/merchelloshop/blob/master/dev/code/Json/Resolvers/PublishedContentContractResolver.cs
- * It is unknown (to me) who the original author is, and how the code
- * has been licensed. My assumption is under the MIT license. */
+ *
+ * From searching GitHub, and a subsequent conversation with Anders Bjerner (@abjerner), the original code came from Skybrud's internal SPA library, circa 2014.
+ * The original author was René Pjengaard (@rpjengaard).
+ * The Umbraco 8 packaged version of the code is available here:
+ * https://github.com/skybrud/Skybrud.Umbraco.Spa/blob/v3/latest/src/Skybrud.Umbraco.Spa/Json/Resolvers/SpaPublishedContentContractResolver.cs
+ * The Umbraco 9 packaged version of the code is available here:
+ * https://github.com/limbo-works/Limbo.Umbraco.Spa/blob/v1/main/src/Limbo.Umbraco.Spa/Json/Resolvers/SpaPublishedContentContractResolver.cs
+ *
+ * Modified under the permissions of the MIT License.
+ * Modifications are licensed under the Mozilla Public License.
+ */
 
 using System;
 using System.Collections.Generic;
@@ -142,6 +148,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
         }
 
+        public string SystemPropertyNamePrefix { private get; set; }
+
+        [Obsolete("Please use `SystemPropertyNamePrefix = \"_\"` instead.")]
         public bool PrefixSystemPropertyNamesWithUnderscore { private get; set; }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -200,9 +209,16 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 property.Converter = _converterLookup[property.PropertyType];
             }
 
-            if (PrefixSystemPropertyNamesWithUnderscore == true && _systemProperties.Contains(member.Name) == true)
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == true && PrefixSystemPropertyNamesWithUnderscore == true)
             {
-                property.PropertyName = "_" + property.PropertyName;
+                SystemPropertyNamePrefix = "_";
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(member.Name) == true)
+            {
+                property.PropertyName = SystemPropertyNamePrefix + property.PropertyName;
             }
 
             return property;
@@ -211,7 +227,14 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 #if NET472 == false
         protected override string ResolvePropertyName(string propertyName)
         {
-            return PrefixSystemPropertyNamesWithUnderscore == true && _systemProperties.Contains(propertyName) == true
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == true && PrefixSystemPropertyNamesWithUnderscore == true)
+            {
+                SystemPropertyNamePrefix = "_";
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            return string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(propertyName) == true
                 ? "_" + base.ResolvePropertyName(propertyName)
                 : base.ResolvePropertyName(propertyName);
         }

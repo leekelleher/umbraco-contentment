@@ -31,15 +31,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-cards.html";
+        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        {
+            { "allowCopy", Constants.Values.True },
+            { "allowCreateContentTemplate", Constants.Values.False },
+        };
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "enablePreview", Constants.Values.False },
-            { "allowCopy", Constants.Values.False },
+            { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.False },
+            { "displayMode", "cards" },
+            { "enablePreview", Constants.Values.False },
         };
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
@@ -48,6 +53,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 <summary><strong>A note about block type previews.</strong></summary>
 <p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
 </details>", true),
+            new ConfigurationField
+            {
+                Key = "allowCopy",
+                Name = "Allow copy?",
+                Description = "Select to enable copying content blocks.",
+                View = "views/propertyeditors/boolean/boolean.html",
+            },
+            new ConfigurationField
+            {
+                Key = "allowCreateContentTemplate",
+                Name = "Allow create content template?",
+                Description = "Select to enable the 'Create content template' feature.",
+                View = "views/propertyeditors/boolean/boolean.html",
+            }
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;

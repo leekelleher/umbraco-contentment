@@ -14,6 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("item-picker.model", $scope.model);
 
         var defaultConfig = {
+            addButtonLabelKey: "general_add",
             allowClear: 0,
             allowDuplicates: 0,
             confirmRemoval: 0,
@@ -28,7 +29,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             overlayView: "",
             overlayOrderBy: "name",
             overlaySize: "small",
-            addButtonLabelKey: "general_add",
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -50,6 +50,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.enableMultiple = Object.toBoolean(config.enableMultiple) && config.maxItems !== 1;
 
             vm.defaultIcon = config.defaultIcon;
+            vm.displayMode = "list";
             vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
             vm.allowRemove = true;

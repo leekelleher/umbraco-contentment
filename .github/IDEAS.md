@@ -11,8 +11,6 @@
 
 - [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
 
-- [Data List: Value Converters](https://github.com/leekelleher/umbraco-contentment/discussions/89)
-
 - Text Input - Change Font-Size within Input Field Based on Length (similar to Facebook's post experience, after 85 chars)
   - https://web-design-weekly.com/snippets/change-font-size-within-input-field-based-on-length/
 
@@ -23,16 +21,21 @@
 - Wizard - overlay panel with a step wizard, each containing multiple fields, that populate the next set of fields. (Similar to the cascading editor, above.)
   Making use of the [`<umb-pagination>` directive](https://github.com/umbraco/Umbraco-CMS/search?q=general_previous)?
 
+- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks).
+
+- Griddle - a lightweight version of the Grid, (think a stacked block editor with the richness of Grid editors).
+
 
 ### Internally used editors
 
 Could these internally used editors have potential as standalone property editors?
 
-- Cascading Dropdown List
+- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
 - Configuration Editor
 - Data List Item editor
 - Data Table
 - Macro Picker
+- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
 
 ### Validation
@@ -58,10 +61,4 @@ Remove hard-coded English labels, move them to the language XML file.
 ## Deprecation considerations
 
 It's good to re-evaluate whether certain features are still relevant. Review the [telemetry stats](https://leekelleher.com/umbraco/contentment/telemetry/) for usage data.
-
-
-## Asset bundling/minification
-
-- Consider replacing Powershell/AjaxMinifier.exe with [BundlerMinifier](https://github.com/madskristensen/BundlerMinifier)?
-  e.g. https://blog.elmah.io/how-we-do-bundling-and-minification-in-asp-net-core/
 

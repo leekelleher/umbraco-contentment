@@ -12,8 +12,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("dictionary-picker.model", $scope.model);
 
         var defaultConfig = {
+            addButtonLabelKey: "general_add",
+            disableSorting: 0,
             maxItems: 0,
-            disableSorting: 0
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -27,7 +28,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }
 
-            vm.defaultIcon = "";
+            vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
+            vm.defaultIcon = "icon-book-alt";
+            vm.displayMode = "list";
 
             vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;

@@ -49,12 +49,12 @@ Property Editors are:
 
 ### v2.0
 
-- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS v8.14, _(the most recent version of Umbraco at the time of release)._
+- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS v8.14.0, _(the most recent version of Umbraco at the time of release)._
 
 ### v2.1
 
 - Configuration Editor item grouping
-- Data List: Unlocking all (hidden 🤫) data-sources
+- Data List: Unlocking all (hidden 🤫) [data-sources](../docs/data-sources/README.md)
 
 ### v2.2
 
@@ -65,7 +65,7 @@ Property Editors are:
 
 ### v3.0
 
-- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17 and v9.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
+- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17.0 and v9.0.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
 ### v3.1
 
@@ -90,21 +90,28 @@ Property Editors are:
 
 ### v4.0
 
-- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.18, v9.4 and v10.0.
+- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.18.0, v9.5.0 and v10.0.
 
 ### v4.1
 
 - `(⊙_⊙;)` _I haven't decided yet._
 
 
+## v5
+
+### v5.0
+
+- A breaking-change release _(following SemVer guidelines),_ dropping support for Umbraco v8 and v9, to only compile against Umbraco v10.0. This would have the same features as v4.x.
+
+### v5.1
+
+- `(⌐■_■)` _I haven't decided yet._
+
+
 ## Future feature releases
 
 _Who knows?!_ `¯\_(ツ)_/¯`
 
-- Cascading Dropdown List _(uses API endpoints to populate the dropdowns)_
-- [Custom Value Converter](https://github.com/leekelleher/umbraco-contentment/pull/196) editor wrapper
-- [Data List: Groups](https://github.com/leekelleher/umbraco-contentment/discussions/90)
-- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
-
 **I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
+
 

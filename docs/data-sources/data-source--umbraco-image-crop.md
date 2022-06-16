@@ -4,23 +4,21 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #158.
-> https://github.com/leekelleher/umbraco-contentment/issues/158
-
-
 #### Umbraco Image Crops
 
-Select an Image Cropper data-type to use its defined crops to populate the data source.
+This data-source lets you to use crops defined in an Umbraco Image Cropper data-type to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the Umbraco image crops data-source has the following options:
+
+![Configuration Editor for Umbraco image crops](data-source--umbraco-image-crop--configuration-editor-01.png)
+
+The **Image Cropper** field will let you select an existing Umbraco Image Cropper data-type select the defined crops from.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the Umbraco image crops item is a `string` of the crop's alias.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

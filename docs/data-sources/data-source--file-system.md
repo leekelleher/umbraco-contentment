@@ -23,3 +23,4 @@ The next set of fields to enter **Filename filter**, e.g. `*.css`.
 ##### What is the value's object-type?
 
 The value for the File System data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

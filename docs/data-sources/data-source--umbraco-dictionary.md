@@ -4,23 +4,22 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #156.
-> https://github.com/leekelleher/umbraco-contentment/issues/156
-
-
 #### Umbraco Dictionary Item
 
-Select an Umbraco dictionary item to populate the data source with its child items.
+This data-source lets you use the child dictionary items from a selected parent dictionary item to populate the options of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The configuration of the Umbraco dictionary item data-source has the following options:
+
+![Configuration Editor for Umbraco dictionary item](data-source--umbraco-dictionary--configuration-editor-01.png)
+
+The **Dictionary item** field will let you select the parent dictionary item to display the child items from.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the Umbraco dictionary data-source item is a `string` of the dictionary item's key (alias).
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
+

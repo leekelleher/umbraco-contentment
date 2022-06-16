@@ -31,12 +31,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-list.html";
+        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public Dictionary<string, object> DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
+            { "displayMode", "list" },
             { "enablePreview", Constants.Values.False },
         };
 

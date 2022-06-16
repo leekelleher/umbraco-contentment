@@ -23,4 +23,5 @@ Press "Add item" button and fill the fields manually, or choose the advanced opt
 ##### What is the value's object-type?
 
 The value for the User-defined List data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 

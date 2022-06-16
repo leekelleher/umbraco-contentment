@@ -2,9 +2,12 @@ This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### General gist
 
-First, before writing any code, [please open an issue](https://github.com/leekelleher/umbraco-contentment/issues), or [let's have a discussion](https://github.com/leekelleher/umbraco-contentment/discussions) about any features or ideas that you may have.
+Before writing any code, [please open an issue](https://github.com/leekelleher/umbraco-contentment/issues), or [let's have a discussion](https://github.com/leekelleher/umbraco-contentment/discussions) about any features or ideas that you may have.
 
-Once the feature or idea is fleshed out, it's hacking time!
+> **No-nos!** Saying this upfront, please do not upgrade any NuGet dependencies and please do not modify any licensing information, e.g. do not update the copyright year.
+> I have strong opinions on how I like these to be managed.
+
+Okay, once you have the feature or idea is fleshed out, it's hacking time!
 
 1. Fork it
 2. Branch it
@@ -26,6 +29,7 @@ Given there are now multiple versions of Contentment that support multiple versi
 - The [`dev/v1.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v1.x) branch is for Contentment **v1.4.x** patch releases, this targets Umbraco **v8.6.1**.
 - The [`dev/v2.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v2.x) branch is for Contentment **v2.2.x** patch releases, this targets Umbraco **v8.14.0**.
 - The [`dev/v3.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v3.x) branch is for Contentment **v3.x** (current) releases, this targets both Umbraco **v8.17.0** and **v9.0.0**.
+- The [`dev/v4.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v4.x) branch is for Contentment **v4.x** (next) releases, this targets Umbraco **v8.18.0**, **v9.5.0** and **v10.0.0**.
 
 
 ### Further reading

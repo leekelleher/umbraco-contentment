@@ -21,3 +21,4 @@ The first field is enter your SQL query or paste it. The second field is to sele
 ##### What is the value's object-type?
 
 The value for the SQL data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

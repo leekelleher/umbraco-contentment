@@ -22,17 +22,19 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         // console.log("content-blocks.model", $scope.model);
 
         var defaultConfig = {
+            addButtonLabelKey: "grid_addElement",
             allowCopy: 1,
             allowCreateContentTemplate: 0,
             allowEdit: 1,
             allowRemove: 1,
-            disableSorting: 0,
             contentBlockTypes: [],
+            disableSorting: 0,
+            displayMode: "blocks",
+            enableDevMode: 0,
             enableFilter: 0,
             enablePreview: 0,
             maxItems: 0,
             overlayView: "",
-            enableDevMode: 0,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -44,6 +46,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             // If the page is new, then it doesn't have an id, so the parentId will be used.
             var currentNode = editorState.getCurrent();
             config.currentPageId = currentNode.id > 0 ? currentNode.id : currentNode.parentId;
+
+            // Support Content not in Content / Media Tree
+            if (!config.currentPageId) {
+                config.currentPageId = -1;
+            }
 
             $scope.model.value = $scope.model.value || [];
 
@@ -63,6 +70,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.elementTypeLookup[blockType.key] = blockType;
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
+
+            vm.addButtonLabelKey = config.addButtonLabelKey || "grid_addElement";
+            vm.displayMode = config.displayMode;
 
             vm.enablePreview = Object.toBoolean(config.enablePreview);
 

@@ -43,9 +43,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { "enablePreview", Constants.Values.True },
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
+            { "displayMode", "blocks" },
+            { "enablePreview", Constants.Values.True },
         };
 
         public IEnumerable<ConfigurationField> Fields => new[]

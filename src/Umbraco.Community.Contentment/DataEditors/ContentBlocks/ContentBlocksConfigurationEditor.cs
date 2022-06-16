@@ -112,6 +112,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
                 if (displayMode != null)
                 {
+                    // NOTE: Removing the raw configuration as the display mode may have the same key.
+                    config.Remove(DisplayMode);
+
                     var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
 
                     foreach (var prop in editorConfig)

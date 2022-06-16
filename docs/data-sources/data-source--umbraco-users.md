@@ -18,3 +18,5 @@ The configuration of the Umbraco Users data-source has one option, to select a *
 
 The value for the Umbraco Users data-source item is an [`IUser`](https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Core/Models/Membership/IUser.cs) object-type. Typically, this will be a concrete class of [`User`](https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Core/Models/Membership/User.cs), _(unless if you are doing advanced user group management?)._
 
+Depending on the `List editor` used, this may be wrapped in a `List<IUser>`.
+

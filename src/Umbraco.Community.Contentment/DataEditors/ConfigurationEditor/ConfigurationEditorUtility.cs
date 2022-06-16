@@ -65,7 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? item.Fields
                 : Enumerable.Empty<ConfigurationField>();
 
-            return new ConfigurationEditorModel
+            var model = new ConfigurationEditorModel
             {
                 Key = type.GetFullNameWithAssembly(),
                 Name = item.Name ?? type.Name.SplitPascalCasing(shortStringHelper),
@@ -76,6 +76,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 DefaultValues = item.DefaultValues,
                 OverlaySize = item.OverlaySize,
             };
+
+            if (item is IContentmentListTemplateItem lti)
+            {
+                model.NameTemplate = lti.NameTemplate;
+                model.DescriptionTemplate = lti.DescriptionTemplate;
+            }
+
+            return model;
         }
 
         public IEnumerable<ConfigurationEditorModel> GetConfigurationEditorModels<T>(IShortStringHelper shortStringHelper, bool ignoreFields = false)
