@@ -24,8 +24,8 @@
         <dependency id="Umbraco.Cms.Web.BackOffice" version="[9.5.0, 10.0.0)" />
       </group>
       <group targetFramework="net6.0">
-        <dependency id="Umbraco.Cms.Web.Website" version="[10.0.0-rc5, 12.0.0)" />
-        <dependency id="Umbraco.Cms.Web.BackOffice" version="[10.0.0-rc5, 12.0.0)" />
+        <dependency id="Umbraco.Cms.Web.Website" version="[10.0.0, 12.0.0)" />
+        <dependency id="Umbraco.Cms.Web.BackOffice" version="[10.0.0, 12.0.0)" />
       </group>
     </dependencies>
   </metadata>
