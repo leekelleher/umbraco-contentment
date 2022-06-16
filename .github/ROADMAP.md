@@ -83,7 +83,9 @@ Property Editors are:
 
 ### v3.4
 
-- `╰(*°▽°*)╯` _I haven't decided yet._
+- Deploy Connectors for Notes, Editor Notes and Render Macro
+- Enhancement to Configuration Editor, added `IContentmentListTemplateItem` interface
+- Data List: New data-sources for Umbraco Files and Umbraco Templates
 
 
 ## v4
