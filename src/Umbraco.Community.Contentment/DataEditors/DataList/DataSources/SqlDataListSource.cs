@@ -4,10 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using System.Data.Common;
+#if NET6_0_OR_GREATER
+using Microsoft.Data.SqlClient;
+#else
 using System.Data.SqlClient;
+#endif
+using System.Data.Common;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 #if NET472
 using System.Configuration;
 using System.Data.SqlServerCe;
@@ -39,14 +44,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
 
         public SqlDataListSource(
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
 #if NET472 == false
             IConfiguration configuration,
 #endif
             IIOHelper ioHelper)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
-            _codeEditorMode = File.Exists(hostingEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
+            _codeEditorMode = File.Exists(webHostEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
                 ? "sqlserver"
                 : "razor";
 
@@ -167,6 +172,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
             }
 #else
+            // TODO: [v10] [LK:2022-04-06] Add support for querying SQLite database.
+
             // TODO: [v9] [LK:2021-05-07] Review SQLCE
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
             // I've tried digging around Umbraco's `IUmbracoDatabase` layer, but I couldn't get my head around it.

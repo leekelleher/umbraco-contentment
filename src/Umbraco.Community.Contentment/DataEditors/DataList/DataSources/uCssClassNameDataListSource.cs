@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.Hosting;
@@ -24,14 +25,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public class uCssClassNameDataListSource : IDataListSource
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
         public uCssClassNameDataListSource(
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 
@@ -106,7 +107,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var items = new HashSet<string>();
 
-            var path = _hostingEnvironment.MapPathWebRoot(cssPath);
+            var path = _webHostEnvironment.MapPathWebRoot(cssPath);
 
             if (File.Exists(path) == true)
             {

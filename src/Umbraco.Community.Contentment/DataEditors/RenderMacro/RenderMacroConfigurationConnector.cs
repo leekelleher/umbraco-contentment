@@ -10,6 +10,7 @@ using Umbraco.Core;
 using Umbraco.Core.Deploy;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Serialization;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
@@ -25,24 +26,18 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public IEnumerable<string> PropertyEditorAliases => new[] { RenderMacroDataEditor.DataEditorName };
 
-#if NET472 == false
         private readonly IConfigurationEditorJsonSerializer _configurationEditorJsonSerializer;
 
         public RenderMacroConfigurationConnector(IConfigurationEditorJsonSerializer configurationEditorJsonSerializer)
         {
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
         }
-#endif
 
         public object FromArtifact(IDataType dataType, string configuration)
         {
             var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
 
-#if NET472
-            return dataTypeConfigurationEditor.FromDatabase(configuration);
-#else
             return dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
-#endif
         }
 
         public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)

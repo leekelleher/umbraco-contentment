@@ -48,11 +48,12 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 _**Please note...**_
 
-- v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0** and will support those versions and above.
-- v2.x has been developed against **Umbraco v8.14.0** and it will still work on current Umbraco v8.x releases.
-- v1.x has been developed against **Umbraco v8.6.1**, it will still work on current Umbraco v8.x releases.
+- v4.x has been developed against **Umbraco v8.17.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0 only) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
+- v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
+- v2.x has been developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
+- v1.x has been developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
 
-With Contentment v3.x on Umbraco v9.0 (.NET 5), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
+With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
 
 ##### NuGet package repository
 
@@ -73,7 +74,7 @@ If you are using Umbraco v8.x, and prefer to install Contentment from the backof
 
 #### Demo website
 
-[A demo website is available for testing purposes.](../src/Umbraco.Cms.9.0.0/README.md) _(Please note, you will need to clone the repository and run locally.)_
+[A demo website is available for testing purposes.](../src/Umbraco.Cms.10.0.0/README.md) _(Please note, you will need to clone the repository and run locally.)_
 
 
 ### Documentation
@@ -85,6 +86,9 @@ _Let's call those "life's little surprises"._
 
 
 #### Known issues
+
+- **Compatibility with Umbraco v9 running .NET 6.0** (on Contentment v4)
+  - Due to how the .NET multi-targeting support has been implemented in Contentment, if you are running Umbraco v9 on .NET 6.0 and want to install the Contentment package, you may experience an `NU1107: Version conflict detected` error. At present, the workarounds are to either upgrade to Umbraco v10, or use Contentment v3.x. If you have an alternative workaround suggestion, please do let me know. [See #223 for details.](https://github.com/leekelleher/umbraco-contentment/issues/223) _(Note: v9 on .NET 5.0 is totally fine.)_
 
 - **Data List**
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)

@@ -3,8 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Microsoft.AspNetCore.Hosting;
 #if NET472
-using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
@@ -37,42 +37,35 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "code-editor.html";
         internal const string DataEditorIcon = "icon-fa fa-code";
 
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
 #if NET472
         public CodeEditorDataEditor(
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper,
             ILogger logger)
             : base(logger)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 #else
-        private readonly IDataTypeService _dataTypeService;
-        private readonly ILocalizationService _localizationService;
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public CodeEditorDataEditor(
             IDataValueEditorFactory dataValueEditorFactory,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper,
-            ILoggerFactory loggerFactory,
-            IDataTypeService dataTypeService,
-            ILocalizationService localizationService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
             : base(dataValueEditorFactory)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
-            _dataTypeService = dataTypeService;
-            _localizationService = localizationService;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
@@ -80,7 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new CodeEditorConfigurationEditor(
-            _hostingEnvironment,
+            _webHostEnvironment,
             _ioHelper);
 
 #if NET472

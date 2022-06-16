@@ -9,6 +9,7 @@ using Umbraco.Core;
 using Umbraco.Core.Deploy;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Serialization;
 using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
@@ -24,9 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class NotesConfigurationConnector : IDataTypeConfigurationConnector
     {
-#if NET472 == false
         private readonly IConfigurationEditorJsonSerializer _configurationEditorJsonSerializer;
-#endif
         private readonly ILocalLinkParser _localLinkParser;
         private readonly IImageSourceParser _imageSourceParser;
         private readonly IMacroParser _macroParser;
@@ -34,16 +33,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<string> PropertyEditorAliases => new[] { NotesDataEditor.DataEditorName };
 
         public NotesConfigurationConnector(
-#if NET472 == false
             IConfigurationEditorJsonSerializer configurationEditorJsonSerializer,
-#endif
             ILocalLinkParser localLinkParser,
             IImageSourceParser imageSourceParser,
             IMacroParser macroParser)
         {
-#if NET472 == false
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
-#endif
             _localLinkParser = localLinkParser;
             _imageSourceParser = imageSourceParser;
             _macroParser = macroParser;
@@ -52,11 +47,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public object FromArtifact(IDataType dataType, string configuration)
         {
             var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
-#if NET472
-            var db = dataTypeConfigurationEditor.FromDatabase(configuration);
-#else
+
             var db = dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
-#endif
 
             if (db is Dictionary<string, object> config &&
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string notes) == true &&

@@ -116,6 +116,7 @@ namespace Umbraco.Community.Contentment.Notifications
                             dataTypeConfig = dataTypeConfig,
                         };
 
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
                         using (var client = new WebClient())
                         {
                             var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
@@ -125,6 +126,7 @@ namespace Umbraco.Community.Contentment.Notifications
                             client.Headers.Add("Content-Type", MediaTypeNames.Text.Plain);
                             Task.Run(() => client.UploadStringAsync(address, payload));
                         }
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
                     }
                     catch { /* ¯\_(ツ)_/¯ */ }
                 }

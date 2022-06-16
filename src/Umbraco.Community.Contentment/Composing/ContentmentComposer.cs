@@ -33,8 +33,6 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            composition.RegisterUnique<Core.Hosting.IHostingEnvironment, Polyfill.ContenmentHostingEnvironment>();
-            composition.RegisterUnique<Core.IO.IIOHelper, Polyfill.ContenmentIOHelper>();
             composition.RegisterUnique<ConfigurationEditorUtility>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)
@@ -69,7 +67,7 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            builder.Services.AddUnique<ConfigurationEditorUtility>();
+            builder.Services.AddSingleton<ConfigurationEditorUtility>();
 
             builder
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
