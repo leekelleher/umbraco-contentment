@@ -22,3 +22,4 @@ The item values will be the names and aliases from the Umbraco user groups (role
 
 The value for the Umbraco User Groups data-source item is an [`IUserGroup`](https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Core/Models/Membership/IUserGroup.cs) object-type. Typically, this will be a concrete class of [`UserGroup`](https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Core/Models/Membership/UserGroup.cs), _(unless if you are doing advanced user group management?)._
 
+Depending on the `List editor` used, this may be wrapped in a `List<IUserGroup>`.

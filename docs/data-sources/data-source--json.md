@@ -31,6 +31,4 @@ The next set of fields are the JSONPath expressions used to populate the data-so
 ##### What is the value's object-type?
 
 The value for the JSON data-source item is a `string`.
-
-
-
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

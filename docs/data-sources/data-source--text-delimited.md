@@ -25,4 +25,5 @@ You can keep the other fields into the default values, or change them as you nee
 ##### What is the value's object-type?
 
 The value for the Text Delimited data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 

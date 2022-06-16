@@ -4,23 +4,18 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #159.
-> https://github.com/leekelleher/umbraco-contentment/issues/159
-
-
 #### Umbraco Languages
 
-Populate the data source with langauges configured in Umbraco.
+This data-source enables you to use Umbraco languages to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The Umbraco languages data-source does not have any configuration options. It will list all the available languages configured within Umbraco.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the Umbraco languages data-source item will be the 2 letter ISO code (e.g. en or fr) as a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
+

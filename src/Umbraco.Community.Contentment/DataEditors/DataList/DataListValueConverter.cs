@@ -64,9 +64,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (inter is string value)
             {
-                return converter != null
-                    ? converter(valueType, value)
-                    : value;
+                // EDGE-CASE: Values previously saved as single-value, but switched to multi-value, without re-saving it'd be null.
+                // ref: https://github.com/leekelleher/umbraco-contentment/issues/226#issue-1266583794
+                if (hasMultipleValues == true)
+                {
+                    inter = value.AsEnumerableOfOne();
+                }
+                else
+                {
+                    return converter != null
+                        ? converter(valueType, value)
+                        : value;
+                }
             }
 
             // EDGE-CASE: To work around Umbraco `PublishedElementPropertyBase` not calling `ConvertSourceToIntermediate()` [LK:2021-05-25]

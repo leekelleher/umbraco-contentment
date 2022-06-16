@@ -24,3 +24,4 @@ The third and forth fields are to configure the number of steps between each num
 ##### What is the value's object-type?
 
 The value for the Number Range data-source item is a `double`.
+Depending on the `List editor` used, this may be wrapped in a `List<double>`.

@@ -6,7 +6,7 @@
 
 #### .NET Time Zones (UTC)
 
-All the time zones available in the .NET Framework.
+This data-source will use all the time zones available in the .NET Framework to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
@@ -17,37 +17,7 @@ In your new Data Type, selected the `[Contentment] Data List` option and then th
 
 Please see the [Data List editor page](../editors/data-list.md) for more information on the List editor options.
 
+
 ##### What is the value's object-type?
 
 The value of the editor will always be an instance of the [System.TimeZoneInfo](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo) class but depending on the `List editor` used, this may be wrapped in a `List<System.TimeZoneInfo>`.
-
-###### `System.TimeZoneInfo` Value List Editors
-
-**Buttons (single)**  
-**Type:** System.TimeZoneInfo  
-
-**Dropdown List**  
-**Type:** System.TimeZoneInfo  
-
-**Radio Button List**  
-**Type:** System.TimeZoneInfo  
-
-**Templated List (single)**  
-**Type:** System.TimeZoneInfo  
-
-###### `List<System.TimeZoneInfo>` Value List Editors
-
-**Buttons (multi)**  
-**Type:** System.Collections.Generic.List`1[System.TimeZoneInfo]  
-
-**Checkbox List**  
-**Type:** System.Collections.Generic.List`1[System.TimeZoneInfo]  
-
-**Item Picker**  
-**Type:** System.Collections.Generic.List`1[System.TimeZoneInfo]  
- 
-**Tags**  
-**Type:** System.Collections.Generic.List`1[System.TimeZoneInfo]  
-
-**Templated List (multi)**  
-**Type:** System.Collections.Generic.List`1[System.TimeZoneInfo]  

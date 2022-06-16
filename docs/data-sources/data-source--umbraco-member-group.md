@@ -4,23 +4,20 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #160.
-> https://github.com/leekelleher/umbraco-contentment/issues/160
-
-
 #### Umbraco Member Groups
 
-Populate the data source with Umbraco member groups.
+This data-source enables you to use Umbraco member groups to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
 ##### How to configure the editor?
 
-_[TBC]_
+The Umbraco member groups data-source does not have any configuration options. It will list all the available member groups.
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value for the Umbraco member groups data-source item will be a `Guid` (of the member group's ID).
+Depending on the `List editor` used, this may be wrapped in a `List<Guid>`.
+
+With the `Guid` value you can use the `IMemberGroupService` to query the group data from the database.
+
