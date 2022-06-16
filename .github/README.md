@@ -57,11 +57,7 @@ With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package fr
 
 ##### NuGet package repository
 
-To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from within Visual Studio:
-
-    PM> Install-Package Our.Umbraco.Community.Contentment
-
-...or if you are using the `dotnet` command line interface?
+To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from the `dotnet` CLI:
 
     dotnet add package Our.Umbraco.Community.Contentment
 
