@@ -25,4 +25,3 @@ The **Member Type** field will let you select an Umbraco member type to filter t
 
 The value for the Umbraco Members data-source item will be an instance of `IPublishedContent`, representing the member's properties.
 Depending on the `List editor` used, this may be wrapped in a `List<IPublishedContent>`.
-

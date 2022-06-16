@@ -21,4 +21,5 @@ The item values are a range of decimal points from `0.0` to `1.0`.
 ##### What is the value's object-type?
 
 The value for the XML Sitemap: Priority data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 

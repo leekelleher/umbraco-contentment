@@ -4,6 +4,11 @@
 
 ### Data Sources
 
+
+> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
+> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
+
+
 #### Umbraco Templates
 
 Populate the data source using defined view templates.

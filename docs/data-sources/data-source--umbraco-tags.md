@@ -17,4 +17,5 @@ The configuration of the Umbraco Tags data-source has one option, to enter a **T
 ##### What is the value's object-type?
 
 The value for the  Umbraco Tags data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 

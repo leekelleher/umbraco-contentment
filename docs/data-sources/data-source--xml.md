@@ -11,7 +11,7 @@ This data-source enables you to enter the URL of an XML data source, using it to
 
 ##### How to configure the editor?
 
-The configuration of the XML data-source has the following options.
+The configuration of the XML data-source has the following options:
 
 ![Configuration Editor for XML Data](data-source--xml--configuration-editor-01.png)
 
@@ -31,4 +31,4 @@ The next set of fields are the XPath expressions used to populate the data-sourc
 ##### What is the value's object-type?
 
 The value for the XML data-source item is a `string`.
-
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

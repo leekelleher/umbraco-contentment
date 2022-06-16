@@ -21,3 +21,4 @@ The **Image Cropper** field will let you select an existing Umbraco Image Croppe
 ##### What is the value's object-type?
 
 The value for the Umbraco image crops item is a `string` of the crop's alias.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.

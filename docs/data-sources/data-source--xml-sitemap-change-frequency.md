@@ -23,4 +23,5 @@ The item values are from the range: `always`, `hourly`, `daily`, `weekly`, `mont
 ##### What is the value's object-type?
 
 The value for the XML Sitemap: Change Frequency data-source item is a `string`.
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 
