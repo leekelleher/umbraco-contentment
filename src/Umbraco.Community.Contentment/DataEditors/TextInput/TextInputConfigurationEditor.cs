@@ -34,6 +34,38 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new ConfigurationField
             {
+                Key = "inputType",
+                Name = "Input type",
+                Description = "Select the HTML input type.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new DataListItem[]
+                        {
+                            new DataListItem()
+                            {
+                                Name = "Text", Value = "text"
+                            },
+                            new DataListItem()
+                            {
+                                Name = "Email", Value = "email"
+                            },
+                            new DataListItem()
+                            {
+                                Name = "Telephone", Value = "tel"
+                            },
+                            new DataListItem()
+                            {
+                                Name = "URL", Value = "url"
+                            }
+                        }
+                    }
+                }
+            });
+
+            Fields.Add(new ConfigurationField
+            {
                 Key = "placeholderText",
                 Name = "Placeholder text",
                 Description = "Add placeholder text for the text input.<br>This is to be used as instructional information, not as a default value.",
