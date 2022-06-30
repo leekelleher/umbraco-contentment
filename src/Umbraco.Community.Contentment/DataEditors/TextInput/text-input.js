@@ -11,7 +11,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             items: [],
-            inputType: 'text',
+            inputType: "text",
             autocomplete: 0,
             placeholderText: null,
             defaultValue: null,

@@ -32,33 +32,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
 
+            DefaultConfiguration.Add("inputType", "text");
+
             Fields.Add(new ConfigurationField
             {
                 Key = "inputType",
                 Name = "Input type",
-                Description = "Select the HTML input type.",
+                Description = "Select the text-based HTML input type.",
                 View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, new DataListItem[]
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            new DataListItem()
-                            {
-                                Name = "Text", Value = "text"
-                            },
-                            new DataListItem()
-                            {
-                                Name = "Email", Value = "email"
-                            },
-                            new DataListItem()
-                            {
-                                Name = "Telephone", Value = "tel"
-                            },
-                            new DataListItem()
-                            {
-                                Name = "URL", Value = "url"
-                            }
+                            new DataListItem { Name = "Email", Value = "email" },
+                            new DataListItem { Name = "Telephone", Value = "tel" },
+                            new DataListItem { Name = "Text", Value = "text" },
+                            new DataListItem { Name = "URL", Value = "url" }
                         }
                     }
                 }
