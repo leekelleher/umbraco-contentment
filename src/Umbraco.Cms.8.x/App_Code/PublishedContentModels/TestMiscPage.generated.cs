@@ -64,5 +64,12 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("textInput")]
 		public virtual string TextInput => this.Value<string>("textInput");
+
+		///<summary>
+		/// Text Input Email
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("textInputEmail")]
+		public virtual string TextInputEmail => this.Value<string>("textInputEmail");
 	}
 }
