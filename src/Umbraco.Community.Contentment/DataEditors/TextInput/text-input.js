@@ -11,6 +11,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             items: [],
+            inputType: 'text',
             autocomplete: 0,
             placeholderText: null,
             defaultValue: null,
@@ -18,6 +19,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             append: null,
             maxChars: 500
         };
+
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -30,6 +32,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = $scope.model.value.join(", ");
             }
 
+            vm.inputType = config.inputType;
             vm.autoComplete = Object.toBoolean(config.autocomplete) ? "on" : "off";
             vm.spellCheck = Object.toBoolean(config.spellcheck) ? "true" : "false";
             vm.placeholderText = config.placeholderText;
