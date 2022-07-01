@@ -50,6 +50,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Icon Picker
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("iconPicker")]
+		public virtual string IconPicker => this.Value<string>(_publishedValueFallback, "iconPicker");
+
+		///<summary>
 		/// Test Textbox: Used as a guide/comparison for the Textbox List editor.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
@@ -64,5 +72,21 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("textboxList")]
 		public virtual global::System.Collections.Specialized.NameValueCollection TextboxList => this.Value<global::System.Collections.Specialized.NameValueCollection>(_publishedValueFallback, "textboxList");
+
+		///<summary>
+		/// Text Input
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("textInput")]
+		public virtual string TextInput => this.Value<string>(_publishedValueFallback, "textInput");
+
+		///<summary>
+		/// Text Input Email
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("textInputEmail")]
+		public virtual string TextInputEmail => this.Value<string>(_publishedValueFallback, "textInputEmail");
 	}
 }
