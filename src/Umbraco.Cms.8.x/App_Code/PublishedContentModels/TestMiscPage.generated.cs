@@ -52,6 +52,14 @@ namespace Umbraco.Web.PublishedModels
 		public virtual string IconPicker => this.Value<string>("iconPicker");
 
 		///<summary>
+		/// Social Links
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("socialLinks")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Core.Models.PublishedContent.SocialLink> SocialLinks => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Core.Models.PublishedContent.SocialLink>>("socialLinks");
+
+		
+		///<summary>
 		/// Test Textbox: Used as a guide/comparison for the Textbox List editor.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
