@@ -42,5 +42,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DescriptionTemplate { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string IconTemplate { get; set; }
     }
 }

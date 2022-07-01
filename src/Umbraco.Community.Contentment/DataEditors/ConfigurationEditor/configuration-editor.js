@@ -58,6 +58,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.allowEdit = {};
             config.nameTemplates = {};
             config.descriptionTemplates = {};
+            config.iconTemplates = {};
             config.missingItem = {};
 
             config.items.forEach(item => {
@@ -71,6 +72,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 if (item.descriptionTemplate) {
                     config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
+                }
+
+                if (item.iconTemplate) {
+                    config.iconTemplates[item.key] = $interpolate(item.iconTemplate);
                 }
             });
 
@@ -210,6 +215,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (propertyName === "description" && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
                 var expression = config.descriptionTemplates[item.key];
+                if (expression) {
+                    item.value.$index = $index + 1;
+                    label = expression(item.value);
+                    delete item.value.$index;
+                }
+            }
+
+            if (propertyName === "icon" && config.iconTemplates.hasOwnProperty(item.key) === true) {
+                var expression = config.iconTemplates[item.key];
                 if (expression) {
                     item.value.$index = $index + 1;
                     label = expression(item.value);
