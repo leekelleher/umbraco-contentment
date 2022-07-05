@@ -77,12 +77,13 @@ Here's an example of strongly-typed...
 
 ```cshtml
 <dl>
-    @foreach (var key in Model.Value<System.Collections.Specialized.NameValueCollection>("textboxList").AllKeys)
-    {
-        <dt>@key</dt>
-        <dd>@Model.TextboxList[key]</dd>
+    @{
+        var textboxList = Model.Value<System.Collections.Specialized.NameValueCollection>("textboxList");
+        foreach (var key in textboxList.AllKeys)
+        {
+            <dt>@key</dt>
+            <dd>@textboxList[key]</dd>
+        }
     }
 </dl>
 ```
-
-
