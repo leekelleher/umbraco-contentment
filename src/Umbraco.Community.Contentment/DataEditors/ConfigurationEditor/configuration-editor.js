@@ -73,7 +73,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     config.expressions[item.key] = {};
 
-                    if (item.expressions) {
+                    if (item.expressions && item.expressions.length > 0) {
                         for (let [alias, value] of Object.entries(item.expressions)) {
                             config.expressions[item.key][alias] = $interpolate(value);
                         }
@@ -224,6 +224,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         delete item.value.$index;
                     }
                 }
+            }
+
             return label || config.itemLookup[item.key][propertyName];
         };
 
