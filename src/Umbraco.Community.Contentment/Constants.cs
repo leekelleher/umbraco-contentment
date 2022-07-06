@@ -98,6 +98,8 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Icons
         {
+            public const string Contentment = "icon-contentment";
+
             public const string ContentTemplate = "icon-blueprint";
         }
 
