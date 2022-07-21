@@ -139,6 +139,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         // The following code has been hacked and butchered from:
         // https://github.com/aspnet/Entropy/blob/master/samples/Mvc.RenderViewToString/RazorViewToStringRenderer.cs
         // https://gist.github.com/ahmad-moussawi/1643d703c11699a6a4046e57247b4d09
+        // https://weblog.west-wind.com/posts/2022/Jun/21/Back-to-Basics-Rendering-Razor-Views-to-String-in-ASPNET-Core
+        // https://gist.github.com/Matthew-Wise/80626bbf9c9590228fc317774f15222a
         private string RenderPartialViewToString(string viewName, ViewDataDictionary viewData)
         {
             IView view = default;

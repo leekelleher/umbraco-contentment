@@ -97,13 +97,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             var iconPattern = config.GetValueAs("iconPattern", string.Empty);
 
             var items = new HashSet<string>();
+            var contents = GetCssFileContents(cssPath);
 
-            var path = _webHostEnvironment.MapPathWebRoot(cssPath);
-
-            if (File.Exists(path) == true)
+            if (string.IsNullOrWhiteSpace(contents) == false)
             {
-                var contents = File.ReadAllText(path);
-
                 var regex = new Regex(cssRegex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                 var matches = regex.Matches(contents);
 
@@ -126,6 +123,30 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Value = x,
                     Icon = string.IsNullOrWhiteSpace(iconPattern) == false ? string.Format(iconPattern, x) : null,
                 });
+        }
+
+        private string GetCssFileContents(string cssPath)
+        {
+#if NET472
+            var path = _webHostEnvironment.MapPathWebRoot(cssPath);
+
+            if (File.Exists(path) == true)
+            {
+                return File.ReadAllText(path);
+            }
+#else
+            var file = _webHostEnvironment.WebRootFileProvider.GetFileInfo(cssPath.TrimStart("~/"));
+
+            if (file.Exists == true)
+            {
+                using var stream = file.CreateReadStream();
+                using var reader = new StreamReader(stream);
+
+                return reader.ReadToEnd();
+            }
+#endif
+
+            return default;
         }
     }
 }

@@ -48,21 +48,36 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             config.itemLookup = {};
             config.allowEdit = {};
-            config.nameTemplates = {};
-            config.descriptionTemplates = {};
+            config.expressions = {};
             config.missingItem = {};
 
             config.items.forEach(item => {
-                config.itemLookup[item.key] = item;
 
-                config.allowEdit[item.key] = item.fields && item.fields.length > 0;
-
-                if (item.nameTemplate) {
-                    config.nameTemplates[item.key] = $interpolate(item.nameTemplate);
+                if (config.itemLookup.hasOwnProperty(item.key) === false) {
+                    config.itemLookup[item.key] = item;
                 }
 
-                if (item.descriptionTemplate) {
-                    config.descriptionTemplates[item.key] = $interpolate(item.descriptionTemplate);
+                if (config.allowEdit.hasOwnProperty(item.key) === false) {
+                    config.allowEdit[item.key] = item.fields && item.fields.length > 0;
+                }
+
+                if (config.expressions.hasOwnProperty(item.key) === false) {
+
+                    config.expressions[item.key] = {};
+
+                    if (item.expressions && item.expressions.length > 0) {
+                        for (let [alias, value] of Object.entries(item.expressions)) {
+                            config.expressions[item.key][alias] = $interpolate(value);
+                        }
+                    }
+
+                    if (item.nameTemplate) { // TODO: [LK:2022-07-05] Deprecated.
+                        config.expressions[item.key]["name"] = $interpolate(item.nameTemplate);
+                    }
+
+                    if (item.descriptionTemplate) { // TODO: [LK:2022-07-05] Deprecated.
+                        config.expressions[item.key]["description"] = $interpolate(item.descriptionTemplate);
+                    }
                 }
             });
 
@@ -191,21 +206,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return config.missingItem[propertyName] || propertyName;
             }
 
-            if (propertyName === "name" && config.nameTemplates.hasOwnProperty(item.key) === true) {
-                var expression = config.nameTemplates[item.key];
-                if (expression) {
-                    item.value.$index = $index + 1;
-                    label = expression(item.value);
-                    delete item.value.$index;
-                }
-            }
-
-            if (propertyName === "description" && config.descriptionTemplates.hasOwnProperty(item.key) === true) {
-                var expression = config.descriptionTemplates[item.key];
-                if (expression) {
-                    item.value.$index = $index + 1;
-                    label = expression(item.value);
-                    delete item.value.$index;
+            if (config.expressions.hasOwnProperty(item.key) === true) {
+                var expressions = config.expressions[item.key];
+                if (expressions.hasOwnProperty(propertyName) === true) {
+                    var expression = expressions[propertyName];
+                    if (expression) {
+                        item.value.$index = $index + 1;
+                        label = expression(item.value);
+                        delete item.value.$index;
+                    }
                 }
             }
 
@@ -247,7 +256,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             } else {
                 vm.allowAdd = true;
             }
-            emit();
+            setDirty();
         };
 
         function setDirty() {

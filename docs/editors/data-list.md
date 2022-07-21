@@ -251,7 +251,7 @@ Say you wanted to select from a list of countries. You could use a third-party X
 
 For the **Data source**, select **XML Data**.
 
-- For the **URL**, enter "https://madskristensen.net/posts/files/countries.xml"
+- For the **URL**, enter "https://www.madskristensen.net/posts/files/countries.xml"
 - For the **Items XPath**, enter "/countries/country"
 - For the **Name XPath**, enter "text()"
 - For the **Value XPath**, enter "@code"

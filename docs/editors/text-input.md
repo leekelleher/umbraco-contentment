@@ -13,7 +13,15 @@ In your new Data Type, selected the "[Contentment] Text Input" option. You will 
 
 ![Configuration Editor for Text Input](text-input--configuration-editor.png)
 
-The first field is **Placeholder text**, which is used to add initial instructional information for the text input, this is not a default value.
+The first field is **Input type**, which is used to configure the type of input expected. You can select from:
+* **Text** (for normal text) - *this is the default*
+* **Email** (for an email address)
+* **Telephone** (for a telephone number)
+* **URL** (for a web address)
+
+> From an HTML5 perspective, this is the [`<input>`'s `type` attribute](https://developer.mozilla.org/en-US/docs/Learn/Forms/HTML5_input_types).
+
+The second field is **Placeholder text**, which is used to add initial instructional information for the text input, this is not a default value.
 
 > For technical users, from a HTML5 perspective, this is the [`<input>`'s `placeholder` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text#placeholder).
 
@@ -35,6 +43,9 @@ The **Enable spellcheck?** option can enable your web-browser's spellcheck funct
 
 > For technical users, this is the [`<input>`'s `spellcheck` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text#spellcheck).
 
+The **Prepend icon** - allows you to optionally select an icon that is shown before your input control.
+
+The **Append icon** - this allows you to optionally select an icon that is shown after your input control.
 
 ### How to use the editor?
 

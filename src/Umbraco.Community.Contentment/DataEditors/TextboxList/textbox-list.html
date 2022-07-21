@@ -17,7 +17,7 @@
                   ng-if="vm.hideName === false"></span>
         </label>
         <div class="umb-property-editor">
-            <input type="text"
+            <input type="{{vm.inputTypes.includes(key) ? key : 'text'}}"
                    class="umb-textstring -full-width-input"
                    id="{{_id}}"
                    ng-model="model.value[key]"

@@ -151,7 +151,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1145+ hours</b> (between 2019-03-13 to 2022-02-10)</summary>
+<summary>Current development effort: <b>1385+ hours</b> (between 2019-03-13 to 2022-07-06)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

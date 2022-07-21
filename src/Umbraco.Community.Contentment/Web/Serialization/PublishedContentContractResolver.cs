@@ -129,7 +129,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
-            var properties = base.CreateProperties(type, memberSerialization).OrderBy(p => p.PropertyName).ToList();
+            var properties = base.CreateProperties(type, memberSerialization).OrderBy(p => p.PropertyName, StringComparer.OrdinalIgnoreCase).ToList();
 
             if (typeof(IPublishedContent).IsAssignableFrom(type) == true)
             {

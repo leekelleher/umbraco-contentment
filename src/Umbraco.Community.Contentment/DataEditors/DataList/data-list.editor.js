@@ -82,6 +82,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 description: "",
             });
 
+            if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
+                vm.allowAdd = false;
+            }
+
             setDirty();
 
         };
