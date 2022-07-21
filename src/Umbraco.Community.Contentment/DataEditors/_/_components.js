@@ -92,6 +92,7 @@
                         vm.canRemove = canRemove;
                         vm.edit = edit;
                         vm.populate = populate;
+                        vm.populateStyle = populateStyle;
                         vm.remove = remove;
 
                         if (vm.addButtonLabelKey) {
@@ -175,6 +176,12 @@
                                     ? item[propertyName]
                                     : undefined;
                         }
+                    };
+
+                    function populateStyle(item, $index, propertyName, styleProperty) {
+                        var style = {};
+                        style[styleProperty] = populate(item, $index, propertyName);
+                        return style;
                     };
 
                     function remove($index) {
