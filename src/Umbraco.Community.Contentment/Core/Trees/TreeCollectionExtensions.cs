@@ -5,7 +5,6 @@
 
 #if NET472 == false
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Cms.Core.Composing;
@@ -51,7 +50,8 @@ namespace Umbraco.Extensions
                 {
                     Array.Copy(trees, 0, tmp, 0, idx);
                 }
-                else
+
+                if (idx < trees.Length - 1)
                 {
                     Array.Copy(trees, idx + 1, tmp, idx, trees.Length - idx - 1);
                 }
