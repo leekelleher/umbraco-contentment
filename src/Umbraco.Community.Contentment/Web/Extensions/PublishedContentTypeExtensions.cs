@@ -8,7 +8,11 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.DataEditors;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 
+#if NET472
 namespace Umbraco.Web
+#else
+namespace Umbraco.Extensions
+#endif
 {
     public static class PublishedContentTypeExtensions
     {
