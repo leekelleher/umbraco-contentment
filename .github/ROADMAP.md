@@ -96,7 +96,7 @@ Property Editors are:
 
 ### v4.1
 
-- `(⊙_⊙;)` _I haven't decided yet._
+- [Social Links](https://github.com/leekelleher/umbraco-contentment/pull/234)
 
 
 ## v5

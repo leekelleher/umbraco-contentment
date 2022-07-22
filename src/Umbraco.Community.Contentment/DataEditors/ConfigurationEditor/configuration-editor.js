@@ -65,18 +65,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     config.expressions[item.key] = {};
 
-                    if (item.expressions && item.expressions.length > 0) {
-                        for (let [alias, value] of Object.entries(item.expressions)) {
-                            config.expressions[item.key][alias] = $interpolate(value);
-                        }
-                    }
-
                     if (item.nameTemplate) { // TODO: [LK:2022-07-05] Deprecated.
                         config.expressions[item.key]["name"] = $interpolate(item.nameTemplate);
                     }
 
                     if (item.descriptionTemplate) { // TODO: [LK:2022-07-05] Deprecated.
                         config.expressions[item.key]["description"] = $interpolate(item.descriptionTemplate);
+                    }
+
+                    if (item.expressions) {
+                        for (let [alias, value] of Object.entries(item.expressions)) {
+                            config.expressions[item.key][alias] = $interpolate(value);
+                        }
                     }
                 }
             });
