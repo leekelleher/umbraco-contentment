@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.Trees
         {
             var root = base.CreateRootNode(queryStrings);
 
-            root.Icon = "icon-fa fa-cube";
+            root.Icon = Constants.Icons.Contentment;
             root.HasChildren = false;
             root.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.MenuUrl = null;
@@ -77,7 +77,7 @@ namespace Umbraco.Community.Contentment.Trees
         {
             var root = base.CreateRootNode(queryStrings);
 
-            root.Value.Icon = "icon-fa fa-cube";
+            root.Value.Icon = Constants.Icons.Contentment;
             root.Value.HasChildren = false;
             root.Value.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.Value.MenuUrl = null;

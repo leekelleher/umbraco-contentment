@@ -27,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.keys = [];
             vm.icons = {};
             vm.names = {};
+            vm.inputTypes = ["color", "email", "number", "password", "tel", "text", "url"];
 
             vm.hideIcon = config.labelStyle === "text";
             vm.hideName = config.labelStyle === "icon";

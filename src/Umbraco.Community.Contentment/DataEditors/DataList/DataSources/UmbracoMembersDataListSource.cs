@@ -96,7 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
                             { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
-                            { "maxItems", 1 },
+                            { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     }
                 };

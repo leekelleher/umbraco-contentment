@@ -32,6 +32,7 @@ Let's take a look inside...
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
 - [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
+- [Social Links](../docs/editors/social-links.md) - an editor to manage links for social network platforms.
 - [Templated Label](../docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Textbox List](../docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
@@ -57,11 +58,7 @@ With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package fr
 
 ##### NuGet package repository
 
-To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from within Visual Studio:
-
-    PM> Install-Package Our.Umbraco.Community.Contentment
-
-...or if you are using the `dotnet` command line interface?
+To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from the `dotnet` CLI:
 
     dotnet add package Our.Umbraco.Community.Contentment
 
@@ -152,7 +149,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1145+ hours</b> (between 2019-03-13 to 2022-02-10)</summary>
+<summary>Current development effort: <b>1385+ hours</b> (between 2019-03-13 to 2022-07-06)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

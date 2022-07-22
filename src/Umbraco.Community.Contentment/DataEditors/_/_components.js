@@ -92,6 +92,7 @@
                         vm.canRemove = canRemove;
                         vm.edit = edit;
                         vm.populate = populate;
+                        vm.populateStyle = populateStyle;
                         vm.remove = remove;
 
                         if (vm.addButtonLabelKey) {
@@ -116,13 +117,13 @@
                     };
 
                     function add() {
-                        if (typeof (vm.onAdd) === "function") {
+                        if (typeof vm.onAdd === "function") {
                             vm.onAdd();
                         }
                     };
 
                     function canEdit(item, $index) {
-                        switch (typeof (vm.allowEdit)) {
+                        switch (typeof vm.allowEdit) {
                             case "boolean":
                                 return vm.allowEdit;
                             case "function":
@@ -133,7 +134,7 @@
                     };
 
                     function canRemove(item, $index) {
-                        switch (typeof (vm.allowRemove)) {
+                        switch (typeof vm.allowRemove) {
                             case "boolean":
                                 return vm.allowRemove;
                             case "function":
@@ -144,39 +145,47 @@
                     };
 
                     function edit($index) {
-                        if (typeof (vm.onEdit) === "function") {
+                        if (typeof vm.onEdit === "function") {
                             vm.onEdit($index);
                         }
                     };
 
                     function populate(item, $index, propertyName) {
-                        if (typeof (vm.getItem) === "function") {
+                        if (typeof vm.getItem === "function") {
                             return vm.getItem(item, $index, propertyName);
                         }
 
                         switch (propertyName) {
                             case "icon":
-                                return typeof (vm.getItemIcon) === "function"
+                                return typeof vm.getItemIcon === "function"
                                     ? vm.getItemIcon(item, $index)
                                     : item.icon || vm.defaultIcon;
 
                             case "name":
-                                return typeof (vm.getItemName) === "function"
+                                return typeof vm.getItemName === "function"
                                     ? vm.getItemName(item, $index)
                                     : item.name;
 
                             case "description":
-                                return typeof (vm.getItemDescription) === "function"
+                                return typeof vm.getItemDescription === "function"
                                     ? vm.getItemDescription(item, $index)
                                     : item.description;
 
                             default:
-                                return item[propertyName];
+                                return item.hasOwnProperty(propertyName) === true
+                                    ? item[propertyName]
+                                    : undefined;
                         }
                     };
 
+                    function populateStyle(item, $index, propertyName, styleProperty) {
+                        var style = {};
+                        style[styleProperty] = populate(item, $index, propertyName);
+                        return style;
+                    };
+
                     function remove($index) {
-                        if (typeof (vm.onRemove) === "function") {
+                        if (typeof vm.onRemove === "function") {
                             vm.onRemove($index);
                         }
                     };

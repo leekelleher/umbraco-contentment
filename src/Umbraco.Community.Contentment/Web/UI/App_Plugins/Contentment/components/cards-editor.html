@@ -12,14 +12,17 @@
 <div class="contentment umb-block-list-block-configuration">
     <div class="umb-block-card-grid" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
         <div class="umb-block-card" ng-repeat="item in vm.ngModel" ng-click="vm.edit($index)">
-            <div class="__showcase">
+            <div class="__showcase" ng-style="vm.populateStyle(item, $index, 'cardStyle', 'background-color')">
                 <div class="__icon">
-                    <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}" ng-class="_icon"></umb-icon>
+                    <umb-icon icon="{{_icon = vm.populate(item, $index, 'icon')}}"
+                              ng-class="_icon"
+                              ng-style="vm.populateStyle(item, $index, 'iconStyle', 'color')">
+                    </umb-icon>
                 </div>
             </div>
             <div class="__info">
                 <div class="__name" ng-bind="vm.populate(item, $index, 'name')"></div>
-                <!--<div class="__subname" ng-bind="vm.populate(item, $index, 'description')"></div>-->
+                <div class="__subname" ng-bind="vm.populate(item, $index, 'description')"></div>
             </div>
             <div class="__actions">
                 <button type="button"

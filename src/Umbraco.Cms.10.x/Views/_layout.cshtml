@@ -2,15 +2,15 @@
 @{
     var homepage = Model.AncestorOrSelf<HomePage>(2);
 
-    var siteTitle = string.IsNullOrWhiteSpace(homepage.SiteTitle) == false
+    var siteTitle = string.IsNullOrWhiteSpace(homepage?.SiteTitle) == false
         ? homepage.SiteTitle
-        : homepage.Parent.Name;
+        : homepage?.Parent?.Name;
 
-    var metaTitle = Model.Id == homepage.Id
+    var metaTitle = Model.Id == homepage?.Id
         ? siteTitle
         : string.Concat(string.Join(" &raquo; ", Model.AncestorsOrSelf().Where(x => x.IsVisible() && x.Level > 2).Select(x => x.Name)), " &laquo; ", siteTitle);
 
-    var modules = new List<IPublishedElement>(homepage.SiteModules);
+    var modules = new List<IPublishedElement>(homepage?.SiteModules ?? Enumerable.Empty<IPublishedElement>());
     if (Model is IPageModulesProperty pm && pm.PageModules?.Any() == true)
     {
         modules.AddRange(pm.PageModules);
@@ -38,7 +38,7 @@
 <body>
     @Html.RenderJsModules(modules, RenderPosition.BodyOpen)
 
-    @if (homepage.Header?.FirstOrDefault() is HeaderSettings header)
+    @if (homepage?.Header?.FirstOrDefault() is HeaderSettings header)
     {
         <header>
             <h2>@homepage.SiteTitle</h2>
@@ -64,7 +64,7 @@
         @this.RenderSection("body", RenderBody())
     </main>
 
-    @if (homepage.Footer?.FirstOrDefault() is FooterSettings footer)
+    @if (homepage?.Footer?.FirstOrDefault() is FooterSettings footer)
     {
         <footer>
             <p>@homepage.SiteTitle, Lee Kelleher &copy; 2021</p>
