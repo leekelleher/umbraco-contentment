@@ -3,6 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+/* To workaround a visual breaking-change introduced in Umbraco 10.1 ¯\_(ツ)_/¯ */
+.contentment.umb-readonlyvalue {
+    max-width: 100%;
+}
+
 .umb-readonlyvalue details summary {
     cursor: pointer;
 }
