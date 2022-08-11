@@ -9,7 +9,7 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);wwwroot/media/**;</DefaultItemExcludes>
     </PropertyGroup>
 
-        <ItemGroup>
+    <ItemGroup>
         <PackageReference Include="Umbraco.Cms" Version="10.0.0" />
         <PackageReference Include="uSync" Version="10.0.0" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
