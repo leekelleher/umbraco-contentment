@@ -45,8 +45,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         labelKey: "buttons_clearSelection",
                         icon: "trash",
                         method: () => {
-                            $scope.model.value = null;
-                            // setDirty();
+                            $scope.model.value = config.defaultValue;
+                            setDirty();
                         }
                     });
                 }
