@@ -58,7 +58,6 @@ namespace Umbraco.Web.PublishedModels
 		[ImplementPropertyType("socialLinks")]
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Core.Models.PublishedContent.SocialLink> SocialLinks => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Core.Models.PublishedContent.SocialLink>>("socialLinks");
 
-		
 		///<summary>
 		/// Test Textbox: Used as a guide/comparison for the Textbox List editor.
 		///</summary>

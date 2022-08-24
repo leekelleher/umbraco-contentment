@@ -95,6 +95,8 @@
                         vm.populateStyle = populateStyle;
                         vm.remove = remove;
 
+                        vm.isSingle = vm.allowAdd === false && vm.ngModel.length === 1 ? "" : undefined;
+
                         if (vm.addButtonLabelKey) {
                             localizationService.localize(vm.addButtonLabelKey).then(function (label) {
                                 vm.addButtonLabel = label;

@@ -39,8 +39,10 @@ angular.module("umbraco.directives.html").directive("lkBindHtmlTemplate", [
                         return scope.$eval(attrs.lkBindHtmlTemplate);
                     },
                     function (value) {
-                        element.html(value);
-                        $compile(element.contents())(scope);
+                        if (value) {
+                            var dom = $compile(value)(scope);
+                            element.append(dom);
+                        }
                     }
                 );
             }
