@@ -20,6 +20,7 @@
 .contentment .umb-action-link .menu-label {
     margin-left: 15px;
     padding-left: 0;
+    white-space: normal;
 }
 
 .contentment.lk-overlay .umb-action {
