@@ -6,6 +6,7 @@
 /* To workaround a visual breaking-change introduced in Umbraco 10.1 ¯\_(ツ)_/¯ */
 .contentment.umb-readonlyvalue {
     max-width: 100%;
+	word-break: break-word;
 }
 
 .umb-readonlyvalue details summary {
