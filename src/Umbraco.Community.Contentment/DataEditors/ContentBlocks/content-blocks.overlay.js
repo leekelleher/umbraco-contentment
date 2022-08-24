@@ -37,7 +37,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 vm.items = config.elementTypes;
                 vm.selectedElementType = null;
 
-                vm.clipboardItems = clipboardService.retriveDataOfType("elementType", config.elementTypes.map(item => item.alias));
+                // NOTE: Corrected `retriveDataOfType` typo, but kept backwards-compatibility for v8.17.x.
+                // ref: https://github.com/umbraco/Umbraco-CMS/pull/11027
+                vm.clipboardItems = typeof clipboardService.retrieveDataOfType === "function"
+                    ? clipboardService.retrieveDataOfType("elementType", config.elementTypes.map(item => item.alias))
+                    : clipboardService.retriveDataOfType("elementType", config.elementTypes.map(item => item.alias));
 
                 if (config.elementTypes.length > 1 || vm.clipboardItems.length > 0) {
 
