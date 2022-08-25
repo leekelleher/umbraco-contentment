@@ -8,7 +8,7 @@
         <umb-load-indicator></umb-load-indicator>
     </div>
     <div ng-if="!vm.loading && !vm.html && !vm.error"><lee-was-here></lee-was-here></div>
-    <div ng-bind-html="vm.html | safe_html" ng-if="vm.loading === false && vm.html"></div>
+    <div lk-bind-html-template="vm.html" ng-if="vm.loading === false && vm.html"></div>
     <div class="well umb-contentpicker__min-max-help" ng-if="vm.loading === false && vm.error">
         <h5 ng-bind="vm.error.title"></h5>
         <p ng-bind="vm.error.message"><p>
