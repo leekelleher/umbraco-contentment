@@ -25,14 +25,23 @@ namespace Umbraco.Extensions
         public static TValue ValueOrDefault<TModel, TValue>(this TModel model, string alias, string culture = null, string segment = null, TValue defaultValue = default)
             where TModel : IPublishedElement
         {
+#if NET472
             return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+#else
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
+#endif
         }
 
         public static TValue ValueOrDefaultFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null, TValue defaultValue = default)
             where TModel : IPublishedElement
         {
             var alias = GetAlias(model, property);
+
+#if NET472
             return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+#else
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
+#endif
         }
 
         public static bool HasValueFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null)
