@@ -10,14 +10,20 @@ using Examine.Search;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
+using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
 using UmbracoExamineFieldNames = Umbraco.Examine.UmbracoExamineIndex;
 #else
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Examine;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
@@ -28,10 +34,24 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;
-        private readonly IShortStringHelper _shortStringHelper;
+#if NET472
+        private readonly IdkMap _idKeyMap;
+#else
+        private readonly IIdKeyMap _idKeyMap;
+#endif
         private readonly IIOHelper _ioHelper;
+#if NET472 == false
 
+        private readonly IRequestAccessor _requestAccessor;
+#endif
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+
+#if NET472
         private const string _defaultNameField = "nodeName";
+#else
+        private const string _defaultNameField = UmbracoExamineFieldNames.NodeNameFieldName;
+#endif
         private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
         private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
@@ -68,11 +88,28 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public ExamineDataListSource(IExamineManager examineManager, IShortStringHelper shortStringHelper, IIOHelper ioHelper)
+        public ExamineDataListSource(
+            IExamineManager examineManager,
+#if NET472
+            IdkMap idKeyMap,
+#else
+            IIdKeyMap idKeyMap,
+#endif
+            IIOHelper ioHelper,
+#if NET472 == false
+            IRequestAccessor requestAccessor,
+#endif
+            IShortStringHelper shortStringHelper,
+            IUmbracoContextAccessor umbracoContextAccessor)
         {
             _examineManager = examineManager;
-            _shortStringHelper = shortStringHelper;
+            _idKeyMap = idKeyMap;
             _ioHelper = ioHelper;
+#if NET472 == false
+            _requestAccessor = requestAccessor;
+#endif
+            _shortStringHelper = shortStringHelper;
+            _umbracoContextAccessor = umbracoContextAccessor;
         }
 
         public string Name => "Examine Query";
@@ -111,7 +148,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "luceneQuery",
                 Name = "Lucene query",
-                Description = "Enter your raw Lucene expression to query Examine with.",
+                Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
@@ -172,6 +209,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var luceneQuery = config.GetValueAs("luceneQuery", string.Empty);
                 if (string.IsNullOrWhiteSpace(luceneQuery) == false)
                 {
+                    if (luceneQuery.Contains("{0}") == true)
+                    {
+#if NET472
+                        var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
+                        if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+#else
+                        if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
+#endif
+                        {
+                            var udi = _idKeyMap.GetUdiForId(currentId, UmbracoObjectTypes.Document);
+                            if (udi.Success == true)
+                            {
+                                luceneQuery = string.Format(luceneQuery, udi.Result);
+                            }
+                        }
+                    }
+
                     var nameField = config.GetValueAs("nameField", _defaultNameField);
                     var valueField = config.GetValueAs("valueField", _defaultValueField);
                     var iconField = config.GetValueAs("iconField", _defaultIconField);
