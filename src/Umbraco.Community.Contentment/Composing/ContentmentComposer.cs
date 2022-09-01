@@ -70,6 +70,7 @@ namespace Umbraco.Community.Contentment.Composing
             builder.Services.AddSingleton<ConfigurationEditorUtility>();
 
             builder
+                .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
                 .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
