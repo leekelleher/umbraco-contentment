@@ -180,10 +180,9 @@
                         }
                     };
 
-                    function populateStyle(item, $index, propertyName, styleProperty) {
-                        var style = {};
-                        style[styleProperty] = populate(item, $index, propertyName);
-                        return style;
+                    function populateStyle(item, $index, propertyName) {
+                        var style = populate(item, $index, propertyName);
+                        return style ? angular.fromJson(style) : {};
                     };
 
                     function remove($index) {
