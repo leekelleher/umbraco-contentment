@@ -32,8 +32,12 @@ namespace Umbraco.Cms.Web.Common.Controllers
                 var settings = new JsonSerializerSettings
                 {
                     Formatting = Formatting.Indented,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     Converters = new List<JsonConverter>
                     {
+                        new HtmlEncodedStringJsonConverter(),
+                        new PublishedContentTypeJsonConverter(),
+                        new PublishedPropertyTypeJsonConverter(),
                     },
                     ContractResolver = new PublishedContentContractResolver
                     {
