@@ -120,7 +120,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             };
 
 #if NET472 == false
-            _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>
+            _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>(StringComparer.OrdinalIgnoreCase)
             {
                 { nameof(FriendlyPublishedContentExtensions.CreatorName), x => x.CreatorName() },
                 { nameof(FriendlyPublishedContentExtensions.Url), x => x.Url() },
@@ -164,19 +164,21 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             {
                 var noAttributeProvider = new NoAttributeProvider();
 
-                properties.AddRange(_systemMethods.Select(x => new JsonProperty
-                {
-                    DeclaringType = type,
-                    PropertyName = ResolvePropertyName(x.Key),
-                    UnderlyingName = x.Key,
-                    PropertyType = typeof(string),
-                    ValueProvider = new PublishedContentValueProvider(x.Value),
-                    AttributeProvider = noAttributeProvider,
-                    Readable = true,
-                    Writable = false,
-                    ItemIsReference = false,
-                    TypeNameHandling = TypeNameHandling.None,
-                }));
+                properties.AddRange(_systemMethods
+                    .Where(x => _ignoreFromCustom.Contains(x.Key) == false)
+                    .Select(x => new JsonProperty
+                    {
+                        DeclaringType = type,
+                        PropertyName = ResolvePropertyName(x.Key),
+                        UnderlyingName = x.Key,
+                        PropertyType = typeof(string),
+                        ValueProvider = new PublishedContentValueProvider(x.Value),
+                        AttributeProvider = noAttributeProvider,
+                        Readable = true,
+                        Writable = false,
+                        ItemIsReference = false,
+                        TypeNameHandling = TypeNameHandling.None,
+                    }));
             }
 
             return properties;
