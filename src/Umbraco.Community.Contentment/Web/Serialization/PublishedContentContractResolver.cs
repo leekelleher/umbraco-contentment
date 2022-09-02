@@ -187,6 +187,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
+            var hasSystemProperties = false;
             var property = base.CreateProperty(member, memberSerialization);
 
             if (_ignoreFromCustom.Contains(member.Name) == true)
@@ -195,10 +196,12 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
             else if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType) == true)
             {
+                hasSystemProperties = true;
                 property.ShouldSerialize = _ => _ignoreFromContent.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedElement).IsAssignableFrom(member.DeclaringType) == true)
             {
+                hasSystemProperties = true;
                 property.ShouldSerialize = _ => _ignoreFromElement.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedProperty).IsAssignableFrom(member.DeclaringType) == true)
@@ -218,7 +221,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(member.Name) == true)
+            if (hasSystemProperties == true &&
+                string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false &&
+                _systemProperties.Contains(member.Name) == true)
             {
                 property.PropertyName = SystemPropertyNamePrefix + property.PropertyName;
             }
@@ -237,7 +242,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
 
             return string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(propertyName) == true
-                ? "_" + base.ResolvePropertyName(propertyName)
+                ? SystemPropertyNamePrefix + base.ResolvePropertyName(propertyName)
                 : base.ResolvePropertyName(propertyName);
         }
 
