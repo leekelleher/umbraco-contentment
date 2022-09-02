@@ -190,23 +190,19 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             var hasSystemProperties = false;
             var property = base.CreateProperty(member, memberSerialization);
 
-            if (_ignoreFromCustom.Contains(member.Name) == true)
-            {
-                property.ShouldSerialize = _ => false;
-            }
-            else if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType) == true)
+            if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType) == true)
             {
                 hasSystemProperties = true;
-                property.ShouldSerialize = _ => _ignoreFromContent.Contains(member.Name) == false;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromContent.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedElement).IsAssignableFrom(member.DeclaringType) == true)
             {
                 hasSystemProperties = true;
-                property.ShouldSerialize = _ => _ignoreFromElement.Contains(member.Name) == false;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromElement.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedProperty).IsAssignableFrom(member.DeclaringType) == true)
             {
-                property.ShouldSerialize = _ => _ignoreFromProperty.Contains(member.Name) == false;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromProperty.Contains(member.Name) == false;
             }
 
             if (_converterLookup.ContainsKey(property.PropertyType) == true)
