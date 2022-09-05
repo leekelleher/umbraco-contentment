@@ -57,8 +57,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         { "name", "{{ name }}" },
                         { "description", "{{ url }}" },
                         { "icon", "{{ icon.split(\" \")[0] }}" },
-                        { "cardStyle", "{{ backgroundColor }}" },
-                        { "iconStyle", "{{ iconColor }}" },
+                        { "cardStyle", "{ \"background-color\": \"{{ backgroundColor }}\" }" },
+                        { "iconStyle", "{ \"color\": \"{{ iconColor }}\" }" },
                     },
                     Fields = new[]
                     {

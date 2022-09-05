@@ -22,17 +22,31 @@ namespace Umbraco.Extensions
 {
     public static class PublishedElementExtensions
     {
+        // TODO: [LK] Raise bug with Umbraco. Noticed that `PublishedElementExtensions` and `PublishedContentExtensions` Value calls are different.
+        // Unsure why, but the Content one fallback works, and the Element one does not.
+        // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Core/Extensions/PublishedElementExtensions.cs#L166-L192
+        // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Core/Extensions/PublishedContentExtensions.cs#L383-L409
+
         public static TValue ValueOrDefault<TModel, TValue>(this TModel model, string alias, string culture = null, string segment = null, TValue defaultValue = default)
             where TModel : IPublishedElement
         {
+#if NET472
             return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+#else
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
+#endif
         }
 
         public static TValue ValueOrDefaultFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null, TValue defaultValue = default)
             where TModel : IPublishedElement
         {
             var alias = GetAlias(model, property);
+
+#if NET472
             return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue);
+#else
+            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
+#endif
         }
 
         public static bool HasValueFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null)

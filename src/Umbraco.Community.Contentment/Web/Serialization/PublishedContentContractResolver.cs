@@ -120,7 +120,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             };
 
 #if NET472 == false
-            _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>
+            _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>(StringComparer.OrdinalIgnoreCase)
             {
                 { nameof(FriendlyPublishedContentExtensions.CreatorName), x => x.CreatorName() },
                 { nameof(FriendlyPublishedContentExtensions.Url), x => x.Url() },
@@ -164,19 +164,21 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             {
                 var noAttributeProvider = new NoAttributeProvider();
 
-                properties.AddRange(_systemMethods.Select(x => new JsonProperty
-                {
-                    DeclaringType = type,
-                    PropertyName = ResolvePropertyName(x.Key),
-                    UnderlyingName = x.Key,
-                    PropertyType = typeof(string),
-                    ValueProvider = new PublishedContentValueProvider(x.Value),
-                    AttributeProvider = noAttributeProvider,
-                    Readable = true,
-                    Writable = false,
-                    ItemIsReference = false,
-                    TypeNameHandling = TypeNameHandling.None,
-                }));
+                properties.AddRange(_systemMethods
+                    .Where(x => _ignoreFromCustom.Contains(x.Key) == false)
+                    .Select(x => new JsonProperty
+                    {
+                        DeclaringType = type,
+                        PropertyName = ResolvePropertyName(x.Key),
+                        UnderlyingName = x.Key,
+                        PropertyType = typeof(string),
+                        ValueProvider = new PublishedContentValueProvider(x.Value),
+                        AttributeProvider = noAttributeProvider,
+                        Readable = true,
+                        Writable = false,
+                        ItemIsReference = false,
+                        TypeNameHandling = TypeNameHandling.None,
+                    }));
             }
 
             return properties;
@@ -185,23 +187,22 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
+            var hasSystemProperties = false;
             var property = base.CreateProperty(member, memberSerialization);
 
-            if (_ignoreFromCustom.Contains(member.Name) == true)
+            if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType) == true)
             {
-                property.ShouldSerialize = _ => false;
-            }
-            else if (typeof(IPublishedContent).IsAssignableFrom(member.DeclaringType) == true)
-            {
-                property.ShouldSerialize = _ => _ignoreFromContent.Contains(member.Name) == false;
+                hasSystemProperties = true;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromContent.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedElement).IsAssignableFrom(member.DeclaringType) == true)
             {
-                property.ShouldSerialize = _ => _ignoreFromElement.Contains(member.Name) == false;
+                hasSystemProperties = true;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromElement.Contains(member.Name) == false;
             }
             else if (typeof(IPublishedProperty).IsAssignableFrom(member.DeclaringType) == true)
             {
-                property.ShouldSerialize = _ => _ignoreFromProperty.Contains(member.Name) == false;
+                property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromProperty.Contains(member.Name) == false;
             }
 
             if (_converterLookup.ContainsKey(property.PropertyType) == true)
@@ -216,7 +217,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            if (string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(member.Name) == true)
+            if (hasSystemProperties == true &&
+                string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false &&
+                _systemProperties.Contains(member.Name) == true)
             {
                 property.PropertyName = SystemPropertyNamePrefix + property.PropertyName;
             }
@@ -235,7 +238,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
 
             return string.IsNullOrWhiteSpace(SystemPropertyNamePrefix) == false && _systemProperties.Contains(propertyName) == true
-                ? "_" + base.ResolvePropertyName(propertyName)
+                ? SystemPropertyNamePrefix + base.ResolvePropertyName(propertyName)
                 : base.ResolvePropertyName(propertyName);
         }
 
