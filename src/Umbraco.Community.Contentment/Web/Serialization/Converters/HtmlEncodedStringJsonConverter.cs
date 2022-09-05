@@ -12,6 +12,10 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 {
     public class HtmlEncodedStringJsonConverter : JsonConverter<IHtmlEncodedString>
     {
+        public override bool CanRead => false;
+
+        public override bool CanWrite => true;
+
         public override IHtmlEncodedString ReadJson(JsonReader reader, Type objectType, IHtmlEncodedString existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             // TODO: [LK:2022-09-02] Up For Grabs! Please help me implement this.

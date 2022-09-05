@@ -5,6 +5,7 @@
 
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core.Models.PublishedContent;
 #else
@@ -15,6 +16,10 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 {
     public sealed class PublishedContentTypeJsonConverter : JsonConverter<IPublishedContentType>
     {
+        public override bool CanRead => false;
+
+        public override bool CanWrite => true;
+
         public override IPublishedContentType ReadJson(JsonReader reader, Type objectType, IPublishedContentType existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             // TODO: [LK:2022-09-02] Up For Grabs! Please help me implement this.
@@ -23,9 +28,25 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         public override void WriteJson(JsonWriter writer, IPublishedContentType value, JsonSerializer serializer)
         {
-            // TODO: [LK:2022-09-02] Expand the serialized object,
-            // it's mainly the `PropertyType[].ContentType` circular-reference that breaks it.
-            writer.WriteValue(value?.Alias);
+#if NET472
+            value.TryGetKey(out var contentTypeKey);
+#endif
+            JObject
+                .FromObject(new
+                {
+                    value.Alias,
+                    value.CompositionAliases,
+                    value.Id,
+                    value.ItemType,
+                    value.IsElement,
+#if NET472
+                    Key = contentTypeKey,
+#else
+                    value.Key,
+#endif
+                    value.PropertyTypes,
+                }, serializer)
+                .WriteTo(writer);
         }
     }
 }
