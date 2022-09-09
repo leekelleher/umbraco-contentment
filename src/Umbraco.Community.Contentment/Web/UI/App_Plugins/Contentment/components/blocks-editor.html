@@ -11,7 +11,7 @@
 <div class="contentment umb-block-list">
     <div class="umb-block-list__wrapper">
         <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
-            <div class="umb-block-list__block" ng-repeat="item in vm.ngModel">
+            <div class="umb-block-list__block" ng-repeat="item in vm.ngModel track by $index">
 
                 <div class="umb-block-list__block--view" ng-if="!vm.previews[item.key]">
                     <button type="button"
