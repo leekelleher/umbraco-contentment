@@ -28,6 +28,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
             vm.submit = submit;
             vm.close = close;
 
+            // NOTE: Fixes https://github.com/leekelleher/umbraco-contentment/issues/250
+            vm.contentNodeModel = config.currentPage || { variants: [] };
+
             if (config.elementType && $scope.model.value) {
 
                 edit(config.elementType, $scope.model.value);
@@ -115,9 +118,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 elementType: elementType.key,
                 key: String.CreateGuid()
             };
-
-            // NOTE: Fixes https://github.com/leekelleher/umbraco-contentment/issues/250
-            vm.contentNodeModel = config.currentPage || { variants: [] };
 
             // TODO: [v9] [LK] Review this, get error with blueprint API request, 404.
             // "Failed to retrieve blueprint for id 1082"
