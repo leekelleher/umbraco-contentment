@@ -6,7 +6,7 @@
 <div class="umb-contentpicker">
     <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
         <umb-node-preview ng-attr-single="{{vm.isSingle}}"
-                          ng-repeat="item in vm.ngModel"
+                          ng-repeat="item in vm.ngModel track by $index"
                           icon="vm.populate(item, $index, 'icon')"
                           name="vm.populate(item, $index, 'name')"
                           description="vm.populate(item, $index, 'description')"

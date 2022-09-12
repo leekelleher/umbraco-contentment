@@ -44,8 +44,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             // NOTE: [LK] Some of the editors may need the context of the current page.
             // If the page is new, then it doesn't have an id, so the parentId will be used.
-            var currentNode = editorState.getCurrent();
-            config.currentPageId = currentNode.id > 0 ? currentNode.id : currentNode.parentId;
+            config.currentPage = $scope.node || editorState.getCurrent();
+            config.currentPageId = config.currentPage.id > 0 ? config.currentPage.id : config.currentPage.parentId;
 
             // Support Content not in Content / Media Tree
             if (!config.currentPageId) {
@@ -154,6 +154,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     elementTypes: config.contentBlockTypes,
                     enableFilter: config.enableFilter,
+                    currentPage: config.currentPage,
                     currentPageId: config.currentPageId,
                 },
                 size: config.contentBlockTypes.length === 1 ? config.contentBlockTypes[0].overlaySize : "small",
