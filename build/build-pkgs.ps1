@@ -19,7 +19,7 @@ $authorName = 'Lee Kelleher';
 $authorUrl = 'https://leekelleher.com/';
 $minUmbracoVersion = 8,17,0;
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
-$tags = "umbraco";
+$tags = "umbraco;umbraco-marketplace";
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
 $buildFolder = Join-Path -Path $rootFolder -ChildPath 'build';
