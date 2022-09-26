@@ -91,6 +91,7 @@ _Let's call those "life's little surprises"._
   - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
   - With Umbraco v9 (Contentment v3), SQL data source does not support querying SQL CE. [See #172 for details.](https://github.com/leekelleher/umbraco-contentment/issues/172)
+  - With Umbraco v10 (Contentment v4), SQL data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
 
 
 ### Roadmap
@@ -119,7 +120,7 @@ Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go home.** :v::heart::dove:
 
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
-Otherwise you are completely free to not use this software, complain on your favourite social network, or go shout into the void.
+Otherwise you are completely free to not use this software, complain on your favourite social network, or go [scream into the void](https://screamintothevoid.com/).
 
 Unacceptable behaviour towards myself (or contributors) may result in being blocked from accessing this repository.
 
@@ -149,7 +150,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1385+ hours</b> (between 2019-03-13 to 2022-07-06)</summary>
+<summary>Current development effort: <b>1,453+ hours</b> (between 2019-03-13 to 2022-09-26)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
