@@ -29,7 +29,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentXPathDataListSource : BaseUmbracoContentDataListSource, IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public UmbracoContentXPathDataListSource(
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper) : base(umbracoContextAccessor)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IRequestAccessor requestAccessor,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper) : base(requestAccessor, umbracoContextAccessor)
         {
             _contentTypeService = contentTypeService;
             _requestAccessor = requestAccessor;
@@ -61,17 +61,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 #endif
 
-        public string Name => "Umbraco Content by XPath";
+        public override string Name => "Umbraco Content by XPath";
 
-        public string Description => "Use an XPath query to select Umbraco content to use as the data source.";
+        public override string Description => "Use an XPath query to select Umbraco content to use as the data source.";
 
-        public string Icon => "icon-fa fa-file-code-o";
+        public override string Icon => "icon-fa fa-file-code-o";
+        
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
-
-        public OverlaySize OverlaySize => OverlaySize.Small;
-
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -100,43 +98,24 @@ namespace Umbraco.Community.Contentment.DataEditors
 </details>", true),
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
             { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var xpath = config.GetValueAs("xpath", string.Empty);
 
             if (string.IsNullOrWhiteSpace(xpath) == false)
             {
-                var nodeContextId = default(int?);
                 var preview = true;
                 var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
-                // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-#if NET472
-                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
-#else
-                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
-#endif
-                {
-                    nodeContextId = currentId;
-                }
-#if NET472
-                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
-#else
-                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
-#endif
-                {
-                    nodeContextId = parentId;
-                }
-
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
-
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpath, nodeContextId, getPath, publishedContentExists);
+                
+                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpath, ContextContentId, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {

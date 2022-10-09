@@ -29,7 +29,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentDataListSource : BaseUmbracoContentDataListSource, IDataListSource, IDataListSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public UmbracoContentDataListSource(
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper) : base(umbracoContextAccessor)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IRequestAccessor requestAccessor,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper) : base(requestAccessor, umbracoContextAccessor)
         {
             _contentTypeService = contentTypeService;
             _requestAccessor = requestAccessor;
@@ -61,17 +61,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 #endif
 
-        public string Name => "Umbraco Content";
+        public override string Name => "Umbraco Content";
 
-        public string Description => "Select a start node to use its children as the data source.";
+        public override string Description => "Select a start node to use its children as the data source.";
 
-        public string Icon => "icon-umbraco";
+        public override string Icon => "icon-umbraco";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
-
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -82,9 +80,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var preview = true;
             var parentNode = config.GetValueAs("parentNode", string.Empty);
@@ -93,27 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
-                var nodeContextId = default(int?);
-
-                // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-#if NET472
-                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
-#else
-                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
-#endif
-                {
-                    nodeContextId = currentId;
-                }
-#if NET472
-                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
-#else
-                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
-#endif
-                {
-                    nodeContextId = parentId;
-                }
-
-                if (nodeContextId == -20)
+                if (ContextContentId == -20)
                 {
                     // TODO: [UP-FOR-GRABS] If the ID = -20, then we can assume that it's come from Nested Content. What to do? ¯\_(ツ)_/¯
                 }
@@ -121,7 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
+                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, ContextContentId, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
