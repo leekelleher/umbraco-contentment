@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Examine;
 using Examine.Search;
+using Umbraco.Community.Contentment.Services;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -25,6 +26,7 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Examine;
+using Umbraco.Community.Contentment.Services.Implement;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
@@ -33,6 +35,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ExamineDataListSource : IDataListSource
     {
+        private readonly IContentmentContextAccessor _contentmentContextAccessor;
+
         private readonly IExamineManager _examineManager;
 #if NET472
         private readonly IdkMap _idKeyMap;
@@ -40,10 +44,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIdKeyMap _idKeyMap;
 #endif
         private readonly IIOHelper _ioHelper;
-#if NET472 == false
-
-        private readonly IRequestAccessor _requestAccessor;
-#endif
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
@@ -89,6 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         public ExamineDataListSource(
+            IContentmentContextAccessor contentmentContextAccessor,
             IExamineManager examineManager,
 #if NET472
             IdkMap idKeyMap,
@@ -96,18 +97,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             IIdKeyMap idKeyMap,
 #endif
             IIOHelper ioHelper,
-#if NET472 == false
-            IRequestAccessor requestAccessor,
-#endif
             IShortStringHelper shortStringHelper,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
+            _contentmentContextAccessor = contentmentContextAccessor;
             _examineManager = examineManager;
             _idKeyMap = idKeyMap;
             _ioHelper = ioHelper;
-#if NET472 == false
-            _requestAccessor = requestAccessor;
-#endif
             _shortStringHelper = shortStringHelper;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -211,14 +207,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     if (luceneQuery.Contains("{0}") == true)
                     {
-#if NET472
                         var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
-                        if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
-#else
-                        if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
-#endif
+                        var currentContent = _contentmentContextAccessor.GetCurrentContentId(out bool isCurrentContentParent);
+                        if (currentContent.HasValue && !isCurrentContentParent)
                         {
-                            var udi = _idKeyMap.GetUdiForId(currentId, UmbracoObjectTypes.Document);
+                            var udi = _idKeyMap.GetUdiForId(currentContent.Value, UmbracoObjectTypes.Document);
                             if (udi.Success == true)
                             {
                                 luceneQuery = string.Format(luceneQuery, udi.Result);
