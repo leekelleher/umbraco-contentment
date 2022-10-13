@@ -2,6 +2,8 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+using Umbraco.Community.Contentment.Services;
+using Umbraco.Community.Contentment.Services.Implement;
 
 #if NET472
 using Umbraco.Community.Contentment.DataEditors;
@@ -34,6 +36,8 @@ namespace Umbraco.Community.Contentment.Composing
             ;
 
             composition.RegisterUnique<ConfigurationEditorUtility>();
+
+            composition.RegisterFor<IContentmentContextAccessor, ContentmentContextAccessor>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)
             {
@@ -68,6 +72,7 @@ namespace Umbraco.Community.Contentment.Composing
             ;
 
             builder.Services.AddSingleton<ConfigurationEditorUtility>();
+            builder.Services.AddSingleton<IContentmentContextAccessor, ContentmentContextAccessor>();
 
             builder
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()

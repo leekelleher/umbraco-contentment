@@ -124,6 +124,38 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
+##### Context accessor service
+
+If you need to access the current Umbraco content node, there's an `IContentmentContextAccessor` service which can be injected into your constructor. The `isParent` flag indicates whether the returned values relate to the current node, or it's parent (for example, when editing an element).
+
+```csharp
+public class BlogCategoriesDataSource : IDataListSource
+{
+    private readonly IContentmentContextAccessor _contentmentContextAccessor;
+
+    public BlogCategoriesDataSource(IContentmentContextAccessor contentmentContextAccessor)
+    {
+        _contentmentContextAccessor = contentmentContextAccessor;
+    }
+
+    /// …
+
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+    {
+        // It's more performant to just get the ID if you only need that…
+        // var currentId = _contentmentContextAccessor.GetCurrentContentId(out bool isParent);
+        
+        // …or you can get the IPublishedContent
+        var currentPage = _contentmentContextAccessor.GetCurrentContent(out bool isParent);
+        
+        var blog = currentPage?.AncestorOrSelf<Blog>();
+        return blog?.Categories?.Select(x => new DataListItem() { Name = x, Value = x });
+    }
+}
+```
+
+
+
 #### Providing custom values for published content models
 
 As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.
