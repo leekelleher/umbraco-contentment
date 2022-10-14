@@ -16,6 +16,13 @@ namespace Umbraco.Web
         {
             return accessor.UmbracoContext;
         }
+
+        public static bool TryGetUmbracoContext(this IUmbracoContextAccessor accessor, out UmbracoContext umbracoContext)
+        {
+            umbracoContext = accessor.UmbracoContext;
+
+            return umbracoContext != null;
+        }
     }
 }
 #endif
