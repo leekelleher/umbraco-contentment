@@ -2,11 +2,10 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-using Umbraco.Community.Contentment.Services;
-using Umbraco.Community.Contentment.Services.Implement;
 
 #if NET472
 using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Community.Contentment.Telemetry;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
@@ -18,7 +17,7 @@ using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
-using Umbraco.Extensions;
+using Umbraco.Community.Contentment.Services;
 #endif
 
 namespace Umbraco.Community.Contentment.Composing
@@ -35,9 +34,9 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            composition.RegisterUnique<ConfigurationEditorUtility>();
+            composition.RegisterFor<IContentmentContentContext, ContentmentContentContext>();
 
-            composition.RegisterFor<IContentmentContextAccessor, ContentmentContextAccessor>();
+            composition.RegisterUnique<ConfigurationEditorUtility>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)
             {
@@ -63,6 +62,8 @@ namespace Umbraco.Community.Contentment.Composing
         {
             builder
                 .Services
+                    .AddSingleton<ConfigurationEditorUtility>()
+                    .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
                     .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
              ;
 
@@ -70,9 +71,6 @@ namespace Umbraco.Community.Contentment.Composing
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
-
-            builder.Services.AddSingleton<ConfigurationEditorUtility>();
-            builder.Services.AddSingleton<IContentmentContextAccessor, ContentmentContextAccessor>();
 
             builder
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()

@@ -124,37 +124,36 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
-##### Context accessor service
 
-If you need to access the current Umbraco content node, there's an `IContentmentContextAccessor` service which can be injected into your constructor. The `isParent` flag indicates whether the returned values relate to the current node, or it's parent (for example, when editing an element).
+##### Accessing contextual content
+
+If you need to access contextual data from the current Umbraco content node, there's an `IContentmentContentContext` service which can be injected into your constructor. The `isParent` flag indicates whether the returned values relate to the current node, or it's parent node (for example, when editing an element item).
 
 ```csharp
 public class BlogCategoriesDataSource : IDataListSource
 {
-    private readonly IContentmentContextAccessor _contentmentContextAccessor;
+    private readonly IContentmentContentContext _contentmentContentContext;
 
-    public BlogCategoriesDataSource(IContentmentContextAccessor contentmentContextAccessor)
+    public BlogCategoriesDataSource(IContentmentContentContext contentmentContentContext)
     {
-        _contentmentContextAccessor = contentmentContextAccessor;
+        _contentmentContentContext = contentmentContentContext;
     }
 
-    /// …
+    // <snip>
 
     public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
     {
-        // It's more performant to just get the ID if you only need that…
-        // var currentId = _contentmentContextAccessor.GetCurrentContentId(out bool isParent);
-        
-        // …or you can get the IPublishedContent
-        var currentPage = _contentmentContextAccessor.GetCurrentContent(out bool isParent);
-        
+        // It's more performant to just get the ID if you only need that...
+        // var currentId = _contentmentContentContext.GetCurrentContentId(out bool isParent);
+
+        // ...or you can get the IPublishedContent
+        var currentPage = _contentmentContentContext.GetCurrentContent(out bool isParent);
+
         var blog = currentPage?.AncestorOrSelf<Blog>();
         return blog?.Categories?.Select(x => new DataListItem() { Name = x, Value = x });
     }
 }
 ```
-
-
 
 #### Providing custom values for published content models
 
