@@ -11,7 +11,7 @@ using Newtonsoft.Json.Serialization;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal sealed class ContentBlock
+    public sealed class ContentBlock
     {
         public Guid ElementType { get; set; }
 
