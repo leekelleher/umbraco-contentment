@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="es" intName="Spanish (ES)" localName="Español (ES)" lcid="" culture="es-ES">
+    <creator>
+        <name>Alex Freire</name>
+        <link>https://github.com/Happy-reindeer007</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+
+        <!-- General -->
+        <key alias="removeItemMessage">¿Estás seguro de que quieres eliminar este elemento?</key>
+        <key alias="removeItemButton">Sí, eliminar</key>
+
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">Este elemento ya no está disponible</key>
+        <key alias="missingItemDescription">Por, favor, elimina esta configuración y selecciona otro elemento.</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Selecciona y configura un modo de visualización</key>
+        <key alias="configureElementType">Selecciona y configura un tipo de elemento</key>
+
+        <key alias="copyAllBlocks">Copiar todos los bloques</key>
+        <key alias="editRawValue">Editar valor original</key>
+
+        <key alias="copyContentBlock">Copiar bloque de contenido</key>
+        <key alias="createContentTemplate">Crear plantilla de contenido...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Selecciona y configura una fuente de datos</key>
+        <key alias="configureListEditor">Selecciona y configura un editor de listas</key>
+        <key alias="configurePreviewInit">Por favor, selecciona y configura una fuente de datos y un editor de listas.</key>
+        <key alias="configurePreviewDataSource">Por favor, selecciona y configura una fuente de datos.</key>
+        <key alias="configurePreviewListEditor">Por favor, selecciona y configura un editor de listas.</key>
+        <key alias="configurePreviewNoItems">La fuente de datos no devolvió ningún elemento que previsualizar.</key>
+
+        <key alias="checkboxListCheckAll">Seleccionar todo</key>
+        <key alias="checkboxListUncheckAll">Deseleccionar todo</key>
+
+        <key alias="tagsType">Escribe para seleccionar un elemento...</key>
+    </area>
+</language>
