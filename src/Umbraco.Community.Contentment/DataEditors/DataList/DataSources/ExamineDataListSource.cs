@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Examine;
@@ -15,7 +16,6 @@ using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
-using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
 using UmbracoExamineFieldNames = Umbraco.Examine.UmbracoExamineIndex;
 #else
@@ -24,9 +24,7 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Examine;
-using Umbraco.Community.Contentment.Services.Implement;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
@@ -35,8 +33,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ExamineDataListSource : IDataListSource
     {
-        private readonly IContentmentContextAccessor _contentmentContextAccessor;
 
+        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;
 #if NET472
         private readonly IdkMap _idKeyMap;
@@ -45,7 +43,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
-        private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
 #if NET472
         private const string _defaultNameField = "nodeName";
@@ -89,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         };
 
         public ExamineDataListSource(
-            IContentmentContextAccessor contentmentContextAccessor,
+            IContentmentContentContext contentmentContentContext,
             IExamineManager examineManager,
 #if NET472
             IdkMap idKeyMap,
@@ -97,15 +94,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             IIdKeyMap idKeyMap,
 #endif
             IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper,
-            IUmbracoContextAccessor umbracoContextAccessor)
+            IShortStringHelper shortStringHelper)
         {
-            _contentmentContextAccessor = contentmentContextAccessor;
+            _contentmentContentContext = contentmentContentContext;
             _examineManager = examineManager;
             _idKeyMap = idKeyMap;
             _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
-            _umbracoContextAccessor = umbracoContextAccessor;
         }
 
         public string Name => "Examine Query";
@@ -207,11 +202,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     if (luceneQuery.Contains("{0}") == true)
                     {
-                        var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
-                        var currentContent = _contentmentContextAccessor.GetCurrentContentId(out bool isCurrentContentParent);
-                        if (currentContent.HasValue && !isCurrentContentParent)
+                        var contentId = _contentmentContentContext.GetCurrentContentId();
+                        if (contentId.HasValue == true)
                         {
-                            var udi = _idKeyMap.GetUdiForId(currentContent.Value, UmbracoObjectTypes.Document);
+                            var udi = _idKeyMap.GetUdiForId(contentId.Value, UmbracoObjectTypes.Document);
                             if (udi.Success == true)
                             {
                                 luceneQuery = string.Format(luceneQuery, udi.Result);

@@ -32,23 +32,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentDataListSource : IDataListSource, IDataListSourceValueConverter
     {
-        private readonly IContentmentContextAccessor _contentmentContextAccessor;
+        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
-        
+
         public UmbracoContentDataListSource(
-            IContentmentContextAccessor contentmentContextAccessor,
+            IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
-            _contentmentContextAccessor = contentmentContextAccessor;
+            _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
         }
-        
+
         public string Name => "Umbraco Content";
 
         public string Description => "Select a start node to use its children as the data source.";
@@ -81,8 +81,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (parentNode.InvariantStartsWith("umb://document/") == false)
             {
-                var currentContentId = _contentmentContextAccessor.GetCurrentContentId(out _);
-                if (currentContentId == -20)
+                var nodeContextId = _contentmentContentContext.GetCurrentContentId();
+                if (nodeContextId == -20)
                 {
                     // TODO: [UP-FOR-GRABS] If the ID = -20, then we can assume that it's come from Nested Content. What to do? ¯\_(ツ)_/¯
                 }
@@ -90,7 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, currentContentId, getPath, publishedContentExists);
+                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
@@ -122,8 +122,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out GuidUdi udi) == true
-                ? _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(udi)
+            return UdiParser.TryParse(value, out GuidUdi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content.GetById(udi)
                 : default;
         }
     }
