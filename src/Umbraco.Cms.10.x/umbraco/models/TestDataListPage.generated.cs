@@ -278,5 +278,13 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("dataListXmlSitemapPriority")]
 		public virtual string DataListXmlSitemapPriority => this.Value<string>(_publishedValueFallback, "dataListXmlSitemapPriority");
+
+		///<summary>
+		/// Umbraco Tags: Used to populate the "Data List Umbraco Tags" editor (above).
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("umbracoTags")]
+		public virtual global::System.Collections.Generic.IEnumerable<string> UmbracoTags => this.Value<global::System.Collections.Generic.IEnumerable<string>>(_publishedValueFallback, "umbracoTags");
 	}
 }

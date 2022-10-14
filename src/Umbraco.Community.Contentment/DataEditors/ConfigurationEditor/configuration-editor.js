@@ -75,7 +75,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     if (item.expressions) {
                         for (let [alias, value] of Object.entries(item.expressions)) {
-                            config.expressions[item.key][alias] = $interpolate(value);
+                            if (value) {
+                                config.expressions[item.key][alias] = $interpolate(value);
+                            }
                         }
                     }
                 }

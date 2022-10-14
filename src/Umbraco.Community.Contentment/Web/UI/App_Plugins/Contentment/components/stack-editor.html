@@ -5,7 +5,7 @@
 
 <div class="contentment lk-content-blocks">
     <div class="lk-content-blocks__container" ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
-        <div class="lk-content-blocks__block" ng-repeat="item in vm.ngModel">
+        <div class="lk-content-blocks__block" ng-repeat="item in vm.ngModel track by $index">
 
             <div tabindex="-1" class="lk-content-blocks__preview">
                 <div class="lk-content-blocks__preview--left" ng-if="vm.previews[item.key]">

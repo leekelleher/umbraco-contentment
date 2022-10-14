@@ -116,7 +116,7 @@
         <umb-editor-container ng-if="vm.mode === 'edit'">
             <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
             <ng-form class="form-horizontal" val-form-manager ng-if="vm.loading === false">
-                <umb-tabbed-content content="vm.content"></umb-tabbed-content>
+                <umb-tabbed-content content="vm.content" content-node-model="vm.contentNodeModel"></umb-tabbed-content>
             </ng-form>
         </umb-editor-container>
 

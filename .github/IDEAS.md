@@ -31,6 +31,12 @@
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.controller.js
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.html#L9-L19
 
+- Data Picker - a picker for larger queryable data-sources; for scenarios where Data List has its limitations.
+
+- Block - a single item edition of the Block List editor.
+
+- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
+
 
 ### Internally used editors
 
@@ -41,7 +47,6 @@ Could these internally used editors have potential as standalone property editor
 - Data List Item editor
 - Data Table
 - Macro Picker
-- [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
 
 ### Validation

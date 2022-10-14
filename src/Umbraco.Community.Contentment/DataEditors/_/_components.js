@@ -95,6 +95,8 @@
                         vm.populateStyle = populateStyle;
                         vm.remove = remove;
 
+                        vm.isSingle = vm.allowAdd === false && vm.ngModel.length === 1 ? "" : undefined;
+
                         if (vm.addButtonLabelKey) {
                             localizationService.localize(vm.addButtonLabelKey).then(function (label) {
                                 vm.addButtonLabel = label;
@@ -178,10 +180,9 @@
                         }
                     };
 
-                    function populateStyle(item, $index, propertyName, styleProperty) {
-                        var style = {};
-                        style[styleProperty] = populate(item, $index, propertyName);
-                        return style;
+                    function populateStyle(item, $index, propertyName) {
+                        var style = populate(item, $index, propertyName);
+                        return style ? angular.fromJson(style) : {};
                     };
 
                     function remove($index) {

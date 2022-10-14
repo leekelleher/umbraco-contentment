@@ -71,11 +71,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (item is IContentmentListTemplateItem lti)
             {
-                model.Expressions = new Dictionary<string, string>
+                model.Expressions = new Dictionary<string, string>();
+
+                if (string.IsNullOrWhiteSpace(lti.NameTemplate) == false)
                 {
-                    { "name", lti.NameTemplate },
-                    { "description", lti.DescriptionTemplate },
-                };
+                    model.Expressions.Add("name", lti.NameTemplate);
+                }
+
+                if (string.IsNullOrWhiteSpace(lti.DescriptionTemplate) == false)
+                {
+                    model.Expressions.Add("description", lti.DescriptionTemplate);
+                }
             }
 
             return model;

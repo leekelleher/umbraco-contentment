@@ -7,9 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Examine;
 using Examine.Search;
+using Umbraco.Core.Models;
+using Umbraco.Core.Services;
+using Umbraco.Web;
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Examine;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
@@ -19,10 +25,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ExamineDataListSource : IDataListSource
     {
         private readonly IExamineManager _examineManager;
-        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IIdKeyMap _idKeyMap;
         private readonly IIOHelper _ioHelper;
+        private readonly IRequestAccessor _requestAccessor;
+        private readonly IShortStringHelper _shortStringHelper;
+        private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
-        private const string _defaultNameField = "nodeName";
+        private const string _defaultNameField = UmbracoExamineFieldNames.NodeNameFieldName;
         private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
         private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
@@ -59,11 +68,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public ExamineDataListSource(IExamineManager examineManager, IShortStringHelper shortStringHelper, IIOHelper ioHelper)
+        public ExamineDataListSource(
+            IExamineManager examineManager,
+            IIdKeyMap idKeyMap,
+            IIOHelper ioHelper,
+            IRequestAccessor requestAccessor,
+            IShortStringHelper shortStringHelper,
+            IUmbracoContextAccessor umbracoContextAccessor)
         {
             _examineManager = examineManager;
-            _shortStringHelper = shortStringHelper;
+            _idKeyMap = idKeyMap;
             _ioHelper = ioHelper;
+            _requestAccessor = requestAccessor;
+            _shortStringHelper = shortStringHelper;
+            _umbracoContextAccessor = umbracoContextAccessor;
         }
 
         public string Name => "Examine Query";
@@ -102,7 +120,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "luceneQuery",
                 Name = "Lucene query",
-                Description = "Enter your raw Lucene expression to query Examine with.",
+                Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
@@ -163,6 +181,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var luceneQuery = config.GetValueAs("luceneQuery", string.Empty);
                 if (string.IsNullOrWhiteSpace(luceneQuery) == false)
                 {
+                    if (luceneQuery.Contains("{0}") == true)
+                    {
+                        if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
+                        {
+                            var udi = _idKeyMap.GetUdiForId(currentId, UmbracoObjectTypes.Document);
+                            if (udi.Success == true)
+                            {
+                                luceneQuery = string.Format(luceneQuery, udi.Result);
+                            }
+                        }
+                    }
+
                     var nameField = config.GetValueAs("nameField", _defaultNameField);
                     var valueField = config.GetValueAs("valueField", _defaultValueField);
                     var iconField = config.GetValueAs("iconField", _defaultIconField);
