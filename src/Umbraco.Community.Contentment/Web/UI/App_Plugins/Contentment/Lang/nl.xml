@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="nl" intName="Dutch" localName="Nederlands" lcid="19" culture="nl-NL">
+    <creator>
+        <name>Erik-Jan Westendorp</name>
+        <link>https://twitter.com/ewestendorp</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+
+        <!-- General -->
+        <key alias="removeItemMessage">Weet je zeker dat je dit item wilt verwijderen?</key>
+        <key alias="removeItemButton">Ja, verwijder</key>
+
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">Dit item is niet langer beschikbaar</key>
+        <key alias="missingItemDescription">Verwijder deze configuratie en selecteer een ander item.</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Selecteer en configureer een weergavemodus</key>
+        <key alias="configureElementType">Selecteer en configureer een elementtype</key>
+
+        <key alias="copyAllBlocks">Kopieer alle blokken</key>
+        <key alias="editRawValue">Ruwe waarde bewerken</key>
+
+        <key alias="copyContentBlock">Inhoudsblok kopiëren</key>
+        <key alias="createContentTemplate">Inhoudssjabloon maken...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Selecteer en configureer een gegevensbron</key>
+        <key alias="configureListEditor">Selecteer en configureer een lijsteditor</key>
+        <key alias="configurePreviewInit">Selecteer en configureer een gegevensbron en lijsteditor.</key>
+        <key alias="configurePreviewDataSource">Selecteer en configureer een gegevensbron.</key>
+        <key alias="configurePreviewListEditor">Selecteer en configureer een lijsteditor.</key>
+        <key alias="configurePreviewNoItems">De gegevensbron heeft geen items geretourneerd om te bekijken.</key>
+
+        <key alias="checkboxListCheckAll">Alles selecteren</key>
+        <key alias="checkboxListUncheckAll">Alles deselecteren</key>
+
+        <key alias="tagsType">Typ om een item te selecteren...</key>
+    </area>
+</language>
