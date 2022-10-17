@@ -11,6 +11,10 @@
         <key alias="removeItemMessage">Er du sikker på, at du vil fjerne denne element?</key>
         <key alias="removeItemButton">Ja, fjern</key>
 
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">Dette element er ikke længere tilgængeligt</key>
+        <key alias="missingItemDescription">Fjern venligst konfigurationen og vælg et andet element.</key>
+
         <!-- Content Blocks -->
         <key alias="configureDisplayMode">Vælg og konfigurer en visningstype</key>
         <key alias="configureElementType">Vælg og konfigurer en elementtype</key>
