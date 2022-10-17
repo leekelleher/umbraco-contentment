@@ -11,10 +11,10 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public interface IContentmentContentContext
+    public static class ContentmentContentContextExtensions
     {
-        int? GetCurrentContentId(out bool isParent);
+        public static int? GetCurrentContentId(this IContentmentContentContext ctx) => ctx.GetCurrentContentId(out _);
 
-        IPublishedContent GetCurrentContent(out bool isParent);
+        public static IPublishedContent GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
     }
 }

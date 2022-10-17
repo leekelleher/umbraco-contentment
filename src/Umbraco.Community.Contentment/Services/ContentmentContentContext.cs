@@ -32,8 +32,6 @@ namespace Umbraco.Community.Contentment.Services
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
-        public int? GetCurrentContentId() => GetCurrentContentId(out _);
-
         public int? GetCurrentContentId(out bool isParent)
         {
             isParent = false;
@@ -66,8 +64,6 @@ namespace Umbraco.Community.Contentment.Services
 #endif
             return default;
         }
-
-        public IPublishedContent GetCurrentContent() => GetCurrentContent(out _);
 
         public IPublishedContent GetCurrentContent(out bool isParent)
         {
