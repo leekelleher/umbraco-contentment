@@ -34,9 +34,8 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            composition.RegisterFor<IContentmentContentContext, ContentmentContentContext>();
-
             composition.RegisterUnique<ConfigurationEditorUtility>();
+            composition.RegisterUnique<IContentmentContentContext, ContentmentContentContext>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)
             {
