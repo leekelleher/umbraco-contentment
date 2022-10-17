@@ -5,6 +5,7 @@
 
 #if NET472
 using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Community.Contentment.Telemetry;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
@@ -16,7 +17,7 @@ using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
-using Umbraco.Extensions;
+using Umbraco.Community.Contentment.Services;
 #endif
 
 namespace Umbraco.Community.Contentment.Composing
@@ -34,6 +35,7 @@ namespace Umbraco.Community.Contentment.Composing
             ;
 
             composition.RegisterUnique<ConfigurationEditorUtility>();
+            composition.RegisterUnique<IContentmentContentContext, ContentmentContentContext>();
 
             if (composition.RuntimeState.Level > RuntimeLevel.Install)
             {
@@ -59,6 +61,8 @@ namespace Umbraco.Community.Contentment.Composing
         {
             builder
                 .Services
+                    .AddSingleton<ConfigurationEditorUtility>()
+                    .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
                     .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
              ;
 
@@ -66,8 +70,6 @@ namespace Umbraco.Community.Contentment.Composing
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
-
-            builder.Services.AddSingleton<ConfigurationEditorUtility>();
 
             builder
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()

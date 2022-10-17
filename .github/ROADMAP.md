@@ -98,6 +98,10 @@ Property Editors are:
 
 - [Social Links](https://github.com/leekelleher/umbraco-contentment/pull/234)
 
+### 4.2
+
+- Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources
+
 
 ## v5
 

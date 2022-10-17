@@ -6,8 +6,8 @@
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
     <Description>Contentment, a collection of components for Umbraco.</Description>
-    <PackageTags>umbraco</PackageTags>
-    <Version>4.1.5</Version>
+    <PackageTags>umbraco umbraco-marketplace</PackageTags>
+    <Version>4.2.0</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
