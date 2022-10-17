@@ -86,6 +86,8 @@ public class TimeZoneDataSource : IDataListSource
 
     public string Icon => "icon-globe";
 
+    public string Group => "Custom";
+
     public OverlaySize OverlaySize => OverlaySize.Small;
 
     public Dictionary<string, object> DefaultValues => default;
