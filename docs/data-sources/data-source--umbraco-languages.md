@@ -19,4 +19,4 @@ The Umbraco languages data-source does not have any configuration options. It wi
 The value for the Umbraco languages data-source item will be the 2 letter ISO code (e.g. en or fr) as a `string`.
 Depending on the `List editor` used, this may be wrapped in a `List<string>`.
 
-![image](https://user-images.githubusercontent.com/9142936/196559927-18a7c98c-d842-4b18-84b5-991e0a6ab7c9.png)
+![Configuration Editor for Umbraco Languages](data-source--umbraco-languages--configuration-editor-01.png)
