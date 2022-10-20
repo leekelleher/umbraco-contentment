@@ -11,7 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     [JsonObject(
         ItemNullValueHandling = NullValueHandling.Ignore,
         NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class DataListItem
+    public class DataListItem
     {
         public string Description { get; set; }
 
