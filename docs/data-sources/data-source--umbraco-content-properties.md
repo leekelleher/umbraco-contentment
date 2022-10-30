@@ -4,13 +4,6 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #152.
-> https://github.com/leekelleher/umbraco-contentment/issues/152
-
-
 #### Umbraco Content Properties
 
 Populate the data source using a Content Type's properties.
@@ -18,9 +11,13 @@ Populate the data source using a Content Type's properties.
 
 ##### How to configure the editor?
 
-_[TBC]_
+The editor lets you select the desired Content Type to pick properties from. You can configure each Data Source with one Content Type.
+
+![Configuration Editor for Umbraco Content Properties](data-source--umbraco-content-properties.png)
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value returned from the List editor is an `string` containing the alias of the selected content property.
+
+Depending on the `List editor` used, this may be wrapped in a `List<string>`.
