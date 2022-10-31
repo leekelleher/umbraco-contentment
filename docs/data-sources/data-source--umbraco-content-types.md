@@ -4,13 +4,6 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #153.
-> https://github.com/leekelleher/umbraco-contentment/issues/153
-
-
 #### Umbraco Content Types
 
 Populate the data source using Content Types.
@@ -18,9 +11,12 @@ Populate the data source using Content Types.
 
 ##### How to configure the editor?
 
-_[TBC]_
+Select the content types that should be available in the data source. You can select between Document Types with or without templates, or Element Types.
 
+![Configuration Editor for Umbraco Content Types](data-source--umbraco-content-types.png)
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value returned from the List editor is an `IPublishedContentType`.
+
+Depending on the `List editor` used, this may be wrapped in a `List<IPublishedContentType>`.
