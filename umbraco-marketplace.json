@@ -1,0 +1,24 @@
+{
+  "AuthorDetails": {
+    "Description": "#umbraco collaborator",
+    "Url": "https://leekelleher.com",
+    "ImageUrl": "https://github.com/leekelleher.png"
+  },
+  "Category": "CMS Extensions",
+  "LicenseType": "Free",
+  "PackageType": "Package",
+  "PackagesByAuthor": [],
+  "RelatedPackages": [],
+  "Screenshots": [
+    {
+      "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-02.png",
+      "Caption": "Configuration Editor for Data List - available data sources"
+    }
+  ],
+  "Tags": [
+    "backoffice",
+    "property-editor"
+  ],
+  "Umbraco8PackageId": "Our.Umbraco.Community.Contentment",
+  "VideoUrl": "https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M"
+}
