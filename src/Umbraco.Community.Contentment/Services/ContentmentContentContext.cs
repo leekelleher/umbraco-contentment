@@ -35,14 +35,22 @@ namespace Umbraco.Community.Contentment.Services
         public int? GetCurrentContentId(out bool isParent)
         {
             isParent = false;
-
-#if NET472
+            
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
+                if (umbracoContext.PublishedRequest?.PublishedContent != null)
+                {
+                    isParent = false;
+                    return umbracoContext.PublishedRequest.PublishedContent.Id;
+                }
+
+#if NET472 == false
+            }
 #endif
-                // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
+
+            // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
 #if NET472
-                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
+            if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
 #else
                 if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
 #endif
@@ -67,11 +75,21 @@ namespace Umbraco.Community.Contentment.Services
 
         public IPublishedContent GetCurrentContent(out bool isParent)
         {
-            var currentContentId = GetCurrentContentId(out isParent);
-
-            if (currentContentId.HasValue == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
+            isParent = false;
+            
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
-                return umbracoContext.Content.GetById(true, currentContentId.Value);
+                if (umbracoContext.PublishedRequest?.PublishedContent != null)
+                {
+                    return umbracoContext.PublishedRequest.PublishedContent;
+                }
+
+                var currentContentId = GetCurrentContentId(out isParent);
+
+                if (currentContentId.HasValue == true)
+                {
+                    return umbracoContext.Content.GetById(true, currentContentId.Value);
+                }
             }
 
             return default;
