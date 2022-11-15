@@ -6,7 +6,7 @@
 <div class="contentment umb-readonlyvalue editor-note flex items-center" ng-class="vm.alertType" lk-hide-property-group="{{vm.hidePropertyGroup}}" ng-controller="Umbraco.Community.Contentment.DataEditors.EditorNotes.Controller as vm">
     <umb-icon icon="{{vm.icon}}" ng-class="vm.icon" ng-if="vm.icon"></umb-icon>
     <div>
-        <h3 class="mt1 mb1" ng-bind="vm.heading" ng-if="vm.heading"></h3>
+        <h5 class="mt1 mb1" ng-bind="vm.heading" ng-if="vm.heading"></h5>
         <div lk-bind-html-template="vm.message" ng-class="{ 'mt1': !vm.heading }" ng-if="vm.message"></div>
     </div>
 </div>
