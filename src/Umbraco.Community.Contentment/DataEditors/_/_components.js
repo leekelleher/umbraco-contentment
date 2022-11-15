@@ -22,6 +22,7 @@
                 getItemIcon: "<?",
                 getItemName: "<?",
                 getItemDescription: "<?",
+                itemTemplate: "<?",
                 ngModel: "=",
                 onAdd: "<?",
                 onEdit: "<?",

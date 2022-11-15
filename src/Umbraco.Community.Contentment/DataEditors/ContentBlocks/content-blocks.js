@@ -33,6 +33,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             enableDevMode: 0,
             enableFilter: 0,
             enablePreview: 0,
+            itemTemplate: null,
             maxItems: 0,
             overlayView: "",
         };
@@ -81,7 +82,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             });
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "grid_addElement";
-            vm.displayMode = config.displayMode;
+            vm.displayMode = config.displayMode || "blocks";
 
             vm.enablePreview = Object.toBoolean(config.enablePreview);
 
@@ -97,6 +98,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.remove = remove;
             vm.populate = populate;
             vm.sort = () => populatePreviews();
+
+            vm.itemTemplate = config.itemTemplate;
 
             vm.disabled = {};
             vm.previews = [];

@@ -30,7 +30,9 @@
                     <button aria-label="Edit content"
                             type="button"
                             class="btn-reset umb-outline lk-content-blocks__edit"
-                            ng-click="vm.edit($index)"></button>
+                            ng-click="vm.edit($index)"
+                            ng-if="vm.canEdit(item, $index)">
+                    </button>
                 </div>
 
                 <div class="umb-block-list__block--actions">

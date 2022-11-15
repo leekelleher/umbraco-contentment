@@ -27,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultValue: [],
             displayMode: "cards",
             enableDevMode: 0,
+            itemTemplate: null,
             maxItems: 0,
             overlaySize: "medium",
             overlayView: "",
@@ -89,6 +90,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.add = add;
             vm.populate = populate;
             vm.remove = remove;
+
+            vm.itemTemplate = config.itemTemplate;
 
             vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
                 ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
