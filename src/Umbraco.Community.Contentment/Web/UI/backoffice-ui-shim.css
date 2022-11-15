@@ -23,6 +23,11 @@
     color: #1b264f;
 }
 
+/* Contentment dashboard, paragraph line height felt squished. */
+.contentment .umb-box-content p {
+    line-height: 1.5rem;
+}
+
 /* Block List Configuration Card, fixes icon position of action buttons. */
 .contentment .umb-block-card .__actions > button {
     padding-top: 3px;
