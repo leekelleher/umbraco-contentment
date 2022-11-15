@@ -10,10 +10,12 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
 #else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 #endif
@@ -24,13 +26,15 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataSource = "dataSource";
         internal const string ListEditor = "listEditor";
+        internal const string Preview = "preview";
 
         private readonly ConfigurationEditorUtility _utility;
 
         public DataListConfigurationEditor(
-            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper,
+            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
+            ConfigurationEditorUtility utility)
             : base()
         {
             _utility = utility;
@@ -50,8 +54,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new ConfigurationField
             {
                 Key = DataSource,
-                Name = "Data source",
-                Description = "Select and configure a data source.",
+                Name = localizedTextService.LocalizeContentment("labelDataSource", "Data source"),
+                Description = localizedTextService.LocalizeContentment("configureDataSource", "Select and configure a data source."),
                 View = configEditorViewPath,
                 Config = new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
@@ -69,8 +73,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new ConfigurationField
             {
                 Key = ListEditor,
-                Name = "List editor",
-                Description = "Select and configure a list editor.",
+                Name = localizedTextService.LocalizeContentment("labelListEditor", "List editor"),
+                Description = localizedTextService.LocalizeContentment("configureListEditor", "Select and configure a list editor."),
                 View = configEditorViewPath,
                 Config = new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
@@ -82,8 +86,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new ConfigurationField
             {
-                Key = "preview",
-                Name = "Preview",
+                Key = Preview,
+                Name = nameof(Preview),
                 View = ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
             });
         }

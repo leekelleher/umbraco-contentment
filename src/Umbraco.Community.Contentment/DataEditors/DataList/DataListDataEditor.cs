@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
 #else
@@ -37,33 +38,35 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly ConfigurationEditorUtility _utility;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
+        private readonly ILocalizedTextService _localizedTextService;
 
 #if NET472
         public DataListDataEditor(
-            ConfigurationEditorUtility utility,
+            IIOHelper ioHelper,
+            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
+            ConfigurationEditorUtility utility)
         {
-            _utility = utility;
-            _shortStringHelper = shortStringHelper;
             _ioHelper = ioHelper;
+            _localizedTextService = localizedTextService;
+            _shortStringHelper = shortStringHelper;
+            _utility = utility;
         }
 #else
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
 
         public DataListDataEditor(
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
+            IIOHelper ioHelper,
             IJsonSerializer jsonSerializer,
-            ConfigurationEditorUtility utility,
-            IIOHelper ioHelper)
+            ConfigurationEditorUtility utility)
         {
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
+            _ioHelper = ioHelper;
             _jsonSerializer = jsonSerializer;
             _utility = utility;
-            _ioHelper = ioHelper;
         }
 #endif
         public string Alias => DataEditorAlias;
@@ -82,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility, _shortStringHelper, _ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_ioHelper, _localizedTextService, _shortStringHelper, _utility);
 
         public IDataValueEditor GetValueEditor()
         {

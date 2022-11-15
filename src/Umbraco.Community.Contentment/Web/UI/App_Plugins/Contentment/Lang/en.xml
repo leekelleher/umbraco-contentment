@@ -26,6 +26,8 @@
         <key alias="createContentTemplate">Create content template...</key>
 
         <!-- Data List -->
+        <key alias="labelDataSource">Data source</key>
+        <key alias="labelListEditor">List editor</key>
         <key alias="configureDataSource">Select and configure a data source</key>
         <key alias="configureListEditor">Select and configure a list editor</key>
         <key alias="configurePreviewInit">Please select and configure a data source and list editor.</key>
