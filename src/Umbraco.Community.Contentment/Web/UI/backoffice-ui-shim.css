@@ -28,6 +28,10 @@
     padding-top: 3px;
 }
 
+/* Block List Configuration Card, fixes dscription padding. */
+.contentment .umb-block-card .__info .__subname {
+    margin-right: 16px;
+}
 
 /* Copyright © 2020 Perplex Digital
  * Parts of this Source Code has been derived from Perplex.ContentBlocks.
