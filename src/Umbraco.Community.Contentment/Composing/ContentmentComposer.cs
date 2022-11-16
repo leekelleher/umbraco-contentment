@@ -30,8 +30,13 @@ namespace Umbraco.Community.Contentment.Composing
         public void Compose(Composition composition)
         {
             composition
-                .ContentmentListItems()
+                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
+            ;
+
+            composition
+                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
+                    .Add(() => composition.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
             ;
 
             composition.RegisterUnique<ConfigurationEditorUtility>();
@@ -69,6 +74,11 @@ namespace Umbraco.Community.Contentment.Composing
             builder
                 .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
+            ;
+
+            builder
+                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
+                    .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
             ;
 
             builder

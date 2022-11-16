@@ -88,6 +88,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Sources", "Data Source
 		..\docs\data-sources\data-source--timezone.md = ..\docs\data-sources\data-source--timezone.md
 		..\docs\data-sources\data-source--ucssclassname.md = ..\docs\data-sources\data-source--ucssclassname.md
 		..\docs\data-sources\data-source--umbraco-content-properties.md = ..\docs\data-sources\data-source--umbraco-content-properties.md
+		..\docs\data-sources\data-source--umbraco-content-property-values.md = ..\docs\data-sources\data-source--umbraco-content-property-values.md
 		..\docs\data-sources\data-source--umbraco-content-types.md = ..\docs\data-sources\data-source--umbraco-content-types.md
 		..\docs\data-sources\data-source--umbraco-content-xpath.md = ..\docs\data-sources\data-source--umbraco-content-xpath.md
 		..\docs\data-sources\data-source--umbraco-content.md = ..\docs\data-sources\data-source--umbraco-content.md
