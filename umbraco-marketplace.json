@@ -1,24 +1,57 @@
 {
-  "AuthorDetails": {
-    "Description": "#umbraco collaborator",
-    "Url": "https://leekelleher.com",
-    "ImageUrl": "https://github.com/leekelleher.png"
-  },
-  "Category": "Editor Tools",
-  "LicenseType": "Free",
-  "PackageType": "Package",
-  "PackagesByAuthor": [],
-  "RelatedPackages": [],
-  "Screenshots": [
-    {
-      "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-02.png",
-      "Caption": "Configuration Editor for Data List - available data sources"
-    }
-  ],
-  "Tags": [
-    "backoffice",
-    "property-editor"
-  ],
-  "Umbraco8PackageId": "Our.Umbraco.Community.Contentment",
-  "VideoUrl": "https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M"
+    "AddOnPackagesRequiredForUmbracoCloud": [],
+    "AlternatePackageNames": [
+        "Contentment"
+    ],
+    "AuthorDetails": {
+        "Description": "A long time Umbraco collaborator, 12x MVP",
+        "Url": "https://leekelleher.com/umbraco/",
+        "ImageUrl": "https://github.com/leekelleher.png",
+        "Contributors": []
+    },
+    "Category": "Editor Tools",
+    "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
+    "LicenseType": "Free",
+    "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
+    "IsSubPackageOf": "",
+    "PackageType": "Package",
+    "PackagesByAuthor": [],
+    "RelatedPackages": [],
+    "Screenshots": [{
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-02.png",
+            "Caption": "Configuration Editor for Data List - available data sources"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-04.png",
+            "Caption": "Configuration Editor for Data List - available list editors"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/code-editor--property-editor-01.png",
+            "Caption": "Code Editor property-editor"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/content-blocks--property-editor-05.png",
+            "Caption": "Content Blocks - content block action menu"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/editor-notes--configuration-editor.png",
+            "Caption": "Editor Notes - Configuration Editor"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--configuration-editor-01.png",
+            "Caption": "Social Links - Configuration Editor"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--configuration-editor-02.png",
+            "Caption": "Social Links - add social network configuration"
+        }, {
+            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--property-editor-02.png",
+            "Caption": "Social Links - edit social profile details"
+        }
+    ],
+    "Tags": [
+        "backoffice",
+        "property-editor"
+    ],
+    "Title": "Contentment",
+    "VersionSpecificPackageIds": [{
+            "UmbracoMajorVersion": 8,
+            "PackageId": "Our.Umbraco.Community.Contentment"
+        }
+    ],
+    "VideoUrl": "https://www.youtube.com/watch?v=wADPwnJrTfg&list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M&index=1"
 }
