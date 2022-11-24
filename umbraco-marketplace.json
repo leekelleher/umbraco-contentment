@@ -1,5 +1,5 @@
 {
-    "AddOnPackagesRequiredForUmbracoCloud": [],
+    "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
     "AlternatePackageNames": [
         "Contentment"
     ],
@@ -11,7 +11,7 @@
     },
     "Category": "Editor Tools",
     "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
-    "LicenseType": "Free",
+    "LicenseTypes": ["Free"],
     "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
     "IsSubPackageOf": "",
     "PackageType": "Package",
@@ -51,13 +51,13 @@
         "content blocks",
         "data list",
         "editor notes",
-        "editorial experience"
+        "editorial experience",
         "icon picker",
         "notes",
         "render macro",
         "property editor",
         "social links",
-        "templated label"
+        "templated label",
         "textbox list",
         "text input"
     ],
