@@ -33,14 +33,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
         }
 
+#if NET7_0
+        public object FromArtifact(IDataType dataType, string configuration, IContextCache contextCache)
+#else
         public object FromArtifact(IDataType dataType, string configuration)
+#endif
         {
             var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
 
             return dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
         }
 
+#if NET7_0
+        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
+#else
         public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
+#endif
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
                 config.TryGetValueAs(RenderMacroConfigurationEditor.Macro, out JArray array) == true &&
