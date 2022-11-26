@@ -36,7 +36,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             return CultureInfo
                 .GetCultures(CultureTypes.SpecificCultures)
+#if NET7_0_OR_GREATER
+                .Select(x => new RegionInfo(x.Name))
+#else
                 .Select(x => new RegionInfo(x.LCID))
+#endif
                 .DistinctBy(x => x.ISOCurrencySymbol)
                 .Where(x => x.ISOCurrencySymbol.Length == 3) // NOTE: Removes any odd currencies.
                 .OrderBy(x => x.CurrencyEnglishName)
