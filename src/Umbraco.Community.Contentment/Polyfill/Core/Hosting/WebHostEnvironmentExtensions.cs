@@ -13,7 +13,7 @@ using Umbraco.Cms.Web.Common.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Hosting
 {
-    internal static class WebHostEnvironmentExtensions
+    internal static partial class WebHostEnvironmentExtensions
     {
         public static string MapPathWebRoot(this IWebHostEnvironment webHostEnvironment, string path)
         {
