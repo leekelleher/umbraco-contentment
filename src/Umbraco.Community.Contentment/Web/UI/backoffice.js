@@ -31,6 +31,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Tree.Control
                     url: "https://github.com/leekelleher/umbraco-contentment/tree/master/docs"
                 },
                 {
+                    icon: "icon-fa fa-youtube",
+                    name: "Video demonstrations",
+                    description: "Demos, guides and tutorials on YouTube.",
+                    url: "https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M"
+                },
+                {
                     icon: "icon-fa fa-fw fa-comments-o",
                     name: "Support forum",
                     description: "Ask for help, the community is your friend.",
