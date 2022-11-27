@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<language alias="pt" intName="Portuguese (BR)" localName="Português (BR)" lcid="" culture="pt-BR">
+<language alias="pt" intName="Portuguese" localName="Português" lcid="" culture="pt">
     <creator>
         <name>Renan Domingues, Leonardo Bottaro</name>
         <link>https://github.com/RenanOD</link>
