@@ -113,6 +113,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.8.x", "Umbraco.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umbraco.Cms.10.x", "Umbraco.Cms.10.x\Umbraco.Cms.10.x.csproj", "{975B8A1E-4B37-4631-8175-96B9B9DC05AD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umbraco.Cms.11.x", "Umbraco.Cms.11.x\Umbraco.Cms.11.x.csproj", "{F6B67590-A9C2-477A-A972-7A8595C8E07D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{781DFB27-8B65-4D12-8107-62F1565D9AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{975B8A1E-4B37-4631-8175-96B9B9DC05AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{975B8A1E-4B37-4631-8175-96B9B9DC05AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B67590-A9C2-477A-A972-7A8595C8E07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B67590-A9C2-477A-A972-7A8595C8E07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6B67590-A9C2-477A-A972-7A8595C8E07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B67590-A9C2-477A-A972-7A8595C8E07D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
