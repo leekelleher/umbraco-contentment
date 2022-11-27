@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select items from a list rendered with custom markup.";
 
-        public string Icon => "icon-fa fa-code";
+        public string Icon => TemplatedLabelDataEditor.DataEditorIcon;
 
         public string Group => default;
 

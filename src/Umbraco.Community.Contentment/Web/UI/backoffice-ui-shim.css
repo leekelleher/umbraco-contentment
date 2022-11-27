@@ -23,11 +23,20 @@
     color: #1b264f;
 }
 
+/* Contentment dashboard, paragraph line height felt squished. */
+.contentment .umb-box-content p {
+    line-height: 1.5rem;
+}
+
 /* Block List Configuration Card, fixes icon position of action buttons. */
 .contentment .umb-block-card .__actions > button {
     padding-top: 3px;
 }
 
+/* Block List Configuration Card, fixes dscription padding. */
+.contentment .umb-block-card .__info .__subname {
+    margin-right: 16px;
+}
 
 /* Copyright © 2020 Perplex Digital
  * Parts of this Source Code has been derived from Perplex.ContentBlocks.

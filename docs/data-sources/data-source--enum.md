@@ -4,13 +4,6 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #142.
-> https://github.com/leekelleher/umbraco-contentment/issues/142
-
-
 #### .NET Enumeration
 
 Select an enumeration from a .NET assembly as the data source.
@@ -18,9 +11,14 @@ Select an enumeration from a .NET assembly as the data source.
 
 ##### How to configure the editor?
 
-_[TBC]_
+Select the desired enumeration, by selecting the containing .NET assembly, and then the enumeration type. You can opt to sort the values alphabetically in the data source too.
+
+![Configuration Editor for .NET Enumeration](data-source--enum.png)
+
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value returned from the List editor is the configured enumeration type.
+
+Depending on the `List editor` used, this may be wrapped in a `List<T>`.

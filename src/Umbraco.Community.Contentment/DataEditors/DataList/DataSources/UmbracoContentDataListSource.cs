@@ -74,45 +74,43 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var preview = true;
-            var parentNode = config.GetValueAs("parentNode", string.Empty);
-            var startNode = default(IPublishedContent);
-            var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
-
-            if (parentNode.InvariantStartsWith("umb://document/") == false)
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
-                var nodeContextId = _contentmentContentContext.GetCurrentContentId();
-                if (nodeContextId == -20)
+                var parentNode = config.GetValueAs("parentNode", string.Empty);
+                var preview = true;
+                var startNode = default(IPublishedContent);
+
+                if (parentNode.InvariantStartsWith("umb://document/") == false)
                 {
-                    // TODO: [UP-FOR-GRABS] If the ID = -20, then we can assume that it's come from Nested Content. What to do? ¯\_(ツ)_/¯
+                    var nodeContextId = _contentmentContentContext.GetCurrentContentId();
+
+                    IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                    bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
+
+                    var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
+
+                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                    {
+                        startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
+                    }
+                }
+                else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
+                {
+                    startNode = umbracoContext.Content.GetById(preview, udi.Guid);
                 }
 
-                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-                bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
-
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(parentNode, nodeContextId, getPath, publishedContentExists);
-
-                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                if (startNode != null)
                 {
-                    startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
+                    return startNode.Children.Select(x => new DataListItem
+                    {
+                        // TODO: [LK:2020-12-03] If multi-lingual is enabled, should the `.Name` take the culture into account?
+                        Name = x.Name,
+                        Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
+                        Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
+                        Description = x.TemplateId > 0 ? x.Url() : string.Empty,
+                        Disabled = x.IsPublished() == false,
+                    });
                 }
-            }
-            else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
-            {
-                startNode = umbracoContext.Content.GetById(preview, udi.Guid);
-            }
-
-            if (startNode != null)
-            {
-                return startNode.Children.Select(x => new DataListItem
-                {
-                    // TODO: [LK:2020-12-03] If multi-lingual is enabled, should the `.Name` take the culture into account?
-                    Name = x.Name,
-                    Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
-                    Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                    Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                    Disabled = x.IsPublished() == false,
-                });
             }
 
             return Enumerable.Empty<DataListItem>();

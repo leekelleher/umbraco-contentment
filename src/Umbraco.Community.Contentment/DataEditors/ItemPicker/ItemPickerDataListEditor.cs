@@ -40,12 +40,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
+            // TODO: [LK:2022-10-21] Add in "Display Mode" field.
+
             new ConfigurationField
             {
                 Key = "overlaySize",
                 Name = "Editor overlay size",
-                Description = "Select the size of the overlay editing panel. By default this is set to 'small'. However if the editor fields require a wider panel, please select 'medium' or 'large'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                Description = "Select the size of the overlay editing panel. The default is 'small', although if the editor fields require a wider panel, do consider using 'medium' or 'large'.",
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -55,15 +57,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "Large", Value = "large" }
                         }
                     },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" },
+                    { "labelStyle", "text" },
+                    { "size", "m" },
                 }
-            },
-            new ConfigurationField
-            {
-                Key = "defaultIcon",
-                Name = "Default icon",
-                Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
             new ConfigurationField
             {
@@ -75,12 +72,20 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
+                            //  // TODO: [LK:2022-10-21] Possibly a Cards UI?
                             new DataListItem { Name = "Grid", Value = "grid", Description = "Displays as a card based layout, (3 cards per row)." },
                             new DataListItem { Name = "List", Value = "list", Description = "Displays as a single column menu, (with descriptions, if available)." }
                         }
                     },
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
+            },
+            new ConfigurationField
+            {
+                Key = "defaultIcon",
+                Name = "Default icon",
+                Description = "Select an icon to be displayed as the default icon, <em>(for when no icon is available)</em>.",
+                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
             new EnableFilterConfigurationField
             {
@@ -135,7 +140,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return config.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
         }
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public string View => DataEditorViewPath;
     }

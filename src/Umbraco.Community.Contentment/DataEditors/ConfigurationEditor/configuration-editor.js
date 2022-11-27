@@ -102,7 +102,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowRemove = Object.toBoolean(config.allowRemove);
             vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
-            vm.displayMode = config.displayMode;
+            vm.displayMode = config.displayMode || "list";
 
             vm.sortableOptions = {
                 axis: "y",

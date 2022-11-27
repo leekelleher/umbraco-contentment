@@ -23,6 +23,10 @@
         color: #fff !important;
     }
 
+    .contentment.umb-readonlyvalue.editor-note h5 {
+        color: inherit;
+    }
+
 .umb-editor--infiniteMode .contentment.umb-readonlyvalue.editor-note .umb-icon {
     height: 32px;
     width: 32px;

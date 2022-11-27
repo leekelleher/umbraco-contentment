@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "alertType",
                 Name = "Alert type",
                 Description = string.Empty,
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/radio-button-list.html"),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "defaultValue", "alert alert-warning" },

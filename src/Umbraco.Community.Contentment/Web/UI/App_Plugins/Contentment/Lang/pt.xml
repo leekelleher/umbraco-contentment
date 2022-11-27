@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="pt" intName="Portuguese" localName="Português" lcid="" culture="pt">
+    <creator>
+        <name>Renan Domingues, Leonardo Bottaro</name>
+        <link>https://github.com/RenanOD</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+
+        <!-- General -->
+        <key alias="removeItemMessage">Tem certeza que deseja remover este item?</key>
+        <key alias="removeItemButton">Sim, remover</key>
+
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">Este item não está mais disponível</key>
+        <key alias="missingItemDescription">Por favor remova esta configuração e selecione outro item.</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Selecionar e configurar o modo de exibição</key>
+        <key alias="configureElementType">Selecionar e configurar o tipo de elemento</key>
+
+        <key alias="copyAllBlocks">Copiar todos os blocos</key>
+        <key alias="editRawValue">Alterar o valor original</key>
+
+        <key alias="copyContentBlock">Copiar o conteúdo do bloco</key>
+        <key alias="createContentTemplate">Criar modelo de conteúdo...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Selecionar e configurar uma origem de dados</key>
+        <key alias="configureListEditor">Selecionar e configurar um editor de lista</key>
+        <key alias="configurePreviewInit">Por favor selecione e configure uma origem de dados e um editor de lista.</key>
+        <key alias="configurePreviewDataSource">Por favor selecione e configure uma origem de dados.</key>
+        <key alias="configurePreviewListEditor">Por favor selecione e configure um editor de lista.</key>
+        <key alias="configurePreviewNoItems">A fonte de dados não retornou nenhum item para visualização.</key>
+
+        <key alias="checkboxListCheckAll">Marcar todos</key>
+        <key alias="checkboxListUncheckAll">Desmarcar todos</key>
+
+        <key alias="tagsType">Digite para selecionar um item...</key>
+    </area>
+</language>

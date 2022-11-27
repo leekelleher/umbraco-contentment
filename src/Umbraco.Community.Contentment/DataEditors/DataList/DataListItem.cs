@@ -9,9 +9,9 @@ using Newtonsoft.Json.Serialization;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [JsonObject(
-        ItemNullValueHandling = NullValueHandling.Ignore,
-        NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class DataListItem
+     ItemNullValueHandling = NullValueHandling.Ignore,
+     NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    public class DataListItem
     {
         public string Description { get; set; }
 
