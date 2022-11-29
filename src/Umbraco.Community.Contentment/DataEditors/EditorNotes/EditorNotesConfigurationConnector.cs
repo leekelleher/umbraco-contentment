@@ -44,11 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-#if NET7_0
-        public object FromArtifact(IDataType dataType, string configuration, IContextCache contextCache)
-#else
         public object FromArtifact(IDataType dataType, string configuration)
-#endif
         {
             var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
 
@@ -70,11 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-#if NET7_0
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
-#else
         public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-#endif
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
                 config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string notes) == true &&
