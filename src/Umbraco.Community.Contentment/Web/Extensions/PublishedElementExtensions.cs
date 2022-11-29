@@ -4,14 +4,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 #if NET472
+using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.ModelsBuilder.Embedded;
+using UmbConstants = Umbraco.Core.Constants;
 #else
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Infrastructure.ModelsBuilder;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 #if NET472
@@ -22,6 +27,26 @@ namespace Umbraco.Extensions
 {
     public static class PublishedElementExtensions
     {
+        private static readonly Dictionary<PublishedItemType, string> _entityTypeLookup = new Dictionary<PublishedItemType, string>
+        {
+            { PublishedItemType.Content, UmbConstants.UdiEntityType.Document },
+            { PublishedItemType.Element, UmbConstants.UdiEntityType.Element },
+            { PublishedItemType.Media, UmbConstants.UdiEntityType.Media },
+            { PublishedItemType.Member, UmbConstants.UdiEntityType.Member },
+            { PublishedItemType.Unknown, UmbConstants.UdiEntityType.Unknown },
+        };
+
+        public static Udi GetUdi<TModel>(this TModel model)
+             where TModel : IPublishedElement
+        {
+            if (model is IPublishedContent content && _entityTypeLookup.TryGetValue(content.ItemType, out var entityType) == true)
+            {
+                return new GuidUdi(entityType, content.Key);
+            }
+
+            return new GuidUdi(UmbConstants.UdiEntityType.Element, model.Key);
+        }
+
         // TODO: [LK] Raise bug with Umbraco. Noticed that `PublishedElementExtensions` and `PublishedContentExtensions` Value calls are different.
         // Unsure why, but the Content one fallback works, and the Element one does not.
         // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Core/Extensions/PublishedElementExtensions.cs#L166-L192
