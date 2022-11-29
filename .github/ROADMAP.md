@@ -100,15 +100,16 @@ Property Editors are:
 
 ### 4.2
 
-- Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources
+- Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources.
 
 ### 4.3
 
-- A non-breaking-change minor release. Adds support for Umbraco v11, .NET 7.0. _(Whilst still supporting v8.17+, v9.5+ and v10.0+)_
+- A non-breaking-change minor release. Adds support for Umbraco v11, .NET 7.0. _(Whilst still supporting v8.17+, v9.5+ and v10.0+)._
 
 ### 4.4
 
-- Data List: [Umbraco Content Property Value](#) data-source
+- Data List: [Umbraco Content Property Value](https://github.com/leekelleher/umbraco-contentment/pull/287) data-source.
+- Data List Item editor _(the one that is used in the User-defined data-source)._
 
 ### 4.5
 
