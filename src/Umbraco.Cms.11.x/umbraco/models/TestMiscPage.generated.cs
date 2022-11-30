@@ -50,6 +50,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Data List Items
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "11.0.0-rc5+dc1b10f")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("dataListItems")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem> DataListItems => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem>>(_publishedValueFallback, "dataListItems");
+
+		///<summary>
 		/// Icon Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "11.0.0-rc5+dc1b10f")]
