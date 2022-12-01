@@ -47,6 +47,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }
 
+            if (Array.isArray(config.overlaySize) === true) {
+                config.overlaySize = config.overlaySize[0];
+            }
+
             config.confirmRemoval = Object.toBoolean(config.confirmRemoval);
             config.enableMultiple = Object.toBoolean(config.enableMultiple) && config.maxItems !== 1;
 

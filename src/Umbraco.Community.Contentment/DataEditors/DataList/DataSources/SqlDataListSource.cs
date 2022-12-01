@@ -3,31 +3,51 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET472
 using System.Collections.Generic;
-#if NET6_0_OR_GREATER
-using Microsoft.Data.SqlClient;
-#else
-using System.Data.SqlClient;
-#endif
+using System.Configuration;
 using System.Data.Common;
-using System.IO;
+using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using System.Configuration;
-using System.Data.SqlServerCe;
 using Umbraco.Core;
-using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbConstants = Umbraco.Core.Constants;
-#else
+#elif NET5_0
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Configuration;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Scoping;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#elif NET6_0
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Infrastructure.Scoping;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#elif NET7_0
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
@@ -41,17 +61,19 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
 #if NET472 == false
         private readonly IConfiguration _configuration;
+        private readonly IScopeProvider _scopeProvider;
 #endif
 
         public SqlDataListSource(
             IWebHostEnvironment webHostEnvironment,
 #if NET472 == false
             IConfiguration configuration,
+            IScopeProvider scopeProvider,
 #endif
             IIOHelper ioHelper)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
-            _codeEditorMode = File.Exists(webHostEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
+            _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
                 ? "sqlserver"
                 : "razor";
 
@@ -65,15 +87,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
 #else
             _connectionStrings = configuration
-                .GetSection("ConnectionStrings")
-                .GetChildren()
-                .Select(x => new DataListItem
-                {
-                    Name = x.Key,
-                    Value = x.Key
-                });
+    .GetSection("ConnectionStrings")
+    .GetChildren()
+    .Select(x => new DataListItem
+    {
+        Name = x.Key,
+        Value = x.Key
+    });
 
             _configuration = configuration;
+            _scopeProvider = scopeProvider;
 #endif
             _ioHelper = ioHelper;
         }
@@ -134,7 +157,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
+            { "query", $"SELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n\r\n-- This is an example query that will select all the content nodes that are at level 1.\r\n;" },
             { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 
@@ -171,8 +194,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, settings.ConnectionString));
             }
-#else
-            // TODO: [v10] [LK:2022-04-06] Add support for querying SQLite database.
+#elif NET5_0
 
             // TODO: [v9] [LK:2021-05-07] Review SQLCE
             // NOTE: SQLCE uses a different connection/command. I'm trying to keep this as generic as possible, without resorting to using NPoco. [LK]
@@ -181,6 +203,36 @@ namespace Umbraco.Community.Contentment.DataEditors
             // But I don't want to add an assembly dependency (for SQLCE) to Contentment itself. I'd like to leverage Umbraco's code.
 
             items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
+#elif NET6_0_OR_GREATER
+            if (connectionStringName == UmbConstants.System.UmbracoConnectionName)
+            {
+                using (var scope = _scopeProvider.CreateScope())
+                {
+                    //new NPoco.PocoExpando().Values.ElementAtOrDefault(0);
+                    var results = scope.Database.Fetch<dynamic>(query);
+
+                    foreach (NPoco.PocoExpando result in results)
+                    {
+                        items.Add(new DataListItem
+                        {
+                            Name = result.Values.ElementAtOrDefault(0).TryConvertTo<string>().ResultOr(string.Empty),
+                            Value = result.Values.ElementAtOrDefault(1).TryConvertTo<string>().ResultOr(string.Empty),
+                            Description = result.Values.ElementAtOrDefault(2).TryConvertTo<string>().ResultOr(string.Empty),
+                            Icon = result.Values.ElementAtOrDefault(3).TryConvertTo<string>().ResultOr(string.Empty),
+                            Disabled = result.Values.ElementAtOrDefault(4).TryConvertTo<bool>().ResultOr(false),
+                        });
+                    }
+                }
+            }
+            else
+            {
+#if NET6_0
+                // TODO: [v10] [LK:2022-04-06] Add support for querying generic SQLite database.
+                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
+#elif NET7_0_OR_GREATER
+                // TODO: [v11] [LK:2022-11-26] Figure out how to do a generic SQL query, most likely now NPoco.
+#endif
+            }
 #endif
 
             return items;

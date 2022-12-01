@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net472;net5.0;net6.0;net7.0</TargetFrameworks>
     <Product>Umbraco.Community.Contentment</Product>
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
     <Description>Contentment, a collection of components for Umbraco.</Description>
     <PackageTags>umbraco umbraco-marketplace</PackageTags>
-    <Version>4.2.1</Version>
+    <Version>4.3.0</Version>
     <Company>Umbrella Inc Ltd</Company>
     <Authors>Lee Kelleher</Authors>
     <Copyright>2019 © Lee Kelleher</Copyright>
@@ -31,13 +31,18 @@
     <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
+  </ItemGroup>
+
   <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
     <ItemGroup>
       <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
     </ItemGroup>
   </Target>
 
-  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net6.0'">
+  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
     <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -ProjectDir $(ProjectDir)" />
   </Target>
 

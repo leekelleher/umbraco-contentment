@@ -1,71 +1,91 @@
 {
-    "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
-    "AlternatePackageNames": [
-        "Contentment"
-    ],
-    "AuthorDetails": {
-        "Description": "A long time Umbraco collaborator, 12x MVP",
-        "Url": "https://leekelleher.com/umbraco/",
-        "ImageUrl": "https://github.com/leekelleher.png",
-        "Contributors": []
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "AlternatePackageNames": [
+    "Contentment"
+  ],
+  "AuthorDetails": {
+    "Description": "A long time Umbraco collaborator, 12x MVP",
+    "Url": "https://leekelleher.com/umbraco/",
+    "ImageUrl": "https://github.com/leekelleher.png",
+    "Contributors": []
+  },
+  "Category": "Editor Tools",
+  "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
+  "LicenseTypes": [ "Free" ],
+  "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
+  "PackageType": "Package",
+  "PackagesByAuthor": [],
+  "RelatedPackages": [],
+  "Screenshots": [
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/data-list--configuration-editor-02.png",
+      "Caption": "Configuration Editor for Data List - available data sources"
     },
-    "Category": "Editor Tools",
-    "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
-    "LicenseTypes": ["Free"],
-    "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
-    "IsSubPackageOf": "",
-    "PackageType": "Package",
-    "PackagesByAuthor": [],
-    "RelatedPackages": [],
-    "Screenshots": [{
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-02.png",
-            "Caption": "Configuration Editor for Data List - available data sources"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/raw/develop/docs/editors/data-list--configuration-editor-04.png",
-            "Caption": "Configuration Editor for Data List - available list editors"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/code-editor--property-editor-01.png",
-            "Caption": "Code Editor property-editor"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/content-blocks--property-editor-05.png",
-            "Caption": "Content Blocks - content block action menu"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/editor-notes--configuration-editor.png",
-            "Caption": "Editor Notes - Configuration Editor"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--configuration-editor-01.png",
-            "Caption": "Social Links - Configuration Editor"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--configuration-editor-02.png",
-            "Caption": "Social Links - add social network configuration"
-        }, {
-            "ImageUrl": "https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links--property-editor-02.png",
-            "Caption": "Social Links - edit social profile details"
-        }
-    ],
-    "Tags": [
-        "backoffice",
-        "block editor",
-        "bytes",
-        "code editor",
-        "content blocks",
-        "data list",
-        "editor notes",
-        "editorial experience",
-        "icon picker",
-        "notes",
-        "render macro",
-        "property editor",
-        "social links",
-        "templated label",
-        "textbox list",
-        "text input"
-    ],
-    "Title": "Contentment",
-    "VersionSpecificPackageIds": [{
-            "UmbracoMajorVersion": 8,
-            "PackageId": "Our.Umbraco.Community.Contentment"
-        }
-    ],
-    "VideoUrl": "https://www.youtube.com/watch?v=wADPwnJrTfg&list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M&index=1"
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/data-list--configuration-editor-04.png",
+      "Caption": "Configuration Editor for Data List - available list editors"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/code-editor--property-editor-01.png",
+      "Caption": "Code Editor property-editor"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/content-blocks--property-editor-05.png",
+      "Caption": "Content Blocks - content block action menu"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/editor-notes--configuration-editor.png",
+      "Caption": "Editor Notes - Configuration Editor"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/social-links--configuration-editor-01.png",
+      "Caption": "Social Links - Configuration Editor"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/social-links--configuration-editor-02.png",
+      "Caption": "Social Links - add social network configuration"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/develop/docs/editors/social-links--property-editor-02.png",
+      "Caption": "Social Links - edit social profile details"
+    }
+  ],
+  "Tags": [
+    "backoffice",
+    "block editor",
+    "bytes",
+    "code editor",
+    "content blocks",
+    "data list",
+    "editor notes",
+    "editorial experience",
+    "icon picker",
+    "notes",
+    "render macro",
+    "property editor",
+    "social links",
+    "templated label",
+    "textbox list",
+    "text input"
+  ],
+  "Title": "Contentment",
+  "VersionSpecificPackageIds": [
+    {
+      "UmbracoMajorVersion": 8,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 9,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 10,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 11,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    }
+  ],
+  "VideoUrl": "https://www.youtube.com/embed/alhbwyQkU1E"
 }

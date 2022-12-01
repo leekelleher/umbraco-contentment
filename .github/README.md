@@ -49,18 +49,20 @@ Downloads are available on the [releases page](https://github.com/leekelleher/um
 
 _**Please note...**_
 
-- v4.x has been developed against **Umbraco v8.17.0** (on .NET 4.7), **Umbraco v9.5.0** (on .NET 5.0 only) and **Umbraco v10.0.0** (on .NET 6.0), it will support those versions and above.
-- v3.x has been developed against **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
-- v2.x has been developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
-- v1.x has been developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
+- v4.x supports **Umbraco v8.17** (on .NET 4.7), **Umbraco v9.5** (on .NET 5.0 only), **Umbraco v10.0** (on .NET 6.0) and  **Umbraco v11.0** (on .NET 7.0), it will support those versions and above.
+- v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
+- v2.x was developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
+- v1.x was developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
 
 With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
 
 ##### NuGet package repository
 
-To [install from NuGet](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment), you can run the following command from the `dotnet` CLI:
+To [install from NuGet](https://www.nuget.org/packages/Umbraco.Community.Contentment), you can run the following command from the `dotnet` CLI:
 
-    dotnet add package Our.Umbraco.Community.Contentment
+    dotnet add package Umbraco.Community.Contentment
+
+> Please note, that the [`Umbraco.Community.Contentment`](https://www.nuget.org/packages/Umbraco.Community.Contentment) NuGet package is a placeholder package for future releases, it contains a dependency on two other packages, [`Our.Umbraco.Community.Contentment`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment) _(containing the web assets)_, and [`Our.Umbraco.Community.Contentment.Core`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment.Core/) _(containing the assembly code libraries)_.
 
 ##### Our Umbraco package repository
 
@@ -94,7 +96,7 @@ _Let's call those "life's little surprises"._
   - With Umbraco v10 (Contentment v4), SQL data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
 
 
-### Roadmap
+### [Roadmap](ROADMAP.md)
 
 If you would like to know what is coming up in future releases, then take a look at the [roadmap](ROADMAP.md).
 
@@ -108,7 +110,7 @@ I reserve the right to address bug reports or feature requests in my own time, o
 **Any feedback is welcome and appreciated.** But please keep in mind, I am not your personal support developer.
 
 If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it. 
-Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), I am sure someone can help you there.
+Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or the [Community Discord Channel](https://community.umbraco.com/get-involved/community-discord-channel/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
@@ -150,7 +152,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1,453+ hours</b> (between 2019-03-13 to 2022-09-26)</summary>
+<summary>Current development effort: <b>1,493+ hours</b> (between 2019-03-13 to 2022-11-27)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

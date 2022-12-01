@@ -1,0 +1,28 @@
+﻿@inherits UmbracoViewPage<TestMiscPage>
+@{
+    Layout = "_layout.cshtml";
+}
+
+@section body
+{
+    <h1>@Model.Name</h1>
+
+    <h3>Testing <code>ValueOrDefault()</code></h3>
+    <p><code>Implied: @Model.ValueOrDefault("fakeAlias", defaultValue: "fallback value")</code></p>
+    <p><code>Content: @(((IPublishedContent)Model).ValueOrDefault("fakeAlias", defaultValue: "fallback value"))</code></p>
+    <p><code>Element: @(((IPublishedElement)Model).ValueOrDefault("fakeAlias", defaultValue: "fallback value"))</code></p>
+
+    <p><code>Implied: @Model.Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value")</code></p>
+    <p><code>Content: @(((IPublishedContent)Model).Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value"))</code></p>
+    <p><code>Element: @(((IPublishedElement)Model).Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value"))</code></p>
+
+    <h3>@nameof(Model.Properties)</h3>
+    @foreach (var property in Model.Properties)
+    {
+        <div>
+            <h4>@property.Alias</h4>
+            <div><code>@property.PropertyType.ClrType</code></div>
+            <pre><code>@property.GetSourceValue()</code></pre>
+        </div>
+    }
+}

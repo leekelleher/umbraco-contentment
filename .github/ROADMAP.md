@@ -100,18 +100,25 @@ Property Editors are:
 
 ### 4.2
 
-- Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources
+- Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources.
+
+### 4.3
+
+- A non-breaking-change minor release. Adds support for Umbraco v11, .NET 7.0. _(Whilst still supporting v8.17+, v9.5+ and v10.0+)._
+
+### 4.4
+
+- Data List: [Umbraco Content Property Value](https://github.com/leekelleher/umbraco-contentment/pull/287) data-source.
+- Data List Item editor _(the one that is used in the User-defined data-source)._
+
+### 4.5
+
+- [Data Picker](#)
 
 
 ## v5
 
-### v5.0
-
-- A breaking-change release _(following SemVer guidelines),_ dropping support for Umbraco v8 and v9, to only compile against Umbraco v10.0.0. This would have the same features as v4.x.
-
-### v5.1
-
-- `(⌐■_■)` _I haven't decided yet._
+- `(⌐■_■)` _I was going to drop support for v8 and v9, but with v13 (new backoffice on the horizon), I might save my development efforts._
 
 
 ## Future feature releases
