@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Community.Contentment.Web.Serialization;
+using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.Controllers
 {
