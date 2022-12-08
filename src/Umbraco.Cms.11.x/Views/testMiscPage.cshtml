@@ -12,6 +12,7 @@
     <p><code>Content: @(((IPublishedContent)Model).ValueOrDefault("fakeAlias", defaultValue: "fallback value"))</code></p>
     <p><code>Element: @(((IPublishedElement)Model).ValueOrDefault("fakeAlias", defaultValue: "fallback value"))</code></p>
 
+    <h3>Testing <code>Value()</code></h3>
     <p><code>Implied: @Model.Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value")</code></p>
     <p><code>Content: @(((IPublishedContent)Model).Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value"))</code></p>
     <p><code>Element: @(((IPublishedElement)Model).Value("fakeAlias", null, null, Fallback.ToDefaultValue, "fallback value"))</code></p>

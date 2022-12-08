@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorListEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(ListItemsDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { "confirmRemoval", Constants.Values.True },

@@ -52,6 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editors", "Editors", "{A529
 		..\docs\editors\editor-notes.md = ..\docs\editors\editor-notes.md
 		..\docs\editors\icon-picker.md = ..\docs\editors\icon-picker.md
 		..\docs\editors\notes.md = ..\docs\editors\notes.md
+		..\docs\editors\list-items.md = ..\docs\editors\list-items.md
 		..\docs\editors\number-input.md = ..\docs\editors\number-input.md
 		..\docs\editors\render-macro.md = ..\docs\editors\render-macro.md
 		..\docs\editors\social-links.md = ..\docs\editors\social-links.md
