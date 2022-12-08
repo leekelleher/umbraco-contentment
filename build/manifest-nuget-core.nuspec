@@ -1,6 +1,6 @@
 <package>
   <metadata>
-    <id>$id$.Core</id>
+    <id>Our.$id$.Core</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$authors$</authors>
@@ -39,6 +39,6 @@
     <file src="net6.0\*.dll" target="lib\net6.0" />
     <file src="net7.0\*.dll" target="lib\net7.0" />
     <file src="icon.png" target="" />
-    <file src="README.md" target="" />
+    <file src="README_CORE.md" target="README.md" />
   </files>
 </package>

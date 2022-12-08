@@ -12,7 +12,7 @@
 
             <umb-icon icon="icon-navigation" class="lk-data-list-item__handle" aria-label="Sort"></umb-icon>
 
-            <div class="lk-data-list-item__icon">
+            <div class="lk-data-list-item__icon" ng-if="!vm.hideIcon">
                 <button type="button" ng-click="vm.open(item)" umb-auto-focus>
                     <umb-icon icon="{{item.icon}}" class="icon"></umb-icon>
                 </button>
@@ -23,7 +23,7 @@
                     <input type="text" ng-model="item.name" placeholder="Enter a name" class="-full-width-input mr1" focus-when="{{ vm.focusName }}" ng-blur="vm.blur(item)" />
                     <input type="text" ng-model="item.value" placeholder="Enter a value" class="-full-width-input" />
                 </div>
-                <div>
+                <div ng-if="!vm.hideDescription">
                     <input type="text" ng-model="item.description" placeholder="Enter a description" class="-full-width-input mt1" />
                 </div>
             </div>
