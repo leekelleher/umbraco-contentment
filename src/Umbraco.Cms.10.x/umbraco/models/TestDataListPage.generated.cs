@@ -161,6 +161,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string DataListUmbracoContentProperties => this.Value<string>(_publishedValueFallback, "dataListUmbracoContentProperties");
 
 		///<summary>
+		/// Data List Umbraco Content Property Value
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("dataListUmbracoContentPropertyValue")]
+		public virtual string DataListUmbracoContentPropertyValue => this.Value<string>(_publishedValueFallback, "dataListUmbracoContentPropertyValue");
+
+		///<summary>
 		/// Data List Umbraco Content Types
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]

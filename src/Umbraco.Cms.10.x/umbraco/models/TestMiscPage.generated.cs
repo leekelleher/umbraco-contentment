@@ -66,6 +66,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string IconPicker => this.Value<string>(_publishedValueFallback, "iconPicker");
 
 		///<summary>
+		/// Options for Data List
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("optionsForDataList")]
+		public virtual global::System.Collections.Generic.IEnumerable<string> OptionsForDataList => this.Value<global::System.Collections.Generic.IEnumerable<string>>(_publishedValueFallback, "optionsForDataList");
+
+		///<summary>
 		/// Social Links
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
