@@ -114,11 +114,12 @@ Property Editors are:
 ### 4.5
 
 - [Data Picker](#)
+- [Content Blocks](../docs/editors/content-blocks.md) ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
 
 
 ## v5
 
-- `(⌐■_■)` _I was going to drop support for v8 and v9, but with v13 (new backoffice on the horizon), I might save my development efforts._
+- `(⌐■_■)` _I'm parking the idea of a v5! Originally, my plans was for v5 to drop support for v8 and v9, focusing on v10+, but with v13 (new backoffice) on the horizon, I might save my development efforts._
 
 
 ## Future feature releases
