@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksConfigurationEditor : ConfigurationEditor
     {
-        // TODO: expire the local cache `_elementTypes` when a new element type is added. [LK:2021-08-16]
+        // TODO: [LK:2021-08-16] expire the local cache `_elementTypes` when a new element type is added.
         private readonly Dictionary<Guid, IContentType> _elementTypes;
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
         private readonly IIOHelper _ioHelper;
