@@ -20,7 +20,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 {
 	/// <summary>Content Page</summary>
 	[PublishedModel("contentPage")]
-	public partial class ContentPage : PublishedContentModel, IPageBlocksProperty, IPageModulesProperty, IPageNavigationUrlNameProperty, IPageNavigationVisibilityProperty
+	public partial class ContentPage : PublishedContentModel, IPageBlocksProperty, IPageImageProperty, IPageModulesProperty, IPageNavigationUrlNameProperty, IPageNavigationVisibilityProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -56,6 +56,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("pageBlocks")]
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedElement> PageBlocks => global::Umbraco.Cms.Web.Common.PublishedModels.PageBlocksProperty.GetPageBlocks(this, _publishedValueFallback);
+
+		///<summary>
+		/// Image
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("image")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent Image => global::Umbraco.Cms.Web.Common.PublishedModels.PageImageProperty.GetImage(this, _publishedValueFallback);
 
 		///<summary>
 		/// Page modules: Configure modules that are specific to this page.

@@ -1,0 +1,16 @@
+<div class="contentment umb-block-list-block-configuration umb-property-editor--limit-width2" ng-controller="Umbraco.Community.Contentment.DataEditors.DataPicker.Controller as vm">
+    <umb-load-indicator ng-if="vm.loading === true"></umb-load-indicator>
+    <contentment-items-editor ng-if="vm.loading === false"
+                              ng-model="model.value"
+                              add-button-label-key="vm.addButtonLabelKey"
+                              allow-add="vm.allowAdd"
+                              allow-remove="vm.allowRemove"
+                              allow-sort="vm.allowSort"
+                              default-icon="vm.defaultIcon"
+                              display-mode="vm.displayMode"
+                              get-item="vm.populate"
+                              on-add="vm.add"
+                              on-remove="vm.remove"
+                              property-actions="vm.propertyActions">
+    </contentment-items-editor>
+</div>

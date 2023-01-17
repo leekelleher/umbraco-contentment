@@ -28,6 +28,11 @@
     line-height: 1.5rem;
 }
 
+/* Block List Configuration Card, adds fade to appear disabled/unpublished. */
+.contentment .umb-block-card.__fade {
+    opacity: 0.5;
+}
+
 /* Block List Configuration Card, fixes icon position of action buttons. */
 .contentment .umb-block-card .__actions > button {
     padding-top: 3px;

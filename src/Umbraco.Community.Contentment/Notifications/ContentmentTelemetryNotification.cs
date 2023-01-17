@@ -92,6 +92,11 @@ namespace Umbraco.Community.Contentment.Notifications
                                     AddConfigurationEditorKey(DataListConfigurationEditor.ListEditor);
                                     break;
 
+                                case DataPickerDataEditor.DataEditorAlias:
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DisplayMode);
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DataSource);
+                                    break;
+
                                 case ContentBlocksDataEditor.DataEditorAlias:
                                     AddConfigurationEditorKey(ContentBlocksConfigurationEditor.DisplayMode);
                                     break;

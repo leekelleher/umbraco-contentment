@@ -83,6 +83,8 @@ namespace Umbraco.Community.Contentment.Composing
 
             builder
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
+                .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
+                .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
                 .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()

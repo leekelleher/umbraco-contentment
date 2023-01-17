@@ -99,6 +99,11 @@ namespace Umbraco.Community.Contentment.Telemetry
                                     AddConfigurationEditorKey(DataListConfigurationEditor.ListEditor);
                                     break;
 
+                                case DataPickerDataEditor.DataEditorAlias:
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DisplayMode);
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DataSource);
+                                    break;
+
                                 case ContentBlocksDataEditor.DataEditorAlias:
                                     AddConfigurationEditorKey(ContentBlocksConfigurationEditor.DisplayMode);
                                     break;

@@ -13,6 +13,18 @@ namespace Umbraco.Extensions
 {
     internal static class DictionaryExtensions
     {
+        internal static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+        {
+            if (dictionary.ContainsKey(key) == false)
+            {
+                dictionary.Add(key, value);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public static TValueOut GetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, TValueOut defaultValue = default)
         {
             if (config.TryGetValue(key, out var tmp) == true)

@@ -58,6 +58,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem> DataListItems => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem>>(_publishedValueFallback, "dataListItems");
 
 		///<summary>
+		/// Data Picker - Umbraco Content
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("dataPickerUmbracoContent")]
+		public virtual global::System.Collections.Generic.List<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> DataPickerUmbracoContent => this.Value<global::System.Collections.Generic.List<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>(_publishedValueFallback, "dataPickerUmbracoContent");
+
+		///<summary>
 		/// Icon Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
