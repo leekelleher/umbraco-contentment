@@ -114,6 +114,9 @@ Property Editors are:
 ### 4.5
 
 - [Data Picker](#)
+
+### 4.6
+
 - [Content Blocks](../docs/editors/content-blocks.md) ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
 
 
