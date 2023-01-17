@@ -45,6 +45,13 @@ namespace Umbraco.Web.PublishedModels
 		// properties
 
 		///<summary>
+		/// Data Picker - Umbraco Content
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerUmbracoContent")]
+		public virtual global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent> DataPickerUmbracoContent => this.Value<global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent>>("dataPickerUmbracoContent");
+
+		///<summary>
 		/// Icon Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
