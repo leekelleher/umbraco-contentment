@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Community.Contentment.Services;
+using System.Threading.Tasks;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -75,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataPickerItem> GetItems(Dictionary<string, object> config, IEnumerable<string> values)
+        public Task<IEnumerable<DataPickerItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
         {
             if (values?.Any() == true &&
                 _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
@@ -84,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", "image");
 
-                return values
+                return Task.FromResult(values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x))
@@ -96,13 +97,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Icon = x.ContentType.GetIcon(_contentTypeService),
                         Image = x.Value<IPublishedContent>(imageAlias)?.Url(),
                         Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                    });
+                    }));
             }
 
-            return Enumerable.Empty<DataPickerItem>();
+            return Task.FromResult(Enumerable.Empty<DataPickerItem>());
         }
 
-        public IEnumerable<DataPickerItem> Search(Dictionary<string, object> config, out int totalPages, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<IEnumerable<DataPickerItem>> SearchAsync(Dictionary<string, object> config, out int totalPages, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             totalPages = -1;
 
@@ -146,19 +147,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                         var offset = (pageNumber - 1) * pageSize;
 
-                        return items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
+                        return Task.FromResult(items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
                         {
                             Name = x.Name,
                             Value = x.GetUdi().ToString(),
                             Icon = x.ContentType.GetIcon(_contentTypeService),
                             Image = x.Value<IPublishedContent>(imageAlias)?.Url(),
                             Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                        });
+                        }));
                     }
                 }
             }
 
-            return Enumerable.Empty<DataPickerItem>();
+            return Task.FromResult(Enumerable.Empty<DataPickerItem>());
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);

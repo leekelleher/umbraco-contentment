@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 #if NET472
 using System.Web.Http;
 using Umbraco.Core;
@@ -47,17 +48,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpPost]
 #if NET472
-        public HttpResponseMessage GetItems(Guid dataTypeKey, [FromBody] string[] values)
+        public async Task<HttpResponseMessage> GetItems(Guid dataTypeKey, [FromBody] string[] values)
 #else
-        public IActionResult GetItems(Guid dataTypeKey, [FromBody] string[] values)
+        public async Task<IActionResult> GetItems(Guid dataTypeKey, [FromBody] string[] values)
 #endif
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
+                var result = (await cached.Item1.GetItemsAsync(cached.Item2, values)).ToDictionary(x => x.Value);
 #if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, cached.Item1.GetItems(cached.Item2, values).ToDictionary(x => x.Value));
+                return Request.CreateResponse(HttpStatusCode.OK, result);
 #else
-                return Ok(cached.Item1.GetItems(cached.Item2, values).ToDictionary(x => x.Value));
+                return Ok(result);
 #endif
             }
             else if (_dataTypeService.GetDataType(dataTypeKey) is IDataType dataType &&
@@ -78,11 +80,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
 
                     _lookup.TryAdd(dataTypeKey, (source1, config1));
-
+                    var result = (await source1.GetItemsAsync(config1, values)).ToDictionary(x => x.Value);
 #if NET472
-                    return Request.CreateResponse(HttpStatusCode.OK, source1.GetItems(config1, values).ToDictionary(x => x.Value));
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
 #else
-                    return Ok(source1.GetItems(config1, values).ToDictionary(x => x.Value));
+                    return Ok(result);
 #endif
                 }
             }
@@ -96,16 +98,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpGet]
 #if NET472
-        public HttpResponseMessage Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+        public async Task<HttpResponseMessage> Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 #else
-        public IActionResult Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+        public async Task<IActionResult> Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 #endif
         {
             var totalPages = -1;
 
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
-                var items = cached.Item1.Search(cached.Item2, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                var items = await cached.Item1.SearchAsync(cached.Item2, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
 #if NET472
                 return Request.CreateResponse(HttpStatusCode.OK, new { items, totalPages });
@@ -132,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                    var items = source1?.Search(config1, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                    var items = await source1?.SearchAsync(config1, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 #if NET472
                     return Request.CreateResponse(HttpStatusCode.OK, new { items, totalPages });
 #else
