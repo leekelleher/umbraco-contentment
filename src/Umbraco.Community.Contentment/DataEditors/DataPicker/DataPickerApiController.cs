@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
-                var result = (await cached.Item1.GetItemsAsync(cached.Item2, values)).ToDictionary(x => x.Value);
+                var result = (await cached.Item1.GetItemsAsync(cached.Item2, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value);
 #if NET472
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 #else
@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
 
                     _lookup.TryAdd(dataTypeKey, (source1, config1));
-                    var result = (await source1.GetItemsAsync(config1, values)).ToDictionary(x => x.Value);
+                    var result = (await source1.GetItemsAsync(config1, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value);
 #if NET472
                     return Request.CreateResponse(HttpStatusCode.OK, result);
 #else
