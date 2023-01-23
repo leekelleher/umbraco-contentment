@@ -63,6 +63,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.populate = populate;
             vm.remove = remove;
 
+            vm.uniqueId = $scope.model.hasOwnProperty("dataTypeKey")
+                ? [$scope.model.alias, $scope.model.dataTypeKey.substring(0, 8)].join("-")
+                : $scope.model.alias;
+
             vm.propertyActions = [];
 
             if (Object.toBoolean(config.enableDevMode)) {

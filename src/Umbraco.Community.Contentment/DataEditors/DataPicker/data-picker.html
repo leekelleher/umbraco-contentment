@@ -1,4 +1,4 @@
-<div class="contentment umb-block-list-block-configuration umb-property-editor--limit-width2" ng-controller="Umbraco.Community.Contentment.DataEditors.DataPicker.Controller as vm">
+<div class="contentment umb-block-list-block-configuration" ng-class="vm.uniqueId" ng-controller="Umbraco.Community.Contentment.DataEditors.DataPicker.Controller as vm">
     <umb-load-indicator ng-if="vm.loading === true"></umb-load-indicator>
     <contentment-items-editor ng-if="vm.loading === false"
                               ng-model="model.value"
