@@ -28,10 +28,27 @@
     line-height: 1.5rem;
 }
 
-/* Block List Configuration Card, adds fade to appear disabled/unpublished. */
-.contentment .umb-block-card.__fade {
-    opacity: 0.5;
+/* Block List Configuration Card - Tweaks */
+.contentment .umb-block-card {
 }
+
+    .contentment .umb-block-card .__showcase {
+        background-color: rgba(0, 0, 0, 0.25);
+        background-size: cover;
+    }
+
+    .contentment .umb-block-card .__info .__name,
+    .contentment .umb-block-card .__info .__subname {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 10px;
+    }
+
+    /* Block List Configuration Card, adds fade to appear disabled/unpublished. */
+    .contentment .umb-block-card.__fade {
+        opacity: 0.5;
+    }
 
 /* Block List Configuration Card - Tweaks */
 .contentment .umb-block-card {
