@@ -42,8 +42,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>(shortStringHelper));
 
+            var defaultOverlaySize = "medium";
+
             DefaultConfiguration.Add(DisplayMode, "cards");
             DefaultConfiguration.Add("maxItems", 0);
+            DefaultConfiguration.Add("overlaySize", defaultOverlaySize);
             DefaultConfiguration.Add("pageSize", 12);
 
             Fields.Add(new ConfigurationField
@@ -87,6 +90,27 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Maximum items",
                 Description = "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
                 View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/number-input.html")
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "overlaySize",
+                Name = "Editor overlay size",
+                Description = $"Select the size of the overlay panel. The default is '{defaultOverlaySize}'.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Small", Value = "small" },
+                            new DataListItem { Name = "Medium", Value = "medium" },
+                            new DataListItem { Name = "Large", Value = "large" }
+                        }
+                    },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultOverlaySize },
+                    { "labelStyle", "text" },
+                    { "size", "m" },
+                }
             });
 
             Fields.Add(new ConfigurationField

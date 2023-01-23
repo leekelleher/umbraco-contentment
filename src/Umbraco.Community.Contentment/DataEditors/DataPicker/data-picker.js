@@ -21,6 +21,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             displayMode: "cards",
             enableDevMode: 0,
             maxItems: 0,
+            overlaySize: "medium",
             overlayView: "",
             pageSize: 12,
         };
@@ -38,6 +39,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             if (Number.isInteger(config.maxItems) === false) {
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
+            }
+
+            if (Array.isArray(config.overlaySize) === true) {
+                config.overlaySize = config.overlaySize[0];
             }
 
             vm.itemLookup = {};
@@ -81,7 +86,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function add() {
             editorService.open({
                 view: config.overlayView,
-                size: "medium",
+                size: config.overlaySize || "medium",
                 config: {
                     dataTypeKey: $scope.model.dataTypeKey,
                     enableMultiple: config.maxItems !== 1,
