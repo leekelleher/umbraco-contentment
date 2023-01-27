@@ -72,8 +72,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            //  // TODO: [LK:2022-10-21] Possibly a Cards UI?
-                            new DataListItem { Name = "Grid", Value = "grid", Description = "Displays as a card based layout, (3 cards per row)." },
+                            new DataListItem { Name = "Cards", Value = "cards", Description = "Displays as a card based layout." },
+                            new DataListItem { Name = "Grid", Value = "grid", Description = "Displays as a grid item based layout." },
                             new DataListItem { Name = "List", Value = "list", Description = "Displays as a single column menu, (with descriptions, if available)." }
                         }
                     },
