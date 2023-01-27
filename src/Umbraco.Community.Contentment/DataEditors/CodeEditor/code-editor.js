@@ -7,7 +7,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$scope",
     function ($scope) {
 
-        //console.log("code-editor.model", $scope.model);
+        // console.log("code-editor.model", $scope.model);
 
         var defaultConfig = {
             showGutter: 1,
@@ -33,6 +33,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var vm = this;
 
         function init() {
+
+            vm.cssClasses = !$scope.model.labelOnTop ? ["umb-property-editor--limit-width"] : [];
 
             vm.readonly = Object.toBoolean(config.readonly);
 

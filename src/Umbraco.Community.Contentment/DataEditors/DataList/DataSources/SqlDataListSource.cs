@@ -113,8 +113,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            // TODO: [LK:2021-09-20] Add a note on v9 edition to inform the user about the lack of SQLCE support + a plea for help.
-
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
@@ -227,10 +225,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             else
             {
 #if NET6_0
-                // TODO: [v10] [LK:2022-04-06] Add support for querying generic SQLite database.
+                // TODO: [LK:2022-04-06] [v10] Add support for querying generic SQLite database.
                 items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
 #elif NET7_0_OR_GREATER
-                // TODO: [v11] [LK:2022-11-26] Figure out how to do a generic SQL query, most likely now NPoco.
+                // TODO: [LK:2022-11-26] [v11] Figure out how to do a generic SQL query, most likely now NPoco.
 #endif
             }
 #endif

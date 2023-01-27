@@ -3,6 +3,7 @@ using System.Linq;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Extensions;
 using Umbraco.Web;
 
 namespace Umbraco.Cms.v11_x.DataSources

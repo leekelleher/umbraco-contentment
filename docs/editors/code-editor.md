@@ -6,6 +6,8 @@
 
 Code Editor is a property-editor that is used to enter code snippets (as content), makes use of [AWS Cloud 9's Ace editor](https://ace.c9.io/) library that is distributed with Umbraco.
 
+This is useful if you would like to embed a snippet of HTML or JavaScript on a content page, or have a full HTML property-editor.
+
 
 ### How to configure the editor?
 
