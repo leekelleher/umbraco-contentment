@@ -98,24 +98,24 @@ Property Editors are:
 
 - [Social Links](https://github.com/leekelleher/umbraco-contentment/pull/234)
 
-### 4.2
+### v4.2
 
 - Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources.
 
-### 4.3
+### v4.3
 
 - A non-breaking-change minor release. Adds support for Umbraco v11, .NET 7.0. _(Whilst still supporting v8.17+, v9.5+ and v10.0+)._
 
-### 4.4
+### v4.4
 
 - Data List: [Umbraco Content Property Value](https://github.com/leekelleher/umbraco-contentment/pull/287) data-source.
 - Data List Item editor _(the one that is used in the User-defined data-source)._
 
-### 4.5
+### v4.5
 
-- [Data Picker](#)
+- [Data Picker](https://github.com/leekelleher/umbraco-contentment/pull/297)
 
-### 4.6
+### v4.6
 
 - [Content Blocks](../docs/editors/content-blocks.md) ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
 
