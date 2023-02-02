@@ -136,9 +136,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     var results = await source1?.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 #if NET472
-                    return Request.CreateResponse(HttpStatusCode.OK, new { items, totalPages });
+                    return Request.CreateResponse(HttpStatusCode.OK, new { results.Items, results.TotalPages });
 #else
-                    return Ok(new { items, totalPages });
+                    return Ok(new { results.Items, results.TotalPages });
 #endif
                 }
             }
