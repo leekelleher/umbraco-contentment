@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public class DatapickerSearchResults 
+    public class DataPickerSearchResults 
     {
         public int TotalPages { get; set; } = -1;
 

@@ -103,9 +103,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataPickerItem>());
         }
 
-        public Task<DatapickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<DataPickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
-            DatapickerSearchResults datapickerSearchResults = new DatapickerSearchResults()
+            DataPickerSearchResults datapickerSearchResults = new DataPickerSearchResults()
             {
                 TotalPages = -1
             };

@@ -13,6 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         Task<IEnumerable<DataPickerItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values);
 
-        Task<DatapickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
+        Task<DataPickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
     }
 }
