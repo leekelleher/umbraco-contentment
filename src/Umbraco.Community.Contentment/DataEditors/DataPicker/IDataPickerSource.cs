@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Umbraco.Community.Contentment.DataEditors.DataPicker;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -12,6 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         Task<IEnumerable<DataPickerItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values);
 
-        Task<IEnumerable<DataPickerItem>> SearchAsync(Dictionary<string, object> config, out int totalPages, int pageNumber = 1, int pageSize = 12, string query = "");
+        Task<DatapickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
     }
 }

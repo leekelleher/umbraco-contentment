@@ -103,9 +103,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataPickerItem>());
         }
 
-        public Task<IEnumerable<DataPickerItem>> SearchAsync(Dictionary<string, object> config, out int totalPages, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<DatapickerSearchResults> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
-            totalPages = -1;
+            DatapickerSearchResults datapickerSearchResults = new DatapickerSearchResults()
+            {
+                TotalPages = -1
+            };
 
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content != null)
@@ -143,23 +146,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (items?.Any() == true)
                     {
-                        totalPages = (int)Math.Ceiling((double)items.Count() / pageSize);
+                        datapickerSearchResults.TotalPages = (int)Math.Ceiling((double)items.Count() / pageSize);
 
                         var offset = (pageNumber - 1) * pageSize;
-
-                        return Task.FromResult(items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
+                        datapickerSearchResults.Items = items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
                         {
                             Name = x.Name,
                             Value = x.GetUdi().ToString(),
                             Icon = x.ContentType.GetIcon(_contentTypeService),
                             Image = x.Value<IPublishedContent>(imageAlias)?.Url(),
                             Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                        }));
+                        });
+                        return Task.FromResult(datapickerSearchResults);
                     }
                 }
             }
 
-            return Task.FromResult(Enumerable.Empty<DataPickerItem>());
+            return Task.FromResult(datapickerSearchResults);
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
