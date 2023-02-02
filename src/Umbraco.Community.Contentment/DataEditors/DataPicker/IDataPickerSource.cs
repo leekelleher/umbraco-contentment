@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Umbraco.Community.Contentment.DataEditors.DataPicker;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
