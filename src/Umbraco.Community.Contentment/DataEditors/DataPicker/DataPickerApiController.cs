@@ -110,9 +110,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var results = await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
 #if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, new { results.Items, results.TotalPages });
+                return Request.CreateResponse(HttpStatusCode.OK, results);
 #else
-                return Ok(new { results.Items, results.TotalPages });
+                return Ok(results);
 #endif
             }
             else if (_dataTypeService.GetDataType(dataTypeKey) is IDataType dataType &&
@@ -136,9 +136,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     var results = await source1?.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 #if NET472
-                    return Request.CreateResponse(HttpStatusCode.OK, new { results.Items, results.TotalPages });
+                    return Request.CreateResponse(HttpStatusCode.OK, results);
 #else
-                    return Ok(new { results.Items, results.TotalPages });
+                    return Ok(results);
 #endif
                 }
             }
