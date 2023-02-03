@@ -107,12 +107,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
-                var items = await cached.Item1.SearchAsync(cached.Item2, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                var results = await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
 #if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, new { items, totalPages });
+                return Request.CreateResponse(HttpStatusCode.OK, results);
 #else
-                return Ok(new { items, totalPages });
+                return Ok(results);
 #endif
             }
             else if (_dataTypeService.GetDataType(dataTypeKey) is IDataType dataType &&
@@ -134,11 +134,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                    var items = await source1?.SearchAsync(config1, out totalPages, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                    var results = await source1?.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 #if NET472
-                    return Request.CreateResponse(HttpStatusCode.OK, new { items, totalPages });
+                    return Request.CreateResponse(HttpStatusCode.OK, results);
 #else
-                    return Ok(new { items, totalPages });
+                    return Ok(results);
 #endif
                 }
             }

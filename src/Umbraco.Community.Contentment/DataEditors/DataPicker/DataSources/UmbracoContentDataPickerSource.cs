@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
@@ -15,6 +16,7 @@ using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -103,10 +105,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataPickerItem>());
         }
 
-        public Task<IEnumerable<DataPickerItem>> SearchAsync(Dictionary<string, object> config, out int totalPages, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedResult<DataPickerItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
-            totalPages = -1;
-
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content != null)
             {
@@ -143,23 +143,25 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (items?.Any() == true)
                     {
-                        totalPages = (int)Math.Ceiling((double)items.Count() / pageSize);
-
                         var offset = (pageNumber - 1) * pageSize;
-
-                        return Task.FromResult(items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
+                        var results = new PagedResult<DataPickerItem>(items.Count(), pageNumber, pageSize)
                         {
-                            Name = x.Name,
-                            Value = x.GetUdi().ToString(),
-                            Icon = x.ContentType.GetIcon(_contentTypeService),
-                            Image = x.Value<IPublishedContent>(imageAlias)?.Url(),
-                            Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                        }));
+                            Items = items.Skip(offset).Take(pageSize).Select(x => new DataPickerItem
+                            {
+                                Name = x.Name,
+                                Value = x.GetUdi().ToString(),
+                                Icon = x.ContentType.GetIcon(_contentTypeService),
+                                Image = x.Value<IPublishedContent>(imageAlias)?.Url(),
+                                Description = x.TemplateId > 0 ? x.Url() : string.Empty,
+                            })
+                        };
+
+                        return Task.FromResult(results);
                     }
                 }
             }
 
-            return Task.FromResult(Enumerable.Empty<DataPickerItem>());
+            return Task.FromResult(new PagedResult<DataPickerItem>(-1, pageNumber, pageSize));
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
