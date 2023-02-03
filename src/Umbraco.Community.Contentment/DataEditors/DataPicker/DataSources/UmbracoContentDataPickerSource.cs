@@ -12,7 +12,6 @@ using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Core.Xml;
 using Umbraco.Web;
-using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
@@ -24,7 +23,6 @@ using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Core.Xml;
 using Umbraco.Extensions;
 using Umbraco.Web;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
