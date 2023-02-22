@@ -68,24 +68,21 @@ public ContentBlocksDataValueEditor(
         public override object ToEditor(IProperty property, string culture = null, string segment = null)
 #endif
         {
-            var value = property.GetValue(culture, segment)?.ToString();
+#if NET472
+            var value = base.ToEditor(property, dataTypeService, culture, segment)?.ToString();
+#else
+            var value = base.ToEditor(property, culture, segment)?.ToString();
+#endif
+
             if (string.IsNullOrWhiteSpace(value) == true)
             {
-#if NET472
-                return base.ToEditor(property, dataTypeService, culture, segment);
-#else
-                return base.ToEditor(property, culture, segment);
-#endif
+                return Array.Empty<object>();
             }
 
             var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             if (blocks == null)
             {
-#if NET472
-                return base.ToEditor(property, dataTypeService, culture, segment);
-#else
-                return base.ToEditor(property, culture, segment);
-#endif
+                return Array.Empty<object>();
             }
 
             foreach (var block in blocks)

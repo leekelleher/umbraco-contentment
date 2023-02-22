@@ -10,6 +10,7 @@ using Umbraco.Core.PropertyEditors;
 using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
@@ -48,5 +49,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 #endif
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new ListItemsConfigurationEditor(_ioHelper);
+
+#if NET472
+        protected override IDataValueEditor CreateValueEditor() => new JsonArrayDataValueEditor(Attribute);
+#else
+        protected override IDataValueEditor CreateValueEditor() => DataValueEditorFactory.Create<JsonArrayDataValueEditor>(Attribute);
+#endif
     }
 }

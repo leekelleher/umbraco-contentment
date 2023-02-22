@@ -89,9 +89,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IDataValueEditor GetValueEditor()
         {
 #if NET472
-            return new DataValueEditor
+            return new JsonArrayDataValueEditor
 #else
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new JsonArrayDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
 #endif
             {
                 ValueType = ValueTypes.Json,
@@ -123,9 +123,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
 #if NET472
-            return new DataValueEditor
+            return new JsonArrayDataValueEditor
 #else
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new JsonArrayDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
 #endif
             {
                 Configuration = configuration,
