@@ -1,3 +1,8 @@
+/* Copyright � 2023 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.DataPicker.Controller", [
     "$scope",
     "$http",
@@ -57,6 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             load();
 
             vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
+            vm.allowEdit = false;
             vm.allowRemove = true;
             vm.allowSort = config.maxItems !== 1;
 
