@@ -6,9 +6,11 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 #if NET472
+using System.Web.Mvc;
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
+using Umbraco.Core.Serialization;
 using Umbraco.Core.Services;
 using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
@@ -38,36 +40,28 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
         private readonly ILocalizedTextService _localizedTextService;
-
-#if NET472
-        public DataListDataEditor(
-            IIOHelper ioHelper,
-            ILocalizedTextService localizedTextService,
-            IShortStringHelper shortStringHelper,
-            ConfigurationEditorUtility utility)
-        {
-            _ioHelper = ioHelper;
-            _localizedTextService = localizedTextService;
-            _shortStringHelper = shortStringHelper;
-            _utility = utility;
-        }
-#else
         private readonly IJsonSerializer _jsonSerializer;
 
         public DataListDataEditor(
+            IIOHelper ioHelper,
+#if NET472 == false
+            IJsonSerializer jsonSerializer,
+#endif
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper,
-            IJsonSerializer jsonSerializer,
             ConfigurationEditorUtility utility)
         {
+            _ioHelper = ioHelper;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
-            _ioHelper = ioHelper;
+#if NET472
+            _jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
+#else
             _jsonSerializer = jsonSerializer;
+#endif
             _utility = utility;
         }
-#endif
+
         public string Alias => DataEditorAlias;
 
         public EditorType Type => EditorType.PropertyValue;
@@ -88,11 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-#if NET472
-            return new JsonArrayDataValueEditor
-#else
-            return new JsonArrayDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
+            return new DataListDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
@@ -122,11 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-#if NET472
-            return new JsonArrayDataValueEditor
-#else
-            return new JsonArrayDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
+            return new DataListDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,
