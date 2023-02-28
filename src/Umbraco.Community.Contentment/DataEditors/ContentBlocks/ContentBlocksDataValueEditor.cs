@@ -40,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly PropertyEditorCollection _propertyEditors;
 
 #if NET472
-public ContentBlocksDataValueEditor(
+        public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
             PropertyEditorCollection propertyEditors)
@@ -64,130 +64,97 @@ public ContentBlocksDataValueEditor(
 
 #if NET472
         public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)
-#else
-        public override object ToEditor(IProperty property, string culture = null, string segment = null)
-#endif
         {
-#if NET472
             var value = base.ToEditor(property, dataTypeService, culture, segment)?.ToString();
 #else
+        public override object ToEditor(IProperty property, string culture = null, string segment = null)
+        {
             var value = base.ToEditor(property, culture, segment)?.ToString();
 #endif
-
-            if (string.IsNullOrWhiteSpace(value) == true)
+            if (string.IsNullOrWhiteSpace(value) == false)
             {
-                return Array.Empty<object>();
-            }
-
-            var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
-            if (blocks == null)
-            {
-                return Array.Empty<object>();
-            }
-
-            foreach (var block in blocks)
-            {
-                var elementType = _elementTypes.Value.ContainsKey(block.ElementType)
-                    ? _elementTypes.Value[block.ElementType]
-                    : null;
-
-                if (elementType == null)
+                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+                if (blocks?.Any() == true)
                 {
-                    continue;
-                }
-
-                var keys = new List<string>(block.Value.Keys);
-                foreach (var key in keys)
-                {
-                    var propertyType = elementType.CompositionPropertyTypes.FirstOrDefault(x => x.Alias.InvariantEquals(key));
-                    if (propertyType == null)
+                    foreach (var block in blocks)
                     {
-                        continue;
+                        if (block != null &&
+                            _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
+                        {
+                            foreach (var propertyType in elementType.CompositionPropertyTypes)
+                            {
+                                if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true)
+                                {
+                                    propertyType.Variations = ContentVariation.Nothing;
+
+                                    var fakeProperty = new Property(propertyType);
+                                    fakeProperty.SetValue(blockPropertyValue);
+
+                                    if (_propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
+                                    {
+                                        var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, _dataTypeService);
+
+                                        block.Value[propertyType.Alias] = convertedValue != null
+                                            ? JToken.FromObject(convertedValue)
+                                            : null;
+                                    }
+                                    else
+                                    {
+                                        block.Value[propertyType.Alias] = fakeProperty.GetValue()?.ToString();
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    propertyType.Variations = ContentVariation.Nothing;
-
-                    var fakeProperty = new Property(propertyType);
-                    fakeProperty.SetValue(block.Value[key]);
-
-                    var propertyEditor = _propertyEditors[propertyType.PropertyEditorAlias];
-                    if (propertyEditor == null)
-                    {
-                        block.Value[key] = fakeProperty.GetValue()?.ToString();
-                        continue;
-                    }
-
-#if NET472
-                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, dataTypeService);
-#else
-                    var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
-#endif
-
-                    block.Value[key] = convertedValue != null
-                        ? JToken.FromObject(convertedValue)
-                        : null;
+                    return blocks;
                 }
             }
 
-            return blocks;
+            return Array.Empty<object>();
         }
 
         public override object FromEditor(ContentPropertyData editorValue, object currentValue)
         {
             var value = editorValue?.Value?.ToString();
-            if (string.IsNullOrWhiteSpace(value) == true)
+            if (string.IsNullOrWhiteSpace(value) == false)
             {
-                return base.FromEditor(editorValue, currentValue);
-            }
-
-            var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
-            if (blocks == null)
-            {
-                return base.FromEditor(editorValue, currentValue);
-            }
-
-            foreach (var block in blocks)
-            {
-                var elementType = _elementTypes.Value.ContainsKey(block.ElementType)
-                    ? _elementTypes.Value[block.ElementType]
-                    : null;
-
-                if (elementType == null)
+                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+                if (blocks?.Any() == true)
                 {
-                    continue;
-                }
-
-                var keys = new List<string>(block.Value.Keys);
-                foreach (var key in keys)
-                {
-                    var propertyType = elementType.CompositionPropertyTypes.FirstOrDefault(x => x.Alias.InvariantEquals(key));
-                    if (propertyType == null)
+                    foreach (var block in blocks)
                     {
-                        continue;
+                        if (block != null &&
+                            _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
+                        {
+                            foreach (var propertyType in elementType.CompositionPropertyTypes)
+                            {
+                                if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true &&
+                                    _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
+                                {
+                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId).Configuration;
+                                    var contentPropertyData = new ContentPropertyData(blockPropertyValue, configuration)
+                                    {
+                                        ContentKey = block.Key,
+                                        PropertyTypeKey = propertyType.Key,
+                                        Files = Array.Empty<ContentPropertyFile>()
+                                    };
+
+                                    var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, blockPropertyValue);
+
+                                    block.Value[propertyType.Alias] = convertedValue != null
+                                        ? JToken.FromObject(convertedValue)
+                                        : null;
+                                }
+                            }
+                        }
                     }
 
-                    var propertyEditor = _propertyEditors[propertyType.PropertyEditorAlias];
-                    if (propertyEditor == null)
-                    {
-                        continue;
-                    }
-
-                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId).Configuration;
-                    var contentPropertyData = new ContentPropertyData(block.Value[key], configuration)
-                    {
-                        ContentKey = block.Key,
-                        PropertyTypeKey = propertyType.Key,
-                        Files = new ContentPropertyFile[0]
-                    };
-                    var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, block.Value[key]);
-
-                    block.Value[key] = convertedValue != null
-                        ? JToken.FromObject(convertedValue)
-                        : null;
+                    return JsonConvert.SerializeObject(blocks, Formatting.None);
                 }
             }
 
-            return JsonConvert.SerializeObject(blocks, Formatting.None);
+            return base.FromEditor(editorValue, currentValue);
         }
     }
 }
