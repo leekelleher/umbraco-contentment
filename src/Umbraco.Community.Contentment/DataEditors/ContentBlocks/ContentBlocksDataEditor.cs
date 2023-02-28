@@ -63,6 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 #else
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
+        private readonly IPropertyValidationService _propertyValidationService;
 
         public ContentBlocksDataEditor(
             IContentService contentService,
@@ -73,7 +74,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             ConfigurationEditorUtility utility,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper,
+            IPropertyValidationService propertyValidationService)
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
@@ -84,6 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _propertyEditors = propertyEditors;
             _utility = utility;
             _ioHelper = ioHelper;
+            _propertyValidationService = propertyValidationService;
         }
 #endif
 
@@ -119,7 +122,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _dataTypeService,
                 _localizedTextService,
                 _shortStringHelper,
-                _jsonSerializer)
+                _jsonSerializer,
+                _propertyValidationService)
 #endif
             {
                 ValueType = ValueTypes.Json,
@@ -162,7 +166,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _dataTypeService,
                 _localizedTextService,
                 _shortStringHelper,
-                _jsonSerializer)
+                _jsonSerializer,
+                _propertyValidationService)
 #endif
             {
                 Configuration = configuration,

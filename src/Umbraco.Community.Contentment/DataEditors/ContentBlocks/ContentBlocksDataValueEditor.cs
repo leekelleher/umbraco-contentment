@@ -52,13 +52,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             IDataTypeService dataTypeService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
-            IJsonSerializer jsonSerializer)
+            IJsonSerializer jsonSerializer,
+            IPropertyValidationService propertyValidationService)
             : base(localizedTextService, shortStringHelper, jsonSerializer)
 #endif
         {
             _dataTypeService = dataTypeService;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
+
+#if NET472 == false
+            Validators.Add(new ContentBlocksValueValidator(_elementTypes, propertyValidationService));
+#endif
         }
 
 
