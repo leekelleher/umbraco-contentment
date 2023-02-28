@@ -33,7 +33,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ContentBlocksDataValueEditor : DataValueEditor
+    internal sealed class ContentBlocksDataValueEditor : DataValueEditor, IDataValueReference
     {
         private readonly IDataTypeService _dataTypeService;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
@@ -155,6 +155,36 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return base.FromEditor(editorValue, currentValue);
+        }
+
+        public IEnumerable<UmbracoEntityReference> GetReferences(object value)
+        {
+            if (value is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
+            {
+                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(str);
+                if (blocks?.Any() == true)
+                {
+                    foreach (var block in blocks)
+                    {
+                        if (block != null &&
+                            _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
+                        {
+                            foreach (var propertyType in elementType.CompositionPropertyTypes)
+                            {
+                                if (block.Value.TryGetValue(propertyType.Alias, out var bpv) == true &&
+                                    _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var editor) == true &&
+                                    editor?.GetValueEditor() is IDataValueReference dvr)
+                                {
+                                    foreach (var reference in dvr.GetReferences(bpv))
+                                    {
+                                        yield return reference;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
