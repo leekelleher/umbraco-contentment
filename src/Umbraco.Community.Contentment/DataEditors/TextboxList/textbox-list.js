@@ -24,6 +24,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value = $scope.model.value || {};
 
+            if (Utilities.isObject($scope.model.value) === false) {
+                $scope.model.value = {};
+            }
+
             vm.keys = [];
             vm.icons = {};
             vm.names = {};

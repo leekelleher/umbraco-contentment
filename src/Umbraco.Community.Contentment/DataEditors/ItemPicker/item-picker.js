@@ -133,11 +133,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 size: config.overlaySize || "small",
                 submit: function (selectedItems) {
 
-                    // NOTE: Edge-case, if the value isn't set and the content is saved, the value becomes an empty string. ¯\_(ツ)_/¯
-                    if (typeof $scope.model.value === "string") {
-                        $scope.model.value = $scope.model.value.length > 0 ? [$scope.model.value] : config.defaultValue;
-                    }
-
                     selectedItems.forEach(item => {
                         vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
                         $scope.model.value.push(item.value);
