@@ -15,14 +15,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Community.Contentment.Services;
 using Umbraco.Community.Contentment.Composing;
+using Umbraco.Community.Contentment.Xml;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Xml;
 using Umbraco.Web;
 #else
 using Umbraco.Cms.Core;
@@ -30,7 +29,6 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Web;
-using Umbraco.Cms.Core.Xml;
 using Umbraco.Extensions;
 #endif
 
@@ -39,18 +37,15 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
     public sealed class UmbracoContentPropertyValueDataListSource : IDataListSource
     {
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
-        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IIOHelper _ioHelper;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public UmbracoContentPropertyValueDataListSource(
             ContentmentDataListItemPropertyValueConverterCollection converters,
-            IContentmentContentContext contentmentContentContext,
             IIOHelper ioHelper,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _converters = converters;
-            _contentmentContentContext = contentmentContentContext;
             _ioHelper = ioHelper;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -99,12 +94,11 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
                 if (contentNode.InvariantStartsWith("umb://document/") == false)
                 {
-                    var nodeContextId = _contentmentContentContext.GetCurrentContentId();
-
                     IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+
                     bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                    var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(contentNode, nodeContextId, getPath, publishedContentExists);
+                    var parsed = ContentmentXPathSyntaxParser.ParseXPathQuery(contentNode, getPath, publishedContentExists);
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                     {
