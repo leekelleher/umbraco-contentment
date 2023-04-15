@@ -43,7 +43,7 @@
   </Target>
 
   <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file $(ProjectDir)..\..\build\build-assets.ps1 -ProjectDir $(ProjectDir)" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
   </Target>
 
 </Project>
