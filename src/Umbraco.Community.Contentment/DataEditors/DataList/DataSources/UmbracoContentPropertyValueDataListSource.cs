@@ -15,8 +15,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Community.Contentment.Composing;
-using Umbraco.Community.Contentment.Xml;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -37,15 +37,18 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
     public sealed class UmbracoContentPropertyValueDataListSource : IDataListSource
     {
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
+        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IIOHelper _ioHelper;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public UmbracoContentPropertyValueDataListSource(
             ContentmentDataListItemPropertyValueConverterCollection converters,
+            IContentmentContentContext contentmentContentContext,
             IIOHelper ioHelper,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _converters = converters;
+            _contentmentContentContext = contentmentContentContext;
             _ioHelper = ioHelper;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -95,10 +98,9 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
                 if (contentNode.InvariantStartsWith("umb://document/") == false)
                 {
                     IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-
                     bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                    var parsed = ContentmentXPathSyntaxParser.ParseXPathQuery(contentNode, getPath, publishedContentExists);
+                    var parsed = _contentmentContentContext.ParseXPathQuery(contentNode, getPath, publishedContentExists);
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                     {
