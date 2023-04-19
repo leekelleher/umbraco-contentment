@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Community.Contentment.Xml;
+using Umbraco.Community.Contentment.Services;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -30,15 +30,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentDataListSource : IDataListSource, IDataListSourceValueConverter
     {
+        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoContentDataListSource(
+            IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
+            _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
@@ -78,10 +81,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (parentNode.InvariantStartsWith("umb://document/") == false)
                 {
                     IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-
                     bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                    var parsed = ContentmentXPathSyntaxParser.ParseXPathQuery(parentNode, getPath, publishedContentExists);
+                    var parsed = _contentmentContentContext.ParseXPathQuery(parentNode, getPath, publishedContentExists);
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                     {
