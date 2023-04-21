@@ -22,7 +22,6 @@ using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Xml;
 using Umbraco.Web;
 #else
 using Umbraco.Cms.Core;
@@ -30,7 +29,6 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Web;
-using Umbraco.Cms.Core.Xml;
 using Umbraco.Extensions;
 #endif
 
@@ -99,12 +97,10 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
                 if (contentNode.InvariantStartsWith("umb://document/") == false)
                 {
-                    var nodeContextId = _contentmentContentContext.GetCurrentContentId();
-
                     IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                     bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                    var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(contentNode, nodeContextId, getPath, publishedContentExists);
+                    var parsed = _contentmentContentContext.ParseXPathQuery(contentNode, getPath, publishedContentExists);
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                     {
