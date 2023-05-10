@@ -1,13 +1,13 @@
 {
   "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
-  "AlternatePackageNames": [
-    "Contentment"
-  ],
+  "AlternatePackageNames": [ "Contentment" ],
   "AuthorDetails": {
+    "Name": "Lee Kelleher",
     "Description": "A long time Umbraco collaborator, 12x MVP",
     "Url": "https://leekelleher.com/umbraco/",
     "ImageUrl": "https://github.com/leekelleher.png",
-    "Contributors": []
+    "Contributors": [],
+    "SyncContributorsFromRepository": false
   },
   "Category": "Editor Tools",
   "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
