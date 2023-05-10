@@ -22,6 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class DataListValueConverter : PropertyValueConverterBase
     {
+        private readonly Type _defaultObjectType = typeof(string);
         private readonly ConfigurationEditorUtility _utility;
 
         public DataListValueConverter(ConfigurationEditorUtility utility)
@@ -140,7 +141,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private void TryGetPropertyTypeConfiguration(IPublishedPropertyType propertyType, out bool hasMultipleValues, out Type valueType, out Func<Type, string, object> converter)
         {
             hasMultipleValues = false;
-            valueType = typeof(string);
+            valueType = _defaultObjectType;
             converter = default;
 
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
@@ -160,7 +161,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (source != null)
                 {
                     var config = obj1["value"].ToObject<Dictionary<string, object>>();
-                    valueType = source.GetValueType(config);
+                    valueType = source.GetValueType(config) ?? _defaultObjectType;
                     converter = source.ConvertValue;
                 }
 

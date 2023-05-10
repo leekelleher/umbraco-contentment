@@ -13,7 +13,6 @@ using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
-using Umbraco.Core.Xml;
 using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
 #else
@@ -23,7 +22,6 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
-using Umbraco.Cms.Core.Xml;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
@@ -104,8 +102,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
                 bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
 
-                var nodeContextId = _contentmentContentContext.GetCurrentContentId();
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpath, nodeContextId, getPath, publishedContentExists);
+                var parsed = _contentmentContentContext.ParseXPathQuery(xpath, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {

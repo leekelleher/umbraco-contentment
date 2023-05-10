@@ -16,10 +16,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{5297EC84
 		..\build\build-assets.ps1 = ..\build\build-assets.ps1
 		..\build\build-pkgs.ps1 = ..\build\build-pkgs.ps1
 		..\build\manifest-nuget-core.nuspec = ..\build\manifest-nuget-core.nuspec
+		..\build\manifest-nuget-main.nuspec = ..\build\manifest-nuget-main.nuspec
 		..\build\manifest-nuget-web.nuspec = ..\build\manifest-nuget-web.nuspec
 		..\build\manifest-umbraco.xml = ..\build\manifest-umbraco.xml
 		Umbraco.Community.Contentment\Web\UI\App_Plugins\Contentment\package.manifest = Umbraco.Community.Contentment\Web\UI\App_Plugins\Contentment\package.manifest
-		..\build\readme-nuget.md = ..\build\readme-nuget.md
+		..\build\readme-nuget-core.md = ..\build\readme-nuget-core.md
+		..\build\readme-nuget-main.md = ..\build\readme-nuget-main.md
+		..\build\readme-nuget-web.md = ..\build\readme-nuget-web.md
 		..\build\_nuget-post-install.targets = ..\build\_nuget-post-install.targets
 		..\build\_vs-copy-assets.targets = ..\build\_vs-copy-assets.targets
 	EndProjectSection
