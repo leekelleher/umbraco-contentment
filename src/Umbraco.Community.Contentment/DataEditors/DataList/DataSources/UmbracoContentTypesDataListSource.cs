@@ -25,6 +25,7 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+using Umbraco.Cms.Core.Dictionary;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -34,6 +35,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly ICultureDictionary _cultureDictionary;
 
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
@@ -43,6 +46,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
+            _localizedTextService = localizedTextService;
+            _cultureDictionary = cultureDictionary; 
         }
 
         public string Name => "Umbraco Content Types";
@@ -133,7 +138,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
+                    Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
                     Description = string.Join(", ", x.AllowedTemplates.Select(t => t.Alias)),
