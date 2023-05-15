@@ -23,9 +23,7 @@ The value returned from the List editor is the configured enumeration type.
 
 Depending on the `List editor` used, this may be wrapped in a `List<T>`.
 
-##### Controlling Enum display in Contentment
-
-Here's the proofread version of the text:
+##### Controlling Enum display
 
 You can use the [DataListItemAttribute](../../src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItemAttribute.cs) to decorate your enum values with additional information for use with Contentment. With this attribute, you can specify properties such as name, description, icon, etc., for individual enum items.
 
@@ -59,4 +57,3 @@ The `DataListItemAttribute` contains the following properties:
 | Name        | Provides a custom name for the Enum value (default: field name)   | string  |
 | Value       | Specifies a custom value for the Enum value (default: field value)| string  |
 
-The provided text has been proofread and revised for clarity and accuracy.
