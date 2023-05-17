@@ -122,6 +122,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{DCC84B25-30A6-41E5-8411-525C3A144F7D}"
 	ProjectSection(SolutionItems) = preProject
 		..\umbraco-marketplace.json = ..\umbraco-marketplace.json
+		..\umbraco-marketplace-readme.md = ..\umbraco-marketplace-readme.md
 	EndProjectSection
 EndProject
 Global
