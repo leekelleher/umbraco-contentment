@@ -10,6 +10,7 @@
     "SyncContributorsFromRepository": false
   },
   "Category": "Editor Tools",
+  "Description": "Contentment, a collection of components for Umbraco.",
   "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
   "DocumentationUrl": "https://github.com/leekelleher/umbraco-contentment/tree/develop/docs",
   "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",

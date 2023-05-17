@@ -1,6 +1,4 @@
-﻿## Contentment for Umbraco
-
-Contentment is a collection of components for [Umbraco](https://www.nuget.org/packages/UmbracoCms/) that can enhance the CMS editorial experience.
+Contentment is a collection of components that can enhance the CMS editorial experience.
 
 The following property editors are available...
 
@@ -19,14 +17,8 @@ The following property editors are available...
 - [Textbox List](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
 - [Text Input](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
-
 There are some undocumented features within Contentment, _let's call those "life's little surprises"._
-
 
 [Documentation for each of the components - with screenshots, use-cases and code examples can be found on the GitHub repository.](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/)
 
----
-
-Contentment is licensed under the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0).
-
-Copyright &copy; [Lee Kelleher](https://leekelleher.com).
+Community support is available, please keep in mind that I am not your personal support developer.
