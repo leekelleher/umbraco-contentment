@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
+using Umbraco.Core.Dictionary;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
@@ -18,6 +19,7 @@ using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -25,7 +27,6 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-using Umbraco.Cms.Core.Dictionary;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -41,13 +42,21 @@ namespace Umbraco.Community.Contentment.DataEditors
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
+            ILocalizedTextService localizedTextService,
+#if NET472 == false
+            ICultureDictionary cultureDictionary,
+#endif
             IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
-            _ioHelper = ioHelper;
             _localizedTextService = localizedTextService;
-            _cultureDictionary = cultureDictionary; 
+#if NET472
+            _cultureDictionary = Core.Composing.Current.CultureDictionaryFactory.CreateDictionary();
+#else
+            _cultureDictionary = cultureDictionary;
+#endif
+            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content Types";
