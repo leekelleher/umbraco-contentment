@@ -41,6 +41,26 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
+            Fields.Add(new ConfigurationField
+            {
+                Key = "size",
+                Name = "Size",
+                Description = "Select the size of icon picker. The default is 'large'.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Small", Value = "small" },
+                            new DataListItem { Name = "Large", Value = "large" }
+                        }
+                    },
+                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "large" },
+                    { "labelStyle", "text" },
+                    { "size", "m" },
+                }
+            });
+
 #if NET7_0_OR_GREATER
             if (umbracoVersion.Version >= new Version(11, 2))
             {

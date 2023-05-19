@@ -22,6 +22,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function init() {
             $scope.model.value = $scope.model.value || config.defaultIcon;
 
+            if (Array.isArray(config.size) === true) {
+                config.size = config.size[0];
+            }
+
             vm.label = $scope.model.value.replace(" ", "<br>");
             vm.size = config.size;
 
