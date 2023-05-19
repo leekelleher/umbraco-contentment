@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 #else
+#if NET7_0_OR_GREATER
+using System;
+using Umbraco.Cms.Core.Configuration;
+#endif
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
@@ -17,7 +21,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class IconPickerConfigurationEditor : ConfigurationEditor
     {
+#if NET7_0_OR_GREATER
+        public IconPickerConfigurationEditor(IIOHelper ioHelper, IUmbracoVersion umbracoVersion)
+#else
         public IconPickerConfigurationEditor(IIOHelper ioHelper)
+#endif
             : base()
         {
             Fields.Add(new ConfigurationField
@@ -32,6 +40,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "size", "large" },
                 }
             });
+
+#if NET7_0_OR_GREATER
+            if (umbracoVersion.Version >= new Version(11, 2))
+            {
+                Fields.Add(new ConfigurationField
+                {
+                    Key = "hideColors",
+                    Name = "Hide colors?",
+                    Description = "Select to hide the color options in the icon picker panel.",
+                    View = "boolean",
+                });
+            }
+#endif
         }
     }
 }

@@ -10,7 +10,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         // console.log("icon-picker.model", $scope.model);
 
-        var defaultConfig = { defaultIcon: "", size: "large" };
+        var defaultConfig = {
+            defaultIcon: "",
+            hideColors: 0, // NOTE: This only applies to Umbraco 11.2+.
+            size: "large"
+        };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
         var vm = this;
@@ -34,6 +38,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var iconPicker = {
                 icon: parts[0],
                 color: parts[1],
+                hideColors: Object.toBoolean(config.hideColors),
                 submit: function (model) {
                     $scope.model.value = [model.icon, model.color].filter(s => s).join(" ");
 
