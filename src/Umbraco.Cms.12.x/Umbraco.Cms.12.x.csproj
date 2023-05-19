@@ -3,15 +3,15 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <RootNamespace>Umbraco.Cms.v11_x</RootNamespace>
+        <RootNamespace>Umbraco.Cms.v12_x</RootNamespace>
         <DefaultItemExcludes>$(DefaultItemExcludes);App_Plugins/**;</DefaultItemExcludes>
         <DefaultItemExcludes>$(DefaultItemExcludes);umbraco/**;</DefaultItemExcludes>
         <DefaultItemExcludes>$(DefaultItemExcludes);wwwroot/media/**;</DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="11.0.0" />
-        <PackageReference Include="uSync" Version="11.0.0" />
+        <PackageReference Include="Umbraco.Cms" Version="12.0.0-rc1" />
+        <PackageReference Include="uSync" Version="11.2.0" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>
 

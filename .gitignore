@@ -21,8 +21,7 @@ src/Umbraco.Cms.10.x/appsettings-schema.json
 src/Umbraco.Cms.8.x/App_Data/*
 src/Umbraco.Cms.*.x/App_Plugins/*/**
 src/Umbraco.Cms.8.x/Umbraco/*
-src/Umbraco.Cms.10.x/Umbraco/Data/*
-src/Umbraco.Cms.11.x/Umbraco/Data/*
+src/Umbraco.Cms.*.x/Umbraco/Data/*
 src/Umbraco.Cms.*.x/Views/Partials/[Bb]lock[Ll]ist/*
 src/Umbraco.Cms.*.x/Views/Partials/[Gg]rid/*
 tools/*.exe
