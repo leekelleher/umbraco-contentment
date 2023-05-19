@@ -11,6 +11,8 @@ namespace Umbraco.Extensions
 {
     public static partial class UmbracoBuilderExtensions
     {
+        // Backstory on the Umbraco Discord channel:
+        // https://discord.com/channels/869656431308189746/882984410432012360/999353549685276702
         public static IUmbracoBuilder AddUmbracoConfiguration(this IUmbracoBuilder builder, Action<IUmbracoBuilder> action)
         {
             action?.Invoke(builder);
