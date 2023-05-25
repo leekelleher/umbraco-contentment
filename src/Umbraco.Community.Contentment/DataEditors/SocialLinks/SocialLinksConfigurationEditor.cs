@@ -91,7 +91,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = "icon",
                             Name = "Icon",
                             Description = "Typically select the logo for the social network.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                            View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                            Config = new Dictionary<string, object>
+                            {
+                                { "hideColors", Constants.Values.True },
+                                { "size", "small" },
+                            }
                         },
                         new NotesConfigurationField(ioHelper, $@"<details class=""alert alert-info"">
 <summary>Would you like to use a <strong>custom icon</strong>?</summary>
