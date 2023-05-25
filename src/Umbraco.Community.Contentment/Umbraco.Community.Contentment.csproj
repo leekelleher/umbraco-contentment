@@ -42,7 +42,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
+  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net472'">
     <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
   </Target>
 
