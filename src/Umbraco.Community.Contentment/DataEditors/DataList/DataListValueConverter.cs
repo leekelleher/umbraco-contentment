@@ -157,7 +157,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     obj1.Remove("type");
                 }
 
-                var source = _utility.GetConfigurationEditor<IDataListSourceValueConverter>(obj1.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(obj1.Value<string>("key"));
                 if (source != null)
                 {
                     var config = obj1["value"].ToObject<Dictionary<string, object>>();

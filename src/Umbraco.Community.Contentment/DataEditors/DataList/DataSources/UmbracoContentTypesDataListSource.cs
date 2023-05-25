@@ -29,7 +29,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;

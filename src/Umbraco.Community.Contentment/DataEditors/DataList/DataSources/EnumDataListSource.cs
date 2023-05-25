@@ -28,7 +28,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter, IContentmentListTemplateItem
+    public sealed class EnumDataListSource : IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;

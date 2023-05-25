@@ -14,7 +14,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TimeZoneDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class TimeZoneDataListSource : IDataListSource, IDataSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 

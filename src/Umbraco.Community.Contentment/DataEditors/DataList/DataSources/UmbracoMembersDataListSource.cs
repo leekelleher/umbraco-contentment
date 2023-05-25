@@ -30,7 +30,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
