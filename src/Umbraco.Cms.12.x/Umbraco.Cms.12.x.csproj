@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="12.0.0-rc1" />
+        <PackageReference Include="Umbraco.Cms" Version="12.0.0-rc2" />
         <PackageReference Include="uSync" Version="11.2.0" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>
