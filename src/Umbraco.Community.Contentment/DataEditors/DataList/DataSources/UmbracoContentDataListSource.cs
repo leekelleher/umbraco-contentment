@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public Dictionary<string, object> DefaultValues => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -66,9 +66,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => default;
-
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+
+        public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
