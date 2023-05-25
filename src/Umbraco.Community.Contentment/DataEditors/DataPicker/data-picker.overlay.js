@@ -14,6 +14,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
         var defaultConfig = {
             currentPageId: -1,
             dataTypeKey: null,
+            defaultIcon: "icon-science",
             enableMultiple: false,
             listType: "cards",
             pageSize: 12,
@@ -25,6 +26,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
         function init() {
 
             vm.title = "Select items...";
+            vm.defaultIcon = config.defaultIcon || "icon-science";
             vm.enableMultiple = config.enableMultiple;
             vm.listType = config.listType;
 

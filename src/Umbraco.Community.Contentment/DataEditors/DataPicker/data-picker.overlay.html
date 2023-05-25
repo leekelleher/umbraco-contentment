@@ -38,7 +38,7 @@
                     <div class="__showcase"
                          ng-style="_img = vm.getImage(item)">
                         <div class="__icon" ng-if="!_img">
-                            <umb-icon icon="{{item.icon}}"></umb-icon>
+                            <umb-icon icon="{{item.icon || vm.defaultIcon}}"></umb-icon>
                         </div>
                     </div>
                     <div class="__info">

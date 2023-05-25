@@ -23,6 +23,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         var defaultConfig = {
             addButtonLabelKey: "general_add",
+            defaultIcon: "icon-science",
             defaultValue: [],
             displayMode: "cards",
             enableDevMode: 0,
@@ -82,7 +83,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.allowSort = config.maxItems !== 1;
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
-            vm.defaultIcon = "icon-t-shirt";
+            vm.defaultIcon = config.defaultIcon || "icon-science";
             vm.displayMode = config.displayMode || "cards";
 
             vm.add = add;
