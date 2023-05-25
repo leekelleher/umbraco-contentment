@@ -7,7 +7,7 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 ## v1
 
-### v1.0
+### [v1.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.0.0)
 
 Initial release.
 
@@ -21,67 +21,67 @@ Property Editors are:
 - [Notes](../docs/editors/notes.md)
 - [Render Macro](../docs/editors/render-macro.md)
 
-### v1.1
+### [v1.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.1.0)
 
 - [Content Blocks](../docs/editors/content-blocks.md)
 - Data List: Umbraco Content _(a data source for selecting nodes)_
 
-### v1.2
+### [v1.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.2.0)
 
 - [Text Input](../docs/editors/text-input.md) _(a reimagining of the textstring editor)_
 - [Number Input](../docs/editors/number-input.md) _(a reimagining of the numeric editor)_
 - Data List: Templated List _(use custom AngularJS markup to render items)_
 - Telemetry
 
-### v1.3
+### [v1.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.4.0)
 
 - [Code Editor](../docs/editors/code-editor.md) _(using ACE bundled with Umbraco)_
 - Data List: Preview _(a real time preview of the configured Data Source and List Editor)_
 - Data List: Buttons _(list editor, similar to what folk see used in Umbraco Uno)_
 - Data List: Tags _(list editor, visually similar to Umbraco Tags editor)_
 
-### v1.4
+### [v1.4](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.4.0)
 
 - _A bunch of (hidden) extra data-sources._ 🤫
 
 
 ## v2
 
-### v2.0
+### [v2.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.0.0)
 
 - A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS v8.14.0, _(the most recent version of Umbraco at the time of release)._
 
-### v2.1
+### [v2.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.1.0)
 
 - Configuration Editor item grouping
 - Data List: Unlocking all (hidden 🤫) [data-sources](../docs/data-sources/README.md)
 
-### v2.2
+### [v2.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.2.0)
 
 - [Templated Label](https://github.com/leekelleher/umbraco-contentment/discussions/100)
 
 
 ## v3
 
-### v3.0
+### [v3.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0)
 
 - A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17.0 and v9.0.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
-### v3.1
+### [v3.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.1.0)
 
 - [Content Blocks](../docs/editors/content-blocks.md) ["Cards" display mode](https://github.com/leekelleher/umbraco-contentment/pull/194)
 - [Textbox List](https://github.com/leekelleher/umbraco-contentment/pull/195)
 
-### v3.2
+### [v3.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.2.0)
 
 - [Editor Notes](https://github.com/leekelleher/umbraco-contentment/discussions/187)
 
-### v3.3
+### [v3.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.3.0)
 
 - [Content Blocks](../docs/editors/content-blocks.md) previews on "Blocks" display mode
 - [Text Input](../docs/editors/text-input.md): adds prepend/append icon options
 
-### v3.4
+### [v3.4](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.4.0)
 
 - Deploy Connectors for Notes, Editor Notes and Render Macro
 - Enhancement to Configuration Editor, added `IContentmentListTemplateItem` interface
@@ -90,23 +90,23 @@ Property Editors are:
 
 ## v4
 
-### v4.0
+### [v4.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.0.0)
 
 - A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.17.0, v9.5.0 and v10.0.0.
 
-### v4.1
+### [v4.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.1.0)
 
 - [Social Links](https://github.com/leekelleher/umbraco-contentment/pull/234)
 
-### v4.2
+### [v4.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.2.0)
 
 - Adds `IContentmentContentContext` for attempting to get the current node ID within Data List data-sources.
 
-### v4.3
+### [v4.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.3.0)
 
 - A non-breaking-change minor release. Adds support for Umbraco v11, .NET 7.0. _(Whilst still supporting v8.17+, v9.5+ and v10.0+)._
 
-### v4.4
+### [v4.4](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.4.0)
 
 - Data List: [Umbraco Content Property Value](https://github.com/leekelleher/umbraco-contentment/pull/287) data-source.
 - Data List Item editor _(the one that is used in the User-defined data-source)._
@@ -122,7 +122,7 @@ Property Editors are:
 
 ## v5
 
-- `(⌐■_■)` _I'm parking the idea of a v5! Originally, my plans was for v5 to drop support for v8 and v9, focusing on v10+, but with v13 (new backoffice) on the horizon, I might save my development efforts._
+- `(⌐■_■)` _I'm parking the idea of a v5! Originally, my plans was for v5 to drop support for v8 and v9, focusing on v10+, but with v14 (new backoffice) on the horizon, I might save my development efforts._
 
 
 ## Future feature releases
