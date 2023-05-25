@@ -130,12 +130,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (editor != null)
                 {
                     var editorConfig = item2["value"].ToObject<Dictionary<string, object>>();
-
-                    foreach (var prop in editorConfig)
+                    if (editorConfig != null)
                     {
-                        if (toValueEditor.ContainsKey(prop.Key) == false)
+
+                        foreach (var prop in editorConfig)
                         {
-                            toValueEditor.Add(prop.Key, prop.Value);
+                            if (toValueEditor.ContainsKey(prop.Key) == false)
+                            {
+                                toValueEditor.Add(prop.Key, prop.Value);
+                            }
                         }
                     }
 
