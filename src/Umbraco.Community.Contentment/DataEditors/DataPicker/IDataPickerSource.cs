@@ -15,8 +15,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public interface IDataPickerSource : IContentmentEditorItem
     {
-        Task<IEnumerable<DataPickerItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values);
+        Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values);
 
-        Task<PagedResult<DataPickerItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
+        Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
     }
 }
