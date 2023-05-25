@@ -4,7 +4,10 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Community.Contentment.Web.Serialization;
 
@@ -13,11 +16,18 @@ namespace Umbraco.Cms.Web.Common.Controllers
     [Route("api/[action]")]
     public class ContentmentApiController : UmbracoApiController
     {
+        private readonly IDataTypeService _dataTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly PropertyEditorCollection _propertyEditors;
 
-        public ContentmentApiController(IUmbracoContextAccessor umbracoContextAccessor)
+        public ContentmentApiController(
+            IDataTypeService dataTypeService,
+            IUmbracoContextAccessor umbracoContextAccessor,
+            PropertyEditorCollection propertyEditors)
         {
+            _dataTypeService = dataTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _propertyEditors = propertyEditors;
         }
 
         public ActionResult Json(Guid? key)
@@ -63,7 +73,24 @@ namespace Umbraco.Cms.Web.Common.Controllers
                 return Content(json, new MediaTypeHeaderValue(MediaTypeNames.Application.Json));
             }
 
-            return Content(string.Empty);
+            return NotFound();
+        }
+
+        public ActionResult GetDataSourceItemsByDataType(Guid? key)
+        {
+            if (key.HasValue == true &&
+                _dataTypeService.GetDataType(key.Value) is IDataType dataType &&
+                dataType?.EditorAlias.InvariantEquals("Umbraco.Community.Contentment.DataList") == true &&
+                dataType.Configuration is Dictionary<string, object> config &&
+                _propertyEditors.TryGet(dataType.EditorAlias, out var propertyEditor) == true)
+            {
+                var configurationEditor = propertyEditor.GetConfigurationEditor();
+                var valueEditorConfig = configurationEditor.ToValueEditor(config);
+
+                return Ok(valueEditorConfig?["items"]);
+            }
+
+            return NotFound();
         }
     }
 }
