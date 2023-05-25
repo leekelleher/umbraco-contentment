@@ -1,3 +1,8 @@
+<!-- Copyright © 2023 Lee Kelleher.
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
 <div class="contentment lk-overlay" ng-controller="Umbraco.Community.Contentment.Overlays.DataPicker.Controller as vm">
     <umb-editor-view>
 
@@ -25,7 +30,7 @@
 
             <umb-load-indicator ng-show="vm.loading === true"></umb-load-indicator>
 
-            <div class="umb-block-card-grid" ng-show="vm.loading === false && vm.items.length !== 0">
+            <div class="umb-block-card-grid" ng-if="vm.listType === 'cards'" ng-show="vm.loading === false && vm.items.length !== 0">
                 <div class="umb-block-card"
                      ng-repeat="item in vm.items"
                      ng-class="{'--isOpen': vm.isSelected(item)}"
@@ -43,6 +48,27 @@
                     <div class="__actions"></div>
                 </div>
             </div>
+
+            <umb-box ng-if="vm.listType === 'list'" ng-show="vm.loading === false && vm.items.length !== 0">
+                <umb-box-content>
+                    <ul class="umb-actions umb-actions-child">
+                        <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items">
+                            <button type="button" class="umb-action-link umb-outline btn-reset" ng-click="vm.select(item, $event)">
+                                <div ng-if="vm.enableMultiple"
+                                     ng-class="{'umb-checkmark--checked': vm.isSelected(item)}"
+                                     class="umb-checkmark umb-checkmark--m umb-outline">
+                                    <umb-icon ng-if="vm.isSelected(item)" icon="icon-check"></umb-icon>
+                                </div>
+                                <umb-icon icon="{{item.icon || vm.defaultIcon}}" class="large icon"></umb-icon>
+                                <span class="menu-label">
+                                    <span ng-bind="item.name"></span>
+                                    <small ng-bind="item.description"></small>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </umb-box-content>
+            </umb-box>
 
             <div class="flex justify-center" ng-show="vm.searchOptions.totalPages > 0 && vm.loading === false">
                 <umb-pagination page-number="vm.searchOptions.pageNumber"

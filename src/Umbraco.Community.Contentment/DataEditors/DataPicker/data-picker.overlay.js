@@ -9,6 +9,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
         var defaultConfig = {
             dataTypeKey: null,
             enableMultiple: false,
+            listType: "cards",
             pageSize: 12,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
@@ -19,6 +20,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
 
             vm.title = "Select items...";
             vm.enableMultiple = config.enableMultiple;
+            vm.listType = config.listType;
 
             vm.loading = true;
             vm.items = [];

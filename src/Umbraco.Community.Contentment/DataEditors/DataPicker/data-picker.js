@@ -42,6 +42,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
+            if (Array.isArray(config.displayMode) === true) {
+                config.displayMode = config.displayMode[0];
+            }
+
             if (Number.isInteger(config.maxItems) === false) {
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }
@@ -68,7 +72,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "general_add";
             vm.defaultIcon = "icon-t-shirt";
-            vm.displayMode = Array.isArray(config.displayMode) === true ? config.displayMode[0] : config.displayMode || "cards";
+            vm.displayMode = config.displayMode || "cards";
 
             vm.add = add;
             vm.populate = populate;
@@ -96,6 +100,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config: {
                     dataTypeKey: $scope.model.dataTypeKey,
                     enableMultiple: config.maxItems !== 1,
+                    listType: config.displayMode,
                     pageSize: config.pageSize,
                 },
                 submit: function (selection) {
@@ -148,7 +153,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 } else if (propertyName === "iconStyle") {
                     return null;
                 } else if (propertyName === "icon") {
-                    return vm.displayMode === "cards" && vm.itemLookup[key].hasOwnProperty("image") === true
+                    return vm.displayMode === "cards" && vm.itemLookup[key]["image"]
                         ? null
                         : vm.itemLookup[key][propertyName] || vm.defaultIcon;
                 }

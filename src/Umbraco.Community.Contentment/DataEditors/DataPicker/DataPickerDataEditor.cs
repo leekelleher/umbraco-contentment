@@ -4,9 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 #if NET472
+using Umbraco.Core;
 using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Strings;
 using UmbConstants = Umbraco.Core.Constants;
@@ -15,24 +16,18 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [DataEditor(
-        DataEditorAlias,
-        EditorType.PropertyValue,
-        DataEditorName,
-        DataEditorViewPath,
-        ValueType = ValueTypes.Json,
-        Group = UmbConstants.PropertyEditors.Groups.Lists,
-        Icon = DataEditorIcon)]
-    internal sealed class DataPickerDataEditor : DataEditor
+    public sealed class DataPickerDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "DataPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Data Picker";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "data-picker.html";
+        internal const string DataEditorViewPath = Constants.Internals.EmptyEditorViewPath;
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "data-picker.overlay.html";
         internal const string DataEditorIcon = "icon-fa fa-mouse-pointer";
 
@@ -44,37 +39,98 @@ namespace Umbraco.Community.Contentment.DataEditors
         public DataPickerDataEditor(
             IIOHelper ioHelper,
             IShortStringHelper shortStringHelper,
-            ConfigurationEditorUtility utility,
-            ILogger logger)
-            : base(logger)
+            ConfigurationEditorUtility utility)
         {
             _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
             _utility = utility;
         }
 #else
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IJsonSerializer _jsonSerializer;
+
         public DataPickerDataEditor(
-            IDataValueEditorFactory dataValueEditorFactory,
             IIOHelper ioHelper,
+            ILocalizedTextService localizedTextService,
+            IJsonSerializer jsonSerializer,
             IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
-            : base(dataValueEditorFactory)
         {
             _ioHelper = ioHelper;
+            _localizedTextService = localizedTextService;
+            _jsonSerializer = jsonSerializer;
             _shortStringHelper = shortStringHelper;
             _utility = utility;
         }
 #endif
-        protected override IConfigurationEditor CreateConfigurationEditor() => new DataPickerConfigurationEditor(_ioHelper, _shortStringHelper, _utility);
 
-        public override IDataValueEditor GetValueEditor(object configuration)
+        public string Alias => DataEditorAlias;
+
+        public EditorType Type => EditorType.PropertyValue;
+
+        public string Name => DataEditorName;
+
+        public string Icon => DataEditorIcon;
+
+        public string Group => UmbConstants.PropertyEditors.Groups.Lists;
+
+        public bool IsDeprecated => false;
+
+        public IDictionary<string, object> DefaultConfiguration => default;
+
+        public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
+
+        public IConfigurationEditor GetConfigurationEditor() => new DataPickerConfigurationEditor(_ioHelper, _shortStringHelper, _utility);
+
+        public IDataValueEditor GetValueEditor()
         {
+#if NET472
+            return new DataValueEditor()
+#else
+            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+#endif
+            {
+                ValueType = ValueTypes.Json,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+            };
+        }
+
+        public IDataValueEditor GetValueEditor(object configuration)
+        {
+            var view = default(string);
+
             if (configuration is Dictionary<string, object> config)
             {
-                config.Add("overlayView", _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) ?? string.Empty);
+                if (config.TryGetValue(DataPickerConfigurationEditor.DisplayMode, out var tmp1) == true)
+                {
+                    var displayMode = default(IDataPickerDisplayMode);
+
+                    if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
+                    {
+                        displayMode = _utility.FindConfigurationEditor<IDataPickerDisplayMode>(x => str1.InvariantEquals(x.View) == true);
+                    }
+                    else if (tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject item1)
+                    {
+                        displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
+                    }
+
+                    if (displayMode != null)
+                    {
+                        view = displayMode.View;
+                    }
+                }
             }
 
-            return base.GetValueEditor(configuration);
+#if NET472
+            return new DataValueEditor()
+#else
+            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+#endif
+            {
+                Configuration = configuration,
+                ValueType = ValueTypes.Json,
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
+            };
         }
     }
 }

@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
@@ -24,72 +25,76 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataSource = "dataSource";
         internal const string DisplayMode = "displayMode";
 
+        private readonly IIOHelper _ioHelper;
+        private readonly ConfigurationEditorUtility _utility;
+
         public DataPickerConfigurationEditor(
             IIOHelper ioHelper,
             IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
             : base()
         {
-            var displayModes = utility
-                .GetConfigurationEditorModels<IContentBlocksDisplayMode>(shortStringHelper)
-                .Select(x => new DataListItem
-                {
-                    Name = x.Name,
-                    Value = x.Name.ToSafeAlias(shortStringHelper, true),
-                    Icon = x.Icon,
-                    Description = x.Description,
-                });
+            _ioHelper = ioHelper;
+            _utility = utility;
+
+            var configEditorViewPath = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
+            var defaultConfigEditorConfig = new Dictionary<string, object>
+            {
+                { MaxItemsConfigurationField.MaxItems, 1 },
+                { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+            };
 
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>(shortStringHelper));
+            var displayModes = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerDisplayMode>(shortStringHelper));
+
+            // NOTE: Sets the default display mode to be the Cards.
+            var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(CardsDataPickerDisplayMode).GetFullNameWithAssembly()));
+            if (defaultDisplayMode != null)
+            {
+                DefaultConfiguration.Add(DisplayMode, new[] { new { key = defaultDisplayMode.Key, value = defaultDisplayMode.DefaultValues } });
+            }
 
             var defaultOverlaySize = "medium";
 
-            DefaultConfiguration.Add(DisplayMode, "cards");
-            DefaultConfiguration.Add("maxItems", 0);
-            DefaultConfiguration.Add("overlaySize", defaultOverlaySize);
             DefaultConfiguration.Add("pageSize", 12);
-
-            Fields.Add(new ConfigurationField
-            {
-                Key = DisplayMode,
-                Name = "Display mode",
-                Description = "Select display mode for the picker editor.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/item-picker.html"),
-                Config = new Dictionary<string, object>
-                {
-                    { "defaultValue", "cards" },
-                    { "items", displayModes },
-                    { "maxItems", 1 },
-                    { "disableSorting", "1" },
-                    { "listType", "list" },
-                    { "overlayView", ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/item-picker.overlay.html") ?? string.Empty },
-                }
-            });
+            DefaultConfiguration.Add("overlaySize", defaultOverlaySize);
+            DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
 
             Fields.Add(new ConfigurationField
             {
                 Key = DataSource,
                 Name = "Data source",
                 Description = "Select and configure a data source.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/configuration-editor.html"),
-                Config = new Dictionary<string, object>
+                View = configEditorViewPath,
+                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
                 {
-                    { "addButtonLabelKey", "contentment_configureDataSource" },
-                    { "disableSorting", "1" },
-                    { "enableDevMode", "1" },
-                    { "enableFilter", (dataSources.Count > 10) ? "1" : "0" },
-                    { "items", dataSources },
-                    { "maxItems", 1 },
-                    { "overlayView", ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/configuration-editor.overlay.html") ?? string.Empty },
+                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
+                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                 }
             });
 
             Fields.Add(new ConfigurationField
             {
-                Key = "maxItems",
-                Name = "Maximum items",
-                Description = "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/number-input.html")
+                Key = DisplayMode,
+                Name = "Display mode",
+                Description = "Select display mode for the picker editor.",
+                View = configEditorViewPath,
+                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDisplayMode" },
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
+                }
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "pageSize",
+                Name = "Page size",
+                Description = "How many items to display per page? The default value is 12.",
+                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
             });
 
             Fields.Add(new ConfigurationField
@@ -113,21 +118,53 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
-            {
-                Key = "pageSize",
-                Name = "Page size",
-                Description = "How many items to display per page? The default value is 12.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/number-input.html")
-            });
+            Fields.Add(new MaxItemsConfigurationField(ioHelper));
+            Fields.Add(new EnableDevModeConfigurationField());
+        }
 
-            Fields.Add(new ConfigurationField
+        public override IDictionary<string, object> ToValueEditor(object configuration)
+        {
+            var config = base.ToValueEditor(configuration);
+
+            if (config.TryGetValueAs(DisplayMode, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
             {
-                Key = "enableDevMode",
-                Name = "Developer mode?",
-                Description = "Enable a property action to edit the raw data for the editor value.",
-                View = "boolean",
-            });
+                var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
+                if (displayMode != null)
+                {
+                    // NOTE: Removing the raw configuration as the display mode may have the same key.
+                    config.Remove(DisplayMode);
+
+                    var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
+                    if (editorConfig != null)
+                    {
+                        foreach (var prop in editorConfig)
+                        {
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
+                        }
+                    }
+
+                    if (displayMode.DefaultConfig != null)
+                    {
+                        foreach (var prop in displayMode.DefaultConfig)
+                        {
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
+            {
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath));
+            }
+
+            return config;
         }
     }
 }
