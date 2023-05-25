@@ -1,4 +1,4 @@
-/* Copyright ï¿½ 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -7,11 +7,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "$scope",
     "$http",
     "editorService",
+    "editorState",
     "localizationService",
     "overlayService",
     "umbRequestHelper",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, $http, editorService, localizationService, overlayService, umbRequestHelper, devModeService) {
+    function ($scope, $http, editorService, editorState, localizationService, overlayService, umbRequestHelper, devModeService) {
 
         if ($scope.model.hasOwnProperty("contentTypeId")) {
             // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
@@ -35,6 +36,16 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var vm = this;
 
         function init() {
+
+            // NOTE: [LK] Adds context of the current page, for potential future data-sources.
+            // If the page is new, then it doesn't have an id, so the parentId will be used.
+            config.currentPage = $scope.node || editorState.getCurrent();
+            config.currentPageId = config.currentPage.id > 0 ? config.currentPage.id : config.currentPage.parentId;
+
+            // Support Content not in Content / Media Tree
+            if (!config.currentPageId) {
+                config.currentPageId = -1;
+            }
 
             $scope.model.value = $scope.model.value || config.defaultValue;
 
@@ -98,6 +109,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 view: config.overlayView,
                 size: config.overlaySize || "medium",
                 config: {
+                    currentPageId: config.currentPageId,
                     dataTypeKey: $scope.model.dataTypeKey,
                     enableMultiple: config.maxItems !== 1,
                     listType: config.displayMode,
@@ -130,7 +142,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             if ($scope.model.value.length) {
                 vm.loading = true;
                 umbRequestHelper.resourcePromise(
-                    $http.post("backoffice/Contentment/DataPickerApi/GetItems", $scope.model.value, {
+                    $http.post("backoffice/Contentment/DataPickerApi/GetItems?id=" + config.currentPageId, $scope.model.value, {
                         params: { dataTypeKey: $scope.model.dataTypeKey }
                     }),
                     "Failed to retrieve item data.")

@@ -46,9 +46,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpPost]
 #if NET472
-        public async Task<IHttpActionResult> GetItems(Guid dataTypeKey, [FromBody] string[] values)
+        public async Task<IHttpActionResult> GetItems([FromUri] int id, Guid dataTypeKey, [FromBody] string[] values)
 #else
-        public async Task<IActionResult> GetItems(Guid dataTypeKey, [FromBody] string[] values)
+        public async Task<IActionResult> GetItems([FromQuery] int id, Guid dataTypeKey, [FromBody] string[] values)
 #endif
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
@@ -91,9 +91,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpGet]
 #if NET472
-        public async Task<IHttpActionResult> Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+        public async Task<IHttpActionResult> Search(int id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 #else
-        public async Task<IActionResult> Search(Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+        public async Task<IActionResult> Search(int id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 #endif
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)

@@ -1,3 +1,8 @@
+/* Copyright © 2023 Lee Kelleher.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.DataPicker.Controller", [
     "$scope",
     "$http",
@@ -7,6 +12,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
         //console.log("data-picker.overlay", $scope.model);
 
         var defaultConfig = {
+            currentPageId: -1,
             dataTypeKey: null,
             enableMultiple: false,
             listType: "cards",
@@ -56,6 +62,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             umbRequestHelper.resourcePromise(
                 $http.get("backoffice/Contentment/DataPickerApi/Search", {
                     params: {
+                        id: config.currentPageId,
                         dataTypeKey: vm.searchOptions.dataTypeKey,
                         pageNumber: vm.searchOptions.pageNumber,
                         pageSize: vm.searchOptions.pageSize,
