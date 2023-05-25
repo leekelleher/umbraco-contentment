@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
+using Umbraco.Core.Dictionary;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
@@ -18,6 +19,7 @@ using Umbraco.Web;
 using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -34,14 +36,26 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly ICultureDictionary _cultureDictionary;
 
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
+            ILocalizedTextService localizedTextService,
+#if NET472 == false
+            ICultureDictionary cultureDictionary,
+#endif
             IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _localizedTextService = localizedTextService;
+#if NET472
+            _cultureDictionary = Core.Composing.Current.CultureDictionaryFactory.CreateDictionary();
+#else
+            _cultureDictionary = cultureDictionary;
+#endif
             _ioHelper = ioHelper;
         }
 
@@ -133,7 +147,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
+                    Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
                     Description = string.Join(", ", x.AllowedTemplates.Select(t => t.Alias)),

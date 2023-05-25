@@ -14,7 +14,7 @@ namespace Umbraco.Core.Services
 namespace Umbraco.Extensions
 #endif
 {
-    internal static class LocalizedTextServiceExtensions
+    internal static partial class LocalizedTextServiceExtensions
     {
         public static string LocalizeContentment(this ILocalizedTextService service, string key, string fallback = null)
         {
