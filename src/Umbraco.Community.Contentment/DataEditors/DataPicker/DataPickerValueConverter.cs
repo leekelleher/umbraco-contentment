@@ -153,7 +153,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 configuration.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
                 tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1)
             {
-                var source = _utility.GetConfigurationEditor<IDataPickerSourceValueConverter>(obj1.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(obj1.Value<string>("key"));
                 if (source != null)
                 {
                     var config = obj1["value"].ToObject<Dictionary<string, object>>();
