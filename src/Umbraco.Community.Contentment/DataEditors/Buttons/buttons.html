@@ -10,7 +10,7 @@
                 ng-repeat="item in vm.items"
                 ng-class="{ 'umb-button--selected' : item.selected }"
                 label="{{vm.hideName === false ? item.name : null}}"
-                title="{{item.name}}, {{item.description}}"
+                title="{{vm.hideName === true ? item.name : ''}}{{item.description == '' ? '' : (vm.hideName ? (', ' + item.description) : item.description)}}"
                 icon="{{vm.hideIcon === false ? (item.icon || vm.defaultIcon) + vm.iconExtras : null}}"
                 disabled="item.disabled">
     </umb-button>
