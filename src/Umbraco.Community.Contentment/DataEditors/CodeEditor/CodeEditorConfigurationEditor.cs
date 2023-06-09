@@ -192,6 +192,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 #endif
+            modes.Sort((x, y) => x.Value.CompareTo(y.Value));
+            themes.Sort((x, y) => x.Value.CompareTo(y.Value));
 
             return (modes, themes);
         }
