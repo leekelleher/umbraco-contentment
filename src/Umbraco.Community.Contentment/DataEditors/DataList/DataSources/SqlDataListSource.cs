@@ -211,14 +211,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     foreach (NPoco.PocoExpando result in results)
                     {
-                        items.Add(new DataListItem
+                        var item = new DataListItem
                         {
                             Name = result.Values.ElementAtOrDefault(0).TryConvertTo<string>().ResultOr(string.Empty),
-                            Value = result.Values.ElementAtOrDefault(1).TryConvertTo<string>().ResultOr(string.Empty),
-                            Description = result.Values.ElementAtOrDefault(2).TryConvertTo<string>().ResultOr(string.Empty),
-                            Icon = result.Values.ElementAtOrDefault(3).TryConvertTo<string>().ResultOr(string.Empty),
-                            Disabled = result.Values.ElementAtOrDefault(4).TryConvertTo<bool>().ResultOr(false),
-                        });
+                        };
+
+                        item.Value = result.Values.ElementAtOrDefault(1).TryConvertTo<string>().ResultOr(item.Name);
+
+                        if (result.Values.Count > 2)
+                            item.Description = result.Values.ElementAtOrDefault(2).TryConvertTo<string>().ResultOr(string.Empty);
+
+                        if (result.Values.Count > 3)
+                            item.Icon = result.Values.ElementAtOrDefault(3).TryConvertTo<string>().ResultOr(string.Empty);
+
+                        if (result.Values.Count > 4)
+                            item.Disabled = result.Values.ElementAtOrDefault(4).TryConvertTo<bool>().ResultOr(false);
+
+                        items.Add(item);
                     }
                 }
             }
