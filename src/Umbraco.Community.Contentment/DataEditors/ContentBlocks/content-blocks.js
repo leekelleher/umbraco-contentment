@@ -376,7 +376,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 overlayService.open({
                     disableBackdropClick: true,
-                    title: localizationService.tokenReplace(labels[0], [itemName]),
+                    title: localizationService.tokenReplace(labels[0], [itemName]).replace("<em>", "'").replace("</em>", "'"),
                     description: labels[1],
                     blueprintName: itemName,
                     view: "/App_Plugins/Contentment/editors/content-blocks.blueprint.html",
