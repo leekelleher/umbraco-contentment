@@ -106,16 +106,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
-                    return umbracoContext.Content.GetByXPath(preview, parsed)
-                        .Select(x => new DataListItem
-                        {
-                            Name = x.Name,
-                            Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
-                            Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                            Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                            Disabled = x.IsPublished() == false,
-                        })
-                        .ToList();
+                    return umbracoContext.Content
+                        .GetByXPath(preview, parsed)
+                        .Select(x => x.ToDataListItem("image", _contentTypeService));
                 }
             }
 

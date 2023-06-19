@@ -4,16 +4,13 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
-using Umbraco.Web;
 #if NET472
 using Umbraco.Core.Models.PublishedContent;
 #else
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Extensions;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -27,36 +24,26 @@ namespace Umbraco.Community.Contentment.DataEditors
             switch (value)
             {
                 case IPublishedContent content:
-                    return new DataListItem
-                    {
-                        Name = content.Name,
-                        Description = content.TemplateId > 0 ? content.Url() : string.Empty,
-                        Disabled = content.IsPublished() == false,
-                        Icon = content.ContentType.GetIcon(),
-                        Properties = new Dictionary<string, object>
-                        {
-                            { "image", content.Value<IPublishedContent>("image")?.Url() },
-                        },
-                        Value = content.GetUdi().ToString(),
-                    };
+                    return content.ToDataListItem();
 
                 case JObject jobj:
                     return jobj.ToObject(typeof(DataListItem)) as DataListItem;
 
                 case SocialLink link:
+                    return link.ToDataListItem();
+
+                case string str:
                     return new DataListItem
                     {
-                        Name = link.Name,
-                        Description = link.Url,
-                        Icon = $"icon-{link.Network}",
-                        Value = link.Network,
+                        Name = str,
+                        Value = str
                     };
 
                 default:
                     return new DataListItem
                     {
                         Name = value.ToString(),
-                        Value = value.ToString(),
+                        Value = value.ToString()
                     };
             }
         }
