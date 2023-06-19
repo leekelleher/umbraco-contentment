@@ -4,7 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
 #if NET472
 using Umbraco.Core.Models.PublishedContent;
 #else
@@ -22,15 +22,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> ConvertTo(IPublishedProperty property)
         {
-            var value = property.GetValue() as System.Collections.Specialized.NameValueCollection;
-
-            return value != null
-                ? value.AllKeys.Select(x => new DataListItem
+            if (property.GetValue() is NameValueCollection items)
+            {
+                foreach (var key in items.AllKeys)
                 {
-                    Name = x,
-                    Value = value[x],
-                })
-                : Enumerable.Empty<DataListItem>();
+                    yield return new DataListItem
+                    {
+                        Name = key,
+                        Value = items[key],
+                    };
+                }
+            }
         }
     }
 }
