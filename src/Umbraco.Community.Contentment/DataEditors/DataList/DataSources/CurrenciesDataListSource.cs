@@ -92,11 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             return CultureInfo
                 .GetCultures(CultureTypes.SpecificCultures)
-#if NET7_0_OR_GREATER
                 .Select(x => new RegionInfo(x.Name))
-#else
-                .Select(x => new RegionInfo(x.LCID))
-#endif
                 .DistinctBy(x => x.ISOCurrencySymbol)
                 // NOTE: Removes any odd currencies.
                 .Where(x => x.ISOCurrencySymbol.Length == 3);
