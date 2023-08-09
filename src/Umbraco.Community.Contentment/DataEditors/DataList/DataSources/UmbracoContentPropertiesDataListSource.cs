@@ -115,7 +115,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Icon = _icons.ContainsKey(x.PropertyEditorAlias) == true
                                 ? _icons[x.PropertyEditorAlias]
                                 : UmbConstants.Icons.PropertyEditor,
-                        });
+                        }).OrderBy(y => y.Name);
                 }
             }
 
