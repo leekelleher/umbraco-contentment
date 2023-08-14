@@ -21,4 +21,4 @@ You may find other features within Contentment that have not yet been documented
 
 [Documentation for each of the components](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/) - with screenshots, use-cases and code examples can be found on the GitHub repository.
 
-If my Umbraco packages are of value to you and/or your business, then [**you could sponsor my open source contributions on GitHub?**](https://github.com/sponsors/leekelleher)
+If Contentment or any of my Umbraco packages are of value to you and/or your business, then [**you could sponsor my open source contributions on GitHub.**](https://github.com/sponsors/leekelleher)

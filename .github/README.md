@@ -4,6 +4,8 @@
 
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
+[![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Our.Umbraco.Community.Contentment.Core?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
+
 ### What is it?
 
 This is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
