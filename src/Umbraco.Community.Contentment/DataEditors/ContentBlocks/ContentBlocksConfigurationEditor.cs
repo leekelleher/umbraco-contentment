@@ -87,6 +87,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToConfigurationEditor(configuration);
 
+            // NOTE: [LK] Technical debt. This works around the original display mode data just being the view-path (string).
+            // This was prior to v1.1.0 release, (when Content Blocks was introduced). It could be removed in the next major version.
             if (config.TryGetValueAs(DisplayMode, out string str1) == true && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
             {
                 var mode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
@@ -116,12 +118,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     config.Remove(DisplayMode);
 
                     var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
-
-                    foreach (var prop in editorConfig)
+                    if (editorConfig != null)
                     {
-                        if (config.ContainsKey(prop.Key) == false)
+                        foreach (var prop in editorConfig)
                         {
-                            config.Add(prop.Key, prop.Value);
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
                         }
                     }
 

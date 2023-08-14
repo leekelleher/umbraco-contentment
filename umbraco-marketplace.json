@@ -3,7 +3,7 @@
   "AlternatePackageNames": [ "Contentment" ],
   "AuthorDetails": {
     "Name": "Lee Kelleher",
-    "Description": "A long time Umbraco collaborator, 12x MVP",
+    "Description": "A long time Umbraco collaborator, 13x MVP",
     "Url": "https://leekelleher.com/umbraco/",
     "ImageUrl": "https://github.com/leekelleher.png",
     "Contributors": [],
@@ -74,19 +74,23 @@
   "VersionSpecificPackageIds": [
     {
       "UmbracoMajorVersion": 8,
-      "PackageId": "Our.Umbraco.Community.Contentment"
+      "PackageId": "Umbraco.Community.Contentment"
     },
     {
       "UmbracoMajorVersion": 9,
-      "PackageId": "Our.Umbraco.Community.Contentment"
+      "PackageId": "Umbraco.Community.Contentment"
     },
     {
       "UmbracoMajorVersion": 10,
-      "PackageId": "Our.Umbraco.Community.Contentment"
+      "PackageId": "Umbraco.Community.Contentment"
     },
     {
       "UmbracoMajorVersion": 11,
-      "PackageId": "Our.Umbraco.Community.Contentment"
+      "PackageId": "Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 12,
+      "PackageId": "Umbraco.Community.Contentment"
     }
   ],
   "VideoUrl": "https://www.youtube.com/embed/alhbwyQkU1E"

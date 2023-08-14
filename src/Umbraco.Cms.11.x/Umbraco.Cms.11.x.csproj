@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="Umbraco.Cms" Version="11.0.0" />
-        <PackageReference Include="uSync" Version="11.0.0-rc3" />
+        <PackageReference Include="uSync" Version="11.0.0" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>
 

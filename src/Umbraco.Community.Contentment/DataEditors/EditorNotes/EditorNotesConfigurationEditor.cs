@@ -51,7 +51,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "icon",
                 Name = "Icon",
                 Description = "Select an icon to be displayed next to the message.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath)
+                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { "size", "small" },
+                }
             });
 
             Fields.Add(new ConfigurationField

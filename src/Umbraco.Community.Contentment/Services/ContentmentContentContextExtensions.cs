@@ -21,7 +21,11 @@ namespace Umbraco.Community.Contentment.Services
 
         public static IPublishedContent GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
 
-        public static string ParseXPathQuery(this IContentmentContentContext ctx, string xpathExpression, Func<int, IEnumerable<string>> getPath, Func<int, bool> publishedContentExists)
+        public static string ParseXPathQuery(
+            this IContentmentContentContext ctx,
+            string xpathExpression,
+            Func<int, IEnumerable<string>> getPath,
+            Func<int, bool> publishedContentExists)
         {
             var nodeContextId = ctx.GetCurrentContentId(out var isParent);
 

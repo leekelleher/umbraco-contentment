@@ -10,7 +10,6 @@ using System.Net;
 using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;
-using Umbraco.Core.Hosting;
 using Umbraco.Core.IO;
 using Umbraco.Core.Logging;
 using Umbraco.Core.PropertyEditors;

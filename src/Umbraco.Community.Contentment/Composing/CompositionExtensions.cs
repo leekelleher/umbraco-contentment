@@ -17,6 +17,7 @@ namespace Umbraco.Core.Composing
             return composition.WithCollectionBuilder<ContentmentListItemCollectionBuilder>();
         }
 
+        [System.Obsolete("This method is no longer used. It will be removed in a future version.")]
         public static Composition UnlockContentment(this Composition composition)
         {
             // NOTE: All of the Data List Sources have now been unlocked, this extension method is redundant.

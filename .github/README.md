@@ -4,6 +4,8 @@
 
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
+[![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Our.Umbraco.Community.Contentment.Core?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
+
 ### What is it?
 
 This is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
@@ -153,7 +155,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://mastodon.social/@leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1,589+ hours</b> (between 2019-03-13 to 2023-04-15)</summary>
+<summary>Current development effort: <b>1,637+ hours</b> (between 2019-03-13 to 2023-04-25)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 

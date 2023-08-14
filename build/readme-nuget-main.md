@@ -19,11 +19,11 @@ The following property editors are available...
 - [Textbox List](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
 - [Text Input](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
+You may find other features within Contentment that have not yet been documented, _let's call those "life's little surprises"._
 
-There are some undocumented features within Contentment, _let's call those "life's little surprises"._
+[Documentation for each of the components](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/) - with screenshots, use-cases and code examples can be found on the GitHub repository.
 
-
-[Documentation for each of the components - with screenshots, use-cases and code examples can be found on the GitHub repository.](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/)
+If my Umbraco packages are of value to you and/or your business, then [**you could sponsor my open source contributions on GitHub?**](https://github.com/sponsors/leekelleher)
 
 ---
 

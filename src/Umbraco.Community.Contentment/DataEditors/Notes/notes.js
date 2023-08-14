@@ -5,8 +5,9 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.Notes.Controller", [
     "$scope",
+    "editorState",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, devModeService) {
+    function ($scope, editorState, devModeService) {
 
         //console.log("notes.model", $scope.model);
 
@@ -27,6 +28,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     method: () => devModeService.editValue($scope.model, setDirty)
                 }]);
             }
+
+            vm.currentPage = $scope.node || editorState.getCurrent();
 
             // NOTE: If previewing in the Content Type Editor's property preview panel,
             // we'll ignore the hide property group container.

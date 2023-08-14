@@ -1,6 +1,6 @@
 ﻿{
     "name": "Contentment",
-    "version": "4.4.4",
+    "version": "4.4.5",
     "css": [ "~/App_Plugins/Contentment/contentment.css" ],
     "javascript": [ "~/App_Plugins/Contentment/contentment.js" ]
 }
