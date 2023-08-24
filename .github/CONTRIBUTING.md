@@ -29,10 +29,11 @@ Given there are now multiple versions of Contentment that support multiple versi
 - The [`dev/v1.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v1.x) branch is for Contentment **v1.4.x** patch releases, this targets Umbraco **v8.6.1**.
 - The [`dev/v2.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v2.x) branch is for Contentment **v2.2.x** patch releases, this targets Umbraco **v8.14.0**.
 - The [`dev/v3.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v3.x) branch is for Contentment **v3.4.x** patch releases, this targets both Umbraco **v8.17.0** and **v9.0.0**.
-- The [`dev/v4.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v4.x) branch is for Contentment **v4.x** (current) releases, this targets Umbraco **v8.17.0**, **v9.5.0**, **v10.0.0** and **v11.0.0**.
+- The [`dev/v4.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v4.x) branch is for Contentment **v4.x** (current) releases, this targets Umbraco **v8.17.0**, **v9.5.0**, **v10.0.0**, **v11.0.0** and **v12.0.0**.
 
 
 ### Further reading
 
-I've been thinking a lot about Jeff Geerling's post ["Why I close PRs (OSS project maintainer notes)"](https://www.jeffgeerling.com/blog/2016/why-i-close-prs-oss-project-maintainer-notes) lately. If you do submit a PR and feel that I'm closing down the conversation, this is most likely the rationale behind it.
+I've been thinking a lot about Jeff Geerling's post ["Why I close PRs (OSS project maintainer notes)"](https://www.jeffgeerling.com/blog/2016/why-i-close-prs-oss-project-maintainer-notes) lately.
+If you do submit a PR and feel that I'm closing down the conversation, this is most likely the rationale behind it.
 
