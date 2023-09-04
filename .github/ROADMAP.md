@@ -114,6 +114,7 @@ Property Editors are:
 ### v4.5
 
 - [Data Picker](https://github.com/leekelleher/umbraco-contentment/pull/297)
+- Data List: [Umbraco Backoffice Sections](https://github.com/leekelleher/umbraco-contentment/commit/c8a2f0f8552b2ad3a778782f13c45cbb18aff88c) data-source.
 
 ### v4.6
 
@@ -123,6 +124,11 @@ Property Editors are:
 ## v5
 
 - `(⌐■_■)` _I'm parking the idea of a v5! Originally, my plans was for v5 to drop support for v8 and v9, focusing on v10+, but with v14 (new backoffice) on the horizon, I might save my development efforts._
+
+
+## vFuture
+
+- [Support for Umbraco v14 (Bellissima, aka new backoffice)](https://github.com/leekelleher/umbraco-contentment/issues/316)?
 
 
 ## Future feature releases
