@@ -27,6 +27,10 @@ namespace Umbraco.Cms.v12_x
                 .AddWebsite()
                 .AddDeliveryApi()
                 .AddComposers()
+                .AddUmbracoConfiguration(x =>
+                {
+                    x.PropertyValueConverters().Remove<Community.Contentment.DataEditors.ContentBlocksValueConverter>();
+                })
                 .Build();
         }
 
