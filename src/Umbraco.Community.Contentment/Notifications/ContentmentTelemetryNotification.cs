@@ -60,7 +60,11 @@ namespace Umbraco.Community.Contentment.Notifications
                     {
                         var dataTypeConfig = new Dictionary<string, object>();
 
+#if NET8_0_OR_GREATER
+                        if (entity.ConfigurationObject is Dictionary<string, object> config)
+#else
                         if (entity.Configuration is Dictionary<string, object> config)
+#endif
                         {
                             void AddConfigurationEditorKey(string alias)
                             {
