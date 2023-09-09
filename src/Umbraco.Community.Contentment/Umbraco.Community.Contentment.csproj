@@ -14,10 +14,10 @@
         <Product>Umbraco.Community.Contentment</Product>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <Version>5.1.0-develop</Version>
+        <Version>6.0.0-alpha001</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
-        <Copyright>$([System.DateTime]::Now.Year) Â© $(Company)</Copyright>
+        <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
         <PackageId>Umbraco.Community.Contentment</PackageId>
         <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>

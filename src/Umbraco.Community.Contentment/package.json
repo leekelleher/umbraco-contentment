@@ -1,17 +1,27 @@
 {
-    "name": "umbraco-community-contentment",
-    "private": true,
-    "version": "5.0.0-develop",
-    "scripts": {
-        "dev": "gulp watch",
-        "build": "gulp build"
-    },
-    "devDependencies": {
-        "gulp": "^4.0.2",
-        "gulp-clean-css": "^4.3.0",
-        "gulp-concat": "^2.6.1",
-        "gulp-rename": "^2.0.0",
-        "gulp-strip-comments": "^2.6.0",
-        "gulp-uglify": "^3.0.2"
-    }
+  "name": "umbraco-community-contentment",
+  "version": "6.0.0-alpha001",
+  "description": "Contentment, a collection of components for Umbraco.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leekelleher/umbraco-contentment.git"
+  },
+  "keywords": [
+    "umbraco",
+    "umbraco-backoffice",
+    "umbraco-package"
+  ],
+  "author": "leekelleher",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/leekelleher/umbraco-contentment/issues"
+  },
+  "homepage": "https://github.com/leekelleher/umbraco-contentment#readme",
+  "devDependencies": {
+    "@umbraco-cms/backoffice": "^14.0.0--preview001"
+  }
 }

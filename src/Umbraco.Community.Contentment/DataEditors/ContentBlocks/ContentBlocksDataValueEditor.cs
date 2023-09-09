@@ -115,7 +115,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     {
                                         ContentKey = block.Key,
                                         PropertyTypeKey = propertyType.Key,
+#if NET8_0_OR_GREATER == false
                                         Files = Array.Empty<ContentPropertyFile>()
+#endif
                                     };
 
                                     var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, blockPropertyValue);

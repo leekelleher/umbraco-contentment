@@ -1,0 +1,14 @@
+{
+    "id": "contentment",
+    "name": "Contentment",
+    "version": "6.0.0-alpha001",
+    "allowTelemetry": false,
+    "extensions": [
+        {
+            "name": "Contentment EntryPoint",
+            "type": "entryPoint",
+            "alias": "Contentment.EntryPoint",
+            "js": "/App_Plugins/Contentment/bellissima.js"
+        }
+    ]
+}
