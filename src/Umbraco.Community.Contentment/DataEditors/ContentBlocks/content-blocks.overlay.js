@@ -220,7 +220,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
                     var item = model.selection[0];
 
-                    console.log("content-blocks-overlay.contentPicker.submit", item);
+                    //console.log("content-blocks-overlay.contentPicker.submit", item);
 
                     umbRequestHelper.resourcePromise(
                         $http.get(
@@ -231,14 +231,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                         .then(result => {
                             if (result && result.contentTypeKey) {
 
-                                console.log("content-blocks-overlay.contentResource.getScaffold", result);
+                                //console.log("content-blocks-overlay.contentResource.getScaffold", result);
 
                                 $scope.model.submit({
                                     name: item.name,
                                     elementType: result.contentTypeKey,
                                     icon: item.icon,
                                     key: item.key,
-                                    value: {} // TODO: [LK:2022-04-14] You got to here. Might need to pass more data through, to help with the lookups, etc.
+                                    udi: item.udi,
+                                    value: {}
                                 });
 
                             }
@@ -262,6 +263,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                 var item = {
                     elementType: vm.content.elementType,
                     key: vm.content.key,
+                    udi: "umb://element/" + vm.content.key.replaceAll("-", ""),
                     value: {},
                 };
 

@@ -7,6 +7,11 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+#if NET472
+using Umbraco.Core;
+#else
+using Umbraco.Cms.Core;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -21,6 +26,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Guid ElementType { get; set; }
 
         public Guid Key { get; set; }
+
+        public Udi Udi { get; set; }
 
         public Dictionary<string, object> Value { get; set; }
     }

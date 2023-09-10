@@ -22,6 +22,7 @@ using Umbraco.Core.Models.Editors;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 #else
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -86,6 +87,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                         if (block != null &&
                             _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
                         {
+                            if (block.Udi == null)
+                            {
+                                block.Udi = Udi.Create("element", block.Key);
+                            }
+
                             foreach (var propertyType in elementType.CompositionPropertyTypes)
                             {
                                 if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true)

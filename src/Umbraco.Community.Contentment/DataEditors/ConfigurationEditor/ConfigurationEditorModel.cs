@@ -49,6 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DescriptionTemplate { get; set; }
 
+        [Obsolete("Please use Expressions instead. e.g. { \"icon\", \"{{ AngularJS expression }}\" }", false)]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string IconTemplate { get; set; }
     }

@@ -19,7 +19,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "Umbraco.Community.Contentment.Services.DevMode",
     function ($scope, $q, $http, $interpolate, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
 
-        // console.log("content-blocks.model", $scope.model);
+        console.log("content-blocks.model", $scope.model);
 
         var defaultConfig = {
             addButtonLabelKey: "grid_addElement",
@@ -183,6 +183,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 view: config.overlayView,
                 submit: function (model) {
 
+                    //console.log("content-blocks.add.submit", model);
+
                     $scope.model.value.push(model);
 
                     var idx = $scope.model.value.length - 1;
@@ -252,7 +254,22 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var item = $scope.model.value[$index];
 
-            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
+            if (item.udi && item.udi.startsWith("umb://document/") === true) {
+
+                editorService.contentEditor({
+
+                    id: item.key,
+                    submit: function (model) {
+                        console.log("submit?", model);
+                        editorService.close();
+                    },
+                    close: function () {
+                        console.log("close?", arguments);
+                        editorService.close();
+                    }
+                });
+
+            } else if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
                 var elementType = config.elementTypeLookup[item.elementType];
 
@@ -261,7 +278,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         elementType: elementType,
                         currentPageId: config.currentPageId,
                     },
-                    size: elementType.overlaySize,
+                    size: elementType.overlaySize || "large",
                     value: item,
                     view: config.overlayView,
                     submit: function (model) {
