@@ -12,14 +12,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
     "contentResource",
     "editorService",
     "editorState",
+    "entityResource",
     "localizationService",
     "notificationsService",
     "overlayService",
     "umbRequestHelper",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, $q, $http, $interpolate, clipboardService, contentResource, editorService, editorState, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
+    function ($scope, $q, $http, $interpolate, clipboardService, contentResource, editorService, editorState, entityResource, localizationService, notificationsService, overlayService, umbRequestHelper, devModeService) {
 
-        console.log("content-blocks.model", $scope.model);
+        //console.log("content-blocks.model", $scope.model);
 
         var defaultConfig = {
             addButtonLabelKey: "grid_addElement",
@@ -69,6 +70,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             config.elementTypeScaffoldCache = {};
             config.elementTypeLookup = {};
+            config.documentLookup = {};
             config.missingItem = { name: "This content is not supported for this configuration.", icon: "icon-alert" };
             config.nameTemplates = {};
 
@@ -103,10 +105,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.previews = [];
             vm.blockActions = {};
 
+            var documents = [];
+
             for (var i = 0; i < $scope.model.value.length; i++) {
                 var item = $scope.model.value[i];
+                if (isDocument(item) === true) {
+                    documents.push(item.udi);
+                }
 
-                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
+                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true || isDocument(item) === true) {
 
                     vm.blockActions[item.key] = actionsFactory(i);
 
@@ -115,6 +122,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     vm.disabled[item.key] = true;
 
                 }
+            }
+
+            if (documents.length > 0) {
+                entityResource.getByIds(documents, "Document").then(data => {
+                    // TODO: [LK] Check if the document has been deleted? (remove it?)
+                    // or unpublished, show a different state? ¯\_(ツ)_/¯
+                    data.forEach(x => { config.documentLookup[x.key] = x; });
+                });
             }
 
             populatePreviews();
@@ -187,10 +202,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     $scope.model.value.push(model);
 
+                    if (isDocument(model) === true) {
+
+                        entityResource.getById(model.key, "Document").then(node => {
+                            // TODO: [LK] Check if the document has been deleted? (remove it?)
+                            // or unpublished, show a different state? ¯\_(ツ)_/¯
+                            config.documentLookup[node.key] = node;
+                        });
+
+                    }
+
                     var idx = $scope.model.value.length - 1;
-
-                    vm.blockActions[model.key] = actionsFactory(idx);
-
+                    vm.blockActions.push(actionsFactory(idx));
                     preview(idx);
 
                     if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
@@ -254,17 +277,20 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             var item = $scope.model.value[$index];
 
-            if (item.udi && item.udi.startsWith("umb://document/") === true) {
+            if (isDocument(item) === true) {
 
                 editorService.contentEditor({
 
                     id: item.key,
                     submit: function (model) {
-                        console.log("submit?", model);
+                        console.log("submit: does this ever get called?", model);
+                        // TODO: [LK] Would I update the node info from here?
                         editorService.close();
                     },
                     close: function () {
-                        console.log("close?", arguments);
+                        console.log("close", arguments);
+                        // TODO: [LK] Update the node info from here?
+                        // The first argument is "this", so use the `id` or `item.key`.
                         editorService.close();
                     }
                 });
@@ -301,6 +327,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 devModeService.editValue(item);
 
             }
+        };
+
+        function isDocument(item) {
+            return item.udi && item.udi.startsWith("umb://document/") === true
         };
 
         function preview($index) {
@@ -368,6 +398,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return config.elementTypeLookup[item.elementType].icon;
             }
 
+            if (config.documentLookup.hasOwnProperty(item.key) === true) {
+                return config.documentLookup[item.key].icon;
+            }
+
             return "icon-document";
         };
 
@@ -395,6 +429,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             } else if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
                 name = config.elementTypeLookup[item.elementType].name;
+
+            } else if (config.documentLookup.hasOwnProperty(item.key) === true) {
+
+                name = config.documentLookup[item.key].name;
 
             }
 

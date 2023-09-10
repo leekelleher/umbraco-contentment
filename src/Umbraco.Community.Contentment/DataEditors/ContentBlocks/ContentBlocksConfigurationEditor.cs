@@ -98,9 +98,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                     DefaultValues = new Dictionary<string, object>
                     {
                         { "icon", UmbConstants.Icons.ContentType },
-                        { "nameTemplate", "{{ udi | ncNodeName }}" },
-                        { "overlaySize", "small" },
-                        { "enablePreview", Constants.Values.False },
+                        //{ "nameTemplate", "{{ udi | ncNodeName }}" },
+                        //{ "overlaySize", "small" },
+                        //{ "enablePreview", Constants.Values.False },
                     },
                     Fields = new[]
                     {
@@ -132,13 +132,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Description = "Set a parent node to use its child nodes as reusable content.",
                             View =  ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
                         },
-                        new ConfigurationField
-                        {
-                            Key = "nameTemplate",
-                            Name = "Name template",
-                            Description = "Enter an AngularJS expression to evaluate against each block for its name.",
-                            View = "textstring",
-                        },
+                        //new ConfigurationField
+                        //{
+                        //    Key = "nameTemplate",
+                        //    Name = "Name template",
+                        //    Description = "Enter an AngularJS expression to evaluate against each block for its name.",
+                        //    View = "textstring",
+                        //},
                         //new ConfigurationField
                         //{
                         //    Key = "overlaySize",

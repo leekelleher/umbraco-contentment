@@ -234,12 +234,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
                                 //console.log("content-blocks-overlay.contentResource.getScaffold", result);
 
                                 $scope.model.submit({
-                                    name: item.name,
                                     elementType: result.contentTypeKey,
-                                    icon: item.icon,
                                     key: item.key,
                                     udi: item.udi,
-                                    value: {}
                                 });
 
                             }
