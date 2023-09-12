@@ -118,17 +118,27 @@ Property Editors are:
 
 ### v4.6
 
-- [Content Blocks](../docs/editors/content-blocks.md) ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
+- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Blame @lssweatherhead_ :wink:
+
+### v4.7
+
+- Content Blocks: ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
 
 
 ## v5
 
-- `(⌐■_■)` _I'm parking the idea of a v5! Originally, my plans was for v5 to drop support for v8 and v9, focusing on v10+, but with v14 (new backoffice) on the horizon, I might save my development efforts._
+- _Support for Umbraco 13 / .NET 8 LTS?_
 
 
-## vFuture
+## v6
 
-- [Support for Umbraco v14 (Bellissima, aka new backoffice)](https://github.com/leekelleher/umbraco-contentment/issues/316)?
+- [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
+- _Support for Umbraco 15 / .NET 9?_
+
+
+## v7
+
+- _Support for Umbraco 17 / .NET 10 LTS?_
 
 
 ## Future feature releases
@@ -136,5 +146,3 @@ Property Editors are:
 _Who knows?!_ `¯\_(ツ)_/¯`
 
 **I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
-
-

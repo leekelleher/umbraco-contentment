@@ -23,8 +23,6 @@
 
 - Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks).
 
-- Griddle - a lightweight version of the Grid, (think a stacked block editor with the richness of Grid editors).
-
 - Content Picker + Templated Label
   With a similar feel to [Multiple Content Picker with Preview](https://our.umbraco.com/packages/website-utilities/content-picker-with-preview/).
   - https://github.com/Offroadcode/Multiple-Content-Node-Picker-With-Preview
