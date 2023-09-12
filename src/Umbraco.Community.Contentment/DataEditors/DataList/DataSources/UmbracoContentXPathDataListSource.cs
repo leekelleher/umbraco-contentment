@@ -108,7 +108,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     return umbracoContext.Content
                         .GetByXPath(preview, parsed)
-                        .Select(x => x.ToDataListItem("image", _contentTypeService));
+                        .Select(x => x.ToDataListItem("image", _contentTypeService))
+                        .ToList();
                 }
             }
 
