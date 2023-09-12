@@ -97,15 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (startNode != null)
                 {
-                    return startNode.Children.Select(x => new DataListItem
-                    {
-                        // TODO: [UP-FOR-GRABS] If multi-lingual is enabled, should the `.Name` take the culture into account?
-                        Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
-                        Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                        Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                        Disabled = x.IsPublished() == false,
-                    });
+                    return startNode.Children.Select(DataListItemExtensions.ToDataListItem);
                 }
             }
 
