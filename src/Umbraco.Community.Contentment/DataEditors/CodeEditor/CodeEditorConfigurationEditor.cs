@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 #if NET472
 using Umbraco.Core;

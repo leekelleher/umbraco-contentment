@@ -7,8 +7,8 @@
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web.Models;
 #else
-using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.PublishedContent;
 #endif
 
 #if NET472
