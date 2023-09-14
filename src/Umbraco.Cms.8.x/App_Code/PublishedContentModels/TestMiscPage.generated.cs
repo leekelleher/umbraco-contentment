@@ -45,6 +45,48 @@ namespace Umbraco.Web.PublishedModels
 		// properties
 
 		///<summary>
+		/// Data Picker - .NET Countries
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerNETCountries")]
+		public virtual global::System.Collections.Generic.List<string> DataPickerNetcountries => this.Value<global::System.Collections.Generic.List<string>>("dataPickerNETCountries");
+
+		///<summary>
+		/// Data Picker - .NET Currencies
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerNETCurrencies")]
+		public virtual global::System.Collections.Generic.List<string> DataPickerNetcurrencies => this.Value<global::System.Collections.Generic.List<string>>("dataPickerNETCurrencies");
+
+		///<summary>
+		/// Data Picker - .NET Languages
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerNETLanguages")]
+		public virtual global::System.Collections.Generic.List<string> DataPickerNetlanguages => this.Value<global::System.Collections.Generic.List<string>>("dataPickerNETLanguages");
+
+		///<summary>
+		/// Data Picker - .NET Time Zones
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerNETTimeZones")]
+		public virtual global::System.Collections.Generic.List<global::System.TimeZoneInfo> DataPickerNettimeZones => this.Value<global::System.Collections.Generic.List<global::System.TimeZoneInfo>>("dataPickerNETTimeZones");
+
+		///<summary>
+		/// Data Picker - Umbraco Content
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerUmbracoContent")]
+		public virtual global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent> DataPickerUmbracoContent => this.Value<global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent>>("dataPickerUmbracoContent");
+
+		///<summary>
+		/// Data Picker - Umbraco Members
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		[ImplementPropertyType("dataPickerUmbracoMembers")]
+		public virtual global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent> DataPickerUmbracoMembers => this.Value<global::System.Collections.Generic.List<global::Umbraco.Core.Models.PublishedContent.IPublishedContent>>("dataPickerUmbracoMembers");
+
+		///<summary>
 		/// Icon Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]

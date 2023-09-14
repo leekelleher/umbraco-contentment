@@ -6,14 +6,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Core.Persistence.DatabaseModelDefinitions;
+using Umbraco.Core.Persistence.Querying;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
+using Umbraco.Web;
 using Umbraco.Web.PublishedCache;
 using UmbConstants = Umbraco.Core.Constants;
 #else
@@ -21,6 +25,7 @@ using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Persistence.Querying;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
@@ -30,7 +35,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
     {
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
@@ -74,15 +79,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new[]
                 {
-                    new NotesConfigurationField(_ioHelper, $@"<details class=""alert alert-danger"">
-<summary><strong>Important note about Umbraco Members.</strong></summary>
-<p>This data source is ideal for smaller number of members, e.g. under 50. Upwards of that, you will notice an unpleasant editor experience and rapidly diminished performance.</p>
-<p>Remember...</p>
-<blockquote cite=""https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility"">
-<p>&ldquo;With great power comes great responsibility!&rdquo;</p>
-</blockquote>
-<p class=""text-right"">—Benjamin Franklin Parker</p>
-</details>", true),
                     new ConfigurationField
                     {
                         Key = "memberType",
@@ -109,32 +105,50 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            DataListItem mapMember(IMember member)
-            {
-                var guidUdi = Udi.Create(UmbConstants.UdiEntityType.Member, member.Key).ToString();
-                return new DataListItem
-                {
-                    Name = member.Name,
-                    Value = guidUdi,
-                    Icon = member.ContentType.Icon ?? UmbConstants.Icons.Member,
-                    Description = guidUdi,
-                };
-            };
+            var memberType = GetMemberType(config);
 
-            if (config.TryGetValueAs("memberType", out JArray array) == true &&
-                array.Count > 0 &&
-                array[0].Value<string>() is string str &&
-                string.IsNullOrWhiteSpace(str) == false &&
-                UdiParser.TryParse(str, out GuidUdi udi) == true)
+            return memberType != null
+                ? _memberService.GetMembersByMemberType(memberType.Id).Select(ToDataListItem)
+                : _memberService.GetAllMembers().Select(ToDataListItem);
+        }
+
+        public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
+        {
+            if (values?.Any() == true)
             {
-                var memberType = _memberTypeService.Get(udi.Guid);
-                if (memberType != null)
-                {
-                    return _memberService.GetMembersByMemberType(memberType.Id).Select(mapMember);
-                }
+                return Task.FromResult(values
+                    .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
+                    .WhereNotNull()
+                    .Select(x => _memberService.GetByKey(x.Guid))
+                    .WhereNotNull()
+                    .Select(ToDataListItem));
             }
 
-            return _memberService.GetAllMembers().Select(mapMember);
+            return Task.FromResult(Enumerable.Empty<DataListItem>());
+        }
+
+        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        {
+            var totalRecords = -1L;
+            var pageIndex = pageNumber - 1;
+            var memberType = GetMemberType(config);
+            var items = _memberService.GetAll(pageIndex, pageSize, out totalRecords, "LoginName", Direction.Ascending, memberType?.Alias, query);
+
+            if (items?.Any() == true)
+            {
+                var offset = pageIndex * pageSize;
+                var results = new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize)
+                {
+                    Items = items
+                        .Skip(offset)
+                        .Take(pageSize)
+                        .Select(ToDataListItem)
+                };
+
+                return Task.FromResult(results);
+            }
+
+            return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
@@ -155,6 +169,33 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return default(IPublishedContent);
+        }
+
+        private IMemberType GetMemberType(Dictionary<string, object> config)
+        {
+            if (config.TryGetValueAs("memberType", out JArray array) == true &&
+               array.Count > 0 &&
+               array[0].Value<string>() is string str &&
+               string.IsNullOrWhiteSpace(str) == false &&
+               UdiParser.TryParse(str, out GuidUdi udi) == true)
+            {
+                return _memberTypeService.Get(udi.Guid);
+            }
+
+            return default;
+        }
+
+        private DataListItem ToDataListItem(IMember member)
+        {
+            var guidUdi = member.GetUdi().ToString();
+
+            return new DataListItem
+            {
+                Name = member.Name,
+                Value = guidUdi,
+                Icon = member.ContentType.Icon ?? UmbConstants.Icons.Member,
+                Description = guidUdi,
+            };
         }
     }
 }

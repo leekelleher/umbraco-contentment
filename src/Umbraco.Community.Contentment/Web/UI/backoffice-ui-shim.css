@@ -50,12 +50,17 @@
         opacity: 0.5;
     }
 
+    /* Block List Configuration Card, non-editable styles, e.g. not clickable. */
+    .contentment .umb-block-card.__no-edit {
+        cursor: move;
+    }
+
     /* Block List Configuration Card, fixes icon position of action buttons. */
     .contentment .umb-block-card .__actions > button {
         padding-top: 3px;
     }
 
-    /* Block List Configuration Card, fixes dscription padding. */
+    /* Block List Configuration Card, fixes description padding. */
     .contentment .umb-block-card .__info .__subname {
         margin-right: 16px;
     }

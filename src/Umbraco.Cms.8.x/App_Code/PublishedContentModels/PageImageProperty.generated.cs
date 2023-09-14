@@ -19,9 +19,18 @@ using Umbraco.ModelsBuilder.Embedded;
 
 namespace Umbraco.Web.PublishedModels
 {
+	// Mixin Content Type with alias "pageImageProperty"
+	/// <summary>[Page] Image Property</summary>
+	public partial interface IPageImageProperty : IPublishedElement
+	{
+		/// <summary>Image</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		global::Umbraco.Core.Models.PublishedContent.IPublishedContent Image { get; }
+	}
+
 	/// <summary>[Page] Image Property</summary>
 	[PublishedModel("pageImageProperty")]
-	public partial class PageImageProperty : PublishedElementModel
+	public partial class PageImageProperty : PublishedElementModel, IPageImageProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -49,6 +58,10 @@ namespace Umbraco.Web.PublishedModels
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
 		[ImplementPropertyType("image")]
-		public virtual global::Umbraco.Core.Models.PublishedContent.IPublishedContent Image => this.Value<global::Umbraco.Core.Models.PublishedContent.IPublishedContent>("image");
+		public virtual global::Umbraco.Core.Models.PublishedContent.IPublishedContent Image => GetImage(this);
+
+		/// <summary>Static getter for Image</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "8.17.0")]
+		public static global::Umbraco.Core.Models.PublishedContent.IPublishedContent GetImage(IPageImageProperty that) => that.Value<global::Umbraco.Core.Models.PublishedContent.IPublishedContent>("image");
 	}
 }

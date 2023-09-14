@@ -6,34 +6,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Umbraco.Community.Contentment.Services;
+using Umbraco.Web;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
-using Umbraco.Web;
-using UmbConstants = Umbraco.Core.Constants;
+using Umbraco.Web.PublishedCache;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoContentDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
     {
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
+
+        private const string _defaultImageAlias = "image";
 
         public UmbracoContentDataListSource(
             IContentmentContentContext contentmentContentContext,
@@ -63,6 +68,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
+            },
+            new ConfigurationField
+            {
+                Key = "imageAlias",
+                Name = "Image alias",
+                Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
+                View =  "textstring",
             }
         };
 
@@ -72,36 +84,62 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
+            var start = GetStartContent(config);
+            if (start != null)
             {
-                var parentNode = config.GetValueAs("parentNode", string.Empty);
-                var preview = true;
-                var startNode = default(IPublishedContent);
-
-                if (parentNode.InvariantStartsWith("umb://document/") == false)
-                {
-                    IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-                    bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
-
-                    var parsed = _contentmentContentContext.ParseXPathQuery(parentNode, getPath, publishedContentExists);
-
-                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
-                    {
-                        startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
-                    }
-                }
-                else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
-                {
-                    startNode = umbracoContext.Content.GetById(preview, udi.Guid);
-                }
-
-                if (startNode != null)
-                {
-                    return startNode.Children.Select(DataListItemExtensions.ToDataListItem);
-                }
+                var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+                return start.Children.Select(x => ToDataListItem(x, imageAlias));
             }
 
             return Enumerable.Empty<DataListItem>();
+        }
+
+        public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
+        {
+            if (values?.Any() == true &&
+                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content != null)
+            {
+                var preview = true;
+                var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+
+                return Task.FromResult(values
+                    .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
+                    .WhereNotNull()
+                    .Select(x => umbracoContext.Content.GetById(preview, x))
+                    .WhereNotNull()
+                    .Select(x => ToDataListItem(x, imageAlias)));
+            }
+
+            return Task.FromResult(Enumerable.Empty<DataListItem>());
+        }
+
+        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        {
+            var start = GetStartContent(config);
+            if (start != null)
+            {
+                var items = string.IsNullOrWhiteSpace(query) == false
+                    ? start.SearchChildren(query).Select(x => x.Content)
+                    : start.Children;
+
+                if (items?.Any() == true)
+                {
+                    var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+                    var offset = (pageNumber - 1) * pageSize;
+                    var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
+                    {
+                        Items = items
+                            .Skip(offset)
+                            .Take(pageSize)
+                            .Select(x => ToDataListItem(x, imageAlias))
+                    };
+
+                    return Task.FromResult(results);
+                }
+            }
+
+            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
@@ -111,6 +149,50 @@ namespace Umbraco.Community.Contentment.DataEditors
             return UdiParser.TryParse(value, out GuidUdi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
                 ? umbracoContext.Content.GetById(udi)
                 : default;
+        }
+
+        private IPublishedContent GetStartContent(Dictionary<string, object> config)
+        {
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache)
+            {
+                var preview = true;
+                var parentNode = config.GetValueAs("parentNode", string.Empty);
+                if (parentNode.InvariantStartsWith("umb://document/") == false)
+                {
+                    IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                    bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
+
+                    var parsed = _contentmentContentContext.ParseXPathQuery(parentNode, getPath, publishedContentExists);
+
+                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                    {
+                        return contentCache.GetSingleByXPath(preview, parsed);
+                    }
+                }
+                else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
+                {
+                    return contentCache.GetById(preview, udi.Guid);
+                }
+            }
+
+            return default;
+        }
+
+        private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = _defaultImageAlias)
+        {
+            return new DataListItem
+            {
+                Name = content.Name,
+                Description = content.TemplateId > 0 ? content.Url() : string.Empty,
+                Disabled = content.IsPublished() == false,
+                Icon = content.ContentType.GetIcon(_contentTypeService),
+                Properties = new Dictionary<string, object>
+                {
+                    { _defaultImageAlias, content.Value<IPublishedContent>(imageAlias)?.Url() },
+                },
+                Value = content.GetUdi().ToString(),
+            };
         }
     }
 }
