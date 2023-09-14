@@ -135,7 +135,8 @@ Copyright &copy; [Lee Kelleher](https://leekelleher.com).
 
 All source code is licensed under the [Mozilla Public License](../LICENSE).
 
-#### A note about licensing
+<details>
+<summary><strong>A note about licensing</strong></summary>
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
 The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
@@ -146,6 +147,7 @@ If you do not to intend to modify the source code, then you will still have the 
 
 For more information about the **Mozilla Public License**, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
+</details>
 
 ### Acknowledgements
 
@@ -164,8 +166,14 @@ _To give you an idea of how much human developer time/effort has been put into m
 #### Special thanks
 
 - Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me initiate this project.
+- Kudos to [Gibe](https://gibe.digital/) for enabling the development of the [Data Picker](../docs/editors/data-picker.md) editor.
 
 
 #### Logo
 
 The package logo uses the [Happy](https://thenounproject.com/term/happy/375493/) (by [Nick Bluth](https://thenounproject.com/nickbluth/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
+
+
+### Icons
+
+The [Social Links](../docs/editors/social-links.md) editor makes use of social media icons from the Font Awesome library, (as downloaded SVG files). These are licensed under the [Font Awesome Free License](https://fontawesome.com/license/free) agreement, specifically under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).
