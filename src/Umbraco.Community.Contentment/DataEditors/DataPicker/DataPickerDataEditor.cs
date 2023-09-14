@@ -101,19 +101,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (configuration is Dictionary<string, object> config)
             {
-                if (config.TryGetValue(DataPickerConfigurationEditor.DisplayMode, out var tmp1) == true)
+                if (config.TryGetValueAs(DataPickerConfigurationEditor.DisplayMode, out JArray array1) == true &&
+                    array1.Count > 0 &&
+                    array1[0] is JObject item1)
                 {
-                    var displayMode = default(IDataPickerDisplayMode);
-
-                    if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
-                    {
-                        displayMode = _utility.FindConfigurationEditor<IDataPickerDisplayMode>(x => str1.InvariantEquals(x.View) == true);
-                    }
-                    else if (tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject item1)
-                    {
-                        displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
-                    }
-
+                    var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
                     if (displayMode != null)
                     {
                         view = displayMode.View;

@@ -6,7 +6,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
@@ -17,7 +16,6 @@ using Umbraco.Core.Serialization;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 #endif
 
