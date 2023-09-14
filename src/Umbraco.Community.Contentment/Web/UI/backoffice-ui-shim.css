@@ -28,6 +28,11 @@
     line-height: 1.5rem;
 }
 
+/* Tags - Typeahead overlay z-index. */
+.contentment .umb-tags-editor .tt-menu.tt-open {
+    z-index: 1001 !important;
+}
+
 /* Block List Configuration Card - Tweaks */
 .contentment .umb-block-card {
 }
