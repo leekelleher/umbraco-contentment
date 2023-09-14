@@ -4,6 +4,9 @@
 
 Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be actioned at my own pleasure.
 
+> To note: I try to follow the [Semantic Versioning](https://semver.org/) standard.
+> TL;DR, `[Major].[Minor].[Patch]`, Major = breaking-change; Minor  = feature; Patch = bug-fix.
+
 
 ## v1
 
@@ -127,22 +130,25 @@ Property Editors are:
 
 ## v5
 
-- _Support for Umbraco 13 / .NET 8 LTS?_
+- _Add support for Umbraco 13 (.NET 8)._
+- _Remove support for Umbraco 8 (.NET Framework 4.7.2) and Umbraco 9 (.NET 5)._
+- _Convert to a Razor Class Library?_ :thinking:
 
 
 ## v6
 
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
-- _Support for Umbraco 15 / .NET 9?_
+- _Add support for Umbraco 15 (.NET 9)._
+- _Remove support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._
 
 
 ## v7
 
-- _Support for Umbraco 17 / .NET 10 LTS?_
+- _Add support for Umbraco 17 (.NET 10)._
 
 
-## Future feature releases
+## Future feature (minor) releases
 
 _Who knows?!_ `¯\_(ツ)_/¯`
 
-**I have [a few of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
+**I have [a bunch of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
