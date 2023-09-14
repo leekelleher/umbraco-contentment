@@ -5,9 +5,9 @@
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.DictionaryPicker.Controller", [
     "$scope",
-    "entityResource",
+    "dictionaryResource",
     "editorService",
-    function ($scope, entityResource, editorService) {
+    function ($scope, dictionaryResource, editorService) {
 
         // console.log("dictionary-picker.model", $scope.model);
 
@@ -48,16 +48,18 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 title: "Dictionary item",
                 emptyStateMessage: "No dictionary items to choose from",
                 select: function (model) {
+                    dictionaryResource.getById(model.id).then(function (item) {
 
-                    $scope.model.value.push({ id: model.id, name: model.name });
+                        $scope.model.value.push({ key: item.key, name: item.name });
 
-                    if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
-                        vm.allowAdd = false;
-                    }
+                        if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+                            vm.allowAdd = false;
+                        }
 
-                    setDirty();
+                        setDirty();
 
-                    editorService.close();
+                        editorService.close();
+                    });
                 },
                 close: function (model) {
                     editorService.close();
