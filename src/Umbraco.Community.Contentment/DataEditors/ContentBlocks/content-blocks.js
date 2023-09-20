@@ -125,10 +125,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
 
             if (documents.length > 0) {
-                entityResource.getByIds(documents, "Document").then(data => {
-                    // TODO: [LK] Check if the document has been deleted? (remove it?)
-                    // or unpublished, show a different state? ¯\_(ツ)_/¯
-                    data.forEach(x => { config.documentLookup[x.key] = x; });
+                entityResource.getByIds(documents, "Document").then(nodes => {
+                    nodes.forEach(node => {
+                        if (node.trashed === true || node.metaData.IsPublished === false) {
+                            vm.disabled[node.key] = true;
+                        }
+                        config.documentLookup[node.key] = node;
+                    });
                 });
             }
 
@@ -205,8 +208,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     if (isDocument(model) === true) {
 
                         entityResource.getById(model.key, "Document").then(node => {
-                            // TODO: [LK] Check if the document has been deleted? (remove it?)
-                            // or unpublished, show a different state? ¯\_(ツ)_/¯
+                            if (node.trashed === true || node.metaData.IsPublished === false) {
+                                vm.disabled[node.key] = true;
+                            }
                             config.documentLookup[node.key] = node;
                         });
 
@@ -233,6 +237,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function copy($index) {
 
             var item = $scope.model.value[$index];
+
+            if (isDocument(item) === true) {
+                return;
+            }
+
             var elementType = config.elementTypeLookup[item.elementType];
             var name = populateName(item, $index);
 
@@ -278,20 +287,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             var item = $scope.model.value[$index];
 
             if (isDocument(item) === true) {
-
                 editorService.contentEditor({
-
                     id: item.key,
-                    submit: function (model) {
-                        console.log("submit: does this ever get called?", model);
-                        // TODO: [LK] Would I update the node info from here?
-                        editorService.close();
-                    },
                     close: function () {
-                        console.log("close", arguments);
-                        // TODO: [LK] Update the node info from here?
-                        // The first argument is "this", so use the `id` or `item.key`.
-                        editorService.close();
+                        //console.log("content-blocks.edit.close");
+                        entityResource.getById(item.key, "Document").then(node => {
+                            if (node.trashed === true || node.metaData.IsPublished === false) {
+                                vm.disabled[node.key] = true;
+                            } else if (vm.disabled.hasOwnProperty(node.key) == true && (node.trashed === false || node.metaData.IsPublished === true)) {
+                                delete vm.disabled[node.key];
+                            }
+
+                            config.documentLookup[node.key] = node;
+
+                            editorService.close();
+                        });
                     }
                 });
 
