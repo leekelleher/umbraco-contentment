@@ -21,6 +21,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Models.Editors;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
+using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
@@ -30,6 +31,7 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -89,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             if (block.Udi == null)
                             {
-                                block.Udi = Udi.Create("element", block.Key);
+                                block.Udi = Udi.Create(UmbConstants.UdiEntityType.Element, block.Key);
                             }
 
                             foreach (var propertyType in elementType.CompositionPropertyTypes)
@@ -177,20 +179,26 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     foreach (var block in blocks)
                     {
-                        if (block != null &&
-                            _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
+                        if (block != null)
                         {
-                            foreach (var propertyType in elementType.CompositionPropertyTypes)
+                            if (_elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
                             {
-                                if (block.Value.TryGetValue(propertyType.Alias, out var bpv) == true &&
-                                    _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var editor) == true &&
-                                    editor?.GetValueEditor() is IDataValueReference dvr)
+                                foreach (var propertyType in elementType.CompositionPropertyTypes)
                                 {
-                                    foreach (var reference in dvr.GetReferences(bpv))
+                                    if (block.Value.TryGetValue(propertyType.Alias, out var bpv) == true &&
+                                        _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var editor) == true &&
+                                        editor?.GetValueEditor() is IDataValueReference dvr)
                                     {
-                                        yield return reference;
+                                        foreach (var reference in dvr.GetReferences(bpv))
+                                        {
+                                            yield return reference;
+                                        }
                                     }
                                 }
+                            }
+                            else if (block.Udi?.EntityType == UmbConstants.UdiEntityType.Document)
+                            {
+                                yield return new UmbracoEntityReference(block.Udi);
                             }
                         }
                     }

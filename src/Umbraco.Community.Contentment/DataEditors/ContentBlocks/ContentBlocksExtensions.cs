@@ -99,6 +99,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             ElementType = data.ContentTypeKey,
                             Key = data.Key,
+                            Udi = data.Udi,
                             Value = data.RawPropertyValues,
                         });
                     }
