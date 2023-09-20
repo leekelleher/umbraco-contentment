@@ -109,15 +109,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             for (var i = 0; i < $scope.model.value.length; i++) {
                 var item = $scope.model.value[i];
+
                 if (isDocument(item) === true) {
                     documents.push(item.udi);
                 }
-
-                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true || isDocument(item) === true) {
+                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
                     vm.blockActions[item.key] = actionsFactory(i);
 
-                } else {
+                } else if (isDocument(item) === false) {
 
                     vm.disabled[item.key] = true;
 
@@ -214,11 +214,12 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                             config.documentLookup[node.key] = node;
                         });
 
-                    }
+                    } else {
 
-                    var idx = $scope.model.value.length - 1;
-                    vm.blockActions.push(actionsFactory(idx));
-                    preview(idx);
+                        var idx = $scope.model.value.length - 1;
+                        vm.blockActions[model.key] = actionsFactory(idx);
+                        preview(idx);
+                    }
 
                     if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
