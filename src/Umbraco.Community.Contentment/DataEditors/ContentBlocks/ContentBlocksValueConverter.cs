@@ -11,31 +11,28 @@ using Umbraco.Community.Contentment.Web.PublishedCache;
 using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
 using Umbraco.Web.PublishedCache;
+using UmbConstants = Umbraco.Core.Constants;
 #else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ContentBlocksValueConverter : PropertyValueConverterBase
     {
-        private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedModelFactory _publishedModelFactory;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
         public ContentBlocksValueConverter(
-            IContentTypeService contentTypeService,
             IPublishedModelFactory publishedModelFactory,
             IPublishedSnapshotAccessor publishedSnapshotAccessor)
             : base()
         {
-            _contentTypeService = contentTypeService;
             _publishedModelFactory = publishedModelFactory;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
@@ -58,6 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (inter is IEnumerable<ContentBlock> items)
             {
+                var contentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
                 var elements = new List<IPublishedElement>();
 
                 foreach (var item in items)
@@ -65,39 +63,39 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (item == null || item.ElementType == Guid.Empty)
                         continue;
 
-                    // NOTE: [LK:2019-09-03] Why `IPublishedCache` doesn't support Guids or UDIs, I do not know!?
-                    // Thought v8 was meant to be "GUID ALL THE THINGS!!1"? ¯\_(ツ)_/¯
-                    if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
-                        continue;
-
-                    var contentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
-
-                    var contentType = contentCache.GetContentType(alias);
+                    var contentType = contentCache.GetContentType(item.ElementType);
                     if (contentType == null)
                         continue;
 
-                    if (contentType.IsElement == false)
+                    switch (item.Udi?.EntityType)
                     {
-                        var content = contentCache.GetById(item.Key);
-                        if (content != null)
-                        {
-                            elements.Add(_publishedModelFactory.CreateModel(content));
-                        }
-                    }
-                    else
-                    {
-                        var properties = new List<IPublishedProperty>();
-
-                        foreach (var thing in item.Value)
-                        {
-                            var propType = contentType.GetPropertyType(thing.Key);
-                            if (propType != null)
+                        case UmbConstants.UdiEntityType.Document:
                             {
-                                properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+                                var content = contentCache.GetById(item.Key);
+                                if (content != null)
+                                {
+                                    elements.Add(_publishedModelFactory.CreateModel(content));
+                                }
                             }
-                        }
+                            break;
 
-                        elements.Add(_publishedModelFactory.CreateModel(new DetachedPublishedElement(item.Key, contentType, properties)));
+                        case UmbConstants.UdiEntityType.Element:
+                        default:
+                            {
+                                var properties = new List<IPublishedProperty>();
+
+                                foreach (var thing in item.Value)
+                                {
+                                    var propType = contentType.GetPropertyType(thing.Key);
+                                    if (propType != null)
+                                    {
+                                        properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+                                    }
+                                }
+
+                                elements.Add(_publishedModelFactory.CreateModel(new DetachedPublishedElement(item.Key, contentType, properties)));
+                            }
+                            break;
                     }
                 }
 

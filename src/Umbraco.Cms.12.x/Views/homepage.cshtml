@@ -4,12 +4,24 @@
 }
 
 @section body
-{
+    {
     @if (Model.PageBlocks != null)
     {
         foreach (var block in Model.PageBlocks)
         {
-            @await Html.PartialAsync($"blocks/{block.ContentType.Alias}", block)
+            switch (block)
+            {
+                case Something something:
+                    <pre><code><strong>This is a reusable content item.</strong><br />Name: @something.Name; Udi: @something.GetUdi()</code></pre>
+                    break;
+
+                case CallToActionBlock:
+                case HtmlEmbedBlock:
+                default:
+                    @await Html.PartialAsync($"blocks/{block.ContentType.Alias}", block)
+                    break;
+            }
+
         }
     }
 }
