@@ -18,14 +18,14 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
-	/// <summary>JavaScript Code</summary>
-	[PublishedModel("jsModule")]
-	public partial class JsModule : PublishedElementModel, IComponentCodeRenderPositionProperty, IComponentCodeSnippetProperties, IModuleRenderJs
+	/// <summary>Something</summary>
+	[PublishedModel("something")]
+	public partial class Something : PublishedContentModel, IComponentHeadingProperty, IComponentImageProperty, IComponentIntroProperty
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
-		public new const string ModelTypeAlias = "jsModule";
+		public new const string ModelTypeAlias = "something";
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
@@ -34,14 +34,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 			=> PublishedModelUtility.GetModelContentType(publishedSnapshotAccessor, ModelItemType, ModelTypeAlias);
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedSnapshotAccessor publishedSnapshotAccessor, Expression<Func<JsModule, TValue>> selector)
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedSnapshotAccessor publishedSnapshotAccessor, Expression<Func<Something, TValue>> selector)
 			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(publishedSnapshotAccessor), selector);
 #pragma warning restore 0109
 
 		private IPublishedValueFallback _publishedValueFallback;
 
 		// ctor
-		public JsModule(IPublishedElement content, IPublishedValueFallback publishedValueFallback)
+		public Something(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
 			: base(content, publishedValueFallback)
 		{
 			_publishedValueFallback = publishedValueFallback;
@@ -50,26 +50,27 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Render Position: Select the position to render the code snippet. The default position is "Before the closing &lt;/body&gt; tag".
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
-		[ImplementPropertyType("renderPosition")]
-		public virtual global::Umbraco.Cms.Web.Common.PublishedModels.RenderPosition RenderPosition => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentCodeRenderPositionProperty.GetRenderPosition(this, _publishedValueFallback);
-
-		///<summary>
-		/// Code: Paste in your code snippet.
+		/// Heading
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("code")]
-		public virtual string Code => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentCodeSnippetProperties.GetCode(this, _publishedValueFallback);
+		[ImplementPropertyType("heading")]
+		public virtual string Heading => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentHeadingProperty.GetHeading(this, _publishedValueFallback);
 
 		///<summary>
-		/// Description: For display purposes, enter a description of this code snippet.
+		/// Image
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("description")]
-		public virtual string Description => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentCodeSnippetProperties.GetDescription(this, _publishedValueFallback);
+		[ImplementPropertyType("image")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent Image => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentImageProperty.GetImage(this, _publishedValueFallback);
+
+		///<summary>
+		/// Intro
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "12.0.0-rc2+459d664")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("intro")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Intro => global::Umbraco.Cms.Web.Common.PublishedModels.ComponentIntroProperty.GetIntro(this, _publishedValueFallback);
 	}
 }
