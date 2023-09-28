@@ -34,6 +34,12 @@
         <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Remove="node_modules\**" />
+        <EmbeddedResource Remove="node_modules\**" />
+        <None Remove="node_modules\**" />
+    </ItemGroup>
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />
         <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
@@ -55,8 +61,8 @@
         </ItemGroup>
     </Target>
 
-    <!--<Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net8.0'">
-        <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
-    </Target>-->
+    <Target Name="ContentmentPrepareAssets" BeforeTargets="DispatchToInnerBuilds">
+        <Exec Command="npm run build" />
+    </Target>
 
 </Project>
