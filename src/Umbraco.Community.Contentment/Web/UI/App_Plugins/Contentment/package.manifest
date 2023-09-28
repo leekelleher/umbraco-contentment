@@ -1,6 +1,0 @@
-﻿{
-    "name": "Contentment",
-    "version": "5.0.0-develop",
-    "css": [ "~/App_Plugins/Contentment/contentment.css" ],
-    "javascript": [ "~/App_Plugins/Contentment/contentment.js" ]
-}

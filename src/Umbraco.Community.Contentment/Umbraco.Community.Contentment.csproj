@@ -1,21 +1,38 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    </PropertyGroup>
+
+    <!-- NuGet package metadata -->
+    <PropertyGroup>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <Product>Umbraco.Community.Contentment</Product>
-        <PackageId>Our.Umbraco.Community.Contentment</PackageId>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <PackageTags>umbraco</PackageTags>
         <Version>5.0.0-develop</Version>
-        <Company>Umbrella Inc Ltd</Company>
         <Authors>Lee Kelleher</Authors>
+        <Company>Lee Kelleher</Company>
         <Copyright>2019 © Lee Kelleher</Copyright>
+        <PackageId>Umbraco.Community.Contentment</PackageId>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>umbraco umbraco-marketplace</PackageTags>
         <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\docs\assets\img\logo.png" Pack="true" PackagePath="icon.png" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
+    </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />

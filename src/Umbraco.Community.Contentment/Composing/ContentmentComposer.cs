@@ -18,6 +18,11 @@ namespace Umbraco.Community.Contentment.Composing
         public void Compose(IUmbracoBuilder builder)
         {
             builder
+                .ManifestFilters()
+                    .Append<ContentmentManifestFilter>()
+            ;
+
+            builder
                 .Services
                     .AddSingleton<ConfigurationEditorUtility>()
                     .AddSingleton<IContentmentContentContext, ContentmentContentContext>()

@@ -31,8 +31,6 @@
         <Compile Include="umbraco/models/**" Exclude="**/*.flag" />
     </ItemGroup>
 
-    <Import Project="..\..\build\_vs-copy-assets.targets" />
-
     <PropertyGroup>
         <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
     </PropertyGroup>
