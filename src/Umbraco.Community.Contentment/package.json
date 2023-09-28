@@ -1,27 +1,19 @@
 {
-  "name": "umbraco-community-contentment",
-  "version": "6.0.0-alpha001",
-  "description": "Contentment, a collection of components for Umbraco.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/leekelleher/umbraco-contentment.git"
-  },
-  "keywords": [
-    "umbraco",
-    "umbraco-backoffice",
-    "umbraco-package"
-  ],
-  "author": "leekelleher",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/leekelleher/umbraco-contentment/issues"
-  },
-  "homepage": "https://github.com/leekelleher/umbraco-contentment#readme",
-  "devDependencies": {
-    "@umbraco-cms/backoffice": "^14.0.0--preview001"
-  }
+    "name": "umbraco-community-contentment",
+    "private": true,
+    "version": "6.0.0-alpha001",
+    "type": "module",
+    "scripts": {
+        "dev": "tsc && vite build --watch",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "lit": "^2.7.6"
+    },
+    "devDependencies": {
+        "@umbraco-cms/backoffice": "^14.0.0-709b3cbf",
+        "typescript": "^5.0.2",
+        "vite": "^4.4.5"
+    }
 }
