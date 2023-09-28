@@ -1,40 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-    <Product>Umbraco.Community.Contentment</Product>
-    <PackageId>Our.Umbraco.Community.Contentment</PackageId>
-    <Title>Contentment for Umbraco</Title>
-    <Description>Contentment, a collection of components for Umbraco.</Description>
-    <PackageTags>umbraco</PackageTags>
-    <Version>5.0.0-alpha001</Version>
-    <Company>Umbrella Inc Ltd</Company>
-    <Authors>Lee Kelleher</Authors>
-    <Copyright>2019 © Lee Kelleher</Copyright>
-    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+        <Product>Umbraco.Community.Contentment</Product>
+        <PackageId>Our.Umbraco.Community.Contentment</PackageId>
+        <Title>Contentment for Umbraco</Title>
+        <Description>Contentment, a collection of components for Umbraco.</Description>
+        <PackageTags>umbraco</PackageTags>
+        <Version>5.0.0-develop</Version>
+        <Company>Umbrella Inc Ltd</Company>
+        <Authors>Lee Kelleher</Authors>
+        <Copyright>2019 © Lee Kelleher</Copyright>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
-  </ItemGroup>
-
-  <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
-    <ItemGroup>
-      <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
     </ItemGroup>
-  </Target>
 
-  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net472'">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
-  </Target>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.0.0--rc.preview.26.g06272d9" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.0.0--rc.preview.26.g06272d9" />
+    </ItemGroup>
+
+    <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
+        <ItemGroup>
+            <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
+        </ItemGroup>
+    </Target>
+
+    <!--<Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net8.0'">
+        <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
+    </Target>-->
 
 </Project>
