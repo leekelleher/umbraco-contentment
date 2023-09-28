@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "alertType",
                 Name = "Alert type",
                 Description = string.Empty,
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/App_Plugins/Contentment/editors/radio-button-list.html"),
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>
                 {
                     { "defaultValue", "alert alert-warning" },
@@ -46,7 +46,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "icon",
                 Name = "Icon",
                 Description = "Select an icon to be displayed next to the message.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath)
+                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                Config = new Dictionary<string, object>
+                {
+                    { "size", "small" },
+                }
             });
 
             Fields.Add(new ConfigurationField

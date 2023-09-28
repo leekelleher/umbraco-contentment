@@ -3,20 +3,30 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET6_0
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
 using System.Data.Common;
-using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Configuration;
-using Umbraco.Cms.Core.Hosting;
+using Microsoft.Data.SqlClient;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
+#else
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Infrastructure.Scoping;
+using Umbraco.Extensions;
+using UmbConstants = Umbraco.Cms.Core.Constants;
+#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -26,28 +36,30 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IEnumerable<DataListItem> _connectionStrings;
         private readonly IIOHelper _ioHelper;
         private readonly IConfiguration _configuration;
+        private readonly IScopeProvider _scopeProvider;
 
         public SqlDataListSource(
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration,
+            IScopeProvider scopeProvider,
             IIOHelper ioHelper)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
-            _codeEditorMode = File.Exists(webHostEnvironment.MapPathWebRoot("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js"))
+            _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
                 ? "sqlserver"
                 : "razor";
 
             _connectionStrings = configuration
-                .GetSection("ConnectionStrings")
-                .GetChildren()
-                .Select(x => new DataListItem
-                {
-                    Name = x.Key,
-                    Value = x.Key
-                });
+    .GetSection("ConnectionStrings")
+    .GetChildren()
+    .Select(x => new DataListItem
+    {
+        Name = x.Key,
+        Value = x.Key
+    });
 
             _configuration = configuration;
-
+            _scopeProvider = scopeProvider;
             _ioHelper = ioHelper;
         }
 
@@ -63,8 +75,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            // TODO: [LK:2021-09-20] Add a note on v9 edition to inform the user about the lack of SQLCE support + a plea for help.
-
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
@@ -107,7 +117,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
         {
-            { "query", $"-- This is an example query that will select all the content nodes that are at level 1.\r\nSELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n;" },
+            { "query", $"SELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n\r\n-- This is an example query that will select all the content nodes that are at level 1.\r\n;" },
             { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 
@@ -129,9 +139,44 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return items;
             }
 
-            // TODO: [v10] [LK:2022-04-06] Add support for querying SQLite database.
+            if (connectionStringName == UmbConstants.System.UmbracoConnectionName)
+            {
+                using (var scope = _scopeProvider.CreateScope())
+                {
+                    //new NPoco.PocoExpando().Values.ElementAtOrDefault(0);
+                    var results = scope.Database.Fetch<dynamic>(query);
 
-            items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
+                    foreach (NPoco.PocoExpando result in results)
+                    {
+                        var item = new DataListItem
+                        {
+                            Name = result.Values.ElementAtOrDefault(0).TryConvertTo<string>().ResultOr(string.Empty),
+                        };
+
+                        item.Value = result.Values.ElementAtOrDefault(1).TryConvertTo<string>().ResultOr(item.Name);
+
+                        if (result.Values.Count > 2)
+                            item.Description = result.Values.ElementAtOrDefault(2).TryConvertTo<string>().ResultOr(string.Empty);
+
+                        if (result.Values.Count > 3)
+                            item.Icon = result.Values.ElementAtOrDefault(3).TryConvertTo<string>().ResultOr(string.Empty);
+
+                        if (result.Values.Count > 4)
+                            item.Disabled = result.Values.ElementAtOrDefault(4).TryConvertTo<bool>().ResultOr(false);
+
+                        items.Add(item);
+                    }
+                }
+            }
+            else
+            {
+#if NET6_0
+                // TODO: [LK:2022-04-06] [v10] Add support for querying generic SQLite database.
+                items.AddRange(GetSqlItems<SqlConnection, SqlCommand>(query, connectionString));
+#elif NET7_0_OR_GREATER
+                // TODO: [LK:2022-11-26] [v11] Figure out how to do a generic SQL query, most likely now NPoco.
+#endif
+            }
 
             return items;
         }

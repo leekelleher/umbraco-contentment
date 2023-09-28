@@ -169,6 +169,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     checkFile(Path.GetFileNameWithoutExtension(file.Name));
                 }
             }
+            modes.Sort((x, y) => x.Value.CompareTo(y.Value));
+            themes.Sort((x, y) => x.Value.CompareTo(y.Value));
 
             return (modes, themes);
         }

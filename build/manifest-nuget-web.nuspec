@@ -1,6 +1,6 @@
 <package>
   <metadata>
-    <id>$id$</id>
+    <id>Our.$id$</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$authors$</authors>
@@ -16,13 +16,13 @@
     <tags>$tags$</tags>
     <repository type="git" url="$repositoryUrl$" />
     <dependencies>
-      <dependency id="$id$.Core" version="$version$" />
+      <dependency id="Our.$id$.Core" version="$version$" />
     </dependencies>
   </metadata>
   <files>
     <file src="App_Plugins\**\*.*" target="content\App_Plugins" />
     <file src="*.targets" target="buildTransitive\" />
     <file src="icon.png" target="" />
-    <file src="README.md" target="" />
+    <file src="README_WEB.md" target="README.md" />
   </files>
 </package>

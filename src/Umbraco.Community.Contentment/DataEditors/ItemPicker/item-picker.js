@@ -21,6 +21,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultIcon: "icon-science",
             defaultValue: [],
             disableSorting: 0,
+            displayMode: "list",
             enableFilter: 1,
             enableMultiple: 0,
             items: [],
@@ -46,11 +47,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
             }
 
+            if (Array.isArray(config.overlaySize) === true) {
+                config.overlaySize = config.overlaySize[0];
+            }
+
             config.confirmRemoval = Object.toBoolean(config.confirmRemoval);
             config.enableMultiple = Object.toBoolean(config.enableMultiple) && config.maxItems !== 1;
 
             vm.defaultIcon = config.defaultIcon;
-            vm.displayMode = "list";
+            vm.displayMode = config.displayMode || "list";
             vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.allowEdit = false;
             vm.allowRemove = true;
@@ -127,11 +132,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 view: config.overlayView,
                 size: config.overlaySize || "small",
                 submit: function (selectedItems) {
-
-                    // NOTE: Edge-case, if the value isn't set and the content is saved, the value becomes an empty string. ¯\_(ツ)_/¯
-                    if (typeof $scope.model.value === "string") {
-                        $scope.model.value = $scope.model.value.length > 0 ? [$scope.model.value] : config.defaultValue;
-                    }
 
                     selectedItems.forEach(item => {
                         vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]

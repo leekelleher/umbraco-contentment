@@ -6,13 +6,13 @@
 
 # Set various variables / folder paths
 
-$nugetPackageId = 'Our.Umbraco.Community.Contentment';
+$nugetPackageId = 'Umbraco.Community.Contentment';
 $nugetTitle = "${packageName} for Umbraco";
 $packageDescription = "${packageName}, a collection of components for Umbraco.";
 $packageUrl = 'https://github.com/leekelleher/umbraco-contentment';
 $authorName = 'Lee Kelleher';
 $copyright = "Copyright " + [char]0x00A9 + " " + (Get-Date).year + " $authorName";
-$tags = "umbraco;umbraco-marketplace";
+$tags = "umbraco";
 
 $rootFolder = (Get-Item($MyInvocation.MyCommand.Path)).Directory.Parent.FullName;
 $buildFolder = Join-Path -Path $rootFolder -ChildPath 'build';
@@ -56,14 +56,20 @@ if (-NOT $?) {
 $net60Folder = "${assetsFolder}\net6.0";
 if (!(Test-Path -Path $net60Folder)) {New-Item -Path $net60Folder -Type Directory;}
 Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net6.0\${projectNamespace}.*" -Destination $net60Folder;
+$net70Folder = "${assetsFolder}\net7.0";
+if (!(Test-Path -Path $net70Folder)) {New-Item -Path $net70Folder -Type Directory;}
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net7.0\${projectNamespace}.*" -Destination $net70Folder;
 
 
 # Populate the NuGet package manifest
 Copy-Item -Path "${rootFolder}\docs\assets\img\logo.png" -Destination "${assetsFolder}\icon.png";
-Copy-Item -Path "${buildFolder}\readme-nuget.md" -Destination "${assetsFolder}\README.md";
-Copy-Item -Path "${buildFolder}\_nuget-post-install.targets" -Destination "${assetsFolder}\${nugetPackageId}.targets";
+Copy-Item -Path "${buildFolder}\readme-nuget-core.md" -Destination "${assetsFolder}\README_CORE.md";
+Copy-Item -Path "${buildFolder}\readme-nuget-web.md" -Destination "${assetsFolder}\README_WEB.md";
+Copy-Item -Path "${buildFolder}\readme-nuget-main.md" -Destination "${assetsFolder}\README.md";
+Copy-Item -Path "${buildFolder}\_nuget-post-install.targets" -Destination "${assetsFolder}\Our.${nugetPackageId}.targets";
 & $nuget_exe pack "${buildFolder}\manifest-nuget-core.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;repositoryUrl=$packageUrl;"
 & $nuget_exe pack "${buildFolder}\manifest-nuget-web.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;repositoryUrl=$packageUrl;"
+& $nuget_exe pack "${buildFolder}\manifest-nuget-main.nuspec" -BasePath $assetsFolder -OutputDirectory $artifactsFolder -Version "$version" -Properties "id=$nugetPackageId;version=$version;title=$nugetTitle;authors=$authorName;owners=$authorName;projectUrl=$packageUrl;requireLicenseAcceptance=false;description=$packageDescription;copyright=$copyright;license=MPL-2.0;language=en;tags=$tags;repositoryUrl=$packageUrl;"
 
 
 # Tidy up folders

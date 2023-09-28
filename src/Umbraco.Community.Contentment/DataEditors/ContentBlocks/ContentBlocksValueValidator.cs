@@ -3,9 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 
@@ -13,19 +15,43 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksValueValidator : ComplexEditorValidator
     {
-        public ContentBlocksValueValidator(IPropertyValidationService propertyValidationService)
+        private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
+
+        public ContentBlocksValueValidator(
+            Lazy<Dictionary<Guid, IContentType>> elementTypes,
+            IPropertyValidationService propertyValidationService)
             : base(propertyValidationService)
-        { }
+        {
+            _elementTypes = elementTypes;
+        }
 
         protected override IEnumerable<ElementTypeValidationModel> GetElementTypeValidation(object value)
         {
-            // TODO: [LK:2022-09-01] Take a look at `ComplexEditorValidator`
-            // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Infrastructure/PropertyEditors/ComplexEditorValidator.cs
-            // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Infrastructure/PropertyEditors/BlockEditorPropertyEditor.cs#L278
-            // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Infrastructure/PropertyEditors/NestedContentPropertyEditor.cs#L342
+            if (value is JArray array && array.Any() == true)
+            {
+                var blocks = array.ToObject<IEnumerable<ContentBlock>>();
+                if (blocks?.Any() == true)
+                {
+                    foreach (var block in blocks)
+                    {
+                        if (block != null &&
+                            _elementTypes.Value.TryGetValue(block.ElementType, out var elementType) == true)
+                        {
+                            var elementValidation = new ElementTypeValidationModel(elementType.Alias, block.Key);
 
-            return Enumerable.Empty<ElementTypeValidationModel>();
+                            foreach (var propertyType in elementType.CompositionPropertyTypes)
+                            {
+                                if (block.Value.TryGetValue(propertyType.Alias, out var bpv) == true)
+                                {
+                                    elementValidation.AddPropertyTypeValidation(new PropertyTypeValidationModel(propertyType, bpv));
+                                }
+                            }
+
+                            yield return elementValidation;
+                        }
+                    }
+                }
+            }
         }
     }
 }
-#endif

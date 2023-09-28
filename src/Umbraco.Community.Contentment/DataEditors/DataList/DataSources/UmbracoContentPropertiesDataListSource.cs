@@ -72,7 +72,21 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
-                    }
+                    },
+                    new ConfigurationField
+                    {
+                        Key = "includeName",
+                        Name = "Include \"Name\" property?",
+                        Description = "Select to include an option called \"Name\", for the content item's name.",
+                        View = "boolean"
+                    },
+                    new ConfigurationField
+                    {
+                        Key = "sortAlphabetically",
+                        Name = "Sort alphabetically?",
+                        Description = "Select to sort the properties in alphabetical order.<br>By default, the order is defined by the order they appear on the document type.",
+                        View = "boolean"
+                    },
                 };
             }
         }
@@ -97,17 +111,41 @@ namespace Umbraco.Community.Contentment.DataEditors
                         _icons = _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
                     }
 
-                    return contentType
-                        .CompositionPropertyTypes
-                        .Select(x => new DataListItem
+                    IEnumerable<DataListItem> addNameItem(bool add)
+                    {
+                        if (add == true)
                         {
-                            Name = x.Name,
-                            Value = x.Alias,
-                            Description = x.PropertyEditorAlias,
-                            Icon = _icons.ContainsKey(x.PropertyEditorAlias) == true
-                                ? _icons[x.PropertyEditorAlias]
-                                : UmbConstants.Icons.PropertyEditor,
-                        });
+                            yield return new DataListItem
+                            {
+                                Name = "Name",
+                                Value = "name",
+                                Description = "The name of the `IPublishedContent` item.",
+                                Icon = UmbConstants.Icons.DataType
+                            };
+                        }
+                    };
+
+                    var includeName = config.GetValueAs("includeName", false);
+
+                    var items = addNameItem(includeName)
+                        .Union(contentType
+                            .CompositionPropertyTypes
+                            .Select(x => new DataListItem
+                            {
+                                Name = x.Name,
+                                Value = x.Alias,
+                                Description = x.PropertyEditorAlias,
+                                Icon = _icons.ContainsKey(x.PropertyEditorAlias) == true
+                                    ? _icons[x.PropertyEditorAlias]
+                                    : UmbConstants.Icons.PropertyEditor,
+                            }));
+
+                    if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                    {
+                        return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                    }
+
+                    return items;
                 }
             }
 

@@ -20,7 +20,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : IDataListSource, IDataListSourceValueConverter, IContentmentListTemplateItem
+    public sealed class EnumDataListSource : IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;
@@ -106,6 +106,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Description = attr?.Description ?? attr2?.Description,
                     Disabled = attr?.Disabled ?? false,
+                    Group = attr?.Group,
                     Icon = attr?.Icon,
                     Name = attr?.Name ?? field.Name.SplitPascalCasing(_shortStringHelper),
                     Value = attr3?.Value ?? attr?.Value ?? field.Name

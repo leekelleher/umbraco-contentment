@@ -4,13 +4,6 @@
 
 ### Data Sources
 
-
-> :rotating_light::rotating_light::rotating_light: **This documentation has not been written yet.** :rotating_light::rotating_light::rotating_light:
-> If you have a desire to contribute back to the Contentment package project, (and you have the time), please consider helping me write the documentation pages for the data-sources.
-> Any discussion, guidance or feedback can be had on issue #142.
-> https://github.com/leekelleher/umbraco-contentment/issues/142
-
-
 #### .NET Enumeration
 
 Select an enumeration from a .NET assembly as the data source.
@@ -18,9 +11,49 @@ Select an enumeration from a .NET assembly as the data source.
 
 ##### How to configure the editor?
 
-_[TBC]_
+Select the desired enumeration, by selecting the containing .NET assembly, and then the enumeration type. You can opt to sort the values alphabetically in the data source too.
+
+![Configuration Editor for .NET Enumeration](data-source--enum.png)
+
 
 
 ##### What is the value's object-type?
 
-_[TBC]_
+The value returned from the List editor is the configured enumeration type.
+
+Depending on the `List editor` used, this may be wrapped in a `List<T>`.
+
+##### Controlling Enum display
+
+You can use the [DataListItemAttribute](../../src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItemAttribute.cs) to decorate your enum values with additional information for use with Contentment. With this attribute, you can specify properties such as name, description, icon, etc., for individual enum items.
+
+For example:
+
+```csharp
+using Umbraco.Community.Contentment.DataEditors;
+
+public enum MyEnum
+{
+    [DataListItem(Description = "This is the first value", Group = "Group A", Icon = "icon-first")]
+    First,
+
+    [DataListItem(Description = "This is the second value", Group = "Group B", Icon = "icon-second")]
+    Second,
+
+    [DataListItem(Description = "This is the third value", Group = "Group A", Icon = "icon-third")]
+    Third
+}
+```
+
+The `DataListItemAttribute` contains the following properties:
+
+| Property    | Description                                                      | Type    |
+|-------------|------------------------------------------------------------------|---------|
+| Description | Provides a description for the Enum value                         | string  |
+| Disabled    | Specifies whether the Enum value should be disabled               | bool    |
+| Group       | Assigns the Enum value to a specific group                        | string  |
+| Icon        | Specifies an icon for the Enum value                              | string  |
+| Ignore      | Indicates whether the Enum value should be ignored                | bool    |
+| Name        | Provides a custom name for the Enum value (default: field name)   | string  |
+| Value       | Specifies a custom value for the Enum value (default: field value)| string  |
+

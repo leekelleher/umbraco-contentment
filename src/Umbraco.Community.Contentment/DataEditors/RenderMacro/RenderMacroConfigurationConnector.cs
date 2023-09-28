@@ -5,20 +5,12 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Deploy;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -52,11 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 dependencies.Add(new ArtifactDependency(udi, false, ArtifactDependencyMode.Match));
             }
 
-#if NET472
-            return ConfigurationEditor.ToDatabase(dataType.Configuration);
-#else
             return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);
-#endif
         }
     }
 }

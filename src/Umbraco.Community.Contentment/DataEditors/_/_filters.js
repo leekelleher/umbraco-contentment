@@ -13,7 +13,6 @@ angular.module("umbraco.filters").filter("lkNodeName", [
             }
 
             return input.map(item => $filter("ncNodeName")(item)).join(", ");
-
         };
     }
 ]);
@@ -22,7 +21,7 @@ angular.module("umbraco.filters").filter("lkGroupBy", [
     function () {
         return _.memoize(
             (items, field, cacheKey) => _.chain(items).sortBy(field).groupBy(field).value(),
-            (items, field, cacheKey) => [cacheKey, field].join("_")
+            (items, field, cacheKey) => [cacheKey, field, items.length].join("_")
         );
     }
 ]);

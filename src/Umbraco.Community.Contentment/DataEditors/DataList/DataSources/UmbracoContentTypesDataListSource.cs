@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -18,19 +19,25 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentTypesDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly ICultureDictionary _cultureDictionary;
 
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
+            ILocalizedTextService localizedTextService,
+            ICultureDictionary cultureDictionary,
             IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _localizedTextService = localizedTextService;
+            _cultureDictionary = cultureDictionary;
             _ioHelper = ioHelper;
         }
 
@@ -122,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
+                    Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
                     Description = string.Join(", ", x.AllowedTemplates.Select(t => t.Alias)),

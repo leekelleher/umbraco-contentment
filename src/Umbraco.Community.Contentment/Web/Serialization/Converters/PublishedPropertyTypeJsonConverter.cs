@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         public override IPublishedPropertyType ReadJson(JsonReader reader, Type objectType, IPublishedPropertyType existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            // TODO: [LK:2022-09-05] Up For Grabs! Please help me implement this.
+            // TODO: [UP-FOR-GRABS] Please help me implement this.
             throw new NotImplementedException();
         }
 

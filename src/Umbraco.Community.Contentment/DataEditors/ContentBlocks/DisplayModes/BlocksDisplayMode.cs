@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using UmbIcons = Umbraco.Cms.Core.Constants.Icons;
 
@@ -12,13 +11,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class BlocksDisplayMode : IContentBlocksDisplayMode
     {
-        private readonly IIOHelper _ioHelper;
-
-        public BlocksDisplayMode(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-
         public string Name => "Blocks";
 
         public string Description => "Blocks will be displayed in a list similar to the Block List editor.";
@@ -39,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
-            { "displayMode", "blocks" },
+            { ContentBlocksConfigurationEditor.DisplayMode, "blocks" },
             { "enablePreview", Constants.Values.True },
         };
 

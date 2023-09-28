@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksConfigurationEditor : ConfigurationEditor
     {
-        // TODO: expire the local cache `_elementTypes` when a new element type is added. [LK:2021-08-16]
+        // TODO: [LK:2021-08-16] expire the local cache `_elementTypes` when a new element type is added.
         private readonly Dictionary<Guid, IContentType> _elementTypes;
         private readonly Lazy<ILookup<int, IContent>> _elementBlueprints;
         private readonly IIOHelper _ioHelper;
@@ -78,6 +78,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToConfigurationEditor(configuration);
 
+            // NOTE: [LK] Technical debt. This works around the original display mode data just being the view-path (string).
+            // This was prior to v1.1.0 release, (when Content Blocks was introduced). It could be removed in the next major version.
             if (config.TryGetValueAs(DisplayMode, out string str1) == true && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
             {
                 var mode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
@@ -107,12 +109,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     config.Remove(DisplayMode);
 
                     var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
-
-                    foreach (var prop in editorConfig)
+                    if (editorConfig != null)
                     {
-                        if (config.ContainsKey(prop.Key) == false)
+                        foreach (var prop in editorConfig)
                         {
-                            config.Add(prop.Key, prop.Value);
+                            if (config.ContainsKey(prop.Key) == false)
+                            {
+                                config.Add(prop.Key, prop.Value);
+                            }
                         }
                     }
 

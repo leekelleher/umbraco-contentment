@@ -20,27 +20,47 @@
 
         <umb-editor-container>
 
-            <umb-box ng-if="vm.items.length > 0">
+            <div class="umb-control-group" ng-if="vm.enableFilter">
+                <div class="form-search">
+                    <umb-search-filter input-id="contentment-itempicker-filter"
+                                       model="vm.searchTerm"
+                                       label-key="placeholders_filter"
+                                       text="Type to filter..."
+                                       on-change="vm.search()"
+                                       css-class="w-100"
+                                       auto-focus="true">
+                    </umb-search-filter>
+                </div>
+            </div>
+
+            <div ng-if="vm.enableMultiple === true && vm.itemCount > 0 && vm.maxItems > 0 && vm.itemCount > vm.maxItems" class="alert alert-danger">
+                <span>Too many items selected, please unselect <strong>{{vm.itemCount - vm.maxItems}}</strong> {{vm.itemCount - vm.maxItems === 1 ? 'item' : 'items'}}.</span>
+            </div>
+
+            <div class="umb-block-card-grid" ng-if="vm.listType === 'cards'">
+                <div class="umb-block-card"
+                     ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results"
+                     ng-class="{'--isOpen': item.selected}"
+                     ng-click="vm.select(item)">
+                    <div class="__showcase">
+                        <div class="__icon">
+                            <umb-icon icon="{{item.icon || vm.defaultIcon}}"></umb-icon>
+                        </div>
+                    </div>
+                    <div class="__info">
+                        <div class="__name" ng-bind="item.name"></div>
+                        <div class="__subname" ng-bind="item.description"></div>
+                    </div>
+                    <div class="__actions"></div>
+                </div>
+                <div class="alert alert-danger" ng-if="results.length == 0">
+                    <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
+                </div>
+            </div>
+
+            <umb-box ng-if="vm.listType === 'grid'">
                 <umb-box-content>
-
-                    <div class="umb-search-filter w-100 mb3" ng-if="vm.enableFilter">
-                        <label for="icon-search" class="sr-only">Type to filter...</label>
-                        <umb-icon icon="icon-search"></umb-icon>
-                        <input id="icon-search"
-                               type="text"
-                               ng-model="vm.searchTerm"
-                               class="umb-search-filter__input"
-                               localize="placeholder"
-                               placeholder="@placeholders_filter"
-                               umb-auto-focus
-                               no-dirty-check />
-                    </div>
-
-                    <div ng-if="vm.enableMultiple === true && vm.itemCount > 0 && vm.maxItems > 0 && vm.itemCount > vm.maxItems" class="alert alert-danger">
-                        <span>Too many items selected, please unselect <strong>{{vm.itemCount - vm.maxItems}}</strong> {{vm.itemCount - vm.maxItems === 1 ? 'item' : 'items'}}.</span>
-                    </div>
-
-                    <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}" ng-if="vm.listType === 'grid'">
+                    <ul class="umb-card-grid" ng-class="{'-three-in-row': vm.items.length < 7, '-four-in-row': vm.items.length >= 7}">
                         <li ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                             <button type="button" class="btn-reset umb-card-grid-item" title="{{ item.name }}" ng-click="vm.select(item)">
                                 <span>
@@ -53,8 +73,12 @@
                             <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
                         </li>
                     </ul>
+                </umb-box-content>
+            </umb-box>
 
-                    <ul class="umb-actions umb-actions-child" ng-if="vm.listType === 'list'">
+            <umb-box ng-if="vm.listType === 'list'">
+                <umb-box-content>
+                    <ul class="umb-actions umb-actions-child">
                         <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items | orderBy:vm.orderBy | filter:vm.searchTerm as results">
                             <button type="button" class="umb-action-link umb-outline btn-reset" ng-click="vm.select(item)">
                                 <div ng-if="vm.enableMultiple"
@@ -73,7 +97,6 @@
                             <span>No items found for '<em ng-bind="vm.searchTerm"></em>'.</span>
                         </li>
                     </ul>
-
                 </umb-box-content>
             </umb-box>
 

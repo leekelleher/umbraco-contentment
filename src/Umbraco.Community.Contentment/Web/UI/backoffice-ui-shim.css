@@ -23,11 +23,52 @@
     color: #1b264f;
 }
 
-/* Block List Configuration Card, fixes icon position of action buttons. */
-.contentment .umb-block-card .__actions > button {
-    padding-top: 3px;
+/* Contentment dashboard, paragraph line height felt squished. */
+.contentment .umb-box-content p {
+    line-height: 1.5rem;
 }
 
+/* Tags - Typeahead overlay z-index. */
+.contentment .umb-tags-editor .tt-menu.tt-open {
+    z-index: 1001 !important;
+}
+
+/* Block List Configuration Card - Tweaks */
+.contentment .umb-block-card {
+}
+
+    .contentment .umb-block-card .__showcase {
+        background-color: rgba(0, 0, 0, 0.25);
+        background-size: cover;
+    }
+
+    .contentment .umb-block-card .__info .__name,
+    .contentment .umb-block-card .__info .__subname {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 10px;
+    }
+
+    /* Block List Configuration Card, adds fade to appear disabled/unpublished. */
+    .contentment .umb-block-card.__fade {
+        opacity: 0.5;
+    }
+
+    /* Block List Configuration Card, non-editable styles, e.g. not clickable. */
+    .contentment .umb-block-card.__no-edit {
+        cursor: move;
+    }
+
+    /* Block List Configuration Card, fixes icon position of action buttons. */
+    .contentment .umb-block-card .__actions > button {
+        padding-top: 3px;
+    }
+
+    /* Block List Configuration Card, fixes description padding. */
+    .contentment .umb-block-card .__info .__subname {
+        margin-right: 16px;
+    }
 
 /* Copyright © 2020 Perplex Digital
  * Parts of this Source Code has been derived from Perplex.ContentBlocks.

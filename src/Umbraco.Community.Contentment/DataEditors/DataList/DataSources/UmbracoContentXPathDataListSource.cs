@@ -10,30 +10,25 @@ using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
-using Umbraco.Cms.Core.Xml;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataSourceValueConverter
     {
-        private readonly IContentTypeService _contentTypeService;
+        private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
 
-        private readonly IRequestAccessor _requestAccessor;
-
         public UmbracoContentXPathDataListSource(
-            IContentTypeService contentTypeService,
-            IRequestAccessor requestAccessor,
+            IContentmentContentContext contentmentContentContext,
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
-            _contentTypeService = contentTypeService;
-            _requestAccessor = requestAccessor;
+            _contentmentContentContext = contentmentContentContext;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
         }
@@ -43,8 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public string Description => "Use an XPath query to select Umbraco content to use as the data source.";
 
         public string Icon => "icon-fa fa-file-code-o";
-
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -82,42 +75,28 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
         };
 
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var xpath = config.GetValueAs("xpath", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(xpath) == false)
+            if (string.IsNullOrWhiteSpace(xpath) == false &&
+                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache)
             {
-                var nodeContextId = default(int?);
                 var preview = true;
-                var umbracoContext = _umbracoContextAccessor.GetRequiredUmbracoContext();
 
-                // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
-                {
-                    nodeContextId = currentId;
-                }
-                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
-                {
-                    nodeContextId = parentId;
-                }
+                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
 
-                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-                bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
-
-                var parsed = UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpath, nodeContextId, getPath, publishedContentExists);
+                var parsed = _contentmentContentContext.ParseXPathQuery(xpath, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
-                    return umbracoContext.Content.GetByXPath(preview, parsed)
-                        .Select(x => new DataListItem
-                        {
-                            Name = x.Name,
-                            Value = Udi.Create(UmbConstants.UdiEntityType.Document, x.Key).ToString(),
-                            Icon = ContentTypeCacheHelper.TryGetIcon(x.ContentType.Alias, out var icon, _contentTypeService) == true ? icon : UmbConstants.Icons.Content,
-                            Description = x.TemplateId > 0 ? x.Url() : string.Empty,
-                            Disabled = x.IsPublished() == false,
-                        })
+                    return contentCache
+                        .GetByXPath(preview, parsed)
+                        .Select(DataListItemExtensions.ToDataListItem)
                         .ToList();
                 }
             }
@@ -129,8 +108,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out Udi udi) == true
-                ? _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetById(udi)
+            return UdiParser.TryParse(value, out Udi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content.GetById(udi)
                 : default;
         }
     }

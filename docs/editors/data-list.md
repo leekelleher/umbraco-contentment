@@ -86,6 +86,8 @@ public class TimeZoneDataSource : IDataListSource
 
     public string Icon => "icon-globe";
 
+    public string Group => "Custom";
+
     public OverlaySize OverlaySize => OverlaySize.Small;
 
     public Dictionary<string, object> DefaultValues => default;
@@ -124,6 +126,37 @@ public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
     }
 }
 ```
+
+##### Accessing contextual content
+
+If you need to access contextual data from the current Umbraco content node, there's an `IContentmentContentContext` service which can be injected into your constructor. The `isParent` flag indicates whether the returned values relate to the current node, or it's parent node (for example, when editing an element item).
+
+```csharp
+public class BlogCategoriesDataSource : IDataListSource
+{
+    private readonly IContentmentContentContext _contentmentContentContext;
+
+    public BlogCategoriesDataSource(IContentmentContentContext contentmentContentContext)
+    {
+        _contentmentContentContext = contentmentContentContext;
+    }
+
+    // <snip>
+
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+    {
+        // It's more performant to just get the ID if you only need that...
+        // var currentId = _contentmentContentContext.GetCurrentContentId(out bool isParent);
+
+        // ...or you can get the IPublishedContent
+        var currentPage = _contentmentContentContext.GetCurrentContent(out bool isParent);
+
+        var blog = currentPage?.AncestorOrSelf<Blog>();
+        return blog?.Categories?.Select(x => new DataListItem() { Name = x, Value = x });
+    }
+}
+```
+
 #### Providing custom values for published content models
 
 As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.

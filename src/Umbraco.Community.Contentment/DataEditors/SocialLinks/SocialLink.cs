@@ -6,11 +6,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-#if NET472
-namespace Umbraco.Core.Models.PublishedContent
-#else
 namespace Umbraco.Cms.Core.Models.PublishedContent
-#endif
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class SocialLink

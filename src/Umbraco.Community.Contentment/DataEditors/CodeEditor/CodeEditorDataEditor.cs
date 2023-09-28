@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         ValueType = ValueTypes.Text,
         Group = Constants.Conventions.PropertyGroups.Code,
         Icon = DataEditorIcon)]
-    internal sealed class CodeEditorDataEditor : DataEditor
+    public sealed class CodeEditorDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CodeEditor";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Code Editor";

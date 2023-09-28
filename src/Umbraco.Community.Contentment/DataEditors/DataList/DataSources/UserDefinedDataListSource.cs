@@ -13,7 +13,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UserDefinedDataListSource : IDataListSource
+    public sealed class UserDefinedDataListSource : IDataListSource, IContentmentListTemplateItem
     {
         private readonly IIOHelper _ioHelper;
 
@@ -24,7 +24,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "User-defined List";
 
+        public string NameTemplate => default;
+
         public string Description => "Manually configure the items for the data source.";
+
+        public string DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
 
         public string Icon => UmbConstants.Icons.DataType;
 
@@ -37,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorListEditorViewPath),
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(ListItemsDataEditor.DataEditorViewPath),
                 Config = new Dictionary<string, object>()
                 {
                     { "confirmRemoval", Constants.Values.True },

@@ -1,6 +1,7 @@
 ﻿<!-- Copyright © 2013-present Umbraco.
    - This Source Code has been derived from Umbraco CMS.
    - https://github.com/umbraco/Umbraco-CMS/blob/release-8.1.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/mediapicker/mediapicker.html
+   - https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Web.UI.Client/src/views/propertyeditors/listview/icon.prevalues.html
    - Modified under the permissions of the MIT License.
    - Modifications are licensed under the Mozilla Public License.
    - Copyright © 2019 Lee Kelleher.
@@ -32,7 +33,10 @@
             </ul>
         </div>
     </div>
-    <a class="lk-icon-picker-small" href="" ng-if="vm.size === 'small'" ng-click="vm.pick()" prevent-default>
-        <umb-icon icon="{{model.value}}" class="icon" ng-class="{ 'medium': vm.allowAdd === false, 'small icon-add': vm.allowAdd }"></umb-icon>
-    </a>
+    <button ng-if="vm.size === 'small'" type="button" class="btn-reset umb-panel-header-icon" ng-click="vm.pick()" ng-class="{'-placeholder': !model.value }" title="{{model.value}}">
+        <umb-icon icon="{{model.value}}" class="icon" ng-if="model.value"></umb-icon>
+        <span class="umb-panel-header-icon-text" ng-if="!model.value">
+            <localize key="settings_addIcon">Add icon</localize>
+        </span>
+    </button>
 </div>

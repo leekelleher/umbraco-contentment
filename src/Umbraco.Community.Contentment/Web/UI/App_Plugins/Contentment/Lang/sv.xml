@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="sv" intName="Swedish (Sweden)" localName="Svenska (Sverige)" lcid="" culture="sv-SE">
+    <creator>
+        <name>Markus Johansson</name>
+        <link>https://twitter.com/markusjoha</link>
+    </creator>
+    <area alias="contentment">
+        <key alias="name">Contentment</key>
+
+        <!-- General -->
+        <key alias="removeItemMessage">Är du säker på att du vill radera?</key>
+        <key alias="removeItemButton">Ja, radera</key>
+
+        <!-- Configuration Editor -->
+        <key alias="missingItemName">Denna är inte längre tillgänglig</key>
+        <key alias="missingItemDescription">Vänligen radera denna konfiguration och välj en annan.</key>
+
+        <!-- Content Blocks -->
+        <key alias="configureDisplayMode">Välj och konfigurera visningsläge</key>
+        <key alias="configureElementType">Välj och konfigurera elementtyp</key>
+
+        <key alias="copyAllBlocks">Kopiera alla block</key>
+        <key alias="editRawValue">Redigera underliggande värde</key>
+
+        <key alias="copyContentBlock">Kopiera innehållsblock</key>
+        <key alias="createContentTemplate">Skapa en innehållsmall...</key>
+
+        <!-- Data List -->
+        <key alias="configureDataSource">Välj och konfigurera en data källa</key>
+        <key alias="configureListEditor">Välj och konfiguera en list editor.</key>
+        <key alias="configurePreviewInit">Vänligen välj och konfigurera en datakälla eller list editor.</key>
+        <key alias="configurePreviewDataSource">Vänligen välj och konfigurera en datakälla.</key>
+        <key alias="configurePreviewListEditor">Vänligen välj och konfigurera en list editor.</key>
+        <key alias="configurePreviewNoItems">Datakällan returnerade inget resultat att visa.</key>
+
+        <key alias="checkboxListCheckAll">Markera alla</key>
+        <key alias="checkboxListUncheckAll">Avmarkera alla</key>
+
+        <key alias="tagsType">Skriv för att välja...</key>
+    </area>
+</language>

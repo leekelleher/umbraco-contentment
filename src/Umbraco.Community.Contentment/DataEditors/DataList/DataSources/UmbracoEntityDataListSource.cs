@@ -18,7 +18,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoEntityDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoEntityDataListSource : IDataListSource, IDataSourceValueConverter
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
         {

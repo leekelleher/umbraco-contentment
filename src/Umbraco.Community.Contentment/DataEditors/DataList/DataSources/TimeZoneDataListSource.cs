@@ -6,11 +6,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TimeZoneDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class TimeZoneDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 
@@ -30,11 +33,58 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             return TimeZoneInfo
                 .GetSystemTimeZones()
-                .Select(x => new DataListItem
+                .Select(ToDataListItem);
+        }
+
+        public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
+        {
+            if (values?.Any() == true)
+            {
+                return Task.FromResult(values
+                    .Select(x => TimeZoneInfo.FindSystemTimeZoneById(x))
+                    .Select(ToDataListItem));
+            }
+
+            return Task.FromResult(Enumerable.Empty<DataListItem>());
+        }
+
+        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        {
+            var items = default(IEnumerable<DataListItem>);
+
+            if (string.IsNullOrWhiteSpace(query) == true)
+            {
+                items = GetItems(config);
+            }
+            else
+            {
+                items = GetItems(config)
+                    .Where(x => x.Name.InvariantContains(query) == true || x.Value.InvariantStartsWith(query) == true);
+            }
+
+            if (items?.Any() == true)
+            {
+                var offset = (pageNumber - 1) * pageSize;
+                var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
                 {
-                    Name = x.DisplayName,
-                    Value = x.Id
-                });
+                    Items = items.Skip(offset).Take(pageSize)
+                };
+
+                return Task.FromResult(results);
+            }
+
+            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
+        }
+
+        private DataListItem ToDataListItem(TimeZoneInfo info)
+        {
+            return new DataListItem
+            {
+                Name = info.DisplayName,
+                Value = info.Id,
+                Icon = "icon-time",
+                Description = info.Id,
+            };
         }
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(TimeZoneInfo);

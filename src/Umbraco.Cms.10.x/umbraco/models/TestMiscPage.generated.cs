@@ -50,12 +50,36 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Data List Items
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("dataListItems")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem> DataListItems => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Community.Contentment.DataEditors.DataListItem>>(_publishedValueFallback, "dataListItems");
+
+		///<summary>
+		/// Data Picker - Umbraco Content
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("dataPickerUmbracoContent")]
+		public virtual global::System.Collections.Generic.List<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> DataPickerUmbracoContent => this.Value<global::System.Collections.Generic.List<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>(_publishedValueFallback, "dataPickerUmbracoContent");
+
+		///<summary>
 		/// Icon Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("iconPicker")]
 		public virtual string IconPicker => this.Value<string>(_publishedValueFallback, "iconPicker");
+
+		///<summary>
+		/// Options for Data List
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "10.0.0+e3f4b86")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("optionsForDataList")]
+		public virtual global::System.Collections.Generic.IEnumerable<string> OptionsForDataList => this.Value<global::System.Collections.Generic.IEnumerable<string>>(_publishedValueFallback, "optionsForDataList");
 
 		///<summary>
 		/// Social Links

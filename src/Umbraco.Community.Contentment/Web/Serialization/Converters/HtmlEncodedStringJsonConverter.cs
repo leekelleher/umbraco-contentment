@@ -17,7 +17,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         public override IHtmlEncodedString ReadJson(JsonReader reader, Type objectType, IHtmlEncodedString existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            // TODO: [LK:2022-09-02] Up For Grabs! Please help me implement this.
+            // TODO: [UP-FOR-GRABS] Please help me implement this.
             throw new NotImplementedException();
         }
 

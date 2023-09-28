@@ -16,7 +16,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTemplatesDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class UmbracoTemplatesDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IFileService _fileService;
         private readonly IIOHelper _ioHelper;

@@ -4,14 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System;
-using System.Collections.Generic;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public interface IDataListSourceValueConverter : IDataListSource
-    {
-        Type GetValueType(Dictionary<string, object> config);
-
-        object ConvertValue(Type type, string value);
-    }
+    [Obsolete("This interface has been deprecated. Please used `IDataSourceValueConverter` instead.")]
+    public interface IDataListSourceValueConverter : IDataSourceValueConverter, IDataListSource
+    { }
 }

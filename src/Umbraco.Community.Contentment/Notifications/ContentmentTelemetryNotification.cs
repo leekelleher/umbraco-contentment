@@ -5,9 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -21,23 +22,26 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Notifications
 {
-    internal sealed class ContentmentTelemetryNotification : INotificationHandler<DataTypeSavedNotification>
+    internal sealed class ContentmentTelemetryNotification : INotificationAsyncHandler<DataTypeSavedNotification>
     {
         private readonly ContentmentSettings _contentmentSettings;
         private readonly GlobalSettings _globalSettings;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IUmbracoVersion _umbracoVersion;
 
         public ContentmentTelemetryNotification(
             IOptions<ContentmentSettings> contentmentSettings,
             IOptions<GlobalSettings> globalSettings,
+            IHttpClientFactory httpClientFactory,
             IUmbracoVersion umbracoVersion)
         {
             _contentmentSettings = contentmentSettings.Value;
             _globalSettings = globalSettings.Value;
+            _httpClientFactory = httpClientFactory;
             _umbracoVersion = umbracoVersion;
         }
 
-        public void Handle(DataTypeSavedNotification notification)
+        public async Task HandleAsync(DataTypeSavedNotification notification, CancellationToken cancellationToken)
         {
             if (_contentmentSettings.DisableTelemetry == true)
             {
@@ -91,6 +95,11 @@ namespace Umbraco.Community.Contentment.Notifications
                                     AddConfigurationEditorKey(DataListConfigurationEditor.ListEditor);
                                     break;
 
+                                case DataPickerDataEditor.DataEditorAlias:
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DisplayMode);
+                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DataSource);
+                                    break;
+
                                 case ContentBlocksDataEditor.DataEditorAlias:
                                     AddConfigurationEditorKey(ContentBlocksConfigurationEditor.DisplayMode);
                                     break;
@@ -115,17 +124,13 @@ namespace Umbraco.Community.Contentment.Notifications
                             dataTypeConfig = dataTypeConfig,
                         };
 
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-                        using (var client = new WebClient())
-                        {
-                            var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
-                            var json = JsonConvert.SerializeObject(data, Formatting.None);
-                            var payload = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+                        var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
+                        var json = JsonConvert.SerializeObject(data, Formatting.None);
+                        var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+                        var payload = new StringContent(base64, Encoding.UTF8, MediaTypeNames.Text.Plain);
 
-                            client.Headers.Add("Content-Type", MediaTypeNames.Text.Plain);
-                            Task.Run(() => client.UploadStringAsync(address, payload));
-                        }
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
+                        using var client = _httpClientFactory.CreateClient();
+                        using var post = await client.PostAsync(address, payload);
                     }
                     catch { /* ¯\_(ツ)_/¯ */ }
                 }

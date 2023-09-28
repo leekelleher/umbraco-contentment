@@ -17,6 +17,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             confirmRemoval: 0,
             defaultIcon: "icon-stop",
             enableDevMode: 0,
+            hideDescription: false,
+            hideIcon: false,
             maxItems: 0,
             notes: null,
         };
@@ -36,6 +38,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.focusName = false;
+            vm.hideDescription = Object.toBoolean(config.hideDescription);
+            vm.hideIcon = Object.toBoolean(config.hideIcon);
 
             vm.sortableOptions = {
                 axis: "y",
@@ -73,7 +77,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function add() {
 
-            vm.focusName = false;
+            vm.focusName = vm.hideIcon === true;
 
             $scope.model.value.push({
                 icon: config.defaultIcon,
@@ -153,7 +157,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             $scope.model.value.splice($index, 1);
 
-            if (config.maxItems === 0 || vm.items.length < config.maxItems) {
+            if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                 vm.allowAdd = true;
             }
 

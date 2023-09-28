@@ -12,7 +12,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class NumberRangeDataListSource : IDataListSource, IDataListSourceValueConverter
+    public sealed class NumberRangeDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IIOHelper _ioHelper;
 

@@ -16,7 +16,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class PhysicalFileSystemDataSource : IDataListSource
+    public sealed class PhysicalFileSystemDataSource : IDataListSource, IContentmentListTemplateItem
     {
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
@@ -40,7 +40,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "File System";
 
+        public string NameTemplate => default;
+
         public string Description => "Select paths from the physical file system as the data source.";
+
+        public string DescriptionTemplate => "{{ path }}; {{ filter }}";
 
         public string Icon => "icon-folder-close";
 

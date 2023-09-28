@@ -5,23 +5,18 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class SocialLinksConfigurationEditor : ConfigurationEditor
     {
         internal const string OverlayView = "overlayView";
+        internal const string Network = "network";
+        internal const string Networks = "networks";
 
         private readonly IIOHelper _ioHelper;
 
@@ -30,21 +25,22 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _ioHelper = ioHelper;
 
-            DefaultConfiguration.Add("networks", new[]
+            DefaultConfiguration.Add(Networks, new[]
             {
-                new { key = "network", value = new { network = "facebook", name = "Facebook", url = "https://facebook.com/", icon = "icon-facebook", backgroundColor = "#3b5998", iconColor = "#fff" } },
-                new { key = "network", value = new { network = "twitter", name = "Twitter", url = "https://twitter.com/", icon = "icon-twitter", backgroundColor = "#2795e9", iconColor = "#fff" } },
-                new { key = "network", value = new { network = "instagram", name = "Instagram", url = "https://instagram.com/", icon = "icon-instagram", backgroundColor = "#305777", iconColor = "#fff" } },
-                new { key = "network", value = new { network = "linkedin", name = "LinkedIn", url = "https://linkedin.com/in/", icon = "icon-linkedin", backgroundColor = "#007bb6", iconColor = "#fff" } },
-                new { key = "network", value = new { network = "youtube", name = "YouTube", url = "https://www.youtube.com/channel/", icon = "icon-youtube", backgroundColor = "#f00", iconColor = "#fff" } },
-                new { key = "network", value = new { network = "github", name = "GitHub", url = "https://github.com/", icon = "icon-github", backgroundColor = "#000", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "facebook", name = "Facebook", url = "https://facebook.com/", icon = "icon-facebook", backgroundColor = "#3b5998", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "twitter", name = "Twitter", url = "https://twitter.com/", icon = "icon-twitter", backgroundColor = "#2795e9", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "instagram", name = "Instagram", url = "https://instagram.com/", icon = "icon-instagram", backgroundColor = "#305777", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "linkedin", name = "LinkedIn", url = "https://linkedin.com/in/", icon = "icon-linkedin", backgroundColor = "#007bb6", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "mastodon", name = "Mastodon", url = "https://mastodon.social/", icon = "icon-mastodon", backgroundColor = "#5b4be1", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "youtube", name = "YouTube", url = "https://youtube.com/", icon = "icon-youtube", backgroundColor = "#f00", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "github", name = "GitHub", url = "https://github.com/", icon = "icon-github", backgroundColor = "#000", iconColor = "#fff" } },
             });
 
             var items = new[]
             {
                 new ConfigurationEditorModel
                 {
-                    Key = "network",
+                    Key = Network,
                     Name = "Social network",
                     Description = string.Empty,
                     Icon = SocialLinksDataEditor.DataEditorIcon,
@@ -64,8 +60,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         new ConfigurationField
                         {
-                            Key = "network",
-                            Name = "Network",
+                            Key = Network,
+                            Name = nameof(Network),
                             Description = "An alias for the social network. This will be used as the value of the selection.",
                             View = "textstring",
                         },
@@ -88,7 +84,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = "icon",
                             Name = "Icon",
                             Description = "Typically select the logo for the social network.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                            View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+                            Config = new Dictionary<string, object>
+                            {
+                                { "hideColors", Constants.Values.True },
+                                { "size", "small" },
+                            }
                         },
                         new NotesConfigurationField(ioHelper, $@"<details class=""alert alert-info"">
 <summary>Would you like to use a <strong>custom icon</strong>?</summary>
@@ -116,7 +117,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new ConfigurationField
             {
-                Key = "networks",
+                Key = Networks,
                 Name = "Social networks",
                 Description = "Define the icon set for the available social networks.",
                 View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
@@ -145,7 +146,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override object FromConfigurationEditor(IDictionary<string, object> editorValues, object configuration)
         {
-            if (editorValues.TryGetValueAs("networks", out JArray networks) == true)
+            if (editorValues.TryGetValueAs(Networks, out JArray networks) == true)
             {
                 foreach (JObject network in networks)
                 {
@@ -168,7 +169,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs("networks", out JArray array1) && array1.Count > 0)
+            if (config.TryGetValueAs(Networks, out JArray array1) && array1.Count > 0)
             {
                 var networks = new List<JObject>();
 
@@ -177,7 +178,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     networks.Add((JObject)array1[i]["value"]);
                 }
 
-                config["networks"] = networks;
+                config[Networks] = networks;
             }
 
             if (config.ContainsKey(OverlayView) == false)

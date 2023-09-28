@@ -22,18 +22,22 @@
         margin-right: 15px;
     }
 
-    .contentment .lk-data-list-item .lk-data-list-item__icon > button {
-        border: 1px solid #d8d7d9;
-        background: #fff;
-        font-size: 30px;
-        padding-top: 5px;
-        width: 50px;
-        height: 50px;
+    .contentment .lk-data-list-item .lk-data-list-item__icon {
+        margin-right: 1rem;
     }
+
+        .contentment .lk-data-list-item .lk-data-list-item__icon > button {
+            border: 1px solid #d8d7d9;
+            background: #fff;
+            font-size: 30px;
+            padding-top: 5px;
+            width: 50px;
+            height: 50px;
+        }
 
     .contentment .lk-data-list-item .lk-data-list-item__text {
         flex: 1;
-        margin: 0 1rem;
+        margin-right: 1rem;
     }
 
     .contentment .lk-data-list-item .lk-data-list-item__remove {

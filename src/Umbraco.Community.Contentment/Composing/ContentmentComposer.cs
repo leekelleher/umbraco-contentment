@@ -9,6 +9,7 @@ using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
+using Umbraco.Community.Contentment.Services;
 
 namespace Umbraco.Community.Contentment.Composing
 {
@@ -18,6 +19,8 @@ namespace Umbraco.Community.Contentment.Composing
         {
             builder
                 .Services
+                    .AddSingleton<ConfigurationEditorUtility>()
+                    .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
                     .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
              ;
 
@@ -26,11 +29,16 @@ namespace Umbraco.Community.Contentment.Composing
                     .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
             ;
 
-            builder.Services.AddSingleton<ConfigurationEditorUtility>();
+            builder
+                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
+                    .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
+            ;
 
             builder
+                .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
-                .AddNotificationHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
+                .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
+                .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
                 .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
             ;
