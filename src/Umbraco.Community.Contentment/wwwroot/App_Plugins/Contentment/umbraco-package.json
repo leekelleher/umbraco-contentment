@@ -1,14 +1,39 @@
 {
+    "$schema": "../../../../../umbraco.cms.14.x/umbraco-package-schema.json#",
     "id": "contentment",
     "name": "Contentment",
     "version": "6.0.0-alpha001",
     "allowTelemetry": false,
     "extensions": [
         {
-            "name": "Contentment EntryPoint",
             "type": "entryPoint",
-            "alias": "Contentment.EntryPoint",
+            "alias": "Umbraco.Community.Contentment.EntryPoint",
+            "name": "Contentment EntryPoint",
             "js": "/App_Plugins/Contentment/bellissima.js"
+        },
+        {
+            "type": "propertyEditorUi",
+            "alias": "Umbraco.Community.Contentment.Notes.UI",
+            "name": "Contentment Notes UI",
+            "js": "/App_Plugins/Contentment/extensions/notes.element.js",
+            "elementName": "contentment-notes",
+            "meta": {
+                "label": "[Contentment] Notes",
+                "icon": "umb:autofill",
+                "group": "display",
+                "propertyEditorSchemaAlias": "Umbraco.Community.Contentment.Notes",
+                "settings": {
+                    "properties": [
+                        {
+                            "alias": "notes",
+                            "label": "Notes",
+                            "description": "Enter the notes to be displayed for the content editor.",
+                            "propertyEditorUiAlias": "Umb.PropertyEditorUi.TinyMCE"
+                        }
+                    ],
+                    "defaultData": []
+                }
+            }
         }
     ]
 }
