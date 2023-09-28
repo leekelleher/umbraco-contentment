@@ -16,9 +16,6 @@
  * Modifications are licensed under the Mozilla Public License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

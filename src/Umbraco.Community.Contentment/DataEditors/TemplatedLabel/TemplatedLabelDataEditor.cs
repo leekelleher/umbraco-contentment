@@ -3,14 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {

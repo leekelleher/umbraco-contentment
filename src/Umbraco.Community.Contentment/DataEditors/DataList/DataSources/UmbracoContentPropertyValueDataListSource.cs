@@ -12,17 +12,14 @@
  * Modifications are licensed under the Mozilla Public License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Umbraco.Community.Contentment.Services;
-using Umbraco.Community.Contentment.Composing;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Community.Contentment.Composing;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
-using Umbraco.Cms.Core;
 
 namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 {

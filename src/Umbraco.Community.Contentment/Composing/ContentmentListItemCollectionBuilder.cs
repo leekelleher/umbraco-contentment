@@ -3,11 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Composing
