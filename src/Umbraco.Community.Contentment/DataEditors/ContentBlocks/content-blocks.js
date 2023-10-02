@@ -71,6 +71,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
 
+            // Remove items from the original value that can't be used (anymore)
+            $scope.model.value = $scope.model.value.filter(item => config.elementTypeLookup[item.elementType] !== undefined);
+
             vm.addButtonLabelKey = config.addButtonLabelKey || "grid_addElement";
             vm.displayMode = config.displayMode;
 
