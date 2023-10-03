@@ -113,6 +113,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 if (isDocument(item) === true) {
                     documents.push(item.udi);
                 }
+
                 if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
                     vm.blockActions[item.key] = actionsFactory(i);
@@ -397,7 +398,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function populateIcon(item, $index) {
 
             // check that the element type exists, if not then return the missing icon.
-            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && config.missingItem) {
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && isDocument(item) === false && config.missingItem) {
                 return config.missingItem.icon;
             }
 
@@ -418,13 +419,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
         function populateName(item, $index) {
 
-            if (item.hasOwnProperty("name") === true) {
-                return item.name;
+            // check that the element type exists, if not then return the missing label.
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && isDocument(item) === false && config.missingItem) {
+                return config.missingItem.name;
             }
 
-            // check that the element type exists, if not then return the missing label.
-            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && config.missingItem) {
-                return config.missingItem.name;
+            if (item.hasOwnProperty("name") === true) {
+                return item.name;
             }
 
             var name = "";

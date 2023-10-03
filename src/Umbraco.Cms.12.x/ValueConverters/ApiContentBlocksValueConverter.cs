@@ -7,7 +7,6 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.DataEditors;
 
 namespace Umbraco.Cms.v12_x.ValueConverters;
@@ -19,17 +18,12 @@ public class ApiContentBlocksValueConverter : PropertyValueConverterBase, IDeliv
 
     public ApiContentBlocksValueConverter(
         IApiElementBuilder apiElementBuilder,
-        IContentTypeService contentTypeService,
         IPublishedModelFactory publishedModelFactory,
         IPublishedSnapshotAccessor publishedSnapshotAccessor)
         : base()
     {
         _apiElementBuilder = apiElementBuilder;
-
-        _contentBlocksValueConverter = new ContentBlocksValueConverter(
-            contentTypeService,
-            publishedModelFactory,
-            publishedSnapshotAccessor);
+        _contentBlocksValueConverter = new ContentBlocksValueConverter(publishedModelFactory, publishedSnapshotAccessor);
     }
 
     public override bool IsConverter(IPublishedPropertyType propertyType)
