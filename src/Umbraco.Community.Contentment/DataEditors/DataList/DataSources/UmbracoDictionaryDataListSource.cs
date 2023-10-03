@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,10 +11,12 @@ using Newtonsoft.Json.Linq;
 #if NET472
 using Umbraco.Core;
 using Umbraco.Core.IO;
+using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 #else
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -65,10 +68,19 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (config.TryGetValueAs("item", out JArray array) == true &&
                 array.Count > 0 &&
-                array[0].Value<int>("id") is int id &&
-                id > 0)
+                array[0] is JObject dictItem)
             {
-                var parent = _localizationService.GetDictionaryItemById(id);
+                var parent = default(IDictionaryItem);
+
+                if (dictItem.Value<string>("key") is string guid && Guid.TryParse(guid, out var key) == true && key.Equals(Guid.Empty) == false)
+                {
+                    parent = _localizationService.GetDictionaryItemById(key);
+                }
+                else if (dictItem.Value<int>("id") is int id && id > 0)
+                {
+                    // NOTE: Fallback on the `int` ID (for backwards-compatibility)
+                    parent = _localizationService.GetDictionaryItemById(id);
+                }
 
                 if (parent != null)
                 {
