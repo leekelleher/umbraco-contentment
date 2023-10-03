@@ -47,7 +47,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             config.currentPage = $scope.node || editorState.getCurrent();
             config.currentPageId = config.currentPage.id > 0 ? config.currentPage.id : config.currentPage.parentId;
 
-            // Support Content not in Content / Media Tree
+            // Supports content that is not in Content/Media tree.
             if (!config.currentPageId) {
                 config.currentPageId = -1;
             }
@@ -62,7 +62,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 $scope.model.value = [$scope.model.value];
             }
 
-            config.elementTypeScaffoldCache = {}; // because, reasons! ¯\_(ツ)_/¯
+            if (Number.isInteger(config.maxItems) === false) {
+                config.maxItems = Number.parseInt(config.maxItems) || defaultConfig.maxItems;
+            }
+
+            config.elementTypeScaffoldCache = {};
             config.elementTypeLookup = {};
             config.missingItem = { name: "This content is not supported for this configuration.", icon: "icon-alert" };
             config.nameTemplates = {};
@@ -81,11 +85,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.enablePreview = Object.toBoolean(config.enablePreview);
 
-            vm.allowAdd = (config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems;
+            vm.allowAdd = config.maxItems === 0 || $scope.model.value.length < config.maxItems;
             vm.allowCopy = Object.toBoolean(config.allowCopy) && clipboardService.isSupported();
             vm.allowEdit = Object.toBoolean(config.allowEdit);
             vm.allowRemove = Object.toBoolean(config.allowRemove);
-            vm.allowSort = Object.toBoolean(config.disableSorting) === false && (config.maxItems !== 1 && config.maxItems !== "1");
+            vm.allowSort = Object.toBoolean(config.disableSorting) === false && config.maxItems !== 1;
 
             vm.add = add;
             vm.copy = copy;
@@ -185,7 +189,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     preview(idx);
 
-                    if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
+                    if (config.maxItems !== 0 && $scope.model.value.length >= config.maxItems) {
                         vm.allowAdd = false;
                     }
 
@@ -285,7 +289,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                 var item = $scope.model.value[$index];
 
-                if (config.elementTypeLookup[item.elementType].previewEnabled) {
+                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true &&
+                    config.elementTypeLookup[item.elementType].previewEnabled) {
 
                     vm.previews[item.key] = { loading: true };
 
@@ -340,7 +345,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 return item.icon;
             }
 
-            if (item.elementType) {
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
                 return config.elementTypeLookup[item.elementType].icon;
             }
 
@@ -364,7 +369,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 name = expression(item.value);
                 delete item.value.$index;
 
-            } else {
+            } else if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
                 name = config.elementTypeLookup[item.elementType].name;
 
@@ -391,7 +396,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                         populatePreviews();
 
-                        if ((config.maxItems === 0 || config.maxItems === "0") || $scope.model.value.length < config.maxItems) {
+                        if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                             vm.allowAdd = true;
                         }
 
