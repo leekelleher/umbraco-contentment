@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="umb-block-list__block--actions">
-                    <button ng-repeat="btn in vm.blockActions[$index]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
+                    <button ng-repeat="btn in vm.blockActions[item.key]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
                         <umb-icon icon="icon-{{btn.icon}}" class="icon"></umb-icon>
                         <span class="sr-only" ng-bind="btn.label"></span>
                     </button>

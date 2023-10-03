@@ -37,8 +37,8 @@
                         <umb-icon icon="icon-trash" class="icon"></umb-icon>
                     </button>
                 </li>
-                <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[$index]">
-                    <umb-property-actions actions="vm.blockActions[$index]"></umb-property-actions>
+                <li class="lk-content-blocks__action--item" ng-if="vm.blockActions[item.key]">
+                    <umb-property-actions actions="vm.blockActions[item.key]"></umb-property-actions>
                 </li>
             </ul>
 

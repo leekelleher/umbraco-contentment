@@ -96,14 +96,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.disabled = {};
             vm.previews = [];
-            vm.blockActions = [];
+            vm.blockActions = {};
 
             for (var i = 0; i < $scope.model.value.length; i++) {
                 var item = $scope.model.value[i];
 
                 if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
-                    vm.blockActions.push(actionsFactory(i));
+                    vm.blockActions[item.key] = actionsFactory(i);
 
                 } else {
 
@@ -181,7 +181,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     var idx = $scope.model.value.length - 1;
 
-                    vm.blockActions.push(actionsFactory(idx));
+                    vm.blockActions[model.key] = actionsFactory(idx);
 
                     preview(idx);
 
@@ -383,10 +383,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     submitButtonLabel: data[3],
                     submitButtonStyle: "danger",
                     submit: function () {
+                        var item = $scope.model.value[$index];
 
                         $scope.model.value.splice($index, 1);
 
-                        vm.blockActions.pop();
+                        delete vm.blockActions[item.key];
 
                         populatePreviews();
 
