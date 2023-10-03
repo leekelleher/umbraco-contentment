@@ -64,6 +64,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             config.elementTypeScaffoldCache = {}; // because, reasons! ¯\_(ツ)_/¯
             config.elementTypeLookup = {};
+            config.missingItem = { name: "This content is not supported for this configuration.", icon: "icon-alert" };
             config.nameTemplates = {};
 
             config.contentBlockTypes.forEach(blockType => {
@@ -71,8 +72,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.nameTemplates[blockType.key] = $interpolate(blockType.nameTemplate || "Item {{ $index }}");
             });
 
-            // Remove items from the original value that can't be used (anymore)
-            $scope.model.value = $scope.model.value.filter(item => config.elementTypeLookup[item.elementType] !== undefined);
+            localizationService.localizeMany(["contentment_missingElementType"]).then(data => {
+                config.missingItem.name = data[0];
+            });
 
             vm.addButtonLabelKey = config.addButtonLabelKey || "grid_addElement";
             vm.displayMode = config.displayMode;
@@ -89,15 +91,25 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.copy = copy;
             vm.edit = edit;
             vm.remove = remove;
-            vm.populateIcon = populateIcon;
-            vm.populateName = populateName;
+            vm.populate = populate;
             vm.sort = () => populatePreviews();
 
+            vm.disabled = {};
             vm.previews = [];
             vm.blockActions = [];
 
             for (var i = 0; i < $scope.model.value.length; i++) {
-                vm.blockActions.push(actionsFactory(i));
+                var item = $scope.model.value[i];
+
+                if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
+
+                    vm.blockActions.push(actionsFactory(i));
+
+                } else {
+
+                    vm.disabled[item.key] = true;
+
+                }
             }
 
             populatePreviews();
@@ -233,30 +245,39 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function edit($index) {
 
             var item = $scope.model.value[$index];
-            var elementType = config.elementTypeLookup[item.elementType];
 
-            editorService.open({
-                config: {
-                    elementType: elementType,
-                    currentPageId: config.currentPageId,
-                },
-                size: elementType.overlaySize,
-                value: item,
-                view: config.overlayView,
-                submit: function (model) {
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === true) {
 
-                    $scope.model.value[$index] = model;
+                var elementType = config.elementTypeLookup[item.elementType];
 
-                    preview($index);
+                editorService.open({
+                    config: {
+                        elementType: elementType,
+                        currentPageId: config.currentPageId,
+                    },
+                    size: elementType.overlaySize,
+                    value: item,
+                    view: config.overlayView,
+                    submit: function (model) {
 
-                    setDirty();
+                        $scope.model.value[$index] = model;
 
-                    editorService.close();
-                },
-                close: function () {
-                    editorService.close();
-                }
-            });
+                        preview($index);
+
+                        setDirty();
+
+                        editorService.close();
+                    },
+                    close: function () {
+                        editorService.close();
+                    }
+                });
+
+            } else {
+
+                devModeService.editValue(item);
+
+            }
         };
 
         function preview($index) {
@@ -295,7 +316,25 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             }
         };
 
+        function populate(item, $index, propertyName) {
+            switch (propertyName) {
+                case "disabled":
+                    return vm.disabled.hasOwnProperty(item.key) == true;
+                case "icon":
+                    return populateIcon(item, $index);
+                case "name":
+                    return populateName(item, $index);
+                default:
+                    return item.hasOwnProperty(propertyName) === true ? item[propertyName] : undefined;
+            }
+        };
+
         function populateIcon(item, $index) {
+
+            // check that the element type exists, if not then return the missing icon.
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && config.missingItem) {
+                return config.missingItem.icon;
+            }
 
             if (item.hasOwnProperty("icon") === true) {
                 return item.icon;
@@ -309,6 +348,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function populateName(item, $index) {
+
+            // check that the element type exists, if not then return the missing label.
+            if (config.elementTypeLookup.hasOwnProperty(item.elementType) === false && config.missingItem) {
+                return config.missingItem.name;
+            }
 
             var name = "";
 
