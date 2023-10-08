@@ -13,7 +13,7 @@
         <ContentmentPackageContentFilesPath>$(MSBuildThisFileDirectory)..\content\App_Plugins\Contentment\**\*.*</ContentmentPackageContentFilesPath>
     </PropertyGroup>
 
-    <Target Name="CopyContentmentPackageAssets" BeforeTargets="Build">
+    <Target Name="CopyContentmentPackageAssets" BeforeTargets="BeforeBuild">
         <ItemGroup>
             <ContentmentPackageContentFiles Include="$(ContentmentPackageContentFilesPath)" />
         </ItemGroup>
