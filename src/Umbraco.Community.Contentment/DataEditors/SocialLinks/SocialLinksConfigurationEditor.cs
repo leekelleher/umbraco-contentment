@@ -41,6 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 new { key = Network, value = new { network = "mastodon", name = "Mastodon", url = "https://mastodon.social/", icon = "icon-mastodon", backgroundColor = "#5b4be1", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "youtube", name = "YouTube", url = "https://youtube.com/", icon = "icon-youtube", backgroundColor = "#f00", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "github", name = "GitHub", url = "https://github.com/", icon = "icon-github", backgroundColor = "#000", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "discord", name = "Discord", url = "https://discord.com/users/", icon = "icon-discord", backgroundColor = "#404eed", iconColor = "#fff" } },
             });
 
             var items = new[]
