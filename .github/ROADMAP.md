@@ -114,14 +114,14 @@ Property Editors are:
 - Data List: [Umbraco Content Property Value](https://github.com/leekelleher/umbraco-contentment/pull/287) data-source.
 - Data List Item editor _(the one that is used in the User-defined data-source)._
 
-### v4.5
+### [v4.5](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.5.0)
 
 - [Data Picker](https://github.com/leekelleher/umbraco-contentment/pull/297)
 - Data List: [Umbraco Backoffice Sections](https://github.com/leekelleher/umbraco-contentment/commit/c8a2f0f8552b2ad3a778782f13c45cbb18aff88c) data-source.
 
 ### v4.6
 
-- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Blame @lssweatherhead_ :wink:
+- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Thank @lssweatherhead_ :wink:
 
 ### v4.7
 
@@ -130,21 +130,21 @@ Property Editors are:
 
 ## v5
 
-- _Add support for Umbraco 13 (.NET 8)._
-- _Remove support for Umbraco 8 (.NET Framework 4.7.2) and Umbraco 9 (.NET 5)._
+- _Adds support for Umbraco 13 (.NET 8)._
+- _Removes support for Umbraco 8 (.NET Framework 4.7.2) and Umbraco 9 (.NET 5)._
 - _Convert to a Razor Class Library?_ :thinking:
 
 
 ## v6
 
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
-- _Add support for Umbraco 15 (.NET 9)._
-- _Remove support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._
+- _Adds support for Umbraco 15 (.NET 9)._
+- _Removes support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._
 
 
 ## v7
 
-- _Add support for Umbraco 17 (.NET 10)._
+- _Adds support for Umbraco 17 (.NET 10)._
 
 
 ## Future feature (minor) releases
