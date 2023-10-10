@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 new { key = Network, value = new { network = "facebook", name = "Facebook", url = "https://facebook.com/", icon = "icon-facebook", backgroundColor = "#3b5998", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "twitter", name = "Twitter", url = "https://twitter.com/", icon = "icon-twitter", backgroundColor = "#2795e9", iconColor = "#fff" } },
-                new { key = Network, value = new { network = "instagram", name = "Instagram", url = "https://instagram.com/", icon = "icon-instagram", backgroundColor = "#305777", iconColor = "#fff" } },
+                new { key = Network, value = new { network = "instagram", name = "Instagram", url = "https://instagram.com/", icon = "icon-x-instagram", backgroundColor = "#305777", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "linkedin", name = "LinkedIn", url = "https://linkedin.com/in/", icon = "icon-linkedin", backgroundColor = "#007bb6", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "mastodon", name = "Mastodon", url = "https://mastodon.social/", icon = "icon-mastodon", backgroundColor = "#5b4be1", iconColor = "#fff" } },
                 new { key = Network, value = new { network = "youtube", name = "YouTube", url = "https://youtube.com/", icon = "icon-youtube", backgroundColor = "#f00", iconColor = "#fff" } },
