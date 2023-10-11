@@ -12,18 +12,16 @@ using Umbraco.Core;
 using Umbraco.Core.IO;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
 using Umbraco.Web;
-using UmbConstants = Umbraco.Core.Constants;
+using Umbraco.Web.PublishedCache;
 #else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 #endif
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -31,18 +29,15 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataSourceValueConverter
     {
         private readonly IContentmentContentContext _contentmentContentContext;
-        private readonly IContentTypeService _contentTypeService;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoContentXPathDataListSource(
             IContentmentContentContext contentmentContentContext,
-            IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
             _contentmentContentContext = contentmentContentContext;
-            _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
         }
@@ -95,20 +90,22 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var xpath = config.GetValueAs("xpath", string.Empty);
 
-            if (string.IsNullOrWhiteSpace(xpath) == false && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
+            if (string.IsNullOrWhiteSpace(xpath) == false &&
+                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache)
             {
                 var preview = true;
 
-                IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-                bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
+                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
 
                 var parsed = _contentmentContentContext.ParseXPathQuery(xpath, getPath, publishedContentExists);
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
                 {
-                    return umbracoContext.Content
+                    return contentCache
                         .GetByXPath(preview, parsed)
-                        .Select(x => x.ToDataListItem("image", _contentTypeService))
+                        .Select(DataListItemExtensions.ToDataListItem)
                         .ToList();
                 }
             }

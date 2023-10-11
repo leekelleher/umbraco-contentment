@@ -1,6 +1,7 @@
 ﻿{
     "name": "Contentment",
-    "version": "4.4.6",
+    "id": "Umbraco.Community.Contentment",
+    "version": "4.5.0",
     "css": [ "~/App_Plugins/Contentment/contentment.css" ],
     "javascript": [ "~/App_Plugins/Contentment/contentment.js" ]
 }

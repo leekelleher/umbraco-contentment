@@ -11,7 +11,9 @@
 <div class="contentment umb-block-list">
     <div class="umb-block-list__wrapper">
         <div ui-sortable="vm.sortableOptions" ng-model="vm.ngModel">
-            <div class="umb-block-list__block" ng-repeat="item in vm.ngModel track by $index">
+            <div class="umb-block-list__block"
+                 ng-repeat="item in vm.ngModel track by $index"
+                 ng-class="{'__fade': vm.populate(item, $index, 'disabled') === true}">
 
                 <div class="umb-block-list__block--view" ng-if="!vm.previews[item.key]">
                     <button type="button"
@@ -32,7 +34,7 @@
                 </div>
 
                 <div class="umb-block-list__block--actions">
-                    <button ng-repeat="btn in vm.blockActions[$index]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
+                    <button ng-repeat="btn in vm.blockActions[item.key]" type="button" class="btn-reset umb-outline action" title="{{btn.label}}" ng-click="btn.method()">
                         <umb-icon icon="icon-{{btn.icon}}" class="icon"></umb-icon>
                         <span class="sr-only" ng-bind="btn.label"></span>
                     </button>

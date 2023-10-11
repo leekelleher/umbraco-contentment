@@ -29,6 +29,7 @@ Let's take a look inside...
 - [Code Editor](../docs/editors/code-editor.md) - a code snippet editor, _(using the ACE library that is bundled with Umbraco)._
 - [Content Blocks](../docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Data Picker](../docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](../docs/editors/editor-notes.md) - Similar to [Notes](../docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
@@ -40,24 +41,26 @@ Let's take a look inside...
 - [Textbox List](../docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
-#### Telemetry
+#### [Telemetry](../docs/telemetry.md)
 
 Information about the [telemetry feature](../docs/telemetry.md).
 
-#### Releases
+#### [Releases](../releases)
 
-Downloads are available on the [releases page](https://github.com/leekelleher/umbraco-contentment/releases).
+Downloads are available on the [releases page](../releases).
 
 #### Installation
 
 _**Please note...**_
 
-- v4.x supports **Umbraco v8.17** (on .NET 4.7), **Umbraco v9.5** (on .NET 5.0 only), **Umbraco v10.0** (on .NET 6.0) and  **Umbraco v11.0** (on .NET 7.0), it will support those versions and above.
+- v4.x supports **Umbraco v8.17.0** (on .NET 4.7.2), **Umbraco v10** (on .NET 6.0) and  **Umbraco v11/v12** (on .NET 7.0), it will support those versions and above.
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x was developed against **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x was developed against **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
 
 With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
+
+To understand more about which Umbraco CMS versions are actively supported by Umbraco HQ, please see [Umbraco's Long-term Support (LTS) and End-of-Life (EOL) policy](https://umbraco.com/products/knowledge-center/long-term-support-and-end-of-life/).
 
 ##### NuGet package repository
 
@@ -76,12 +79,12 @@ If you are using Umbraco v8.x, and prefer to install Contentment from the backof
 
 #### Demo website
 
-[A demo website is available for testing purposes.](../src/Umbraco.Cms.10.0.0/README.md) _(Please note, you will need to clone the repository and run locally.)_
+[A demo website is available for testing purposes.](../src/Umbraco.Cms.10.x/README.md) _(Please note, you will need to clone the repository and run locally.)_
 
 
-### Documentation
+### [Documentation](../docs/)
 
-[Documentation for each of the components - with screenshots, use-cases and code examples](../docs/) - can be found in the `/docs` folder.
+Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the `/docs` folder.
 
 Please note, you may find other components within Contentment that have not yet been documented.<br>
 _Let's call those "life's little surprises"._
@@ -89,14 +92,10 @@ _Let's call those "life's little surprises"._
 
 #### Known issues
 
-- **Compatibility with Umbraco v9 running .NET 6.0** (on Contentment v4)
-  - Due to how the .NET multi-targeting support has been implemented in Contentment, if you are running Umbraco v9 on .NET 6.0 and want to install the Contentment package, you may experience an `NU1107: Version conflict detected` error. At present, the workarounds are to either upgrade to Umbraco v10, or use Contentment v3.x. If you have an alternative workaround suggestion, please do let me know. [See #223 for details.](https://github.com/leekelleher/umbraco-contentment/issues/223) _(Note: v9 on .NET 5.0 is totally fine.)_
-
 - **Data List**
-  - When using the Umbraco Content data source with an XPath query, inside a Nested Content editor, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
-  - When using the Umbraco Content data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
-  - With Umbraco v9 (Contentment v3), SQL data source does not support querying SQL CE. [See #172 for details.](https://github.com/leekelleher/umbraco-contentment/issues/172)
-  - With Umbraco v10 (Contentment v4), SQL data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
+  - When using the **Umbraco Content** data source with an XPath query, inside a Nested Content or Block List editors, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
+  - When using the **Umbraco Content** data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
+  - With Umbraco v10 (Contentment v4), **SQL** data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
 
 
 ### [Roadmap](ROADMAP.md)
@@ -108,12 +107,12 @@ If you would like to know what is coming up in future releases, then take a look
 
 I've been doing open source for a long time. I have suffered my fair share of burnout and empathy fatigue.
 
-I reserve the right to address bug reports or feature requests in my own time, or ignore them completely.
+I reserve the right to address bug reports or feature requests **in my own time**, or ignore them completely.
 
-**Any feedback is welcome and appreciated.** But please keep in mind, I am not your personal support developer.
+**Any feedback is welcome and appreciated.** Please keep in mind, I am not your personal support developer.
 
-If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it. 
-Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or the [Community Discord Channel](https://community.umbraco.com/get-involved/community-discord-channel/), I am sure someone can help you there.
+If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.
+Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or the [Community Discord Server](https://community.umbraco.com/get-involved/community-discord-server/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
@@ -136,7 +135,8 @@ Copyright &copy; [Lee Kelleher](https://leekelleher.com).
 
 All source code is licensed under the [Mozilla Public License](../LICENSE).
 
-#### A note about licensing
+<details>
+<summary><strong>A note about licensing</strong></summary>
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
 The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
@@ -147,6 +147,7 @@ If you do not to intend to modify the source code, then you will still have the 
 
 For more information about the **Mozilla Public License**, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
 
+</details>
 
 ### Acknowledgements
 
@@ -155,7 +156,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://mastodon.social/@leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>1,637+ hours</b> (between 2019-03-13 to 2023-04-25)</summary>
+<summary>Current development effort: <b>~1,674+ hours</b> (between 2019-03-13 to 2023-08-24)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
@@ -165,8 +166,14 @@ _To give you an idea of how much human developer time/effort has been put into m
 #### Special thanks
 
 - Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me initiate this project.
+- Kudos to [Gibe](https://gibe.digital/) for enabling the development of the [Data Picker](../docs/editors/data-picker.md) editor.
 
 
 #### Logo
 
 The package logo uses the [Happy](https://thenounproject.com/term/happy/375493/) (by [Nick Bluth](https://thenounproject.com/nickbluth/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
+
+
+### Icons
+
+The [Social Links](../docs/editors/social-links.md) editor makes use of social media icons from the Font Awesome library, (as downloaded SVG files). These are licensed under the [Font Awesome Free License](https://fontawesome.com/license/free) agreement, specifically under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).

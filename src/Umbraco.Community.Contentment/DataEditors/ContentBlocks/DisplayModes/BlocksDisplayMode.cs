@@ -5,11 +5,9 @@
 
 using System.Collections.Generic;
 #if NET472
-using Umbraco.Core.IO;
 using Umbraco.Core.PropertyEditors;
 using UmbIcons = Umbraco.Core.Constants.Icons;
 #else
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using UmbIcons = Umbraco.Cms.Core.Constants.Icons;
 #endif
@@ -18,13 +16,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class BlocksDisplayMode : IContentBlocksDisplayMode
     {
-        private readonly IIOHelper _ioHelper;
-
-        public BlocksDisplayMode(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-
         public string Name => "Blocks";
 
         public string Description => "Blocks will be displayed in a list similar to the Block List editor.";

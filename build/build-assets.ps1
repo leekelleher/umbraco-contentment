@@ -42,10 +42,10 @@ foreach($razorFile in $razorFiles){
 
 # CSS - Bundle & Minify
 $targetCssPath = "${pluginFolder}contentment.css";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.css" | Set-Content -Encoding UTF8 -Path $targetCssPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.css" -Exclude "node_modules" | Set-Content -Encoding UTF8 -Path $targetCssPath;
 & "${rootDir}\tools\AjaxMinifier.exe" $targetCssPath -o $targetCssPath
 
 # JS - Bundle & Minify
 $targetJsPath = "${pluginFolder}contentment.js";
-Get-Content -Raw -Path "${ProjectDir}**\**\*.js" | Set-Content -Encoding UTF8 -Path $targetJsPath;
+Get-Content -Raw -Path "${ProjectDir}**\**\*.js" -Exclude "node_modules" | Set-Content -Encoding UTF8 -Path $targetJsPath;
 & "${rootDir}\tools\AjaxMinifier.exe" $targetJsPath -o $targetJsPath

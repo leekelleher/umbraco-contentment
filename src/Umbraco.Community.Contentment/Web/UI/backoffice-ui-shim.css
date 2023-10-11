@@ -28,6 +28,11 @@
     line-height: 1.5rem;
 }
 
+/* Tags - Typeahead overlay z-index. */
+.contentment .umb-tags-editor .tt-menu.tt-open {
+    z-index: 1001 !important;
+}
+
 /* Block List Configuration Card - Tweaks */
 .contentment .umb-block-card {
 }
@@ -45,9 +50,15 @@
         margin-right: 10px;
     }
 
-    /* Block List Configuration Card, adds fade to appear disabled/unpublished. */
-    .contentment .umb-block-card.__fade {
+    /* Block Item, adds fade to appear disabled/unpublished. */
+    .contentment .umb-block-card.__fade,
+    .contentment .umb-block-list__block.__fade > .umb-block-list__block--view {
         opacity: 0.5;
+    }
+
+    /* Block List Configuration Card, non-editable styles, e.g. not clickable. */
+    .contentment .umb-block-card.__no-edit {
+        cursor: move;
     }
 
     /* Block List Configuration Card, fixes icon position of action buttons. */
@@ -55,7 +66,7 @@
         padding-top: 3px;
     }
 
-    /* Block List Configuration Card, fixes dscription padding. */
+    /* Block List Configuration Card, fixes description padding. */
     .contentment .umb-block-card .__info .__subname {
         margin-right: 16px;
     }

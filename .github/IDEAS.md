@@ -23,17 +23,11 @@
 
 - Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks).
 
-- Griddle - a lightweight version of the Grid, (think a stacked block editor with the richness of Grid editors).
-
 - Content Picker + Templated Label
   With a similar feel to [Multiple Content Picker with Preview](https://our.umbraco.com/packages/website-utilities/content-picker-with-preview/).
   - https://github.com/Offroadcode/Multiple-Content-Node-Picker-With-Preview
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.controller.js
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.html#L9-L19
-
-- Data Picker - a picker for larger queryable data-sources; for scenarios where Data List has its limitations.
-
-- Block - a single item edition of the Block List editor.
 
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 

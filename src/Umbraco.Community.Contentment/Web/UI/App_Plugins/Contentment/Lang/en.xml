@@ -25,6 +25,8 @@
         <key alias="copyContentBlock">Copy content block</key>
         <key alias="createContentTemplate">Create content template...</key>
 
+        <key alias="missingElementType">This content is not supported for this configuration.</key>
+
         <!-- Data List -->
         <key alias="labelDataSource">Data source</key>
         <key alias="labelListEditor">List editor</key>
