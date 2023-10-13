@@ -71,6 +71,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ConfigurationField
             {
+                Key = "sortAlphabetically",
+                Name = "Sort alphabetically?",
+                Description = "Select to sort the content items in alphabetical order.<br>By default, the order is defined by the Umbraco content sort order.",
+                View = "boolean"
+            },
+            new ConfigurationField
+            {
                 Key = "imageAlias",
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
@@ -88,7 +95,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start != null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
-                return start.Children.Select(x => ToDataListItem(x, imageAlias));
+                var items = start.Children.Select(x => ToDataListItem(x, imageAlias));
+
+                if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                {
+                    return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                }
+
+                return items;
             }
 
             return Enumerable.Empty<DataListItem>();
@@ -103,12 +117,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
 
-                return Task.FromResult(values
+                var items = values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x))
-                    .WhereNotNull()
-                    .Select(x => ToDataListItem(x, imageAlias)));
+                    .WhereNotNull();
+
+                if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                {
+                    items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                }
+
+                return Task.FromResult(items.Select(x => ToDataListItem(x, imageAlias)));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -127,6 +147,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
                     var offset = (pageNumber - 1) * pageSize;
+
+                    if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                    {
+                        items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                    }
+
                     var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
                     {
                         Items = items
