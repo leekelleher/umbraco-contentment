@@ -229,6 +229,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                         items.Add(item);
                     }
+
+                    scope.Complete();
                 }
             }
             else
