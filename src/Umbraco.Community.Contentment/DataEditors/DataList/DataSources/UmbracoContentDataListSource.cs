@@ -71,18 +71,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ConfigurationField
             {
+                Key = "imageAlias",
+                Name = "Image alias",
+                Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
+                View =  "textstring",
+            },
+            new ConfigurationField
+            {
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the content items in alphabetical order.<br>By default, the order is defined by the Umbraco content sort order.",
                 View = "boolean"
             },
-            new ConfigurationField
-            {
-                Key = "imageAlias",
-                Name = "Image alias",
-                Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
-                View =  "textstring",
-            }
         };
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
