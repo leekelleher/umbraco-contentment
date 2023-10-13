@@ -117,18 +117,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
 
-                var items = values
+                return Task.FromResult(values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x))
-                    .WhereNotNull();
-
-                if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
-                {
-                    items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
-                }
-
-                return Task.FromResult(items.Select(x => ToDataListItem(x, imageAlias)));
+                    .WhereNotNull()
+                    .Select(x => ToDataListItem(x, imageAlias)));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
