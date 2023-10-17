@@ -6,6 +6,7 @@
 /* NOTE: This code file is ONLY for Umbraco v10/v11/v12, .NET Core 6.0/7.0. */
 
 #if NET6_0_OR_GREATER
+
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IScopeProvider scopeProvider,
             IIOHelper ioHelper)
         {
-            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
+            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
             _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
                 ? "sqlserver"
                 : "razor";
@@ -113,12 +114,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(providerName) == true)
                 {
-                    providerName = "Microsoft.Data.SqlClient";
+                    providerName = Umbraco.Cms.Persistence.SqlServer.Constants.ProviderName;
                 }
 
                 var dbProviderFactory = _dbProviderFactoryCreator.CreateFactory(providerName);
 
-                if (providerName.InvariantEquals("Microsoft.Data.Sqlite") == true)
+                if (providerName.InvariantEquals(Umbraco.Cms.Persistence.Sqlite.Constants.ProviderName) == true)
                 {
                     return new Database(connectionString, DatabaseType.SQLite, dbProviderFactory);
                 }
