@@ -6,7 +6,6 @@
 /* NOTE: This code file is ONLY for Umbraco v10/v11/v12, .NET Core 6.0/7.0. */
 
 #if NET6_0_OR_GREATER
-
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
