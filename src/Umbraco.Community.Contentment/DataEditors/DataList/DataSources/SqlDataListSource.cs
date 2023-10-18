@@ -4,9 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 #if NET6_0
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;

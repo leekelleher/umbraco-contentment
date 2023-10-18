@@ -6,7 +6,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
+#if NET8_0_OR_GREATER
+using Umbraco.Cms.Core.DependencyInjection;
+#else
 using Umbraco.Cms.Web.Common.DependencyInjection;
+#endif
 
 namespace Umbraco.Extensions
 {
