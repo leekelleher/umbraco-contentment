@@ -48,6 +48,12 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
         <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="node_modules\**;wwwroot\**" />
+    <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
+    <None Remove="node_modules\**;wwwroot\**" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">

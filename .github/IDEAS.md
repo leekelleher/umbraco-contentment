@@ -29,8 +29,6 @@
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.controller.js
   - https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Web.UI.Client/src/views/propertyeditors/contentpicker/contentpicker.html#L9-L19
 
-- Block - a single item edition of the Block List editor.
-
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
 

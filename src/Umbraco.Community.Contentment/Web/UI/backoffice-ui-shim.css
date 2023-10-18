@@ -50,8 +50,9 @@
         margin-right: 10px;
     }
 
-    /* Block List Configuration Card, adds fade to appear disabled/unpublished. */
-    .contentment .umb-block-card.__fade {
+    /* Block Item, adds fade to appear disabled/unpublished. */
+    .contentment .umb-block-card.__fade,
+    .contentment .umb-block-list__block.__fade > .umb-block-list__block--view {
         opacity: 0.5;
     }
 

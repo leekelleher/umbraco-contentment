@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <umb-box ng-if="vm.listType === 'list'" ng-show="vm.loading === false && vm.items.length !== 0">
+            <umb-box ng-if="vm.listType !== 'cards'" ng-show="vm.loading === false && vm.items.length !== 0">
                 <umb-box-content>
                     <ul class="umb-actions umb-actions-child">
                         <li class="umb-action" ng-class="{ '-disabled': item.disabled }" ng-repeat="item in vm.items">

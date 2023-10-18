@@ -10,6 +10,7 @@ Thumbs.db
 .DS_Store
 *.log
 .vs
+node_modules/
 
 artifacts/
 build/__umb/*
@@ -17,9 +18,10 @@ build/assets/
 build/build-push-nuget.ps1
 build/build-push-umb.ps1
 src/packages/*/**
-src/Umbraco.Cms.8.x/*
-src/Umbraco.Cms.9.x/*
-src/Umbraco.Cms.10.x/appsettings-schema.json
+src/Umbraco.Cms.[89].x/
+src/Umbraco.Cms.*.x/appsettings-schema.json
+src/Umbraco.Cms.*.x/appsettings-schema.Umbraco.Cms.json
+src/Umbraco.Cms.*.x/umbraco-package-schema.json
 src/Umbraco.Cms.11.x/*
 src/Umbraco.Cms.14.x/*
 src/Umbraco.Cms.*.x/App_Plugins/*/**

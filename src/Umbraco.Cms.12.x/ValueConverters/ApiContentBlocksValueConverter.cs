@@ -50,7 +50,7 @@ public class ApiContentBlocksValueConverter : PropertyValueConverterBase, IDeliv
     public Type GetDeliveryApiPropertyValueType(IPublishedPropertyType propertyType)
         => typeof(IEnumerable<IApiElement>);
 
-    public object? ConvertIntermediateToDeliveryApiObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
+    public object? ConvertIntermediateToDeliveryApiObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview, bool expanding)
     {
         var items = ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview) as IEnumerable<IPublishedElement>;
 

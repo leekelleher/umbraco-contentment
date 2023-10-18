@@ -107,11 +107,11 @@
                             vm.umbProperty.setPropertyActions(vm.propertyActions);
                         }
 
-                        if (vm.blockActions && vm.blockActions.length > 0) {
-                            vm.blockActions.forEach(function (x) {
-                                x.forEach(function (y) {
-                                    localizationService.localize(y.labelKey).then(function (label) {
-                                        y.label = label;
+                        if (vm.blockActions) {
+                            Object.values(vm.blockActions).forEach(actions => {
+                                actions.forEach(action => {
+                                    localizationService.localize(action.labelKey).then(label => {
+                                        action.label = label;
                                     });
                                 });
                             });
