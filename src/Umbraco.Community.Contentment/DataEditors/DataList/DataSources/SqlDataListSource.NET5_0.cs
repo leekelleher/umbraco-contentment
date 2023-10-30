@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IConfiguration configuration,
             IIOHelper ioHelper)
         {
-            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
+            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
             _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
                 ? "sqlserver"
                 : "razor";

@@ -35,7 +35,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IScopeProvider scopeProvider,
             IIOHelper ioHelper)
         {
-            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defautls to Razor.
+            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
             _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
                 ? "sqlserver"
                 : "razor";
@@ -113,12 +113,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(providerName) == true)
                 {
-                    providerName = "Microsoft.Data.SqlClient";
+                    providerName = Constants.Persistance.Providers.SqlServer;
                 }
 
                 var dbProviderFactory = _dbProviderFactoryCreator.CreateFactory(providerName);
 
-                if (providerName.InvariantEquals("Microsoft.Data.Sqlite") == true)
+                if (providerName.InvariantEquals(Constants.Persistance.Providers.Sqlite) == true)
                 {
                     return new Database(connectionString, DatabaseType.SQLite, dbProviderFactory);
                 }
