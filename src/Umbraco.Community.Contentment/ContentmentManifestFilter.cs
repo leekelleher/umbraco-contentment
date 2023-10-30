@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+#if NET8_0_OR_GREATER == false
 using Umbraco.Cms.Core.Manifest;
 using Umbraco.Extensions;
 
@@ -23,3 +24,4 @@ internal sealed class ContentmentManifestFilter : IManifestFilter
         });
     }
 }
+#endif

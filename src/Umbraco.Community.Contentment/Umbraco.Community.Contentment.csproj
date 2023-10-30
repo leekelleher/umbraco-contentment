@@ -51,12 +51,6 @@
         <None Remove="node_modules\**;wwwroot\**" />
     </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="node_modules\**" />
-    <EmbeddedResource Remove="node_modules\**" />
-    <None Remove="node_modules\**" />
-  </ItemGroup>
-
     <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
         <ItemGroup>
             <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />

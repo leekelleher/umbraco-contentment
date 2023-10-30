@@ -20,10 +20,12 @@ namespace Umbraco.Community.Contentment.Composing
     {
         public void Compose(IUmbracoBuilder builder)
         {
+#if NET8_0_OR_GREATER == false
             builder
                 .ManifestFilters()
                     .Append<ContentmentManifestFilter>()
             ;
+#endif
 
             builder
                 .Services

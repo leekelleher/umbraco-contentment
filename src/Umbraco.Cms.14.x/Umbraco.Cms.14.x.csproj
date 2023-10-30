@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="14.0.0--preview002" />
+        <PackageReference Include="Umbraco.Cms" Version="14.0.0--preview003" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,8 +17,6 @@
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
         <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.1" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
     </ItemGroup>
-
-    <Import Project="..\..\build\_vs-copy-assets.targets" />
 
     <PropertyGroup>
         <!-- Razor files are needed for the backoffice to work correctly -->
