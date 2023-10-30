@@ -90,7 +90,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
             {
+#if NET8_0_OR_GREATER
+                ConfigurationObject = configuration,
+#else
                 Configuration = configuration,
+#endif
                 ValueType = ValueTypes.Json,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
