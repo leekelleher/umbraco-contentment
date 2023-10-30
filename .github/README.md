@@ -97,7 +97,7 @@ _Let's call those "life's little surprises"._
   - When using the **Umbraco Content** data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
   - With Umbraco v10 (Contentment v4), **SQL** data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
 - **.NET Publish with .NET 6 (or newer)**
-  - When using .NET Publish with .NET 6 (or newer versions of .NET). [See #361 for details]([https://github.com/leekelleher/umbraco-contentment/issues/361](https://github.com/leekelleher/umbraco-contentment/issues/361).
+  - When using .NET Publish with .NET 6 (or newer versions of .NET). [See #361 for details](https://github.com/leekelleher/umbraco-contentment/issues/361).
 
 ### [Roadmap](ROADMAP.md)
 
