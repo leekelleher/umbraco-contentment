@@ -3,10 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-import type { ManifestPropertyEditorUi } from "@umbraco-cms/backoffice/extension-registry";
+import { editorNotesUiManifest } from "./EditorNotes/editor-notes.manifest.js";
+import { notesSchemaManifest, notesUiManifest } from "./Notes/notes.manifest.js";
 
-import { manifest as notesManifests } from "./Notes/manifests.js";
-
-export const manifests: Array<ManifestPropertyEditorUi> = [
-    notesManifests,
+export const manifests = [
+    editorNotesUiManifest,
+    notesSchemaManifest,
+    notesUiManifest
 ];
