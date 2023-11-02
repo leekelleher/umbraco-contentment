@@ -25,6 +25,7 @@ src/Umbraco.Cms.*.x/umbraco-package-schema.json
 src/Umbraco.Cms.11.x/*
 src/Umbraco.Cms.14.x/*
 src/Umbraco.Cms.*.x/App_Plugins/*/**
+src/Umbraco.Cms.*.x/Smidge/Cache/*
 src/Umbraco.Cms.*.x/[Uu]mbraco/Data/*
 src/Umbraco.Cms.*.x/[Uu]mbraco/Logs/*
 src/Umbraco.Cms.*.x/Views/Partials/[Bb]lock[Ll]ist/*
