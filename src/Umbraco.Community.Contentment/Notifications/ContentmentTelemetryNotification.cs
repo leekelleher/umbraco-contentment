@@ -68,10 +68,8 @@ namespace Umbraco.Community.Contentment.Notifications
                                     config.TryGetValueAs(alias, out JArray array) == true &&
                                     array.Count > 0 &&
                                     array[0] is JObject item &&
-                                    item.ContainsKey("key") == true)
+                                    item.TryGetValueAs("key", out string key) == true)
                                 {
-                                    var key = item.Value<string>("key");
-
                                     if (key.InvariantStartsWith(Constants.Internals.ProjectNamespace) == true && key.Length > 73)
                                     {
                                         // Strips off the namespace and assembly.
@@ -125,7 +123,7 @@ namespace Umbraco.Community.Contentment.Notifications
                         var payload = new StringContent(base64, Encoding.UTF8, MediaTypeNames.Text.Plain);
 
                         using var client = _httpClientFactory.CreateClient();
-                        using var post = await client.PostAsync(address, payload);
+                        using var post = await client.PostAsync(address, payload, CancellationToken.None);
                     }
                     catch { /* ¯\_(ツ)_/¯ */ }
                 }
