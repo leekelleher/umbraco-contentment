@@ -20,6 +20,7 @@ export const editorNotesUiManifest: ManifestPropertyEditorUi = {
                 {
                     alias: "alertType",
                     label: "Alert type",
+                    description: "WIP: Use one of the following: `default`, `positive`, `warning`, `danger`.",
                     propertyEditorUiAlias: "Umb.PropertyEditorUi.TextBox"
                 },
                 {
