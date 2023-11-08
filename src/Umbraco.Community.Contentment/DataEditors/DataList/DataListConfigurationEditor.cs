@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         @class = "alert alert-info",
                         title = "Do you need a custom data-source?",
                         notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data List with your own custom data source.</p>
-<p>To do this, read the documentation on <a href=""{Constants.Package.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
+<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
                 }
             });
 

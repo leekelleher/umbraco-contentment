@@ -9,29 +9,31 @@ namespace Umbraco.Community.Contentment
     {
         internal static partial class Internals
         {
-            internal const string ProjectName = "Contentment";
+            internal const string ProjectName = nameof(Contentment);
 
             internal const string ProjectAlias = "contentment";
 
-            internal const string ProjectNamespace = "Umbraco.Community.Contentment";
+            internal const string ProjectNamespace = $"{nameof(Umbraco)}.{nameof(Community)}.{nameof(Contentment)}";
 
-            internal const string DataEditorNamePrefix = "[" + ProjectName + "] ";
+            internal const string DataEditorNamePrefix = $"[{ProjectName}] ";
 
-            internal const string DataEditorAliasPrefix = ProjectNamespace + ".";
+            internal const string DataEditorAliasPrefix = $"{ProjectNamespace}.";
 
-            internal const string EditorsPathRoot = PackagePathRoot + "editors/";
+            internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
 
-            internal const string PackagePathRoot = "/App_Plugins/" + ProjectName + "/";
+            internal const string PackagePathRoot = $"{UmbConstants.SystemDirectories.AppPlugins}/{ProjectName}/";
 
             internal const string PluginControllerName = ProjectName;
 
-            internal const string BackOfficePathRoot = PackagePathRoot + "backoffice/" + TreeAlias + "/";
+            internal const string BackOfficePathRoot = $"{PackagePathRoot}backoffice/{TreeAlias}/";
 
             internal const string TreeAlias = ProjectAlias;
 
-            internal const string ConfigurationSection = "Umbraco:Contentment";
+            internal const string ConfigurationSection = $"{nameof(Umbraco)}:{nameof(Contentment)}";
 
-            internal const string EmptyEditorViewPath = EditorsPathRoot + "_empty.html";
+            internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
+
+            public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
 
         internal static partial class Conventions
@@ -107,14 +109,9 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Icons
         {
-            public const string Contentment = "icon-contentment";
+            public const string Contentment = $"icon-{Internals.ProjectAlias}";
 
             public const string ContentTemplate = "icon-blueprint";
-        }
-
-        internal static partial class Package
-        {
-            public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
 
         internal static partial class Values
