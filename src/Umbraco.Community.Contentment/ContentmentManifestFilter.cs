@@ -16,9 +16,9 @@ internal sealed class ContentmentManifestFilter : IManifestFilter
         {
             AllowPackageTelemetry = true,
             PackageName = Constants.Internals.ProjectName,
-            Version = ContentmentVersion.SemanticVersion.ToSemanticString(),
             Scripts = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".js" },
             Stylesheets = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".css" },
+            Version = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
         });
     }
 }
