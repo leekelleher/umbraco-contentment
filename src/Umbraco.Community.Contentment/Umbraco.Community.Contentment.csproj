@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
@@ -27,6 +27,10 @@
         <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Using Alias="UmbConstants" Include="Umbraco.Cms.Core.Constants" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="..\..\docs\assets\img\logo.png" Pack="true" PackagePath="icon.png" />

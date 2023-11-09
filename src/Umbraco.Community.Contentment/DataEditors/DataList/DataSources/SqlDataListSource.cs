@@ -11,7 +11,6 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
