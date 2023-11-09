@@ -42,7 +42,7 @@ export const editorNotesUiManifest: ManifestPropertyEditorUi = {
                 },
             ],
             defaultData: [{
-                alias: "alertType", value: "alert alert-warning"
+                alias: "alertType", value: "warning"
             }]
         }
     },
