@@ -28,9 +28,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             $scope.model.value = $scope.model.value || config.defaultValue;
 
             if (Array.isArray($scope.model.value)) {
-                $scope.model.value = $scope.model.value[0];
+                $scope.model.value = $scope.model.value.length > 0 ? $scope.model.value[0] : config.defaultValue;
             }
-            else if (config.showEmpty === false && $scope.model.value === '' && vm.items.length > 0) {
+
+            if (config.showEmpty === false && !$scope.model.value && vm.items.length > 0) {
                 $scope.model.value = vm.items[0].value;
             }
 
