@@ -96,6 +96,16 @@ namespace Umbraco.Community.Contentment
             }
         }
 
+        internal static partial class Persistance
+        {
+            internal static partial class Providers
+            {
+                public const string Sqlite = "Microsoft.Data.Sqlite";
+
+                public const string SqlServer = "Microsoft.Data.SqlClient";
+            }
+        }
+
         internal static partial class Icons
         {
             public const string Contentment = "icon-contentment";

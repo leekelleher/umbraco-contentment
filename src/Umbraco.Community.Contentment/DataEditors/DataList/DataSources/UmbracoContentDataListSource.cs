@@ -60,7 +60,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
                 View =  "textstring",
-            }
+            },
+            new ConfigurationField
+            {
+                Key = "sortAlphabetically",
+                Name = "Sort alphabetically?",
+                Description = "Select to sort the content items in alphabetical order.<br>By default, the order is defined by the Umbraco content sort order.",
+                View = "boolean"
+            },
         };
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
@@ -73,7 +80,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start != null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
-                return start.Children.Select(x => ToDataListItem(x, imageAlias));
+                var items = start.Children.Select(x => ToDataListItem(x, imageAlias));
+
+                if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                {
+                    return items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                }
+
+                return items;
             }
 
             return Enumerable.Empty<DataListItem>();
@@ -112,6 +126,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
                     var offset = (pageNumber - 1) * pageSize;
+
+                    if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
+                    {
+                        items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
+                    }
+
                     var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
                     {
                         Items = items
