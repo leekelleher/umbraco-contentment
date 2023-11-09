@@ -32,11 +32,11 @@ indent_style = tab
 
 # Visual Studio XML Project Files
 [*.{csproj,vbproj,vcxproj.filters,proj,projitems,shproj}]
-indent_size = 2
+indent_size = 4
 
 # XML Configuration Files
 [*.{xml,config,props,targets,nuspec,resx,ruleset,vsixmanifest,vsct}]
-indent_size = 2
+indent_size = 4
 
 # JSON Files
 [*.{json,json5,webmanifest}]
@@ -52,7 +52,7 @@ trim_trailing_whitespace = false
 
 # Web Files
 [*.{htm,html,js,jsm,ts,tsx,css,sass,scss,less,svg,vue}]
-indent_size = 2
+indent_size = 4
 
 # Batch Files
 [*.{cmd,bat}]
@@ -147,7 +147,7 @@ dotnet_style_prefer_simplified_interpolation = true:warning
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions#implicit-and-explicit-types
 csharp_style_var_for_built_in_types = never
 csharp_style_var_when_type_is_apparent = true:warning
-csharp_style_var_elsewhere = false:warning
+csharp_style_var_elsewhere = true:suggestion
 # Expression-bodied members
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions#expression-bodied-members
 csharp_style_expression_bodied_methods = true:suggestion
@@ -189,7 +189,7 @@ csharp_style_deconstructed_variable_declaration = true:warning
 csharp_style_pattern_local_over_anonymous_function = true:warning
 csharp_using_directive_placement = outside_namespace:warning
 csharp_prefer_static_local_function = true:warning
-csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_simple_using_statement = true:silent
 
 ##########################################
 # .NET Formatting Conventions
