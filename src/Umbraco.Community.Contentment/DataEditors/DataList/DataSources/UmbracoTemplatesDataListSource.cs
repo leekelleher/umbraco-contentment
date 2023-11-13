@@ -72,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "valueType", "udi" },
         };
@@ -81,8 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var valueType = config.GetValueAs("valueType", defaultValue: "udi");
 
-
-            string getValue(IFile file)
+            string? getValue(IFile file)
             {
                 switch (valueType)
                 {
@@ -103,10 +102,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
-                    Value = getValue(x),
+                    Name = x.Name ?? x.Alias,
+                    Value = getValue(x) ?? x.Alias,
                     Icon = Icon,
-                    Description = x.VirtualPath,
+                    Description = x.VirtualPath ?? x.Alias,
                 });
         }
 

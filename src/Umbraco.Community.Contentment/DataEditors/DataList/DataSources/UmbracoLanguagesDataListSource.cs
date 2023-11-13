@@ -25,9 +25,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
 
-        private const string _defaultImageAlias = "image";
+        private const string DefaultImageAlias = "image";
 
         public UmbracoContentDataListSource(
             IContentmentContentContext contentmentContentContext,
@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-umbraco";
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "imageAlias",
                 Name = "Image alias",
-                Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{_defaultImageAlias}'.",
+                Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
                 View =  "textstring",
             },
             new ConfigurationField
@@ -79,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var start = GetStartContent(config);
             if (start != null)
             {
-                var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+                var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
                 var items = start.Children.Select(x => ToDataListItem(x, imageAlias));
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
@@ -100,10 +100,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 umbracoContext.Content != null)
             {
                 var preview = true;
-                var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+                var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
 
                 return Task.FromResult(values
-                    .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
+                    .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x))
                     .WhereNotNull()
@@ -124,7 +124,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (items?.Any() == true)
                 {
-                    var imageAlias = config.GetValueAs("imageAlias", _defaultImageAlias);
+                    var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
                     var offset = (pageNumber - 1) * pageSize;
 
                     if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
@@ -149,33 +149,35 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out GuidUdi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
-                ? umbracoContext.Content.GetById(udi)
+            return UdiParser.TryParse(value, out var udi) == true && udi is not null && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content?.GetById(udi)
                 : default;
         }
 
-        private IPublishedContent GetStartContent(Dictionary<string, object> config)
+        private IPublishedContent? GetStartContent(Dictionary<string, object> config)
         {
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content is IPublishedContentCache contentCache)
             {
                 var preview = true;
                 var parentNode = config.GetValueAs("parentNode", string.Empty);
-                if (parentNode.InvariantStartsWith("umb://document/") == false)
+                if (parentNode?.InvariantStartsWith("umb://document/") == false)
                 {
-                    IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                    IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
                     bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
 
                     var parsed = _contentmentContentContext.ParseXPathQuery(parentNode, getPath, publishedContentExists);
 
-                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                     {
+#pragma warning disable CS0618 // Type or member is obsolete
                         return contentCache.GetSingleByXPath(preview, parsed);
+#pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
-                else if (UdiParser.TryParse(parentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
+                else if (UdiParser.TryParse(parentNode, out GuidUdi? udi) == true && udi.Guid != Guid.Empty)
                 {
                     return contentCache.GetById(preview, udi.Guid);
                 }
@@ -184,7 +186,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return default;
         }
 
-        private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = _defaultImageAlias)
+        private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = DefaultImageAlias)
         {
             return new DataListItem
             {
@@ -194,7 +196,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Icon = content.ContentType.GetIcon(_contentTypeService),
                 Properties = new Dictionary<string, object>
                 {
-                    { _defaultImageAlias, content.Value<IPublishedContent>(imageAlias)?.Url() },
+                    { DefaultImageAlias, content.Value<IPublishedContent>(imageAlias)?.Url() ?? string.Empty },
                 },
                 Value = content.GetUdi().ToString(),
             };

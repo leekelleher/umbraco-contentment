@@ -14,8 +14,8 @@ namespace Umbraco.Extensions
     {
         public static IUmbracoBuilder AddContentment(
             this IUmbracoBuilder builder,
-            Action<ContentmentSettings> settings = default,
-            Action<ContentmentListItemCollectionBuilder> listItems = default)
+            Action<ContentmentSettings>? settings = default,
+            Action<ContentmentListItemCollectionBuilder>? listItems = default)
         {
             if (settings is not null)
             {

@@ -33,21 +33,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-        public object FromArtifact(IDataType dataType, string configuration)
+        public object? FromArtifact(IDataType dataType, string? configuration)
         {
-            var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
-            var db = dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
+            var db = dataTypeConfigurationEditor?.FromDatabase(configuration, _configurationEditorJsonSerializer);
 
             if (db is Dictionary<string, object> config &&
-                config.TryGetValueAs(NotesConfigurationField.Notes, out string notes) == true &&
+                config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 notes = _localLinkParser.FromArtifact(notes);
                 notes = _imageSourceParser.FromArtifact(notes);
                 notes = _macroParser.FromArtifact(notes);
 
-                config[NotesConfigurationField.Notes] = notes;
+                config[NotesConfigurationField.Notes] = notes ?? string.Empty;
 
                 return config;
             }
@@ -55,10 +55,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(NotesConfigurationField.Notes, out string notes) == true &&
+                config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
@@ -76,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }
 
-                config[NotesConfigurationField.Notes] = notes;
+                config[NotesConfigurationField.Notes] = notes ?? string.Empty;
             }
 
             return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);

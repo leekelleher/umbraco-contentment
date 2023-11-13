@@ -67,21 +67,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            DataListItem mapUser(IUser user)
+            DataListItem mapUser(IUser user) => new()
             {
-                return new DataListItem
-                {
-                    Name = user.Name,
-                    Value = user.Username,
-                    Icon = Icon,
-                    Description = user.Username,
-                };
+                Name = user.Name ?? user.Username,
+                Value = user.Username,
+                Icon = Icon,
+                Description = user.Username,
             };
 
             if (config.TryGetValueAs("userGroup", out JArray array) == true &&
@@ -101,6 +98,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type GetValueType(Dictionary<string, object> config) => typeof(IUser);
 
-        public object ConvertValue(Type type, string value) => _userService.GetByUsername(value);
+        public object? ConvertValue(Type type, string value) => _userService.GetByUsername(value);
     }
 }

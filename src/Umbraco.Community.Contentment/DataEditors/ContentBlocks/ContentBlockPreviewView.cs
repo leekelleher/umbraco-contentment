@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -32,7 +32,7 @@ namespace Umbraco.Cms.Web.Common.Views
 
             void setProperty<T>(string key, Action<T> action)
             {
-                if (viewData.TryGetValueAs(key, out T value) == true)
+                if (viewData.TryGetValueAs(key, out T? value) == true && value is not null)
                 {
                     action(value);
                 }

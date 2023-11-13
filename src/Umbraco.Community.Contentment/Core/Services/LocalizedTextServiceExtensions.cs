@@ -10,7 +10,7 @@ namespace Umbraco.Extensions
 {
     internal static partial class LocalizedTextServiceExtensions
     {
-        public static string LocalizeContentment(this ILocalizedTextService service, string key, string fallback = null)
+        public static string LocalizeContentment(this ILocalizedTextService service, string key, string? fallback = null)
         {
             var localized = service.Localize(HappyConstants.Internals.ProjectAlias, key);
 

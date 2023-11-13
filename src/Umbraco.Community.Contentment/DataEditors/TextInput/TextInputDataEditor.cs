@@ -5,7 +5,6 @@
 
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -25,21 +24,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-autofill";
 
         private readonly IIOHelper _ioHelper;
-        private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
 
         public TextInputDataEditor(
             ConfigurationEditorUtility utility,
             IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper,
             IDataValueEditorFactory dataValueEditorFactory)
             : base(dataValueEditorFactory)
         {
             _utility = utility;
             _ioHelper = ioHelper;
-            _shortStringHelper = shortStringHelper;
         }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility, _ioHelper, _shortStringHelper);
+        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility, _ioHelper);
     }
 }

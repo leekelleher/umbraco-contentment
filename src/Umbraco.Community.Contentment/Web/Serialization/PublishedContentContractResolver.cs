@@ -94,9 +94,9 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
             _systemMethods = new Dictionary<string, Func<IPublishedContent, object>>(StringComparer.OrdinalIgnoreCase)
             {
-                { nameof(FriendlyPublishedContentExtensions.CreatorName), x => x.CreatorName() },
+                { nameof(FriendlyPublishedContentExtensions.CreatorName), x => x.CreatorName() ?? string.Empty },
                 { nameof(FriendlyPublishedContentExtensions.Url), x => x.Url() },
-                { nameof(FriendlyPublishedContentExtensions.WriterName), x => x.WriterName() },
+                { nameof(FriendlyPublishedContentExtensions.WriterName), x => x.WriterName() ?? string.Empty },
              };
         }
 
@@ -119,7 +119,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
             }
         }
 
-        public string SystemPropertyNamePrefix { private get; set; }
+        public string? SystemPropertyNamePrefix { private get; set; }
 
         [Obsolete("Please use `SystemPropertyNamePrefix = \"_\"` instead.")]
         public bool PrefixSystemPropertyNamesWithUnderscore { private get; set; }
@@ -172,7 +172,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
                 property.ShouldSerialize = _ => _ignoreFromCustom.Contains(member.Name) == false && _ignoreFromProperty.Contains(member.Name) == false;
             }
 
-            if (_converterLookup.ContainsKey(property.PropertyType) == true)
+            if (property.PropertyType is not null && _converterLookup.ContainsKey(property.PropertyType) == true)
             {
                 property.Converter = _converterLookup[property.PropertyType];
             }
@@ -216,7 +216,7 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
             public object GetValue(object target) => _func((IPublishedContent)target);
 
-            public void SetValue(object target, object value) => throw new NotImplementedException();
+            public void SetValue(object target, object? value) => throw new NotImplementedException();
         }
 
         private class NoAttributeProvider : IAttributeProvider

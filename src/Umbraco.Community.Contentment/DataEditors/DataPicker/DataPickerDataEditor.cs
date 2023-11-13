@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataPickerConfigurationEditor(_ioHelper, _shortStringHelper, _utility);
+        public IConfigurationEditor GetConfigurationEditor() => new DataPickerConfigurationEditor(_ioHelper, _utility);
 
         public IDataValueEditor GetValueEditor()
         {
@@ -69,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             var view = default(string);
 

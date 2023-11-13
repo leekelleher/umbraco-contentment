@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoEntityDataListSource : IDataListSource, IDataSourceValueConverter
     {
-        internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
+        internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new()
         {
             { nameof(UmbracoObjectTypes.DataType), UmbracoObjectTypes.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbracoObjectTypes.Document },
@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { nameof(UmbracoObjectTypes.MemberType), UmbracoObjectTypes.MemberType },
         };
 
-        internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
+        internal static Dictionary<string, string> EntityTypeIcons = new()
         {
             { nameof(UmbracoObjectTypes.DataType), UmbConstants.Icons.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbConstants.Icons.Content },
@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 

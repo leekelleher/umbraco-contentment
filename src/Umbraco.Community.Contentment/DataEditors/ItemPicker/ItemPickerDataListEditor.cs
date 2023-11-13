@@ -112,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultValues => new()
         {
             { "listType", "list" },
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
@@ -120,7 +120,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
-        public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultConfig => new()
         {
             { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) },
             { "overlayOrderBy", string.Empty },

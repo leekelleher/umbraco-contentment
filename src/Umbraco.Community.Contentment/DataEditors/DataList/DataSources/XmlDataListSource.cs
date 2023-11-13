@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -7,7 +7,6 @@ using System.Net;
 using System.Xml;
 using System.Xml.XPath;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
@@ -19,25 +18,21 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
-        private readonly ILogger<XmlDataListSource> _logger;
-
         public XmlDataListSource(
-            ILogger<XmlDataListSource> logger,
             IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
         {
-            _logger = logger;
             _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 
         public string Name => "XML Data";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public string Description => "Configure XML data to populate the data source.";
 
-        public string DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-code";
 
@@ -99,7 +94,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.xml" },
             { "itemsXPath", "/items/item" },
@@ -128,17 +123,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 doc = new XPathDocument(path);
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+                // Unable to retrieve data from '{path}'.
             }
-            catch (WebException ex)
+            catch (WebException)
             {
-                _logger.LogError(ex, $"Unable to retrieve data from '{path}'.");
+                // Unable to retrieve data from '{path}'.
             }
-            catch (XmlException ex)
+            catch (XmlException)
             {
-                _logger.LogError(ex, $"Unable to load XML data from '{path}'.");
+                // Unable to load XML data from '{path}'.
             }
 
             if (doc == null)
@@ -172,8 +167,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (nodes.Count == 0)
             {
-                _logger.LogWarning($"The XPath '{itemsXPath}' did not match any items in the XML: {nav.OuterXml.Substring(0, Math.Min(300, nav.OuterXml.Length))}");
-
                 return Enumerable.Empty<DataListItem>();
             }
 
@@ -186,18 +179,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             foreach (XPathNavigator node in nodes)
             {
-                var name = node.SelectSingleNode(nameXPath, nsmgr);
                 var value = node.SelectSingleNode(valueXPath, nsmgr);
+                var name = node.SelectSingleNode(nameXPath, nsmgr) ?? value;
 
-                if (name != null && value != null)
+                if (name is not null && value is not null)
                 {
                     var icon = string.IsNullOrWhiteSpace(iconXPath) == false
                         ? node.SelectSingleNode(iconXPath, nsmgr)
-                        : null;
+                        : default;
 
                     var description = string.IsNullOrWhiteSpace(descriptionXPath) == false
                         ? node.SelectSingleNode(descriptionXPath, nsmgr)
-                        : null;
+                        : default;
 
                     items.Add(new DataListItem
                     {
@@ -206,20 +199,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Description = description?.Value,
                         Value = value.Value
                     });
-                }
-                else
-                {
-                    var outerXml = node.OuterXml.Substring(0, Math.Min(300, node.OuterXml.Length));
-
-                    if (name == null)
-                    {
-                        _logger.LogWarning($"The XPath '{nameXPath}' did not match a 'name' in the item XML: {outerXml}");
-                    }
-
-                    if (value == null)
-                    {
-                        _logger.LogWarning($"The XPath '{valueXPath}' did not match a 'value' in the item XML: {outerXml}");
-                    }
                 }
             }
 

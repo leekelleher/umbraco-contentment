@@ -143,9 +143,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override object FromConfigurationEditor(IDictionary<string, object> editorValues, object configuration)
+        public override object? FromConfigurationEditor(IDictionary<string, object?>? editorValues, object? configuration)
         {
-            if (editorValues.TryGetValueAs(Networks, out JArray networks) == true)
+            if (editorValues?.TryGetValueAs(Networks, out JArray networks) == true)
             {
                 foreach (JObject network in networks)
                 {

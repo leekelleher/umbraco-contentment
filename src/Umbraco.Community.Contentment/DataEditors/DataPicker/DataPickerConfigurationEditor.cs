@@ -1,4 +1,4 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -21,7 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public DataPickerConfigurationEditor(
             IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
             : base()
         {
@@ -37,8 +36,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
-            var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>(shortStringHelper));
-            var displayModes = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerDisplayMode>(shortStringHelper));
+            var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>());
+            var displayModes = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerDisplayMode>());
 
             // NOTE: Sets the default display mode to be the Cards.
             var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(CardsDataPickerDisplayMode).GetFullNameWithAssembly()));
@@ -123,7 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (displayMode != null)
                 {
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
-                    config.Remove(DisplayMode);
+                    _ = config.Remove(DisplayMode);
 
                     var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)

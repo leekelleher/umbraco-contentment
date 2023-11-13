@@ -49,7 +49,7 @@ namespace Umbraco.Community.Contentment.Services
             return default;
         }
 
-        public IPublishedContent GetCurrentContent(out bool isParent)
+        public IPublishedContent? GetCurrentContent(out bool isParent)
         {
             isParent = false;
 

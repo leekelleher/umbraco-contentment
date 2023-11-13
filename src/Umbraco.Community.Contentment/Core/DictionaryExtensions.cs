@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -19,7 +19,7 @@ namespace Umbraco.Extensions
             return false;
         }
 
-        public static TValueOut GetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, TValueOut defaultValue = default)
+        public static TValueOut? GetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, TValueOut? defaultValue = default)
         {
             if (config.TryGetValue(key, out var tmp) == true)
             {
@@ -43,7 +43,7 @@ namespace Umbraco.Extensions
             return defaultValue;
         }
 
-        public static bool TryGetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, out TValueOut value)
+        public static bool TryGetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, out TValueOut? value)
         {
             if (config.TryGetValue(key, out var tmp1) == true)
             {
@@ -62,6 +62,7 @@ namespace Umbraco.Extensions
             }
 
             value = default;
+
             return false;
         }
     }

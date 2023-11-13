@@ -11,6 +11,6 @@ namespace Umbraco.Community.Contentment.Services
     {
         int? GetCurrentContentId(out bool isParent);
 
-        IPublishedContent GetCurrentContent(out bool isParent);
+        IPublishedContent? GetCurrentContent(out bool isParent);
     }
 }

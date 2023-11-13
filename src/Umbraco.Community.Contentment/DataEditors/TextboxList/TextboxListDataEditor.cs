@@ -56,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _jsonSerializer = jsonSerializer;
         }
 
-        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility, _ioHelper, _shortStringHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility, _ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {

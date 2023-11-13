@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
         private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
-        private readonly Dictionary<string, object> _examineFieldConfig = new Dictionary<string, object>
+        private readonly Dictionary<string, object> _examineFieldConfig = new()
         {
             {
                 Constants.Conventions.ConfigurationFieldAliases.Items,
@@ -155,7 +155,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName },
             { "luceneQuery", "+__IndexType:content" },

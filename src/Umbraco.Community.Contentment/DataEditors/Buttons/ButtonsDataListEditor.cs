@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-tab";
 
-        public string Group => default;
+        public string? Group => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -84,7 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultValues => new()
         {
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },

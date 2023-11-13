@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoFilesDataListSource : IDataListSource
     {
-        private static readonly Dictionary<string, string> _icons = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _icons = new()
         {
             { UmbConstants.UdiEntityType.Script, "icon-script" },
             { UmbConstants.UdiEntityType.Stylesheet, "icon-brackets" },
@@ -98,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "fileType", UmbConstants.UdiEntityType.Stylesheet },
             { "valueType", "alias" },
@@ -122,7 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             };
 
-            string getValue(IFile file)
+            string? getValue(IFile file)
             {
                 switch (valueType)
                 {
@@ -139,10 +139,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
-                    Value = getValue(x),
+                    Name = x.Name ?? x.Alias,
+                    Value = getValue(x) ?? x.Alias,
                     Icon = _icons.ContainsKey(fileType) == true ? _icons[fileType] : Icon,
-                    Description = x.VirtualPath,
+                    Description = x.VirtualPath ?? x.Alias,
                 });
         }
     }

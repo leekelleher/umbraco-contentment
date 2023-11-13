@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "start", 1 },
             { "end", 10 },
@@ -98,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var decimals = config.GetValueAs("decimals", defaultValue: default(int));
             var format = string.Concat("N", decimals);
 
-            DataListItem newItem(double i) => new DataListItem { Name = i.ToString(format), Value = i.ToString(format) };
+            DataListItem newItem(double i) => new() { Name = i.ToString(format), Value = i.ToString(format) };
 
             if (step <= default(double))
             {

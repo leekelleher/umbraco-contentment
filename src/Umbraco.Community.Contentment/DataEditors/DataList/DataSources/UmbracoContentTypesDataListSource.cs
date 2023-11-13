@@ -89,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {

@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class TextDelimitedDataListItemPropertyValueConverter : IDataListItemPropertyValueConverter
     {
 
-        private readonly Dictionary<string, char[]> _lookup = new Dictionary<string, char[]>(StringComparer.InvariantCultureIgnoreCase)
+        private readonly Dictionary<string, char[]> _lookup = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { TextInputDataEditor.DataEditorAlias, UmbConstants.CharArrays.Comma },
             { UmbConstants.PropertyEditors.Aliases.TextArea, UmbConstants.CharArrays.LineFeedCarriageReturn },

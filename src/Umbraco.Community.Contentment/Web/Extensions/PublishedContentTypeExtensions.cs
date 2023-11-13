@@ -19,7 +19,7 @@ namespace Umbraco.Extensions
     {
         private static IContentTypeService _contentTypeService => StaticServiceProvider.Instance.GetRequiredService<IContentTypeService>();
 
-        public static string GetIcon(this IPublishedContentType contentType, IContentTypeService contentTypeService = null)
+        public static string GetIcon(this IPublishedContentType contentType, IContentTypeService? contentTypeService = null)
         {
             if (contentType != null &&
                 ContentTypeCacheHelper.TryGetIcon(contentType.Alias, out var icon, contentTypeService ?? _contentTypeService) == true)

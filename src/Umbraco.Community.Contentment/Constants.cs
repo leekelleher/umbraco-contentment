@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -126,11 +126,11 @@ namespace Umbraco.Community.Contentment
             public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
 
 #if NET6_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(10, 0, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new(10, 0, 0);
 #elif NET7_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(11, 0, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new(11, 0, 0);
 #else
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(13, 0, 0);
+            public static readonly System.Version MinimumSupportedUmbracoVersion = new(13, 0, 0);
 #endif
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";

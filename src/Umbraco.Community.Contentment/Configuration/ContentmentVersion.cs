@@ -1,4 +1,4 @@
-﻿/* Copyright © 2013-present Umbraco.
+/* Copyright © 2013-present Umbraco.
  * This Source Code has been derived from Umbraco CMS.
  * https://github.com/umbraco/Umbraco-CMS/blob/release-8.2.0-rc/src/Umbraco.Core/Configuration/UmbracoVersion.cs
  * Modified under the permissions of the MIT License.
@@ -18,24 +18,32 @@ namespace Umbraco.Community.Contentment
         static ContentmentVersion()
         {
             var assembly = typeof(ContentmentVersion).Assembly;
+            var assemblyFileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+            var semanticVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
             AssemblyVersion = assembly.GetName().Version;
 
-            AssemblyFileVersion = Version.Parse(assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version);
+            AssemblyFileVersion = assemblyFileVersion is not null ?
+                Version.Parse(assemblyFileVersion.Version)
+                : AssemblyVersion;
 
-            SemanticVersion = SemVersion.Parse(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+            SemanticVersion = semanticVersion is not null ?
+                SemVersion.Parse(semanticVersion.InformationalVersion) :
+                AssemblyVersion is not null ? new SemVersion(AssemblyVersion) : default;
 
-            Version = new Version(SemanticVersion.Major, SemanticVersion.Minor, SemanticVersion.Patch);
+            Version = SemanticVersion is not null ?
+                new Version(SemanticVersion.Major, SemanticVersion.Minor, SemanticVersion.Patch)
+                : AssemblyVersion ?? default;
         }
 
-        public static Version AssemblyVersion { get; }
+        public static Version? AssemblyVersion { get; }
 
-        public static Version AssemblyFileVersion { get; }
+        public static Version? AssemblyFileVersion { get; }
 
-        public static string Comment => SemanticVersion.Prerelease;
+        public static string? Comment => SemanticVersion?.Prerelease;
 
-        public static SemVersion SemanticVersion { get; }
+        public static SemVersion? SemanticVersion { get; }
 
-        public static Version Version { get; }
+        public static Version? Version { get; }
     }
 }

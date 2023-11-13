@@ -13,7 +13,7 @@ namespace Umbraco.Extensions
 {
     public static class PublishedElementExtensions
     {
-        private static readonly Dictionary<PublishedItemType, string> _entityTypeLookup = new Dictionary<PublishedItemType, string>
+        private static readonly Dictionary<PublishedItemType, string> _entityTypeLookup = new()
         {
             { PublishedItemType.Content, UmbConstants.UdiEntityType.Document },
             { PublishedItemType.Element, UmbConstants.UdiEntityType.Element },
@@ -38,39 +38,41 @@ namespace Umbraco.Extensions
         // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Core/Extensions/PublishedElementExtensions.cs#L166-L192
         // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Core/Extensions/PublishedContentExtensions.cs#L383-L409
 
-        public static TValue ValueOrDefault<TModel, TValue>(this TModel model, string alias, string culture = null, string segment = null, TValue defaultValue = default)
+        public static TValue? ValueOrDefault<TModel, TValue>(this TModel model, string alias, string? culture = null, string? segment = null, TValue? defaultValue = default)
             where TModel : IPublishedElement
         {
             return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
         }
 
-        public static TValue ValueOrDefaultFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null, TValue defaultValue = default)
+        public static TValue? ValueOrDefaultFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string? culture = null, string? segment = null, TValue? defaultValue = default)
             where TModel : IPublishedElement
         {
             var alias = GetAlias(model, property);
 
-            return model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue;
+            return string.IsNullOrWhiteSpace(alias) == false
+                ? model.Value(alias, culture, segment, Fallback.ToDefaultValue, defaultValue) ?? defaultValue
+                : defaultValue;
         }
 
-        public static bool HasValueFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string culture = null, string segment = null)
+        public static bool HasValueFor<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> property, string? culture = null, string? segment = null)
             where TModel : IPublishedElement
         {
             var alias = GetAlias(model, property);
-            return model.HasValue(alias, culture, segment);
+            return string.IsNullOrWhiteSpace(alias) == false && model.HasValue(alias, culture, segment);
         }
 
         // NOTE: Bah! `PublishedElementExtensions.GetAlias` is marked as private! It's either copy code, or reflection - here we go!
         // https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.ModelsBuilder.Embedded/PublishedElementExtensions.cs#L28
         // https://github.com/umbraco/Umbraco-CMS/blob/release-9.0.0/src/Umbraco.Infrastructure/ModelsBuilder/PublishedElementExtensions.cs#L27
-        private static string GetAlias<TModel, TValue>(TModel model, Expression<Func<TModel, TValue>> property)
+        private static string? GetAlias<TModel, TValue>(TModel model, Expression<Func<TModel, TValue>> property)
         {
             try
             {
                 var assembly = typeof(ApiVersion).Assembly;
                 var type = assembly.GetType("Umbraco.Extensions.PublishedElementExtensions");
-                var method = type.GetMethod(nameof(GetAlias), BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
-                var generic = method.MakeGenericMethod(typeof(TModel), typeof(TValue));
-                return generic.Invoke(null, new object[] { model, property }) as string;
+                var method = type?.GetMethod(nameof(GetAlias), BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
+                var generic = method?.MakeGenericMethod(typeof(TModel), typeof(TValue));
+                return generic?.Invoke(null, new object?[] { model, property }) as string;
             }
             catch { /* ಠ_ಠ */ }
 

@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     .Select(x => new DataListItem
                     {
                         Icon = Icon,
-                        Name = x.Name,
+                        Name = x.Name ?? x.EditorAlias,
                         Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
                     });
 
@@ -57,14 +57,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
-                            { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value }
+                            { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value ?? string.Empty }
                         }
                     }
                 };
             }
         }
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -73,7 +73,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (config.TryGetValue("imageCropper", out var obj) == true &&
                 obj is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                UdiParser.TryParse(str, out GuidUdi udi) == true)
+                UdiParser.TryParse(str, out GuidUdi? udi) == true &&
+                udi is not null)
             {
                 return _dataTypeService
                     .GetDataType(udi.Guid)?
@@ -85,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Value = x.Alias,
                         Icon = this.Icon,
                         Description = $"{x.Width}px × {x.Height}px"
-                    });
+                    }) ?? Enumerable.Empty<DataListItem>();
             }
 
             return Enumerable.Empty<DataListItem>();

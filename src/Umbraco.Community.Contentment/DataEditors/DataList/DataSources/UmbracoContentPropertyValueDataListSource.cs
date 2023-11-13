@@ -1,4 +1,4 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ConfigurationField>? Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -68,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
             },
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
@@ -86,30 +86,34 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
                 if (contentNode.InvariantStartsWith("umb://document/") == false)
                 {
-                    IEnumerable<string> getPath(int id) => umbracoContext.Content.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
-                    bool publishedContentExists(int id) => umbracoContext.Content.GetById(preview, id) != null;
+                    IEnumerable<string> getPath(int id) => umbracoContext.Content?.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
+                    bool publishedContentExists(int id) => umbracoContext.Content?.GetById(preview, id) != null;
 
                     var parsed = _contentmentContentContext.ParseXPathQuery(contentNode, getPath, publishedContentExists);
 
-                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                     {
-                        startNode = umbracoContext.Content.GetSingleByXPath(preview, parsed);
+#pragma warning disable CS0618 // Type or member is obsolete
+                        startNode = umbracoContext.Content?.GetSingleByXPath(preview, parsed);
+#pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
-                else if (UdiParser.TryParse(contentNode, out GuidUdi udi) == true && udi.Guid != Guid.Empty)
+                else if (UdiParser.TryParse(contentNode, out GuidUdi? udi) == true && udi is not null && udi.Guid != Guid.Empty)
                 {
-                    startNode = umbracoContext.Content.GetById(preview, udi.Guid);
+                    startNode = umbracoContext.Content?.GetById(preview, udi.Guid);
                 }
 
                 if (startNode != null)
                 {
                     var property = startNode.GetProperty(propertyAlias);
-
-                    foreach (var converter in _converters)
+                    if (property is not null)
                     {
-                        if (converter.IsConverter(property.PropertyType) == true)
+                        foreach (var converter in _converters)
                         {
-                            return converter.ConvertTo(property);
+                            if (converter.IsConverter(property.PropertyType) == true)
+                            {
+                                return converter.ConvertTo(property);
+                            }
                         }
                     }
                 }

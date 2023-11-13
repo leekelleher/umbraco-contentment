@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
+/* Copyright © 2019 Lee Kelleher, Umbrella Inc and other contributors.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -6,7 +6,6 @@
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -19,25 +18,21 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
-        private readonly ILogger<JsonDataListSource> _logger;
-
         public JsonDataListSource(
-            ILogger<JsonDataListSource> logger,
             IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper)
         {
-            _logger = logger;
             _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
 
         public string Name => "JSON Data";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public string Description => "Configure JSON data to populate the data source.";
 
-        public string DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-brackets";
 
@@ -98,7 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.json" },
             { "itemsJsonPath", "$[*]" },
@@ -137,8 +132,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (tokens.Any() == false)
                 {
-                    _logger.LogWarning($"The JSONPath '{itemsJsonPath}' did not match any items in the JSON.");
-
+                    // The JSONPath '{itemsJsonPath}' did not match any items in the JSON.
                     return Enumerable.Empty<DataListItem>();
                 }
 
@@ -155,8 +149,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 foreach (var token in tokens)
                 {
-                    var name = token.SelectToken(nameJsonPath);
                     var value = token.SelectToken(valueJsonPath);
+
+                    if (value == null)
+                    {
+                        // If value is missing we'll skip this specific item and log as a warning.
+                        continue;
+                    }
+
+                    var name = token.SelectToken(nameJsonPath) ?? value;
 
                     var icon = string.IsNullOrEmpty(iconJsonPath) == false
                         ? token.SelectToken(iconJsonPath)
@@ -165,19 +166,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var description = string.IsNullOrEmpty(descriptionJsonPath) == false
                         ? token.SelectToken(descriptionJsonPath)
                         : null;
-
-                    // How should we log if either name or value is empty? Note that empty or missing values are totally legal according to json
-                    if (name == null)
-                    {
-                        _logger.LogWarning($"The JSONPath '{nameJsonPath}' did not match a 'name' in the item JSON.");
-                    }
-
-                    // If value is missing we'll skip this specific item and log as a warning
-                    if (value == null)
-                    {
-                        _logger.LogWarning($"The JSONPath '{valueJsonPath}' did not match a 'value' in the item XML. The item was skipped.");
-                        continue;
-                    }
 
                     items.Add(new DataListItem
                     {
@@ -190,15 +178,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return items;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "Error finding items in the JSON. Please check the syntax of your JSONPath expressions.");
+               // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
             }
 
             return Enumerable.Empty<DataListItem>();
         }
 
-        private JToken GetJson(string url)
+        private JToken? GetJson(string url)
         {
             var content = string.Empty;
 
@@ -207,15 +195,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 try
                 {
 #pragma warning disable SYSLIB0014 // Type or member is obsolete
+                    // TODO: [UP-FOR-GRABS] Can someone convert this code to use .NET Core `HttpClient` please?
                     using (var client = new WebClient() { Encoding = Encoding.UTF8 })
                     {
                         content = client.DownloadString(url);
                     }
 #pragma warning restore SYSLIB0014 // Type or member is obsolete
                 }
-                catch (WebException ex)
+                catch (WebException)
                 {
-                    _logger.LogError(ex, $"Unable to fetch remote data from URL: {url}");
+                    // Unable to fetch remote data from URL: '{url}'.
                 }
             }
             else
@@ -228,15 +217,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-                    _logger.LogError(new FileNotFoundException(), $"Unable to find the local file path: {url}");
-                    return null;
+                    // Unable to find the local file path: '{url}'.
+                    return default;
                 }
             }
 
             if (string.IsNullOrWhiteSpace(content) == true)
             {
-                _logger.LogWarning($"The contents of '{url}' was empty. Unable to process JSON data.");
-
+                // The contents of '{url}' was empty. Unable to process JSON data.
                 return default;
             }
 
@@ -246,11 +234,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // Inspiration taken from StackOverflow: https://stackoverflow.com/a/38560188/12787
                 return JToken.Parse(content);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var trimmed = content.Substring(0, Math.Min(400, content.Length));
-
-                _logger.LogError(ex, $"Error parsing string to JSON: {trimmed}");
+                // Error parsing string to JSON.
+                // Wondering if a `JToken.TryParse()` should be a thing? [LK]
             }
 
             return default;

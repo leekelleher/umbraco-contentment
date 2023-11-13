@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -27,7 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentService contentService,
             IContentTypeService contentTypeService,
             ConfigurationEditorUtility utility,
-            IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
             : base()
         {
@@ -38,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _elementTypes = contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key);
             _elementBlueprints = new Lazy<ILookup<int, IContent>>(() => contentService.GetBlueprintsForContentTypes(_elementTypes.Values.Select(x => x.Id).ToArray()).ToLookup(x => x.ContentTypeId));
 
-            var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>(shortStringHelper);
+            var displayModes = utility.GetConfigurationEditorModels<IContentBlocksDisplayMode>();
 
             // NOTE: Sets the default display mode to be the Blocks.
             var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(BlocksDisplayMode).GetFullNameWithAssembly()));
@@ -103,7 +102,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (displayMode != null)
                 {
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
-                    config.Remove(DisplayMode);
+                    _ = config.Remove(DisplayMode);
 
                     var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)

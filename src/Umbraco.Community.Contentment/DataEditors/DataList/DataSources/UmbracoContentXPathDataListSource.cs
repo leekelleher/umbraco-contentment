@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -67,7 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 </details>", true),
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
         };
@@ -84,29 +84,33 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var preview = true;
 
-                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
                 bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
 
                 var parsed = _contentmentContentContext.ParseXPathQuery(xpath, getPath, publishedContentExists);
 
-                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     return contentCache
                         .GetByXPath(preview, parsed)
                         .Select(DataListItemExtensions.ToDataListItem)
                         .ToList();
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 
             return Enumerable.Empty<DataListItem>();
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
+        public Type? GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out Udi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
-                ? umbracoContext.Content.GetById(udi)
+            return UdiParser.TryParse(value, out var udi) == true
+                && udi is not null
+                && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content?.GetById(udi)
                 : default;
         }
     }

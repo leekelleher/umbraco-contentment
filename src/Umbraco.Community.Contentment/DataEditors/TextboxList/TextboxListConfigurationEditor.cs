@@ -17,13 +17,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly ConfigurationEditorUtility _utility;
 
-        public TextboxListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
+        public TextboxListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper)
 
             : base()
         {
             _utility = utility;
 
-            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
+            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>());
 
             Fields.Add(new ConfigurationField
             {
@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
@@ -101,7 +101,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
                     config.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
-                    config.Remove(DataSource);
+                    _ = config.Remove(DataSource);
                 }
             }
 

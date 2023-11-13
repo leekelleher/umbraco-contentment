@@ -17,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly Type _defaultObjectType = typeof(string);
 
-        private readonly Dictionary<string, Type> _objectTypes = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> _objectTypes = new()
         {
             { ValueTypes.Date, typeof(DateTime) },
             { ValueTypes.DateTime, typeof(DateTime) },

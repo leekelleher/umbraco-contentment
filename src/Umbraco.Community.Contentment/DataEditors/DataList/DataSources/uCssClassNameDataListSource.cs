@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -76,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object>? DefaultValues => new()
         {
             { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
@@ -106,7 +106,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var text = match.Groups[1].Value.Trim();
                     if (text.Length > 2 && items.Contains(text) == false)
                     {
-                        items.Add(text);
+                        _ = items.Add(text);
                     }
                 }
             }
