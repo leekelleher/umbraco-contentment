@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net5.0;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net472;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <Product>Umbraco.Community.Contentment</Product>
     <PackageId>Our.Umbraco.Community.Contentment</PackageId>
     <Title>Contentment for Umbraco</Title>
@@ -34,6 +34,11 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
     <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.0.0-rc2" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.0.0-rc2" />
   </ItemGroup>
 
   <ItemGroup>
