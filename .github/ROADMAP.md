@@ -121,25 +121,20 @@ Property Editors are:
 
 ### v4.6
 
-- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Thank @lssweatherhead_ :wink:
-
-### v4.7
-
-- Content Blocks: ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
+- A non-breaking-change minor release. Adds support for Umbraco v13, .NET 8.0. _(Whilst still supporting v8.17+, v9, v10, v11 and v12)._
 
 
 ## v5
 
-- _Adds support for Umbraco 13 (.NET 8)._
-- _Removes support for Umbraco 8 (.NET Framework 4.7.2) and Umbraco 9 (.NET 5)._
-- _Convert to a Razor Class Library?_ :thinking:
+- Removes support for Umbraco 8 (.NET Framework 4.7.2), Umbraco 9 (.NET 5) and Umbraco 11 (.NET 7).
+- Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
 
 
 ## v6
 
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
 - _Adds support for Umbraco 15 (.NET 9)._
-- _Removes support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._
+- _I'm still deciding whether to remove support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._ :thinking:
 
 
 ## v7
