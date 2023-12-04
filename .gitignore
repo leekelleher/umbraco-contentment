@@ -21,3 +21,5 @@ src/packages/*/**
 src/Umbraco.Cms.*.x/*
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
 tools/*.exe
+src/.idea
+tools

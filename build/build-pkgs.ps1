@@ -35,7 +35,20 @@ Write-Host "Package version: $version";
 # Build the VS project
 
 # Ensure NuGet.exe
-$nuget_exe = "${rootFolder}\tools\nuget.exe";
+$tooldir ="${rootFolder}\tools"
+$nuget_exe = "${tooldir}\nuget.exe";
+If (-NOT(Test-Path -Path $tooldir)) {
+    mkdir $tooldir
+
+    Write-Host "Retrieving nuget.exe...";
+    Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $nuget_exe;
+    
+    Write-Host "Retrieving Ajax.Minifier.exe...";
+    mkdir "${tooldir}\temp"
+    Invoke-WebRequest https://github.com/microsoft/ajaxmin/releases/download/v5.14/Microsoft.Ajax.Minifier.v5.14.zip  -OutFile "${tooldir}\temp\AjaxMinifier.zip";
+    Expand-Archive "${tooldir}\temp\AjaxMinifier.zip" "${tooldir}\AjaxMinifier"
+
+}
 If (-NOT(Test-Path -Path $nuget_exe)) {
     Write-Host "Retrieving nuget.exe...";
     Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $nuget_exe;
