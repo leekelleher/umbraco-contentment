@@ -118,11 +118,11 @@ Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or th
 
 ### Contributions, collaborations, rules of engagement
 
-If you would like to contribute to this project, please start a discussion before spending time and energy on a pull request. Your time is precious too.
+If you would like to contribute to this project, please [start a discussion](https://github.com/leekelleher/umbraco-contentment/discussions/new/choose) before spending time and energy on a pull request. Your time is precious too.
 
 Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
-This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go home.** :v::heart::dove:
+This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). **Play nice or go elsewhere.** :v::heart::dove:
 
 If you are unhappy with the project or documentation, please help to identify specific issues and work towards resolving them.
 Otherwise you are completely free to not use this software, complain on your favourite social network, or go [scream into the void](https://screamintothevoid.com/).
@@ -157,7 +157,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://mastodon.social/@leekelleher), [Twitter](https://twitter.com/leekelleher))
 
 <details>
-<summary>Current development effort: <b>~1,674+ hours</b> (between 2019-03-13 to 2023-08-24)</summary>
+<summary>Current development effort: <b>~1,802+ hours</b> (between 2019-03-13 to 2023-12-03)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making this package._
 
@@ -166,7 +166,7 @@ _To give you an idea of how much human developer time/effort has been put into m
 
 #### Special thanks
 
-- Thank you to [Umbrella](https://umbrellainc.co.uk) for facilitating the time and resource to help me initiate this project.
+- Thank you to [Umbrella](https://web.archive.org/web/*/https://umbrellainc.co.uk/) for facilitating the time and resource to help me initiate this project.
 - Kudos to [Gibe](https://gibe.digital/) for enabling the development of the [Data Picker](../docs/editors/data-picker.md) editor.
 
 
