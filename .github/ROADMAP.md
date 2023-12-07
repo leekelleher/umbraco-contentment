@@ -4,7 +4,7 @@
 
 Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be actioned at my own pleasure.
 
-> To note: I try to follow the [Semantic Versioning](https://semver.org/) standard.
+> To note: I try to follow the [Semantic Versioning](https://semver.org/) standard.<br>
 > TL;DR, `[Major].[Minor].[Patch]`, Major = breaking-change; Minor  = feature; Patch = bug-fix.
 
 
@@ -14,7 +14,7 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 Initial release.
 
-Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release)._
+Compiles against Umbraco CMS **v8.6.1**, _(this was the latest version at the time of initial release)._
 
 Property Editors are:
 
@@ -52,7 +52,7 @@ Property Editors are:
 
 ### [v2.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.0.0)
 
-- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS v8.14.0, _(the most recent version of Umbraco at the time of release)._
+- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS **v8.14.0**, _(the most recent version of Umbraco at the time of release)._
 
 ### [v2.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.1.0)
 
@@ -68,7 +68,7 @@ Property Editors are:
 
 ### [v3.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0)
 
-- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17.0 and v9.0.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
+- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco **v8.17.0** and **v9.0.0**. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
 ### [v3.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.1.0)
 
@@ -95,7 +95,7 @@ Property Editors are:
 
 ### [v4.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.0.0)
 
-- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.17.0, v9.5.0 and v10.0.0.
+- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against Umbraco **v8.17.0**, **v9.5.0** and **v10.0.0**.
 
 ### [v4.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.1.0)
 
