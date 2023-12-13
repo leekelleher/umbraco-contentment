@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.Notifications
                 umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
-                    version = ContentmentVersion.SemanticVersion.ToSemanticString(),
+                    version = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
                     telemetry = _contentmentSettings.DisableTelemetry == false,
                 });
             }
