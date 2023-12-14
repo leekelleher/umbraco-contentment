@@ -121,7 +121,7 @@ namespace Umbraco.Community.Contentment.Notifications
                             editorAlias = entity.EditorAlias.Substring(Constants.Internals.DataEditorAliasPrefix.Length),
                             umbracoId = umbracoId,
                             umbracoVersion = _umbracoVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
-                            contentmentVersion = ContentmentVersion.SemanticVersion.ToString(),
+                            contentmentVersion = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
                             dataTypeConfig = dataTypeConfig,
                         };
 

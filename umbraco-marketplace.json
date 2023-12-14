@@ -91,6 +91,10 @@
     {
       "UmbracoMajorVersion": 12,
       "PackageId": "Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 13,
+      "PackageId": "Umbraco.Community.Contentment"
     }
   ],
   "VideoUrl": "https://www.youtube.com/embed/alhbwyQkU1E"

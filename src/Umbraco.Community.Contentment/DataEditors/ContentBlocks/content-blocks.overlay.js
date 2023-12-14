@@ -25,6 +25,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Con
 
         function init() {
 
+            // HACK: Faking `umbVariantContentController` to support v13 RTE (and subsequently the BlockList).
+            vm.constructor = { name: "umbVariantContentController" };
+            vm.editor = { content: { name: "?", language: null } };
+            // END HACK!
+
             vm.submit = submit;
             vm.close = close;
 

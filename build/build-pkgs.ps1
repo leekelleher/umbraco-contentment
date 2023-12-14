@@ -72,6 +72,9 @@ Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net6.0\${projectNa
 $net70Folder = "${assetsFolder}\net7.0";
 if (!(Test-Path -Path $net70Folder)) {New-Item -Path $net70Folder -Type Directory;}
 Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net7.0\${projectNamespace}.*" -Destination $net70Folder;
+$net80Folder = "${assetsFolder}\net8.0";
+if (!(Test-Path -Path $net80Folder)) {New-Item -Path $net80Folder -Type Directory;}
+Copy-Item -Path "${srcFolder}\${projectNamespace}\bin\Release\net8.0\${projectNamespace}.*" -Destination $net80Folder;
 
 # Populate the Umbraco package manifest
 
