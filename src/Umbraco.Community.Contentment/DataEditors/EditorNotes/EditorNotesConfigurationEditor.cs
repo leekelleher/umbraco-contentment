@@ -71,36 +71,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Message,
                 Name = nameof(Message),
                 Description = "Enter the notes to be displayed for the content editor.",
+#if NET8_0_OR_GREATER
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
+#else
                 View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
+#endif
                 Config = new Dictionary<string, object>
                 {
-                    { "editor", new
-                        {
-                            maxImageSize = 500,
-                            mode = "classic",
-                            stylesheets = false,
-                            toolbar = new[]
-                            {
-                                "ace",
-                                "undo",
-                                "redo",
-                                "cut",
-                                "styleselect",
-                                "removeformat",
-                                "bold",
-                                "italic",
-                                "alignleft",
-                                "aligncenter",
-                                "alignright",
-                                "bullist",
-                                "numlist",
-                                "link",
-                                "umbmediapicker",
-                                "umbmacro",
-                                "umbembeddialog"
-                            },
-                        }
-                    }
+                    { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
                 }
             });
 

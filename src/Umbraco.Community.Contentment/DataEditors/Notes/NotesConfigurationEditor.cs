@@ -27,7 +27,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = Notes,
                 Name = nameof(Notes),
                 Description = "Enter the notes to be displayed for the content editor.",
+#if NET8_0_OR_GREATER
+                View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
+#else
                 View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/rte/rte.html"),
+#endif
                 Config = new Dictionary<string, object>
                 {
                     { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
