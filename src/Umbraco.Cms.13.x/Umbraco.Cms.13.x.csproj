@@ -11,16 +11,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="13.0.0-rc1" />
-        <PackageReference Include="uSync" Version="12.2.0" />
+        <PackageReference Include="Umbraco.Cms" Version="13.0.0" />
+        <PackageReference Include="uSync" Version="13.0.0-rc2" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-    <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
-    <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.1" />
-    <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.1" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
-  </ItemGroup>
+        <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
+        <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.1" />
+        <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.1" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+    </ItemGroup>
 
     <ItemGroup>
         <Content Include="App_Plugins/**" CopyToOutputDirectory="Always" />

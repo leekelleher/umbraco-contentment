@@ -4,7 +4,7 @@
 
 Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be actioned at my own pleasure.
 
-> To note: I try to follow the [Semantic Versioning](https://semver.org/) standard.
+> To note: I try to follow the [Semantic Versioning](https://semver.org/) standard.<br>
 > TL;DR, `[Major].[Minor].[Patch]`, Major = breaking-change; Minor  = feature; Patch = bug-fix.
 
 
@@ -14,7 +14,7 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 
 Initial release.
 
-Compiles against Umbraco CMS v8.6.1, _(this was the latest version at the time of initial release)._
+Compiles against Umbraco CMS **v8.6.1**, _(this was the latest version at the time of initial release)._
 
 Property Editors are:
 
@@ -52,7 +52,7 @@ Property Editors are:
 
 ### [v2.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.0.0)
 
-- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS v8.14.0, _(the most recent version of Umbraco at the time of release)._
+- A breaking-change release _(in terms of following [SemVer guidelines](https://semver.org/)),_ of the latest v1.4.x features that compiles against Umbraco CMS **v8.14.0**, _(the most recent version of Umbraco at the time of release)._
 
 ### [v2.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.1.0)
 
@@ -68,7 +68,7 @@ Property Editors are:
 
 ### [v3.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0)
 
-- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco v8.17.0 and v9.0.0. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
+- A breaking-change release _(following SemVer guidelines),_ of v2.x features that will compile against both Umbraco **v8.17.0** and **v9.0.0**. If you're interested in the development of this release, please [see my developer's journal.](https://github.com/leekelleher/umbraco-contentment/discussions/105)
 
 ### [v3.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.1.0)
 
@@ -95,7 +95,7 @@ Property Editors are:
 
 ### [v4.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.0.0)
 
-- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against both Umbraco v8.17.0, v9.5.0 and v10.0.0.
+- A breaking-change release _(following SemVer guidelines),_ of v3.x features that will compile against Umbraco **v8.17.0**, **v9.5.0** and **v10.0.0**.
 
 ### [v4.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.1.0)
 
@@ -121,25 +121,20 @@ Property Editors are:
 
 ### v4.6
 
-- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Thank @lssweatherhead_ :wink:
-
-### v4.7
-
-- Content Blocks: ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
+- A non-breaking-change minor release. Adds support for Umbraco v13, .NET 8.0. _(Whilst still supporting v8.17+, v9, v10, v11 and v12)._
 
 
 ## v5
 
-- _Adds support for Umbraco 13 (.NET 8)._
-- _Removes support for Umbraco 8 (.NET Framework 4.7.2) and Umbraco 9 (.NET 5)._
-- _Convert to a Razor Class Library?_ :thinking:
+- Removes support for Umbraco 8 (.NET Framework 4.7.2), Umbraco 9 (.NET 5) and Umbraco 11 (.NET 7).
+- Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
 
 
 ## v6
 
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
 - _Adds support for Umbraco 15 (.NET 9)._
-- _Removes support for Umbraco 10 (.NET 6), Umbraco 11, 12 (.NET 7) and Umbraco 13 (.NET 8)._
+- _I'm still deciding whether to remove support for Umbraco 10 (.NET 6), Umbraco 12 (.NET 7) and Umbraco 13 (.NET 8)._ :thinking:
 
 
 ## v7

@@ -31,6 +31,10 @@
 
 - [Time Duration](https://github.com/leekelleher/umbraco-contentment/discussions/114)
 
+- Content Blocks - add Content Picker support, (think Content Blocks + MNTP, for reusable blocks). _Thank @lssweatherhead_ :wink:
+
+- Content Blocks: ["Templated" display mode](https://github.com/leekelleher/umbraco-contentment/discussions/278)
+
 
 ### Internally used editors
 
