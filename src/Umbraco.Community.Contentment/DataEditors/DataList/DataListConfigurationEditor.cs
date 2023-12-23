@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
@@ -81,33 +81,41 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
             var toValueEditor = new Dictionary<string, object>();
 
-            if (config.TryGetValueAs(DataSource, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DataSource, out JArray? array1) == true &&
+                array1?.Count > 0 &&
+                array1[0] is JObject item1 &&
+                item1.Value<string>("key") is string key1)
             {
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item1.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
                 if (source != null)
                 {
-                    var sourceConfig = item1["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
+                    var sourceConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
+                    if (sourceConfig is not null)
+                    {
+                        var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
-                    toValueEditor.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
+                        toValueEditor.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
+                    }
                 }
             }
 
-            if (config.TryGetValueAs(ListEditor, out JArray array2) == true && array2.Count > 0 && array2[0] is JObject item2)
+            if (config.TryGetValueAs(ListEditor, out JArray? array2) == true &&
+                array2?.Count > 0 &&
+                array2[0] is JObject item2 &&
+                item2.Value<string>("key") is string key2)
             {
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item2.Value<string>("key"));
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
                 if (editor != null)
                 {
-                    var editorConfig = item2["value"].ToObject<Dictionary<string, object>>();
+                    var editorConfig = item2["value"]?.ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)
                     {
-
                         foreach (var prop in editorConfig)
                         {
                             if (toValueEditor.ContainsKey(prop.Key) == false)

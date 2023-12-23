@@ -106,8 +106,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var fileType = config.GetValueAs("fileType", defaultValue: UmbConstants.UdiEntityType.Stylesheet);
-            var valueType = config.GetValueAs("valueType", defaultValue: "alias");
+            var fileType = config.GetValueAs("fileType", defaultValue: UmbConstants.UdiEntityType.Stylesheet) ?? UmbConstants.UdiEntityType.Stylesheet;
+            var valueType = config.GetValueAs("valueType", defaultValue: "alias") ?? "alias";
 
             IEnumerable<IFile> getFiles()
             {

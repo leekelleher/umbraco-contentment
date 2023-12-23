@@ -1,4 +1,4 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -21,13 +21,13 @@ namespace Umbraco.Community.Contentment.Notifications
 
         public void Handle(ServerVariablesParsingNotification notification)
         {
-            if (notification.ServerVariables.TryGetValueAs("umbracoPlugins", out Dictionary<string, object> umbracoPlugins) == true &&
-                umbracoPlugins.ContainsKey(Constants.Internals.ProjectAlias) == false)
+            if (notification.ServerVariables.TryGetValueAs("umbracoPlugins", out Dictionary<string, object>? umbracoPlugins) == true &&
+                umbracoPlugins?.ContainsKey(Constants.Internals.ProjectAlias) == false)
             {
                 umbracoPlugins.Add(Constants.Internals.ProjectAlias, new
                 {
                     name = Constants.Internals.ProjectName,
-                    version = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
+                    version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild(),
                     telemetry = _contentmentSettings.DisableTelemetry == false,
                 });
             }

@@ -77,10 +77,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var start = GetStartContent(config);
-            if (start != null)
+            if (start is not null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
-                var items = start.Children.Select(x => ToDataListItem(x, imageAlias));
+                var items = start.Children?.Select(x => ToDataListItem(x, imageAlias)) ?? Enumerable.Empty<DataListItem>();
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
                 {
@@ -147,7 +147,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
+        public Type GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
         public object? ConvertValue(Type type, string value)
         {
@@ -177,7 +177,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 #pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
-                else if (UdiParser.TryParse(parentNode, out GuidUdi? udi) == true && udi.Guid != Guid.Empty)
+                else if (UdiParser.TryParse(parentNode, out GuidUdi? udi) == true &&
+                    udi is not null &&
+                    udi.Guid.Equals(Guid.Empty) == false)
                 {
                     return contentCache.GetById(preview, udi.Guid);
                 }

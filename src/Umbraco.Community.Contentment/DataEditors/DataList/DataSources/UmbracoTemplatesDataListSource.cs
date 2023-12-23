@@ -109,21 +109,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object> config)
+        public Type GetValueType(Dictionary<string, object>? config)
         {
-            var valueType = config.GetValueAs("valueType", defaultValue: "udi");
+            var valueType = config?.GetValueAs("valueType", defaultValue: "udi");
             return valueType.InvariantEquals("udi") == true
                 ? typeof(Udi)
                 : typeof(string);
         }
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
             if (type == typeof(Udi))
             {
-                return UdiParser.TryParse(value, out GuidUdi udi) == true
-                    ? udi
-                    : default(Udi);
+                return UdiParser.TryParse(value, out var udi) == true ? udi : default;
             }
 
             return value;

@@ -25,11 +25,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Icon { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonExtensionData]
         public Dictionary<string, object>? Properties { get; set; } = new();
 
-        public string Value { get; set; }
+        public string? Value { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -18,7 +18,7 @@ internal sealed class ContentmentManifestFilter : IManifestFilter
             PackageName = Constants.Internals.ProjectName,
             Scripts = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".js" },
             Stylesheets = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".css" },
-            Version = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
+            Version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild() ?? "5.0.0",
         });
     }
 }

@@ -62,7 +62,6 @@ namespace Umbraco.Extensions
             }
 
             value = default;
-
             return false;
         }
     }

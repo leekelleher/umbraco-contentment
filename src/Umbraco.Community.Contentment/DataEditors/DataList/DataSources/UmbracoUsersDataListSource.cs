@@ -59,7 +59,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     }
@@ -81,8 +81,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = user.Username,
             };
 
-            if (config.TryGetValueAs("userGroup", out JArray array) == true &&
-                array.Count > 0 &&
+            if (config.TryGetValueAs("userGroup", out JArray? array) == true &&
+                array?.Count > 0 &&
                 array[0].Value<string>() is string alias &&
                 string.IsNullOrWhiteSpace(alias) == false)
             {
@@ -96,7 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _userService.GetAll(0, int.MaxValue, out _).Select(mapUser);
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IUser);
+        public Type GetValueType(Dictionary<string, object>? config) => typeof(IUser);
 
         public object? ConvertValue(Type type, string value) => _userService.GetByUsername(value);
     }

@@ -1,4 +1,4 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -19,7 +19,7 @@ namespace Umbraco.Extensions
             builder.ForUmbracoPage(FindContentByDomain);
         }
 
-        private static IPublishedContent FindContentByDomain(ActionExecutingContext actionExecutingContext)
+        private static IPublishedContent? FindContentByDomain(ActionExecutingContext actionExecutingContext)
         {
             var accessor = actionExecutingContext.HttpContext.RequestServices.GetRequiredService<IUmbracoContextAccessor>();
             if (accessor?.TryGetUmbracoContext(out var ctx) == true)
@@ -30,7 +30,7 @@ namespace Umbraco.Extensions
                 return content ?? ctx.Content?.GetAtRoot().FirstOrDefault();
             }
 
-            return null;
+            return default;
         }
     }
 }

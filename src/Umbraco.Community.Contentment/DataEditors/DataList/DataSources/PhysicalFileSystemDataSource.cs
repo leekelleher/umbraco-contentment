@@ -37,11 +37,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "File System";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public string Description => "Select paths from the physical file system as the data source.";
 
-        public string DescriptionTemplate => "{{ path }}; {{ filter }}";
+        public string? DescriptionTemplate => "{{ path }}; {{ filter }}";
 
         public string Icon => "icon-folder-close";
 

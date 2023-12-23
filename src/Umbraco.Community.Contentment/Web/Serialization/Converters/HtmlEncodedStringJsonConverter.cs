@@ -1,4 +1,4 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -14,13 +14,13 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
         public override bool CanWrite => true;
 
-        public override IHtmlEncodedString ReadJson(JsonReader reader, Type objectType, IHtmlEncodedString existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override IHtmlEncodedString ReadJson(JsonReader reader, Type objectType, IHtmlEncodedString? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             // TODO: [UP-FOR-GRABS] Please help me implement this.
             throw new NotImplementedException();
         }
 
-        public override void WriteJson(JsonWriter writer, IHtmlEncodedString value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, IHtmlEncodedString? value, JsonSerializer serializer)
         {
             writer.WriteValue(value?.ToHtmlString());
         }

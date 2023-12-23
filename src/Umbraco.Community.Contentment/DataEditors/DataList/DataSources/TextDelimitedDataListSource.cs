@@ -31,11 +31,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "Text Delimited Data";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public string Description => "Configure text-delimited data to populate the data source.";
 
-        public string DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{{ url }}";
 
         public string Icon => "icon-fa fa-file-text-o";
 
@@ -116,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var items = new List<DataListItem>();
 
             var url = config.GetValueAs("url", string.Empty);
-            var delimiter = config.GetValueAs("delimiter", ",");
+            var delimiter = config.GetValueAs("delimiter", ",") ?? ",";
             var ignoreFirstLine = config.GetValueAs("ignoreFirstLine", false);
             var nameIndex = config.GetValueAs("nameIndex", 0);
             var valueIndex = config.GetValueAs("valueIndex", 0);
@@ -130,7 +130,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var lines = GetTextLines(url);
 
-            if (lines == null || lines.Length == 0)
+            if (lines is null || lines.Length == 0)
             {
                 return items;
             }
@@ -183,7 +183,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        private string[] GetTextLines(string url)
+        private string[]? GetTextLines(string url)
         {
             if (url.InvariantStartsWith("http") == true)
             {

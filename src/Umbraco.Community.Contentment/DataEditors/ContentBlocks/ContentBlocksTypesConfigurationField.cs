@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureElementType" },
                 { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                 { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
@@ -59,10 +59,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Key = "elementType",
                     Name = "Element type",
                     View = _ioHelper.ResolveRelativeOrVirtualUrl(Constants.Internals.EditorsPathRoot + "readonly-node-preview.html"),
-                    Config = new Dictionary<string,object>
+                    Config = new Dictionary<string, object>
                     {
-                        { "name", contentType.Name },
-                        { "icon", contentType.Icon },
+                        { "name", contentType.Name ?? contentType.Alias },
+                        { "icon", contentType.Icon ?? UmbConstants.Icons.DefaultIcon },
                         { "description", contentType.GetUdi().ToString() },
                     },
                     HideLabel = true,

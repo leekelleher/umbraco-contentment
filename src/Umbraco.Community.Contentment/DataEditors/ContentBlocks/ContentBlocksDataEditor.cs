@@ -69,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool IsDeprecated => false;
 
-        public IDictionary<string, object> DefaultConfiguration => default;
+        public IDictionary<string, object>? DefaultConfiguration => default;
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
@@ -91,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             var view = default(string);
 
@@ -105,9 +105,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         displayMode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
                     }
-                    else if (tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject item1)
+                    else if (tmp1 is JArray array1 &&
+                        array1.Count > 0 &&
+                        array1[0] is JObject item1 &&
+                        item1.Value<string>("key") is string key)
                     {
-                        displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
+                        displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
                     }
 
                     if (displayMode != null)

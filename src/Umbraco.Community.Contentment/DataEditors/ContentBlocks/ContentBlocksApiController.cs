@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -58,19 +58,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             var preview = true;
             var contentCache = _umbracoContextAccessor.GetRequiredUmbracoContext().Content;
 
-            var content = contentCache.GetById(true, contentId);
-            if (content == null)
+            var content = contentCache?.GetById(true, contentId);
+            if (content is null)
             {
-                _logger.LogDebug($"Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.");
+                _logger.LogDebug("Unable to retrieve content for ID '{contentId}', it is most likely a new unsaved page.", contentId);
             }
 
             var element = default(IPublishedElement);
             var block = item.ToObject<ContentBlock>();
             if (block != null && block.ElementType.Equals(Guid.Empty) == false)
             {
-                if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, _contentTypeService) == true)
+                if (ContentTypeCacheHelper.TryGetAlias(block.ElementType, out var alias, _contentTypeService) == true &&
+                    string.IsNullOrWhiteSpace(alias) == false)
                 {
-                    var contentType = contentCache.GetContentType(alias);
+                    var contentType = contentCache?.GetContentType(alias);
                     if (contentType != null && contentType.IsElement == true)
                     {
                         var properties = new List<IPublishedProperty>();
@@ -80,7 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var propType = contentType.GetPropertyType(thing.Key);
                             if (propType != null)
                             {
-                                properties.Add(new DetachedPublishedProperty(propType, null, thing.Value, preview));
+                                properties.Add(new DetachedPublishedProperty(propType, content, thing.Value, preview));
                             }
                         }
 
@@ -98,12 +99,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             };
 
-            if (ContentTypeCacheHelper.TryGetIcon(content.ContentType.Alias, out var contentIcon, _contentTypeService) == true)
+            if (ContentTypeCacheHelper.TryGetIcon(content?.ContentType.Alias, out var contentIcon, _contentTypeService) == true)
             {
                 viewData.Add(nameof(contentIcon), contentIcon);
             }
 
-            if (ContentTypeCacheHelper.TryGetIcon(element.ContentType.Alias, out var elementIcon, _contentTypeService) == true)
+            if (ContentTypeCacheHelper.TryGetIcon(element?.ContentType.Alias, out var elementIcon, _contentTypeService) == true)
             {
                 viewData.Add(nameof(elementIcon), elementIcon);
             }
@@ -112,7 +113,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             try
             {
-                markup = RenderPartialViewToString(element.ContentType.Alias, viewData);
+                markup = RenderPartialViewToString(element?.ContentType.Alias, viewData);
             }
             catch (InvalidCastException icex)
             {
@@ -138,9 +139,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         // https://gist.github.com/ahmad-moussawi/1643d703c11699a6a4046e57247b4d09
         // https://weblog.west-wind.com/posts/2022/Jun/21/Back-to-Basics-Rendering-Razor-Views-to-String-in-ASPNET-Core
         // https://gist.github.com/Matthew-Wise/80626bbf9c9590228fc317774f15222a
-        private string RenderPartialViewToString(string viewName, ViewDataDictionary viewData)
+        private string RenderPartialViewToString(string? viewName, ViewDataDictionary viewData)
         {
-            IView view = default;
+            IView? view = default;
 
             // HACK: I couldn't figure out how to add custom view locations to the Razor view engine, so this is my hack.
             // If anyone knows of a better approach, the code is open to contributions. [LK:2022-04-15]

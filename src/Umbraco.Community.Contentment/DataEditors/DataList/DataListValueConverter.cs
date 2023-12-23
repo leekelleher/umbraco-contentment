@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Snapshot;
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source is string value)
             {
@@ -51,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
             TryGetPropertyTypeConfiguration(propertyType, out var hasMultipleValues, out var valueType, out var converter);
 
@@ -75,14 +75,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             // ref: https://github.com/leekelleher/umbraco-contentment/issues/111#issuecomment-847780287
             if (inter is JArray array)
             {
-                inter = array.ToObject<IEnumerable<string>>();
+                inter = array.ToObject<IEnumerable<string>>() ?? Enumerable.Empty<string>();
             }
 
             if (inter is IEnumerable<string> items)
             {
                 if (hasMultipleValues == true)
                 {
-                    var result = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
+                    var result = Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType)) as IList;
 
                     foreach (var item in items)
                     {
@@ -95,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var attempt = obj.TryConvertTo(valueType);
                             if (attempt.Success == true)
                             {
-                                result.Add(attempt.Result);
+                                _ = result?.Add(attempt.Result);
                             }
                             else
                             {
@@ -104,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 // We can attempt to cast it directly, as a last resort.
                                 if (valueType.IsInstanceOfType(obj) == true)
                                 {
-                                    result.Add(obj);
+                                    _ = result?.Add(obj);
                                 }
                             }
                         }
@@ -130,7 +130,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
         }
 
-        private void TryGetPropertyTypeConfiguration(IPublishedPropertyType propertyType, out bool hasMultipleValues, out Type valueType, out Func<Type, string, object> converter)
+        private void TryGetPropertyTypeConfiguration(IPublishedPropertyType propertyType, out bool hasMultipleValues, out Type valueType, out Func<Type, string, object>? converter)
         {
             hasMultipleValues = false;
             valueType = _defaultObjectType;
@@ -139,21 +139,23 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
                 configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) == true &&
                 tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1 &&
+                obj1.Value<string>("key") is string key1 &&
                 configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) == true &&
-                tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2)
+                tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2 &&
+                obj2.Value<string>("key") is string key2)
             {
-                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(obj1.Value<string>("key"));
-                if (source != null)
+                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(key1);
+                if (source is not null)
                 {
-                    var config = obj1["value"].ToObject<Dictionary<string, object>>();
+                    var config = obj1["value"]?.ToObject<Dictionary<string, object>>();
                     valueType = source.GetValueType(config) ?? _defaultObjectType;
-                    converter = source.ConvertValue;
+                    converter = source.ConvertValue!;
                 }
 
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(obj2.Value<string>("key"));
-                if (editor != null)
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
+                if (editor is not null)
                 {
-                    var config = obj2["value"].ToObject<Dictionary<string, object>>();
+                    var config = obj2["value"]?.ToObject<Dictionary<string, object>>();
                     hasMultipleValues = editor.HasMultipleValues(config);
                 }
             }

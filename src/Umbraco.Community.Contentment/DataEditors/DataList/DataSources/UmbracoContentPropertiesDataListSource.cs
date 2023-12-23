@@ -17,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
         private readonly IIOHelper _ioHelper;
-        private Dictionary<string, string> _icons;
+        private Dictionary<string, string>? _icons;
 
         public UmbracoContentPropertiesDataListSource(
             IContentTypeService contentTypeService,
@@ -65,7 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     },
@@ -93,21 +93,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("contentType", out JArray array) == true &&
-                array.Count > 0 &&
+            if (config.TryGetValueAs("contentType", out JArray? array) == true &&
+                array?.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                UdiParser.TryParse(str, out GuidUdi udi) == true)
+                UdiParser.TryParse(str, out GuidUdi? udi) == true &&
+                udi is not null)
             {
                 var contentType = _contentTypeService.Get(udi.Guid);
                 if (contentType != null)
                 {
-                    if (_icons == null)
-                    {
-                        _icons = _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
-                    }
+                    _icons ??= _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
 
-                    IEnumerable<DataListItem> addNameItem(bool add)
+                    static IEnumerable<DataListItem> addNameItem(bool add)
                     {
                         if (add == true)
                         {

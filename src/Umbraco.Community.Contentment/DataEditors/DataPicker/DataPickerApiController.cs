@@ -1,4 +1,4 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -45,14 +45,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 dataTypeConfig.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
                 tmp1 is JArray array1 &&
                 array1.Count > 0 &&
-                array1[0] is JObject item1)
+                array1[0] is JObject item1 &&
+                item1.Value<string>("key") is string key1)
             {
-                var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(item1.Value<string>("key"));
+                var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(key1);
                 if (source1 != null)
                 {
                     var config1 = item1?["value"]?.ToObject<Dictionary<string, object>>()!;
 
-                    _lookup.TryAdd(dataTypeKey, (source1, config1));
+                    _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
                     var result = (await source1.GetItemsAsync(config1, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value);
 
@@ -85,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var config1 = item1?["value"]?.ToObject<Dictionary<string, object>>()!;
 
-                    _lookup.TryAdd(dataTypeKey, (source1, config1));
+                    _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
                     var results = await source1?.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
@@ -99,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         // NOTE: The internal cache is cleared from `ContentmentDataTypeNotificationHandler` [LK]
         internal static void ClearCache(Guid dataTypeKey)
         {
-            _lookup.Remove(dataTypeKey);
+            _ = _lookup.Remove(dataTypeKey);
         }
     }
 }

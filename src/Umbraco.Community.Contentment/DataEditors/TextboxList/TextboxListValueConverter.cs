@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -17,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(NameValueCollection);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
             {
@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
             if (inter is JObject obj)
             {
@@ -35,7 +35,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 foreach (var prop in obj)
                 {
-                    items.Add(prop.Key, prop.Value.ToString());
+                    items.Add(prop.Key, prop.Value?.ToString());
                 }
 
                 return items;

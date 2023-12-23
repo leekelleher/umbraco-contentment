@@ -137,11 +137,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        public Type? GetValueType(Dictionary<string, object> config)
+        public Type? GetValueType(Dictionary<string, object>? config)
         {
-            if (config.TryGetValueAs("enumType", out JArray array) == true)
+            if (config?.TryGetValueAs("enumType", out JArray? array) == true)
             {
-                var enumType = array.ToObject<string[]>();
+                var enumType = array?.ToObject<string[]>();
                 if (enumType?.Length > 1)
                 {
                     var assembly = default(Assembly);
@@ -181,7 +181,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object? ConvertValue(Type type, string value)
         {
-            if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
+            if (string.IsNullOrWhiteSpace(value) == false && type.IsEnum == true)
             {
                 var entry = _lookup.GetOrAdd(type, EnumValueFactory);
                 if (entry.Item2 != null && entry.Item2.TryGetValue(value, out var enumValue) == true)

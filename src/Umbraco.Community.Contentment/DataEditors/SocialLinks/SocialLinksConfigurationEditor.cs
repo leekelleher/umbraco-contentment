@@ -123,7 +123,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { "allowDuplicates", Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                     { "displayMode", "cards" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
@@ -145,7 +145,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override object? FromConfigurationEditor(IDictionary<string, object?>? editorValues, object? configuration)
         {
-            if (editorValues?.TryGetValueAs(Networks, out JArray networks) == true)
+            if (editorValues?.TryGetValueAs(Networks, out JArray? networks) == true && networks?.Count > 0)
             {
                 foreach (JObject network in networks)
                 {
@@ -164,17 +164,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.FromConfigurationEditor(editorValues, configuration);
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Networks, out JArray array1) && array1.Count > 0)
+            if (config.TryGetValueAs(Networks, out JArray? array1) && array1?.Count > 0)
             {
-                var networks = new List<JObject>();
+                var networks = new List<JObject?>();
 
                 for (var i = 0; i < array1.Count; i++)
                 {
-                    networks.Add((JObject)array1[i]["value"]);
+                    networks.Add(array1[i]["value"] as JObject);
                 }
 
                 config[Networks] = networks;
@@ -182,7 +182,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.ContainsKey(OverlayView) == false)
             {
-                config.Add(OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(SocialLinksDataEditor.DataEditorOverlayViewPath));
+                config.Add(OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(SocialLinksDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
             }
 
             return config;

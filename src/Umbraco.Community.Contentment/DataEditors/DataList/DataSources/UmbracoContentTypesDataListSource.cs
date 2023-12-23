@@ -128,17 +128,20 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
-                    Description = string.Join(", ", x.AllowedTemplates.Select(t => t.Alias)),
+                    Description = string.Join(", ", x.AllowedTemplates?.Select(t => t.Alias) ?? Enumerable.Empty<string>()),
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContentType);
+        public Type GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContentType);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            if (UdiParser.TryParse(value, out GuidUdi udi) == true && ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true)
+            if (UdiParser.TryParse(value, out GuidUdi? udi) == true &&
+                udi is not null &&
+                ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true &&
+                string.IsNullOrWhiteSpace(alias) == false)
             {
-                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetContentType(alias);
+                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content?.GetContentType(alias);
             }
 
             return default;

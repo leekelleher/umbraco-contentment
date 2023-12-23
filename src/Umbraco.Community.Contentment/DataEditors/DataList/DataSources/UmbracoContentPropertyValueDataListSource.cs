@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField>? Fields => new ConfigurationField[]
+        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {

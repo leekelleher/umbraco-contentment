@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool IsDeprecated => false;
 
-        public IDictionary<string, object> DefaultConfiguration => default;
+        public IDictionary<string, object>? DefaultConfiguration => default;
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
@@ -75,11 +75,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (configuration is Dictionary<string, object> config)
             {
-                if (config.TryGetValueAs(DataPickerConfigurationEditor.DisplayMode, out JArray array1) == true &&
-                    array1.Count > 0 &&
-                    array1[0] is JObject item1)
+                if (config.TryGetValueAs(DataPickerConfigurationEditor.DisplayMode, out JArray? array1) == true &&
+                    array1?.Count > 0 &&
+                    array1[0] is JObject item1 &&
+                    item1.Value<string>("key") is string key1)
                 {
-                    var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
+                    var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key1);
                     if (displayMode != null)
                     {
                         view = displayMode.View;

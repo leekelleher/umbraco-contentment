@@ -94,7 +94,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("entityType", out string entityType) == true && SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
+            if (config.TryGetValueAs("entityType", out string? entityType) == true &&
+                string.IsNullOrWhiteSpace(entityType) == false &&
+                SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
             {
                 var icon = EntityTypeIcons.GetValueAs(entityType, UmbConstants.Icons.DefaultIcon);
 
@@ -113,11 +115,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<DataListItem>();
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IEntitySlim);
+        public Type GetValueType(Dictionary<string, object>? config) => typeof(IEntitySlim);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
+            return UdiParser.TryParse(value, out GuidUdi? udi) == true && udi?.Guid.Equals(Guid.Empty) == false
                 ? _entityService.Value.Get(udi.Guid)
                 : default;
         }

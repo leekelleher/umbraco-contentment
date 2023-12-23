@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
@@ -112,19 +112,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DisplayMode, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DisplayMode, out JArray? array1) == true &&
+                array1?.Count > 0 &&
+                array1[0] is JObject item1 &&
+                item1.Value<string>("key") is string key1)
             {
-                var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
+                var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key1);
                 if (displayMode != null)
                 {
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
                     _ = config.Remove(DisplayMode);
 
-                    var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
+                    var editorConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)
                     {
                         foreach (var prop in editorConfig)
@@ -151,7 +154,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
             {
-                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath));
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
             }
 
             return config;

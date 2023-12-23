@@ -1,4 +1,4 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _jsonSerializer = jsonSerializer;
         }
 
-        public override object ToEditor(IProperty property, string culture = null, string segment = null)
+        public override object? ToEditor(IProperty property, string? culture = null, string? segment = null)
         {
             var value = base.ToEditor(property, culture, segment);
 
@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return value;
         }
 
-        public IEnumerable<UmbracoEntityReference> GetReferences(object value)
+        public IEnumerable<UmbracoEntityReference> GetReferences(object? value)
         {
             // NOTE: Due to not being able to access the underlying data-source,
             // at this point we do not know what the value-type references, (it could be anything from a custom data-source).
@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     foreach (var item in items)
                     {
                         if (item.InvariantStartsWith("umb://") == true &&
-                            UdiParser.TryParse(item, out Udi udi) == true)
+                            UdiParser.TryParse(item, out var udi) == true)
                         {
                             yield return new UmbracoEntityReference(udi);
                         }

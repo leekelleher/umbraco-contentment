@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
@@ -92,15 +92,22 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DataSource, out JArray array) == true && array.Count > 0 && array[0] is JObject item)
+            if (config.TryGetValueAs(DataSource, out JArray? array) == true &&
+                array?.Count > 0 &&
+                array[0] is JObject item &&
+                item.Value<string>("key") is string key)
             {
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataListSource>(key);
                 if (source != null)
                 {
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
+                    var sourceConfig = item["value"]?.ToObject<Dictionary<string, object>>();
+                    if (sourceConfig is not null)
+                    {
+                        var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
-                    config.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
+                        config.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
+                    }
+
                     _ = config.Remove(DataSource);
                 }
             }

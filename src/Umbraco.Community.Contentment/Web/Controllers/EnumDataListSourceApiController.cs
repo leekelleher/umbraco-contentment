@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -39,7 +39,9 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                 foreach (var assembly in assemblies)
                 {
                     var assemblyName = assembly.GetName();
-                    if (options.Contains(assemblyName.Name) == true || assembly.IsDynamic == true)
+                    if (string.IsNullOrWhiteSpace(assemblyName.Name) == true ||
+                        options.Contains(assemblyName.Name) == true ||
+                        assembly.IsDynamic == true)
                     {
                         continue;
                     }
@@ -68,7 +70,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                         continue;
                     }
 
-                    options.Add(assemblyName.Name);
+                    _ = options.Add(assemblyName.Name);
                 }
             }
 
@@ -84,7 +86,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
 
             foreach (var type in types)
             {
-                if (type.IsEnum == false)
+                if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
                 {
                     continue;
                 }

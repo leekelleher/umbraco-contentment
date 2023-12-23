@@ -14,33 +14,33 @@ namespace Umbraco.Community.Contentment.DataEditors
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public sealed class ConfigurationEditorModel : IConfigurationEditorItem
     {
-        public string Key { get; set; }
+        public string? Key { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string Icon { get; set; }
+        public string? Icon { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Group { get; set; }
+        public string? Group { get; set; }
 
-        public IEnumerable<ConfigurationField> Fields { get; set; }
+        public IEnumerable<ConfigurationField> Fields { get; set; } = Enumerable.Empty<ConfigurationField>();
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object>? DefaultValues { get; set; }
 
-        public OverlaySize OverlaySize { get; set; }
+        public OverlaySize OverlaySize { get; set; } = OverlaySize.Small;
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, string> Expressions { get; set; }
+        public Dictionary<string, string>? Expressions { get; set; }
 
         [Obsolete("Please use Expressions instead. e.g. { \"name\", \"{{ AngularJS expression }}\" }", false)]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string NameTemplate { get; set; }
+        public string? NameTemplate { get; set; }
 
         [Obsolete("Please use Expressions instead. e.g. { \"description\", \"{{ AngularJS expression }}\" }", false)]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string DescriptionTemplate { get; set; }
+        public string? DescriptionTemplate { get; set; }
     }
 }

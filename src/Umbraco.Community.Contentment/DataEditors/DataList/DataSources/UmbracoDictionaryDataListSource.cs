@@ -83,10 +83,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 #if NET8_0_OR_GREATER
                             Name = x.Translations.FirstOrDefault(t => t.LanguageIsoCode.InvariantEquals(cultureName) == true || t.Language.IsDefault == true)?.Value ?? x.ItemKey,
 #else
-                            Name = x.Translations.FirstOrDefault(t => t.Language.IsoCode.InvariantEquals(cultureName) == true || t.Language.IsDefault == true)?.Value ?? x.ItemKey,
+                            Name = x.Translations.FirstOrDefault(t => t.Language?.IsoCode.InvariantEquals(cultureName) == true || t.Language?.IsDefault == true)?.Value ?? x.ItemKey,
 #endif
                             Value = x.ItemKey,
-                            Icon = this.Icon,
+                            Icon = Icon,
                             Description = x.ItemKey
                         });
                 }

@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.Trees
             : base(localizedTextService, umbracoApiControllerTypeCollection, eventAggregator)
         { }
 
-        protected override ActionResult<TreeNode> CreateRootNode(FormCollection queryStrings)
+        protected override ActionResult<TreeNode?> CreateRootNode(FormCollection queryStrings)
         {
             var root = base.CreateRootNode(queryStrings);
 
@@ -41,19 +41,13 @@ namespace Umbraco.Community.Contentment.Trees
             root.Value.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.Value.MenuUrl = null;
 
-            return root.Value;
+            return root?.Value;
         }
 
-#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
-        [Obsolete("See GetMenuForNode")]
-        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
+        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
+            => default;
 
-        [Obsolete("See GetTreeNodesAsync")]
-        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
-#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
-
-        protected override Task<ActionResult<MenuItemCollection>> GetMenuForNodeAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
-
-        protected override Task<ActionResult<TreeNodeCollection>> GetTreeNodesAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
+        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
+            => TreeNodeCollection.Empty;
     }
 }

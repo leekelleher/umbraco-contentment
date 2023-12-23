@@ -34,6 +34,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         protected override IConfigurationEditor CreateConfigurationEditor() => new ListItemsConfigurationEditor(_ioHelper);
 
-        protected override IDataValueEditor CreateValueEditor() => DataValueEditorFactory.Create<JsonArrayDataValueEditor>(Attribute);
+        protected override IDataValueEditor CreateValueEditor() => DataValueEditorFactory.Create<JsonArrayDataValueEditor>(Attribute!);
     }
 }

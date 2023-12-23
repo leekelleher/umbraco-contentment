@@ -90,7 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "labelStyle", "both" },
         };
 
-        public Dictionary<string, object> DefaultConfig => default;
+        public Dictionary<string, object>? DefaultConfig => default;
 
         public bool HasMultipleValues(Dictionary<string, object> config)
         {

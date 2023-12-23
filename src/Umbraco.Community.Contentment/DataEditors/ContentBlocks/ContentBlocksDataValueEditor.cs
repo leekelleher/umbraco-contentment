@@ -1,4 +1,4 @@
-﻿/* Copyright © 2014 Umbrella Inc, Our Umbraco and other contributors.
+/* Copyright © 2014 Umbrella Inc, Our Umbraco and other contributors.
  * This Source Code has been derived from Nested Content.
  * https://github.com/umco/umbraco-nested-content/blob/0.5.0/src/Our.Umbraco.NestedContent/PropertyEditors/NestedContentPropertyEditor.cs
  * Including derivations made in Umbraco CMS for v8. Copyright © 2013-present Umbraco.
@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Validators.Add(new ContentBlocksValueValidator(_elementTypes, propertyValidationService));
         }
 
-        public override object ToEditor(IProperty property, string culture = null, string segment = null)
+        public override object ToEditor(IProperty property, string? culture = null, string? segment = null)
         {
             var value = base.ToEditor(property, culture, segment)?.ToString();
             if (string.IsNullOrWhiteSpace(value) == false)
@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     {
                                         var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
 
-                                        block.Value[propertyType.Alias] = convertedValue != null
+                                        block.Value[propertyType.Alias] = convertedValue is not null
                                             ? JToken.FromObject(convertedValue)
                                             : null;
                                     }
@@ -91,9 +91,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Array.Empty<object>();
         }
 
-        public override object FromEditor(ContentPropertyData editorValue, object currentValue)
+        public override object? FromEditor(ContentPropertyData editorValue, object? currentValue)
         {
-            var value = editorValue?.Value?.ToString();
+            var value = editorValue.Value?.ToString();
             if (string.IsNullOrWhiteSpace(value) == false)
             {
                 var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
@@ -109,7 +109,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true &&
                                     _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                 {
-                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId).Configuration;
+                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId)?.Configuration;
                                     var contentPropertyData = new ContentPropertyData(blockPropertyValue, configuration)
                                     {
                                         ContentKey = block.Key,
@@ -134,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.FromEditor(editorValue, currentValue);
         }
 
-        public IEnumerable<UmbracoEntityReference> GetReferences(object value)
+        public IEnumerable<UmbracoEntityReference> GetReferences(object? value)
         {
             if (value is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
             {

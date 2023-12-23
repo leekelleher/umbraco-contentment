@@ -21,11 +21,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Name => "User-defined List";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public string Description => "Manually configure the items for the data source.";
 
-        public string DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
+        public string? DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
 
         public string Icon => UmbConstants.Icons.DataType;
 
@@ -77,8 +77,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return config.TryGetValueAs("items", out JArray array) == true
-                ? array.ToObject<IEnumerable<DataListItem>>().DistinctBy(x => x.Value)
+            return config.TryGetValueAs("items", out JArray? array) == true
+                ? array?.ToObject<IEnumerable<DataListItem>>()?.DistinctBy(x => x.Value) ?? Enumerable.Empty<DataListItem>()
                 : Enumerable.Empty<DataListItem>();
         }
     }

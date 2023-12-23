@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                 }
             });
@@ -70,13 +70,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override IDictionary<string, object> ToConfigurationEditor(object configuration)
+        public override IDictionary<string, object> ToConfigurationEditor(object? configuration)
         {
             var config = base.ToConfigurationEditor(configuration);
 
             // NOTE: [LK] Technical debt. This works around the original display mode data just being the view-path (string).
             // This was prior to v1.1.0 release, (when Content Blocks was introduced). It could be removed in the next major version.
-            if (config.TryGetValueAs(DisplayMode, out string str1) == true && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
+            if (config.TryGetValueAs(DisplayMode, out string? str1) == true && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
             {
                 var mode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
                 if (mode != null)
@@ -92,19 +92,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             return config;
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DisplayMode, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DisplayMode, out JArray? array1) == true &&
+                array1?.Count > 0 &&
+                array1[0] is JObject item1 &&
+                item1.Value<string>("key") is string key)
             {
-                var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(item1.Value<string>("key"));
+                var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
                 if (displayMode != null)
                 {
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
                     _ = config.Remove(DisplayMode);
 
-                    var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
+                    var editorConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)
                     {
                         foreach (var prop in editorConfig)
@@ -129,7 +132,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray array2) && array2.Count > 0)
+            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray? array2) &&
+                array2?.Count > 0)
             {
                 var elementTypes = new List<ContentBlockType>();
 
@@ -137,11 +141,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var item = (JObject)array2[i];
 
-                    if (Guid.TryParse(item.Value<string>("key"), out var guid) && _elementTypes.ContainsKey(guid) == true)
+                    if (Guid.TryParse(item.Value<string>("key"), out var guid) &&
+                        _elementTypes.TryGetValue(guid, out var elementType) == true)
                     {
-                        var elementType = _elementTypes[guid];
-
-                        var settings = item["value"].ToObject<Dictionary<string, object>>();
+                        var settings = item["value"]?.ToObject<Dictionary<string, object>>();
 
                         var blueprints = _elementBlueprints.Value.Contains(elementType.Id)
                             ? _elementBlueprints.Value[elementType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })
@@ -167,7 +170,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
             {
-                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath));
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ContentBlocksDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
             }
 
             return config;

@@ -157,7 +157,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             foreach (XPathNavigator ns in namespaces)
             {
                 var prefix = nsmgr.LookupPrefix(ns.Value);
-                if (nsmgr.HasNamespace(prefix) == false)
+                if (string.IsNullOrWhiteSpace(prefix) == false && nsmgr.HasNamespace(prefix) == false)
                 {
                     nsmgr.AddNamespace(string.IsNullOrWhiteSpace(ns.Name) == false ? ns.Name : $"ns{++idx}", ns.Value);
                 }
@@ -170,8 +170,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return Enumerable.Empty<DataListItem>();
             }
 
-            var nameXPath = config.GetValueAs("nameXPath", "text()");
-            var valueXPath = config.GetValueAs("valueXPath", "text()");
+            var nameXPath = config.GetValueAs("nameXPath", "text()") ?? "text()";
+            var valueXPath = config.GetValueAs("valueXPath", "text()") ?? "text()";
             var iconXPath = config.GetValueAs("iconXPath", string.Empty);
             var descriptionXPath = config.GetValueAs("descriptionXPath", string.Empty);
 

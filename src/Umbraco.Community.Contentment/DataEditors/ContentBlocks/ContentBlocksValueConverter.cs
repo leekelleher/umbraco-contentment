@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<IPublishedElement>);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source is string value)
             {
@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
             if (inter is IEnumerable<ContentBlock> items)
             {
@@ -53,16 +53,27 @@ namespace Umbraco.Community.Contentment.DataEditors
                 foreach (var item in items)
                 {
                     if (item == null || item.ElementType == Guid.Empty)
+                    {
                         continue;
+                    }
 
                     // NOTE: [LK:2019-09-03] Why `IPublishedCache` doesn't support Guids or UDIs, I do not know!?
                     // Thought v8 was meant to be "GUID ALL THE THINGS!!1"? ¯\_(ツ)_/¯
                     if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
+                    {
                         continue;
+                    }
 
-                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content.GetContentType(alias);
-                    if (contentType == null || contentType.IsElement == false)
+                    if (string.IsNullOrWhiteSpace(alias) == true)
+                    {
                         continue;
+                    }
+
+                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content?.GetContentType(alias);
+                    if (contentType == null || contentType.IsElement == false)
+                    {
+                        continue;
+                    }
 
                     var properties = new List<IPublishedProperty>();
 

@@ -52,18 +52,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             // NOTE: Code smell. Turns out that `ITagQuery` is scoped, so unable to use it within a singleton.
             // Otherwise we get an error: `Cannot resolve scoped service 'Umbraco.Cms.Core.PublishedCache.ITagQuery' from root provider.`
-            var tagQuery = _httpContextAccessor.HttpContext.RequestServices.GetRequiredService<ITagQuery>();
+            var tagQuery = _httpContextAccessor.HttpContext?.RequestServices.GetRequiredService<ITagQuery>();
 
-            return tagQuery
+            return tagQuery?
                 .GetAllTags(tagGroup)
-                .OrderBy(x => x.Text)
+                .OrderBy(x => x?.Text)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Text,
-                    Value = x.Text,
+                    Name = x?.Text,
+                    Value = x?.Text,
                     Icon = Icon,
                     Description = string.Empty,
-                });
+                }) ?? Enumerable.Empty<DataListItem>();
         }
     }
 }

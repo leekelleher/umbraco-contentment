@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     }
@@ -87,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var memberType = GetMemberType(config);
 
-            return memberType != null
+            return memberType is not null
                 ? _memberService.GetMembersByMemberType(memberType.Id).Select(ToDataListItem)
                 : _memberService.GetAllMembers().Select(ToDataListItem);
         }
@@ -97,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (values?.Any() == true)
             {
                 return Task.FromResult(values
-                    .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
+                    .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => _memberService.GetByKey(x.Guid))
                     .WhereNotNull()
@@ -131,29 +131,32 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
+        public Type GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            if (UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false)
+            if (UdiParser.TryParse(value, out GuidUdi? udi) == true &&
+                udi is not null &&
+                udi.Guid.Equals(Guid.Empty) == false)
             {
                 var member = _memberService.GetByKey(udi.Guid);
                 if (member != null)
                 {
-                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.Get(_memberService.GetByKey(udi.Guid));
+                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Members?.Get(member);
                 }
             }
 
             return default(IPublishedContent);
         }
 
-        private IMemberType GetMemberType(Dictionary<string, object> config)
+        private IMemberType? GetMemberType(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("memberType", out JArray array) == true &&
-               array.Count > 0 &&
+            if (config.TryGetValueAs("memberType", out JArray? array) == true &&
+               array?.Count > 0 &&
                array[0].Value<string>() is string str &&
                string.IsNullOrWhiteSpace(str) == false &&
-               UdiParser.TryParse(str, out GuidUdi udi) == true)
+               UdiParser.TryParse(str, out GuidUdi? udi) == true &&
+               udi is not null)
             {
                 return _memberTypeService.Get(udi.Guid);
             }

@@ -11,7 +11,9 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+#pragma warning disable IDE1006 // Naming Styles
     public class uCssClassNameDataListSource : IDataListSource
+#pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -88,9 +90,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var cssPath = config.GetValueAs("cssPath", string.Empty);
-            var cssRegex = config.GetValueAs("cssRegex", string.Empty);
-            var excludeList = config.GetValueAs("excludeList", string.Empty).ToDelimitedList();
+            var cssPath = config.GetValueAs("cssPath", string.Empty) ?? string.Empty;
+            var cssRegex = config.GetValueAs("cssRegex", string.Empty) ?? string.Empty;
+            var excludeList = config.GetValueAs("excludeList", string.Empty)?.ToDelimitedList();
             var iconPattern = config.GetValueAs("iconPattern", string.Empty);
 
             var items = new HashSet<string>();
@@ -112,7 +114,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return items
-                .Where(x => excludeList.Count == 0 || excludeList.Any(x.InvariantContains) == false)
+                .Where(x => excludeList?.Count == 0 || excludeList?.Any(x.InvariantContains) == false)
                 .OrderBy(x => x)
                 .Select(x => new DataListItem
                 {
@@ -122,7 +124,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        private string GetCssFileContents(string cssPath)
+        private string? GetCssFileContents(string cssPath)
         {
             var file = _webHostEnvironment.WebRootFileProvider.GetFileInfo(cssPath.TrimStart("~/"));
 

@@ -164,7 +164,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        private IDatabase GetDatabase(string connectionStringName)
+#pragma warning disable CA1859 // Use concrete types when possible for improved performance
+        private IDatabase? GetDatabase(string connectionStringName)
+#pragma warning restore CA1859 // Use concrete types when possible for improved performance
         {
             if (connectionStringName != UmbConstants.System.UmbracoConnectionName)
             {
@@ -177,13 +179,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 var dbProviderFactory = _dbProviderFactoryCreator.CreateFactory(providerName);
 
-                if (providerName.InvariantEquals(Constants.Persistance.Providers.Sqlite) == true)
+                if (string.IsNullOrWhiteSpace(connectionString) == false && dbProviderFactory is not null)
                 {
-                    return new Database(connectionString, DatabaseType.SQLite, dbProviderFactory);
-                }
-                else
-                {
-                    return new Database(connectionString, DatabaseType.SqlServer2012, dbProviderFactory);
+                    if (providerName.InvariantEquals(Constants.Persistance.Providers.Sqlite) == true)
+                    {
+                        return new Database(connectionString, DatabaseType.SQLite, dbProviderFactory);
+                    }
+                    else
+                    {
+                        return new Database(connectionString, DatabaseType.SqlServer2012, dbProviderFactory);
+                    }
                 }
             }
 

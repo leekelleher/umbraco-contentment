@@ -32,7 +32,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType)
         {
             if (propertyType.DataType.Configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string valueType) == true &&
+                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string? valueType) == true &&
+                string.IsNullOrWhiteSpace(valueType) == false &&
                 ValueTypes.IsValue(valueType) == true)
             {
                 return _objectTypes.ContainsKey(valueType) == true
@@ -43,10 +44,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _defaultObjectType;
         }
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             var valueType = GetPropertyValueType(propertyType);
-            return source.TryConvertTo(valueType).ResultOr(valueType.GetDefaultValue());
+            return source.TryConvertTo(valueType).ResultOr(valueType.GetDefaultValue())
+                ?? base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
     }
 }

@@ -140,8 +140,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // This project https://github.com/s3u/JSONPath supports "~" to retrieve keys. However this is not in the original jsonpath-specs.
                 // We could implement something similar, which checks the JsonPaths for a ~, and the we'll code-extract the keys. However this is a somewhat shady solution.
 
-                var nameJsonPath = config.GetValueAs("nameJsonPath", string.Empty);
-                var valueJsonPath = config.GetValueAs("valueJsonPath", string.Empty);
+                var nameJsonPath = config.GetValueAs("nameJsonPath", string.Empty) ?? string.Empty;
+                var valueJsonPath = config.GetValueAs("valueJsonPath", string.Empty) ?? string.Empty;
                 var iconJsonPath = config.GetValueAs("iconJsonPath", string.Empty);
                 var descriptionJsonPath = config.GetValueAs("descriptionJsonPath", string.Empty);
 

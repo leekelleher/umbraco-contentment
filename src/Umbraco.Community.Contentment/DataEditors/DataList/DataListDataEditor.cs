@@ -70,16 +70,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             var view = default(string);
 
             if (configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray array) == true &&
-                array.Count > 0 &&
-                array[0] is JObject item)
+                config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray? array) == true &&
+                array?.Count > 0 &&
+                array[0] is JObject item &&
+                item.Value<string>("key") is string key)
             {
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("key"));
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key);
                 if (editor != null)
                 {
                     view = editor.View;

@@ -1,4 +1,4 @@
-﻿/* Copyright © 2016 UMCO, Our Umbraco and other contributors.
+/* Copyright © 2016 UMCO, Our Umbraco and other contributors.
  * This Source Code has been derived from Inner Content.
  * https://github.com/umco/umbraco-inner-content/blob/2.0.4/src/Our.Umbraco.InnerContent/Helpers/ContentTypeCacheHelper.cs
  * Modified under the permissions of the MIT License.
@@ -16,9 +16,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal static class ContentTypeCacheHelper
     {
-        private static readonly ConcurrentDictionary<Guid, string> _forward = new ConcurrentDictionary<Guid, string>();
-        private static readonly ConcurrentDictionary<string, Guid> _reverse = new ConcurrentDictionary<string, Guid>();
-        private static readonly ConcurrentDictionary<string, string> _icons = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<Guid, string> _forward = new();
+        private static readonly ConcurrentDictionary<string, Guid> _reverse = new();
+        private static readonly ConcurrentDictionary<string, string> _icons = new();
 
         public static void ClearAll()
         {
@@ -32,14 +32,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             TryAdd(contentType.Key, contentType.Alias, contentType.Icon);
         }
 
-        public static void TryAdd(Guid guid, string alias, string icon = null)
+        public static void TryAdd(Guid guid, string alias, string? icon = null)
         {
-            _forward.TryAdd(guid, alias);
-            _reverse.TryAdd(alias, guid);
-            _icons.TryAdd(alias, icon);
+            _ = _forward.TryAdd(guid, alias);
+            _ = _reverse.TryAdd(alias, guid);
+            _ = string.IsNullOrWhiteSpace(icon) == false && _icons.TryAdd(alias, icon);
         }
 
-        public static bool TryGetAlias(Guid key, out string alias, IContentTypeService contentTypeService = null)
+        public static bool TryGetAlias(Guid key, out string? alias, IContentTypeService? contentTypeService = null)
         {
             if (_forward.TryGetValue(key, out alias) == true)
             {
@@ -61,8 +61,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             return false;
         }
 
-        public static bool TryGetIcon(string alias, out string icon, IContentTypeService contentTypeService = null)
+        public static bool TryGetIcon(string? alias, out string? icon, IContentTypeService? contentTypeService = null)
         {
+            if (string.IsNullOrWhiteSpace(alias) == true)
+            {
+                icon = default;
+                return false;
+            }
+
             if (_icons.TryGetValue(alias, out icon) == true)
             {
                 return true;
@@ -83,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return false;
         }
 
-        public static bool TryGetGuid(string alias, out Guid key, IContentTypeService contentTypeService = null)
+        public static bool TryGetGuid(string alias, out Guid key, IContentTypeService? contentTypeService = null)
         {
             if (_reverse.TryGetValue(alias, out key) == true)
             {
@@ -109,7 +115,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (TryRemove(contentType.Alias) == false)
             {
-                TryRemove(contentType.Key);
+                _ = TryRemove(contentType.Key);
             }
         }
 
@@ -120,7 +126,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public static bool TryRemove(string alias)
         {
-            _icons.TryRemove(alias, out _);
+            _ = _icons.TryRemove(alias, out _);
 
             return _reverse.TryRemove(alias, out var guid) && _forward.TryRemove(guid, out _);
         }

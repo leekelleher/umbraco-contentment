@@ -1,4 +1,4 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => TemplatedLabelDataEditor.DataEditorIcon;
 
-        public string Group => default;
+        public string? Group => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -72,13 +72,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             new HtmlAttributesConfigurationField(_ioHelper),
         };
 
-        public Dictionary<string, object> DefaultConfig => default;
+        public Dictionary<string, object>? DefaultConfig => default;
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
-        public bool HasMultipleValues(Dictionary<string, object> config)
+        public bool HasMultipleValues(Dictionary<string, object>? config)
         {
-            return config.TryGetValueAs("enableMultiple", out bool enableMultiple) == true && enableMultiple == true;
+            return config?.TryGetValueAs("enableMultiple", out bool enableMultiple) == true && enableMultiple == true;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Medium;

@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool IsDeprecated => false;
 
-        public IDictionary<string, object> DefaultConfiguration => default;
+        public IDictionary<string, object>? DefaultConfiguration => default;
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
@@ -67,7 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
             {

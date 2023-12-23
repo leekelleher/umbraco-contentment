@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (item.TryConvertTo<DataListItem>() is Attempt<DataListItem> attempt &&
                         attempt.Success == true)
                     {
-                        yield return attempt.Result;
+                        yield return attempt.Result!;
                     }
                 }
             }
