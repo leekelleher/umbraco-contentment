@@ -33,25 +33,24 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-#if NET8_0_OR_GREATER
-        public object FromArtifact(IDataType dataType, string configuration, IContextCache contextCache)
-#else
-        public object FromArtifact(IDataType dataType, string configuration)
-#endif
-        {
-            var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
+        public object? FromArtifact(IDataType dataType, string? configuration)
+            => FromArtifact(dataType, configuration, PassThroughCache.Instance);
 
-            var db = dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
+        public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
+        {
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
+
+            var db = dataTypeConfigurationEditor?.FromDatabase(configuration, _configurationEditorJsonSerializer);
 
             if (db is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string notes) == true &&
+                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes);
-                notes = _imageSourceParser.FromArtifact(notes);
-                notes = _macroParser.FromArtifact(notes);
+                notes = _localLinkParser.FromArtifact(notes, contextCache);
+                notes = _imageSourceParser.FromArtifact(notes, contextCache);
+                notes = _macroParser.FromArtifact(notes, contextCache);
 
-                config[EditorNotesConfigurationEditor.Message] = notes;
+                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
 
                 return config;
             }
@@ -59,21 +58,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-#if NET8_0_OR_GREATER
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
-#else
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-#endif
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
+            => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
+
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string notes) == true &&
+                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis);
-                notes = _imageSourceParser.ToArtifact(notes, udis);
-                notes = _macroParser.ToArtifact(notes, udis);
+                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
+                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
+                notes = _macroParser.ToArtifact(notes, udis, contextCache);
 
                 foreach (var udi in udis)
                 {
@@ -84,7 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }
 
-                config[EditorNotesConfigurationEditor.Message] = notes;
+                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
             }
 
             return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);

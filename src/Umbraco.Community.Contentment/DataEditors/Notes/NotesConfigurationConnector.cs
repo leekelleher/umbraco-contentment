@@ -33,11 +33,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-#if NET8_0_OR_GREATER
-        public object FromArtifact(IDataType dataType, string configuration, IContextCache contextCache)
-#else
-s        public object FromArtifact(IDataType dataType, string configuration)
-#endif
+        public object? FromArtifact(IDataType dataType, string? configuration)
+            => FromArtifact(dataType, configuration, PassThroughCache.Instance);
+
+        public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
@@ -47,9 +46,9 @@ s        public object FromArtifact(IDataType dataType, string configuration)
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes);
-                notes = _imageSourceParser.FromArtifact(notes);
-                notes = _macroParser.FromArtifact(notes);
+                notes = _localLinkParser.FromArtifact(notes, contextCache);
+                notes = _imageSourceParser.FromArtifact(notes, contextCache);
+                notes = _macroParser.FromArtifact(notes, contextCache);
 
                 config[NotesConfigurationField.Notes] = notes ?? string.Empty;
 
@@ -59,11 +58,10 @@ s        public object FromArtifact(IDataType dataType, string configuration)
             return db;
         }
 
-#if NET8_0_OR_GREATER
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
-#else
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-#endif
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
+            => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
+
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
@@ -71,9 +69,9 @@ s        public object FromArtifact(IDataType dataType, string configuration)
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis);
-                notes = _imageSourceParser.ToArtifact(notes, udis);
-                notes = _macroParser.ToArtifact(notes, udis);
+                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
+                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
+                notes = _macroParser.ToArtifact(notes, udis, contextCache);
 
                 foreach (var udi in udis)
                 {
