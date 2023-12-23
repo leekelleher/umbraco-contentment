@@ -1,4 +1,4 @@
-/* Copyright © 2019 Lee Kelleher.
+/* Copyright Â© 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -82,7 +82,7 @@ namespace Umbraco.Community.Contentment
                         "numlist",
                         "link",
                         "umbmediapicker",
-#if NET8_0_OR_GREATER == false
+#if NET6_0 || NET7_0
                         "umbmacro",
 #endif
                         "umbembeddialog"
@@ -117,26 +117,6 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Package
         {
-            public const string Author = "Lee Kelleher";
-
-            public const string AuthorUrl = "https://leekelleher.com";
-
-            public const string IconUrl = "https://raw.githubusercontent.com/leekelleher/umbraco-contentment/master/docs/assets/img/logo.png";
-
-            public const string License = "Mozilla Public License";
-
-            public const string LicenseUrl = "https://mozilla.org/MPL/2.0/";
-
-#if NET6_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new(10, 0, 0);
-#elif NET7_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new(11, 0, 0);
-#elif NET7_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new(13, 0, 0);
-#elif NET8_0
-            public static readonly System.Version MinimumSupportedUmbracoVersion = new System.Version(13, 0, 0);
-#endif
-
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
 
