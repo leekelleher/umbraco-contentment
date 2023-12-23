@@ -4,13 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.Extensions.DependencyInjection;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
-#if NET8_0_OR_GREATER
-using Umbraco.Cms.Core.DependencyInjection;
-#else
-using Umbraco.Cms.Web.Common.DependencyInjection;
-#endif
 using Umbraco.Community.Contentment.DataEditors;
 
 namespace Umbraco.Extensions
