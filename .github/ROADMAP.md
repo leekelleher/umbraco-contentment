@@ -126,15 +126,18 @@ Property Editors are:
 
 ## v5
 
-- Removes support for Umbraco 8 (.NET Framework 4.7.2), Umbraco 9 (.NET 5) and Umbraco 11 (.NET 7).
+### [v5.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/5.0.0)
+
+- Removes support for previous Umbraco versions: Umbraco 8 (.NET Framework 4.7.2), Umbraco 9 (.NET 5), Umbraco 10 (.NET 6) and Umbraco 11 and 12 (.NET 7).
+- Supports Umbraco 13 (.NET 8) only.
 - Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
 
 
 ## v6
 
-- [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/issues/316).
-- _Adds support for Umbraco 15 (.NET 9)._
-- _I'm still deciding whether to remove support for Umbraco 10 (.NET 6), Umbraco 12 (.NET 7) and Umbraco 13 (.NET 8)._ :thinking:
+- [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/discussions/357).
+- Adds support for Umbraco 14 (.NET 8) _aka Bellissima_.
+- Removes support for Umbraco 13 (.NET 8).
 
 
 ## v7

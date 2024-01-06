@@ -1,8 +1,6 @@
 ﻿## Contentment for Umbraco
 
-This NuGet package contains the assembly library for the [main Contentment package](https://www.nuget.org/packages/Umbraco.Community.Contentment).
-
-It is intended to be used only to reference the Contentment assembly in your code projects and not the web asset files.
+As of Contentment v5.0.0, new versions will not be pushed to this specific NuGet package. Please update your dependency reference to the [main `Umbraco.Community.Contentment` package](https://www.nuget.org/packages/Umbraco.Community.Contentment).
 
 ---
 
