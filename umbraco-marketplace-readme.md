@@ -1,4 +1,3 @@
-Contentment is a collection of components that can enhance the CMS editorial experience.
 
 The following property editors are available...
 

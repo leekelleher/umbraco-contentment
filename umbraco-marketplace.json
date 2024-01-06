@@ -3,14 +3,14 @@
   "AlternatePackageNames": [ "Contentment" ],
   "AuthorDetails": {
     "Name": "Lee Kelleher",
-    "Description": "A long time Umbraco collaborator, 13x MVP",
+    "Description": "Lee is a long time Umbraco community collaborator, he now works for Umbraco HQ as a Senior Developer in the Product and Engineering department.",
     "Url": "https://leekelleher.com/umbraco/",
     "ImageUrl": "https://github.com/leekelleher.png",
     "Contributors": [],
     "SyncContributorsFromRepository": false
   },
   "Category": "Editor Tools",
-  "Description": "Contentment, a collection of components for Umbraco.",
+  "Description": "Contentment is a collection of components that can enhance the Umbraco CMS editorial experience.",
   "DiscussionForumUrl": "https://github.com/leekelleher/umbraco-contentment/discussions",
   "DocumentationUrl": "https://github.com/leekelleher/umbraco-contentment/tree/develop/docs",
   "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
