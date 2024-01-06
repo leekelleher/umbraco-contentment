@@ -80,11 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         .OrderBy(x => x.ItemKey)
                         .Select(x => new DataListItem
                         {
-#if NET8_0_OR_GREATER
                             Name = x.Translations.FirstOrDefault(t => t.LanguageIsoCode.InvariantEquals(cultureName) == true || t.Language.IsDefault == true)?.Value ?? x.ItemKey,
-#else
-                            Name = x.Translations.FirstOrDefault(t => t.Language?.IsoCode.InvariantEquals(cultureName) == true || t.Language?.IsDefault == true)?.Value ?? x.ItemKey,
-#endif
                             Value = x.ItemKey,
                             Icon = Icon,
                             Description = x.ItemKey

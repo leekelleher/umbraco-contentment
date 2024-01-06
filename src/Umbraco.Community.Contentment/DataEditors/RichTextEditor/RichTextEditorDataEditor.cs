@@ -7,10 +7,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class RichTextEditorDataEditor
     {
-#if NET8_0_OR_GREATER
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "rich-text-editor.html";
-#else
-        internal const string DataEditorViewPath = "~/umbraco/views/propertyeditors/rte/rte.html";
-#endif
     }
 }

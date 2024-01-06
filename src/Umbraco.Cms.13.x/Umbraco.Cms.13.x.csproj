@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -12,7 +12,7 @@
 
     <ItemGroup>
         <PackageReference Include="Umbraco.Cms" Version="13.0.0" />
-        <PackageReference Include="uSync" Version="13.0.0-rc2" />
+        <PackageReference Include="uSync" Version="13.0.0" />
         <ProjectReference Include="..\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj" />
     </ItemGroup>
 

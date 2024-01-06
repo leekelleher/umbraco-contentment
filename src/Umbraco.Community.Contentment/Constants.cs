@@ -82,9 +82,6 @@ namespace Umbraco.Community.Contentment
                         "numlist",
                         "link",
                         "umbmediapicker",
-#if NET6_0 || NET7_0
-                        "umbmacro",
-#endif
                         "umbembeddialog"
                     },
                 };
