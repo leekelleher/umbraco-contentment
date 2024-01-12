@@ -143,9 +143,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override object? FromConfigurationEditor(IDictionary<string, object?>? editorValues, object? configuration)
+        public override IDictionary<string, object> FromConfigurationEditor(IDictionary<string, object> configuration)
         {
-            if (editorValues?.TryGetValueAs(Networks, out JArray? networks) == true && networks?.Count > 0)
+            if (configuration.TryGetValueAs(Networks, out JArray? networks) == true && networks?.Count > 0)
             {
                 foreach (JObject network in networks)
                 {
@@ -155,16 +155,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                         var icon = networkValue.GetValueAs("icon", string.Empty);
                         if (string.IsNullOrWhiteSpace(icon) == false && icon.InvariantContains(" color-") == true)
                         {
-                            networkValue["icon"] = icon.Split(new[] { ' ' })[0];
+                            networkValue["icon"] = icon.Split([' '])[0];
                         }
                     }
                 }
             }
 
-            return base.FromConfigurationEditor(editorValues, configuration);
+            return base.FromConfigurationEditor(configuration);
         }
 
-        public override IDictionary<string, object> ToValueEditor(object? configuration)
+        public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)
         {
             var config = base.ToValueEditor(configuration);
 

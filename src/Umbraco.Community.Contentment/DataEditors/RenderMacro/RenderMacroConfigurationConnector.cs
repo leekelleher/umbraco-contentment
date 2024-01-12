@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
-            if (dataType.Configuration is Dictionary<string, object> config &&
+            if (dataType.ConfigurationObject is Dictionary<string, object> config &&
                 config.TryGetValueAs(RenderMacroConfigurationEditor.Macro, out JArray? array) == true &&
                 array?.Count > 0 &&
                 array[0] is JObject obj &&
@@ -50,7 +50,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 dependencies.Add(new ArtifactDependency(udi, false, ArtifactDependencyMode.Match));
             }
 
-            return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
+            return dataTypeConfigurationEditor?.ToDatabase(dataType.ConfigurationData, _configurationEditorJsonSerializer);
         }
     }
 }

@@ -75,18 +75,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     var cultureName = CultureInfo.CurrentCulture.Name;
 
-#pragma warning disable CS0618 // Type or member is obsolete
                     return _localizationService
                         .GetDictionaryItemChildren(parent.Key)
                         .OrderBy(x => x.ItemKey)
                         .Select(x => new DataListItem
                         {
-                            Name = x.Translations.FirstOrDefault(t => t.LanguageIsoCode.InvariantEquals(cultureName) == true || t.Language?.IsDefault == true)?.Value ?? x.ItemKey,
+                            Name = x.Translations.FirstOrDefault(t => t.LanguageIsoCode.InvariantEquals(cultureName) == true)?.Value ?? x.ItemKey,
                             Value = x.ItemKey,
                             Icon = Icon,
                             Description = x.ItemKey
                         });
-#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 

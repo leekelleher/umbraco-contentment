@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType)
         {
-            if (propertyType.DataType.Configuration is Dictionary<string, object> config &&
+            if (propertyType.DataType.ConfigurationObject is Dictionary<string, object> config &&
                 config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string? valueType) == true &&
                 string.IsNullOrWhiteSpace(valueType) == false &&
                 ValueTypes.IsValue(valueType) == true)

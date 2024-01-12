@@ -125,7 +125,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override IDictionary<string, object> ToValueEditor(object? configuration)
+        public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)
         {
             var config = base.ToValueEditor(configuration);
 
