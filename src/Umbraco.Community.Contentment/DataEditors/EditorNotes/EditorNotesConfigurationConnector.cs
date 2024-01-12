@@ -46,9 +46,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes, contextCache);
-                notes = _imageSourceParser.FromArtifact(notes, contextCache);
-                notes = _macroParser.FromArtifact(notes, contextCache);
+                notes = _localLinkParser.FromArtifact(notes);
+                notes = _imageSourceParser.FromArtifact(notes);
+                notes = _macroParser.FromArtifact(notes);
 
                 config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
 
@@ -63,15 +63,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
-            if (dataType.Configuration is Dictionary<string, object> config &&
+            if (dataType.ConfigurationObject is Dictionary<string, object> config &&
                 config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
-                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
-                notes = _macroParser.ToArtifact(notes, udis, contextCache);
+                notes = _localLinkParser.ToArtifact(notes, udis);
+                notes = _imageSourceParser.ToArtifact(notes, udis);
+                notes = _macroParser.ToArtifact(notes, udis);
 
                 foreach (var udi in udis)
                 {
@@ -85,7 +85,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
             }
 
-            return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
+            return dataTypeConfigurationEditor?.ToDatabase(dataType.ConfigurationData, _configurationEditorJsonSerializer);
         }
     }
 }
