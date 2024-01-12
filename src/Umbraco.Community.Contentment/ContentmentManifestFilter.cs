@@ -15,10 +15,11 @@ internal sealed class ContentmentManifestFilter : IManifestFilter
         manifests.Add(new PackageManifest
         {
             AllowPackageTelemetry = true,
+            PackageId = Constants.Internals.ProjectNamespace,
             PackageName = Constants.Internals.ProjectName,
-            Scripts = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".js" },
-            Stylesheets = new[] { Constants.Internals.PackagePathRoot + Constants.Internals.ProjectAlias + ".css" },
-            Version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild() ?? "5.0.0",
+            Scripts = [$"{Constants.Internals.PackagePathRoot}{Constants.Internals.ProjectAlias}.js"],
+            Stylesheets = [$"{Constants.Internals.PackagePathRoot}{Constants.Internals.ProjectAlias}.css"],
+            Version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild() ?? "0.0.0",
         });
     }
 }

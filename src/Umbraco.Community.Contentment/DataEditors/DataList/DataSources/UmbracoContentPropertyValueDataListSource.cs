@@ -57,7 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
                 Key = "contentNode",
                 Name = "Content node",
                 Description = "Set the content node to take the property value from.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorSourceViewPath),
+                View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
             },
             new ConfigurationField
             {
