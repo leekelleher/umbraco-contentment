@@ -4,8 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Newtonsoft.Json;
+using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.Web.PublishedCache;
@@ -13,19 +16,22 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ContentBlocksValueConverter : PropertyValueConverterBase
+    public sealed class ContentBlocksValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
+        private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IPublishedModelFactory _publishedModelFactory;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
         public ContentBlocksValueConverter(
             IContentTypeService contentTypeService,
+            IApiElementBuilder apiElementBuilder,
             IPublishedModelFactory publishedModelFactory,
             IPublishedSnapshotAccessor publishedSnapshotAccessor)
             : base()
         {
             _contentTypeService = contentTypeService;
+            _apiElementBuilder = apiElementBuilder;
             _publishedModelFactory = publishedModelFactory;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
@@ -93,6 +99,19 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
+        }
+
+        public PropertyCacheLevel GetDeliveryApiPropertyCacheLevel(IPublishedPropertyType propertyType) => GetPropertyCacheLevel(propertyType);
+
+        public Type GetDeliveryApiPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<IApiElement>);
+
+        public object? ConvertIntermediateToDeliveryApiObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview, bool expanding)
+        {
+            var items = ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview) as IEnumerable<IPublishedElement>;
+
+            return items?.Any() == true
+                ? items.Select(_apiElementBuilder.Build).ToArray()
+                : Array.Empty<IApiElement>();
         }
     }
 }
