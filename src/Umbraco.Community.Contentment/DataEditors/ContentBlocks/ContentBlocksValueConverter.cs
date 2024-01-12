@@ -10,7 +10,6 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.Web.PublishedCache;
 using Umbraco.Extensions;
 
@@ -18,19 +17,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ContentBlocksValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
-        private readonly IContentTypeService _contentTypeService;
         private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IPublishedModelFactory _publishedModelFactory;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
         public ContentBlocksValueConverter(
-            IContentTypeService contentTypeService,
             IApiElementBuilder apiElementBuilder,
             IPublishedModelFactory publishedModelFactory,
             IPublishedSnapshotAccessor publishedSnapshotAccessor)
             : base()
         {
-            _contentTypeService = contentTypeService;
             _apiElementBuilder = apiElementBuilder;
             _publishedModelFactory = publishedModelFactory;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
@@ -63,19 +59,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                         continue;
                     }
 
-                    // NOTE: [LK:2019-09-03] Why `IPublishedCache` doesn't support Guids or UDIs, I do not know!?
-                    // Thought v8 was meant to be "GUID ALL THE THINGS!!1"? ¯\_(ツ)_/¯
-                    if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
-                    {
-                        continue;
-                    }
+                    var contentType = _publishedSnapshotAccessor
+                        .GetRequiredPublishedSnapshot()
+                        .Content?
+                        .GetContentType(item.ElementType);
 
-                    if (string.IsNullOrWhiteSpace(alias) == true)
-                    {
-                        continue;
-                    }
-
-                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content?.GetContentType(alias);
                     if (contentType == null || contentType.IsElement == false)
                     {
                         continue;
