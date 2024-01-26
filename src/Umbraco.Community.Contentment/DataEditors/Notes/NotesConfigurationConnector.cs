@@ -6,7 +6,6 @@
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
@@ -33,9 +32,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-        public object? FromArtifact(IDataType dataType, string? configuration)
-            => FromArtifact(dataType, configuration, PassThroughCache.Instance);
-
         public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
@@ -46,9 +42,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes);
-                notes = _imageSourceParser.FromArtifact(notes);
-                notes = _macroParser.FromArtifact(notes);
+                notes = _localLinkParser.FromArtifact(notes, contextCache);
+                notes = _imageSourceParser.FromArtifact(notes, contextCache);
+                notes = _macroParser.FromArtifact(notes, contextCache);
 
                 config[NotesConfigurationField.Notes] = notes ?? string.Empty;
 
@@ -58,9 +54,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-            => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
-
         public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
             if (dataType.ConfigurationObject is Dictionary<string, object> config &&
@@ -69,9 +62,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis);
-                notes = _imageSourceParser.ToArtifact(notes, udis);
-                notes = _macroParser.ToArtifact(notes, udis);
+                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
+                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
+                notes = _macroParser.ToArtifact(notes, udis, contextCache);
 
                 foreach (var udi in udis)
                 {

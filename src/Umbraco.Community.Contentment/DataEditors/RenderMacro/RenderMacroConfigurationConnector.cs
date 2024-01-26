@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
@@ -24,18 +23,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
         }
 
-        public object? FromArtifact(IDataType dataType, string? configuration)
-            => FromArtifact(dataType, configuration, PassThroughCache.Instance);
-
         public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
             return dataTypeConfigurationEditor?.FromDatabase(configuration, _configurationEditorJsonSerializer);
         }
-
-        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-            => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
 
         public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
