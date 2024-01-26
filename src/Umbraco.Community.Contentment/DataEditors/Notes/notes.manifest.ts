@@ -1,4 +1,4 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright ï¿½ 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -28,7 +28,7 @@ export const notesUiManifest: ManifestPropertyEditorUi = {
     type: "propertyEditorUi",
     alias: "Umbraco.Community.Contentment.Notes.UI",
     name: "[Contentment] Notes UI",
-    loader: () => import("./notes.element.js"),
+    js: () => import("./notes.element.js"),
     meta: {
         label: "[Contentment] Notes",
         icon: "umb:autofill",

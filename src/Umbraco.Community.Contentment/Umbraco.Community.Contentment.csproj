@@ -41,8 +41,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0--preview003" />
-        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="14.0.0--preview003" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0--preview004" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="14.0.0--preview004" />
     </ItemGroup>
 
     <ItemGroup>
