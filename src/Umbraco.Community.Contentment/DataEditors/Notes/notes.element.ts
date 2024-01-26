@@ -1,31 +1,31 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-import { LitElement, customElement, property, state } from "@umbraco-cms/backoffice/external/lit";
+import { LitElement, customElement, property } from "@umbraco-cms/backoffice/external/lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
-import type { UmbPropertyEditorExtensionElement } from "@umbraco-cms/backoffice/extension-registry";
+import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
 
 @customElement("contentment-property-editor-ui-notes")
 export class ContentmentPropertyEditorUINotesElement
-    extends LitElement
-    implements UmbPropertyEditorExtensionElement {
+    extends UmbElementMixin(LitElement)
+    implements UmbPropertyEditorUiElement {
 
-    @state()
-    private _notes?: string;
-
+    #notes?: string;
+    
     @property()
-    public value: string | undefined;
+    public value?: string;
 
     @property({ attribute: false })
     public set config(config: UmbPropertyEditorConfigCollection) {
-        this._notes = config.getValueByAlias("notes");
+        this.#notes = config.getValueByAlias("notes");
     }
 
     render() {
-        return unsafeHTML(this._notes);
+        return unsafeHTML(this.#notes);
     }
 }
 
