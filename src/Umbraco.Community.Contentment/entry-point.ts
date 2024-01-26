@@ -1,4 +1,4 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -13,19 +13,5 @@ const manifests: Array<ManifestTypes | UmbBackofficeManifestKind> = [
 ];
 
 export const onInit: UmbEntryPointOnInit = (_, extensionRegistry) => {
-
     extensionRegistry.registerMany(manifests);
-
-    console.log(`%c
-     (((
-    (o o)
-ooO--(_)--Ooo-    #FIWNBPFT
-
- ██████╗ ██████╗ ███╗   ██╗████████╗███████╗███╗   ██╗████████╗███╗   ███╗███████╗███╗   ██╗████████╗
-██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝████╗  ██║╚══██╔══╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
-██║     ██║   ██║██╔██╗ ██║   ██║   █████╗  ██╔██╗ ██║   ██║   ██╔████╔██║█████╗  ██╔██╗ ██║   ██║
-██║     ██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██║╚██╗██║   ██║   ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║
-╚██████╗╚██████╔╝██║ ╚████║   ██║   ███████╗██║ ╚████║   ██║   ██║ ╚═╝ ██║███████╗██║ ╚████║   ██║
- ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝`, `font-family: monospace;font-size: 10px;color: #900;`);
-
 };
