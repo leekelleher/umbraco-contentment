@@ -3,8 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-import { LitElement, customElement, property } from "@umbraco-cms/backoffice/external/lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { LitElement, customElement, property, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
 import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
@@ -15,7 +14,7 @@ export class ContentmentPropertyEditorUINotesElement
     implements UmbPropertyEditorUiElement {
 
     #notes?: string;
-    
+
     @property()
     public value?: string;
 
