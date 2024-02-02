@@ -5,11 +5,11 @@
 
 import type { ManifestPropertyEditorUi } from "@umbraco-cms/backoffice/extension-registry";
 
-export const editorNotesUiManifest: ManifestPropertyEditorUi = {
+export const manifest: ManifestPropertyEditorUi = {
     type: "propertyEditorUi",
     alias: "Umbraco.Community.Contentment.EditorNotes.UI",
     name: "[Contentment] Editor Notes UI",
-    js: () => import("./editor-notes.element.js"),
+    element: () => import("./editor-notes.element.js"),
     meta: {
         label: "[Contentment] Editor Notes",
         icon: "umb:alert-alt",
