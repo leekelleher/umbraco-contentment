@@ -4,11 +4,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 import { manifest as codeEditorUiManifest } from "./CodeEditor/code-editor.manifest.js";
+import { manifest as configurationEditorUiManifest } from "./ConfigurationEditor/configuration-editor.manifest.js";
+import { manifest as dataListUiManifest } from "./DataList/data-list.manifest.js";
 import { manifest as editorNotesUiManifest } from "./EditorNotes/editor-notes.manifest.js";
 import { manifest as notesUiManifest } from "./Notes/notes.manifest.js";
 
 export const manifests = [
     codeEditorUiManifest,
+    configurationEditorUiManifest,
+    dataListUiManifest,
     editorNotesUiManifest,
     notesUiManifest
 ];
