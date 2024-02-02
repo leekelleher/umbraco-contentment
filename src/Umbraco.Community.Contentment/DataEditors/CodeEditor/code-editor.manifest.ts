@@ -12,7 +12,7 @@ export const manifest: ManifestPropertyEditorUi = {
     element: () => import("./code-editor.element.js"),
     meta: {
         label: "[Contentment] Code Editor",
-        icon: "umb:code",
+        icon: "icon-code",
         group: "code",
         propertyEditorSchemaAlias: "Umbraco.Community.Contentment.CodeEditor",
         settings: {
