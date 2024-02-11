@@ -5,7 +5,7 @@
 
 import { LitElement, css, customElement, html, property, state } from "@umbraco-cms/backoffice/external/lit";
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
-import { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
+import { UmbPropertyEditorConfigCollection, UmbPropertyValueChangeEvent } from "@umbraco-cms/backoffice/property-editor";
 import { UMB_DOCUMENT_WORKSPACE_CONTEXT } from "@umbraco-cms/backoffice/document";
 import { UMB_PROPERTY_CONTEXT } from "@umbraco-cms/backoffice/property";
 import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
@@ -29,8 +29,6 @@ export class ContentmentPropertyEditorUIDataListElement
 
     #propertyAlias?: string;
 
-    #propertyContext?: typeof UMB_PROPERTY_CONTEXT.TYPE;
-
     #workspaceContext?: typeof UMB_DOCUMENT_WORKSPACE_CONTEXT.TYPE;
 
     @state()
@@ -40,8 +38,6 @@ export class ContentmentPropertyEditorUIDataListElement
         super();
 
         this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
-            this.#propertyContext = propertyContext;
-
             this.observe(propertyContext.alias, (propertyAlias) => {
                 this.#propertyAlias = propertyAlias;
             });
@@ -58,7 +54,6 @@ export class ContentmentPropertyEditorUIDataListElement
 
     connectedCallback() {
         super.connectedCallback();
-        console.log("data-list.connectedCallback");
         this.#init();
     }
 
@@ -69,7 +64,7 @@ export class ContentmentPropertyEditorUIDataListElement
             const property = await this.#workspaceContext.structure.getPropertyStructureByAlias(this.#propertyAlias);
 
             if (property) {
-                this.#dataTypeId = property.dataTypeId; // property.dataType.unique;
+                this.#dataTypeId = property.dataType.unique;
                 console.log("data-list.dataTypeId", this.#dataTypeId);
 
                 // TODO: [LK] Fetch the Data List items.
@@ -82,8 +77,15 @@ export class ContentmentPropertyEditorUIDataListElement
                 this._items = items.map((item) => (item.value === this.value ? { ...item, selected: true } : item));
             }
         }
-
     }
+
+    #onChange(e: Event) {
+        const input = e.target as HTMLInputElement;
+        if (input.value === this.value) return;
+        this.value = input.value;
+        console.log("data-list.onChange", this.value);
+        this.dispatchEvent(new UmbPropertyValueChangeEvent());
+    };
 
     render() {
 
@@ -97,6 +99,7 @@ export class ContentmentPropertyEditorUIDataListElement
         );
 
         return html`
+            <uui-input .value=${this.value ?? ''} type="text" @input=${this.#onChange}></uui-input>
             <umb-extension-slot
                 type="propertyEditorUi"
                 default-element="div"

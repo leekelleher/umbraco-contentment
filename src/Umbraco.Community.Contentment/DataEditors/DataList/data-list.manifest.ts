@@ -21,13 +21,19 @@ export const manifest: ManifestPropertyEditorUi = {
                     alias: "dataSource",
                     label: "Data source",
                     description: "Select and configure a data source.",
-                    propertyEditorUiAlias: "Umbraco.Community.Contentment.ConfigurationEditor.UI"
+                    propertyEditorUiAlias: "Umbraco.Community.Contentment.ConfigurationEditor.UI",
+                    config: [
+                        { alias: "addButtonLabelKey", value:"contentment_configureDataSource" },
+                    ],
                 },
                 {
                     alias: "listEditor",
                     label: "List editor",
                     description: "Select and configure a list editor.",
-                    propertyEditorUiAlias: "Umbraco.Community.Contentment.ConfigurationEditor.UI"
+                    propertyEditorUiAlias: "Umbraco.Community.Contentment.ConfigurationEditor.UI",
+                    config: [
+                        { alias: "addButtonLabelKey", value: "contentment_configureListEditor" },
+                    ],
                 },
             ],
         }
