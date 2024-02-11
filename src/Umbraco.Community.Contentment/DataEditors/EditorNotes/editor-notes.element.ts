@@ -3,8 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-import { LitElement, css, customElement, html, property, when } from "@umbraco-cms/backoffice/external/lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { LitElement, css, customElement, html, property, when, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
 import { UmbTextStyles } from "@umbraco-cms/backoffice/style";
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
@@ -40,9 +39,15 @@ export class ContentmentPropertyEditorUIEditorNotesElement
     }
 
     render() {
+        const inlineStyles = `
+            background-color: var(--uui-color-${this.#alertType});
+            color: var(--uui-color-${this.#alertType}-contrast);
+            border-color: var(--uui-color-${this.#alertType}-standalone);
+        `;
+
         return html`
-            <div id="note" class="uui-text ${this.#alertType}">
-                ${when(this.#icon, () => html`<uui-icon name=${this.#icon}></uui-icon>`)}
+            <div id="note" class="uui-text ${this.#alertType}" style="${inlineStyles}">
+                ${when(this.#icon, () => html`<uui-icon name=${this.#icon} style="color: var(--uui-color-${this.#alertType}-contrast);"></uui-icon>`)}
                 <div>
                     ${when(this.#heading, () => html`<h5>${this.#heading}</h5>`)}
                     ${when(this.#message, () => html`<div>${unsafeHTML(this.#message)}</div>`)}
@@ -70,42 +75,6 @@ export class ContentmentPropertyEditorUIEditorNotesElement
 
                 padding: 1rem;
             }
-
-                #note.default {
-                    background-color: var(--uui-color-default);
-                    color: var(--uui-color-default-contrast);
-                    border-color: var(--uui-color-default-standalone);
-                }
-                    #note.positive uui-icon {
-                        color: var(--uui-color-default-contrast);
-                    }
-
-                #note.positive {
-                    background-color: var(--uui-color-positive);
-                    color: var(--uui-color-positive-contrast);
-                    border-color: var(--uui-color-positive-standalone);
-                }
-                    #note.positive uui-icon {
-                        color: var(--uui-color-positive-contrast);
-                    }
-
-                #note.warning {
-                    background-color: var(--uui-color-warning);
-                    color: var(--uui-color-warning-contrast);
-                    border-color: var(--uui-color-warning-standalone);
-                }
-                    #note.warning uui-icon {
-                        color: var(--uui-color-warning-contrast);
-                    }
-
-                #note.danger {
-                    background-color: var(--uui-color-danger);
-                    color: var(--uui-color-danger-contrast);
-                    border-color: var(--uui-color-danger-standalone);
-                }
-                    #note.danger uui-icon {
-                        color: var(--uui-color-danger-contrast);
-                    }
 
             uui-icon {
                 min-height: 3rem;
