@@ -5,9 +5,9 @@
 
 import { LitElement, css, customElement, html, property } from "@umbraco-cms/backoffice/external/lit";
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
+import { UMB_PROPERTY_CONTEXT } from "@umbraco-cms/backoffice/property";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
 import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
-
 
 @customElement("contentment-property-editor-ui-configuration-editor")
 export class ContentmentPropertyEditorUIConfigurationEditorElement
@@ -15,21 +15,55 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
     implements UmbPropertyEditorUiElement {
 
     @property()
-    public value?: string;
+    public value?: object;
+
+    #addButtonLabelKey: string = "general_add";
 
     @property({ attribute: false })
     public set config(config: UmbPropertyEditorConfigCollection) {
-        if (config) {
 
-        }
+        this.#addButtonLabelKey = config.getValueByAlias("addButtonLabelKey") ?? "general_add";
+
+    }
+
+    #propertyAlias?: string;
+
+    constructor() {
+        super();
+
+        this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
+            this.observe(propertyContext.alias, (alias) => {
+                this.#propertyAlias = alias;
+            });
+        });
+    }
+
+    #openConfigurationEditorModal() {
+        alert(`Open configuration editor modal for ${this.#propertyAlias}`);
     }
 
     render() {
-        return html`&lt;contentment-property-editor-ui-configuration-editor&gt;&lt;/contentment-property-editor-ui-configuration-editor&gt;`;
+        return html`
+            <pre><code>${JSON.stringify(this.value, null, 4)}</code></pre>
+            ${this.#renderChooseButton()}
+        `;
+    }
+
+    #renderChooseButton() {
+        return html`
+            <uui-button
+                @click=${this.#openConfigurationEditorModal}
+                label=${this.localize.term(this.#addButtonLabelKey)}
+                look="placeholder"></uui-button>
+        `;
     }
 
     static styles = [
-        css``
+        css`
+            uui-button {
+                width: 100%;
+            }
+        `
     ];
 }
 
