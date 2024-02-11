@@ -40,7 +40,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                             {
                                 if (block.Value.TryGetValue(propertyType.Alias, out var bpv) == true)
                                 {
-                                    elementValidation.AddPropertyTypeValidation(new PropertyTypeValidationModel(propertyType, bpv));
+                                    // TODO: [LK] Review what the `JsonPath` parameter should be here.
+                                    elementValidation.AddPropertyTypeValidation(new PropertyTypeValidationModel(propertyType, bpv, string.Empty));
                                 }
                             }
 
