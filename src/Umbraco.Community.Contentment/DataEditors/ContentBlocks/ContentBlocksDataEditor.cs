@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -24,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
-        private readonly IDataTypeService _dataTypeService;
+        private readonly IDataTypeConfigurationCache _dataTypeService;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
@@ -37,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentService contentService,
             IContentTypeService contentTypeService,
             Lazy<PropertyEditorCollection> propertyEditors,
-            IDataTypeService dataTypeService,
+            IDataTypeConfigurationCache dataTypeService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,

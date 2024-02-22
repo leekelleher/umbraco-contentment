@@ -12,6 +12,7 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -24,14 +25,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksDataValueEditor : DataValueEditor, IDataValueReference
     {
-        private readonly IDataTypeService _dataTypeService;
+        private readonly IDataTypeConfigurationCache _dataTypeService;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
         public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
             PropertyEditorCollection propertyEditors,
-            IDataTypeService dataTypeService,
+            IDataTypeConfigurationCache dataTypeService,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
@@ -109,7 +110,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true &&
                                     _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                 {
-                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId)?.Configuration;
+                                    var configuration = _dataTypeService.GetConfiguration(propertyType.DataTypeKey);
                                     var contentPropertyData = new ContentPropertyData(blockPropertyValue, configuration)
                                     {
                                         ContentKey = block.Key,
