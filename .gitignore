@@ -9,6 +9,7 @@ _ReSharper.*
 Thumbs.db
 .DS_Store
 *.log
+.idea
 .vs
 node_modules/
 
@@ -22,4 +23,3 @@ src/Umbraco.Cms.*.x/*
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
 src/*/node_modules/*
 tools/*.exe
-src/.idea
