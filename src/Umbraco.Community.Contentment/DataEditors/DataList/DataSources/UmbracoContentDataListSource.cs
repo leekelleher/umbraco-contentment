@@ -4,11 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.DynamicRoot;
+using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Community.Contentment.Services;
@@ -20,6 +23,8 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
+        private readonly IDynamicRootService _dynamicRootService;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
 
@@ -28,11 +33,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         public UmbracoContentDataListSource(
             IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
+            IDynamicRootService dynamicRootService,
+            IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
             _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
+            _dynamicRootService = dynamicRootService;
+            _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
             _ioHelper = ioHelper;
         }
@@ -163,7 +172,48 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var preview = true;
                 var parentNode = config.GetValueAs("parentNode", string.Empty);
-                if (parentNode?.InvariantStartsWith("umb://document/") == false)
+
+                // Content Picker
+                if (UdiParser.TryParse(parentNode, out GuidUdi? udi) == true &&
+                    udi is not null &&
+                    udi.EntityType == UmbConstants.UdiEntityType.Document &&
+                    udi.Guid.Equals(Guid.Empty) == false)
+                {
+                    return contentCache.GetById(preview, udi.Guid);
+                }
+                // Dynamic Root
+                else if (parentNode?.DetectIsJson() == true)
+                {
+                    var current = _contentmentContentContext.GetCurrentContent(out var isParent);
+
+                    var model = _jsonSerializer.Deserialize<DynamicRoot>(parentNode);
+                    if (model is not null)
+                    {
+                        var query = new DynamicRootNodeQuery
+                        {
+                            Context = new DynamicRootContext
+                            {
+                                CurrentKey = current?.Key,
+                                ParentKey = (isParent == true ? current?.Key : current?.Parent?.Key) ?? Guid.Empty
+                            },
+                            OriginAlias = model.OriginAlias,
+                            OriginKey = model.OriginKey,
+                            QuerySteps = model.QuerySteps.Select(x => new DynamicRootQueryStep
+                            {
+                                Alias = x.Alias,
+                                AnyOfDocTypeKeys = x.AnyOfDocTypeKeys
+                            }),
+                        };
+
+                        var startNodes = _dynamicRootService.GetDynamicRootsAsync(query).GetAwaiter().GetResult();
+                        if (startNodes?.Any() == true)
+                        {
+                            return contentCache.GetById(preview, startNodes.First());
+                        }
+                    }
+                }
+                // XPath
+                else if (string.IsNullOrWhiteSpace(parentNode) == false)
                 {
                     IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
                     bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
@@ -176,12 +226,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         return contentCache.GetSingleByXPath(preview, parsed);
 #pragma warning restore CS0618 // Type or member is obsolete
                     }
-                }
-                else if (UdiParser.TryParse(parentNode, out GuidUdi? udi) == true &&
-                    udi is not null &&
-                    udi.Guid.Equals(Guid.Empty) == false)
-                {
-                    return contentCache.GetById(preview, udi.Guid);
                 }
             }
 
