@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -32,7 +32,7 @@ namespace Umbraco.Extensions
 
         public static HelperResult RenderJsModules(this IHtmlHelper helper, IEnumerable<IPublishedElement> modules, RenderPosition position, string prefix = "js")
         {
-            return helper.RenderModules(modules, x => x is IModuleRenderJs && x is IComponentCodeRenderPositionProperty js && js.RenderPosition?.ToString() == position.ToString(), prefix.EnsureEndsWith("/"));
+            return helper.RenderModules(modules, x => x is IModuleRenderJs && x is IComponentCodeRenderPositionProperty js && js.RenderPosition.ToString() == position.ToString(), prefix.EnsureEndsWith("/"));
         }
 
         public static HelperResult RenderMetaTagModules(this IHtmlHelper helper, IEnumerable<IPublishedElement> modules, string prefix = "meta")
