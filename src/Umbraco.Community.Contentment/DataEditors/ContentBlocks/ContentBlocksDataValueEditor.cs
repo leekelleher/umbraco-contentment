@@ -12,6 +12,7 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -24,21 +25,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksDataValueEditor : DataValueEditor, IDataValueReference
     {
-        private readonly IDataTypeService _dataTypeService;
+        private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
         public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
             PropertyEditorCollection propertyEditors,
-            IDataTypeService dataTypeService,
+            IDataTypeConfigurationCache dataTypeConfigurationCache,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IPropertyValidationService propertyValidationService)
             : base(localizedTextService, shortStringHelper, jsonSerializer)
         {
-            _dataTypeService = dataTypeService;
+            _dataTypeConfigurationCache = dataTypeConfigurationCache;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
 
@@ -109,7 +110,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true &&
                                     _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                 {
-                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId)?.Configuration;
+                                    var configuration = _dataTypeConfigurationCache.GetConfiguration(propertyType.DataTypeKey);
                                     var contentPropertyData = new ContentPropertyData(blockPropertyValue, configuration)
                                     {
                                         ContentKey = block.Key,

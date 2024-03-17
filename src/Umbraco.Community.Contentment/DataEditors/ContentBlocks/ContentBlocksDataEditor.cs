@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -24,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
-        private readonly IDataTypeService _dataTypeService;
+        private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
@@ -37,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentService contentService,
             IContentTypeService contentTypeService,
             Lazy<PropertyEditorCollection> propertyEditors,
-            IDataTypeService dataTypeService,
+            IDataTypeConfigurationCache dataTypeConfigurationCache,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
@@ -47,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _contentService = contentService;
             _contentTypeService = contentTypeService;
-            _dataTypeService = dataTypeService;
+            _dataTypeConfigurationCache = dataTypeConfigurationCache;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
@@ -80,7 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
-                _dataTypeService,
+                _dataTypeConfigurationCache,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer,
@@ -123,7 +124,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
-                _dataTypeService,
+                _dataTypeConfigurationCache,
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer,
