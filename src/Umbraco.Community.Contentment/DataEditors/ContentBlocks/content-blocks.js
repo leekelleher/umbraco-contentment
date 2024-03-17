@@ -45,7 +45,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             // NOTE: [LK] Some of the editors may need the context of the current page.
             // If the page is new, then it doesn't have an id, so the parentId will be used.
             config.currentPage = $scope.node || editorState.getCurrent();
-            config.currentPageId = config.currentPage.id > 0 ? config.currentPage.id : config.currentPage.parentId;
+            config.currentPageId = config.currentPage.contentTypeKey && config.currentPage.id > 0
+                ? config.currentPage.id
+                : config.currentPage.parentId;
 
             // Supports content that is not in Content/Media tree.
             if (!config.currentPageId) {

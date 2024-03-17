@@ -1,9 +1,10 @@
 {
   "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "AlternateCategory": "Developer Tools",
   "AlternatePackageNames": [ "Contentment" ],
   "AuthorDetails": {
     "Name": "Lee Kelleher",
-    "Description": "Lee is a long time Umbraco community collaborator, he now works for Umbraco HQ as a Senior Developer in the Product and Engineering department.",
+    "Description": "Lee is a long time Umbraco community collaborator, he now works for Umbraco HQ as a Staff Engineer on the CMS team within the Product and Engineering department.",
     "Url": "https://leekelleher.com/umbraco/",
     "ImageUrl": "https://github.com/leekelleher.png",
     "Contributors": [],
@@ -15,6 +16,8 @@
   "DocumentationUrl": "https://github.com/leekelleher/umbraco-contentment/tree/develop/docs",
   "IssueTrackerUrl": "https://github.com/leekelleher/umbraco-contentment/issues",
   "LicenseTypes": [ "Free" ],
+  "LookingForContributors": true,
+  "LookingForMaintainer": false,
   "PackageType": "Package",
   "PackagesByAuthor": [],
   "RelatedPackages": [],
@@ -59,6 +62,7 @@
     "code editor",
     "content blocks",
     "data list",
+    "data picker",
     "editor notes",
     "editorial experience",
     "icon picker",
@@ -71,31 +75,5 @@
     "text input"
   ],
   "Title": "Contentment",
-  "VersionSpecificPackageIds": [
-    {
-      "UmbracoMajorVersion": 8,
-      "PackageId": "Umbraco.Community.Contentment"
-    },
-    {
-      "UmbracoMajorVersion": 9,
-      "PackageId": "Umbraco.Community.Contentment"
-    },
-    {
-      "UmbracoMajorVersion": 10,
-      "PackageId": "Umbraco.Community.Contentment"
-    },
-    {
-      "UmbracoMajorVersion": 11,
-      "PackageId": "Umbraco.Community.Contentment"
-    },
-    {
-      "UmbracoMajorVersion": 12,
-      "PackageId": "Umbraco.Community.Contentment"
-    },
-    {
-      "UmbracoMajorVersion": 13,
-      "PackageId": "Umbraco.Community.Contentment"
-    }
-  ],
   "VideoUrl": "https://www.youtube.com/embed/alhbwyQkU1E"
 }
