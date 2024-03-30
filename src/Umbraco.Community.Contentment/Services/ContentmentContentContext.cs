@@ -35,11 +35,11 @@ namespace Umbraco.Community.Contentment.Services
             }
 
             // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-            if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
+            if (int.TryParse(_requestAccessor.GetRequestValue("id"), out var currentId) == true)
             {
                 return currentId;
             }
-            else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
+            else if (int.TryParse(_requestAccessor.GetRequestValue("parentId"), out var parentId) == true)
             {
                 isParent = true;
 
