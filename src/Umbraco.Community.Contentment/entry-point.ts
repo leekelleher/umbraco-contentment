@@ -10,6 +10,8 @@ import type { UmbEntryPointOnInit } from "@umbraco-cms/backoffice/extension-api"
 import { manifests as propertyEditorManifests } from "./DataEditors/property-editor-manifests.js";
 import { manifests as localizationManifests } from "./Localizations/manifests.js";
 
+export * from "./DataEditors/_/hide-label.function.js";
+
 const manifests: Array<ManifestTypes | UmbBackofficeManifestKind> = [
     //...propertyActionManifests,
     ...propertyEditorManifests,

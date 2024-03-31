@@ -40,6 +40,12 @@ export const manifest: ManifestPropertyEditorUi = {
                     description: "Enter the notes to be displayed for the content editor.",
                     propertyEditorUiAlias: "Umb.PropertyEditorUi.TinyMCE"
                 },
+                {
+                    alias: "hideLabel",
+                    label: "Hide label?",
+                    description: "Select to hide the label and have the editor take up the full width of the panel.",
+                    propertyEditorUiAlias: "Umb.PropertyEditorUi.Toggle",
+                },
             ],
             defaultData: [{
                 alias: "alertType", value: "warning"

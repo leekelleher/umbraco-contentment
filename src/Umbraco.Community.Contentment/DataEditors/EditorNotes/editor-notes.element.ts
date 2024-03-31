@@ -3,16 +3,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-import { LitElement, css, customElement, html, property, when, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
+import { css, customElement, html, property, when, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
+import { tryHideLabel } from "../_/hide-label.function.js";
+import { UmbLitElement } from "@umbraco-cms/backoffice/lit-element";
 import { UmbTextStyles } from "@umbraco-cms/backoffice/style";
-import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
 import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
 
 @customElement("contentment-property-editor-ui-editor-notes")
-export class ContentmentPropertyEditorUIEditorNotesElement
-    extends UmbElementMixin(LitElement)
-    implements UmbPropertyEditorUiElement {
+export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+
+    #hideLabel: boolean = false;
 
     #alertType?: string;
 
@@ -31,11 +32,17 @@ export class ContentmentPropertyEditorUIEditorNotesElement
         this.#icon = config.getValueByAlias("icon");
         this.#heading = config.getValueByAlias("heading");
         this.#message = config.getValueByAlias("message");
+        this.#hideLabel = config.getValueByAlias<boolean>("hideLabel") ?? false;
 
         if (this.#icon) {
             // HACK: To workaround the `color-text` part of the value. [LK]
             this.#icon = this.#icon.split(' ')[0];
         }
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        tryHideLabel(this, this.#hideLabel);
     }
 
     render() {
