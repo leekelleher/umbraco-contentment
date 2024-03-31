@@ -3,20 +3,26 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
     public sealed class ContentmentContentContext : IContentmentContentContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public ContentmentContentContext(
+            IHttpContextAccessor httpContextAccessor,
             IRequestAccessor requestAccessor,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -35,15 +41,30 @@ namespace Umbraco.Community.Contentment.Services
             }
 
             // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-            if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
+            if (int.TryParse(_requestAccessor.GetRequestValue("id"), out var currentId) == true)
             {
                 return currentId;
             }
-            else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
+            else if (int.TryParse(_requestAccessor.GetRequestValue("parentId"), out var parentId) == true)
             {
                 isParent = true;
 
                 return parentId;
+            }
+
+            var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrWhiteSpace(json) == false)
+            {
+                var obj = JsonConvert.DeserializeAnonymousType(json, new { id = 0, parentId = 0 });
+                if (obj?.id > 0)
+                {
+                    return obj.id;
+                }
+                else if (obj?.parentId > 0)
+                {
+                    isParent = true;
+                    return obj.parentId;
+                }
             }
 
             return default;
