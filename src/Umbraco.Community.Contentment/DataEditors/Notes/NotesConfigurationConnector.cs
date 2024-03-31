@@ -16,20 +16,17 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IConfigurationEditorJsonSerializer _configurationEditorJsonSerializer;
         private readonly ILocalLinkParser _localLinkParser;
         private readonly IImageSourceParser _imageSourceParser;
-        private readonly IMacroParser _macroParser;
 
         public IEnumerable<string> PropertyEditorAliases => new[] { NotesDataEditor.DataEditorName };
 
         public NotesConfigurationConnector(
             IConfigurationEditorJsonSerializer configurationEditorJsonSerializer,
             ILocalLinkParser localLinkParser,
-            IImageSourceParser imageSourceParser,
-            IMacroParser macroParser)
+            IImageSourceParser imageSourceParser)
         {
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
             _localLinkParser = localLinkParser;
             _imageSourceParser = imageSourceParser;
-            _macroParser = macroParser;
         }
 
         public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
@@ -44,7 +41,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 notes = _localLinkParser.FromArtifact(notes, contextCache);
                 notes = _imageSourceParser.FromArtifact(notes, contextCache);
-                notes = _macroParser.FromArtifact(notes, contextCache);
 
                 config[NotesConfigurationField.Notes] = notes ?? string.Empty;
 
@@ -64,13 +60,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
                 notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
-                notes = _macroParser.ToArtifact(notes, udis, contextCache);
 
                 foreach (var udi in udis)
                 {
-                    var mode = udi.EntityType == UmbConstants.UdiEntityType.Macro
-                        ? ArtifactDependencyMode.Match
-                        : ArtifactDependencyMode.Exist;
+                    //var mode = udi.EntityType == UmbConstants.UdiEntityType.Macro
+                    //    ? ArtifactDependencyMode.Match
+                    //    : ArtifactDependencyMode.Exist;
+                    var mode = ArtifactDependencyMode.Exist;
 
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }

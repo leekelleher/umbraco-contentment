@@ -47,14 +47,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 <summary><strong>A note about block type previews.</strong></summary>
 <p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowCopy",
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
                 View = "views/propertyeditors/boolean/boolean.html",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowCreateContentTemplate",
                 Name = "Allow create content template?",

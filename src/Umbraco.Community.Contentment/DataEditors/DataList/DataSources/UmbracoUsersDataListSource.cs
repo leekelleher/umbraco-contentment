@@ -48,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new[]
                 {
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "userGroup",
                         Name = "User Group",

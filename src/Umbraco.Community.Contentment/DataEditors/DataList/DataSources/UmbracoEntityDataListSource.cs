@@ -69,7 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>Umbraco's <a href=""https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Core/Services/Implement/EntityService.cs"" target=""_blank""><code>EntityService</code></a> API (currently) has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "entityType",
                 Name = "Entity type",

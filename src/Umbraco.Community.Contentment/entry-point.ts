@@ -6,12 +6,12 @@
 import type { ManifestTypes, UmbBackofficeManifestKind } from "@umbraco-cms/backoffice/extension-registry";
 import type { UmbEntryPointOnInit } from "@umbraco-cms/backoffice/extension-api";
 
-import { manifests as propertyActionManifests } from "./DataEditors/_/property-action.manifests.js";
+//import { manifests as propertyActionManifests } from "./DataEditors/_/property-action.manifests.js";
 import { manifests as propertyEditorManifests } from "./DataEditors/property-editor-manifests.js";
 import { manifests as localizationManifests } from "./Localizations/manifests.js";
 
 const manifests: Array<ManifestTypes | UmbBackofficeManifestKind> = [
-    ...propertyActionManifests,
+    //...propertyActionManifests,
     ...propertyEditorManifests,
     ...localizationManifests,
 ];

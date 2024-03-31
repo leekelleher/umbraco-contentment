@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             DefaultConfiguration.Add(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, ValueTypes.String);
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType,
                 Name = "Value type",
@@ -56,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 &lt;/details&gt;</umb-code-snippet>
 </details>", false) { Key = "_notes", Name = "", Config = { { "code", "{{ model.value | json }}" } } });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "notes",
                 Name = "Template",

@@ -49,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "contentTypes",
                 Name = "Content types",

@@ -52,14 +52,14 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
         public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "contentNode",
                 Name = "Content node",
                 Description = "Set the content node to take the property value from.",
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "propertyAlias",
                 Name = "Property alias",

@@ -47,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new ConfigurationField[]
                 {
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "imageCropper",
                         Name = "Image Cropper",

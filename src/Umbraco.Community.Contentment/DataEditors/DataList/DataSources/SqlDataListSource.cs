@@ -76,7 +76,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 </ol>
 <p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "query",
                 Name = "SQL query",
@@ -89,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { CodeEditorConfigurationEditor.MaxLines, 40 },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "connectionString",
                 Name = "Connection string",

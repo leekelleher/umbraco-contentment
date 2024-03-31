@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Community.Contentment.Web.Controllers;
+//using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -51,29 +51,29 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
-            {
-                Key = "enumType",
-                Name = "Enumeration type",
-                Description = "Select the enumeration from an assembly type.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { CascadingDropdownListDataEditor.APIs, new[]
-                        {
-                            EnumDataSourceApiController.GetAssembliesUrl,
-                            EnumDataSourceApiController.GetEnumsUrl,
-                        }
-                    }
-                }
-            },
-            new ConfigurationField
-            {
-                Key = "sortAlphabetically",
-                Name = "Sort alphabetically?",
-                Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
-                View = "boolean"
-            }
+            //new ConfigurationField
+            //{
+            //    Key = "enumType",
+            //    Name = "Enumeration type",
+            //    Description = "Select the enumeration from an assembly type.",
+            //    View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { CascadingDropdownListDataEditor.APIs, new[]
+            //            {
+            //                EnumDataSourceApiController.GetAssembliesUrl,
+            //                EnumDataSourceApiController.GetEnumsUrl,
+            //            }
+            //        }
+            //    }
+            //},
+            //new ConfigurationField
+            //{
+            //    Key = "sortAlphabetically",
+            //    Name = "Sort alphabetically?",
+            //    Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
+            //    View = "boolean"
+            //}
         };
 
         private (List<DataListItem>, Dictionary<string, object>) EnumValueFactory(Type type)
@@ -190,7 +190,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
-                try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
+                try
+                { return Enum.Parse(type, value, true); }
+                catch { /* ¯\_(ツ)_/¯ */ }
             }
 
             return type.GetDefaultValue();

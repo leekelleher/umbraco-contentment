@@ -36,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "item",
                 Name = "Dictionary item",

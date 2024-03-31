@@ -49,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 <umb-code-snippet language=""'AngularJS template'"">&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
 &lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-snippet>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "template",
                 Name = "Template",
@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             },
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enableMultiple",
                 Name = "Multiple selection?",

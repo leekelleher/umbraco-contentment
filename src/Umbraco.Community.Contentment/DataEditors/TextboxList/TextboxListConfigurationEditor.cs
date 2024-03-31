@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>());
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = DataSource,
                 Name = "Data source",
@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             DefaultConfiguration.Add("defaultIcon", UmbConstants.Icons.DefaultIcon);
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "labelStyle",
                 Name = "Label style",
@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             Fields.Add(new EnableDevModeConfigurationField());
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "preview",
                 Name = "Preview",

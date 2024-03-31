@@ -30,14 +30,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "size",
                 Name = "Size",
@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "m" }
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "labelStyle",
                 Name = "Label style",
@@ -75,7 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             },
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enableMultiple",
                 Name = "Multiple selection?",

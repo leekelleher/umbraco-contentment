@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal sealed class ContentBlocksTypesConfigurationField : ConfigurationField
+    internal sealed class ContentBlocksTypesConfigurationField : ContentmentConfigurationField
     {
         internal const string ContentBlockTypes = "contentBlockTypes";
 
@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             return new[]
             {
-                new ConfigurationField
+                new ContentmentConfigurationField
                 {
                     Key = "elementType",
                     Name = "Element type",
@@ -67,14 +67,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     },
                     HideLabel = true,
                 },
-                new ConfigurationField
+                new ContentmentConfigurationField
                 {
                     Key = "nameTemplate",
                     Name = "Name template",
                     Description = "Enter an AngularJS expression to evaluate against each block for its name.",
                     View = "textstring",
                 },
-                new ConfigurationField
+                new ContentmentConfigurationField
                 {
                     Key = "overlaySize",
                     Name = "Editor overlay size",
@@ -92,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" }
                     }
                 },
-                new ConfigurationField
+                new ContentmentConfigurationField
                 {
                     Key = "enablePreview",
                     Name = "Enable preview?",

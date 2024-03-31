@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -40,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListSource>());
             var listEditors = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListEditor>());
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = DataSource,
                 Name = localizedTextService.LocalizeContentment("labelDataSource", "Data source"),
@@ -59,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = ListEditor,
                 Name = localizedTextService.LocalizeContentment("labelListEditor", "List editor"),
@@ -73,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Preview,
                 Name = nameof(Preview),

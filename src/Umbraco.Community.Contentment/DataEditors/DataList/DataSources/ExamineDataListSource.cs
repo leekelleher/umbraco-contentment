@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "examineIndex",
                 Name = "Examine Index",
@@ -108,7 +108,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "luceneQuery",
                 Name = "Lucene query",
@@ -121,7 +121,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { CodeEditorConfigurationEditor.MaxLines, 5 },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameField",
                 Name = "Name Field",
@@ -129,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueField",
                 Name = "Value Field",
@@ -137,7 +137,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconField",
                 Name = "Icon Field",
@@ -145,7 +145,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionField",
                 Name = "Description Field",

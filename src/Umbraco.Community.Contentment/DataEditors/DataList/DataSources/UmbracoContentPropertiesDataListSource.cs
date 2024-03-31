@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return new ConfigurationField[]
                 {
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "contentType",
                         Name = "Content Type",
@@ -69,14 +69,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     },
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "includeName",
                         Name = "Include \"Name\" property?",
                         Description = "Select to include an option called \"Name\", for the content item's name.",
                         View = "boolean"
                     },
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "sortAlphabetically",
                         Name = "Sort alphabetically?",
@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var contentType = _contentTypeService.Get(udi.Guid);
                 if (contentType != null)
                 {
-                    _icons ??= _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
+                    _icons ??= _dataEditors.Value.ToDictionary(x => x.Alias, x => "icon-document");
 
                     static IEnumerable<DataListItem> addNameItem(bool add)
                     {

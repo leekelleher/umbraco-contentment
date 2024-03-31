@@ -10,12 +10,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
-        DataEditorName,
-        DataEditorViewPath,
         ValueType = ValueTypes.String,
-        Group = UmbConstants.PropertyEditors.Groups.Common,
-        Icon = DataEditorIcon)]
+        ValueEditorIsReusable = true)]
     public sealed class TextInputDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "TextInput";

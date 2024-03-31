@@ -60,8 +60,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Alias => DataEditorAlias;
 
-        public EditorType Type => EditorType.PropertyValue;
-
         public string Name => DataEditorName;
 
         public string Icon => DataEditorIcon;
@@ -88,7 +86,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _propertyValidationService)
             {
                 ValueType = ValueTypes.Json,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
@@ -136,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Configuration = configuration,
 #endif
                 ValueType = ValueTypes.Json,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

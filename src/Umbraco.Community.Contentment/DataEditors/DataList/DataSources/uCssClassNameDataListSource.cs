@@ -48,28 +48,28 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>As a mark of respect to the loyal fans of the original package, I hereby offer this data source as tribute.</p>
 <p class=""text-center""><img ng-src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName""></p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "cssPath",
                 Name = "PathToStylesheet",
                 Description = "Put in the relative path to the stylesheet",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "cssRegex",
                 Name = "Class Name Regex",
                 Description = "put in the regex pattern that matches the class names",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "excludeList",
                 Name = "Exclusions",
                 Description = "comma delimited list of styles to exclude",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconPattern",
                 Name = "Icon Pattern",

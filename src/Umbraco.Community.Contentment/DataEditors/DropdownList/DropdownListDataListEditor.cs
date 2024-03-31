@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = AllowEmpty,
                 Name = "Allow empty?",

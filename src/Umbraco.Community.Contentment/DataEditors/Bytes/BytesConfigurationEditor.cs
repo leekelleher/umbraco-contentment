@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public BytesConfigurationEditor(IIOHelper ioHelper)
         {
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Kilo,
                 Name = "Kilobytes?",
@@ -37,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Decimals,
                 Name = "Decimal places",

@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "url",
                 Name = "URL",
@@ -57,35 +57,35 @@ namespace Umbraco.Community.Contentment.DataEditors
 <summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>
 <p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "itemsXPath",
                 Name = "Items XPath",
                 Description = "Enter the XPath expression to select the items from the XML data source.",
                 View =  "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameXPath",
                 Name = "Name XPath",
                 Description = "Enter the XPath expression to select the name from the item.",
                 View =  "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueXPath",
                 Name = "Value XPath",
                 Description = "Enter the XPath expression to select the value (key) from the item.",
                 View =  "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconXPath",
                 Name = "Icon XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the icon from the item.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionXPath",
                 Name = "Description XPath",

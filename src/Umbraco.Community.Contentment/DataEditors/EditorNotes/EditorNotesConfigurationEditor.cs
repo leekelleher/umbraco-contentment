@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 new { name = string.Format(format, "well", "Well", "An informational message, displaying inset on a gray background."), value = "well" },
             };
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "alertType",
                 Name = "Alert type",
@@ -40,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "icon",
                 Name = "Icon",
@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "heading",
                 Name = "Heading",
@@ -60,7 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "textstring"
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Message,
                 Name = nameof(Message),

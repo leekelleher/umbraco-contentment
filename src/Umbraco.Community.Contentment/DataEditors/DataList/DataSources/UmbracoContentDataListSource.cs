@@ -56,21 +56,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "parentNode",
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "imageAlias",
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
                 View =  "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",

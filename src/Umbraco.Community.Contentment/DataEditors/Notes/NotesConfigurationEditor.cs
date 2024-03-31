@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public NotesConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Notes,
                 Name = nameof(Notes),

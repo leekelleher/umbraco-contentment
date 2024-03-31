@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             // TODO: [LK:2022-10-21] Add in "Display Mode" field.
 
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "overlaySize",
                 Name = "Editor overlay size",
@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "size", "m" },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "listType",
                 Name = "List type",
@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
@@ -88,14 +88,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new MaxItemsConfigurationField(_ioHelper),
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowDuplicates",
                 Name = "Allow duplicates?",
                 Description = "Select to allow the editor to select duplicate items.",
                 View = "boolean",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
             },
             new DisableSortingConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key ="confirmRemoval",
                 Name = "Confirm removals?",

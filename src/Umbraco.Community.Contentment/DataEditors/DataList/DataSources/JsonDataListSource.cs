@@ -49,42 +49,42 @@ namespace Umbraco.Community.Contentment.DataEditors
 <hr>
 <p><em>If you are a developer and have ideas on how to extract the <code>key</code> (name) from the items, please do let me know on <a href=""{Constants.Internals.RepositoryUrl}/issues/40"" target=""_blank""><strong>GitHub issue: #40</strong></a>.</em></p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the JSON data source.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "itemsJsonPath",
                 Name = "Items JSONPath",
                 Description = "Enter the JSONPath expression to select the items from the JSON data source.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameJsonPath",
                 Name = "Name JSONPath",
                 Description = "Enter the JSONPath expression to select the name from the item.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueJsonPath",
                 Name = "Value JSONPath",
                 Description = "Enter the JSONPath expression to select the value (key) from the item.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconJsonPath",
                 Name = "Icon JSONPath",
                 Description = "<em>(optional)</em> Enter the JSONPath expression to select the icon from the item.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionJsonPath",
                 Name = "Description JSONPath",

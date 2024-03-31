@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             DefaultConfiguration.Add("inputType", "text");
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "inputType",
                 Name = "Input type",
@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "placeholderText",
                 Name = "Placeholder text",
@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "textstring",
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = Constants.Conventions.ConfigurationFieldAliases.Items,
                 Name = "Data list",
@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Name = "Maximum allowed characters",
                 Key = "maxChars",
@@ -79,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "autocomplete",
                 Name = "Enable autocomplete?",
@@ -87,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "spellcheck",
                 Name = "Enable spellcheck?",
@@ -95,7 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "prepend",
                 Name = "Prepend icon",
@@ -108,7 +108,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "append",
                 Name = "Append icon",

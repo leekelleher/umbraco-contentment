@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Render Macro";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "render-macro.html";
-        internal const string DataEditorIcon = UmbConstants.Icons.Macro;
+        internal const string DataEditorIcon = UmbConstants.Icons.Package;
 
         private readonly IIOHelper _ioHelper;
         private readonly ILocalizedTextService _localizedTextService;
@@ -38,8 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public string Alias => DataEditorAlias;
-
-        public EditorType Type => EditorType.PropertyValue;
 
         public string Name => DataEditorName;
 
@@ -63,7 +61,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _jsonSerializer)
             {
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
 
@@ -86,9 +84,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 #else
                 Configuration = configuration,
 #endif
-                HideLabel = hideLabel,
+                //HideLabel = hideLabel,
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
     }

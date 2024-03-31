@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             DefaultConfiguration.Add("overlaySize", defaultOverlaySize);
             DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = DataSource,
                 Name = "Data source",
@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = DisplayMode,
                 Name = "Display mode",
@@ -84,7 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "pageSize",
                 Name = "Page size",
@@ -92,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "overlaySize",
                 Name = "Editor overlay size",

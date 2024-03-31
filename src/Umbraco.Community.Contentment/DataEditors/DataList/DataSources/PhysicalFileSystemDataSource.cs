@@ -51,21 +51,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "path",
                 Name = "Folder path",
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "filter",
                 Name = "Filename filter",
                 Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>",
                 View = "textstring",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "friendlyName",
                 Name = "Use friendly filenames?",

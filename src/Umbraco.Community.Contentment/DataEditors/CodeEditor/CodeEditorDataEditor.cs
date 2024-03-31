@@ -15,12 +15,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
-        DataEditorName,
-        DataEditorViewPath,
         ValueType = ValueTypes.Text,
-        Group = Constants.Conventions.PropertyGroups.Code,
-        Icon = DataEditorIcon)]
+        ValueEditorIsReusable = true)]
     public sealed class CodeEditorDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CodeEditor";

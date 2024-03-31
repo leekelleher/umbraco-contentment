@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (modes.Count > 0)
             {
                 DefaultConfiguration.Add(Mode, "razor");
-                Fields.Add(new ConfigurationField
+                Fields.Add(new ContentmentConfigurationField
                 {
                     Key = Mode,
                     Name = "Language mode",
@@ -47,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (themes.Count > 0)
             {
                 DefaultConfiguration.Add(Theme, "chrome");
-                Fields.Add(new ConfigurationField
+                Fields.Add(new ContentmentConfigurationField
                 {
                     Key = Theme,
                     Name = nameof(Theme),
@@ -72,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             DefaultConfiguration.Add(FontSize, "small");
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = FontSize,
                 Name = "Font size",
@@ -97,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = UseWrapMode,
                 Name = "Word wrapping",
@@ -119,7 +119,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
 
             DefaultConfiguration.Add(MinLines, 12);
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = MinLines,
                 Name = "Minimum lines",
@@ -128,7 +128,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
 
             DefaultConfiguration.Add(MaxLines, 30);
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = MaxLines,
                 Name = "Maximum lines",

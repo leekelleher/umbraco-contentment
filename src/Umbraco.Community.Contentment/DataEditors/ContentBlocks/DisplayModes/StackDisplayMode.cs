@@ -35,14 +35,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowCopy",
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
                 View = "views/propertyeditors/boolean/boolean.html",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowCreateContentTemplate",
                 Name = "Allow create content template?",

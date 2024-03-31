@@ -50,49 +50,49 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the text-delimited data source.<br>This can be either a remote URL, or local relative file path.",
                 View = "textstring"
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "delimiter",
                 Name = "Delimiter",
                 Description = "Enter the character to use as the delimiter.<br>The default delimiter is a comma, <code>,</code>.",
                 View = "textstring"
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "ignoreFirstLine",
                 Name = "Ignore the first line?",
                 Description = "Select to ignore the first line. Typically with text delimited data sources, the first line can be used for column headings.",
                 View = "boolean"
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameIndex",
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",

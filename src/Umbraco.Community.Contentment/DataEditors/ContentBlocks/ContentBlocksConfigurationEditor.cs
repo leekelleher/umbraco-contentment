@@ -46,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 DefaultConfiguration.Add(DisplayMode, new[] { new { key = defaultDisplayMode.Key, value = defaultDisplayMode.DefaultValues } });
             }
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = DisplayMode,
                 Name = "Display mode",

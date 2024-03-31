@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IconPickerConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "size",
                 Name = "Size",
@@ -48,7 +48,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
-            Fields.Add(new ConfigurationField
+            Fields.Add(new ContentmentConfigurationField
             {
                 Key = "hideColors",
                 Name = "Hide colors?",

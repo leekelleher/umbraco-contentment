@@ -11,7 +11,6 @@ WebApplication app = builder.Build();
 
 await app.BootUmbracoAsync();
 
-
 app.UseUmbraco()
     .WithMiddleware(u =>
     {
@@ -20,7 +19,6 @@ app.UseUmbraco()
     })
     .WithEndpoints(u =>
     {
-        u.UseInstallerEndpoints();
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });

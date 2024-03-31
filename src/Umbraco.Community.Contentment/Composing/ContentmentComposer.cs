@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.Composing
                 .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
-                .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
+                //.AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
             ;
 
             builder.Services.Configure<UmbracoPipelineOptions>(opts =>

@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "start",
                 Name = "Start",
@@ -40,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "end",
                 Name = "End",
@@ -52,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "step",
                 Name = "Step",
@@ -64,7 +64,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, nameof(Decimal).ToUpper() }
                 },
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "decimals",
                 Name = "Decimal places",

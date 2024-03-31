@@ -10,12 +10,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue | EditorType.MacroParameter,
-        DataEditorName,
-        DataEditorViewPath,
         ValueType = ValueTypes.String,
-        Group = UmbConstants.PropertyEditors.Groups.Pickers,
-        Icon = DataEditorIcon)]
+        ValueEditorIsReusable = true)]
     public sealed class IconPickerDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "IconPicker";

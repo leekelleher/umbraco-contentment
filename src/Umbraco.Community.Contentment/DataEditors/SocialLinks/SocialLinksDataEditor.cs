@@ -11,12 +11,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     [DataEditor(
         DataEditorAlias,
-        EditorType.PropertyValue,
-        DataEditorName,
-        DataEditorViewPath,
         ValueType = ValueTypes.Json,
-        Group = UmbConstants.PropertyEditors.Groups.Lists,
-        Icon = DataEditorIcon)]
+        ValueEditorIsReusable = true)]
     public class SocialLinksDataEditor : DataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "SocialLinks";

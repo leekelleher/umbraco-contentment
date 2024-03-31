@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new ShowIconsConfigurationField(),
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key ="confirmRemoval",
                 Name = "Confirm removals?",
