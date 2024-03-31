@@ -1,0 +1,14 @@
+{
+  "id": "Umbraco.Community.NewContentment",
+  "name": "New Contentment",
+  "version": "6.0.0-alpha001",
+  "allowTelemetry": false,
+  "extensions": [
+    {
+      "type": "bundle",
+      "alias": "Umb.Contentment.Bundle",
+      "name": "[Contentment] Bundle",
+      "js": "/App_Plugins/Contentment/umbraco-contentment.js"
+    }
+  ]
+}

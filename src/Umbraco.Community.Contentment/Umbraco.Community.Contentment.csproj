@@ -1,11 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     </PropertyGroup>
 
     <!-- NuGet package metadata -->
@@ -49,6 +47,10 @@
         <Compile Remove="node_modules\**;wwwroot\**" />
         <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
         <None Remove="node_modules\**;wwwroot\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Umbraco.Community.Contentment.StaticAssets\Umbraco.Community.Contentment.StaticAssets.csproj" />
     </ItemGroup>
 
     <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
