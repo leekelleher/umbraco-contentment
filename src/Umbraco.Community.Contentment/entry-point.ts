@@ -11,6 +11,7 @@ import { manifests as propertyEditorManifests } from "./DataEditors/property-edi
 import { manifests as localizationManifests } from "./Localizations/manifests.js";
 
 export * from "./DataEditors/_/hide-label.function.js";
+export * from "./DataEditors/DataList/property-editor-ui.element.js";
 
 const manifests: Array<ManifestTypes | UmbBackofficeManifestKind> = [
     //...propertyActionManifests,
