@@ -50,7 +50,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             }
-
+            else if (source is JArray jValue)
+            {
+                return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(jValue.ToString());
+            }
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
