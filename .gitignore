@@ -21,5 +21,6 @@ build/build-push-umb.ps1
 src/packages/*/**
 src/Umbraco.Cms.*.x/*
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
+src/Umbraco.Community.Contentment.StaticAssets/wwwroot/App_Plugins/Contentment/*
 src/*/node_modules/*
 tools/*.exe
