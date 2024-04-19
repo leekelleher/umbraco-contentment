@@ -1,24 +1,30 @@
-import { LitElement, css, customElement, html, property, query } from '@umbraco-cms/backoffice/external/lit';
-import { loadCodeEditor, type UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
-import { UmbBooleanState } from '@umbraco-cms/backoffice/observable-api';
-import { UmbElementMixin } from '@umbraco-cms/backoffice/element-api';
-import { UmbPropertyValueChangeEvent, type UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
-import type { UmbInputEvent } from '@umbraco-cms/backoffice/event';
-import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
-
-@customElement('contentment-property-editor-ui-code-editor')
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
+import {
+  css,
+  customElement,
+  html,
+  property,
+  state,
+} from "@umbraco-cms/backoffice/external/lit";
+import { loadCodeEditor } from "@umbraco-cms/backoffice/code-editor";
+import { UmbInputEvent } from "@umbraco-cms/backoffice/event";
+import { UmbLitElement } from "@umbraco-cms/backoffice/lit-element";
+import { UmbPropertyValueChangeEvent } from "@umbraco-cms/backoffice/property-editor";
+import type { UmbCodeEditorElement } from "@umbraco-cms/backoffice/code-editor";
+import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
+import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
+
+type CodeEditorLanguage = UmbCodeEditorElement["language"];
+
+@customElement("contentment-property-editor-ui-code-editor")
 export class ContentmentPropertyEditorUICodeEditorElement
-  extends UmbElementMixin(LitElement)
-  implements UmbPropertyEditorUiElement {
-
-  #isCodeEditorReady = new UmbBooleanState(false);
-  #loaded = this.#isCodeEditorReady.asObservable();
-
-  @query('umb-code-editor')
-  private _codeEditor?: UmbCodeEditorElement;
+  extends UmbLitElement
+  implements UmbPropertyEditorUiElement
+{
+  @state()
+  private _loading = true;
 
   constructor() {
     super();
@@ -28,40 +34,43 @@ export class ContentmentPropertyEditorUICodeEditorElement
   async #loadCodeEditor() {
     try {
       await loadCodeEditor();
-      this.#isCodeEditorReady.setValue(true);
+      this._loading = false;
     } catch (error) {
       console.error(error);
     }
   }
 
-  #language?: string;
+  #language?: CodeEditorLanguage;
 
   @property()
   public value?: string;
 
   @property({ attribute: false })
   public set config(config: UmbPropertyEditorConfigCollection) {
-    this.#language = config.getValueByAlias('mode') ?? 'razor';
+    if (!config) return;
+    this.#language = config.getValueByAlias<CodeEditorLanguage>("mode");
   }
 
-  #onChange(event: UmbInputEvent) {
-    event.stopPropagation();
-    this.value = this._codeEditor?.code;
+  #onChange(event: UmbInputEvent & { target: UmbCodeEditorElement }) {
+    if (!(event instanceof UmbInputEvent)) return;
+    this.value = event.target.code;
     this.dispatchEvent(new UmbPropertyValueChangeEvent());
   }
 
   render() {
-    return this.#loaded ? this.#renderCodeEditor() : this.#renderLoading();
+    return !this._loading ? this.#renderCodeEditor() : this.#renderLoading();
   }
 
   #renderCodeEditor() {
     return html`
-        <div id='code-editor'>
-            <umb-code-editor language='${this.#language}'
-                              .code='${this.value ?? ''}'
-                              @input='${this.#onChange}'>
-            </umb-code-editor>
-        </div>
+      <div id="code-editor">
+        <umb-code-editor
+          language=${this.#language ?? "razor"}
+          .code=${this.value ?? ""}
+          @input=${this.#onChange}
+        >
+        </umb-code-editor>
+      </div>
     `;
   }
 
@@ -71,14 +80,15 @@ export class ContentmentPropertyEditorUICodeEditorElement
 
   static styles = [
     css`
-        #code-editor {
-            display: flex;
-            height: 200px;
-        }
-            #code-editor > umb-code-editor {
-                width: 100%;
-            }
-    `
+      #code-editor {
+        display: flex;
+        height: 200px;
+        margin-left: -30px;
+      }
+      #code-editor > umb-code-editor {
+        width: 100%;
+      }
+    `,
   ];
 }
 
@@ -86,6 +96,6 @@ export default ContentmentPropertyEditorUICodeEditorElement;
 
 declare global {
   interface HTMLElementTagNameMap {
-    'contentment-property-editor-ui-code-editor': ContentmentPropertyEditorUICodeEditorElement;
+    "contentment-property-editor-ui-code-editor": ContentmentPropertyEditorUICodeEditorElement;
   }
 }
