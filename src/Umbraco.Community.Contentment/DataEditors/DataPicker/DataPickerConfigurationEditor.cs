@@ -118,6 +118,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             });
 
+            Fields.Add(new ConfigurationField
+            {
+                Key = "hideSearch",
+                Name = "Hide search box?",
+                Description = "Hide the search box in the overlay panel.",
+                View = "boolean",
+            });
+
             Fields.Add(new MaxItemsConfigurationField(ioHelper));
             Fields.Add(new EnableDevModeConfigurationField());
         }
