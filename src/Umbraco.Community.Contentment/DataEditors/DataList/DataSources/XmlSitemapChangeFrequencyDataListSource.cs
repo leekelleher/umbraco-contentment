@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapChangeFrequencyDataListSource : IDataListSource
+    public sealed class XmlSitemapChangeFrequencyDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly string[] _options;
 
@@ -26,21 +26,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public string Name => "XML Sitemap: Change Frequency";
+        public override string Name => "XML Sitemap: Change Frequency";
 
-        public string Description => "Populate the data source using XML Sitemap change frequency values.";
+        public override string Description => "Populate the data source using XML Sitemap change frequency values.";
 
-        public string Icon => "icon-fa fa-signal";
+        public override string Icon => "icon-fa fa-signal";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Web;
+        public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _options.Select(x => new DataListItem { Name = x.ToFirstUpperInvariant(), Value = x });
         }

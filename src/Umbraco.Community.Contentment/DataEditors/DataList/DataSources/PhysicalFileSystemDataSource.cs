@@ -13,7 +13,7 @@ using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class PhysicalFileSystemDataSource : IDataListSource, IContentmentListTemplateItem
+    public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
@@ -35,21 +35,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _logger = logger;
         }
 
-        public string Name => "File System";
+        public override string Name => "File System";
 
         public string? NameTemplate => default;
 
-        public string Description => "Select paths from the physical file system as the data source.";
+        public override string Description => "Select paths from the physical file system as the data source.";
 
         public string? DescriptionTemplate => "{{ path }}; {{ filter }}";
 
-        public string Icon => "icon-folder-close";
+        public override string Icon => "icon-folder-close";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -74,13 +74,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "path", "~/css" },
             { "filter", "*.css" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var path = config.GetValueAs("path", string.Empty);
             var filter = config.GetValueAs("filter", string.Empty);

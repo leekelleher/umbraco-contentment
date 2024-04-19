@@ -12,7 +12,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TextDelimitedDataListSource : IDataListSource, IContentmentListTemplateItem
+    public sealed class TextDelimitedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -29,21 +29,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Text Delimited Data";
+        public override string Name => "Text Delimited Data";
 
         public string? NameTemplate => default;
 
-        public string Description => "Configure text-delimited data to populate the data source.";
+        public override string Description => "Configure text-delimited data to populate the data source.";
 
         public string? DescriptionTemplate => "{{ url }}";
 
-        public string Icon => "icon-fa fa-file-text-o";
+        public override string Icon => "icon-fa fa-file-text-o";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about using this data source.</strong></summary>
@@ -101,7 +101,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.csv" },
             { "delimiter", "," },
@@ -111,7 +111,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionIndex", 3 },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new List<DataListItem>();
 

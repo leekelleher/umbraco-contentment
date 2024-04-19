@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             else
             {
                 items = GetItems(config)
-                    .Where(x => x.Name.InvariantContains(query) == true || x.Value.InvariantStartsWith(query) == true);
+                    .Where(x => x.Name?.InvariantContains(query) == true || x.Value?.InvariantStartsWith(query) == true);
             }
 
             if (items?.Any() == true)

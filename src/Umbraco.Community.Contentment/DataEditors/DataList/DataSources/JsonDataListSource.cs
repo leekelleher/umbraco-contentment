@@ -13,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class JsonDataListSource : IDataListSource, IContentmentListTemplateItem
+    public sealed class JsonDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -26,21 +26,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "JSON Data";
+        public override string Name => "JSON Data";
 
         public string? NameTemplate => default;
 
-        public string Description => "Configure JSON data to populate the data source.";
+        public override string Description => "Configure JSON data to populate the data source.";
 
         public string? DescriptionTemplate => "{{ url }}";
 
-        public string Icon => "icon-brackets";
+        public override string Icon => "icon-brackets";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
@@ -93,7 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.json" },
             { "itemsJsonPath", "$[*]" },
@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionJsonPath", "$.description" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var url = config.GetValueAs("url", string.Empty);
 
@@ -181,6 +181,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             catch (Exception)
             {
                // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
+                // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
             }
 
             return Enumerable.Empty<DataListItem>();

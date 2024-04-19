@@ -1,4 +1,4 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -27,6 +27,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             defaultValue: [],
             displayMode: "cards",
             enableDevMode: 0,
+            hideSearch: 0,
             maxItems: 0,
             overlaySize: "medium",
             overlayView: "",
@@ -113,6 +114,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     currentPageId: config.currentPageId,
                     dataTypeKey: $scope.model.dataTypeKey,
                     enableMultiple: config.maxItems !== 1,
+                    hideSearch: Object.toBoolean(config.hideSearch),
                     listType: config.displayMode,
                     pageSize: config.pageSize,
                 },

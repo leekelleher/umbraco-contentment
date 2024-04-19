@@ -12,7 +12,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
 #pragma warning disable IDE1006 // Naming Styles
-    public class uCssClassNameDataListSource : IDataListSource
+    public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IDataListSource
 #pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -26,15 +26,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "uCssClassName";
+        public override string Name => "uCssClassName";
 
-        public string Description => "A homage to @marcemarc's bingo-famous uCssClassNameDropdown package!";
+        public override string Description => "A homage to @marcemarc's bingo-famous uCssClassNameDropdown package!";
 
-        public string Icon => "icon-fa fa-css3";
+        public override string Icon => "icon-fa fa-css3";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Web;
+        public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
@@ -78,7 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
@@ -86,9 +86,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "iconPattern", "icon-fa fa-{0}" },
         };
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var cssPath = config.GetValueAs("cssPath", string.Empty) ?? string.Empty;
             var cssRegex = config.GetValueAs("cssRegex", string.Empty) ?? string.Empty;

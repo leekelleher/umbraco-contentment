@@ -1,4 +1,4 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -16,6 +16,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             dataTypeKey: null,
             defaultIcon: "icon-science",
             enableMultiple: false,
+            hideSearch: false,
             listType: "cards",
             pageSize: 12,
         };
@@ -28,6 +29,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             vm.title = "Select items...";
             vm.defaultIcon = config.defaultIcon || "icon-science";
             vm.enableMultiple = config.enableMultiple;
+            vm.hideSearch = config.hideSearch;
             vm.listType = config.listType;
 
             vm.loading = true;
@@ -74,7 +76,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
                 "Failed to retrieve search data.")
                 .then(function (data) {
                     vm.loading = false;
-                    vm.items = data.items;
+                    vm.items = data.items || [];
                     vm.searchOptions.totalPages = data.totalPages;
                 });
         };

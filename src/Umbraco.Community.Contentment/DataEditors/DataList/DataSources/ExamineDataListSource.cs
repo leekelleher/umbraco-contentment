@@ -16,7 +16,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ExamineDataListSource : IDataListSource
+    public sealed class ExamineDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
 
         private readonly IContentmentContentContext _contentmentContentContext;
@@ -76,17 +76,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _shortStringHelper = shortStringHelper;
         }
 
-        public string Name => "Examine Query";
+        public override string Name => "Examine Query";
 
-        public string Description => "Populate the data source from an Examine query.";
+        public override string Description => "Populate the data source from an Examine query.";
 
-        public string Icon => "icon-search";
+        public override string Icon => "icon-search";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -155,7 +155,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName },
             { "luceneQuery", "+__IndexType:content" },
@@ -165,7 +165,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionField", string.Empty },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var examineIndex = config.GetValueAs("examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName);
             if (_examineManager.TryGetIndex(examineIndex, out var index) == true)

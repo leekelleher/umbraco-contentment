@@ -8,6 +8,7 @@ The following property editors are available...
 - [Code Editor](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/code-editor.md) - a code snippet editor, _(using the ACE library that is bundled with Umbraco)._
 - [Content Blocks](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
+- [Data Picker](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/editor-notes.md) - Similar to [Notes](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
 - [Notes](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.

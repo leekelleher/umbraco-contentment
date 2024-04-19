@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTagsDataListSource : IDataListSource
+    public sealed class UmbracoTagsDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -20,17 +20,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string Name => "Umbraco Tags";
+        public override string Name => "Umbraco Tags";
 
-        public string Description => "Populate the data source using already defined tags.";
+        public override string Description => "Populate the data source using already defined tags.";
 
-        public string Icon => "icon-tags";
+        public override string Icon => "icon-tags";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -41,12 +41,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "tagGroup", "default" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var tagGroup = config.GetValueAs("tagGroup", defaultValue: string.Empty);
 

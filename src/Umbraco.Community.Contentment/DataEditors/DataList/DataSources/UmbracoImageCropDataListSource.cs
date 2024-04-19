@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoImageCropDataListSource : IDataListSource
+    public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;
         private readonly IIOHelper _ioHelper;
@@ -24,15 +24,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Image Crops";
+        public override string Name => "Umbraco Image Crops";
 
-        public string Description => "Select an Image Cropper data-type to use its defined crops to populate the data source.";
+        public override string Description => "Select an Image Cropper data-type to use its defined crops to populate the data source.";
 
-        public string Icon => "icon-crop";
+        public override string Icon => "icon-crop";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields
+        public override IEnumerable<ConfigurationField> Fields
         {
             get
             {
@@ -64,11 +64,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             if (config.TryGetValue("imageCropper", out var obj) == true &&
                 obj is string str &&

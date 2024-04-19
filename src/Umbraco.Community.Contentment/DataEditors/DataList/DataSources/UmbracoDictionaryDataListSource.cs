@@ -13,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoDictionaryDataListSource : IDataListSource
+    public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly ILocalizationService _localizationService;
         private readonly IIOHelper _ioHelper;
@@ -26,15 +26,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Dictionary Items";
+        public override string Name => "Umbraco Dictionary Items";
 
-        public string Description => "Select an Umbraco dictionary item to populate the data source with its child items.";
+        public override string Description => "Select an Umbraco dictionary item to populate the data source with its child items.";
 
-        public string Icon => "icon-book-alt";
+        public override string Icon => "icon-book-alt";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -49,11 +49,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             if (config.TryGetValueAs("item", out JArray? array) == true &&
                 array?.Count > 0 &&

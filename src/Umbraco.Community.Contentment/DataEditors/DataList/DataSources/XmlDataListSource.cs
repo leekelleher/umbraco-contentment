@@ -13,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlDataListSource : IDataListSource, IContentmentListTemplateItem
+    public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -26,21 +26,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "XML Data";
+        public override string Name => "XML Data";
 
         public string? NameTemplate => default;
 
-        public string Description => "Configure XML data to populate the data source.";
+        public override string Description => "Configure XML data to populate the data source.";
 
         public string? DescriptionTemplate => "{{ url }}";
 
-        public string Icon => "icon-code";
+        public override string Icon => "icon-code";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -94,7 +94,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.xml" },
             { "itemsXPath", "/items/item" },
@@ -104,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionXPath", "@description" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var url = config.GetValueAs("url", string.Empty);
 

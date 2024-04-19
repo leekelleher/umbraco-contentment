@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoFilesDataListSource : IDataListSource
+    public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private static readonly Dictionary<string, string> _icons = new()
         {
@@ -33,17 +33,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _textService = textService;
         }
 
-        public string Name => "Umbraco Files";
+        public override string Name => "Umbraco Files";
 
-        public string Description => "Use files defined in Umbraco, such as scripts or stylesheets.";
+        public override string Description => "Use files defined in Umbraco, such as scripts or stylesheets.";
 
-        public string Icon => "icon-notepad-alt";
+        public override string Icon => "icon-notepad-alt";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -98,13 +98,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "fileType", UmbConstants.UdiEntityType.Stylesheet },
             { "valueType", "alias" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var fileType = config.GetValueAs("fileType", defaultValue: UmbConstants.UdiEntityType.Stylesheet) ?? UmbConstants.UdiEntityType.Stylesheet;
             var valueType = config.GetValueAs("valueType", defaultValue: "alias") ?? "alias";

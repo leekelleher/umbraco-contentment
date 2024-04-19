@@ -14,7 +14,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed partial class SqlDataListSource : IDataListSource
+    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
@@ -51,17 +51,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "SQL Data";
+        public override string Name => "SQL Data";
 
-        public string Description => "Use a SQL Server database query as the data source.";
+        public override string Description => "Use a SQL Server database query as the data source.";
 
-        public string Icon => "icon-server-alt";
+        public override string Icon => "icon-server-alt";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public OverlaySize OverlaySize => OverlaySize.Medium;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
@@ -103,13 +103,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "query", $"SELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n\r\n-- This is an example query that will select all the content nodes that are at level 1.\r\n;" },
             { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var items = new List<DataListItem>();
 

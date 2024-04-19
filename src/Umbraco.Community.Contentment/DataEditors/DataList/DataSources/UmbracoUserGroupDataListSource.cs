@@ -9,7 +9,7 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoUserGroupDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoUserGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IUserService _userService;
 
@@ -18,21 +18,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _userService = userService;
         }
 
-        public string Name => "Umbraco User Groups";
+        public override string Name => "Umbraco User Groups";
 
-        public string Description => "Populate the data source with Umbraco user groups.";
+        public override string Description => "Populate the data source with Umbraco user groups.";
 
-        public string Icon => UmbConstants.Icons.UserGroup;
+        public override string Icon => UmbConstants.Icons.UserGroup;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _userService
                 .GetAllUserGroups()

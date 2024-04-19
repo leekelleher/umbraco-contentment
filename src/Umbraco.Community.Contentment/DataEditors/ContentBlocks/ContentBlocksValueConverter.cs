@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
@@ -41,6 +42,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (source is string value)
             {
                 return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+            }
+
+            if (source is JArray array && array.Any() == true)
+            {
+                return array.ToObject<IEnumerable<ContentBlock>>();
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);

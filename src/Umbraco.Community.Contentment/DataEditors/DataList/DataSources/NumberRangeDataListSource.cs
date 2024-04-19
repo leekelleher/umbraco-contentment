@@ -9,7 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class NumberRangeDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class NumberRangeDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IIOHelper _ioHelper;
 
@@ -18,15 +18,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Number Range";
+        public override string Name => "Number Range";
 
-        public string Description => "Generates a sequence of numbers within a specified range.";
+        public override string Description => "Generates a sequence of numbers within a specified range.";
 
-        public string Icon => "icon-fa fa-sort-numeric-asc";
+        public override string Icon => "icon-fa fa-sort-numeric-asc";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object>? DefaultValues => new()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "start", 1 },
             { "end", 10 },
@@ -88,9 +88,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "decimals", 0 },
         };
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var start = config.GetValueAs("start", defaultValue: default(double));
             var end = config.GetValueAs("end", defaultValue: default(double));
