@@ -1,8 +1,3 @@
-/* Copyright © 2023 Lee Kelleher.
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-
 import { LitElement, css, customElement, html, property, query } from '@umbraco-cms/backoffice/external/lit';
 import { loadCodeEditor, type UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
 import { UmbBooleanState } from '@umbraco-cms/backoffice/observable-api';
@@ -12,6 +7,9 @@ import type { UmbInputEvent } from '@umbraco-cms/backoffice/event';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
 @customElement('contentment-property-editor-ui-code-editor')
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2023 Lee Kelleher
+
 export class ContentmentPropertyEditorUICodeEditorElement
   extends UmbElementMixin(LitElement)
   implements UmbPropertyEditorUiElement {

@@ -1,8 +1,3 @@
-/* Copyright © 2023 Lee Kelleher.
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-
 import { css, customElement, html, property, when, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { tryHideLabel } from '../../../utils/hide-label.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -12,6 +7,9 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extensi
 
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2023 Lee Kelleher
 
   #hideLabel: boolean = false;
 
