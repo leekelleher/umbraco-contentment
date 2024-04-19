@@ -6,11 +6,11 @@ import type { ManifestLocalization } from '@umbraco-cms/backoffice/extension-reg
 export const manifests: Array<ManifestLocalization> = [
   {
     type: 'localization',
-    name: '[Contentment] English (US)',
-    alias: 'Umb.Contentment.Localization.En_US',
-    js: () => import('./en-us.js'),
+    name: '[Contentment] English',
+    alias: 'Umb.Contentment.Localization.En',
+    js: () => import('./en.js'),
     meta: {
-      culture: 'en-us',
+      culture: 'en',
     },
   },
 ];
