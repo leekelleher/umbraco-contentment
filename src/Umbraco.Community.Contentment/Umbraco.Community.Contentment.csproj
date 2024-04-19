@@ -17,7 +17,7 @@
         <Version>5.0.0-develop</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
-        <Copyright>2019 © Lee Kelleher</Copyright>
+        <Copyright>2019 Â© Lee Kelleher</Copyright>
         <PackageId>Umbraco.Community.Contentment</PackageId>
         <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>

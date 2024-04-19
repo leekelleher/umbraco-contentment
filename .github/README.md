@@ -54,8 +54,8 @@ Downloads are available on the [releases page](../releases).
 
 _**Please note...**_
 
-- v5.x supports **Umbraco v13** (on .NET 8.0) only.
-- v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v11/v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0).
+- v5.x supports **Umbraco v13.2.0  ** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
+- v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x supports **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x supports **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
@@ -86,9 +86,6 @@ _Let's call those "life's little surprises"._
 - **Data List**
   - When using the **Umbraco Content** data source with an XPath query, inside a Nested Content or Block List editors, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the **Umbraco Content** data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
-  - With Umbraco v10 (Contentment v4), **SQL** data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
-- **.NET Publish with .NET 6 (or newer)**
-  - When using .NET Publish with .NET 6 (or newer versions of .NET). [See #361 for details](https://github.com/leekelleher/umbraco-contentment/issues/361).
 
 
 ### [Roadmap](ROADMAP.md)
@@ -132,7 +129,7 @@ All source code is licensed under the [Mozilla Public License](../LICENSE).
 <summary><strong>A note about licensing</strong></summary>
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
-The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
+The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code **and** distribute those modifications, then you **must** make those changes publicly available.
 
 _More give, less take._
 
