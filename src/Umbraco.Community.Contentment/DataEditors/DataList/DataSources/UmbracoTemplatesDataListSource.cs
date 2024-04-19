@@ -25,7 +25,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTemplatesDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoTemplatesDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IFileService _fileService;
         private readonly IIOHelper _ioHelper;
@@ -38,17 +38,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Templates";
+        public override string Name => "Umbraco Templates";
 
-        public string Description => "Populate the data source using defined view templates.";
+        public override string Description => "Populate the data source using defined view templates.";
 
-        public string Icon => UmbConstants.Icons.Template;
+        public override string Icon => UmbConstants.Icons.Template;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -85,12 +85,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
         {
             { "valueType", "udi" },
         };
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var valueType = config.GetValueAs("valueType", defaultValue: "udi");
 

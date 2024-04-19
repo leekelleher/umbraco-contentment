@@ -20,7 +20,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMemberGroupDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoMemberGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IMemberGroupService _memberGroupService;
 
@@ -29,21 +29,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _memberGroupService = memberGroupService;
         }
 
-        public string Name => "Umbraco Member Groups";
+        public override string Name => "Umbraco Member Groups";
 
-        public string Description => "Populate the data source with Umbraco member groups.";
+        public override string Description => "Populate the data source with Umbraco member groups.";
 
-        public string Icon => UmbConstants.Icons.MemberGroup;
+        public override string Icon => UmbConstants.Icons.MemberGroup;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _memberGroupService
                 .GetAll()

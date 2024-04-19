@@ -119,9 +119,13 @@ Property Editors are:
 - [Data Picker](https://github.com/leekelleher/umbraco-contentment/pull/297)
 - Data List: [Umbraco Backoffice Sections](https://github.com/leekelleher/umbraco-contentment/commit/c8a2f0f8552b2ad3a778782f13c45cbb18aff88c) data-source.
 
-### v4.6
+### [v4.6](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.6.0)
 
 - A non-breaking-change minor release. Adds support for Umbraco v13, .NET 8.0. _(Whilst still supporting v8.17+, v9, v10, v11 and v12)._
+
+### [v4.7](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.7.0)
+
+- Data Picker: [Data List source bridge](https://github.com/leekelleher/umbraco-contentment/pull/393) _(to enable all the built-in Data List sources within Data Picker)._
 
 
 ## v5

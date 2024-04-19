@@ -73,6 +73,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+                    { "help", new {
+                        @class = "alert alert-info",
+                        title = "Do you need a custom data-source?",
+                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data Picker with your own custom data source.</p>
+<p>To do this, read the documentation on <a href=""{Constants.Package.RepositoryUrl}/blob/develop/docs/editors/data-picker.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
                 }
             });
 
@@ -116,6 +121,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "labelStyle", "text" },
                     { "size", "m" },
                 }
+            });
+
+            Fields.Add(new ConfigurationField
+            {
+                Key = "hideSearch",
+                Name = "Hide search box?",
+                Description = "Hide the search box in the overlay panel.",
+                View = "boolean",
             });
 
             Fields.Add(new MaxItemsConfigurationField(ioHelper));

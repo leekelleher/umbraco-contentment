@@ -25,7 +25,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoUsersDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoUsersDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IIOHelper _ioHelper;
         private readonly IUserService _userService;
@@ -36,15 +36,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _userService = userService;
         }
 
-        public string Name => "Umbraco Users";
+        public override string Name => "Umbraco Users";
 
-        public string Description => "Use Umbraco users to populate the data source.";
+        public override string Description => "Use Umbraco users to populate the data source.";
 
-        public string Icon => UmbConstants.Icons.User;
+        public override string Icon => UmbConstants.Icons.User;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields
+        public override IEnumerable<ConfigurationField> Fields
         {
             get
             {
@@ -80,11 +80,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             DataListItem mapUser(IUser user)
             {
