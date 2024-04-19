@@ -27,9 +27,10 @@ namespace Umbraco.Community.Contentment.Services
                 xpathExpression = xpathExpression.Replace("$parent", $"id({nodeContextId})");
             }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
+            return xpathExpression;
+//#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

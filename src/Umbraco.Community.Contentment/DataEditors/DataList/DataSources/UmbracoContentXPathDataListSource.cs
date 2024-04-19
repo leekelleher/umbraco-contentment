@@ -91,12 +91,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                 {
-#pragma warning disable CS0618 // Type or member is obsolete
-                    return contentCache
-                        .GetByXPath(preview, parsed)
-                        .Select(DataListItemExtensions.ToDataListItem)
-                        .ToList();
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//                    return contentCache
+//                        .GetByXPath(preview, parsed)
+//                        .Select(DataListItemExtensions.ToDataListItem)
+//                        .ToList();
+                    return Enumerable.Empty<DataListItem>();
+//#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 

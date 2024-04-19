@@ -39,8 +39,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Core" Version="14.0.0-beta002" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0-beta002" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="14.0.0-rc1" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0-rc1" />
     </ItemGroup>
 
     <ItemGroup>

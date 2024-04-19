@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _imageSourceParser = imageSourceParser;
         }
 
-        public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
+        public IDictionary<string, object> FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 

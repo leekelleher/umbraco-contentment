@@ -93,9 +93,9 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                     {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        startNode = umbracoContext.Content?.GetSingleByXPath(preview, parsed);
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//                        startNode = umbracoContext.Content?.GetSingleByXPath(preview, parsed);
+//#pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
                 else if (UdiParser.TryParse(contentNode, out GuidUdi? udi) == true && udi is not null && udi.Guid != Guid.Empty)
