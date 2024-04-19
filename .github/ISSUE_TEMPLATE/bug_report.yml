@@ -1,5 +1,5 @@
 name: "Bug report"
-description: "File a bug report to help us improve."
+description: "File a bug report to help us improve Contentment."
 labels: ["bug-report"]
 assignees:
   - leekelleher
@@ -12,13 +12,13 @@ body:
   id: "contentmentVersion"
   attributes:
     label: "Which Contentment version are you using?"
-    description: "If you are unsure, we'll assume it's the latest version."
+    description: "If you are unsure, let's' assume it's the latest version."
   validations:
     required: true
 - type: input
   id: "umbracoVersion"
   attributes:
-    label: "Which Umbraco version are you using? For example: 13.0.2 - don't just write v13"
+    label: "Which Umbraco version are you using? For example: 13.2.1 - don't just write v13"
     description: "Use the help icon in the Umbraco backoffice to find the version you're using."
   validations:
     required: true
@@ -67,7 +67,7 @@ body:
     label: What browsers are you seeing the problem on?
     multiple: true
     options:
-      - Firefox
       - Chrome
+      - Edge
+      - Firefox
       - Safari
-      - Microsoft Edge
