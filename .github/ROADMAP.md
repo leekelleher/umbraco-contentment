@@ -153,4 +153,4 @@ Property Editors are:
 
 _Who knows?!_ `¯\_(ツ)_/¯`
 
-**I have [a bunch of ideas](IDEAS.md)**, or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
+...or [suggest your own idea?](https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas)
