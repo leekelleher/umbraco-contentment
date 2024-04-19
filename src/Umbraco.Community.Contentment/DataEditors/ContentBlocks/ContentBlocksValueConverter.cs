@@ -5,7 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Umbraco.Community.Contentment.Web.PublishedCache;
 #if NET472
 using Umbraco.Core;
@@ -50,10 +52,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
             }
-            else if (source is JArray jValue)
+
+            if (source is JArray array && array.Any() == true)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(jValue.ToString());
+                return array.ToObject<IEnumerable<ContentBlock>>();
             }
+
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
