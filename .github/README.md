@@ -146,10 +146,10 @@ For more information about the **Mozilla Public License**, please visit: <https:
 
 #### Developers
 
-- [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://mastodon.social/@leekelleher))
+- [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~1,816+ hours</b> (between 2019-03-13 to 2024-01-05)</summary>
+<summary>Current development effort: <b>~1,840+ hours</b> (between 2019-03-13 to 2024-04-19)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 
