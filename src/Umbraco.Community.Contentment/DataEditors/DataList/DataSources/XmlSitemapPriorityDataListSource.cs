@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Generic;
+using System.Linq;
 #if NET472
 using Umbraco.Core.PropertyEditors;
 #else
@@ -12,23 +13,23 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapPriorityDataListSource : IDataListSource
+    public sealed class XmlSitemapPriorityDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
-        public string Name => "XML Sitemap: Priority";
+        public override string Name => "XML Sitemap: Priority";
 
-        public string Description => "Populate the data source using XML Sitemap priority values.";
+        public override string Description => "Populate the data source using XML Sitemap priority values.";
 
-        public string Icon => "icon-fa fa-exclamation-circle";
+        public override string Icon => "icon-fa fa-exclamation-circle";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Web;
+        public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             for (var i = 0.0D; i <= 1.0D; i += 0.1D)
             {

@@ -29,7 +29,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoEntityDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
         {
@@ -69,15 +69,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Entities";
+        public override string Name => "Umbraco Entities";
 
-        public string Description => "Select an Umbraco entity type to populate the data source.";
+        public override string Description => "Select an Umbraco entity type to populate the data source.";
 
-        public string Icon => "icon-lab";
+        public override string Icon => "icon-lab";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
@@ -103,11 +103,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             if (config.TryGetValueAs("entityType", out string entityType) == true && SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
             {

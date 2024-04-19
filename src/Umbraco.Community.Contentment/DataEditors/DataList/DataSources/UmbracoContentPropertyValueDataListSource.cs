@@ -34,7 +34,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
 {
-    public sealed class UmbracoContentPropertyValueDataListSource : IDataListSource
+    public sealed class UmbracoContentPropertyValueDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
         private readonly IContentmentContentContext _contentmentContentContext;
@@ -53,15 +53,15 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
-        public string Name => "Umbraco Content Property Values";
+        public override string Name => "Umbraco Content Property Values";
 
-        public string Description => "Use Umbraco content property values to populate a data source.";
+        public override string Description => "Use Umbraco content property values to populate a data source.";
 
-        public string Icon => "icon-umbraco";
+        public override string Icon => "icon-umbraco";
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -79,11 +79,11 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
             },
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var contentNode = config.GetValueAs("contentNode", string.Empty);
             var propertyAlias = config.GetValueAs("propertyAlias", string.Empty);

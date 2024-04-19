@@ -26,7 +26,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentXPathDataListSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoContentXPathDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -42,15 +42,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Content by XPath";
+        public override string Name => "Umbraco Content by XPath";
 
-        public string Description => "Use an XPath query to select Umbraco content to use as the data source.";
+        public override string Description => "Use an XPath query to select Umbraco content to use as the data source.";
 
-        public string Icon => "icon-fa fa-file-code-o";
+        public override string Icon => "icon-fa fa-file-code-o";
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new ConfigurationField
             {
@@ -79,14 +79,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 </details>", true),
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
         {
             { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
         };
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var xpath = config.GetValueAs("xpath", string.Empty);
 

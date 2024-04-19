@@ -28,7 +28,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
+    public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IIOHelper _ioHelper;
@@ -56,23 +56,23 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => ".NET Enumeration";
+        public override string Name => ".NET Enumeration";
 
         public string NameTemplate => default;
 
-        public string Description => "Select an enumeration from a .NET assembly as the data source.";
+        public override string Description => "Select an enumeration from a .NET assembly as the data source.";
 
         public string DescriptionTemplate => "{{ enumType[1] }}";
 
-        public string Icon => "icon-indent";
+        public override string Icon => "icon-indent";
 
-        public string Group => Constants.Conventions.DataSourceGroups.DotNet;
+        public override string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -134,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return (items, values);
         }
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var type = GetValueType(config);
 

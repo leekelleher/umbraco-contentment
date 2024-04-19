@@ -19,7 +19,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoBackofficeSectionsDataSource : IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoBackofficeSectionsDataSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly ISectionService _sectionService;
 
@@ -28,21 +28,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _sectionService = sectionService;
         }
 
-        public string Name => "Umbraco Backoffice Sections";
+        public override string Name => "Umbraco Backoffice Sections";
 
-        public string Description => "Use the backoffice sections to populate the data source.";
+        public override string Description => "Use the backoffice sections to populate the data source.";
 
-        public string Icon => "icon-section";
+        public override string Icon => "icon-section";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _sectionService
                 .GetSections()

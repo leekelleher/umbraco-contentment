@@ -20,7 +20,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UserDefinedDataListSource : IDataListSource, IContentmentListTemplateItem
+    public sealed class UserDefinedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IIOHelper _ioHelper;
 
@@ -29,19 +29,19 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "User-defined List";
+        public override string Name => "User-defined List";
 
         public string NameTemplate => default;
 
-        public string Description => "Manually configure the items for the data source.";
+        public override string Description => "Manually configure the items for the data source.";
 
         public string DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
 
-        public string Icon => UmbConstants.Icons.DataType;
+        public override string Icon => UmbConstants.Icons.DataType;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -81,11 +81,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Medium;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return config.TryGetValueAs("items", out JArray array) == true
                 ? array.ToObject<IEnumerable<DataListItem>>().DistinctBy(x => x.Value)

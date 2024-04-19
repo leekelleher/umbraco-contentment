@@ -24,7 +24,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentPropertiesDataListSource : IDataListSource
+    public sealed class UmbracoContentPropertiesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
@@ -41,15 +41,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
         }
 
-        public string Name => "Umbraco Content Properties";
+        public override string Name => "Umbraco Content Properties";
 
-        public string Description => "Populate the data source using a Content Type's properties.";
+        public override string Description => "Populate the data source using a Content Type's properties.";
 
-        public string Icon => "icon-fa fa-tasks";
+        public override string Icon => "icon-fa fa-tasks";
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields
+        public override IEnumerable<ConfigurationField> Fields
         {
             get
             {
@@ -99,11 +99,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             if (config.TryGetValueAs("contentType", out JArray array) == true &&
                 array.Count > 0 &&
