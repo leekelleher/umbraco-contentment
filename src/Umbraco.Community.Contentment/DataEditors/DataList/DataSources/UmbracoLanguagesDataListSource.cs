@@ -17,7 +17,7 @@ using UmbConstants = Umbraco.Cms.Core.Constants;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoLanguagesDataListSource : IDataListSource
+    public sealed class UmbracoLanguagesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly ILocalizationService _localizationService;
 
@@ -26,21 +26,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _localizationService = localizationService;
         }
 
-        public string Name => "Umbraco Languages";
+        public override string Name => "Umbraco Languages";
 
-        public string Description => "Populate the data source with languages configured in Umbraco.";
+        public override string Description => "Populate the data source with languages configured in Umbraco.";
 
-        public string Icon => UmbConstants.Icons.Language;
+        public override string Icon => UmbConstants.Icons.Language;
 
-        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object> DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _localizationService
                 .GetAllLanguages()
