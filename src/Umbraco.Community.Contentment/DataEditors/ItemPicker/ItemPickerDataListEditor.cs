@@ -134,5 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => "Umb.PropertyEditorUi.ItemPicker";
     }
 }

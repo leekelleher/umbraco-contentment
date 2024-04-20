@@ -11,6 +11,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         bool HasMultipleValues(Dictionary<string, object>? config);
 
+        [Obsolete("Migrate to use `PropertyEditorUiAlias`.")]
         string View { get; }
+
+        string PropertyEditorUiAlias { get; }
     }
 }
