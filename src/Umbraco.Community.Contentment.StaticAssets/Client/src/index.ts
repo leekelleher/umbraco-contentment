@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { manifests as localizations } from "./localization/manifests.js";
-import { manifests as propertyEditors } from './property-editor/manifests.js';
+import { manifests as propertyEditors } from './property-editor-ui/manifests.js';
 import type { ManifestTypes, UmbBackofficeManifestKind } from '@umbraco-cms/backoffice/extension-registry';
 
 export * from './components/index.js';

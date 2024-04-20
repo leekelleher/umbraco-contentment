@@ -2,7 +2,7 @@
 // Copyright © 2023 Lee Kelleher
 
 import { css, customElement, html, property, when, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
-import { tryHideLabel } from "../../../utils/hide-label.function.js";
+import { tryHideLabel } from "../../utils/hide-label.function.js";
 import { UmbLitElement } from "@umbraco-cms/backoffice/lit-element";
 import { UmbTextStyles } from "@umbraco-cms/backoffice/style";
 import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
@@ -26,7 +26,6 @@ export class ContentmentPropertyEditorUIEditorNotesElement
   @property()
   public value?: string;
 
-  @property({ attribute: false })
   public set config(config: UmbPropertyEditorConfigCollection) {
     this.#alertType = config.getValueByAlias("alertType");
     this.#icon = config.getValueByAlias("icon");

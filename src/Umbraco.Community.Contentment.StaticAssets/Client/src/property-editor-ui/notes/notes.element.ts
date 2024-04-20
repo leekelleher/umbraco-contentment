@@ -2,7 +2,7 @@
 // Copyright © 2023 Lee Kelleher
 
 import { customElement, property, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
-import { tryHideLabel } from '../../../utils/hide-label.function.js';
+import { tryHideLabel } from '../../utils/hide-label.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
