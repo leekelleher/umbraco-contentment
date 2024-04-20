@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "tsc && vite build --watch",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "generate:server-api": "openapi-ts --input http://localhost:21183/umbraco/swagger/management/swagger.json --output src/api --debug true --enums typescript --lint true --schemas false"
   },
   "dependencies": {
     "lit": "^3.1.2"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.41.0",
     "@umbraco-cms/backoffice": "^14.0.0-rc1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
