@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -15,21 +16,28 @@ namespace Umbraco.Community.Contentment.DataEditors
     [TypeConverter(typeof(DataListItemTypeConverter))]
     public class DataListItem
     {
+        [JsonPropertyName("description")]
         public string? Description { get; set; }
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonPropertyName("disabled")]
         public bool Disabled { get; set; } = false;
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonPropertyName("group")]
         public string? Group { get; set; }
 
+        [JsonPropertyName("icon")]
         public string? Icon { get; set; }
 
+        [JsonPropertyName("name")]
         public string? Name { get; set; }
 
-        [JsonExtensionData]
+        [Newtonsoft.Json.JsonExtensionData]
+        [System.Text.Json.Serialization.JsonExtensionData]
         public Dictionary<string, object>? Properties { get; set; } = new();
 
+        [JsonPropertyName("value")]
         public string? Value { get; set; }
     }
 }

@@ -3,6 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -77,8 +80,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return config.TryGetValueAs("items", out JArray? array) == true
-                ? array?.ToObject<IEnumerable<DataListItem>>()?.DistinctBy(x => x.Value) ?? Enumerable.Empty<DataListItem>()
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault,
+            };
+
+            return config.TryGetValueAs("items", out JsonArray? array) == true
+                ? array?.Deserialize<IEnumerable<DataListItem>>(serializeOptions)?.DistinctBy(x => x.Value) ?? Enumerable.Empty<DataListItem>()
                 : Enumerable.Empty<DataListItem>();
         }
     }
