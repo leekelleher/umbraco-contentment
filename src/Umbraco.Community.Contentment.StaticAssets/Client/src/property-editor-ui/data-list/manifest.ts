@@ -19,14 +19,20 @@ const schema: ManifestPropertyEditorSchema = {
 					label: 'Data source',
 					description: 'Select and configure a data source.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
-					config: [{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' }],
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'configurationType', value: 'dataSource' },
+					],
 				},
 				{
 					alias: 'listEditor',
 					label: 'List editor',
 					description: 'Select and configure a list editor.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
-					config: [{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' }],
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' },
+						{ alias: 'configurationType', value: 'listEditor' },
+					],
 				},
 			],
 		},

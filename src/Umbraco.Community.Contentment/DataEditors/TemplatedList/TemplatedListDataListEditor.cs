@@ -85,6 +85,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.PropertyEditorUi.TemplatedList";
+        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.TemplatedList";
     }
 }

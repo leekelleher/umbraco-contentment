@@ -1,94 +1,97 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
-
-// TODO: [LK] Update the license to credit Umbraco core.
+// This Source Code has been derived from Umbraco CMS Backoffice.
 // https://github.com/umbraco/Umbraco.CMS.Backoffice/blob/v14.0.0-beta002/src/packages/core/property/property/property.element.ts
+// Modified under the permissions of the MIT License.
+// Modifications are licensed under the Mozilla Public License.
 
-import { createExtensionElement } from "@umbraco-cms/backoffice/extension-api";
-import {
-  customElement,
-  nothing,
-  property,
-  state,
-} from "@umbraco-cms/backoffice/external/lit";
-import {
-  ManifestPropertyEditorUi,
-  umbExtensionsRegistry,
-} from "@umbraco-cms/backoffice/extension-registry";
-import { UmbLitElement } from "@umbraco-cms/backoffice/lit-element";
-import { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
+import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
+import { customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { ManifestPropertyEditorUi, umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
-@customElement("contentment-property-editor-ui")
-export class ContentmentPropertyEditorUiElement extends UmbLitElement {
-  @property({ attribute: false })
-  config?: UmbPropertyEditorConfigCollection | undefined;
+import '../lee-was-here/lee-was-here.element.js';
 
-  @property({ type: String, attribute: "property-editor-ui-alias" })
-  public set propertyEditorUiAlias(value: string | undefined) {
-    this.#propertyEditorUiAlias = value;
-    this.#observePropertyEditorUI();
-  }
-  public get propertyEditorUiAlias(): string | undefined {
-    return this.#propertyEditorUiAlias;
-  }
-  #propertyEditorUiAlias?: string;
+@customElement('contentment-property-editor-ui')
+export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
+	@property({ attribute: false })
+	config?: UmbPropertyEditorConfigCollection | undefined;
 
-  @property()
-  value?: any;
+	@property({ type: String, attribute: 'property-editor-ui-alias' })
+	public set propertyEditorUiAlias(value: string | undefined) {
+		this.#propertyEditorUiAlias = value;
+		this.#observePropertyEditorUI();
+	}
+	public get propertyEditorUiAlias(): string | undefined {
+		return this.#propertyEditorUiAlias;
+	}
+	#propertyEditorUiAlias?: string;
 
-  @state()
-  private _element?: ManifestPropertyEditorUi["ELEMENT_TYPE"];
+	@property()
+	value?: any;
 
-  #observePropertyEditorUI(): void {
-    if (this.#propertyEditorUiAlias) {
-      this.observe(
-        umbExtensionsRegistry.byTypeAndAlias(
-          "propertyEditorUi",
-          this.#propertyEditorUiAlias
-        ),
-        (manifest) => this.#gotEditorUI(manifest),
-        "observePropertyEditorUI"
-      );
-    }
-  }
+	@state()
+	private _element?: ManifestPropertyEditorUi['ELEMENT_TYPE'];
 
-  async #gotEditorUI(
-    manifest?: ManifestPropertyEditorUi | null
-  ): Promise<void> {
-    if (!manifest) return;
+	@state()
+	private _undefined: boolean = false;
 
-    const el = await createExtensionElement(manifest);
+	#observePropertyEditorUI(): void {
+		if (this.#propertyEditorUiAlias) {
+			this.observe(
+				umbExtensionsRegistry.byTypeAndAlias('propertyEditorUi', this.#propertyEditorUiAlias),
+				(manifest) => {
+					if (manifest) {
+						this.#getPropertyEditorUI(manifest);
+					} else {
+						console.error(`Failed to find manifest for property editor UI alias: ${this.#propertyEditorUiAlias}`);
+						this._undefined = true;
+					}
+				},
+				'_observePropertyEditorUI'
+			);
+		}
+	}
 
-    if (el) {
-      const oldElement = this._element;
+	async #getPropertyEditorUI(manifest?: ManifestPropertyEditorUi | null): Promise<void> {
+		if (!manifest) return;
 
-      this._element = el as ManifestPropertyEditorUi["ELEMENT_TYPE"];
-      if (this._element) {
-        this._element.value = this.value;
+		const element = await createExtensionElement(manifest);
 
-        if (this.config) {
-          this._element.config = this.config;
-        }
-      }
+		if (!element) {
+			console.error(`Failed to create extension element for manifest: ${manifest}`);
+			this._undefined = true;
+		}
 
-      this.requestUpdate("_element", oldElement);
-    }
-  }
+		const oldElement = this._element;
 
-  // Disable the Shadow DOM for this element. The event propagation needs to pass-through.
-  createRenderRoot() {
-    return this;
-  }
+		this._element = element as ManifestPropertyEditorUi['ELEMENT_TYPE'];
+		if (this._element) {
+			this._element.value = this.value;
 
-  render() {
-    return this._element ?? nothing;
-  }
+			if (this.config) {
+				this._element.config = this.config;
+			}
+		}
+
+		this.requestUpdate('_element', oldElement);
+	}
+
+	// Disable the Shadow DOM for this element. The event propagation needs to pass-through.
+	createRenderRoot() {
+		return this;
+	}
+
+	render() {
+		if (this._element) return this._element;
+		if (this._undefined) return html`<contentment-lee-was-here></contentment-lee-was-here>`;
+		return nothing;
+	}
 }
 
-export default ContentmentPropertyEditorUiElement;
-
 declare global {
-  interface HTMLElementTagNameMap {
-    "contentment-property-editor-ui": ContentmentPropertyEditorUiElement;
-  }
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui': ContentmentPropertyEditorUiElement;
+	}
 }

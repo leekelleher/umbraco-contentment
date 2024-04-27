@@ -43,7 +43,7 @@ public class DataListController : ContentmentControllerBase
         {
             var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
             var sourceConfig = model.DataSource?.FirstOrDefault()?.Value;
-            if (sourceConfig?.Any() == true)
+            if (sourceConfig is not null)
             {
                 var items = source?.GetItems(sourceConfig) ?? [];
                 config.Add(nameof(items), items);
@@ -58,7 +58,7 @@ public class DataListController : ContentmentControllerBase
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 
             var editorConfig = model.ListEditor?.FirstOrDefault()?.Value;
-            if (editorConfig?.Any() == true)
+            if (editorConfig is not null)
             {
                 foreach (var prop in editorConfig)
                 {

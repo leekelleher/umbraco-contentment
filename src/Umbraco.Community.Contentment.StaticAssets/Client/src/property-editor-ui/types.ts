@@ -1,8 +1,8 @@
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
 export type ContentmentConfigurationEditorItem = {
-  key: string;
-  value: any;
+	key: string;
+	value: any;
 };
 
 export type ContentmentDataListItem = {

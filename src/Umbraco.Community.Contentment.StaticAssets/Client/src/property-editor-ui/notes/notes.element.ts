@@ -2,44 +2,41 @@
 // Copyright © 2023 Lee Kelleher
 
 import { customElement, property, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
-import { tryHideLabel } from '../../utils/hide-label.function.js';
+import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
 @customElement('contentment-property-editor-ui-notes')
-export class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+export default class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	#hideLabel: boolean = false;
 
-  #hideLabel: boolean = false;
+	#notes?: string;
 
-  #notes?: string;
+	@property()
+	public value?: string;
 
-  @property()
-  public value?: string;
+	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+		if (!config) return;
+		this.#notes = config.getValueByAlias('notes');
+		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
+	}
 
-  @property({ attribute: false })
-  public set config(config: UmbPropertyEditorConfigCollection) {
-    this.#notes = config.getValueByAlias('notes');
-    this.#hideLabel = config.getValueByAlias<boolean>('hideLabel') ?? false;
-  }
+	connectedCallback() {
+		super.connectedCallback();
+		tryHideLabel(this, this.#hideLabel);
+	}
 
-  connectedCallback() {
-    super.connectedCallback();
-    tryHideLabel(this, this.#hideLabel);
-  }
+	render() {
+		return unsafeHTML(this.#notes);
+	}
 
-  render() {
-    return unsafeHTML(this.#notes);
-  }
-
-  static styles = [UmbTextStyles];
+	static styles = [UmbTextStyles];
 }
 
-export default ContentmentPropertyEditorUINotesElement;
-
 declare global {
-  interface HTMLElementTagNameMap {
-    'contentment-property-editor-ui-notes': ContentmentPropertyEditorUINotesElement;
-  }
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui-notes': ContentmentPropertyEditorUINotesElement;
+	}
 }

@@ -1,105 +1,105 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import { css, customElement, html, property, when, unsafeHTML } from "@umbraco-cms/backoffice/external/lit";
-import { tryHideLabel } from "../../utils/hide-label.function.js";
-import { UmbLitElement } from "@umbraco-cms/backoffice/lit-element";
-import { UmbTextStyles } from "@umbraco-cms/backoffice/style";
-import type { UmbPropertyEditorConfigCollection } from "@umbraco-cms/backoffice/property-editor";
-import type { UmbPropertyEditorUiElement } from "@umbraco-cms/backoffice/extension-registry";
+import { css, customElement, html, property, when, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
+import { parseBoolean, tryHideLabel } from '../../utils/index.js';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
-@customElement("contentment-property-editor-ui-editor-notes")
-export class ContentmentPropertyEditorUIEditorNotesElement
-  extends UmbLitElement
-  implements UmbPropertyEditorUiElement
-{
-  #hideLabel: boolean = false;
+@customElement('contentment-property-editor-ui-editor-notes')
+export default class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	#hideLabel: boolean = false;
 
-  #alertType?: string;
+	#alertType?: string;
 
-  #icon?: string;
+	#icon?: string;
 
-  #heading?: string;
+	#heading?: string;
 
-  #message?: string;
+	#message?: string;
 
-  @property()
-  public value?: string;
+	@property()
+	public value?: string;
 
-  public set config(config: UmbPropertyEditorConfigCollection) {
-    this.#alertType = config.getValueByAlias("alertType");
-    this.#icon = config.getValueByAlias("icon");
-    this.#heading = config.getValueByAlias("heading");
-    this.#message = config.getValueByAlias("message");
-    this.#hideLabel = config.getValueByAlias<boolean>("hideLabel") ?? false;
+	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+		if (!config) return;
+		this.#alertType = config.getValueByAlias('alertType');
+		this.#icon = config.getValueByAlias('icon');
+		this.#heading = config.getValueByAlias('heading');
+		this.#message = config.getValueByAlias('message');
+		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 
-    if (this.#icon) {
-      // HACK: To workaround the `color-text` part of the value. [LK]
-      this.#icon = this.#icon.split(" ")[0];
-    }
-  }
+		if (this.#icon) {
+			// HACK: To workaround the `color-text` part of the value. [LK]
+			this.#icon = this.#icon.split(' ')[0];
+		}
+	}
 
-  connectedCallback() {
-    super.connectedCallback();
-    tryHideLabel(this, this.#hideLabel);
-  }
+	connectedCallback() {
+		super.connectedCallback();
+		tryHideLabel(this, this.#hideLabel);
+	}
 
-  render() {
-    const inlineStyles = `
+	render() {
+		const inlineStyles = `
         background-color: var(--uui-color-${this.#alertType});
         color: var(--uui-color-${this.#alertType}-contrast);
         border-color: var(--uui-color-${this.#alertType}-standalone);
     `;
 
-    return html`
-      <div id="note" class="uui-text ${this.#alertType}" style=${inlineStyles}>
-        ${when(this.#icon, () => html`<umb-icon name=${this.#icon!} style="color: var(--uui-color-${this.#alertType}-contrast);"></umb-icon>`)}
-        <div>
-          ${when(this.#heading, () => html`<h5>${this.#heading}</h5>`)}
-          ${when(this.#message, () => html`<div>${unsafeHTML(this.#message)}</div>`)}
-        </div>
-      </div>
-    `;
-  }
+		return html`
+			<div id="note" class="uui-text ${this.#alertType}" style=${inlineStyles}>
+				${when(
+					this.#icon,
+					() =>
+						html`<umb-icon name=${this.#icon!} style="color: var(--uui-color-${this.#alertType}-contrast);"></umb-icon>`
+				)}
+				<div>
+					${when(this.#heading, () => html`<h5>${this.#heading}</h5>`)}
+					${when(this.#message, () => html`<div>${unsafeHTML(this.#message)}</div>`)}
+				</div>
+			</div>
+		`;
+	}
 
-  static styles = [
-    UmbTextStyles,
-    css`
-      #note {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 1rem;
+	static styles = [
+		UmbTextStyles,
+		css`
+			#note {
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-start;
+				gap: 1rem;
 
-        background-color: var(--uui-color-surface);
-        color: var(--uui-color-text);
+				background-color: var(--uui-color-surface);
+				color: var(--uui-color-text);
 
-        border-color: var(--uui-color-surface);
-        border-radius: calc(var(--uui-border-radius) * 2);
+				border-color: var(--uui-color-surface);
+				border-radius: calc(var(--uui-border-radius) * 2);
 
-        box-shadow: var(--uui-shadow-depth-1);
+				box-shadow: var(--uui-shadow-depth-1);
 
-        padding: 1rem;
-      }
+				padding: 1rem;
+			}
 
-      umb-icon {
-        font-size: 3rem;
-      }
+			umb-icon {
+				font-size: 3rem;
+			}
 
-      .uui-text p {
-        margin: 0.5rem 0;
-      }
-      .uui-text p:last-child {
-        margin-bottom: 0.25rem;
-      }
-    `,
-  ];
+			.uui-text p {
+				margin: 0.5rem 0;
+			}
+			.uui-text p:last-child {
+				margin-bottom: 0.25rem;
+			}
+		`,
+	];
 }
 
-export default ContentmentPropertyEditorUIEditorNotesElement;
-
 declare global {
-  interface HTMLElementTagNameMap {
-    "contentment-property-editor-ui-editor-notes": ContentmentPropertyEditorUIEditorNotesElement;
-  }
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui-editor-notes': ContentmentPropertyEditorUIEditorNotesElement;
+	}
 }

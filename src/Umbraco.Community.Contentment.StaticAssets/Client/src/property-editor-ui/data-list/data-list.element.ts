@@ -12,6 +12,9 @@ import {
 import type { ContentmentConfigurationEditorItem, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
+import '../../components/lee-was-here/lee-was-here.element.js';
+import '../../components/property-editor-ui/property-editor-ui.element.js';
+
 @customElement('contentment-property-editor-ui-data-list')
 export default class ContentmentPropertyEditorUIDataListElement
 	extends UmbLitElement
@@ -31,7 +34,7 @@ export default class ContentmentPropertyEditorUIDataListElement
 	@property()
 	public value?: string | string[];
 
-	public set config(config: UmbPropertyEditorConfigCollection) {
+	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 		this._dataSource = config.getValueByAlias('dataSource');
 		this._listEditor = config.getValueByAlias('listEditor');
@@ -81,11 +84,6 @@ export default class ContentmentPropertyEditorUIDataListElement
 				.value=${this.value}
 				@change=${this.#onChange}>
 			</contentment-property-editor-ui>
-			<!-- <details>
-				<summary>Debug</summary>
-				<pre><code>${JSON.stringify(this.#listEditor.config, null, 2)}</code></pre>
-			</details>
-			<umb-debug visible dialog="true"></umb-debug> -->
 		`;
 	}
 }
