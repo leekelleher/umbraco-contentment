@@ -3,13 +3,12 @@
 
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import { ContentmentService, OpenAPI } from '../../api/index.js';
+import { ContentmentService } from '../../api/services.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UMB_AUTH_CONTEXT } from '@umbraco-cms/backoffice/auth';
 import type { ContentmentConfigurationEditorItem, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
@@ -36,18 +35,6 @@ export default class ContentmentPropertyEditorUIDataListElement
 		if (!config) return;
 		this._dataSource = config.getValueByAlias('dataSource');
 		this._listEditor = config.getValueByAlias('listEditor');
-	}
-
-	constructor() {
-		super();
-
-		this.consumeContext(UMB_AUTH_CONTEXT, (auth) => {
-			if (!auth) return;
-			const umbOpenApi = auth.getOpenApiConfiguration();
-			OpenAPI.TOKEN = umbOpenApi.token;
-			OpenAPI.BASE = umbOpenApi.base;
-			OpenAPI.WITH_CREDENTIALS = umbOpenApi.withCredentials;
-		});
 	}
 
 	protected async firstUpdated() {
