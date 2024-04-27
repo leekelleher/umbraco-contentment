@@ -57,6 +57,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.Dropdown";
+        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.DropdownList";
     }
 }

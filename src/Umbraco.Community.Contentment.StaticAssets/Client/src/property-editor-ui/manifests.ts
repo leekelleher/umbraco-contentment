@@ -4,6 +4,7 @@
 import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifest as configurationEditor } from './configuration-editor/manifest.js';
 import { manifests as dataList } from './data-list/manifest.js';
+import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifest as editorNotes } from './editor-notes/manifest.js';
 import { manifests as notes } from './notes/manifest.js';
 import { manifest as radioButtonList } from './radio-button-list/manifest.js';
@@ -16,6 +17,7 @@ export const manifests: Array<ManifestPropertyEditorSchema | ManifestPropertyEdi
 	codeEditor,
 	configurationEditor,
 	...dataList,
+	dropdownList,
 	editorNotes,
 	...notes,
 	radioButtonList,
