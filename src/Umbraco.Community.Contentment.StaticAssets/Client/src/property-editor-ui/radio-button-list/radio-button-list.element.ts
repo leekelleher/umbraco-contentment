@@ -1,4 +1,14 @@
-import { html, customElement, property, state, repeat, when, css, ifDefined, } from '@umbraco-cms/backoffice/external/lit';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	property,
+	repeat,
+	state,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
+import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentDataListItem } from '../types.js';
@@ -12,18 +22,20 @@ export default class ContentmentPropertyEditorUIRadioButtonListElement
 	implements UmbPropertyEditorUiElement
 {
 	@property()
-	value?: string = '';
-
-	public set config(config: UmbPropertyEditorConfigCollection) {
-		if (!config) return;
-		this._allowClear = config.getValueByAlias('allowClear') ?? false;
-		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
-		this._showDescriptions = config.getValueByAlias('showDescriptions') ?? false;
-		this._showIcons = config.getValueByAlias('showIcons') ?? false;
+	public set value(value: Array<string> | string | undefined) {
+		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
 	}
+	public get value(): string | undefined {
+		return this.#value;
+	}
+	#value?: string = '';
 
-	@state()
-	private _allowClear = false;
+	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+		if (!config) return;
+		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
+		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
+	}
 
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
@@ -45,28 +57,29 @@ export default class ContentmentPropertyEditorUIRadioButtonListElement
 			<uui-radio-group .value=${this.value} @change=${this.#onChange}>
 				${repeat(
 					this._items,
-					(item) => item,
-					(item) => this.#renderRadioButton(item)
+					(item) => item.value,
+					(item) => this.#renderItem(item)
 				)}
 			</uui-radio-group>
 		`;
 	}
 
-	#renderRadioButton(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentDataListItem) {
+		const [icon, color] = item.icon?.split(' ') ?? [];
 		return html`
 			<uui-radio value=${item.value}>
 				<div class="outer">
 					${when(
 						this._showIcons && item.icon,
-						() =>
-							html`<umb-icon
-								name=${ifDefined(item.icon?.split(' ')[0])}
-								color=${ifDefined(item.icon?.split(' ')[1])}></umb-icon>`
+						() => html`<umb-icon name=${ifDefined(icon)} color=${ifDefined(color)}></umb-icon>`
 					)}
-					<div class="inner">
-						<span>${item.name}</span>
-						${when(this._showDescriptions && item.description, () => html`<small>${item.description}</small>`)}
-					</div>
+					<uui-form-layout-item>
+						<span slot="label">${item.name}</span>
+						${when(
+							this._showDescriptions && item.description,
+							() => html`<span slot="description">${item.description}</span>`
+						)}
+					</uui-form-layout-item>
 				</div>
 			</uui-radio>
 		`;
@@ -79,9 +92,10 @@ export default class ContentmentPropertyEditorUIRadioButtonListElement
 				flex-direction: row;
 				gap: 0.5rem;
 			}
-			.inner {
-				display: flex;
-				flex-direction: column;
+
+			uui-form-layout-item {
+				margin-top: 10px;
+				margin-bottom: 0;
 			}
 
 			umb-icon {
