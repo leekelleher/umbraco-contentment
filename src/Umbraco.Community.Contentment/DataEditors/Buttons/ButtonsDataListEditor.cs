@@ -101,6 +101,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.PropertyEditorUi.Buttons";
+        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.Buttons";
     }
 }

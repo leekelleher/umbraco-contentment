@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { manifest as buttons } from './buttons/manifest.js';
 import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifest as configurationEditor } from './configuration-editor/manifest.js';
 import { manifests as dataList } from './data-list/manifest.js';
@@ -14,6 +15,7 @@ import type {
 } from '@umbraco-cms/backoffice/extension-registry';
 
 export const manifests: Array<ManifestPropertyEditorSchema | ManifestPropertyEditorUi> = [
+	buttons,
 	codeEditor,
 	configurationEditor,
 	...dataList,
