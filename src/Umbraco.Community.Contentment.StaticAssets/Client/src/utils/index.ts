@@ -2,3 +2,4 @@
 // Copyright © 2024 Lee Kelleher
 
 export * from './hide-label.function.js';
+export * from './parse-boolean.function.js';
