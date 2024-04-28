@@ -60,19 +60,20 @@ export default class ContentmentPropertyEditorUIButtonsElement
 	#onClick(item: ContentmentDataListButtonOption) {
 		item.selected = !item.selected;
 
-		const value: Array<string> = [];
+		const values: Array<string> = [];
 
-		this._items.forEach((x) => {
+		this._items.forEach((item) => {
 			if (!this._enableMultiple) {
-				x.selected = x.value === item.value;
+				item.selected = item.value === item.value;
 			}
 
-			if (x.selected) {
-				value?.push(x.value);
+			if (item.selected) {
+				values?.push(item.value);
 			}
 		});
 
-		this.value = value;
+		this.value = values;
+
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 

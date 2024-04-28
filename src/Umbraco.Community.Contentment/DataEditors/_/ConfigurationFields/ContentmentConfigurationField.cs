@@ -11,4 +11,6 @@ public class ContentmentConfigurationField : ConfigurationField
     public string? View { get; set; }
 
     public bool HideLabel { get; set; }
+
+    // TODO: [LK] Add `PropertyEditorUiAlias` property.
 }
