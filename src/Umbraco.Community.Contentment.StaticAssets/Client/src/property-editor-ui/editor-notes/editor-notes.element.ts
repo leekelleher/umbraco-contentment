@@ -9,7 +9,10 @@ import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
 @customElement('contentment-property-editor-ui-editor-notes')
-export default class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+export default class ContentmentPropertyEditorUIEditorNotesElement
+	extends UmbLitElement
+	implements UmbPropertyEditorUiElement
+{
 	#hideLabel: boolean = false;
 
 	#alertType?: string;
