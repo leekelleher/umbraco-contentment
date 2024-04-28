@@ -2,6 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { manifest as buttons } from './buttons/manifest.js';
+import { manifest as checkboxList } from './checkbox-list/manifest.js';
 import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifest as configurationEditor } from './configuration-editor/manifest.js';
 import { manifests as dataList } from './data-list/manifest.js';
@@ -17,6 +18,7 @@ import type {
 
 export const manifests: Array<ManifestPropertyEditorSchema | ManifestPropertyEditorUi> = [
 	buttons,
+	checkboxList,
 	codeEditor,
 	configurationEditor,
 	...dataList,

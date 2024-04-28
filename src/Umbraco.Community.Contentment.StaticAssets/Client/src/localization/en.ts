@@ -4,13 +4,17 @@
 import type { UmbLocalizationDictionary } from '@umbraco-cms/backoffice/localization-api';
 
 export default {
-  contentment: {
-    name: 'Contentment',
+	contentment: {
+		name: 'Contentment',
 
-    // Data List
-    labelDataSource: 'Data source',
-    labelListEditor: 'List editor',
-    configureDataSource: 'Select and configure a data source',
-    configureListEditor: 'Select and configure a list editor',
-  },
+		// Data List
+		labelDataSource: 'Data source',
+		labelListEditor: 'List editor',
+		configureDataSource: 'Select and configure a data source',
+		configureListEditor: 'Select and configure a list editor',
+
+		// Checkbox List
+		checkboxListCheckAll: 'Check all',
+		checkboxListUncheckAll: 'Uncheck all',
+	},
 } as UmbLocalizationDictionary;
