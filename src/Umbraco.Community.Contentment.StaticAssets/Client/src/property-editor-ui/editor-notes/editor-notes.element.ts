@@ -94,6 +94,10 @@ export default class ContentmentPropertyEditorUIEditorNotesElement extends UmbLi
 			.uui-text p:last-child {
 				margin-bottom: 0.25rem;
 			}
+
+			details > summary {
+				cursor: pointer;
+			}
 		`,
 	];
 }

@@ -9,6 +9,7 @@ import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifest as editorNotes } from './editor-notes/manifest.js';
 import { manifests as notes } from './notes/manifest.js';
 import { manifest as radioButtonList } from './radio-button-list/manifest.js';
+import { manifests as renderMacro } from './render-macro/manifest.js';
 import type {
 	ManifestPropertyEditorSchema,
 	ManifestPropertyEditorUi,
@@ -23,4 +24,5 @@ export const manifests: Array<ManifestPropertyEditorSchema | ManifestPropertyEdi
 	editorNotes,
 	...notes,
 	radioButtonList,
+	...renderMacro,
 ];
