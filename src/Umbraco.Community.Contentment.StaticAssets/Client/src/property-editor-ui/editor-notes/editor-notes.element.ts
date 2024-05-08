@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import { css, customElement, html, property, when, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, styleMap, when, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
+import type { StyleInfo } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
@@ -19,6 +20,8 @@ export default class ContentmentPropertyEditorUIEditorNotesElement
 
 	#icon?: string;
 
+	#inlineStyles: StyleInfo = {};
+
 	#heading?: string;
 
 	#message?: string;
@@ -31,13 +34,19 @@ export default class ContentmentPropertyEditorUIEditorNotesElement
 		this.#alertType = config.getValueByAlias('alertType');
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
-		this.#message = config.getValueByAlias('message');
+		this.#message = (config.getValueByAlias('message') as unknown as any).markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 
 		if (this.#icon) {
 			// HACK: To workaround the `color-text` part of the value. [LK]
 			this.#icon = this.#icon.split(' ')[0];
 		}
+
+		this.#inlineStyles = {
+			backgroundColor: `var(--uui-color-${this.#alertType})`,
+			color: `var(--uui-color-${this.#alertType}-contrast)`,
+			borderColor: `var(--uui-color-${this.#alertType}-standalone)`,
+		};
 	}
 
 	connectedCallback() {
@@ -46,14 +55,8 @@ export default class ContentmentPropertyEditorUIEditorNotesElement
 	}
 
 	render() {
-		const inlineStyles = `
-        background-color: var(--uui-color-${this.#alertType});
-        color: var(--uui-color-${this.#alertType}-contrast);
-        border-color: var(--uui-color-${this.#alertType}-standalone);
-    `;
-
 		return html`
-			<div id="note" class="uui-text ${this.#alertType}" style=${inlineStyles}>
+			<div id="note" class="uui-text ${this.#alertType}" style=${styleMap(this.#inlineStyles)}>
 				${when(
 					this.#icon,
 					() =>

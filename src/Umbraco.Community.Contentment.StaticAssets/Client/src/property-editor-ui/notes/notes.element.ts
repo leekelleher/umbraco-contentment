@@ -19,7 +19,7 @@ export default class ContentmentPropertyEditorUINotesElement extends UmbLitEleme
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		this.#notes = config.getValueByAlias('notes');
+		this.#notes = (config.getValueByAlias('notes') as unknown as any).markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 	}
 
