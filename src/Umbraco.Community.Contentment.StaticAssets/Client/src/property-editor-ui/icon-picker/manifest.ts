@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import type {
+	ManifestPropertyEditorSchema,
+	ManifestPropertyEditorUi,
+} from '@umbraco-cms/backoffice/extension-registry';
+
+export const schema: ManifestPropertyEditorSchema = {
+	type: 'propertyEditorSchema',
+	name: '[Contentment] Icon Picker',
+	alias: 'Umbraco.Community.Contentment.IconPicker',
+	meta: {
+		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
+	},
+};
+
+const editorUi: ManifestPropertyEditorUi = {
+	type: 'propertyEditorUi',
+	alias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
+	name: '[Contentment] Icon Picker',
+	element: () => import('./icon-picker.element.js'),
+	meta: {
+		label: '[Contentment] Icon Picker',
+		icon: 'icon-circle-dotted',
+		group: 'pickers',
+		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.IconPicker',
+		settings: {
+			properties: [
+				{
+					alias: 'defaultIcon',
+					label: 'Default Icon',
+					description: 'Select an icon to be displayed as the default icon, (for when no icon has been selected).',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
+				},
+			],
+		},
+	},
+};
+
+export const manifests = [schema, editorUi];
