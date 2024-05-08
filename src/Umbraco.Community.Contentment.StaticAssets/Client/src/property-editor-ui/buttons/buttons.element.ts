@@ -18,8 +18,10 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extensi
 
 type ContentmentDataListButtonOption = ContentmentDataListItem & { selected: boolean };
 
-@customElement('contentment-property-editor-ui-buttons')
-export default class ContentmentPropertyEditorUIButtonsElement
+const ELEMENT_NAME = 'contentment-property-editor-ui-buttons';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUIButtonsElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
@@ -144,8 +146,10 @@ export default class ContentmentPropertyEditorUIButtonsElement
 	];
 }
 
+export {ContentmentPropertyEditorUIButtonsElement as element};
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-buttons': ContentmentPropertyEditorUIButtonsElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUIButtonsElement;
 	}
 }

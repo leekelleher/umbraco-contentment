@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { LitElement, css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
-import { UmbElementMixin } from '@umbraco-cms/backoffice/element-api';
+import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
 import { UUITextareaElement } from '@umbraco-cms/backoffice/external/uui';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
-@customElement('contentment-property-editor-ui-configuration-editor')
-export default class ContentmentPropertyEditorUIConfigurationEditorElement
-	extends UmbElementMixin(LitElement)
+const ELEMENT_NAME = 'contentment-property-editor-ui-configuration-editor';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUIConfigurationEditorElement
+	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
 	@property({ type: Object })
@@ -61,8 +63,10 @@ export default class ContentmentPropertyEditorUIConfigurationEditorElement
 	];
 }
 
+export { ContentmentPropertyEditorUIConfigurationEditorElement as element };
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-configuration-editor': ContentmentPropertyEditorUIConfigurationEditorElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUIConfigurationEditorElement;
 	}
 }

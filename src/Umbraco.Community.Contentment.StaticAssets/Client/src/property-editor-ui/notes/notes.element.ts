@@ -8,8 +8,10 @@ import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
-@customElement('contentment-property-editor-ui-notes')
-export default class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+const ELEMENT_NAME = 'contentment-property-editor-ui-notes';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
 
 	#notes?: string;
@@ -35,8 +37,10 @@ export default class ContentmentPropertyEditorUINotesElement extends UmbLitEleme
 	static styles = [UmbTextStyles];
 }
 
+export { ContentmentPropertyEditorUINotesElement as element };
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-notes': ContentmentPropertyEditorUINotesElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUINotesElement;
 	}
 }

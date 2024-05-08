@@ -12,8 +12,10 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extensi
 
 type CodeEditorLanguage = UmbCodeEditorElement['language'];
 
-@customElement('contentment-property-editor-ui-code-editor')
-export default class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+const ELEMENT_NAME = 'contentment-property-editor-ui-code-editor';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
 	private _loading = true;
 
@@ -51,10 +53,7 @@ export default class ContentmentPropertyEditorUICodeEditorElement extends UmbLit
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`
 			<div id="code-editor">
-				<umb-code-editor
-          language=${this.#language ?? 'razor'}
-          .code=${this.value ?? ''}
-          @input=${this.#onChange}>
+				<umb-code-editor language=${this.#language ?? 'razor'} .code=${this.value ?? ''} @input=${this.#onChange}>
 				</umb-code-editor>
 			</div>
 		`;
@@ -74,8 +73,10 @@ export default class ContentmentPropertyEditorUICodeEditorElement extends UmbLit
 	];
 }
 
+export { ContentmentPropertyEditorUICodeEditorElement as element };
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-code-editor': ContentmentPropertyEditorUICodeEditorElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUICodeEditorElement;
 	}
 }

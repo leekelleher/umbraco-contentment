@@ -17,8 +17,10 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extensi
 
 type ContentmentDataListCheckboxOption = ContentmentDataListItem & { checked: boolean };
 
-@customElement('contentment-property-editor-ui-checkbox-list')
-export default class ContentmentPropertyEditorUICheckboxListElement
+const ELEMENT_NAME = 'contentment-property-editor-ui-checkbox-list';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUICheckboxListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
@@ -176,8 +178,10 @@ export default class ContentmentPropertyEditorUICheckboxListElement
 	];
 }
 
+export { ContentmentPropertyEditorUICheckboxListElement as element };
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-checkbox-list': ContentmentPropertyEditorUICheckboxListElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUICheckboxListElement;
 	}
 }

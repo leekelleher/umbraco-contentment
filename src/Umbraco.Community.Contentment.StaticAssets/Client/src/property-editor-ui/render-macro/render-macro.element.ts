@@ -8,11 +8,10 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extensi
 
 import '../../components/property-editor-ui/property-editor-ui.element.js';
 
-@customElement('contentment-property-editor-ui-render-macro')
-export default class ContentmentPropertyEditorUIRenderMacroElement
-	extends UmbLitElement
-	implements UmbPropertyEditorUiElement
-{
+const ELEMENT_NAME = 'contentment-property-editor-ui-render-macro';
+
+@customElement(ELEMENT_NAME)
+export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property()
 	public value?: string;
 
@@ -48,8 +47,10 @@ ${json ? `<details><summary>JSON configuration</summary><pre><code>${json}</code
 	}
 }
 
+export { ContentmentPropertyEditorUIRenderMacroElement as element };
+
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-property-editor-ui-render-macro': ContentmentPropertyEditorUIRenderMacroElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUIRenderMacroElement;
 	}
 }
