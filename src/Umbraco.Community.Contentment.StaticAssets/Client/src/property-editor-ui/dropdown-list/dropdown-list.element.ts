@@ -6,6 +6,7 @@ import {
 	property,
 	repeat,
 	state,
+	unsafeHTML,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
@@ -81,7 +82,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 						<span slot="label">${item.name}</span>
 						${when(
 							this._showDescriptions && item.description,
-							() => html`<span slot="description">${item.description}</span>`
+							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`
 						)}
 					</uui-form-layout-item>
 				</div>
