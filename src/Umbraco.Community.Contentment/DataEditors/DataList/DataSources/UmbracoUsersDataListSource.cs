@@ -96,7 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _userService.GetAll(0, int.MaxValue, out _).Select(mapUser);
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(IUser);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IUser);
 
         public object? ConvertValue(Type type, string value) => _userService.GetByUsername(value);
     }

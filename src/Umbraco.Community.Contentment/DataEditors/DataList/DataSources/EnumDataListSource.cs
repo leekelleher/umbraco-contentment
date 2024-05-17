@@ -47,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
@@ -176,7 +176,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            return default;
+            return typeof(object);
         }
 
         public object? ConvertValue(Type type, string value)

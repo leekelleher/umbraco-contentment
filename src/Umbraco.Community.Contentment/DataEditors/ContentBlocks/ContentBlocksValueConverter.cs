@@ -82,7 +82,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                         var propType = contentType.GetPropertyType(thing.Key);
                         if (propType != null)
                         {
+#pragma warning disable CS8604 // Possible null reference argument.
                             properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+#pragma warning restore CS8604 // Possible null reference argument.
                         }
                     }
 

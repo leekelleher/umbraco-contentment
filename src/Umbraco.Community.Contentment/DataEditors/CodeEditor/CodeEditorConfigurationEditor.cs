@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -167,8 +167,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     checkFile(Path.GetFileNameWithoutExtension(file.Name));
                 }
             }
-            modes.Sort((x, y) => x.Value.CompareTo(y.Value));
-            themes.Sort((x, y) => x.Value.CompareTo(y.Value));
+            modes.Sort((x, y) => x.Value?.CompareTo(y.Value) ?? -1);
+            themes.Sort((x, y) => x.Value?.CompareTo(y.Value) ?? -1);
 
             return (modes, themes);
         }

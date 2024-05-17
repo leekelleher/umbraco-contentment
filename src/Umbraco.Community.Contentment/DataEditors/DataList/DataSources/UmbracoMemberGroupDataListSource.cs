@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(Guid);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(Guid);
 
         public object? ConvertValue(Type type, string value) => Guid.TryParse(value, out var guid) == true ? guid : Guid.Empty;
     }

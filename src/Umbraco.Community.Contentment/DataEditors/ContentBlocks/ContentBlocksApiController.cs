@@ -81,7 +81,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var propType = contentType.GetPropertyType(thing.Key);
                             if (propType != null)
                             {
+#pragma warning disable CS8604 // Possible null reference argument.
                                 properties.Add(new DetachedPublishedProperty(propType, content, thing.Value, preview));
+#pragma warning restore CS8604 // Possible null reference argument.
                             }
                         }
 
@@ -113,7 +115,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             try
             {
-                markup = RenderPartialViewToString(element?.ContentType.Alias, viewData);
+                if (element is not null)
+                {
+                    markup = RenderPartialViewToString(element.ContentType.Alias, viewData);
+                }
+                else
+                {
+                    markup = "<p class=\"text-center mt4\">The block element is unavailable. Unable to render the preview.</p>";
+                }
             }
             catch (InvalidCastException icex)
             {
@@ -139,7 +148,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         // https://gist.github.com/ahmad-moussawi/1643d703c11699a6a4046e57247b4d09
         // https://weblog.west-wind.com/posts/2022/Jun/21/Back-to-Basics-Rendering-Razor-Views-to-String-in-ASPNET-Core
         // https://gist.github.com/Matthew-Wise/80626bbf9c9590228fc317774f15222a
-        private string RenderPartialViewToString(string? viewName, ViewDataDictionary viewData)
+        private string RenderPartialViewToString(string viewName, ViewDataDictionary viewData)
         {
             IView? view = default;
 

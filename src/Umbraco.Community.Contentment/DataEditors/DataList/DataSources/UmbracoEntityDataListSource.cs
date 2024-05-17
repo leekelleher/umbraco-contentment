@@ -115,7 +115,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<DataListItem>();
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(IEntitySlim);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IEntitySlim);
 
         public object? ConvertValue(Type type, string value)
         {

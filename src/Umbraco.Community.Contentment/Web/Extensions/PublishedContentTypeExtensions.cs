@@ -18,7 +18,8 @@ namespace Umbraco.Extensions
         public static string GetIcon(this IPublishedContentType contentType, IContentTypeService? contentTypeService = null)
         {
             if (contentType != null &&
-                ContentTypeCacheHelper.TryGetIcon(contentType.Alias, out var icon, contentTypeService ?? _contentTypeService) == true)
+                ContentTypeCacheHelper.TryGetIcon(contentType.Alias, out var icon, contentTypeService ?? _contentTypeService) == true &&
+                string.IsNullOrWhiteSpace(icon) == false)
             {
                 return icon;
             }

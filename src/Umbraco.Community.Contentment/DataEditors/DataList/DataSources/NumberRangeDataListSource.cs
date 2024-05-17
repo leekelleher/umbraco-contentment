@@ -121,7 +121,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(double);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(double);
 
         public object? ConvertValue(Type type, string value) => value.TryConvertTo(type).ResultOr(default(double));
     }

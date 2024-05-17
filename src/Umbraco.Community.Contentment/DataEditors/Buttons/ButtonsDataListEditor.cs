@@ -92,9 +92,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object>? DefaultConfig => default;
 
-        public bool HasMultipleValues(Dictionary<string, object> config)
+        public bool HasMultipleValues(Dictionary<string, object>? config)
         {
-            return config.TryGetValue("enableMultiple", out var tmp) && tmp.TryConvertTo<bool>().Result;
+            return config?.TryGetValue("enableMultiple", out var tmp) == true && tmp.TryConvertTo<bool>().Result;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Small;

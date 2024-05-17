@@ -126,9 +126,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "overlayOrderBy", string.Empty },
         };
 
-        public bool HasMultipleValues(Dictionary<string, object> config)
+        public bool HasMultipleValues(Dictionary<string, object>? config)
         {
-            return config.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
+            return config?.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Medium;

@@ -83,7 +83,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(TimeZoneInfo);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(TimeZoneInfo);
 
         public object ConvertValue(Type type, string value) => TimeZoneInfo.FindSystemTimeZoneById(value);
     }

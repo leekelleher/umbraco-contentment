@@ -132,7 +132,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContentType);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContentType);
 
         public object? ConvertValue(Type type, string value)
         {

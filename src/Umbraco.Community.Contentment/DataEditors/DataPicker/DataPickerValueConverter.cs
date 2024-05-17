@@ -147,7 +147,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 if (source != null)
                 {
                     var config = obj1["value"]?.ToObject<Dictionary<string, object>>();
-                    valueType = source.GetValueType(config);
+                    valueType = source.GetValueType(config) ?? typeof(string);
                     converter = source.ConvertValue!;
                 }
 

@@ -16,7 +16,9 @@ namespace Umbraco.Extensions
     {
         public static void ForUmbracoPageByDomain(this ControllerActionEndpointConventionBuilder builder)
         {
+#pragma warning disable CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
             builder.ForUmbracoPage(FindContentByDomain);
+#pragma warning restore CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
         }
 
         private static IPublishedContent? FindContentByDomain(ActionExecutingContext actionExecutingContext)

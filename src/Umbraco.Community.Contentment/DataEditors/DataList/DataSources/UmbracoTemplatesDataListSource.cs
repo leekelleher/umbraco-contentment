@@ -109,7 +109,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object>? config)
+        public Type? GetValueType(Dictionary<string, object>? config)
         {
             var valueType = config?.GetValueAs("valueType", defaultValue: "udi");
             return valueType.InvariantEquals("udi") == true

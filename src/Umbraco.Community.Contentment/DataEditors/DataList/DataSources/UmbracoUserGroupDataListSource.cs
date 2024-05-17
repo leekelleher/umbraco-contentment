@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(IUserGroup);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IUserGroup);
 
         public object? ConvertValue(Type type, string value) => _userService.GetUserGroupByAlias(value);
     }

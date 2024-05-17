@@ -31,11 +31,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         [HttpPost]
+#pragma warning disable IDE0060 // Remove unused parameter
         public async Task<IActionResult> GetItems([FromQuery] int id, Guid dataTypeKey, [FromBody] string[] values)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
-                var result = (await cached.Item1.GetItemsAsync(cached.Item2, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value);
+                var result = (await cached.Item1.GetItemsAsync(cached.Item2, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value ?? string.Empty);
 
                 return Ok(result);
             }
@@ -55,7 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                    var result = (await source1.GetItemsAsync(config1, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value);
+                    var result = (await source1.GetItemsAsync(config1, values)).DistinctBy(x => x.Value).ToDictionary(x => x.Value ?? string.Empty);
 
                     return Ok(result);
                 }
@@ -65,7 +67,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         [HttpGet]
+#pragma warning disable IDE0060 // Remove unused parameter
         public async Task<IActionResult> Search(int id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
@@ -81,14 +85,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 array1.Count > 0 &&
                 array1[0] is JObject item1)
             {
-                var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(item1.Value<string>("key"));
-                if (source1 != null)
+                var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(item1.Value<string>("key") ?? string.Empty);
+                if (source1 is not null)
                 {
-                    var config1 = item1?["value"]?.ToObject<Dictionary<string, object>>()!;
+                    var config1 = item1?["value"]?.ToObject<Dictionary<string, object>>() ?? [];
 
                     _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                    var results = await source1?.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                    var results = await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
                     return Ok(results);
                 }

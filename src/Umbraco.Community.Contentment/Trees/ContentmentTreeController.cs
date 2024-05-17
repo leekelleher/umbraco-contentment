@@ -36,16 +36,23 @@ namespace Umbraco.Community.Contentment.Trees
         {
             var root = base.CreateRootNode(queryStrings);
 
+            if (root.Value is null)
+            {
+                return root;
+            }
+
             root.Value.Icon = Constants.Icons.Contentment;
             root.Value.HasChildren = false;
             root.Value.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.Value.MenuUrl = null;
 
-            return root?.Value;
+            return root;
         }
 
+#pragma warning disable CS8603 // Possible null reference return.
         protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
             => default;
+#pragma warning restore CS8603 // Possible null reference return.
 
         protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
             => TreeNodeCollection.Empty;

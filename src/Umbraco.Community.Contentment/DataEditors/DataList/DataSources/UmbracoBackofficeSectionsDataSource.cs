@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(ISection);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(ISection);
 
         public object? ConvertValue(Type type, string value) => _sectionService.GetByAlias(value);
     }

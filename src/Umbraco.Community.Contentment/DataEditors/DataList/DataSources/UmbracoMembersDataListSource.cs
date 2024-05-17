@@ -131,7 +131,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
         }
 
-        public Type GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
         public object? ConvertValue(Type type, string value)
         {
