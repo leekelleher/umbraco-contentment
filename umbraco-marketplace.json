@@ -75,5 +75,27 @@
     "text input"
   ],
   "Title": "Contentment",
+  "VersionSpecificPackageIds": [
+    {
+      "UmbracoMajorVersion": 8,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 9,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 10,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 11,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    },
+    {
+      "UmbracoMajorVersion": 12,
+      "PackageId": "Our.Umbraco.Community.Contentment"
+    }
+  ],
   "VideoUrl": "https://www.youtube.com/embed/alhbwyQkU1E"
 }
