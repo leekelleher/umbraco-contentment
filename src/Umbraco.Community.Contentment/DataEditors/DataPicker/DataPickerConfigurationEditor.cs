@@ -1,22 +1,13 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -30,7 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public DataPickerConfigurationEditor(
             IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
             : base()
         {
@@ -42,12 +32,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { MaxItemsConfigurationField.MaxItems, 1 },
                 { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                 { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
             };
 
-            var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>(shortStringHelper));
-            var displayModes = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerDisplayMode>(shortStringHelper));
+            var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerSource>());
+            var displayModes = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataPickerDisplayMode>());
 
             // NOTE: Sets the default display mode to be the Cards.
             var defaultDisplayMode = displayModes.FirstOrDefault(x => x.Key.InvariantEquals(typeof(CardsDataPickerDisplayMode).GetFullNameWithAssembly()));
@@ -77,7 +67,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         @class = "alert alert-info",
                         title = "Do you need a custom data-source?",
                         notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data Picker with your own custom data source.</p>
-<p>To do this, read the documentation on <a href=""{Constants.Package.RepositoryUrl}/blob/develop/docs/editors/data-picker.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
+<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-picker.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
                 }
             });
 
@@ -135,19 +125,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             Fields.Add(new EnableDevModeConfigurationField());
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DisplayMode, out JArray array1) == true && array1.Count > 0 && array1[0] is JObject item1)
+            if (config.TryGetValueAs(DisplayMode, out JArray? array1) == true &&
+                array1?.Count > 0 &&
+                array1[0] is JObject item1 &&
+                item1.Value<string>("key") is string key1)
             {
-                var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(item1.Value<string>("key"));
+                var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key1);
                 if (displayMode != null)
                 {
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
-                    config.Remove(DisplayMode);
+                    _ = config.Remove(DisplayMode);
 
-                    var editorConfig = item1["value"].ToObject<Dictionary<string, object>>();
+                    var editorConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
                     if (editorConfig != null)
                     {
                         foreach (var prop in editorConfig)
@@ -174,7 +167,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
             {
-                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath));
+                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
             }
 
             return config;

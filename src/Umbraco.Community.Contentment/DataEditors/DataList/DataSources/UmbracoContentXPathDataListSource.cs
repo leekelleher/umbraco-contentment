@@ -1,28 +1,16 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Umbraco.Community.Contentment.Services;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Web;
-using Umbraco.Web.PublishedCache;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -75,11 +63,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 <dd><code>$site</code> - ancestor page located at level 1.</dd>
 </dl>
 <hr />
-<p><strong>Please note,</strong> this data source will not work if used within a 'Nested Content' element type. <strong><em>This is a known issue.</em></strong> <a href=""{Constants.Package.RepositoryUrl}/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener"">Please see GitHub issue #30 for details.</a></p>
+<p><strong>Please note,</strong> this data source will not work if used within a 'Nested Content' element type. <strong><em>This is a known issue.</em></strong> <a href=""{Constants.Internals.RepositoryUrl}/issues/30#issuecomment-668684508"" target=""_blank"" rel=""noopener"">Please see GitHub issue #30 for details.</a></p>
 </details>", true),
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "xpath", "/root/*[@level = 1]/*[@isDoc]" },
         };
@@ -96,29 +84,33 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var preview = true;
 
-                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse();
+                IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
                 bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
 
                 var parsed = _contentmentContentContext.ParseXPathQuery(xpath, getPath, publishedContentExists);
 
-                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith("$") == false)
+                if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     return contentCache
                         .GetByXPath(preview, parsed)
                         .Select(DataListItemExtensions.ToDataListItem)
                         .ToList();
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 
             return Enumerable.Empty<DataListItem>();
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out Udi udi) == true && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
-                ? umbracoContext.Content.GetById(udi)
+            return UdiParser.TryParse(value, out var udi) == true
+                && udi is not null
+                && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content?.GetById(udi)
                 : default;
         }
     }

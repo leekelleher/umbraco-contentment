@@ -1,44 +1,67 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-/* NOTE: This code file is ONLY the base partial class.
- * For the actual SQL logic for .NET Framework or .NET Core,
- * please see the .NET472, .NET5_0 or .NET6_0 code files. */
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
-using Umbraco.Cms.Core.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using NPoco;
+using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Infrastructure.Persistence;
+using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed partial class SqlDataListSource : IDataListSource, IDataPickerSource
+    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
-        public string Name => "SQL Data";
+        private readonly string _codeEditorMode;
+        private readonly IEnumerable<DataListItem> _connectionStrings;
+        private readonly IIOHelper _ioHelper;
+        private readonly IConfiguration _configuration;
+        private readonly IDbProviderFactoryCreator _dbProviderFactoryCreator;
+        private readonly IScopeProvider _scopeProvider;
 
-        public string Description => "Use a SQL Server database query as the data source.";
+        public SqlDataListSource(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration,
+            IDbProviderFactoryCreator dbProviderFactoryCreator,
+            IScopeProvider scopeProvider,
+            IIOHelper ioHelper)
+        {
+            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
+            _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
+                ? "sqlserver"
+                : "razor";
 
-        public string Icon => "icon-server-alt";
+            _connectionStrings = configuration
+                .GetSection("ConnectionStrings")
+                .GetChildren()
+                .Where(x => x.Key.InvariantEndsWith("_ProviderName") == false)
+                .Select(x => new DataListItem
+                {
+                    Name = x.Key,
+                    Value = x.Key
+                });
 
-        public string Group => Constants.Conventions.DataSourceGroups.Data;
+            _configuration = configuration;
+            _dbProviderFactoryCreator = dbProviderFactoryCreator;
+            _scopeProvider = scopeProvider;
+            _ioHelper = ioHelper;
+        }
 
-        public OverlaySize OverlaySize => OverlaySize.Medium;
+        public override string Name => "SQL Data";
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override string Description => "Use a SQL Server database query as the data source.";
+
+        public override string Icon => "icon-server-alt";
+
+        public override string Group => Constants.Conventions.DataSourceGroups.Data;
+
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
+
+        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
@@ -80,47 +103,96 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "query", $"SELECT\r\n\t[text],\r\n\t[uniqueId]\r\nFROM\r\n\t[umbracoNode]\r\nWHERE\r\n\t[nodeObjectType] = '{UmbConstants.ObjectTypes.Strings.Document}'\r\n\tAND\r\n\t[level] = 1\r\nORDER BY\r\n\t[sortOrder] ASC\r\n\r\n-- This is an example query that will select all the content nodes that are at level 1.\r\n;" },
             { "connectionString", UmbConstants.System.UmbracoConnectionName }
         };
 
-        public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
+        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var items = GetItems(config);
+            var items = new List<DataListItem>();
 
-            if (items?.Any() == true)
+            var query = config.GetValueAs("query", string.Empty);
+            var connectionStringName = config.GetValueAs("connectionString", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(query) == true || string.IsNullOrWhiteSpace(connectionStringName) == true)
             {
-                return Task.FromResult(items.Where(x => values.Contains(x.Value) == true));
+                return items;
             }
 
-            return Task.FromResult(Enumerable.Empty<DataListItem>());
+            items.AddRange(GetSqlItems(query, connectionStringName));
+
+            return items;
         }
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        private IEnumerable<DataListItem> GetSqlItems(string query, string connectionStringName)
         {
-            var items = default(IEnumerable<DataListItem>);
+            using (var scope = _scopeProvider.CreateScope())
+            {
+                var database = GetDatabase(connectionStringName) ?? scope.Database;
+                var results = database.Fetch<dynamic>(query);
 
-            if (string.IsNullOrWhiteSpace(query) == true)
-            {
-                items = GetItems(config);
-            }
-            else
-            {
-                items = GetItems(config)?.Where(x => x.Name?.InvariantContains(query) == true || x.Value?.InvariantStartsWith(query) == true);
-            }
-
-            if (items?.Any() == true)
-            {
-                var offset = (pageNumber - 1) * pageSize;
-                return Task.FromResult(new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
+                foreach (PocoExpando result in results)
                 {
-                    Items = items.Skip(offset).Take(pageSize),
-                });
+                    var item = new DataListItem
+                    {
+                        Name = result.Values.ElementAtOrDefault(0).TryConvertTo<string>().ResultOr(string.Empty),
+                    };
+
+                    item.Value = result.Values.ElementAtOrDefault(1).TryConvertTo<string>().ResultOr(item.Name);
+
+                    if (result.Values.Count > 2)
+                    {
+                        item.Description = result.Values.ElementAtOrDefault(2).TryConvertTo<string>().ResultOr(string.Empty);
+                    }
+
+                    if (result.Values.Count > 3)
+                    {
+                        item.Icon = result.Values.ElementAtOrDefault(3).TryConvertTo<string>().ResultOr(string.Empty);
+                    }
+
+                    if (result.Values.Count > 4)
+                    {
+                        item.Disabled = result.Values.ElementAtOrDefault(4).TryConvertTo<bool>().ResultOr(false);
+                    }
+
+                    yield return item;
+                }
+
+                _ = scope.Complete();
+            }
+        }
+
+#pragma warning disable CA1859 // Use concrete types when possible for improved performance
+        private IDatabase? GetDatabase(string connectionStringName)
+#pragma warning restore CA1859 // Use concrete types when possible for improved performance
+        {
+            if (connectionStringName != UmbConstants.System.UmbracoConnectionName)
+            {
+                var connectionString = _configuration.GetUmbracoConnectionString(connectionStringName, out var providerName);
+
+                if (string.IsNullOrWhiteSpace(providerName) == true)
+                {
+                    providerName = Constants.Persistance.Providers.SqlServer;
+                }
+
+                var dbProviderFactory = _dbProviderFactoryCreator.CreateFactory(providerName);
+
+                if (string.IsNullOrWhiteSpace(connectionString) == false && dbProviderFactory is not null)
+                {
+                    if (providerName.InvariantEquals(Constants.Persistance.Providers.Sqlite) == true)
+                    {
+                        return new Database(connectionString, DatabaseType.SQLite, dbProviderFactory);
+                    }
+                    else
+                    {
+                        return new Database(connectionString, DatabaseType.SqlServer2012, dbProviderFactory);
+                    }
+                }
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
+            return default;
         }
     }
 }

@@ -1,20 +1,11 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -36,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-fa fa-mouse-pointer";
 
-        public string Group => default;
+        public string? Group => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -121,7 +112,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultValues => new()
         {
             { "listType", "list" },
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
@@ -129,15 +120,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
-        public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultConfig => new()
         {
-            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) },
+            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) ?? string.Empty },
             { "overlayOrderBy", string.Empty },
         };
 
-        public bool HasMultipleValues(Dictionary<string, object> config)
+        public bool HasMultipleValues(Dictionary<string, object>? config)
         {
-            return config.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
+            return config?.TryGetValueAs(MaxItemsConfigurationField.MaxItems, out int maxItems) == true && maxItems != 1;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Medium;

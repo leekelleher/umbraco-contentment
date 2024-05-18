@@ -1,24 +1,16 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class TextDelimitedDataListItemPropertyValueConverter : IDataListItemPropertyValueConverter
     {
 
-        private readonly Dictionary<string, char[]> _lookup = new Dictionary<string, char[]>(StringComparer.InvariantCultureIgnoreCase)
+        private readonly Dictionary<string, char[]> _lookup = new(StringComparer.InvariantCultureIgnoreCase)
         {
             { TextInputDataEditor.DataEditorAlias, UmbConstants.CharArrays.Comma },
             { UmbConstants.PropertyEditors.Aliases.TextArea, UmbConstants.CharArrays.LineFeedCarriageReturn },

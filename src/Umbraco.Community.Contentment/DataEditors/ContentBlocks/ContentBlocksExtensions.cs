@@ -1,20 +1,11 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.Blocks;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.Blocks;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -89,18 +80,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (blockValue.Layout.TryGetValue(propertyEditorAlias, out var token) == true)
             {
                 var layout = token.ToObject<IEnumerable<BlockListLayoutItem>>();
-                var lookup = blockValue.ContentData.ToDictionary(x => x.Udi);
-
-                foreach (var item in layout)
+                if (layout is not null)
                 {
-                    if (lookup.TryGetValue(item.ContentUdi, out var data) == true)
+                    var lookup = blockValue.ContentData.ToDictionary(x => x.Udi!);
+
+                    foreach (var item in layout)
                     {
-                        blocks.Add(new ContentBlock
+                        if (item.ContentUdi is not null &&
+                            lookup.TryGetValue(item.ContentUdi, out var data) == true)
                         {
-                            ElementType = data.ContentTypeKey,
-                            Key = data.Key,
-                            Value = data.RawPropertyValues,
-                        });
+                            blocks.Add(new ContentBlock
+                            {
+                                ElementType = data.ContentTypeKey,
+                                Key = data.Key,
+                                Value = data.RawPropertyValues,
+                            });
+                        }
                     }
                 }
             }

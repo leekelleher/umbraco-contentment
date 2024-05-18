@@ -1,20 +1,9 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using System.Web.Mvc;
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
-using Umbraco.Core.Services;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -22,8 +11,6 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -44,9 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public DataListDataEditor(
             IIOHelper ioHelper,
-#if NET472 == false
             IJsonSerializer jsonSerializer,
-#endif
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
@@ -54,11 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _ioHelper = ioHelper;
             _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
-#if NET472
-            _jsonSerializer = DependencyResolver.Current.GetService<IJsonSerializer>();
-#else
             _jsonSerializer = jsonSerializer;
-#endif
             _utility = utility;
         }
 
@@ -78,7 +59,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_ioHelper, _localizedTextService, _shortStringHelper, _utility);
+        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_ioHelper, _localizedTextService, _utility);
 
         public IDataValueEditor GetValueEditor()
         {
@@ -89,23 +70,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             var view = default(string);
 
             if (configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray array) == true &&
-                array.Count > 0 &&
-                array[0] is JObject item)
+                config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray? array) == true &&
+                array?.Count > 0 &&
+                array[0] is JObject item &&
+                item.Value<string>("key") is string key)
             {
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`. [LK:2020-04-03]
-                if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
-                {
-                    item.Add("key", item["type"]);
-                    item.Remove("type");
-                }
-
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(item.Value<string>("key"));
+                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key);
                 if (editor != null)
                 {
                     view = editor.View;

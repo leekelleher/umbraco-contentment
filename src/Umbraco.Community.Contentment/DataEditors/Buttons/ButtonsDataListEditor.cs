@@ -1,21 +1,11 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using System.Collections.Generic;
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
-using System.Collections.Generic;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -36,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => "icon-tab";
 
-        public string Group => default;
+        public string? Group => default;
 
         public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
         {
@@ -94,17 +84,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public Dictionary<string, object> DefaultValues => new Dictionary<string, object>
+        public Dictionary<string, object> DefaultValues => new()
         {
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },
         };
 
-        public Dictionary<string, object> DefaultConfig => default;
+        public Dictionary<string, object>? DefaultConfig => default;
 
-        public bool HasMultipleValues(Dictionary<string, object> config)
+        public bool HasMultipleValues(Dictionary<string, object>? config)
         {
-            return config.TryGetValue("enableMultiple", out var tmp) && tmp.TryConvertTo<bool>().Result;
+            return config?.TryGetValue("enableMultiple", out var tmp) == true && tmp.TryConvertTo<bool>().Result;
         }
 
         public OverlaySize OverlaySize => OverlaySize.Small;

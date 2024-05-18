@@ -1,34 +1,29 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web;
-#else
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
-#endif
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
     public sealed class ContentmentContentContext : IContentmentContentContext
     {
-#if NET472 == false
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IRequestAccessor _requestAccessor;
-#endif
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public ContentmentContentContext(
-#if NET472 == false
+            IHttpContextAccessor httpContextAccessor,
             IRequestAccessor requestAccessor,
-#endif
             IUmbracoContextAccessor umbracoContextAccessor)
         {
-#if NET472 == false
+            _httpContextAccessor = httpContextAccessor;
             _requestAccessor = requestAccessor;
-#endif
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
@@ -43,37 +38,39 @@ namespace Umbraco.Community.Contentment.Services
                     isParent = false;
                     return umbracoContext.PublishedRequest.PublishedContent.Id;
                 }
-
-#if NET472 == false
             }
-#endif
 
-                // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-#if NET472
-                if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("id"), out var currentId) == true)
-#else
-                if (int.TryParse(_requestAccessor.GetQueryStringValue("id"), out var currentId) == true)
-#endif
+            // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
+            if (int.TryParse(_requestAccessor.GetRequestValue("id"), out var currentId) == true)
+            {
+                return currentId;
+            }
+            else if (int.TryParse(_requestAccessor.GetRequestValue("parentId"), out var parentId) == true)
+            {
+                isParent = true;
+
+                return parentId;
+            }
+
+            var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrWhiteSpace(json) == false)
+            {
+                var obj = JsonConvert.DeserializeAnonymousType(json, new { id = 0, parentId = 0 });
+                if (obj?.id > 0)
                 {
-                    return currentId;
+                    return obj.id;
                 }
-#if NET472
-                else if (int.TryParse(umbracoContext.HttpContext.Request.QueryString.Get("parentId"), out var parentId) == true)
-#else
-                else if (int.TryParse(_requestAccessor.GetQueryStringValue("parentId"), out var parentId) == true)
-#endif
+                else if (obj?.parentId > 0)
                 {
                     isParent = true;
-
-                    return parentId;
+                    return obj.parentId;
                 }
-#if NET472
             }
-#endif
+
             return default;
         }
 
-        public IPublishedContent GetCurrentContent(out bool isParent)
+        public IPublishedContent? GetCurrentContent(out bool isParent)
         {
             isParent = false;
 
@@ -88,7 +85,7 @@ namespace Umbraco.Community.Contentment.Services
 
                 if (currentContentId.HasValue == true)
                 {
-                    return umbracoContext.Content.GetById(true, currentContentId.Value);
+                    return umbracoContext.Content?.GetById(true, currentContentId.Value);
                 }
             }
 

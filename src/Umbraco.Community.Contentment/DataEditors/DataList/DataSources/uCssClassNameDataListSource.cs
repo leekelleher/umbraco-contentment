@@ -1,29 +1,19 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Hosting;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-#else
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+#pragma warning disable IDE1006 // Naming Styles
     public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+#pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
@@ -88,7 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
@@ -100,9 +90,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var cssPath = config.GetValueAs("cssPath", string.Empty);
-            var cssRegex = config.GetValueAs("cssRegex", string.Empty);
-            var excludeList = config.GetValueAs("excludeList", string.Empty).ToDelimitedList();
+            var cssPath = config.GetValueAs("cssPath", string.Empty) ?? string.Empty;
+            var cssRegex = config.GetValueAs("cssRegex", string.Empty) ?? string.Empty;
+            var excludeList = config.GetValueAs("excludeList", string.Empty)?.ToDelimitedList();
             var iconPattern = config.GetValueAs("iconPattern", string.Empty);
 
             var items = new HashSet<string>();
@@ -118,13 +108,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var text = match.Groups[1].Value.Trim();
                     if (text.Length > 2 && items.Contains(text) == false)
                     {
-                        items.Add(text);
+                        _ = items.Add(text);
                     }
                 }
             }
 
             return items
-                .Where(x => excludeList.Count == 0 || excludeList.Any(x.InvariantContains) == false)
+                .Where(x => excludeList?.Count == 0 || excludeList?.Any(x.InvariantContains) == false)
                 .OrderBy(x => x)
                 .Select(x => new DataListItem
                 {
@@ -134,16 +124,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        private string GetCssFileContents(string cssPath)
+        private string? GetCssFileContents(string cssPath)
         {
-#if NET472
-            var path = _webHostEnvironment.MapPathWebRoot(cssPath);
-
-            if (File.Exists(path) == true)
-            {
-                return File.ReadAllText(path);
-            }
-#else
             var file = _webHostEnvironment.WebRootFileProvider.GetFileInfo(cssPath.TrimStart("~/"));
 
             if (file.Exists == true)
@@ -153,7 +135,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 return reader.ReadToEnd();
             }
-#endif
 
             return default;
         }

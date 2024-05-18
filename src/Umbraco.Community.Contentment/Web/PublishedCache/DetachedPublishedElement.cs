@@ -1,4 +1,4 @@
-﻿/* Copyright © 2016 UMCO, Our Umbraco and other contributors.
+/* Copyright © 2016 UMCO, Our Umbraco and other contributors.
  * This Source Code has been derived from Inner Content.
  * https://github.com/umco/umbraco-inner-content/blob/2.0.4/src/Our.Umbraco.InnerContent/Models/DetachedPublishedContent.cs
  * Modified under the permissions of the MIT License.
@@ -8,14 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
-#endif
 
 namespace Umbraco.Community.Contentment.Web.PublishedCache
 {
@@ -38,11 +31,11 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
 
         public IEnumerable<IPublishedProperty> Properties { get; }
 
-        public IPublishedProperty GetProperty(string alias)
+        public IPublishedProperty? GetProperty(string alias)
         {
             return _propertyLookup.ContainsKey(alias)
                 ? _propertyLookup[alias]
-                : null;
+                : default;
         }
     }
 }

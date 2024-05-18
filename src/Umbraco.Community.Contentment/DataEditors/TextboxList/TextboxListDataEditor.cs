@@ -1,16 +1,8 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using System.Collections.Generic;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
-using System.Collections.Generic;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -18,8 +10,6 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -33,6 +23,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
+        private readonly ILocalizedTextService _localizedTextService;
+        private readonly IJsonSerializer _jsonSerializer;
 
         public string Alias => DataEditorAlias;
 
@@ -46,23 +38,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool IsDeprecated => false;
 
-        public IDictionary<string, object> DefaultConfiguration => default;
+        public IDictionary<string, object>? DefaultConfiguration => default;
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
-
-#if NET472
-        public TextboxListDataEditor(
-            ConfigurationEditorUtility utility,
-            IIOHelper ioHelper,
-            IShortStringHelper shortStringHelper)
-        {
-            _utility = utility;
-            _ioHelper = ioHelper;
-            _shortStringHelper = shortStringHelper;
-        }
-#else
-        private readonly ILocalizedTextService _localizedTextService;
-        private readonly IJsonSerializer _jsonSerializer;
 
         public TextboxListDataEditor(
             ConfigurationEditorUtility utility,
@@ -77,30 +55,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
-#endif
 
-        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility, _ioHelper, _shortStringHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility, _ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-#if NET472
-            return new DataValueEditor()
-#else
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
             {
                 ValueType = ValueTypes.Json,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(Constants.Internals.EmptyEditorViewPath),
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
-#if NET472
-            return new DataValueEditor()
-#else
             return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
-#endif
             {
                 Configuration = configuration,
                 ValueType = ValueTypes.Json,

@@ -1,60 +1,64 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFrameworks>net472;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
-    <Product>Umbraco.Community.Contentment</Product>
-    <PackageId>Our.Umbraco.Community.Contentment</PackageId>
-    <Title>Contentment for Umbraco</Title>
-    <Description>Contentment, a collection of components for Umbraco.</Description>
-    <PackageTags>umbraco umbraco-marketplace</PackageTags>
-    <Version>4.7.0</Version>
-    <Company>Umbrella Inc Ltd</Company>
-    <Authors>Lee Kelleher</Authors>
-    <Copyright>2019 © Lee Kelleher</Copyright>
-    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-    <PackageReference Include="UmbracoCms.Web" Version="8.17.0" />
-  </ItemGroup>
+    <!-- NuGet package metadata -->
+    <PropertyGroup>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <Product>Umbraco.Community.Contentment</Product>
+        <Title>Contentment for Umbraco</Title>
+        <Description>Contentment, a collection of components for Umbraco.</Description>
+        <Version>5.0.0</Version>
+        <Authors>Lee Kelleher</Authors>
+        <Company>Lee Kelleher</Company>
+        <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
+        <PackageId>Umbraco.Community.Contentment</PackageId>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>umbraco umbraco-marketplace</PackageTags>
+        <RepositoryUrl>https://github.com/leekelleher/umbraco-contentment</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.5.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.5.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="11.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="node_modules\**;wwwroot\**" />
-    <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
-    <None Remove="node_modules\**;wwwroot\**" />
-  </ItemGroup>
-
-  <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
     <ItemGroup>
-      <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
+        <Using Alias="UmbConstants" Include="Umbraco.Cms.Core.Constants" />
     </ItemGroup>
-  </Target>
 
-  <Target Name="ContentmentPrepareAssets" AfterTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net472'">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)..\..\build\build-assets.ps1&quot; -ProjectDir &quot;$(ProjectDir)\&quot;" />
-  </Target>
+    <ItemGroup>
+        <None Include="..\..\docs\assets\img\logo.png" Pack="true" PackagePath="icon.png" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[13.2.0, 14)" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[13.2.0, 14)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="node_modules\**;wwwroot\**" />
+        <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
+        <None Remove="node_modules\**;wwwroot\**" />
+    </ItemGroup>
+
+    <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
+        <ItemGroup>
+            <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
+        <Exec Command="npm run build" />
+    </Target>
 
 </Project>

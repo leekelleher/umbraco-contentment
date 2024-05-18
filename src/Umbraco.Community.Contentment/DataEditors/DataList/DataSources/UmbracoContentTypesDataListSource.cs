@@ -1,23 +1,9 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Dictionary;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Core.Xml;
-using Umbraco.Web;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.IO;
@@ -26,8 +12,6 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -43,19 +27,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IUmbracoContextAccessor umbracoContextAccessor,
             ILocalizedTextService localizedTextService,
-#if NET472 == false
             ICultureDictionary cultureDictionary,
-#endif
             IIOHelper ioHelper)
         {
             _contentTypeService = contentTypeService;
             _umbracoContextAccessor = umbracoContextAccessor;
             _localizedTextService = localizedTextService;
-#if NET472
-            _cultureDictionary = Core.Composing.Current.CultureDictionaryFactory.CreateDictionary();
-#else
             _cultureDictionary = cultureDictionary;
-#endif
             _ioHelper = ioHelper;
         }
 
@@ -111,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
@@ -150,17 +128,20 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
-                    Description = string.Join(", ", x.AllowedTemplates.Select(t => t.Alias)),
+                    Description = string.Join(", ", x.AllowedTemplates?.Select(t => t.Alias) ?? Enumerable.Empty<string>()),
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContentType);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContentType);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            if (UdiParser.TryParse(value, out GuidUdi udi) == true && ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true)
+            if (UdiParser.TryParse(value, out GuidUdi? udi) == true &&
+                udi is not null &&
+                ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true &&
+                string.IsNullOrWhiteSpace(alias) == false)
             {
-                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content.GetContentType(alias);
+                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content?.GetContentType(alias);
             }
 
             return default;

@@ -1,31 +1,16 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-#if NET472
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Models;
-using Umbraco.Core.Services;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
-#else
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -44,40 +29,24 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         [HttpPost]
-#if NET472
-        public HttpResponseMessage GetPreview([FromBody] JObject data)
-#else
         public IActionResult GetPreview([FromBody] JObject data)
-#endif
         {
             if (_propertyEditors.TryGet(DataListDataEditor.DataEditorAlias, out var propertyEditor) == true)
             {
                 var config = data.ToObject<Dictionary<string, object>>();
-                var alias = config.GetValueAs("alias", defaultValue: "preview");
+                var alias = config?.GetValueAs("alias", defaultValue: "preview") ?? "preview";
                 var configurationEditor = propertyEditor.GetConfigurationEditor();
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);
                 var valueEditor = propertyEditor.GetValueEditor(config);
 
-#if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig, view = valueEditor.View, alias });
-#else
                 return Ok(new { config = valueEditorConfig, view = valueEditor.View, alias });
-#endif
             }
 
-#if NET472
-            return Request.CreateResponse(HttpStatusCode.NotFound);
-#else
             return NotFound();
-#endif
         }
 
         [HttpPost]
-#if NET472
-        public HttpResponseMessage GetDataSourceItems([FromBody] JObject data)
-#else
         public IActionResult GetDataSourceItems([FromBody] JObject data)
-#endif
         {
             if (_propertyEditors.TryGet(DataListDataEditor.DataEditorAlias, out var propertyEditor) == true)
             {
@@ -85,26 +54,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var configurationEditor = propertyEditor.GetConfigurationEditor();
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);
 
-#if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, new { config = valueEditorConfig });
-#else
                 return Ok(new { config = valueEditorConfig });
-#endif
             }
 
-#if NET472
-            return Request.CreateResponse(HttpStatusCode.NotFound);
-#else
             return NotFound();
-#endif
         }
 
         [HttpGet, HttpPost]
-#if NET472
-        public HttpResponseMessage GetDataSourceItemsByDataTypeKey(Guid? key)
-#else
         public IActionResult GetDataSourceItemsByDataTypeKey(Guid? key)
-#endif
         {
             if (key.HasValue == true &&
                 _dataTypeService.GetDataType(key.Value) is IDataType dataType &&
@@ -115,18 +72,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var configurationEditor = propertyEditor.GetConfigurationEditor();
                 var valueEditorConfig = configurationEditor.ToValueEditor(config);
 
-#if NET472
-                return Request.CreateResponse(HttpStatusCode.OK, valueEditorConfig?["items"]);
-#else
                 return Ok(valueEditorConfig?["items"]);
-#endif
             }
 
-#if NET472
-            return Request.CreateResponse(HttpStatusCode.NotFound);
-#else
             return NotFound();
-#endif
         }
     }
 }

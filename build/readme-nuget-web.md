@@ -1,8 +1,6 @@
 ﻿## Contentment for Umbraco
 
-This NuGet package contains the web asset files for the [main Contentment package](https://www.nuget.org/packages/Umbraco.Community.Contentment).
-
-To note, you can still use this NuGet package as the main dependency. The reason for the **Umbraco.Community.Contentment** namespace is to support the Umbraco Marketplace. So you can use either this or that one.
+As of Contentment v5.0.0, new versions will not be pushed to this specific NuGet package. Please update your dependency reference to the [main `Umbraco.Community.Contentment` package](https://www.nuget.org/packages/Umbraco.Community.Contentment).
 
 ---
 

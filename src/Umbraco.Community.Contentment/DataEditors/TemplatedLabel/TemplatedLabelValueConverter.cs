@@ -1,23 +1,12 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.PropertyEditors.ValueConverters;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
-using UmbConstants = Umbraco.Cms.Core.Constants;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -28,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly Type _defaultObjectType = typeof(string);
 
-        private readonly Dictionary<string, Type> _objectTypes = new Dictionary<string, Type>
+        private readonly Dictionary<string, Type> _objectTypes = new()
         {
             { ValueTypes.Date, typeof(DateTime) },
             { ValueTypes.DateTime, typeof(DateTime) },
@@ -43,7 +32,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType)
         {
             if (propertyType.DataType.Configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string valueType) == true &&
+                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string? valueType) == true &&
+                string.IsNullOrWhiteSpace(valueType) == false &&
                 ValueTypes.IsValue(valueType) == true)
             {
                 return _objectTypes.ContainsKey(valueType) == true
@@ -54,10 +44,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _defaultObjectType;
         }
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             var valueType = GetPropertyValueType(propertyType);
-            return source.TryConvertTo(valueType).ResultOr(valueType.GetDefaultValue());
+            return source.TryConvertTo(valueType).ResultOr(valueType.GetDefaultValue())
+                ?? base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
     }
 }

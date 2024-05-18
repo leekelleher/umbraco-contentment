@@ -3,8 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Community.Contentment;
@@ -16,8 +14,8 @@ namespace Umbraco.Extensions
     {
         public static IUmbracoBuilder AddContentment(
             this IUmbracoBuilder builder,
-            Action<ContentmentSettings> settings = default,
-            Action<ContentmentListItemCollectionBuilder> listItems = default)
+            Action<ContentmentSettings>? settings = default,
+            Action<ContentmentListItemCollectionBuilder>? listItems = default)
         {
             if (settings is not null)
             {
@@ -42,4 +40,3 @@ namespace Umbraco.Extensions
         }
     }
 }
-#endif

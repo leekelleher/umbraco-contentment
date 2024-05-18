@@ -1,27 +1,14 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -85,7 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "valueType", "udi" },
         };
@@ -94,8 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var valueType = config.GetValueAs("valueType", defaultValue: "udi");
 
-
-            string getValue(IFile file)
+            string? getValue(IFile file)
             {
                 switch (valueType)
                 {
@@ -116,28 +102,26 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
-                    Value = getValue(x),
+                    Name = x.Name ?? x.Alias,
+                    Value = getValue(x) ?? x.Alias,
                     Icon = Icon,
-                    Description = x.VirtualPath,
+                    Description = x.VirtualPath ?? x.Alias,
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object> config)
+        public Type? GetValueType(Dictionary<string, object>? config)
         {
-            var valueType = config.GetValueAs("valueType", defaultValue: "udi");
+            var valueType = config?.GetValueAs("valueType", defaultValue: "udi");
             return valueType.InvariantEquals("udi") == true
                 ? typeof(Udi)
                 : typeof(string);
         }
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
             if (type == typeof(Udi))
             {
-                return UdiParser.TryParse(value, out GuidUdi udi) == true
-                    ? udi
-                    : default(Udi);
+                return UdiParser.TryParse(value, out var udi) == true ? udi : default;
             }
 
             return value;

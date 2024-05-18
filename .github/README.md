@@ -18,6 +18,7 @@ Some components may be innovative, others may be a reimagining of existing compo
 I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.
 No pressure or marketing spin from me.
 
+**Please do keep in mind that the Contentment for Umbraco package is not a business, it's a hobby project.**
 
 #### What's on offer?
 
@@ -53,12 +54,13 @@ Downloads are available on the [releases page](../releases).
 
 _**Please note...**_
 
-- v4.x supports **Umbraco v8.17.0** (on .NET 4.7.2), **Umbraco v10** (on .NET 6.0),  **Umbraco v11/v12** (on .NET 7.0) and  **Umbraco v13** (on .NET 8.0).
+- v5.x supports **Umbraco v13.2.0  ** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
+- v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x supports **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x supports **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
 
-With Contentment v3+ on Umbraco v9+ (.NET 5+), you can only install a package from the [NuGet package repository](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment). For Umbraco v8.x, the package can still be installed from either [Our Umbraco](https://our.umbraco.com/packages/backoffice-extensions/contentment/) or NuGet package repositories.
+With Contentment v5, if you require support for Umbraco v8/v9/v10/v11/v12, please use Contentment v4.
 
 To understand more about which Umbraco CMS versions are actively supported by Umbraco HQ, please see [Umbraco's Long-term Support (LTS) and End-of-Life (EOL) policy](https://umbraco.com/products/knowledge-center/long-term-support-and-end-of-life/).
 
@@ -68,18 +70,7 @@ To [install from NuGet](https://www.nuget.org/packages/Umbraco.Community.Content
 
     dotnet add package Umbraco.Community.Contentment
 
-> Please note, that the [`Umbraco.Community.Contentment`](https://www.nuget.org/packages/Umbraco.Community.Contentment) NuGet package is a placeholder package for future releases, it contains a dependency on two other packages, [`Our.Umbraco.Community.Contentment`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment) _(containing the web assets)_, and [`Our.Umbraco.Community.Contentment.Core`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment.Core/) _(containing the assembly code libraries)_.
-
-##### Our Umbraco package repository
-
-If you are using Umbraco v8.x, and prefer to install Contentment from the backoffice, the package can be downloaded from the Our Umbraco package repository:
-
-> <https://our.umbraco.com/packages/backoffice-extensions/contentment/>
-
-
-#### Demo website
-
-[A demo website is available for testing purposes.](../src/Umbraco.Cms.10.x/README.md) _(Please note, you will need to clone the repository and run locally.)_
+> Please note, that the [`Umbraco.Community.Contentment`](https://www.nuget.org/packages/Umbraco.Community.Contentment) NuGet package is the main package for ongoing releases. If you are referencing one of the older NuGet packages, e.g. [`Our.Umbraco.Community.Contentment`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment) or [`Our.Umbraco.Community.Contentment.Core`](https://www.nuget.org/packages/Our.Umbraco.Community.Contentment.Core/), then please update your package references to use [`Umbraco.Community.Contentment`](https://www.nuget.org/packages/Umbraco.Community.Contentment).
 
 
 ### [Documentation](../docs/)
@@ -95,9 +86,7 @@ _Let's call those "life's little surprises"._
 - **Data List**
   - When using the **Umbraco Content** data source with an XPath query, inside a Nested Content or Block List editors, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
   - When using the **Umbraco Content** data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
-  - With Umbraco v10 (Contentment v4), **SQL** data source does not support querying SQLite, _(yet!)_ [See #258 for details.](https://github.com/leekelleher/umbraco-contentment/issues/258)
-- **.NET Publish with .NET 6 (or newer)**
-  - When using .NET Publish with .NET 6 (or newer versions of .NET). [See #361 for details](https://github.com/leekelleher/umbraco-contentment/issues/361).
+
 
 ### [Roadmap](ROADMAP.md)
 
@@ -106,7 +95,7 @@ If you would like to know what is coming up in future releases, then take a look
 
 ### Support
 
-I've been doing open source for a long time. I have suffered my fair share of burnout and empathy fatigue.
+I'll try to help the best I can, but I've been doing open source for a long time, and I have suffered my fair share of burnout and empathy fatigue.
 
 I reserve the right to address bug reports or feature requests **in my own time**, or ignore them completely.
 
@@ -118,7 +107,7 @@ Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or th
 
 ### Contributions, collaborations, rules of engagement
 
-If you would like to contribute to this project, please [start a discussion](https://github.com/leekelleher/umbraco-contentment/discussions/new/choose) before spending time and energy on a pull request. Your time is precious too.
+If you would like to contribute to this project, please [start a discussion](https://github.com/leekelleher/umbraco-contentment/discussions/new/choose) before spending time and energy on a pull request. Your time is precious.
 
 Please make sure that you read the [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
@@ -140,7 +129,7 @@ All source code is licensed under the [Mozilla Public License](../LICENSE).
 <summary><strong>A note about licensing</strong></summary>
 
 Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
-The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code, then you **must** make those changes publicly available.
+The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code **and** distribute those modifications, then you **must** make those changes publicly available.
 
 _More give, less take._
 
@@ -154,12 +143,12 @@ For more information about the **Mozilla Public License**, please visit: <https:
 
 #### Developers
 
-- [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://mastodon.social/@leekelleher), [Twitter](https://twitter.com/leekelleher))
+- [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~1,802+ hours</b> (between 2019-03-13 to 2023-12-03)</summary>
+<summary>Current development effort: <b>~1,840+ hours</b> (between 2019-03-13 to 2024-04-19)</summary>
 
-_To give you an idea of how much human developer time/effort has been put into making this package._
+_To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 
 </details>
 

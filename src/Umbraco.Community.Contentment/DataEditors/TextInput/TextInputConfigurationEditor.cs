@@ -1,22 +1,13 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -24,13 +15,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ConfigurationEditorUtility _utility;
 
-        public TextInputConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
+        public TextInputConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper)
 
             : base()
         {
             _utility = utility;
 
-            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
+            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>());
 
             DefaultConfiguration.Add("inputType", "text");
 
@@ -73,7 +64,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
@@ -131,26 +122,25 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray array) == true && array.Count > 0 && array[0] is JObject item)
+            if (config.TryGetValueAs(Constants.Conventions.ConfigurationFieldAliases.Items, out JArray? array) == true &&
+                array?.Count > 0 &&
+                array[0] is JObject item &&
+                item.Value<string>("key") is string key)
             {
-                // NOTE: Patches a breaking-change. I'd renamed `type` to become `key`.
-                if (item.ContainsKey("key") == false && item.ContainsKey("type") == true)
-                {
-                    item.Add("key", item["type"]);
-                    item.Remove("type");
-                }
-
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataListSource>(key);
                 if (source != null)
                 {
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
+                    var sourceConfig = item["value"]?.ToObject<Dictionary<string, object>>();
+                    if (sourceConfig is not null)
+                    {
+                        var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
-                    config[Constants.Conventions.ConfigurationFieldAliases.Items] = items;
+                        config[Constants.Conventions.ConfigurationFieldAliases.Items] = items;
+                    }
                 }
             }
 

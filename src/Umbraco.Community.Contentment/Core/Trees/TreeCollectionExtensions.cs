@@ -1,11 +1,8 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
-using System;
-using System.Linq;
 using System.Reflection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.Trees;
@@ -28,7 +25,7 @@ namespace Umbraco.Extensions
                 return collection;
             }
 
-            var lazy = (LazyReadOnlyCollection<Tree>)field.GetValue(collection);
+            var lazy = field.GetValue(collection) as LazyReadOnlyCollection<Tree>;
             if (lazy?.Value == null)
             {
                 return collection;
@@ -63,5 +60,3 @@ namespace Umbraco.Extensions
         }
     }
 }
-
-#endif

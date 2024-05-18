@@ -1,24 +1,15 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -30,13 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = UmbConstants.Icons.Macro;
 
         private readonly IIOHelper _ioHelper;
-
-#if NET472
-        public RenderMacroDataEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-#else
         private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
@@ -52,7 +36,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
-#endif
 
         public string Alias => DataEditorAlias;
 
@@ -66,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public bool IsDeprecated => false;
 
-        public IDictionary<string, object> DefaultConfiguration => default;
+        public IDictionary<string, object>? DefaultConfiguration => default;
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
@@ -74,21 +57,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-#if NET472
-            return new ReadOnlyDataValueEditor
-#else
             return new ReadOnlyDataValueEditor(
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
-#endif
             {
                 ValueType = ValueTypes.Integer,
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
 
-        public IDataValueEditor GetValueEditor(object configuration)
+        public IDataValueEditor GetValueEditor(object? configuration)
         {
             var hideLabel = false;
 
@@ -97,14 +76,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 hideLabel = obj.TryConvertTo<bool>().Result;
             }
 
-#if NET472
-            return new ReadOnlyDataValueEditor
-#else
             return new ReadOnlyDataValueEditor(
                 _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
-#endif
             {
                 Configuration = configuration,
                 HideLabel = hideLabel,

@@ -1,24 +1,13 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -28,13 +17,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly ConfigurationEditorUtility _utility;
 
-        public TextboxListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper, IShortStringHelper shortStringHelper)
+        public TextboxListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper)
 
             : base()
         {
             _utility = utility;
 
-            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>(shortStringHelper));
+            var dataSources = new List<ConfigurationEditorModel>(_utility.GetConfigurationEditorModels<IDataListSource>());
 
             Fields.Add(new ConfigurationField
             {
@@ -47,7 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
                     { MaxItemsConfigurationField.MaxItems, 1 },
                     { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) },
+                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                     { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
                     { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
@@ -55,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         @class = "alert alert-info",
                         title = "Do you need a custom data-source?",
                         notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data List with your own custom data source.</p>
-<p>To do this, read the documentation on <a href=""{Constants.Package.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
+<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
                 }
             });
 
@@ -99,20 +88,27 @@ namespace Umbraco.Community.Contentment.DataEditors
             });
         }
 
-        public override IDictionary<string, object> ToValueEditor(object configuration)
+        public override IDictionary<string, object> ToValueEditor(object? configuration)
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DataSource, out JArray array) == true && array.Count > 0 && array[0] is JObject item)
+            if (config.TryGetValueAs(DataSource, out JArray? array) == true &&
+                array?.Count > 0 &&
+                array[0] is JObject item &&
+                item.Value<string>("key") is string key)
             {
-                var source = _utility.GetConfigurationEditor<IDataListSource>(item.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataListSource>(key);
                 if (source != null)
                 {
-                    var sourceConfig = item["value"].ToObject<Dictionary<string, object>>();
-                    var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
+                    var sourceConfig = item["value"]?.ToObject<Dictionary<string, object>>();
+                    if (sourceConfig is not null)
+                    {
+                        var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
 
-                    config.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
-                    config.Remove(DataSource);
+                        config.Add(Constants.Conventions.ConfigurationFieldAliases.Items, items);
+                    }
+
+                    _ = config.Remove(DataSource);
                 }
             }
 

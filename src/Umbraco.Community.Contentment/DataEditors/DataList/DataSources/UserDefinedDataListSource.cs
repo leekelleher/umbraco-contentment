@@ -1,22 +1,12 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -31,11 +21,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Name => "User-defined List";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public override string Description => "Manually configure the items for the data source.";
 
-        public string DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
+        public string? DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
 
         public override string Icon => UmbConstants.Icons.DataType;
 
@@ -81,14 +71,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return config.TryGetValueAs("items", out JArray array) == true
-                ? array.ToObject<IEnumerable<DataListItem>>().DistinctBy(x => x.Value)
+            return config.TryGetValueAs("items", out JArray? array) == true
+                ? array?.ToObject<IEnumerable<DataListItem>>()?.DistinctBy(x => x.Value) ?? Enumerable.Empty<DataListItem>()
                 : Enumerable.Empty<DataListItem>();
         }
     }

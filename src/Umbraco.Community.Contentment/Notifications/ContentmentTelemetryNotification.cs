@@ -1,16 +1,10 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -71,13 +65,12 @@ namespace Umbraco.Community.Contentment.Notifications
                             void AddConfigurationEditorKey(string alias)
                             {
                                 if (config.ContainsKey(alias) == true &&
-                                    config.TryGetValueAs(alias, out JArray array) == true &&
-                                    array.Count > 0 &&
+                                    config.TryGetValueAs(alias, out JArray? array) == true &&
+                                    array?.Count > 0 &&
                                     array[0] is JObject item &&
-                                    item.ContainsKey("key") == true)
+                                    item.TryGetValueAs("key", out string? key) == true &&
+                                    string.IsNullOrWhiteSpace(key) == false)
                                 {
-                                    var key = item.Value<string>("key");
-
                                     if (key.InvariantStartsWith(Constants.Internals.ProjectNamespace) == true && key.Length > 73)
                                     {
                                         // Strips off the namespace and assembly.
@@ -119,10 +112,10 @@ namespace Umbraco.Community.Contentment.Notifications
                         {
                             dataType = entity.Key,
                             editorAlias = entity.EditorAlias.Substring(Constants.Internals.DataEditorAliasPrefix.Length),
-                            umbracoId = umbracoId,
+                            umbracoId,
                             umbracoVersion = _umbracoVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
-                            contentmentVersion = ContentmentVersion.SemanticVersion.ToSemanticStringWithoutBuild(),
-                            dataTypeConfig = dataTypeConfig,
+                            contentmentVersion = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild(),
+                            dataTypeConfig,
                         };
 
                         var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
@@ -131,7 +124,7 @@ namespace Umbraco.Community.Contentment.Notifications
                         var payload = new StringContent(base64, Encoding.UTF8, MediaTypeNames.Text.Plain);
 
                         using var client = _httpClientFactory.CreateClient();
-                        using var post = await client.PostAsync(address, payload);
+                        using var post = await client.PostAsync(address, payload, CancellationToken.None);
                     }
                     catch { /* ¯\_(ツ)_/¯ */ }
                 }
@@ -139,4 +132,3 @@ namespace Umbraco.Community.Contentment.Notifications
         }
     }
 }
-#endif

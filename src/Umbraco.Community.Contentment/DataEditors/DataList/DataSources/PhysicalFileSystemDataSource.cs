@@ -1,42 +1,21 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-using IHostingEnvironment = Umbraco.Core.Hosting.IHostingEnvironment;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IShortStringHelper _shortStringHelper;
-
-#if NET472
-        public PhysicalFileSystemDataSource(
-            IShortStringHelper shortStringHelper)
-        {
-            _shortStringHelper = shortStringHelper;
-        }
-#else
         private readonly IIOHelper _ioHelper;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -55,15 +34,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
-#endif
 
         public override string Name => "File System";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public override string Description => "Select paths from the physical file system as the data source.";
 
-        public string DescriptionTemplate => "{{ path }}; {{ filter }}";
+        public string? DescriptionTemplate => "{{ path }}; {{ filter }}";
 
         public override string Icon => "icon-folder-close";
 
@@ -77,11 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "path",
                 Name = "Folder path",
-#if NET472
-                Description = "Enter the relative path of the folder. e.g. <code>~/css</code>",
-#else
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
-#endif
                 View = "textstring",
             },
             new ConfigurationField
@@ -100,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "path", "~/css" },
             { "filter", "*.css" },
@@ -120,11 +94,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? filter
                 : "*.*";
 
-#if NET472
-            var fs = new PhysicalFileSystem(virtualRoot);
-#else
             var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _webHostEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
-#endif
+
             var files = fs.GetFiles(".", fileFilter);
 
             return files.Select(x => new DataListItem

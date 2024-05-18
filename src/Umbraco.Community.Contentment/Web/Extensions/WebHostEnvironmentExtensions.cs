@@ -3,9 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET6_0_OR_GREATER
 using Umbraco.Extensions;
-#endif
 
 namespace Microsoft.AspNetCore.Hosting
 {
@@ -14,12 +12,8 @@ namespace Microsoft.AspNetCore.Hosting
         public static bool WebPathExists(this IWebHostEnvironment webHostEnvironment, string path)
         {
             var webPath = webHostEnvironment.MapPathWebRoot(path);
-#if NET472
-            return System.IO.File.Exists(webPath);
-#else
-            var fileInfo = webHostEnvironment.WebRootFileProvider.GetFileInfo(webHostEnvironment.MapPathWebRoot(path));
+            var fileInfo = webHostEnvironment.WebRootFileProvider.GetFileInfo(webPath);
             return fileInfo.Exists;
-#endif
         }
     }
 }

@@ -1,20 +1,12 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -167,21 +159,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             };
 
-#if NET472
-            var path = webHostEnvironment.MapPathWebRoot($"~/{aceEditorPath}/");
-
-            if (Directory.Exists(aceEditorPath) == true)
-            {
-                var aceEditorFiles = Directory.GetFiles(aceEditorPath, "*.js");
-                if (aceEditorFiles != null && aceEditorFiles.Length > 0)
-                {
-                    foreach (var file in aceEditorFiles)
-                    {
-                        checkFile(Path.GetFileNameWithoutExtension(file));
-                    }
-                }
-            }
-#else
             var directoryContents = webHostEnvironment.WebRootFileProvider.GetDirectoryContents(aceEditorPath);
             if (directoryContents.Exists == true)
             {
@@ -190,9 +167,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                     checkFile(Path.GetFileNameWithoutExtension(file.Name));
                 }
             }
-#endif
-            modes.Sort((x, y) => x.Value.CompareTo(y.Value));
-            themes.Sort((x, y) => x.Value.CompareTo(y.Value));
+            modes.Sort((x, y) => x.Value?.CompareTo(y.Value) ?? -1);
+            themes.Sort((x, y) => x.Value?.CompareTo(y.Value) ?? -1);
 
             return (modes, themes);
         }

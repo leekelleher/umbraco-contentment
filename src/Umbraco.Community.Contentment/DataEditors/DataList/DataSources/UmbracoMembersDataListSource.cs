@@ -1,37 +1,17 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.Persistence.DatabaseModelDefinitions;
-using Umbraco.Core.Persistence.Querying;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Web;
-using Umbraco.Web.PublishedCache;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Persistence.Querying;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -91,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     }
@@ -99,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -107,7 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var memberType = GetMemberType(config);
 
-            return memberType != null
+            return memberType is not null
                 ? _memberService.GetMembersByMemberType(memberType.Id).Select(ToDataListItem)
                 : _memberService.GetAllMembers().Select(ToDataListItem);
         }
@@ -117,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (values?.Any() == true)
             {
                 return Task.FromResult(values
-                    .Select(x => UdiParser.TryParse(x, out GuidUdi udi) == true ? udi : null)
+                    .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => _memberService.GetByKey(x.Guid))
                     .WhereNotNull()
@@ -151,33 +131,32 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IPublishedContent);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            if (UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false)
+            if (UdiParser.TryParse(value, out GuidUdi? udi) == true &&
+                udi is not null &&
+                udi.Guid.Equals(Guid.Empty) == false)
             {
-#if NET472
-                return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.GetByProviderKey(udi.Guid);
-#else
                 var member = _memberService.GetByKey(udi.Guid);
                 if (member != null)
                 {
-                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot()?.Members.Get(_memberService.GetByKey(udi.Guid));
+                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Members?.Get(member);
                 }
-#endif
             }
 
             return default(IPublishedContent);
         }
 
-        private IMemberType GetMemberType(Dictionary<string, object> config)
+        private IMemberType? GetMemberType(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("memberType", out JArray array) == true &&
-               array.Count > 0 &&
+            if (config.TryGetValueAs("memberType", out JArray? array) == true &&
+               array?.Count > 0 &&
                array[0].Value<string>() is string str &&
                string.IsNullOrWhiteSpace(str) == false &&
-               UdiParser.TryParse(str, out GuidUdi udi) == true)
+               UdiParser.TryParse(str, out GuidUdi? udi) == true &&
+               udi is not null)
             {
                 return _memberTypeService.Get(udi.Guid);
             }

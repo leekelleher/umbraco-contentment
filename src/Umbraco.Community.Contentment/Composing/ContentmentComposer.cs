@@ -1,69 +1,30 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using Umbraco.Community.Contentment.DataEditors;
-using Umbraco.Community.Contentment.Services;
-using Umbraco.Community.Contentment.Telemetry;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
-using Umbraco.Web.Runtime;
-#else
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Web.Common.ApplicationBuilder;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Community.Contentment.Services;
-#endif
 
 namespace Umbraco.Community.Contentment.Composing
 {
-#if NET472
-    [ComposeAfter(typeof(WebInitialComposer))]
-    [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
-    internal sealed class ContentmentComposer : IUserComposer
-    {
-        public void Compose(Composition composition)
-        {
-            composition
-                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                    .Add(() => composition.TypeLoader.GetTypes<IContentmentListItem>())
-            ;
-
-            composition
-                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
-                    .Add(() => composition.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
-            ;
-
-            composition.RegisterUnique<ConfigurationEditorUtility>();
-            composition.RegisterUnique<IContentmentContentContext, ContentmentContentContext>();
-
-            if (composition.RuntimeState.Level > RuntimeLevel.Install)
-            {
-                composition
-                    .Components()
-                        .Append<ContentmentComponent>()
-                ;
-            }
-
-            if (composition.RuntimeState.Level == RuntimeLevel.Run)
-            {
-                if (ContentmentTelemetryComponent.Disabled == false)
-                {
-                    composition.EnableContentmentTelemetry();
-                }
-            }
-        }
-    }
-#else
     internal sealed class ContentmentComposer : IComposer
     {
         public void Compose(IUmbracoBuilder builder)
         {
+            builder
+                .ManifestFilters()
+                    .Append<ContentmentManifestFilter>()
+            ;
+
             builder
                 .Services
                     .AddSingleton<ConfigurationEditorUtility>()
@@ -89,7 +50,20 @@ namespace Umbraco.Community.Contentment.Composing
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
                 .AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
             ;
+
+            builder.Services.Configure<UmbracoPipelineOptions>(opts =>
+            {
+                opts.AddFilter(new UmbracoPipelineFilter("UmbBlockListGetEmptyByKeysRequest_EnableBuffering")
+                {
+                    // HACK:  [LK] To support `IContentmentContentContext` inside the BlockList editor,
+                    // we need to re-access the `Request.Body` to extract the `parentId` value.
+                    // The `GetEmptyByKeys` path has been hard-coded, as unsure how else to generate it at this stage.
+                    PrePipeline = app => app.UseWhen(
+                        ctx => ctx.Request.Path.StartsWithSegments("/umbraco/backoffice/umbracoapi/content/GetEmptyByKeys"),
+                        app2 => app2.Use(async (ctx, next) => { ctx.Request.EnableBuffering(); await next(ctx); })
+                    ),
+                });
+            });
         }
     }
-#endif
 }

@@ -1,10 +1,8 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,10 +16,12 @@ namespace Umbraco.Extensions
     {
         public static void ForUmbracoPageByDomain(this ControllerActionEndpointConventionBuilder builder)
         {
+#pragma warning disable CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
             builder.ForUmbracoPage(FindContentByDomain);
+#pragma warning restore CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
         }
 
-        private static IPublishedContent FindContentByDomain(ActionExecutingContext actionExecutingContext)
+        private static IPublishedContent? FindContentByDomain(ActionExecutingContext actionExecutingContext)
         {
             var accessor = actionExecutingContext.HttpContext.RequestServices.GetRequiredService<IUmbracoContextAccessor>();
             if (accessor?.TryGetUmbracoContext(out var ctx) == true)
@@ -32,8 +32,7 @@ namespace Umbraco.Extensions
                 return content ?? ctx.Content?.GetAtRoot().FirstOrDefault();
             }
 
-            return null;
+            return default;
         }
     }
 }
-#endif

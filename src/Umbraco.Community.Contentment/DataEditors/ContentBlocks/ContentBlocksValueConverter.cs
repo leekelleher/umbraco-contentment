@@ -1,43 +1,34 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Community.Contentment.Web.PublishedCache;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Web.PublishedCache;
-#else
+using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Services;
+using Umbraco.Community.Contentment.Web.PublishedCache;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ContentBlocksValueConverter : PropertyValueConverterBase
+    public sealed class ContentBlocksValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
-        private readonly IContentTypeService _contentTypeService;
+        private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IPublishedModelFactory _publishedModelFactory;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
         public ContentBlocksValueConverter(
-            IContentTypeService contentTypeService,
+            IApiElementBuilder apiElementBuilder,
             IPublishedModelFactory publishedModelFactory,
             IPublishedSnapshotAccessor publishedSnapshotAccessor)
             : base()
         {
-            _contentTypeService = contentTypeService;
+            _apiElementBuilder = apiElementBuilder;
             _publishedModelFactory = publishedModelFactory;
             _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
@@ -46,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<IPublishedElement>);
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source is string value)
             {
@@ -61,7 +52,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
             if (inter is IEnumerable<ContentBlock> items)
             {
@@ -70,16 +61,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 foreach (var item in items)
                 {
                     if (item == null || item.ElementType == Guid.Empty)
+                    {
                         continue;
+                    }
 
-                    // NOTE: [LK:2019-09-03] Why `IPublishedCache` doesn't support Guids or UDIs, I do not know!?
-                    // Thought v8 was meant to be "GUID ALL THE THINGS!!1"? ¯\_(ツ)_/¯
-                    if (ContentTypeCacheHelper.TryGetAlias(item.ElementType, out var alias, _contentTypeService) == false)
-                        continue;
+                    var contentType = _publishedSnapshotAccessor
+                        .GetRequiredPublishedSnapshot()
+                        .Content?
+                        .GetContentType(item.ElementType);
 
-                    var contentType = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content.GetContentType(alias);
                     if (contentType == null || contentType.IsElement == false)
+                    {
                         continue;
+                    }
 
                     var properties = new List<IPublishedProperty>();
 
@@ -88,7 +82,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                         var propType = contentType.GetPropertyType(thing.Key);
                         if (propType != null)
                         {
+#pragma warning disable CS8604 // Possible null reference argument.
                             properties.Add(new DetachedPublishedProperty(propType, owner, thing.Value, preview));
+#pragma warning restore CS8604 // Possible null reference argument.
                         }
                     }
 
@@ -99,6 +95,19 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
+        }
+
+        public PropertyCacheLevel GetDeliveryApiPropertyCacheLevel(IPublishedPropertyType propertyType) => GetPropertyCacheLevel(propertyType);
+
+        public Type GetDeliveryApiPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<IApiElement>);
+
+        public object? ConvertIntermediateToDeliveryApiObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview, bool expanding)
+        {
+            var items = ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview) as IEnumerable<IPublishedElement>;
+
+            return items?.Any() == true
+                ? items.Select(_apiElementBuilder.Build).ToArray()
+                : Array.Empty<IApiElement>();
         }
     }
 }

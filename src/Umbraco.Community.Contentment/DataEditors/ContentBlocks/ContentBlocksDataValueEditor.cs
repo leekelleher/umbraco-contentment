@@ -1,4 +1,4 @@
-﻿/* Copyright © 2014 Umbrella Inc, Our Umbraco and other contributors.
+/* Copyright © 2014 Umbrella Inc, Our Umbraco and other contributors.
  * This Source Code has been derived from Nested Content.
  * https://github.com/umco/umbraco-nested-content/blob/0.5.0/src/Our.Umbraco.NestedContent/PropertyEditors/NestedContentPropertyEditor.cs
  * Including derivations made in Umbraco CMS for v8. Copyright © 2013-present Umbraco.
@@ -10,18 +10,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Editors;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-#else
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -29,53 +20,35 @@ using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentBlocksDataValueEditor : DataValueEditor, IDataValueReference
     {
-        private readonly IDataTypeService _dataTypeService;
+        private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
-#if NET472
-        public ContentBlocksDataValueEditor(
-            IContentTypeService contentTypeService,
-            IDataTypeService dataTypeService,
-            PropertyEditorCollection propertyEditors)
-            : base()
-#else
         public ContentBlocksDataValueEditor(
             IContentTypeService contentTypeService,
             PropertyEditorCollection propertyEditors,
-            IDataTypeService dataTypeService,
+            IDataTypeConfigurationCache dataTypeConfigurationCache,
             ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IPropertyValidationService propertyValidationService)
             : base(localizedTextService, shortStringHelper, jsonSerializer)
-#endif
         {
-            _dataTypeService = dataTypeService;
+            _dataTypeConfigurationCache = dataTypeConfigurationCache;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
 
-#if NET472 == false
             Validators.Add(new ContentBlocksValueValidator(_elementTypes, propertyValidationService));
-#endif
         }
 
-
-#if NET472
-        public override object ToEditor(Property property, IDataTypeService dataTypeService, string culture = null, string segment = null)
-        {
-            var value = base.ToEditor(property, dataTypeService, culture, segment)?.ToString();
-#else
-        public override object ToEditor(IProperty property, string culture = null, string segment = null)
+        public override object ToEditor(IProperty property, string? culture = null, string? segment = null)
         {
             var value = base.ToEditor(property, culture, segment)?.ToString();
-#endif
             if (string.IsNullOrWhiteSpace(value) == false)
             {
                 var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
@@ -97,9 +70,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                                     if (_propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                     {
-                                        var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty, _dataTypeService);
+                                        var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
 
-                                        block.Value[propertyType.Alias] = convertedValue != null
+                                        block.Value[propertyType.Alias] = convertedValue is not null
                                             ? JToken.FromObject(convertedValue)
                                             : null;
                                     }
@@ -119,9 +92,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Array.Empty<object>();
         }
 
-        public override object FromEditor(ContentPropertyData editorValue, object currentValue)
+        public override object? FromEditor(ContentPropertyData editorValue, object? currentValue)
         {
-            var value = editorValue?.Value?.ToString();
+            var value = editorValue.Value?.ToString();
             if (string.IsNullOrWhiteSpace(value) == false)
             {
                 var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
@@ -137,7 +110,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 if (block.Value.TryGetValue(propertyType.Alias, out var blockPropertyValue) == true &&
                                     _propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                 {
-                                    var configuration = _dataTypeService.GetDataType(propertyType.DataTypeId).Configuration;
+                                    var configuration = _dataTypeConfigurationCache.GetConfiguration(propertyType.DataTypeKey);
                                     var contentPropertyData = new ContentPropertyData(blockPropertyValue, configuration)
                                     {
                                         ContentKey = block.Key,
@@ -162,7 +135,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.FromEditor(editorValue, currentValue);
         }
 
-        public IEnumerable<UmbracoEntityReference> GetReferences(object value)
+        public IEnumerable<UmbracoEntityReference> GetReferences(object? value)
         {
             if (value is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
             {

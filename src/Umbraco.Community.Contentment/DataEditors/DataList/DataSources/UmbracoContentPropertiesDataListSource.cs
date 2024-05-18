@@ -1,26 +1,14 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -29,7 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
         private readonly IIOHelper _ioHelper;
-        private Dictionary<string, string> _icons;
+        private Dictionary<string, string>? _icons;
 
         public UmbracoContentPropertiesDataListSource(
             IContentTypeService contentTypeService,
@@ -77,7 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) },
+                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     },
@@ -99,27 +87,25 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         }
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("contentType", out JArray array) == true &&
-                array.Count > 0 &&
+            if (config.TryGetValueAs("contentType", out JArray? array) == true &&
+                array?.Count > 0 &&
                 array[0].Value<string>() is string str &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                UdiParser.TryParse(str, out GuidUdi udi) == true)
+                UdiParser.TryParse(str, out GuidUdi? udi) == true &&
+                udi is not null)
             {
                 var contentType = _contentTypeService.Get(udi.Guid);
                 if (contentType != null)
                 {
-                    if (_icons == null)
-                    {
-                        _icons = _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
-                    }
+                    _icons ??= _dataEditors.Value.ToDictionary(x => x.Alias, x => x.Icon);
 
-                    IEnumerable<DataListItem> addNameItem(bool add)
+                    static IEnumerable<DataListItem> addNameItem(bool add)
                     {
                         if (add == true)
                         {

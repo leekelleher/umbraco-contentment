@@ -1,15 +1,10 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web.Models;
-#else
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,16 +15,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         where TPublishedContent : IPublishedContent
         where TPublishedElement : IPublishedElement
     {
-        IPublishedContent IContentModel.Content => Content;
+        IPublishedContent IContentModel.Content => Content!;
 
-        public TPublishedContent Content { get; internal set; }
+        public TPublishedContent? Content { get; internal set; }
 
-        public string ContentTypeIcon { get; set; }
+        public string? ContentTypeIcon { get; set; }
 
-        public TPublishedElement Element { get; internal set; }
+        public TPublishedElement? Element { get; internal set; }
 
         public int ElementIndex { get; set; }
 
-        public string ElementTypeIcon { get; set; }
+        public string? ElementTypeIcon { get; set; }
     }
 }

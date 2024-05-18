@@ -1,25 +1,14 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Deploy;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -44,24 +33,24 @@ namespace Umbraco.Community.Contentment.DataEditors
             _macroParser = macroParser;
         }
 
-        public object FromArtifact(IDataType dataType, string configuration)
+        public object? FromArtifact(IDataType dataType, string? configuration)
             => FromArtifact(dataType, configuration, PassThroughCache.Instance);
 
-        public object FromArtifact(IDataType dataType, string configuration, IContextCache contextCache)
+        public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
         {
-            var dataTypeConfigurationEditor = dataType.Editor.GetConfigurationEditor();
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
-            var db = dataTypeConfigurationEditor.FromDatabase(configuration, _configurationEditorJsonSerializer);
+            var db = dataTypeConfigurationEditor?.FromDatabase(configuration, _configurationEditorJsonSerializer);
 
             if (db is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string notes) == true &&
+                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 notes = _localLinkParser.FromArtifact(notes, contextCache);
                 notes = _imageSourceParser.FromArtifact(notes, contextCache);
                 notes = _macroParser.FromArtifact(notes, contextCache);
 
-                config[EditorNotesConfigurationEditor.Message] = notes;
+                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
 
                 return config;
             }
@@ -69,13 +58,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
             => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
 
-        public string ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
+        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
         {
             if (dataType.Configuration is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string notes) == true &&
+                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
@@ -93,14 +82,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }
 
-                config[EditorNotesConfigurationEditor.Message] = notes;
+                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
             }
 
-#if NET472
-            return ConfigurationEditor.ToDatabase(dataType.Configuration);
-#else
             return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);
-#endif
         }
     }
 }

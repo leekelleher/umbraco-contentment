@@ -1,23 +1,14 @@
-/* Copyright © 2023 Lee Kelleher.
+/* Copyright Â© 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Serialization;
-#else
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -47,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Snapshot;
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source is string value)
             {
@@ -62,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
         }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)
+        public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
             TryGetPropertyTypeConfiguration(propertyType, out var hasMultipleValues, out var valueType, out var converter);
 
@@ -106,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             var attempt = obj.TryConvertTo(valueType);
                             if (attempt.Success == true)
                             {
-                                result?.Add(attempt.Result);
+                                _ = result?.Add(attempt.Result);
                             }
                             else
                             {
@@ -115,7 +106,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 // We can attempt to cast it directly, as a last resort.
                                 if (valueType.IsInstanceOfType(obj) == true)
                                 {
-                                    result?.Add(obj);
+                                    _ = result?.Add(obj);
                                 }
                             }
                         }
@@ -141,7 +132,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
         }
 
-        private void TryGetPropertyTypeConfiguration(IPublishedPropertyType propertyType, out bool hasMultipleValues, out Type valueType, out Func<Type, string, object> converter)
+        private void TryGetPropertyTypeConfiguration(IPublishedPropertyType propertyType, out bool hasMultipleValues, out Type valueType, out Func<Type, string, object>? converter)
         {
             hasMultipleValues = false;
             valueType = typeof(string);
@@ -149,14 +140,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
                 configuration.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
-                tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1)
+                tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1 &&
+                obj1.Value<string>("key") is string key1)
             {
-                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(obj1.Value<string>("key"));
+                var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(key1);
                 if (source != null)
                 {
-                    var config = obj1["value"].ToObject<Dictionary<string, object>>();
-                    valueType = source.GetValueType(config);
-                    converter = source.ConvertValue;
+                    var config = obj1["value"]?.ToObject<Dictionary<string, object>>();
+                    valueType = source.GetValueType(config) ?? typeof(string);
+                    converter = source.ConvertValue!;
                 }
 
                 hasMultipleValues = configuration.TryGetValue("maxItems", out var tmp2) == true && tmp2.TryConvertTo<int>().ResultOr(0) != 1;

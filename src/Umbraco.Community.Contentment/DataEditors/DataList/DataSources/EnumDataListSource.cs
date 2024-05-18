@@ -1,30 +1,19 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Newtonsoft.Json.Linq;
-using Umbraco.Community.Contentment.Web.Controllers;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Strings;
-#else
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -34,35 +23,23 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
-#if NET472
-        private readonly ILogger _logger;
-#else
-        private readonly ILogger<EnumDataListSource> _logger;
-#endif
-
         public EnumDataListSource(
-#if NET472
-            ILogger logger,
-#else
-            ILogger<EnumDataListSource> logger,
-#endif
             IShortStringHelper shortStringHelper,
             IIOHelper ioHelper)
         {
             _lookup = new ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
 
-            _logger = logger;
             _shortStringHelper = shortStringHelper;
             _ioHelper = ioHelper;
         }
 
         public override string Name => ".NET Enumeration";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public override string Description => "Select an enumeration from a .NET assembly as the data source.";
 
-        public string DescriptionTemplate => "{{ enumType[1] }}";
+        public string? DescriptionTemplate => "{{ enumType[1] }}";
 
         public override string Icon => "icon-indent";
 
@@ -70,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override IEnumerable<ConfigurationField> Fields => new[]
         {
@@ -160,11 +137,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        public Type GetValueType(Dictionary<string, object> config)
+        public Type? GetValueType(Dictionary<string, object>? config)
         {
-            if (config.TryGetValueAs("enumType", out JArray array) == true)
+            if (config?.TryGetValueAs("enumType", out JArray? array) == true)
             {
-                var enumType = array.ToObject<string[]>();
+                var enumType = array?.ToObject<string[]>();
                 if (enumType?.Length > 1)
                 {
                     var assembly = default(Assembly);
@@ -172,32 +149,26 @@ namespace Umbraco.Community.Contentment.DataEditors
                     {
                         assembly = Assembly.Load(enumType[0]);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-#if NET472
-                        _logger.Error<EnumDataListSource>(ex);
-#else
-                        _logger.LogError(ex, "Unable to load target type.");
-#endif
+                        // Unable to load target type.
+                        // Nobody wants an exception here. Wondering if `Assembly.TryLoad()` should be a thing? [LK]
                     }
 
-                    if (assembly != null)
+                    if (assembly is not null)
                     {
                         var type = default(Type);
                         try
                         {
                             type = assembly.GetType(enumType[1]);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-#if NET472
-                            _logger.Error<EnumDataListSource>(ex);
-#else
-                            _logger.LogError(ex, "Unable to retrieve target type.");
-#endif
+                            // Unable to retrieve target type.
+                            // Again, what are users going to do about an exception here? `assembly.TryGetType()` anyone? [LK]
                         }
 
-                        if (type != null && type.IsEnum == true)
+                        if (type?.IsEnum == true)
                         {
                             return type;
                         }
@@ -205,12 +176,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            return null;
+            return typeof(object);
         }
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            if (string.IsNullOrWhiteSpace(value) == false && type?.IsEnum == true)
+            if (string.IsNullOrWhiteSpace(value) == false && type.IsEnum == true)
             {
                 var entry = _lookup.GetOrAdd(type, EnumValueFactory);
                 if (entry.Item2 != null && entry.Item2.TryGetValue(value, out var enumValue) == true)
@@ -220,12 +191,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
                 try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
-
-#if NET472
-                _logger.Debug<EnumDataListSource>($"Unable to find value '{value}' in enum '{type.FullName}'.");
-#else
-                _logger.LogDebug($"Unable to find value '{value}' in enum '{type.FullName}'.");
-#endif
             }
 
             return type.GetDefaultValue();

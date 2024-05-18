@@ -1,29 +1,16 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using Umbraco.Community.Contentment.DataEditors;
-#if NET472
-using System.Web.Http;
-using Umbraco.Core;
-using Umbraco.Core.Strings;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.WebApi;
-#else
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
+using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.Web.Controllers
 {
@@ -44,10 +31,6 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
-#if NET472
-            const string App_Code = "App_Code";
-#endif
-
             var options = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -56,7 +39,9 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                 foreach (var assembly in assemblies)
                 {
                     var assemblyName = assembly.GetName();
-                    if (options.Contains(assemblyName.Name) == true || assembly.IsDynamic == true)
+                    if (string.IsNullOrWhiteSpace(assemblyName.Name) == true ||
+                        options.Contains(assemblyName.Name) == true ||
+                        assembly.IsDynamic == true)
                     {
                         continue;
                     }
@@ -85,16 +70,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                         continue;
                     }
 
-#if NET472
-                    if (assembly.FullName.StartsWith(App_Code) == true && options.Contains(App_Code) == false)
-                    {
-                        options.Add(App_Code);
-                    }
-                    else
-#endif
-                    {
-                        options.Add(assemblyName.Name);
-                    }
+                    _ = options.Add(assemblyName.Name);
                 }
             }
 
@@ -110,7 +86,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
 
             foreach (var type in types)
             {
-                if (type.IsEnum == false)
+                if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
                 {
                     continue;
                 }

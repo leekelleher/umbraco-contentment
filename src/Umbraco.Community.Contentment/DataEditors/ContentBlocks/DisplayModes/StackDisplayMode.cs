@@ -1,14 +1,9 @@
-﻿/* Copyright © 2020 Lee Kelleher.
+/* Copyright © 2020 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-#if NET472
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.PropertyEditors;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -20,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Icon => ContentBlocksDataEditor.DataEditorIcon;
 
-        public string Group => default;
+        public string? Group => default;
 
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 

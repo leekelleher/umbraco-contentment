@@ -1,19 +1,8 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472
-using System.Net.Http.Formatting;
-using System.Web.Http.ModelBinding;
-using Umbraco.Web.Models.Trees;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.Trees;
-using Umbraco.Web.WebApi.Filters;
-using UmbConstants = Umbraco.Core.Constants;
-#else
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;
@@ -23,39 +12,9 @@ using Umbraco.Cms.Core.Trees;
 using Umbraco.Cms.Web.BackOffice.Trees;
 using Umbraco.Cms.Web.Common.Attributes;
 using Umbraco.Cms.Web.Common.ModelBinders;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.Trees
 {
-#if NET472
-    [Tree(
-        UmbConstants.Applications.Settings,
-        Constants.Internals.TreeAlias,
-        IsSingleNodeTree = true,
-        TreeGroup = UmbConstants.Trees.Groups.ThirdParty,
-        TreeTitle = Constants.Internals.ProjectName,
-        TreeUse = TreeUse.Main)]
-    [PluginController(Constants.Internals.PluginControllerName)]
-    internal sealed class ContentmentTreeController : TreeController
-    {
-        protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
-        {
-            var root = base.CreateRootNode(queryStrings);
-
-            root.Icon = Constants.Icons.Contentment;
-            root.HasChildren = false;
-            root.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
-            root.MenuUrl = null;
-
-            return root;
-        }
-
-        protected override MenuItemCollection GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
-
-        protected override TreeNodeCollection GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormDataCollection queryStrings) => null;
-    }
-#else
     [Tree(
         UmbConstants.Applications.Settings,
         Constants.Internals.TreeAlias,
@@ -73,29 +32,29 @@ namespace Umbraco.Community.Contentment.Trees
             : base(localizedTextService, umbracoApiControllerTypeCollection, eventAggregator)
         { }
 
-        protected override ActionResult<TreeNode> CreateRootNode(FormCollection queryStrings)
+        protected override ActionResult<TreeNode?> CreateRootNode(FormCollection queryStrings)
         {
             var root = base.CreateRootNode(queryStrings);
+
+            if (root.Value is null)
+            {
+                return root;
+            }
 
             root.Value.Icon = Constants.Icons.Contentment;
             root.Value.HasChildren = false;
             root.Value.RoutePath = $"{SectionAlias}/{TreeAlias}/index";
             root.Value.MenuUrl = null;
 
-            return root.Value;
+            return root;
         }
 
-#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
-        [Obsolete("See GetMenuForNode")]
-        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
+#pragma warning disable CS8603 // Possible null reference return.
+        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
+            => default;
+#pragma warning restore CS8603 // Possible null reference return.
 
-        [Obsolete("See GetTreeNodesAsync")]
-        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => null;
-#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
-
-        protected override Task<ActionResult<MenuItemCollection>> GetMenuForNodeAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
-
-        protected override Task<ActionResult<TreeNodeCollection>> GetTreeNodesAsync(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings) => default;
+        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, [ModelBinder(typeof(HttpQueryStringModelBinder))] FormCollection queryStrings)
+            => TreeNodeCollection.Empty;
     }
-#endif
 }

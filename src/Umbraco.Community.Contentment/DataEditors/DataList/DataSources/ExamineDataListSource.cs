@@ -1,32 +1,18 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
 using Examine;
 using Examine.Search;
-using Umbraco.Community.Contentment.Services;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-using UmbracoExamineFieldNames = Umbraco.Examine.UmbracoExamineIndex;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Infrastructure.Examine;
+using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -35,23 +21,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;
-#if NET472
-        private readonly IdkMap _idKeyMap;
-#else
         private readonly IIdKeyMap _idKeyMap;
-#endif
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
-#if NET472
-        private const string _defaultNameField = "nodeName";
-#else
         private const string _defaultNameField = UmbracoExamineFieldNames.NodeNameFieldName;
-#endif
         private const string _defaultValueField = UmbracoExamineFieldNames.NodeKeyFieldName;
         private const string _defaultIconField = UmbracoExamineFieldNames.IconFieldName;
 
-        private readonly Dictionary<string, object> _examineFieldConfig = new Dictionary<string, object>
+        private readonly Dictionary<string, object> _examineFieldConfig = new()
         {
             {
                 Constants.Conventions.ConfigurationFieldAliases.Items,
@@ -87,11 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ExamineDataListSource(
             IContentmentContentContext contentmentContentContext,
             IExamineManager examineManager,
-#if NET472
-            IdkMap idKeyMap,
-#else
             IIdKeyMap idKeyMap,
-#endif
             IIOHelper ioHelper,
             IShortStringHelper shortStringHelper)
         {
@@ -181,7 +155,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName },
             { "luceneQuery", "+__IndexType:content" },
@@ -218,11 +192,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var descriptionField = config.GetValueAs("descriptionField", string.Empty);
 
                     var results = index
-#if NET472
-                        .GetSearcher()
-#else
                         .Searcher
-#endif
                         .CreateQuery()
                         .NativeQuery(luceneQuery)
                         // NOTE: For any `OrderBy` complaints, refer to: https://github.com/Shazwazza/Examine/issues/126

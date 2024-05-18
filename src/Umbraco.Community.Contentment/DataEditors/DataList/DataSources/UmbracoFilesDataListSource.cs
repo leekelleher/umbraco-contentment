@@ -1,31 +1,19 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Collections.Generic;
-using System.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
-        private static readonly Dictionary<string, string> _icons = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _icons = new()
         {
             { UmbConstants.UdiEntityType.Script, "icon-script" },
             { UmbConstants.UdiEntityType.Stylesheet, "icon-brackets" },
@@ -110,7 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object>? DefaultValues => new()
         {
             { "fileType", UmbConstants.UdiEntityType.Stylesheet },
             { "valueType", "alias" },
@@ -118,8 +106,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var fileType = config.GetValueAs("fileType", defaultValue: UmbConstants.UdiEntityType.Stylesheet);
-            var valueType = config.GetValueAs("valueType", defaultValue: "alias");
+            var fileType = config.GetValueAs("fileType", defaultValue: UmbConstants.UdiEntityType.Stylesheet) ?? UmbConstants.UdiEntityType.Stylesheet;
+            var valueType = config.GetValueAs("valueType", defaultValue: "alias") ?? "alias";
 
             IEnumerable<IFile> getFiles()
             {
@@ -134,7 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             };
 
-            string getValue(IFile file)
+            string? getValue(IFile file)
             {
                 switch (valueType)
                 {
@@ -151,10 +139,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = x.Name,
-                    Value = getValue(x),
+                    Name = x.Name ?? x.Alias,
+                    Value = getValue(x) ?? x.Alias,
                     Icon = _icons.ContainsKey(fileType) == true ? _icons[fileType] : Icon,
-                    Description = x.VirtualPath,
+                    Description = x.VirtualPath ?? x.Alias,
                 });
         }
     }

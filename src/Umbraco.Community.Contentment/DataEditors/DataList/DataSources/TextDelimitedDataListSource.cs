@@ -1,26 +1,14 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Logging;
-using Umbraco.Core.PropertyEditors;
-#else
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -29,19 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
 
-#if NET472
-        private readonly ILogger _logger;
-
-        public TextDelimitedDataListSource(
-            ILogger logger,
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
-        {
-            _logger = logger;
-            _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
-        }
-#else
         private readonly ILogger<TextDelimitedDataListSource> _logger;
 
         public TextDelimitedDataListSource(
@@ -53,15 +28,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
         }
-#endif
 
         public override string Name => "Text Delimited Data";
 
-        public string NameTemplate => default;
+        public string? NameTemplate => default;
 
         public override string Description => "Configure text-delimited data to populate the data source.";
 
-        public string DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{{ url }}";
 
         public override string Icon => "icon-fa fa-file-text-o";
 
@@ -127,7 +101,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public override Dictionary<string, object> DefaultValues => new Dictionary<string, object>()
+        public override Dictionary<string, object> DefaultValues => new()
         {
             { "url", "https://leekelleher.com/umbraco/contentment/data.csv" },
             { "delimiter", "," },
@@ -142,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var items = new List<DataListItem>();
 
             var url = config.GetValueAs("url", string.Empty);
-            var delimiter = config.GetValueAs("delimiter", ",");
+            var delimiter = config.GetValueAs("delimiter", ",") ?? ",";
             var ignoreFirstLine = config.GetValueAs("ignoreFirstLine", false);
             var nameIndex = config.GetValueAs("nameIndex", 0);
             var valueIndex = config.GetValueAs("valueIndex", 0);
@@ -156,7 +130,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             var lines = GetTextLines(url);
 
-            if (lines == null || lines.Length == 0)
+            if (lines is null || lines.Length == 0)
             {
                 return items;
             }
@@ -209,7 +183,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return items;
         }
 
-        private string[] GetTextLines(string url)
+        private string[]? GetTextLines(string url)
         {
             if (url.InvariantStartsWith("http") == true)
             {
@@ -224,11 +198,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 catch (WebException ex)
                 {
-#if NET472
-                    _logger.Error<TextDelimitedDataListSource>(ex, "Unable to fetch remote data.");
-#else
                     _logger.LogError(ex, "Unable to fetch remote data.");
-#endif
                 }
             }
             else
@@ -241,11 +211,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
                 else
                 {
-#if NET472
-                    _logger.Warn<TextDelimitedDataListSource>("Unable to find the local file path.");
-#else
                     _logger.LogWarning("Unable to find the local file path.");
-#endif
                 }
             }
 

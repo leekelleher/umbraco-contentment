@@ -1,22 +1,11 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -39,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -56,8 +45,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 });
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(Guid);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(Guid);
 
-        public object ConvertValue(Type type, string value) => Guid.TryParse(value, out var guid) == true ? guid : Guid.Empty;
+        public object? ConvertValue(Type type, string value) => Guid.TryParse(value, out var guid) == true ? guid : Guid.Empty;
     }
 }

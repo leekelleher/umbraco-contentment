@@ -1,21 +1,11 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.PropertyEditors;
-#else
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -29,9 +19,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public IEnumerable<ConfigurationField> Fields => default;
+        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
 
-        public Dictionary<string, object> DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => default;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
@@ -93,7 +83,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(TimeZoneInfo);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(TimeZoneInfo);
 
         public object ConvertValue(Type type, string value) => TimeZoneInfo.FindSystemTimeZoneById(value);
     }

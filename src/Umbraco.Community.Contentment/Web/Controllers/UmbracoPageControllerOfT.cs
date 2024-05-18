@@ -1,9 +1,8 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-#if NET472 == false
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Composing;
@@ -22,7 +21,6 @@ namespace Umbraco.Cms.Web.Common.Controllers
             : base(logger, compositeViewEngine)
         { }
 
-        protected new T CurrentPage => base.CurrentPage as T;
+        protected new T? CurrentPage => base.CurrentPage as T;
     }
 }
-#endif

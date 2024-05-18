@@ -1,21 +1,8 @@
-﻿/* Copyright © 2021 Lee Kelleher.
+/* Copyright © 2021 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-#if NET472
-using Umbraco.Core;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Entities;
-using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Services;
-using Umbraco.Core.Strings;
-using UmbConstants = Umbraco.Core.Constants;
-#else
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
@@ -24,14 +11,12 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-using UmbConstants = Umbraco.Cms.Core.Constants;
-#endif
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
-        internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new Dictionary<string, UmbracoObjectTypes>
+        internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new()
         {
             { nameof(UmbracoObjectTypes.DataType), UmbracoObjectTypes.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbracoObjectTypes.Document },
@@ -43,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { nameof(UmbracoObjectTypes.MemberType), UmbracoObjectTypes.MemberType },
         };
 
-        internal static Dictionary<string, string> EntityTypeIcons = new Dictionary<string, string>
+        internal static Dictionary<string, string> EntityTypeIcons = new()
         {
             { nameof(UmbracoObjectTypes.DataType), UmbConstants.Icons.DataType },
             { nameof(UmbracoObjectTypes.Document), UmbConstants.Icons.Content },
@@ -103,13 +88,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
         };
 
-        public override Dictionary<string, object> DefaultValues => default;
+        public override Dictionary<string, object>? DefaultValues => default;
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("entityType", out string entityType) == true && SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
+            if (config.TryGetValueAs("entityType", out string? entityType) == true &&
+                string.IsNullOrWhiteSpace(entityType) == false &&
+                SupportedEntityTypes.TryGetValue(entityType, out var objectType) == true)
             {
                 var icon = EntityTypeIcons.GetValueAs(entityType, UmbConstants.Icons.DefaultIcon);
 
@@ -128,11 +115,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<DataListItem>();
         }
 
-        public Type GetValueType(Dictionary<string, object> config) => typeof(IEntitySlim);
+        public Type? GetValueType(Dictionary<string, object>? config) => typeof(IEntitySlim);
 
-        public object ConvertValue(Type type, string value)
+        public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out GuidUdi udi) == true && udi.Guid.Equals(Guid.Empty) == false
+            return UdiParser.TryParse(value, out GuidUdi? udi) == true && udi?.Guid.Equals(Guid.Empty) == false
                 ? _entityService.Value.Get(udi.Guid)
                 : default;
         }
