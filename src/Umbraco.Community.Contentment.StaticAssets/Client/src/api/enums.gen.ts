@@ -64,6 +64,15 @@ export enum HealthStatusModelEnum {
     REBUILDING = 'Rebuilding'
 }
 
+export enum ImageCropModeModelEnum {
+    CROP = 'Crop',
+    MAX = 'Max',
+    STRETCH = 'Stretch',
+    PAD = 'Pad',
+    BOX_PAD = 'BoxPad',
+    MIN = 'Min'
+}
+
 export enum LogLevelModelEnum {
     VERBOSE = 'Verbose',
     DEBUG = 'Debug',
@@ -95,6 +104,12 @@ export enum OutOfDateTypeModelEnum {
     OUT_OF_DATE = 'OutOfDate',
     CURRENT = 'Current',
     UNKNOWN = 'Unknown'
+}
+
+export enum OverlaySizeEnum {
+    SMALL = 'Small',
+    MEDIUM = 'Medium',
+    LARGE = 'Large'
 }
 
 export enum RedirectStatusModelEnum {

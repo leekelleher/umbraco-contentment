@@ -14,29 +14,12 @@ export type AllowedMediaTypeModel = {
     icon?: string | null;
 };
 
-export type AuditLogEntityModel = {
-    id?: string | null;
-    type?: string | null;
-};
-
 export type AuditLogResponseModel = {
     user: ReferenceByIdModel;
-    entity?: AuditLogEntityModel | null;
     timestamp: string;
     logType: AuditTypeModel;
     comment?: string | null;
     parameters?: string | null;
-};
-
-export type AuditLogWithUsernameResponseModel = {
-    user: ReferenceByIdModel;
-    entity?: AuditLogEntityModel | null;
-    timestamp: string;
-    logType: AuditTypeModel;
-    comment?: string | null;
-    parameters?: string | null;
-    userName?: string | null;
-    userAvatars: Array<(string)>;
 };
 
 export type AuditTypeModel = 'New' | 'Save' | 'SaveVariant' | 'Open' | 'Delete' | 'Publish' | 'PublishVariant' | 'SendToPublish' | 'SendToPublishVariant' | 'Unpublish' | 'UnpublishVariant' | 'Move' | 'Copy' | 'AssignDomain' | 'PublicAccess' | 'Sort' | 'Notify' | 'System' | 'RollBack' | 'PackagerInstall' | 'PackagerUninstall' | 'Custom' | 'ContentVersionPreventCleanup' | 'ContentVersionEnableCleanup';
@@ -83,9 +66,48 @@ export type ConfigurationEditorItemRequestModel = {
     } | null;
 };
 
+export type ConfigurationEditorModel = {
+    key: string;
+    name: string;
+    description?: string | null;
+    icon?: string | null;
+    group?: string | null;
+    fields: Array<(ContentmentConfigurationFieldModel)>;
+    defaultValues?: {
+        [key: string]: unknown;
+    } | null;
+    overlaySize: OverlaySize;
+    expressions?: {
+        [key: string]: (string);
+    } | null;
+    /**
+     * @deprecated
+     */
+    nameTemplate?: string | null;
+    /**
+     * @deprecated
+     */
+    descriptionTemplate?: string | null;
+};
+
+export type ConfigurationEditorModelsResponseModel = {
+    items: Array<(ConfigurationEditorModel)>;
+};
+
 export type ConsentLevelPresentationModel = {
     level: TelemetryLevelModel;
     description: string;
+};
+
+export type ContentmentConfigurationFieldModel = {
+    key?: string | null;
+    name?: string | null;
+    description?: string | null;
+    view?: string | null;
+    propertyEditorUiAlias?: string | null;
+    config?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type CopyDataTypeRequestModel = {
@@ -109,7 +131,7 @@ export type CopyMediaTypeRequestModel = {
 export type CreateDataTypeRequestModel = {
     name: string;
     editorAlias: string;
-    editorUiAlias?: string | null;
+    editorUiAlias: string;
     values: Array<(DataTypePropertyPresentationModel)>;
     id?: string | null;
     parent?: ReferenceByIdModel | null;
@@ -143,7 +165,7 @@ export type CreateDocumentRequestModel = {
     id?: string | null;
     parent?: ReferenceByIdModel | null;
     documentType: ReferenceByIdModel;
-    template?: ReferenceByIdModel | null;
+    template: ReferenceByIdModel | null;
 };
 
 export type CreateDocumentTypePropertyTypeContainerRequestModel = {
@@ -329,6 +351,7 @@ export type CreatePackageRequestModel = {
     scripts: Array<(string)>;
     languages: Array<(string)>;
     dictionaryItems: Array<(string)>;
+    id?: string | null;
 };
 
 export type CreatePartialViewFolderRequestModel = {
@@ -380,6 +403,7 @@ export type CreateUserDataRequestModel = {
 
 export type CreateUserGroupRequestModel = {
     name: string;
+    alias: string;
     icon?: string | null;
     sections: Array<(string)>;
     languages: Array<(string)>;
@@ -390,13 +414,14 @@ export type CreateUserGroupRequestModel = {
     mediaRootAccess: boolean;
     fallbackPermissions: Array<(string)>;
     permissions: Array<(DocumentPermissionPresentationModel | UnknownTypePermissionPresentationModel)>;
+    id?: string | null;
 };
 
 export type CreateUserRequestModel = {
     email: string;
     userName: string;
     name: string;
-    userGroupIds: Array<(string)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
     id?: string | null;
 };
 
@@ -432,9 +457,11 @@ export type CurrentUserResponseModel = {
     email: string;
     userName: string;
     name: string;
-    languageIsoCode?: string | null;
-    documentStartNodeIds: Array<(string)>;
-    mediaStartNodeIds: Array<(string)>;
+    languageIsoCode: string | null;
+    documentStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasDocumentRootAccess: boolean;
+    mediaStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasMediaRootAccess: boolean;
     avatarUrls: Array<(string)>;
     languages: Array<(string)>;
     hasAccessToAllLanguages: boolean;
@@ -457,6 +484,13 @@ export type DataListEditorResponseModel = {
 
 export type DataTypeChangeModeModel = 'True' | 'False' | 'FalseWithHelpText';
 
+export type DataTypeContentTypeReferenceModel = {
+    id: string;
+    type: string | null;
+    name: string | null;
+    icon: string | null;
+};
+
 export type DataTypeItemResponseModel = {
     id: string;
     name: string;
@@ -475,15 +509,14 @@ export type DataTypePropertyReferenceModel = {
 };
 
 export type DataTypeReferenceResponseModel = {
-    id: string;
-    type: string;
+    contentType: DataTypeContentTypeReferenceModel;
     properties: Array<(DataTypePropertyReferenceModel)>;
 };
 
 export type DataTypeResponseModel = {
     name: string;
     editorAlias: string;
-    editorUiAlias?: string | null;
+    editorUiAlias: string;
     values: Array<(DataTypePropertyPresentationModel)>;
     id: string;
     isDeletable: boolean;
@@ -540,11 +573,11 @@ export type DefaultReferenceResponseModel = {
 };
 
 export type DeleteUserGroupsRequestModel = {
-    userGroupIds: Array<(string)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
 };
 
 export type DeleteUsersRequestModel = {
-    userIds: Array<(string)>;
+    userIds: Array<(ReferenceByIdModel)>;
 };
 
 export type DictionaryItemItemResponseModel = {
@@ -573,7 +606,7 @@ export type DictionaryOverviewResponseModel = {
 export type DirectionModel = 'Ascending' | 'Descending';
 
 export type DisableUserRequestModel = {
-    userIds: Array<(string)>;
+    userIds: Array<(ReferenceByIdModel)>;
 };
 
 export type DocumentBlueprintItemResponseModel = {
@@ -609,7 +642,6 @@ export type DocumentCollectionResponseModel = {
 };
 
 export type DocumentConfigurationResponseModel = {
-    sanitizeTinyMce: boolean;
     disableDeleteWhenReferenced: boolean;
     disableUnpublishWhenReferenced: boolean;
     allowEditInvariantFromNonDefault: boolean;
@@ -784,7 +816,7 @@ export type DocumentTypeTreeItemResponseModel = {
 };
 
 export type DocumentUrlInfoModel = {
-    culture?: string | null;
+    culture: string | null;
     url: string;
 };
 
@@ -890,7 +922,13 @@ export type EnableTwoFactorRequestModel = {
 };
 
 export type EnableUserRequestModel = {
-    userIds: Array<(string)>;
+    userIds: Array<(ReferenceByIdModel)>;
+};
+
+export type EntityImportAnalysisResponseModel = {
+    entityType: string;
+    alias?: string | null;
+    key?: string | null;
 };
 
 export type EventMessageTypeModel = 'Default' | 'Info' | 'Error' | 'Success' | 'Warning';
@@ -961,6 +999,11 @@ export type HealthCheckWithResultPresentationModel = {
 
 export type HealthStatusModel = 'Healthy' | 'Unhealthy' | 'Rebuilding';
 
+export type HealthStatusResponseModel = {
+    status: HealthStatusModel;
+    message?: string | null;
+};
+
 export type HelpPageResponseModel = {
     name?: string | null;
     description?: string | null;
@@ -968,14 +1011,24 @@ export type HelpPageResponseModel = {
     type?: string | null;
 };
 
+export type ImageCropModeModel = 'Crop' | 'Max' | 'Stretch' | 'Pad' | 'BoxPad' | 'Min';
+
 export type ImportDictionaryRequestModel = {
     temporaryFile: ReferenceByIdModel;
     parent?: ReferenceByIdModel | null;
 };
 
+export type ImportDocumentTypeRequestModel = {
+    file: ReferenceByIdModel;
+};
+
+export type ImportMediaTypeRequestModel = {
+    file: ReferenceByIdModel;
+};
+
 export type IndexResponseModel = {
     name: string;
-    healthStatus: HealthStatusModel;
+    healthStatus: HealthStatusResponseModel;
     canRebuild: boolean;
     searcherName: string;
     documentCount: number;
@@ -1000,7 +1053,7 @@ export type InviteUserRequestModel = {
     email: string;
     userName: string;
     name: string;
-    userGroupIds: Array<(string)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
     id?: string | null;
     message?: string | null;
 };
@@ -1025,15 +1078,6 @@ export type LanguageResponseModel = {
     isMandatory: boolean;
     fallbackIsoCode?: string | null;
     isoCode: string;
-};
-
-export type LinkedLoginModel = {
-    providerName: string;
-    providerKey: string;
-};
-
-export type LinkedLoginsRequestModel = {
-    linkedLogins: Array<(LinkedLoginModel)>;
 };
 
 export type LogLevelCountsReponseModel = {
@@ -1088,7 +1132,6 @@ export type MediaCollectionResponseModel = {
 export type MediaConfigurationResponseModel = {
     disableDeleteWhenReferenced: boolean;
     disableUnpublishWhenReferenced: boolean;
-    sanitizeTinyMce: boolean;
     reservedFieldNames: Array<(string)>;
 };
 
@@ -1204,6 +1247,8 @@ export type MediaTypeResponseModel = {
     id: string;
     allowedMediaTypes: Array<(MediaTypeSortModel)>;
     compositions: Array<(MediaTypeCompositionModel)>;
+    isDeletable: boolean;
+    aliasCanBeChanged: boolean;
 };
 
 export type MediaTypeSortModel = {
@@ -1218,10 +1263,11 @@ export type MediaTypeTreeItemResponseModel = {
     name: string;
     isFolder: boolean;
     icon: string;
+    isDeletable: boolean;
 };
 
 export type MediaUrlInfoModel = {
-    culture?: string | null;
+    culture: string | null;
     url: string;
 };
 
@@ -1362,6 +1408,14 @@ export type MemberTypeResponseModel = {
     compositions: Array<(MemberTypeCompositionModel)>;
 };
 
+export type MemberTypeTreeItemResponseModel = {
+    hasChildren: boolean;
+    id: string;
+    parent?: ReferenceByIdModel | null;
+    name: string;
+    icon: string;
+};
+
 export type MemberValueModel = {
     culture?: string | null;
     segment?: string | null;
@@ -1440,6 +1494,10 @@ export type NotificationHeaderModel = {
     type: EventMessageTypeModel;
 };
 
+export type OEmbedResponseModel = {
+    markup: string;
+};
+
 export type ObjectTypeResponseModel = {
     name?: string | null;
     id: string;
@@ -1452,6 +1510,8 @@ export type OutOfDateStatusResponseModel = {
 };
 
 export type OutOfDateTypeModel = 'OutOfDate' | 'Current' | 'Unknown';
+
+export type OverlaySize = 'Small' | 'Medium' | 'Large';
 
 export type PackageConfigurationResponseModel = {
     marketplaceUrl: string;
@@ -1494,11 +1554,6 @@ export type PagedAllowedMediaTypeModel = {
 export type PagedAuditLogResponseModel = {
     total: number;
     items: Array<(AuditLogResponseModel)>;
-};
-
-export type PagedAuditLogWithUsernameResponseModel = {
-    total: number;
-    items: Array<(AuditLogWithUsernameResponseModel)>;
 };
 
 export type PagedCultureReponseModel = {
@@ -1629,6 +1684,11 @@ export type PagedMemberGroupResponseModel = {
 export type PagedMemberResponseModel = {
     total: number;
     items: Array<(MemberResponseModel)>;
+};
+
+export type PagedMemberTypeTreeItemResponseModel = {
+    total: number;
+    items: Array<(MemberTypeTreeItemResponseModel)>;
 };
 
 export type PagedModelDataTypeItemResponseModel = {
@@ -1766,6 +1826,11 @@ export type PagedUserResponseModel = {
     items: Array<(UserResponseModel)>;
 };
 
+export type PagedWebhookEventModel = {
+    total: number;
+    items: Array<(WebhookEventModel)>;
+};
+
 export type PagedWebhookResponseModel = {
     total: number;
     items: Array<(WebhookResponseModel)>;
@@ -1847,6 +1912,13 @@ export type PublicAccessRequestModel = {
     errorDocument: ReferenceByIdModel;
     memberUserNames: Array<(string)>;
     memberGroupNames: Array<(string)>;
+};
+
+export type PublicAccessResponseModel = {
+    loginDocument: ReferenceByIdModel;
+    errorDocument: ReferenceByIdModel;
+    members: Array<(MemberItemResponseModel)>;
+    groups: Array<(MemberGroupItemResponseModel)>;
 };
 
 export type PublishDocumentRequestModel = {
@@ -2176,7 +2248,7 @@ export type UnknownTypePermissionPresentationModel = {
 };
 
 export type UnlockUsersRequestModel = {
-    userIds: Array<(string)>;
+    userIds: Array<(ReferenceByIdModel)>;
 };
 
 export type UnpublishDocumentRequestModel = {
@@ -2186,7 +2258,7 @@ export type UnpublishDocumentRequestModel = {
 export type UpdateDataTypeRequestModel = {
     name: string;
     editorAlias: string;
-    editorUiAlias?: string | null;
+    editorUiAlias: string;
     values: Array<(DataTypePropertyPresentationModel)>;
 };
 
@@ -2411,6 +2483,7 @@ export type UpdateUserDataRequestModel = {
 
 export type UpdateUserGroupRequestModel = {
     name: string;
+    alias: string;
     icon?: string | null;
     sections: Array<(string)>;
     languages: Array<(string)>;
@@ -2424,18 +2497,20 @@ export type UpdateUserGroupRequestModel = {
 };
 
 export type UpdateUserGroupsOnUserRequestModel = {
-    userIds: Array<(string)>;
-    userGroupIds: Array<(string)>;
+    userIds: Array<(ReferenceByIdModel)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
 };
 
 export type UpdateUserRequestModel = {
     email: string;
     userName: string;
     name: string;
-    userGroupIds: Array<(string)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
     languageIsoCode: string;
-    documentStartNodeIds: Array<(string)>;
-    mediaStartNodeIds: Array<(string)>;
+    documentStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasDocumentRootAccess: boolean;
+    mediaStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasMediaRootAccess: boolean;
 };
 
 export type UpdateWebhookRequestModel = {
@@ -2476,14 +2551,23 @@ export type UserDataResponseModel = {
     key: string;
 };
 
+export type UserExternalLoginProviderModel = {
+    providerSchemeName: string;
+    providerKey?: string | null;
+    isLinkedOnUser: boolean;
+    hasManualLinkingEnabled: boolean;
+};
+
 export type UserGroupItemResponseModel = {
     id: string;
     name: string;
     icon?: string | null;
+    alias?: string | null;
 };
 
 export type UserGroupResponseModel = {
     name: string;
+    alias: string;
     icon?: string | null;
     sections: Array<(string)>;
     languages: Array<(string)>;
@@ -2495,7 +2579,8 @@ export type UserGroupResponseModel = {
     fallbackPermissions: Array<(string)>;
     permissions: Array<(DocumentPermissionPresentationModel | UnknownTypePermissionPresentationModel)>;
     id: string;
-    isSystemGroup: boolean;
+    isDeletable: boolean;
+    aliasCanBeChanged: boolean;
 };
 
 export type UserInstallRequestModel = {
@@ -2508,6 +2593,7 @@ export type UserInstallRequestModel = {
 export type UserItemResponseModel = {
     id: string;
     name: string;
+    avatarUrls: Array<(string)>;
 };
 
 export type UserOrderModel = 'UserName' | 'Language' | 'Name' | 'Email' | 'Id' | 'CreateDate' | 'UpdateDate' | 'IsApproved' | 'IsLockedOut' | 'LastLoginDate';
@@ -2525,11 +2611,13 @@ export type UserResponseModel = {
     email: string;
     userName: string;
     name: string;
-    userGroupIds: Array<(string)>;
+    userGroupIds: Array<(ReferenceByIdModel)>;
     id: string;
     languageIsoCode?: string | null;
-    documentStartNodeIds: Array<(string)>;
-    mediaStartNodeIds: Array<(string)>;
+    documentStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasDocumentRootAccess: boolean;
+    mediaStartNodeIds: Array<(ReferenceByIdModel)>;
+    hasMediaRootAccess: boolean;
     avatarUrls: Array<(string)>;
     state: UserStateModel;
     failedLoginAttempts: number;
@@ -2577,6 +2665,12 @@ export type VerifyResetPasswordTokenRequestModel = {
     resetCode: string;
 };
 
+export type WebhookEventModel = {
+    eventName: string;
+    eventType: string;
+    alias: string;
+};
+
 export type WebhookEventResponseModel = {
     eventName: string;
     eventType: string;
@@ -2603,40 +2697,16 @@ export type WebhookResponseModel = {
 };
 
 export type $OpenApiTs = {
-    '/umbraco/management/api/v1/audit-log': {
+    '/umbraco/management/api/v1/contentment/configuration-editor/models': {
         get: {
             req: {
-                orderDirection?: DirectionModel;
-                sinceDate?: string;
-                skip?: number;
-                take?: number;
+                type?: string;
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
-                200: PagedAuditLogWithUsernameResponseModel;
-                /**
-                 * The resource is protected and requires an authentication token
-                 */
-                401: unknown;
-            };
-        };
-    };
-    '/umbraco/management/api/v1/audit-log/{id}': {
-        get: {
-            req: {
-                id: string;
-                orderDirection?: DirectionModel;
-                sinceDate?: string;
-                skip?: number;
-                take?: number;
-            };
-            res: {
-                /**
-                 * Success
-                 */
-                200: PagedAuditLogResponseModel;
+                200: ConfigurationEditorModelsResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
@@ -2645,26 +2715,10 @@ export type $OpenApiTs = {
                  * The authenticated user do not have access to this resource
                  */
                 403: unknown;
-            };
-        };
-    };
-    '/umbraco/management/api/v1/audit-log/type/{logType}': {
-        get: {
-            req: {
-                logType: AuditTypeModel;
-                sinceDate?: string;
-                skip?: number;
-                take?: number;
-            };
-            res: {
                 /**
-                 * Success
+                 * Not Found
                  */
-                200: PagedAuditLogResponseModel;
-                /**
-                 * The resource is protected and requires an authentication token
-                 */
-                401: unknown;
+                404: ProblemDetails;
             };
         };
     };
@@ -2675,7 +2729,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DataListEditorResponseModel;
                 /**
@@ -2701,7 +2755,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedCultureReponseModel;
                 /**
@@ -2747,7 +2801,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DataTypeResponseModel;
                 /**
@@ -2770,7 +2824,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -2798,7 +2852,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -2853,7 +2907,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: boolean;
                 /**
@@ -2879,7 +2933,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -2904,7 +2958,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DataTypeReferenceResponseModel)>;
                 /**
@@ -2926,7 +2980,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DatatypeConfigurationResponseModel;
                 /**
@@ -2976,7 +3030,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: FolderResponseModel;
                 /**
@@ -2999,7 +3053,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3027,7 +3081,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3060,7 +3114,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDataTypeItemResponseModel;
                 /**
@@ -3081,17 +3135,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DataTypeItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -3104,17 +3154,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelDataTypeItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -3125,7 +3171,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DataTypeTreeItemResponseModel)>;
                 /**
@@ -3149,7 +3195,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDataTypeTreeItemResponseModel;
                 /**
@@ -3172,7 +3218,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDataTypeTreeItemResponseModel;
                 /**
@@ -3195,7 +3241,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDictionaryOverviewResponseModel;
                 /**
@@ -3247,7 +3293,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DictionaryItemResponseModel;
                 /**
@@ -3270,7 +3316,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3298,7 +3344,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3328,7 +3374,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: (Blob | File);
                 /**
@@ -3354,7 +3400,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3412,17 +3458,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DictionaryItemItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -3433,7 +3475,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(NamedEntityTreeItemResponseModel)>;
                 /**
@@ -3456,7 +3498,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedNamedEntityTreeItemResponseModel;
                 /**
@@ -3478,7 +3520,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedNamedEntityTreeItemResponseModel;
                 /**
@@ -3528,7 +3570,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentBlueprintResponseModel;
                 /**
@@ -3551,7 +3593,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3579,7 +3621,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3609,7 +3651,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3663,7 +3705,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: FolderResponseModel;
                 /**
@@ -3686,7 +3728,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3714,7 +3756,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3768,17 +3810,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentBlueprintItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -3789,7 +3827,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentBlueprintTreeItemResponseModel)>;
                 /**
@@ -3813,7 +3851,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentBlueprintTreeItemResponseModel;
                 /**
@@ -3836,7 +3874,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentBlueprintTreeItemResponseModel;
                 /**
@@ -3886,7 +3924,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentTypeResponseModel;
                 /**
@@ -3909,7 +3947,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3933,7 +3971,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -3964,7 +4002,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedAllowedDocumentTypeModel;
                 /**
@@ -3991,7 +4029,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentTypeBlueprintItemResponseModel;
                 /**
@@ -4016,7 +4054,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentTypeCompositionResponseModel)>;
                 /**
@@ -4068,6 +4106,61 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/umbraco/management/api/v1/document-type/{id}/export': {
+        get: {
+            req: {
+                id: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: (Blob | File);
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/document-type/{id}/import': {
+        put: {
+            req: {
+                id: string;
+                requestBody?: ImportDocumentTypeRequestModel;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: string;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
     '/umbraco/management/api/v1/document-type/{id}/move': {
         put: {
             req: {
@@ -4076,7 +4169,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4106,7 +4199,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedAllowedDocumentTypeModel;
                 /**
@@ -4127,7 +4220,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(AvailableDocumentTypeCompositionResponseModel)>;
                 /**
@@ -4145,7 +4238,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentTypeConfigurationResponseModel;
                 /**
@@ -4195,7 +4288,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: FolderResponseModel;
                 /**
@@ -4218,7 +4311,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4246,9 +4339,38 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/document-type/import': {
+        post: {
+            req: {
+                requestBody?: ImportDocumentTypeRequestModel;
+            };
+            res: {
+                /**
+                 * Created
+                 */
+                201: string;
                 /**
                  * Bad Request
                  */
@@ -4275,17 +4397,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentTypeItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -4298,17 +4416,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelDocumentTypeItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -4319,7 +4433,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentTypeTreeItemResponseModel)>;
                 /**
@@ -4343,7 +4457,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentTypeTreeItemResponseModel;
                 /**
@@ -4366,7 +4480,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentTypeTreeItemResponseModel;
                 /**
@@ -4390,7 +4504,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentVersionItemResponseModel;
                 /**
@@ -4419,7 +4533,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentVersionResponseModel;
                 /**
@@ -4449,7 +4563,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4479,7 +4593,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4515,7 +4629,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentCollectionResponseModel;
                 /**
@@ -4573,7 +4687,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentResponseModel;
                 /**
@@ -4596,7 +4710,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4624,7 +4738,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4643,6 +4757,31 @@ export type $OpenApiTs = {
                  * Not Found
                  */
                 404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/document/{id}/audit-log': {
+        get: {
+            req: {
+                id: string;
+                orderDirection?: DirectionModel;
+                sinceDate?: string;
+                skip?: number;
+                take?: number;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: PagedAuditLogResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
             };
         };
     };
@@ -4679,7 +4818,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DomainsResponseModel;
                 /**
@@ -4703,7 +4842,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4737,7 +4876,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4762,7 +4901,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4791,7 +4930,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentNotificationResponseModel)>;
                 /**
@@ -4815,7 +4954,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4864,7 +5003,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4887,6 +5026,10 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
+                 * OK
+                 */
+                200: PublicAccessResponseModel;
+                /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
@@ -4907,7 +5050,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4933,7 +5076,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4963,7 +5106,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -4994,7 +5137,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedIReferenceResponseModel;
                 /**
@@ -5017,7 +5160,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedReferenceByIdModel;
                 /**
@@ -5039,7 +5182,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5069,7 +5212,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5100,7 +5243,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedReferenceByIdModel;
                 /**
@@ -5118,7 +5261,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DocumentConfigurationResponseModel;
                 /**
@@ -5139,7 +5282,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5168,7 +5311,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentUrlInfoResponseModel)>;
                 /**
@@ -5189,7 +5332,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5218,17 +5361,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -5241,17 +5380,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelDocumentItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -5259,7 +5394,7 @@ export type $OpenApiTs = {
         delete: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5284,7 +5419,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5313,7 +5448,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ReferenceByIdModel;
                 /**
@@ -5343,7 +5478,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5374,7 +5509,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentRecycleBinItemResponseModel;
                 /**
@@ -5396,7 +5531,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentRecycleBinItemResponseModel;
                 /**
@@ -5417,7 +5552,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(DocumentTreeItemResponseModel)>;
                 /**
@@ -5441,7 +5576,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentTreeItemResponseModel;
                 /**
@@ -5464,7 +5599,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedDocumentTreeItemResponseModel;
                 /**
@@ -5485,7 +5620,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: DynamicRootResponseModel;
                 /**
@@ -5503,7 +5638,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(string)>;
                 /**
@@ -5525,7 +5660,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedHealthCheckGroupResponseModel;
                 /**
@@ -5546,7 +5681,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: HealthCheckGroupPresentationModel;
                 /**
@@ -5571,7 +5706,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: HealthCheckGroupWithResultResponseModel;
                 /**
@@ -5596,7 +5731,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: HealthCheckResultResponseModel;
                 /**
@@ -5625,7 +5760,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedHelpPageResponseModel;
                 /**
@@ -5639,6 +5774,55 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/umbraco/management/api/v1/imaging/resize/urls': {
+        get: {
+            req: {
+                height?: number;
+                id?: Array<(string)>;
+                mode?: ImageCropModeModel;
+                width?: number;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<(MediaUrlInfoResponseModel)>;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/import/analyze': {
+        get: {
+            req: {
+                temporaryFileId?: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: EntityImportAnalysisResponseModel;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
     '/umbraco/management/api/v1/indexer': {
         get: {
             req: {
@@ -5647,7 +5831,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedIndexResponseModel;
                 /**
@@ -5664,7 +5848,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: IndexResponseModel;
                 /**
@@ -5685,7 +5869,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5711,11 +5895,11 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: InstallSettingsResponseModel;
                 /**
-                 * Client Error
+                 * Precondition Required
                  */
                 428: ProblemDetails;
             };
@@ -5728,11 +5912,11 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
-                 * Client Error
+                 * Precondition Required
                  */
                 428: ProblemDetails;
             };
@@ -5745,7 +5929,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5762,17 +5946,27 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(LanguageItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/item/language/default': {
+        get: {
+            res: {
                 /**
-                 * The authenticated user do not have access to this resource
+                 * OK
                  */
-                403: unknown;
+                200: LanguageItemResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
             };
         };
     };
@@ -5784,7 +5978,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedLanguageResponseModel;
                 /**
@@ -5828,7 +6022,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: LanguageResponseModel;
                 /**
@@ -5847,7 +6041,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5875,7 +6069,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -5905,7 +6099,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedLoggerResponseModel;
                 /**
@@ -5927,7 +6121,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: LogLevelCountsReponseModel;
                 /**
@@ -5958,7 +6152,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedLogMessageResponseModel;
                 /**
@@ -5982,7 +6176,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedLogTemplateResponseModel;
                 /**
@@ -6008,7 +6202,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedSavedLogSearchResponseModel;
                 /**
@@ -6052,7 +6246,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: SavedLogSearchResponseModel;
                 /**
@@ -6075,7 +6269,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6101,7 +6295,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: unknown;
                 /**
@@ -6123,7 +6317,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(ManifestResponseModel)>;
                 /**
@@ -6141,7 +6335,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(ManifestResponseModel)>;
                 /**
@@ -6159,7 +6353,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(ManifestResponseModel)>;
             };
@@ -6172,17 +6366,50 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaTypeItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/item/media-type/allowed': {
+        get: {
+            req: {
+                fileExtension?: string;
+                skip?: number;
+                take?: number;
+            };
+            res: {
                 /**
-                 * The authenticated user do not have access to this resource
+                 * OK
                  */
-                403: unknown;
+                200: PagedModelMediaTypeItemResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/item/media-type/folders': {
+        get: {
+            req: {
+                skip?: number;
+                take?: number;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: PagedModelMediaTypeItemResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
             };
         };
     };
@@ -6195,17 +6422,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelMediaTypeItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -6245,7 +6468,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MediaTypeResponseModel;
                 /**
@@ -6268,7 +6491,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6292,7 +6515,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6323,7 +6546,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedAllowedMediaTypeModel;
                 /**
@@ -6348,7 +6571,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaTypeCompositionResponseModel)>;
                 /**
@@ -6400,6 +6623,61 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/umbraco/management/api/v1/media-type/{id}/export': {
+        get: {
+            req: {
+                id: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: (Blob | File);
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/media-type/{id}/import': {
+        put: {
+            req: {
+                id: string;
+                requestBody?: ImportMediaTypeRequestModel;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: string;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
     '/umbraco/management/api/v1/media-type/{id}/move': {
         put: {
             req: {
@@ -6408,7 +6686,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6438,7 +6716,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedAllowedMediaTypeModel;
                 /**
@@ -6459,7 +6737,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(AvailableMediaTypeCompositionResponseModel)>;
                 /**
@@ -6509,7 +6787,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: FolderResponseModel;
                 /**
@@ -6532,7 +6810,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6560,9 +6838,38 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/media-type/import': {
+        post: {
+            req: {
+                requestBody?: ImportMediaTypeRequestModel;
+            };
+            res: {
+                /**
+                 * Created
+                 */
+                201: string;
                 /**
                  * Bad Request
                  */
@@ -6589,7 +6896,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaTypeTreeItemResponseModel)>;
                 /**
@@ -6613,7 +6920,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaTypeTreeItemResponseModel;
                 /**
@@ -6636,7 +6943,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaTypeTreeItemResponseModel;
                 /**
@@ -6663,7 +6970,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaCollectionResponseModel;
                 /**
@@ -6692,17 +6999,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -6715,17 +7018,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelMediaItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -6765,7 +7064,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MediaResponseModel;
                 /**
@@ -6788,7 +7087,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6816,7 +7115,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6838,6 +7137,31 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/umbraco/management/api/v1/media/{id}/audit-log': {
+        get: {
+            req: {
+                id: string;
+                orderDirection?: DirectionModel;
+                sinceDate?: string;
+                skip?: number;
+                take?: number;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: PagedAuditLogResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
+            };
+        };
+    };
     '/umbraco/management/api/v1/media/{id}/move': {
         put: {
             req: {
@@ -6846,7 +7170,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6871,7 +7195,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6902,7 +7226,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedIReferenceResponseModel;
                 /**
@@ -6925,7 +7249,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedReferenceByIdModel;
                 /**
@@ -6947,7 +7271,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -6978,7 +7302,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedReferenceByIdModel;
                 /**
@@ -6996,7 +7320,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MediaConfigurationResponseModel;
                 /**
@@ -7017,7 +7341,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7046,7 +7370,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaUrlInfoResponseModel)>;
                 /**
@@ -7067,7 +7391,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7093,7 +7417,7 @@ export type $OpenApiTs = {
         delete: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7118,7 +7442,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7147,7 +7471,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ReferenceByIdModel;
                 /**
@@ -7177,7 +7501,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7208,7 +7532,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaRecycleBinItemResponseModel;
                 /**
@@ -7230,7 +7554,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaRecycleBinItemResponseModel;
                 /**
@@ -7251,7 +7575,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MediaTreeItemResponseModel)>;
                 /**
@@ -7275,7 +7599,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaTreeItemResponseModel;
                 /**
@@ -7298,7 +7622,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMediaTreeItemResponseModel;
                 /**
@@ -7319,17 +7643,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MemberGroupItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -7341,7 +7661,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMemberGroupResponseModel;
                 /**
@@ -7385,7 +7705,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MemberGroupResponseModel;
                 /**
@@ -7408,7 +7728,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7436,7 +7756,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7466,7 +7786,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedNamedEntityTreeItemResponseModel;
                 /**
@@ -7487,17 +7807,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MemberTypeItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -7510,17 +7826,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelMemberTypeItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -7560,7 +7872,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MemberTypeResponseModel;
                 /**
@@ -7583,7 +7895,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7607,7 +7919,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7636,7 +7948,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MemberTypeCompositionResponseModel)>;
                 /**
@@ -7694,7 +8006,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(AvailableMemberTypeCompositionResponseModel)>;
                 /**
@@ -7716,9 +8028,9 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
-                200: PagedNamedEntityTreeItemResponseModel;
+                200: PagedMemberTypeTreeItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
@@ -7745,7 +8057,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedMemberResponseModel;
                 /**
@@ -7770,17 +8082,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(MemberItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -7793,17 +8101,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelMemberItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -7843,7 +8147,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MemberResponseModel;
                 /**
@@ -7866,7 +8170,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7894,7 +8198,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7924,7 +8228,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7950,7 +8254,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: MemberConfigurationResponseModel;
                 /**
@@ -7971,7 +8275,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -7997,7 +8301,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8009,7 +8313,7 @@ export type $OpenApiTs = {
                  */
                 403: string;
                 /**
-                 * Client Error
+                 * Precondition Required
                  */
                 428: ProblemDetails;
             };
@@ -8019,7 +8323,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ModelsBuilderResponseModel;
                 /**
@@ -8037,7 +8341,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: OutOfDateStatusResponseModel;
                 /**
@@ -8059,13 +8363,36 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedObjectTypeResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/oembed/query': {
+        get: {
+            req: {
+                maxHeight?: number;
+                maxWidth?: number;
+                url?: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: OEmbedResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
             };
         };
     };
@@ -8076,7 +8403,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8102,7 +8429,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PackageConfigurationResponseModel;
                 /**
@@ -8124,7 +8451,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedPackageDefinitionResponseModel;
                 /**
@@ -8172,7 +8499,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PackageDefinitionResponseModel;
                 /**
@@ -8195,7 +8522,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8219,7 +8546,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8244,7 +8571,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: (Blob | File);
                 /**
@@ -8270,7 +8597,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedPackageMigrationStatusResponseModel;
                 /**
@@ -8291,17 +8618,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(PartialViewItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -8341,7 +8664,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PartialViewResponseModel;
                 /**
@@ -8364,7 +8687,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8392,7 +8715,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8480,7 +8803,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PartialViewFolderResponseModel;
                 /**
@@ -8503,7 +8826,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8533,7 +8856,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedPartialViewSnippetItemResponseModel;
                 /**
@@ -8554,7 +8877,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PartialViewSnippetResponseModel;
                 /**
@@ -8579,7 +8902,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(FileSystemTreeItemPresentationModel)>;
                 /**
@@ -8602,7 +8925,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -8624,7 +8947,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -8642,19 +8965,15 @@ export type $OpenApiTs = {
         delete: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
-                /**
-                 * The resource is protected and requires an authentication token
-                 */
-                401: unknown;
             };
         };
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8668,7 +8987,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ProfilingStatusResponseModel;
                 /**
@@ -8687,7 +9006,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8709,7 +9028,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: boolean;
                 /**
@@ -8731,7 +9050,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8745,7 +9064,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8759,7 +9078,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8773,7 +9092,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8792,7 +9111,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedRedirectUrlResponseModel;
                 /**
@@ -8819,7 +9138,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedRedirectUrlResponseModel;
                 /**
@@ -8838,7 +9157,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8856,7 +9175,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: RedirectUrlStatusResponseModel;
                 /**
@@ -8875,7 +9194,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -8896,17 +9215,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(RelationTypeItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -8918,7 +9233,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedRelationTypeResponseModel;
                 /**
@@ -8939,7 +9254,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: RelationTypeResponseModel;
                 /**
@@ -8966,7 +9281,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedRelationResponseModel;
                 /**
@@ -8991,17 +9306,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(ScriptItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -9041,7 +9352,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ScriptResponseModel;
                 /**
@@ -9064,7 +9375,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9092,7 +9403,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9180,7 +9491,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ScriptFolderResponseModel;
                 /**
@@ -9203,7 +9514,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9232,7 +9543,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(FileSystemTreeItemPresentationModel)>;
                 /**
@@ -9255,7 +9566,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9277,7 +9588,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9299,7 +9610,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedSearcherResponseModel;
                 /**
@@ -9319,7 +9630,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedSearchResultResponseModel;
                 /**
@@ -9337,7 +9648,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: SecurityConfigurationResponseModel;
                 /**
@@ -9358,7 +9669,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9412,7 +9723,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: VerifyResetPasswordResponseModel;
                 /**
@@ -9434,7 +9745,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedSegmentResponseModel;
                 /**
@@ -9456,7 +9767,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ServerConfigurationResponseModel;
                 /**
@@ -9470,7 +9781,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ServerInformationResponseModel;
                 /**
@@ -9484,7 +9795,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ServerStatusResponseModel;
                 /**
@@ -9498,7 +9809,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ServerTroubleshootingResponseModel;
                 /**
@@ -9515,7 +9826,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(StaticFileItemResponseModel)>;
                 /**
@@ -9532,7 +9843,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(FileSystemTreeItemPresentationModel)>;
                 /**
@@ -9551,7 +9862,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9569,7 +9880,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9586,17 +9897,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(StylesheetItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -9636,7 +9943,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: StylesheetResponseModel;
                 /**
@@ -9659,7 +9966,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9687,7 +9994,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9775,7 +10082,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: StylesheetFolderResponseModel;
                 /**
@@ -9798,7 +10105,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9827,7 +10134,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(FileSystemTreeItemPresentationModel)>;
                 /**
@@ -9850,7 +10157,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9872,7 +10179,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedFileSystemTreeItemPresentationModel;
                 /**
@@ -9897,7 +10204,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedTagResponseModel;
                 /**
@@ -9915,7 +10222,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedTelemetryResponseModel;
                 /**
@@ -9933,7 +10240,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TelemetryResponseModel;
                 /**
@@ -9952,7 +10259,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -9977,17 +10284,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(TemplateItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -10000,17 +10303,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedModelTemplateItemResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -10050,7 +10349,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemplateResponseModel;
                 /**
@@ -10073,7 +10372,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10101,7 +10400,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10127,7 +10426,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemplateConfigurationResponseModel;
                 /**
@@ -10148,7 +10447,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemplateQueryResultResponseModel;
                 /**
@@ -10166,7 +10465,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemplateQuerySettingsResponseModel;
                 /**
@@ -10187,7 +10486,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(NamedEntityTreeItemResponseModel)>;
                 /**
@@ -10210,7 +10509,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedNamedEntityTreeItemResponseModel;
                 /**
@@ -10232,7 +10531,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedNamedEntityTreeItemResponseModel;
                 /**
@@ -10250,8 +10549,8 @@ export type $OpenApiTs = {
         post: {
             req: {
                 formData?: {
-                    Id?: string;
-                    File?: (Blob | File);
+                    Id: string;
+                    File: (Blob | File);
                 };
             };
             res: {
@@ -10277,7 +10576,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemporaryFileResponseModel;
                 /**
@@ -10300,7 +10599,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10322,7 +10621,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: TemporaryFileConfigurationResponseModel;
                 /**
@@ -10336,7 +10635,7 @@ export type $OpenApiTs = {
         post: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10348,11 +10647,11 @@ export type $OpenApiTs = {
                  */
                 403: string;
                 /**
-                 * Client Error
+                 * Precondition Required
                  */
                 428: ProblemDetails;
                 /**
-                 * Server Error
+                 * Internal Server Error
                  */
                 500: ProblemDetails;
             };
@@ -10362,7 +10661,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UpgradeSettingsResponseModel;
                 /**
@@ -10374,7 +10673,7 @@ export type $OpenApiTs = {
                  */
                 403: unknown;
                 /**
-                 * Client Error
+                 * Precondition Required
                  */
                 428: ProblemDetails;
             };
@@ -10413,7 +10712,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedUserDataResponseModel;
                 /**
@@ -10428,7 +10727,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10453,7 +10752,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserDataModel;
                 /**
@@ -10467,16 +10766,22 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/umbraco/management/api/v1/item/user-group': {
+    '/umbraco/management/api/v1/filter/user-group': {
         get: {
             req: {
-                id?: Array<(string)>;
+                filter?: string;
+                skip?: number;
+                take?: number;
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
-                200: Array<(UserGroupItemResponseModel)>;
+                200: PagedUserGroupResponseModel;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
                 /**
                  * The resource is protected and requires an authentication token
                  */
@@ -10485,6 +10790,27 @@ export type $OpenApiTs = {
                  * The authenticated user do not have access to this resource
                  */
                 403: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/item/user-group': {
+        get: {
+            req: {
+                id?: Array<(string)>;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<(UserGroupItemResponseModel)>;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
             };
         };
     };
@@ -10495,7 +10821,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10542,7 +10868,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedUserGroupResponseModel;
                 /**
@@ -10563,7 +10889,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserGroupResponseModel;
                 /**
@@ -10586,7 +10912,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10610,7 +10936,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10632,11 +10958,11 @@ export type $OpenApiTs = {
         delete: {
             req: {
                 id: string;
-                requestBody?: Array<(string)>;
+                requestBody?: Array<(ReferenceByIdModel)>;
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10656,11 +10982,11 @@ export type $OpenApiTs = {
         post: {
             req: {
                 id: string;
-                requestBody?: Array<(string)>;
+                requestBody?: Array<(ReferenceByIdModel)>;
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10691,7 +11017,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedUserResponseModel;
                 /**
@@ -10720,17 +11046,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(UserItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -10768,7 +11090,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10792,7 +11114,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedUserResponseModel;
                 /**
@@ -10817,7 +11139,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserResponseModel;
                 /**
@@ -10840,7 +11162,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10868,7 +11190,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10897,7 +11219,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(UserTwoFactorProviderModel)>;
                 /**
@@ -10923,7 +11245,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10953,7 +11275,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -10982,7 +11304,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: ResetPasswordUserResponseModel;
                 /**
@@ -11011,7 +11333,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11039,7 +11361,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11065,7 +11387,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserConfigurationResponseModel;
                 /**
@@ -11083,7 +11405,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: CurrentUserResponseModel;
                 /**
@@ -11097,7 +11419,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(UserTwoFactorProviderModel)>;
                 /**
@@ -11115,7 +11437,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11139,7 +11461,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: NoopSetupTwoFactorModel;
                 /**
@@ -11162,7 +11484,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: NoopSetupTwoFactorModel;
                 /**
@@ -11187,7 +11509,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11208,7 +11530,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11226,7 +11548,7 @@ export type $OpenApiTs = {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: CurrenUserConfigurationResponseModel;
                 /**
@@ -11240,13 +11562,13 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/umbraco/management/api/v1/user/current/logins': {
+    '/umbraco/management/api/v1/user/current/login-providers': {
         get: {
             res: {
                 /**
-                 * Success
+                 * OK
                  */
-                200: LinkedLoginsRequestModel;
+                200: Array<(UserExternalLoginProviderModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
@@ -11261,7 +11583,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserPermissionsResponseModel;
                 /**
@@ -11282,7 +11604,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(UserPermissionsResponseModel)>;
                 /**
@@ -11303,7 +11625,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: UserPermissionsResponseModel;
                 /**
@@ -11324,7 +11646,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11353,7 +11675,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11411,7 +11733,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11436,7 +11758,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11465,7 +11787,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: VerifyInviteUserResponseModel;
                 /**
@@ -11490,7 +11812,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11511,7 +11833,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11536,17 +11858,13 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: Array<(WebhookItemResponseModel)>;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: unknown;
             };
         };
     };
@@ -11558,7 +11876,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: PagedWebhookResponseModel;
                 /**
@@ -11602,13 +11920,40 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: WebhookResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+        delete: {
+            req: {
+                id: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: string;
+                /**
+                 * Bad Request
+                 */
+                400: ProblemDetails;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
                 /**
                  * Not Found
                  */
@@ -11622,7 +11967,7 @@ export type $OpenApiTs = {
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
                 200: string;
                 /**
@@ -11643,31 +11988,22 @@ export type $OpenApiTs = {
                 404: ProblemDetails;
             };
         };
-        delete: {
+    };
+    '/umbraco/management/api/v1/webhook/events': {
+        get: {
             req: {
-                id: string;
+                skip?: number;
+                take?: number;
             };
             res: {
                 /**
-                 * Success
+                 * OK
                  */
-                200: string;
-                /**
-                 * Bad Request
-                 */
-                400: ProblemDetails;
+                200: PagedWebhookEventModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */
                 401: unknown;
-                /**
-                 * The authenticated user do not have access to this resource
-                 */
-                403: string;
-                /**
-                 * Not Found
-                 */
-                404: ProblemDetails;
             };
         };
     };

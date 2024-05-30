@@ -5,96 +5,32 @@ import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 import type { $OpenApiTs } from './types.gen';
 
-export class AuditLogService {
-    /**
-     * @param data The data for the request.
-     * @param data.orderDirection
-     * @param data.sinceDate
-     * @param data.skip
-     * @param data.take
-     * @returns unknown Success
-     * @throws ApiError
-     */
-    public static getAuditLog(data: $OpenApiTs['/umbraco/management/api/v1/audit-log']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/audit-log']['get']['res'][200]> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/audit-log',
-            query: {
-                orderDirection: data.orderDirection,
-                sinceDate: data.sinceDate,
-                skip: data.skip,
-                take: data.take
-            },
-            errors: {
-                401: 'The resource is protected and requires an authentication token'
-            }
-        });
-    }
-    
-    /**
-     * @param data The data for the request.
-     * @param data.id
-     * @param data.orderDirection
-     * @param data.sinceDate
-     * @param data.skip
-     * @param data.take
-     * @returns unknown Success
-     * @throws ApiError
-     */
-    public static getAuditLogById(data: $OpenApiTs['/umbraco/management/api/v1/audit-log/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/audit-log/{id}']['get']['res'][200]> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/audit-log/{id}',
-            path: {
-                id: data.id
-            },
-            query: {
-                orderDirection: data.orderDirection,
-                sinceDate: data.sinceDate,
-                skip: data.skip,
-                take: data.take
-            },
-            errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
-            }
-        });
-    }
-    
-    /**
-     * @param data The data for the request.
-     * @param data.logType
-     * @param data.sinceDate
-     * @param data.skip
-     * @param data.take
-     * @returns unknown Success
-     * @throws ApiError
-     */
-    public static getAuditLogTypeByLogType(data: $OpenApiTs['/umbraco/management/api/v1/audit-log/type/{logType}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/audit-log/type/{logType}']['get']['res'][200]> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/audit-log/type/{logType}',
-            path: {
-                logType: data.logType
-            },
-            query: {
-                sinceDate: data.sinceDate,
-                skip: data.skip,
-                take: data.take
-            },
-            errors: {
-                401: 'The resource is protected and requires an authentication token'
-            }
-        });
-    }
-    
-}
-
 export class ContentmentService {
     /**
      * @param data The data for the request.
+     * @param data.type
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getContentmentConfigurationEditorModels(data: $OpenApiTs['/umbraco/management/api/v1/contentment/configuration-editor/models']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/configuration-editor/models']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/configuration-editor/models',
+            query: {
+                type: data.type
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postContentmentDataListEditor(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-list/editor']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-list/editor']['post']['res'][200]> {
@@ -118,7 +54,7 @@ export class CultureService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getCulture(data: $OpenApiTs['/umbraco/management/api/v1/culture']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/culture']['get']['res'][200]> {
@@ -163,7 +99,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDataTypeById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['get']['res'][200]> {
@@ -184,7 +120,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDataTypeById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['delete']['res'][200]> {
@@ -208,7 +144,7 @@ export class DataTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDataTypeById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}']['put']['res'][200]> {
@@ -258,7 +194,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns boolean Success
+     * @returns boolean OK
      * @throws ApiError
      */
     public static getDataTypeByIdIsUsed(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}/is-used']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}/is-used']['get']['res'][200]> {
@@ -280,7 +216,7 @@ export class DataTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDataTypeByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}/move']['put']['res'][200]> {
@@ -304,7 +240,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDataTypeByIdReferences(data: $OpenApiTs['/umbraco/management/api/v1/data-type/{id}/references']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/{id}/references']['get']['res'][200]> {
@@ -323,7 +259,7 @@ export class DataTypeService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDataTypeConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/configuration']['get']['res'][200]> {
@@ -362,7 +298,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDataTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['get']['res'][200]> {
@@ -383,7 +319,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDataTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['delete']['res'][200]> {
@@ -407,7 +343,7 @@ export class DataTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDataTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/data-type/folder/{id}']['put']['res'][200]> {
@@ -436,7 +372,7 @@ export class DataTypeService {
      * @param data.name
      * @param data.editorUiAlias
      * @param data.editorAlias
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getFilterDataType(data: $OpenApiTs['/umbraco/management/api/v1/filter/data-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/filter/data-type']['get']['res'][200]> {
@@ -460,7 +396,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDataType(data: $OpenApiTs['/umbraco/management/api/v1/item/data-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/data-type']['get']['res'][200]> {
@@ -471,8 +407,7 @@ export class DataTypeService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -482,7 +417,7 @@ export class DataTypeService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDataTypeSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/data-type/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/data-type/search']['get']['res'][200]> {
@@ -495,8 +430,7 @@ export class DataTypeService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -504,7 +438,7 @@ export class DataTypeService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDataTypeAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/data-type/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/data-type/ancestors']['get']['res'][200]> {
@@ -527,7 +461,7 @@ export class DataTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDataTypeChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/data-type/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/data-type/children']['get']['res'][200]> {
@@ -552,7 +486,7 @@ export class DataTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDataTypeRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/data-type/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/data-type/root']['get']['res'][200]> {
@@ -579,7 +513,7 @@ export class DictionaryService {
      * @param data.filter
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDictionary(data: $OpenApiTs['/umbraco/management/api/v1/dictionary']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary']['get']['res'][200]> {
@@ -624,7 +558,7 @@ export class DictionaryService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDictionaryById(data: $OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['get']['res'][200]> {
@@ -645,7 +579,7 @@ export class DictionaryService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDictionaryById(data: $OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['delete']['res'][200]> {
@@ -669,7 +603,7 @@ export class DictionaryService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDictionaryById(data: $OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary/{id}']['put']['res'][200]> {
@@ -695,7 +629,7 @@ export class DictionaryService {
      * @param data The data for the request.
      * @param data.id
      * @param data.includeChildren
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDictionaryByIdExport(data: $OpenApiTs['/umbraco/management/api/v1/dictionary/{id}/export']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary/{id}/export']['get']['res'][200]> {
@@ -720,7 +654,7 @@ export class DictionaryService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDictionaryByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/dictionary/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dictionary/{id}/move']['put']['res'][200]> {
@@ -767,7 +701,7 @@ export class DictionaryService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDictionary(data: $OpenApiTs['/umbraco/management/api/v1/item/dictionary']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/dictionary']['get']['res'][200]> {
@@ -778,8 +712,7 @@ export class DictionaryService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -787,7 +720,7 @@ export class DictionaryService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDictionaryAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/dictionary/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/dictionary/ancestors']['get']['res'][200]> {
@@ -809,7 +742,7 @@ export class DictionaryService {
      * @param data.parentId
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDictionaryChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/dictionary/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/dictionary/children']['get']['res'][200]> {
@@ -832,7 +765,7 @@ export class DictionaryService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDictionaryRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/dictionary/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/dictionary/root']['get']['res'][200]> {
@@ -878,7 +811,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentBlueprintById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['get']['res'][200]> {
@@ -899,7 +832,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentBlueprintById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['delete']['res'][200]> {
@@ -923,7 +856,7 @@ export class DocumentBlueprintService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentBlueprintById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}']['put']['res'][200]> {
@@ -949,7 +882,7 @@ export class DocumentBlueprintService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentBlueprintByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/{id}/move']['put']['res'][200]> {
@@ -995,7 +928,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentBlueprintFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['get']['res'][200]> {
@@ -1016,7 +949,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentBlueprintFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['delete']['res'][200]> {
@@ -1040,7 +973,7 @@ export class DocumentBlueprintService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentBlueprintFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-blueprint/folder/{id}']['put']['res'][200]> {
@@ -1086,7 +1019,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDocumentBlueprint(data: $OpenApiTs['/umbraco/management/api/v1/item/document-blueprint']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/document-blueprint']['get']['res'][200]> {
@@ -1097,8 +1030,7 @@ export class DocumentBlueprintService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -1106,7 +1038,7 @@ export class DocumentBlueprintService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentBlueprintAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/ancestors']['get']['res'][200]> {
@@ -1129,7 +1061,7 @@ export class DocumentBlueprintService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentBlueprintChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/children']['get']['res'][200]> {
@@ -1154,7 +1086,7 @@ export class DocumentBlueprintService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentBlueprintRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-blueprint/root']['get']['res'][200]> {
@@ -1201,7 +1133,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['get']['res'][200]> {
@@ -1222,7 +1154,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentTypeById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['delete']['res'][200]> {
@@ -1245,7 +1177,7 @@ export class DocumentTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentTypeById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}']['put']['res'][200]> {
@@ -1272,7 +1204,7 @@ export class DocumentTypeService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeByIdAllowedChildren(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/allowed-children']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/allowed-children']['get']['res'][200]> {
@@ -1299,7 +1231,7 @@ export class DocumentTypeService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeByIdBlueprint(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/blueprint']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/blueprint']['get']['res'][200]> {
@@ -1324,7 +1256,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeByIdCompositionReferences(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/composition-references']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/composition-references']['get']['res'][200]> {
@@ -1372,8 +1304,55 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getDocumentTypeByIdExport(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/export']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/export']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/document-type/{id}/export',
+            path: {
+                id: data.id
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static putDocumentTypeByIdImport(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/import']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/import']['put']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/umbraco/management/api/v1/document-type/{id}/import',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            responseHeader: 'Umb-Notifications',
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentTypeByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/document-type/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/{id}/move']['put']['res'][200]> {
@@ -1399,7 +1378,7 @@ export class DocumentTypeService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeAllowedAtRoot(data: $OpenApiTs['/umbraco/management/api/v1/document-type/allowed-at-root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/allowed-at-root']['get']['res'][200]> {
@@ -1420,7 +1399,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postDocumentTypeAvailableCompositions(data: $OpenApiTs['/umbraco/management/api/v1/document-type/available-compositions']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/available-compositions']['post']['res'][200]> {
@@ -1437,7 +1416,7 @@ export class DocumentTypeService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/configuration']['get']['res'][200]> {
@@ -1476,7 +1455,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['get']['res'][200]> {
@@ -1497,7 +1476,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['delete']['res'][200]> {
@@ -1521,7 +1500,7 @@ export class DocumentTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/folder/{id}']['put']['res'][200]> {
@@ -1545,8 +1524,30 @@ export class DocumentTypeService {
     
     /**
      * @param data The data for the request.
+     * @param data.requestBody
+     * @returns string Created
+     * @throws ApiError
+     */
+    public static postDocumentTypeImport(data: $OpenApiTs['/umbraco/management/api/v1/document-type/import']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-type/import']['post']['res'][201]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/umbraco/management/api/v1/document-type/import',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            responseHeader: 'Umb-Generated-Resource',
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDocumentType(data: $OpenApiTs['/umbraco/management/api/v1/item/document-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/document-type']['get']['res'][200]> {
@@ -1557,8 +1558,7 @@ export class DocumentTypeService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -1568,7 +1568,7 @@ export class DocumentTypeService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDocumentTypeSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/document-type/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/document-type/search']['get']['res'][200]> {
@@ -1581,8 +1581,7 @@ export class DocumentTypeService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -1590,7 +1589,7 @@ export class DocumentTypeService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentTypeAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-type/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-type/ancestors']['get']['res'][200]> {
@@ -1613,7 +1612,7 @@ export class DocumentTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentTypeChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-type/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-type/children']['get']['res'][200]> {
@@ -1638,7 +1637,7 @@ export class DocumentTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentTypeRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/document-type/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document-type/root']['get']['res'][200]> {
@@ -1666,7 +1665,7 @@ export class DocumentVersionService {
      * @param data.culture
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentVersion(data: $OpenApiTs['/umbraco/management/api/v1/document-version']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-version']['get']['res'][200]> {
@@ -1691,7 +1690,7 @@ export class DocumentVersionService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentVersionById(data: $OpenApiTs['/umbraco/management/api/v1/document-version/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-version/{id}']['get']['res'][200]> {
@@ -1714,7 +1713,7 @@ export class DocumentVersionService {
      * @param data The data for the request.
      * @param data.id
      * @param data.preventCleanup
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentVersionByIdPreventCleanup(data: $OpenApiTs['/umbraco/management/api/v1/document-version/{id}/prevent-cleanup']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-version/{id}/prevent-cleanup']['put']['res'][200]> {
@@ -1741,7 +1740,7 @@ export class DocumentVersionService {
      * @param data The data for the request.
      * @param data.id
      * @param data.culture
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postDocumentVersionByIdRollback(data: $OpenApiTs['/umbraco/management/api/v1/document-version/{id}/rollback']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document-version/{id}/rollback']['post']['res'][200]> {
@@ -1777,7 +1776,7 @@ export class DocumentService {
      * @param data.filter
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getCollectionDocumentById(data: $OpenApiTs['/umbraco/management/api/v1/collection/document/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/collection/document/{id}']['get']['res'][200]> {
@@ -1830,7 +1829,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentById(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}']['get']['res'][200]> {
@@ -1851,7 +1850,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentById(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}']['delete']['res'][200]> {
@@ -1875,7 +1874,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentById(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}']['put']['res'][200]> {
@@ -1893,6 +1892,36 @@ export class DocumentService {
                 401: 'The resource is protected and requires an authentication token',
                 403: 'The authenticated user do not have access to this resource',
                 404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.orderDirection
+     * @param data.sinceDate
+     * @param data.skip
+     * @param data.take
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getDocumentByIdAuditLog(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/audit-log']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/audit-log']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/document/{id}/audit-log',
+            path: {
+                id: data.id
+            },
+            query: {
+                orderDirection: data.orderDirection,
+                sinceDate: data.sinceDate,
+                skip: data.skip,
+                take: data.take
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource'
             }
         });
     }
@@ -1925,7 +1954,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentByIdDomains(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/domains']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/domains']['get']['res'][200]> {
@@ -1947,7 +1976,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdDomains(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/domains']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/domains']['put']['res'][200]> {
@@ -1974,7 +2003,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/move']['put']['res'][200]> {
@@ -1998,7 +2027,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdMoveToRecycleBin(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/move-to-recycle-bin']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/move-to-recycle-bin']['put']['res'][200]> {
@@ -2021,7 +2050,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentByIdNotifications(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/notifications']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/notifications']['get']['res'][200]> {
@@ -2043,7 +2072,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdNotifications(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/notifications']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/notifications']['put']['res'][200]> {
@@ -2092,7 +2121,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteDocumentByIdPublicAccess(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['delete']['res'][200]> {
@@ -2114,9 +2143,10 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @returns unknown OK
      * @throws ApiError
      */
-    public static getDocumentByIdPublicAccess(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['get']['req']): CancelablePromise<void> {
+    public static getDocumentByIdPublicAccess(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['get']['res'][200]> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/umbraco/management/api/v1/document/{id}/public-access',
@@ -2135,7 +2165,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdPublicAccess(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/public-access']['put']['res'][200]> {
@@ -2160,7 +2190,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdPublish(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/publish']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/publish']['put']['res'][200]> {
@@ -2186,7 +2216,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdPublishWithDescendants(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/publish-with-descendants']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/publish-with-descendants']['put']['res'][200]> {
@@ -2213,7 +2243,7 @@ export class DocumentService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentByIdReferencedBy(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/referenced-by']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/referenced-by']['get']['res'][200]> {
@@ -2239,7 +2269,7 @@ export class DocumentService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentByIdReferencedDescendants(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/referenced-descendants']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/referenced-descendants']['get']['res'][200]> {
@@ -2264,7 +2294,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdUnpublish(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/unpublish']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/unpublish']['put']['res'][200]> {
@@ -2290,7 +2320,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentByIdValidate(data: $OpenApiTs['/umbraco/management/api/v1/document/{id}/validate']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/{id}/validate']['put']['res'][200]> {
@@ -2317,7 +2347,7 @@ export class DocumentService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentAreReferenced(data: $OpenApiTs['/umbraco/management/api/v1/document/are-referenced']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/are-referenced']['get']['res'][200]> {
@@ -2337,7 +2367,7 @@ export class DocumentService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/configuration']['get']['res'][200]> {
@@ -2354,7 +2384,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putDocumentSort(data: $OpenApiTs['/umbraco/management/api/v1/document/sort']['put']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/sort']['put']['res'][200]> {
@@ -2376,7 +2406,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getDocumentUrls(data: $OpenApiTs['/umbraco/management/api/v1/document/urls']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/urls']['get']['res'][200]> {
@@ -2396,7 +2426,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postDocumentValidate(data: $OpenApiTs['/umbraco/management/api/v1/document/validate']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/document/validate']['post']['res'][200]> {
@@ -2418,7 +2448,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDocument(data: $OpenApiTs['/umbraco/management/api/v1/item/document']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/document']['get']['res'][200]> {
@@ -2429,8 +2459,7 @@ export class DocumentService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -2440,7 +2469,7 @@ export class DocumentService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemDocumentSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/document/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/document/search']['get']['res'][200]> {
@@ -2453,14 +2482,13 @@ export class DocumentService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteRecycleBinDocument(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document']['delete']['res'][200]> {
@@ -2479,7 +2507,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteRecycleBinDocumentById(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}']['delete']['res'][200]> {
@@ -2502,7 +2530,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinDocumentByIdOriginalParent(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}/original-parent']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}/original-parent']['get']['res'][200]> {
@@ -2525,7 +2553,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putRecycleBinDocumentByIdRestore(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}/restore']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/{id}/restore']['put']['res'][200]> {
@@ -2552,7 +2580,7 @@ export class DocumentService {
      * @param data.parentId
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinDocumentChildren(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/children']['get']['res'][200]> {
@@ -2575,7 +2603,7 @@ export class DocumentService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinDocumentRoot(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/document/root']['get']['res'][200]> {
@@ -2596,7 +2624,7 @@ export class DocumentService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/document/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document/ancestors']['get']['res'][200]> {
@@ -2619,7 +2647,7 @@ export class DocumentService {
      * @param data.skip
      * @param data.take
      * @param data.dataTypeId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/document/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document/children']['get']['res'][200]> {
@@ -2644,7 +2672,7 @@ export class DocumentService {
      * @param data.skip
      * @param data.take
      * @param data.dataTypeId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeDocumentRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/document/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/document/root']['get']['res'][200]> {
@@ -2669,7 +2697,7 @@ export class DynamicRootService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postDynamicRootQuery(data: $OpenApiTs['/umbraco/management/api/v1/dynamic-root/query']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dynamic-root/query']['post']['res'][200]> {
@@ -2686,7 +2714,7 @@ export class DynamicRootService {
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static getDynamicRootSteps(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/dynamic-root/steps']['get']['res'][200]> {
@@ -2707,7 +2735,7 @@ export class HealthCheckService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getHealthCheckGroup(data: $OpenApiTs['/umbraco/management/api/v1/health-check-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/health-check-group']['get']['res'][200]> {
@@ -2728,7 +2756,7 @@ export class HealthCheckService {
     /**
      * @param data The data for the request.
      * @param data.name
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getHealthCheckGroupByName(data: $OpenApiTs['/umbraco/management/api/v1/health-check-group/{name}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/health-check-group/{name}']['get']['res'][200]> {
@@ -2749,7 +2777,7 @@ export class HealthCheckService {
     /**
      * @param data The data for the request.
      * @param data.name
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postHealthCheckGroupByNameCheck(data: $OpenApiTs['/umbraco/management/api/v1/health-check-group/{name}/check']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/health-check-group/{name}/check']['post']['res'][200]> {
@@ -2770,7 +2798,7 @@ export class HealthCheckService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postHealthCheckExecuteAction(data: $OpenApiTs['/umbraco/management/api/v1/health-check/execute-action']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/health-check/execute-action']['post']['res'][200]> {
@@ -2797,7 +2825,7 @@ export class HelpService {
      * @param data.skip
      * @param data.take
      * @param data.baseUrl
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getHelp(data: $OpenApiTs['/umbraco/management/api/v1/help']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/help']['get']['res'][200]> {
@@ -2820,12 +2848,65 @@ export class HelpService {
     
 }
 
+export class ImagingService {
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.height
+     * @param data.width
+     * @param data.mode
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getImagingResizeUrls(data: $OpenApiTs['/umbraco/management/api/v1/imaging/resize/urls']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/imaging/resize/urls']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/imaging/resize/urls',
+            query: {
+                id: data.id,
+                height: data.height,
+                width: data.width,
+                mode: data.mode
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource'
+            }
+        });
+    }
+    
+}
+
+export class ImportService {
+    /**
+     * @param data The data for the request.
+     * @param data.temporaryFileId
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getImportAnalyze(data: $OpenApiTs['/umbraco/management/api/v1/import/analyze']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/import/analyze']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/import/analyze',
+            query: {
+                temporaryFileId: data.temporaryFileId
+            },
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+}
+
 export class IndexerService {
     /**
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getIndexer(data: $OpenApiTs['/umbraco/management/api/v1/indexer']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/indexer']['get']['res'][200]> {
@@ -2845,7 +2926,7 @@ export class IndexerService {
     /**
      * @param data The data for the request.
      * @param data.indexName
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getIndexerByIndexName(data: $OpenApiTs['/umbraco/management/api/v1/indexer/{indexName}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/indexer/{indexName}']['get']['res'][200]> {
@@ -2865,7 +2946,7 @@ export class IndexerService {
     /**
      * @param data The data for the request.
      * @param data.indexName
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postIndexerByIndexNameRebuild(data: $OpenApiTs['/umbraco/management/api/v1/indexer/{indexName}/rebuild']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/indexer/{indexName}/rebuild']['post']['res'][200]> {
@@ -2889,7 +2970,7 @@ export class IndexerService {
 
 export class InstallService {
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getInstallSettings(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/install/settings']['get']['res'][200]> {
@@ -2897,7 +2978,7 @@ export class InstallService {
             method: 'GET',
             url: '/umbraco/management/api/v1/install/settings',
             errors: {
-                428: 'Client Error'
+                428: 'Precondition Required'
             }
         });
     }
@@ -2905,7 +2986,7 @@ export class InstallService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postInstallSetup(data: $OpenApiTs['/umbraco/management/api/v1/install/setup']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/install/setup']['post']['res'][200]> {
@@ -2916,7 +2997,7 @@ export class InstallService {
             mediaType: 'application/json',
             responseHeader: 'Umb-Notifications',
             errors: {
-                428: 'Client Error'
+                428: 'Precondition Required'
             }
         });
     }
@@ -2924,7 +3005,7 @@ export class InstallService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postInstallValidateDatabase(data: $OpenApiTs['/umbraco/management/api/v1/install/validate-database']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/install/validate-database']['post']['res'][200]> {
@@ -2946,7 +3027,7 @@ export class LanguageService {
     /**
      * @param data The data for the request.
      * @param data.isoCode
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemLanguage(data: $OpenApiTs['/umbraco/management/api/v1/item/language']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/language']['get']['res'][200]> {
@@ -2957,8 +3038,21 @@ export class LanguageService {
                 isoCode: data.isoCode
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
+            }
+        });
+    }
+    
+    /**
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getItemLanguageDefault(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/language/default']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/item/language/default',
+            errors: {
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -2967,7 +3061,7 @@ export class LanguageService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLanguage(data: $OpenApiTs['/umbraco/management/api/v1/language']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/language']['get']['res'][200]> {
@@ -3009,7 +3103,7 @@ export class LanguageService {
     /**
      * @param data The data for the request.
      * @param data.isoCode
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLanguageByIsoCode(data: $OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['get']['res'][200]> {
@@ -3029,7 +3123,7 @@ export class LanguageService {
     /**
      * @param data The data for the request.
      * @param data.isoCode
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteLanguageByIsoCode(data: $OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['delete']['res'][200]> {
@@ -3053,7 +3147,7 @@ export class LanguageService {
      * @param data The data for the request.
      * @param data.isoCode
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putLanguageByIsoCode(data: $OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/language/{isoCode}']['put']['res'][200]> {
@@ -3082,7 +3176,7 @@ export class LogViewerService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerLevel(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/level']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/level']['get']['res'][200]> {
@@ -3104,7 +3198,7 @@ export class LogViewerService {
      * @param data The data for the request.
      * @param data.startDate
      * @param data.endDate
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerLevelCount(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/level-count']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/level-count']['get']['res'][200]> {
@@ -3132,7 +3226,7 @@ export class LogViewerService {
      * @param data.logLevel
      * @param data.startDate
      * @param data.endDate
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerLog(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/log']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/log']['get']['res'][200]> {
@@ -3161,7 +3255,7 @@ export class LogViewerService {
      * @param data.take
      * @param data.startDate
      * @param data.endDate
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerMessageTemplate(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/message-template']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/message-template']['get']['res'][200]> {
@@ -3186,7 +3280,7 @@ export class LogViewerService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerSavedSearch(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search']['get']['res'][200]> {
@@ -3228,7 +3322,7 @@ export class LogViewerService {
     /**
      * @param data The data for the request.
      * @param data.name
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerSavedSearchByName(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search/{name}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search/{name}']['get']['res'][200]> {
@@ -3249,7 +3343,7 @@ export class LogViewerService {
     /**
      * @param data The data for the request.
      * @param data.name
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteLogViewerSavedSearchByName(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search/{name}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/saved-search/{name}']['delete']['res'][200]> {
@@ -3272,7 +3366,7 @@ export class LogViewerService {
      * @param data The data for the request.
      * @param data.startDate
      * @param data.endDate
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getLogViewerValidateLogsSize(data: $OpenApiTs['/umbraco/management/api/v1/log-viewer/validate-logs-size']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/log-viewer/validate-logs-size']['get']['res'][200]> {
@@ -3295,7 +3389,7 @@ export class LogViewerService {
 
 export class ManifestService {
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getManifestManifest(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/manifest/manifest']['get']['res'][200]> {
@@ -3310,7 +3404,7 @@ export class ManifestService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getManifestManifestPrivate(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/manifest/manifest/private']['get']['res'][200]> {
@@ -3325,7 +3419,7 @@ export class ManifestService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getManifestManifestPublic(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/manifest/manifest/public']['get']['res'][200]> {
@@ -3341,7 +3435,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMediaType(data: $OpenApiTs['/umbraco/management/api/v1/item/media-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media-type']['get']['res'][200]> {
@@ -3352,8 +3446,51 @@ export class MediaTypeService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.fileExtension
+     * @param data.skip
+     * @param data.take
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getItemMediaTypeAllowed(data: $OpenApiTs['/umbraco/management/api/v1/item/media-type/allowed']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media-type/allowed']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/item/media-type/allowed',
+            query: {
+                fileExtension: data.fileExtension,
+                skip: data.skip,
+                take: data.take
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.take
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getItemMediaTypeFolders(data: $OpenApiTs['/umbraco/management/api/v1/item/media-type/folders']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media-type/folders']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/item/media-type/folders',
+            query: {
+                skip: data.skip,
+                take: data.take
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -3363,7 +3500,7 @@ export class MediaTypeService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMediaTypeSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/media-type/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media-type/search']['get']['res'][200]> {
@@ -3376,8 +3513,7 @@ export class MediaTypeService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -3407,7 +3543,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaTypeById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['get']['res'][200]> {
@@ -3428,7 +3564,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMediaTypeById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['delete']['res'][200]> {
@@ -3451,7 +3587,7 @@ export class MediaTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaTypeById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}']['put']['res'][200]> {
@@ -3478,7 +3614,7 @@ export class MediaTypeService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaTypeByIdAllowedChildren(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}/allowed-children']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}/allowed-children']['get']['res'][200]> {
@@ -3503,7 +3639,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaTypeByIdCompositionReferences(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}/composition-references']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}/composition-references']['get']['res'][200]> {
@@ -3551,8 +3687,55 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getMediaTypeByIdExport(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}/export']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}/export']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/media-type/{id}/export',
+            path: {
+                id: data.id
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static putMediaTypeByIdImport(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}/import']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}/import']['put']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/umbraco/management/api/v1/media-type/{id}/import',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            responseHeader: 'Umb-Notifications',
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaTypeByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/media-type/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/{id}/move']['put']['res'][200]> {
@@ -3578,7 +3761,7 @@ export class MediaTypeService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaTypeAllowedAtRoot(data: $OpenApiTs['/umbraco/management/api/v1/media-type/allowed-at-root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/allowed-at-root']['get']['res'][200]> {
@@ -3599,7 +3782,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postMediaTypeAvailableCompositions(data: $OpenApiTs['/umbraco/management/api/v1/media-type/available-compositions']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/available-compositions']['post']['res'][200]> {
@@ -3640,7 +3823,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['get']['res'][200]> {
@@ -3661,7 +3844,7 @@ export class MediaTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMediaTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['delete']['res'][200]> {
@@ -3685,7 +3868,7 @@ export class MediaTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaTypeFolderById(data: $OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/folder/{id}']['put']['res'][200]> {
@@ -3709,8 +3892,30 @@ export class MediaTypeService {
     
     /**
      * @param data The data for the request.
+     * @param data.requestBody
+     * @returns string Created
+     * @throws ApiError
+     */
+    public static postMediaTypeImport(data: $OpenApiTs['/umbraco/management/api/v1/media-type/import']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media-type/import']['post']['res'][201]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/umbraco/management/api/v1/media-type/import',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            responseHeader: 'Umb-Generated-Resource',
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaTypeAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/media-type/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media-type/ancestors']['get']['res'][200]> {
@@ -3733,7 +3938,7 @@ export class MediaTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaTypeChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/media-type/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media-type/children']['get']['res'][200]> {
@@ -3758,7 +3963,7 @@ export class MediaTypeService {
      * @param data.skip
      * @param data.take
      * @param data.foldersOnly
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaTypeRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/media-type/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media-type/root']['get']['res'][200]> {
@@ -3789,7 +3994,7 @@ export class MediaService {
      * @param data.filter
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getCollectionMedia(data: $OpenApiTs['/umbraco/management/api/v1/collection/media']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/collection/media']['get']['res'][200]> {
@@ -3817,7 +4022,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMedia(data: $OpenApiTs['/umbraco/management/api/v1/item/media']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media']['get']['res'][200]> {
@@ -3828,8 +4033,7 @@ export class MediaService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -3839,7 +4043,7 @@ export class MediaService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMediaSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/media/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/media/search']['get']['res'][200]> {
@@ -3852,8 +4056,7 @@ export class MediaService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -3883,7 +4086,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaById(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}']['get']['res'][200]> {
@@ -3904,7 +4107,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMediaById(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}']['delete']['res'][200]> {
@@ -3928,7 +4131,7 @@ export class MediaService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaById(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}']['put']['res'][200]> {
@@ -3953,8 +4156,38 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @param data.orderDirection
+     * @param data.sinceDate
+     * @param data.skip
+     * @param data.take
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getMediaByIdAuditLog(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/audit-log']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/audit-log']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/media/{id}/audit-log',
+            path: {
+                id: data.id
+            },
+            query: {
+                orderDirection: data.orderDirection,
+                sinceDate: data.sinceDate,
+                skip: data.skip,
+                take: data.take
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaByIdMove(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/move']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/move']['put']['res'][200]> {
@@ -3978,7 +4211,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaByIdMoveToRecycleBin(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/move-to-recycle-bin']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/move-to-recycle-bin']['put']['res'][200]> {
@@ -4003,7 +4236,7 @@ export class MediaService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaByIdReferencedBy(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/referenced-by']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/referenced-by']['get']['res'][200]> {
@@ -4029,7 +4262,7 @@ export class MediaService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaByIdReferencedDescendants(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/referenced-descendants']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/referenced-descendants']['get']['res'][200]> {
@@ -4054,7 +4287,7 @@ export class MediaService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaByIdValidate(data: $OpenApiTs['/umbraco/management/api/v1/media/{id}/validate']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/{id}/validate']['put']['res'][200]> {
@@ -4081,7 +4314,7 @@ export class MediaService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaAreReferenced(data: $OpenApiTs['/umbraco/management/api/v1/media/are-referenced']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/are-referenced']['get']['res'][200]> {
@@ -4101,7 +4334,7 @@ export class MediaService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/configuration']['get']['res'][200]> {
@@ -4118,7 +4351,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMediaSort(data: $OpenApiTs['/umbraco/management/api/v1/media/sort']['put']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/sort']['put']['res'][200]> {
@@ -4140,7 +4373,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMediaUrls(data: $OpenApiTs['/umbraco/management/api/v1/media/urls']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/urls']['get']['res'][200]> {
@@ -4160,7 +4393,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postMediaValidate(data: $OpenApiTs['/umbraco/management/api/v1/media/validate']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/media/validate']['post']['res'][200]> {
@@ -4180,7 +4413,7 @@ export class MediaService {
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteRecycleBinMedia(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media']['delete']['res'][200]> {
@@ -4199,7 +4432,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteRecycleBinMediaById(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}']['delete']['res'][200]> {
@@ -4222,7 +4455,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinMediaByIdOriginalParent(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}/original-parent']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}/original-parent']['get']['res'][200]> {
@@ -4245,7 +4478,7 @@ export class MediaService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putRecycleBinMediaByIdRestore(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}/restore']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/{id}/restore']['put']['res'][200]> {
@@ -4272,7 +4505,7 @@ export class MediaService {
      * @param data.parentId
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinMediaChildren(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/children']['get']['res'][200]> {
@@ -4295,7 +4528,7 @@ export class MediaService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRecycleBinMediaRoot(data: $OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/recycle-bin/media/root']['get']['res'][200]> {
@@ -4316,7 +4549,7 @@ export class MediaService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/media/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media/ancestors']['get']['res'][200]> {
@@ -4339,7 +4572,7 @@ export class MediaService {
      * @param data.skip
      * @param data.take
      * @param data.dataTypeId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/media/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media/children']['get']['res'][200]> {
@@ -4364,7 +4597,7 @@ export class MediaService {
      * @param data.skip
      * @param data.take
      * @param data.dataTypeId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMediaRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/media/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/media/root']['get']['res'][200]> {
@@ -4389,7 +4622,7 @@ export class MemberGroupService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMemberGroup(data: $OpenApiTs['/umbraco/management/api/v1/item/member-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/member-group']['get']['res'][200]> {
@@ -4400,8 +4633,7 @@ export class MemberGroupService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -4410,7 +4642,7 @@ export class MemberGroupService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberGroup(data: $OpenApiTs['/umbraco/management/api/v1/member-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-group']['get']['res'][200]> {
@@ -4452,7 +4684,7 @@ export class MemberGroupService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberGroupById(data: $OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['get']['res'][200]> {
@@ -4473,7 +4705,7 @@ export class MemberGroupService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMemberGroupById(data: $OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['delete']['res'][200]> {
@@ -4497,7 +4729,7 @@ export class MemberGroupService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMemberGroupById(data: $OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-group/{id}']['put']['res'][200]> {
@@ -4523,7 +4755,7 @@ export class MemberGroupService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMemberGroupRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/member-group/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/member-group/root']['get']['res'][200]> {
@@ -4547,7 +4779,7 @@ export class MemberTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMemberType(data: $OpenApiTs['/umbraco/management/api/v1/item/member-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/member-type']['get']['res'][200]> {
@@ -4558,8 +4790,7 @@ export class MemberTypeService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -4569,7 +4800,7 @@ export class MemberTypeService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMemberTypeSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/member-type/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/member-type/search']['get']['res'][200]> {
@@ -4582,8 +4813,7 @@ export class MemberTypeService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -4613,7 +4843,7 @@ export class MemberTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberTypeById(data: $OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['get']['res'][200]> {
@@ -4634,7 +4864,7 @@ export class MemberTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMemberTypeById(data: $OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['delete']['res'][200]> {
@@ -4657,7 +4887,7 @@ export class MemberTypeService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMemberTypeById(data: $OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-type/{id}']['put']['res'][200]> {
@@ -4682,7 +4912,7 @@ export class MemberTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberTypeByIdCompositionReferences(data: $OpenApiTs['/umbraco/management/api/v1/member-type/{id}/composition-references']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-type/{id}/composition-references']['get']['res'][200]> {
@@ -4727,7 +4957,7 @@ export class MemberTypeService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postMemberTypeAvailableCompositions(data: $OpenApiTs['/umbraco/management/api/v1/member-type/available-compositions']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member-type/available-compositions']['post']['res'][200]> {
@@ -4747,7 +4977,7 @@ export class MemberTypeService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeMemberTypeRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/member-type/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/member-type/root']['get']['res'][200]> {
@@ -4779,7 +5009,7 @@ export class MemberService {
      * @param data.filter
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getFilterMember(data: $OpenApiTs['/umbraco/management/api/v1/filter/member']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/filter/member']['get']['res'][200]> {
@@ -4808,7 +5038,7 @@ export class MemberService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMember(data: $OpenApiTs['/umbraco/management/api/v1/item/member']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/member']['get']['res'][200]> {
@@ -4819,8 +5049,7 @@ export class MemberService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -4830,7 +5059,7 @@ export class MemberService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemMemberSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/member/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/member/search']['get']['res'][200]> {
@@ -4843,8 +5072,7 @@ export class MemberService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -4874,7 +5102,7 @@ export class MemberService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberById(data: $OpenApiTs['/umbraco/management/api/v1/member/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/{id}']['get']['res'][200]> {
@@ -4895,7 +5123,7 @@ export class MemberService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteMemberById(data: $OpenApiTs['/umbraco/management/api/v1/member/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/{id}']['delete']['res'][200]> {
@@ -4919,7 +5147,7 @@ export class MemberService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMemberById(data: $OpenApiTs['/umbraco/management/api/v1/member/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/{id}']['put']['res'][200]> {
@@ -4945,7 +5173,7 @@ export class MemberService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putMemberByIdValidate(data: $OpenApiTs['/umbraco/management/api/v1/member/{id}/validate']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/{id}/validate']['put']['res'][200]> {
@@ -4968,7 +5196,7 @@ export class MemberService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getMemberConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/configuration']['get']['res'][200]> {
@@ -4985,7 +5213,7 @@ export class MemberService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postMemberValidate(data: $OpenApiTs['/umbraco/management/api/v1/member/validate']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/member/validate']['post']['res'][200]> {
@@ -5008,7 +5236,7 @@ export class MemberService {
 
 export class ModelsBuilderService {
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postModelsBuilderBuild(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/models-builder/build']['post']['res'][200]> {
@@ -5019,13 +5247,13 @@ export class ModelsBuilderService {
             errors: {
                 401: 'The resource is protected and requires an authentication token',
                 403: 'The authenticated user do not have access to this resource',
-                428: 'Client Error'
+                428: 'Precondition Required'
             }
         });
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getModelsBuilderDashboard(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/models-builder/dashboard']['get']['res'][200]> {
@@ -5040,7 +5268,7 @@ export class ModelsBuilderService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getModelsBuilderStatus(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/models-builder/status']['get']['res'][200]> {
@@ -5061,7 +5289,7 @@ export class ObjectTypesService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getObjectTypes(data: $OpenApiTs['/umbraco/management/api/v1/object-types']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/object-types']['get']['res'][200]> {
@@ -5080,11 +5308,38 @@ export class ObjectTypesService {
     
 }
 
+export class OEmbedService {
+    /**
+     * @param data The data for the request.
+     * @param data.url
+     * @param data.maxWidth
+     * @param data.maxHeight
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getOembedQuery(data: $OpenApiTs['/umbraco/management/api/v1/oembed/query']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/oembed/query']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/oembed/query',
+            query: {
+                url: data.url,
+                maxWidth: data.maxWidth,
+                maxHeight: data.maxHeight
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource'
+            }
+        });
+    }
+    
+}
+
 export class PackageService {
     /**
      * @param data The data for the request.
      * @param data.name
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postPackageByNameRunMigration(data: $OpenApiTs['/umbraco/management/api/v1/package/{name}/run-migration']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/{name}/run-migration']['post']['res'][200]> {
@@ -5105,7 +5360,7 @@ export class PackageService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPackageConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/configuration']['get']['res'][200]> {
@@ -5123,7 +5378,7 @@ export class PackageService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPackageCreated(data: $OpenApiTs['/umbraco/management/api/v1/package/created']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/created']['get']['res'][200]> {
@@ -5166,7 +5421,7 @@ export class PackageService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPackageCreatedById(data: $OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['get']['res'][200]> {
@@ -5187,7 +5442,7 @@ export class PackageService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deletePackageCreatedById(data: $OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['delete']['res'][200]> {
@@ -5210,7 +5465,7 @@ export class PackageService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putPackageCreatedById(data: $OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/created/{id}']['put']['res'][200]> {
@@ -5234,7 +5489,7 @@ export class PackageService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPackageCreatedByIdDownload(data: $OpenApiTs['/umbraco/management/api/v1/package/created/{id}/download']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/created/{id}/download']['get']['res'][200]> {
@@ -5256,7 +5511,7 @@ export class PackageService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPackageMigrationStatus(data: $OpenApiTs['/umbraco/management/api/v1/package/migration-status']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/package/migration-status']['get']['res'][200]> {
@@ -5280,7 +5535,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemPartialView(data: $OpenApiTs['/umbraco/management/api/v1/item/partial-view']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/partial-view']['get']['res'][200]> {
@@ -5291,8 +5546,7 @@ export class PartialViewService {
                 path: data.path
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -5322,7 +5576,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPartialViewByPath(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['get']['res'][200]> {
@@ -5343,7 +5597,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deletePartialViewByPath(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['delete']['res'][200]> {
@@ -5367,7 +5621,7 @@ export class PartialViewService {
      * @param data The data for the request.
      * @param data.path
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putPartialViewByPath(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/{path}']['put']['res'][200]> {
@@ -5440,7 +5694,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPartialViewFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/folder/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/folder/{path}']['get']['res'][200]> {
@@ -5461,7 +5715,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deletePartialViewFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/folder/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/folder/{path}']['delete']['res'][200]> {
@@ -5485,7 +5739,7 @@ export class PartialViewService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPartialViewSnippet(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/snippet']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/snippet']['get']['res'][200]> {
@@ -5506,7 +5760,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getPartialViewSnippetById(data: $OpenApiTs['/umbraco/management/api/v1/partial-view/snippet/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/partial-view/snippet/{id}']['get']['res'][200]> {
@@ -5527,7 +5781,7 @@ export class PartialViewService {
     /**
      * @param data The data for the request.
      * @param data.descendantPath
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreePartialViewAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/partial-view/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/partial-view/ancestors']['get']['res'][200]> {
@@ -5549,7 +5803,7 @@ export class PartialViewService {
      * @param data.parentPath
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreePartialViewChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/partial-view/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/partial-view/children']['get']['res'][200]> {
@@ -5572,7 +5826,7 @@ export class PartialViewService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreePartialViewRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/partial-view/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/partial-view/root']['get']['res'][200]> {
@@ -5594,22 +5848,19 @@ export class PartialViewService {
 
 export class PreviewService {
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deletePreview(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/preview']['delete']['res'][200]> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/umbraco/management/api/v1/preview',
-            responseHeader: 'Umb-Notifications',
-            errors: {
-                401: 'The resource is protected and requires an authentication token'
-            }
+            responseHeader: 'Umb-Notifications'
         });
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postPreview(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/preview']['post']['res'][200]> {
@@ -5627,7 +5878,7 @@ export class PreviewService {
 
 export class ProfilingService {
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getProfilingStatus(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/profiling/status']['get']['res'][200]> {
@@ -5644,7 +5895,7 @@ export class ProfilingService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putProfilingStatus(data: $OpenApiTs['/umbraco/management/api/v1/profiling/status']['put']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/profiling/status']['put']['res'][200]> {
@@ -5668,7 +5919,7 @@ export class PropertyTypeService {
      * @param data The data for the request.
      * @param data.contentTypeId
      * @param data.propertyAlias
-     * @returns boolean Success
+     * @returns boolean OK
      * @throws ApiError
      */
     public static getPropertyTypeIsUsed(data: $OpenApiTs['/umbraco/management/api/v1/property-type/is-used']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/property-type/is-used']['get']['res'][200]> {
@@ -5691,7 +5942,7 @@ export class PropertyTypeService {
 
 export class PublishedCacheService {
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postPublishedCacheCollect(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/published-cache/collect']['post']['res'][200]> {
@@ -5706,7 +5957,7 @@ export class PublishedCacheService {
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postPublishedCacheRebuild(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/published-cache/rebuild']['post']['res'][200]> {
@@ -5721,7 +5972,7 @@ export class PublishedCacheService {
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postPublishedCacheReload(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/published-cache/reload']['post']['res'][200]> {
@@ -5736,7 +5987,7 @@ export class PublishedCacheService {
     }
     
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static getPublishedCacheStatus(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/published-cache/status']['get']['res'][200]> {
@@ -5757,7 +6008,7 @@ export class RedirectManagementService {
      * @param data.filter
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRedirectManagement(data: $OpenApiTs['/umbraco/management/api/v1/redirect-management']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/redirect-management']['get']['res'][200]> {
@@ -5782,7 +6033,7 @@ export class RedirectManagementService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRedirectManagementById(data: $OpenApiTs['/umbraco/management/api/v1/redirect-management/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/redirect-management/{id}']['get']['res'][200]> {
@@ -5806,7 +6057,7 @@ export class RedirectManagementService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteRedirectManagementById(data: $OpenApiTs['/umbraco/management/api/v1/redirect-management/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/redirect-management/{id}']['delete']['res'][200]> {
@@ -5825,7 +6076,7 @@ export class RedirectManagementService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRedirectManagementStatus(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/redirect-management/status']['get']['res'][200]> {
@@ -5842,7 +6093,7 @@ export class RedirectManagementService {
     /**
      * @param data The data for the request.
      * @param data.status
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postRedirectManagementStatus(data: $OpenApiTs['/umbraco/management/api/v1/redirect-management/status']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/redirect-management/status']['post']['res'][200]> {
@@ -5866,7 +6117,7 @@ export class RelationTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemRelationType(data: $OpenApiTs['/umbraco/management/api/v1/item/relation-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/relation-type']['get']['res'][200]> {
@@ -5877,8 +6128,7 @@ export class RelationTypeService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -5887,7 +6137,7 @@ export class RelationTypeService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRelationType(data: $OpenApiTs['/umbraco/management/api/v1/relation-type']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/relation-type']['get']['res'][200]> {
@@ -5908,7 +6158,7 @@ export class RelationTypeService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRelationTypeById(data: $OpenApiTs['/umbraco/management/api/v1/relation-type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/relation-type/{id}']['get']['res'][200]> {
@@ -5934,7 +6184,7 @@ export class RelationService {
      * @param data.id
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getRelationTypeById(data: $OpenApiTs['/umbraco/management/api/v1/relation/type/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/relation/type/{id}']['get']['res'][200]> {
@@ -5962,7 +6212,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemScript(data: $OpenApiTs['/umbraco/management/api/v1/item/script']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/script']['get']['res'][200]> {
@@ -5973,8 +6223,7 @@ export class ScriptService {
                 path: data.path
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -6004,7 +6253,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getScriptByPath(data: $OpenApiTs['/umbraco/management/api/v1/script/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/script/{path}']['get']['res'][200]> {
@@ -6025,7 +6274,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteScriptByPath(data: $OpenApiTs['/umbraco/management/api/v1/script/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/script/{path}']['delete']['res'][200]> {
@@ -6049,7 +6298,7 @@ export class ScriptService {
      * @param data The data for the request.
      * @param data.path
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putScriptByPath(data: $OpenApiTs['/umbraco/management/api/v1/script/{path}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/script/{path}']['put']['res'][200]> {
@@ -6122,7 +6371,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getScriptFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/script/folder/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/script/folder/{path}']['get']['res'][200]> {
@@ -6143,7 +6392,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteScriptFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/script/folder/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/script/folder/{path}']['delete']['res'][200]> {
@@ -6166,7 +6415,7 @@ export class ScriptService {
     /**
      * @param data The data for the request.
      * @param data.descendantPath
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeScriptAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/script/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/script/ancestors']['get']['res'][200]> {
@@ -6188,7 +6437,7 @@ export class ScriptService {
      * @param data.parentPath
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeScriptChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/script/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/script/children']['get']['res'][200]> {
@@ -6211,7 +6460,7 @@ export class ScriptService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeScriptRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/script/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/script/root']['get']['res'][200]> {
@@ -6236,7 +6485,7 @@ export class SearcherService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getSearcher(data: $OpenApiTs['/umbraco/management/api/v1/searcher']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/searcher']['get']['res'][200]> {
@@ -6259,7 +6508,7 @@ export class SearcherService {
      * @param data.term
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getSearcherBySearcherNameQuery(data: $OpenApiTs['/umbraco/management/api/v1/searcher/{searcherName}/query']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/searcher/{searcherName}/query']['get']['res'][200]> {
@@ -6285,7 +6534,7 @@ export class SearcherService {
 
 export class SecurityService {
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getSecurityConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/security/configuration']['get']['res'][200]> {
@@ -6302,7 +6551,7 @@ export class SecurityService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postSecurityForgotPassword(data: $OpenApiTs['/umbraco/management/api/v1/security/forgot-password']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/security/forgot-password']['post']['res'][200]> {
@@ -6345,7 +6594,7 @@ export class SecurityService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postSecurityForgotPasswordVerify(data: $OpenApiTs['/umbraco/management/api/v1/security/forgot-password/verify']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/security/forgot-password/verify']['post']['res'][200]> {
@@ -6368,7 +6617,7 @@ export class SegmentService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getSegment(data: $OpenApiTs['/umbraco/management/api/v1/segment']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/segment']['get']['res'][200]> {
@@ -6391,7 +6640,7 @@ export class SegmentService {
 
 export class ServerService {
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getServerConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/server/configuration']['get']['res'][200]> {
@@ -6405,7 +6654,7 @@ export class ServerService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getServerInformation(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/server/information']['get']['res'][200]> {
@@ -6419,7 +6668,7 @@ export class ServerService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getServerStatus(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/server/status']['get']['res'][200]> {
@@ -6433,7 +6682,7 @@ export class ServerService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getServerTroubleshooting(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/server/troubleshooting']['get']['res'][200]> {
@@ -6452,7 +6701,7 @@ export class StaticFileService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemStaticFile(data: $OpenApiTs['/umbraco/management/api/v1/item/static-file']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/static-file']['get']['res'][200]> {
@@ -6471,7 +6720,7 @@ export class StaticFileService {
     /**
      * @param data The data for the request.
      * @param data.descendantPath
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStaticFileAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/static-file/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/static-file/ancestors']['get']['res'][200]> {
@@ -6492,7 +6741,7 @@ export class StaticFileService {
      * @param data.parentPath
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStaticFileChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/static-file/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/static-file/children']['get']['res'][200]> {
@@ -6514,7 +6763,7 @@ export class StaticFileService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStaticFileRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/static-file/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/static-file/root']['get']['res'][200]> {
@@ -6537,7 +6786,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemStylesheet(data: $OpenApiTs['/umbraco/management/api/v1/item/stylesheet']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/stylesheet']['get']['res'][200]> {
@@ -6548,8 +6797,7 @@ export class StylesheetService {
                 path: data.path
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -6579,7 +6827,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getStylesheetByPath(data: $OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['get']['res'][200]> {
@@ -6600,7 +6848,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteStylesheetByPath(data: $OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['delete']['res'][200]> {
@@ -6624,7 +6872,7 @@ export class StylesheetService {
      * @param data The data for the request.
      * @param data.path
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putStylesheetByPath(data: $OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/stylesheet/{path}']['put']['res'][200]> {
@@ -6697,7 +6945,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getStylesheetFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/stylesheet/folder/{path}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/stylesheet/folder/{path}']['get']['res'][200]> {
@@ -6718,7 +6966,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.path
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteStylesheetFolderByPath(data: $OpenApiTs['/umbraco/management/api/v1/stylesheet/folder/{path}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/stylesheet/folder/{path}']['delete']['res'][200]> {
@@ -6741,7 +6989,7 @@ export class StylesheetService {
     /**
      * @param data The data for the request.
      * @param data.descendantPath
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStylesheetAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/ancestors']['get']['res'][200]> {
@@ -6763,7 +7011,7 @@ export class StylesheetService {
      * @param data.parentPath
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStylesheetChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/children']['get']['res'][200]> {
@@ -6786,7 +7034,7 @@ export class StylesheetService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeStylesheetRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/stylesheet/root']['get']['res'][200]> {
@@ -6814,7 +7062,7 @@ export class TagService {
      * @param data.culture
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTag(data: $OpenApiTs['/umbraco/management/api/v1/tag']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tag']['get']['res'][200]> {
@@ -6841,7 +7089,7 @@ export class TelemetryService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTelemetry(data: $OpenApiTs['/umbraco/management/api/v1/telemetry']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/telemetry']['get']['res'][200]> {
@@ -6860,7 +7108,7 @@ export class TelemetryService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTelemetryLevel(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/telemetry/level']['get']['res'][200]> {
@@ -6877,7 +7125,7 @@ export class TelemetryService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postTelemetryLevel(data: $OpenApiTs['/umbraco/management/api/v1/telemetry/level']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/telemetry/level']['post']['res'][200]> {
@@ -6901,7 +7149,7 @@ export class TemplateService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemTemplate(data: $OpenApiTs['/umbraco/management/api/v1/item/template']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/template']['get']['res'][200]> {
@@ -6912,8 +7160,7 @@ export class TemplateService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -6923,7 +7170,7 @@ export class TemplateService {
      * @param data.query
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemTemplateSearch(data: $OpenApiTs['/umbraco/management/api/v1/item/template/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/template/search']['get']['res'][200]> {
@@ -6936,8 +7183,7 @@ export class TemplateService {
                 take: data.take
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -6967,7 +7213,7 @@ export class TemplateService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTemplateById(data: $OpenApiTs['/umbraco/management/api/v1/template/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/{id}']['get']['res'][200]> {
@@ -6988,7 +7234,7 @@ export class TemplateService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteTemplateById(data: $OpenApiTs['/umbraco/management/api/v1/template/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/{id}']['delete']['res'][200]> {
@@ -7012,7 +7258,7 @@ export class TemplateService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putTemplateById(data: $OpenApiTs['/umbraco/management/api/v1/template/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/{id}']['put']['res'][200]> {
@@ -7035,7 +7281,7 @@ export class TemplateService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTemplateConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/configuration']['get']['res'][200]> {
@@ -7052,7 +7298,7 @@ export class TemplateService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postTemplateQueryExecute(data: $OpenApiTs['/umbraco/management/api/v1/template/query/execute']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/query/execute']['post']['res'][200]> {
@@ -7069,7 +7315,7 @@ export class TemplateService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTemplateQuerySettings(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/template/query/settings']['get']['res'][200]> {
@@ -7086,7 +7332,7 @@ export class TemplateService {
     /**
      * @param data The data for the request.
      * @param data.descendantId
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeTemplateAncestors(data: $OpenApiTs['/umbraco/management/api/v1/tree/template/ancestors']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/template/ancestors']['get']['res'][200]> {
@@ -7108,7 +7354,7 @@ export class TemplateService {
      * @param data.parentId
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeTemplateChildren(data: $OpenApiTs['/umbraco/management/api/v1/tree/template/children']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/template/children']['get']['res'][200]> {
@@ -7131,7 +7377,7 @@ export class TemplateService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTreeTemplateRoot(data: $OpenApiTs['/umbraco/management/api/v1/tree/template/root']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/tree/template/root']['get']['res'][200]> {
@@ -7175,7 +7421,7 @@ export class TemporaryFileService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTemporaryFileById(data: $OpenApiTs['/umbraco/management/api/v1/temporary-file/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/temporary-file/{id}']['get']['res'][200]> {
@@ -7196,7 +7442,7 @@ export class TemporaryFileService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteTemporaryFileById(data: $OpenApiTs['/umbraco/management/api/v1/temporary-file/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/temporary-file/{id}']['delete']['res'][200]> {
@@ -7216,7 +7462,7 @@ export class TemporaryFileService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getTemporaryFileConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/temporary-file/configuration']['get']['res'][200]> {
@@ -7233,7 +7479,7 @@ export class TemporaryFileService {
 
 export class UpgradeService {
     /**
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUpgradeAuthorize(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/upgrade/authorize']['post']['res'][200]> {
@@ -7244,14 +7490,14 @@ export class UpgradeService {
             errors: {
                 401: 'The resource is protected and requires an authentication token',
                 403: 'The authenticated user do not have access to this resource',
-                428: 'Client Error',
-                500: 'Server Error'
+                428: 'Precondition Required',
+                500: 'Internal Server Error'
             }
         });
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUpgradeSettings(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/upgrade/settings']['get']['res'][200]> {
@@ -7261,7 +7507,7 @@ export class UpgradeService {
             errors: {
                 401: 'The resource is protected and requires an authentication token',
                 403: 'The authenticated user do not have access to this resource',
-                428: 'Client Error'
+                428: 'Precondition Required'
             }
         });
     }
@@ -7296,7 +7542,7 @@ export class UserDataService {
      * @param data.identifiers
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserData(data: $OpenApiTs['/umbraco/management/api/v1/user-data']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-data']['get']['res'][200]> {
@@ -7318,7 +7564,7 @@ export class UserDataService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putUserData(data: $OpenApiTs['/umbraco/management/api/v1/user-data']['put']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-data']['put']['res'][200]> {
@@ -7339,7 +7585,7 @@ export class UserDataService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserDataById(data: $OpenApiTs['/umbraco/management/api/v1/user-data/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-data/{id}']['get']['res'][200]> {
@@ -7361,8 +7607,34 @@ export class UserDataService {
 export class UserGroupService {
     /**
      * @param data The data for the request.
+     * @param data.skip
+     * @param data.take
+     * @param data.filter
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getFilterUserGroup(data: $OpenApiTs['/umbraco/management/api/v1/filter/user-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/filter/user-group']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/filter/user-group',
+            query: {
+                skip: data.skip,
+                take: data.take,
+                filter: data.filter
+            },
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemUserGroup(data: $OpenApiTs['/umbraco/management/api/v1/item/user-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/user-group']['get']['res'][200]> {
@@ -7373,8 +7645,7 @@ export class UserGroupService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -7382,7 +7653,7 @@ export class UserGroupService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserGroup(data: $OpenApiTs['/umbraco/management/api/v1/user-group']['delete']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group']['delete']['res'][200]> {
@@ -7425,7 +7696,7 @@ export class UserGroupService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserGroup(data: $OpenApiTs['/umbraco/management/api/v1/user-group']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group']['get']['res'][200]> {
@@ -7446,7 +7717,7 @@ export class UserGroupService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserGroupById(data: $OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['get']['res'][200]> {
@@ -7467,7 +7738,7 @@ export class UserGroupService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserGroupById(data: $OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['delete']['res'][200]> {
@@ -7490,7 +7761,7 @@ export class UserGroupService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putUserGroupById(data: $OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group/{id}']['put']['res'][200]> {
@@ -7515,7 +7786,7 @@ export class UserGroupService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserGroupByIdUsers(data: $OpenApiTs['/umbraco/management/api/v1/user-group/{id}/users']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group/{id}/users']['delete']['res'][200]> {
@@ -7540,7 +7811,7 @@ export class UserGroupService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserGroupByIdUsers(data: $OpenApiTs['/umbraco/management/api/v1/user-group/{id}/users']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user-group/{id}/users']['post']['res'][200]> {
@@ -7573,7 +7844,7 @@ export class UserService {
      * @param data.userGroupIds
      * @param data.userStates
      * @param data.filter
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getFilterUser(data: $OpenApiTs['/umbraco/management/api/v1/filter/user']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/filter/user']['get']['res'][200]> {
@@ -7601,7 +7872,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemUser(data: $OpenApiTs['/umbraco/management/api/v1/item/user']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/user']['get']['res'][200]> {
@@ -7612,8 +7883,7 @@ export class UserService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -7643,7 +7913,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUser(data: $OpenApiTs['/umbraco/management/api/v1/user']['delete']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user']['delete']['res'][200]> {
@@ -7665,7 +7935,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUser(data: $OpenApiTs['/umbraco/management/api/v1/user']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user']['get']['res'][200]> {
@@ -7687,7 +7957,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserById(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}']['get']['res'][200]> {
@@ -7708,7 +7978,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserById(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}']['delete']['res'][200]> {
@@ -7732,7 +8002,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putUserById(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}']['put']['res'][200]> {
@@ -7757,7 +8027,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserById2Fa(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}/2fa']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}/2fa']['get']['res'][200]> {
@@ -7779,7 +8049,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.id
      * @param data.providerName
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserById2FaByProviderName(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}/2fa/{providerName}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}/2fa/{providerName}']['delete']['res'][200]> {
@@ -7804,7 +8074,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserByIdChangePassword(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}/change-password']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}/change-password']['post']['res'][200]> {
@@ -7829,7 +8099,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postUserByIdResetPassword(data: $OpenApiTs['/umbraco/management/api/v1/user/{id}/reset-password']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/{id}/reset-password']['post']['res'][200]> {
@@ -7851,7 +8121,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserAvatarById(data: $OpenApiTs['/umbraco/management/api/v1/user/avatar/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/avatar/{id}']['delete']['res'][200]> {
@@ -7875,7 +8145,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserAvatarById(data: $OpenApiTs['/umbraco/management/api/v1/user/avatar/{id}']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/avatar/{id}']['post']['res'][200]> {
@@ -7898,7 +8168,7 @@ export class UserService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/configuration']['get']['res'][200]> {
@@ -7913,7 +8183,7 @@ export class UserService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrent(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current']['get']['res'][200]> {
@@ -7927,7 +8197,7 @@ export class UserService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrent2Fa(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/2fa']['get']['res'][200]> {
@@ -7944,7 +8214,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.providerName
      * @param data.code
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static deleteUserCurrent2FaByProviderName(data: $OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['delete']['res'][200]> {
@@ -7970,7 +8240,7 @@ export class UserService {
      * @param data The data for the request.
      * @param data.providerName
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postUserCurrent2FaByProviderName(data: $OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['post']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['post']['res'][200]> {
@@ -7993,7 +8263,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.providerName
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrent2FaByProviderName(data: $OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/2fa/{providerName}']['get']['res'][200]> {
@@ -8014,7 +8284,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserCurrentAvatar(data: $OpenApiTs['/umbraco/management/api/v1/user/current/avatar']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/avatar']['post']['res'][200]> {
@@ -8034,7 +8304,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserCurrentChangePassword(data: $OpenApiTs['/umbraco/management/api/v1/user/current/change-password']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/change-password']['post']['res'][200]> {
@@ -8052,7 +8322,7 @@ export class UserService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrentConfiguration(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/configuration']['get']['res'][200]> {
@@ -8067,13 +8337,13 @@ export class UserService {
     }
     
     /**
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
-    public static getUserCurrentLogins(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/logins']['get']['res'][200]> {
+    public static getUserCurrentLoginProviders(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/login-providers']['get']['res'][200]> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/umbraco/management/api/v1/user/current/logins',
+            url: '/umbraco/management/api/v1/user/current/login-providers',
             errors: {
                 401: 'The resource is protected and requires an authentication token'
             }
@@ -8083,7 +8353,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrentPermissions(data: $OpenApiTs['/umbraco/management/api/v1/user/current/permissions']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/permissions']['get']['res'][200]> {
@@ -8103,7 +8373,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrentPermissionsDocument(data: $OpenApiTs['/umbraco/management/api/v1/user/current/permissions/document']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/permissions/document']['get']['res'][200]> {
@@ -8123,7 +8393,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getUserCurrentPermissionsMedia(data: $OpenApiTs['/umbraco/management/api/v1/user/current/permissions/media']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/current/permissions/media']['get']['res'][200]> {
@@ -8143,7 +8413,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserDisable(data: $OpenApiTs['/umbraco/management/api/v1/user/disable']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/disable']['post']['res'][200]> {
@@ -8165,7 +8435,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserEnable(data: $OpenApiTs['/umbraco/management/api/v1/user/enable']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/enable']['post']['res'][200]> {
@@ -8209,7 +8479,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserInviteCreatePassword(data: $OpenApiTs['/umbraco/management/api/v1/user/invite/create-password']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/invite/create-password']['post']['res'][200]> {
@@ -8230,7 +8500,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserInviteResend(data: $OpenApiTs['/umbraco/management/api/v1/user/invite/resend']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/invite/resend']['post']['res'][200]> {
@@ -8252,7 +8522,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static postUserInviteVerify(data: $OpenApiTs['/umbraco/management/api/v1/user/invite/verify']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/invite/verify']['post']['res'][200]> {
@@ -8272,7 +8542,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserSetUserGroups(data: $OpenApiTs['/umbraco/management/api/v1/user/set-user-groups']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/set-user-groups']['post']['res'][200]> {
@@ -8292,7 +8562,7 @@ export class UserService {
     /**
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static postUserUnlock(data: $OpenApiTs['/umbraco/management/api/v1/user/unlock']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/user/unlock']['post']['res'][200]> {
@@ -8316,7 +8586,7 @@ export class WebhookService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getItemWebhook(data: $OpenApiTs['/umbraco/management/api/v1/item/webhook']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/item/webhook']['get']['res'][200]> {
@@ -8327,8 +8597,7 @@ export class WebhookService {
                 id: data.id
             },
             errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
@@ -8337,7 +8606,7 @@ export class WebhookService {
      * @param data The data for the request.
      * @param data.skip
      * @param data.take
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getWebhook(data: $OpenApiTs['/umbraco/management/api/v1/webhook']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook']['get']['res'][200]> {
@@ -8379,7 +8648,7 @@ export class WebhookService {
     /**
      * @param data The data for the request.
      * @param data.id
-     * @returns unknown Success
+     * @returns unknown OK
      * @throws ApiError
      */
     public static getWebhookById(data: $OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['get']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['get']['res'][200]> {
@@ -8399,8 +8668,31 @@ export class WebhookService {
     /**
      * @param data The data for the request.
      * @param data.id
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static deleteWebhookById(data: $OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['delete']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/umbraco/management/api/v1/webhook/{id}',
+            path: {
+                id: data.id
+            },
+            responseHeader: 'Umb-Notifications',
+            errors: {
+                400: 'Bad Request',
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.id
      * @param data.requestBody
-     * @returns string Success
+     * @returns string OK
      * @throws ApiError
      */
     public static putWebhookById(data: $OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['put']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['put']['res'][200]> {
@@ -8424,23 +8716,21 @@ export class WebhookService {
     
     /**
      * @param data The data for the request.
-     * @param data.id
-     * @returns string Success
+     * @param data.skip
+     * @param data.take
+     * @returns unknown OK
      * @throws ApiError
      */
-    public static deleteWebhookById(data: $OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['delete']['req']): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook/{id}']['delete']['res'][200]> {
+    public static getWebhookEvents(data: $OpenApiTs['/umbraco/management/api/v1/webhook/events']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/webhook/events']['get']['res'][200]> {
         return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/umbraco/management/api/v1/webhook/{id}',
-            path: {
-                id: data.id
+            method: 'GET',
+            url: '/umbraco/management/api/v1/webhook/events',
+            query: {
+                skip: data.skip,
+                take: data.take
             },
-            responseHeader: 'Umb-Notifications',
             errors: {
-                400: 'Bad Request',
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource',
-                404: 'Not Found'
+                401: 'The resource is protected and requires an authentication token'
             }
         });
     }
