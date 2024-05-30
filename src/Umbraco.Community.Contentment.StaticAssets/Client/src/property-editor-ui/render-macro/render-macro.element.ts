@@ -6,7 +6,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
-import '../../components/property-editor-ui/property-editor-ui.element.js';
+import '../../property-editor-ui/editor-notes/editor-notes.element.js';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-render-macro';
 
@@ -24,25 +24,23 @@ export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement
 		super.connectedCallback();
 
 		const json = JSON.stringify(this.config, null, 2);
-		const message = `
+		const markup = `
 <p><em>Support for Macros were deprecated in Umbraco 14. Please consider alternative functionality.</em></p>
-${json ? `<details><summary>JSON configuration</summary><pre><code>${json}</code></pre></details>` : ''}
+${json ? `<details><summary>Macro configuration</summary><umb-code-block copy>${json}</umb-code-block></details>` : ''}
     `;
 
 		this.#notesConfig = new UmbPropertyEditorConfigCollection([
 			{ alias: 'alertType', value: 'warning' },
 			{ alias: 'icon', value: 'icon-alert' },
 			{ alias: 'heading', value: 'Render Macro has been deprecated' },
-			{ alias: 'message', value: message },
+			{ alias: 'message', value: { markup } },
 		]);
 	}
 
 	render() {
 		return html`
-			<contentment-property-editor-ui
-				.config=${this.#notesConfig}
-				property-editor-ui-alias="Umb.Contentment.PropertyEditorUi.EditorNotes">
-			</contentment-property-editor-ui>
+			<contentment-property-editor-ui-editor-notes .config=${this.#notesConfig}>
+			</contentment-property-editor-ui-editor-notes>
 		`;
 	}
 }

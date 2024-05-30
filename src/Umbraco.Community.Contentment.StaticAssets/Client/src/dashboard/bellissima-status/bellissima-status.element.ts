@@ -15,12 +15,12 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 const elementName = 'umb-bellissima-status-dashboard-element';
 @customElement(elementName)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
-	#started = 12;
+	#started = 22;
 	#total = 63;
 	#percentage = Math.floor((this.#started / this.#total) * 100);
 
-	#editorNoteConfig = new UmbPropertyEditorConfigCollection([
-		{ alias: 'alertType', value: 'divider' },
+	#notesConfig = new UmbPropertyEditorConfigCollection([
+		{ alias: 'alertType', value: 'current' },
 		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha001' },
 		{ alias: 'icon', value: 'icon-contentment' },
 		{
@@ -29,8 +29,12 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 				markup: `
 <p>During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of progress on Contentment for Umbraco Bellissima.</p>
 <p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong> from stable releases.</p>
-<p>Development on <strong>${this.#started} of ${this.#total}</strong> UI components has been commenced; package migration is <strong>${this.#percentage}% complete</strong>.</p>
-<uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-palette-grey)"></uui-progress-bar>`,
+<p>Development on <strong>${this.#started} of ${
+					this.#total
+				}</strong> UI components has been commenced. Package migration is <strong>${
+					this.#percentage
+				}% complete</strong>.</p>
+<uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>`,
 			},
 		},
 	]);
@@ -42,6 +46,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 		':octocat:': '🐱',
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
+		':red_circle:': '🔴',
 		':warning:': '⚠️',
 	};
 
@@ -50,21 +55,21 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle: | **Bytes**           | **Done** | Implemented as standalone component, doesn't reuse Umbraco's Label editor. |
-| :green_circle:  | **Code Editor**     | **Started** | Property editor built; configuration needs more work. |
-| :no_entry_sign:  | Content Blocks  | _Pending_   | Considering dropping; potentially migrate to Block List? |
+| :green_circle:  | **Bytes**           | **Done** | Implemented as standalone component, doesn't reuse Umbraco's Label editor. |
+| :large_blue_circle:  | Code Editor     | _Started_ | Property editor built; configuration needs more work. |
+| :red_circle:  | Content Blocks  | _Undecided_   | :no_entry_sign: Considering dropping; potentially migrate to Block List? |
 | :green_circle: | **Data List**       | **Done** | Property-editor work is done, **BUT!** The data-type configuration depends on the internal **Configuration Editor**, which is still being worked on, _(see below)_. |
-| :grey_question: | Data Picker     | _Pending_   | I haven't thought about it yet. |
-| :large_blue_circle:  | **Editor Notes**    | **Started** | Property editor built; configuration needs more work. |
+| :large_blue_circle: | Data Picker     | _Started_   | A read-only placeholder editor is available. |
+| :large_blue_circle:  | Editor Notes    | _Started_ | Property editor built; configuration needs more work. |
 | :green_circle: | **Icon Picker**     | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
-| :grey_question: | List Items      | _Pending_   | I haven't thought about it yet. |
-| :large_blue_circle:  | **Notes**           | **Started** | Property editor built; configuration needs more work. |
-| :grey_question: | Number Input    | _Pending_   | I haven't thought about it yet. |
-| :green_circle:       | **Render Macro**    | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
-| :grey_question: | Social Links    | _Pending_   | I haven't thought about it yet. |
-| :thinking: | Templated Label | _Researching_   | Exploring alternative options. |
-| :grey_question: | Textbox List    | _Pending_   | I haven't thought about it yet. |
-| :grey_question: | Text Input      | _Pending_   | I haven't thought about it yet. |
+| :large_blue_circle: | List Items      | _Started_   | A read-only placeholder editor is available. |
+| :large_blue_circle:  | Notes           | _Started_ | Property editor built; configuration needs more work. |
+| :large_blue_circle: | Number Input    | _Started_   | A read-only placeholder editor is available. |
+| :green_circle:  | **Render Macro**    | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
+| :large_blue_circle: | Social Links    | _Started_   | A read-only placeholder editor is available. |
+| :large_blue_circle: | Templated Label | _Started_   | A read-only placeholder editor is available; I'm still researching the templating possibilities. |
+| :large_blue_circle: | Textbox List    | _Started_   | A read-only placeholder editor is available. |
+| :large_blue_circle: | Text Input      | _Started_   | A read-only placeholder editor is available. |
 
 ### Internal components
 
@@ -73,13 +78,13 @@ Status of components used internally within Contentment.
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
 | :grey_question: | Cascading Dropdown List | _Pending_ | I haven't thought about it yet. |
-| :large_blue_circle: | **Configuration Editor** | **Started** | This is the centrepiece of Contentment, there is **A LOT** of work to do here! |
+| :large_blue_circle: | **Configuration Editor** | _Started_ | This is the centrepiece of Contentment, there is **A LOT** of work to do here! |
 | :grey_question: | Content Picker | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Data Table | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Dictionary Picker | _Pending_ | I haven't thought about it yet. |
-| :no_entry_sign: | Macro Picker | _Pending_ | :no_entry_sign: Macros have been deprecated in Umbraco. |
-| :grey_question: | Read Only | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Rich Text Editor | _Pending_ | I haven't thought about it yet. |
+| :red_circle:    | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been deprecated in Umbraco. |
+| :grey_question: | Read Only | _Pending_ | This component was only used in the Content Block configuration, so may no longer be needed. |
+| :grey_question: | Rich Text Editor | _Pending_ | Hopefully, I can reuse Umbraco's RTE component again. |
 
 ### Data List editors
 
@@ -87,11 +92,11 @@ Status of list-editors used by the Data List editor.
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle: | Buttons | **Done** |  |
-| :green_circle: | Checkbox List | **Done** |  |
-| :green_circle: | Dropdown List | **Done** |  |
+| :green_circle: | **Buttons** | **Done** |  |
+| :green_circle: | **Checkbox List** | **Done** |  |
+| :green_circle: | **Dropdown List** | **Done** |  |
 | :grey_question: | Item Picker | _Pending_ | I haven't thought about it yet. |
-| :green_circle: | Radio Button List | **Done** |  |
+| :green_circle: | **Radio Button List** | **Done** |  |
 | :grey_question: | Tags | _Pending_ | I haven't thought about it yet. |
 | :thinking: | Templated List | _Researching_ | Exploring alternative options. |
 
@@ -159,7 +164,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 					this._markup,
 					() => html`
 						<contentment-property-editor-ui-editor-notes
-							.config=${this.#editorNoteConfig}></contentment-property-editor-ui-editor-notes>
+							.config=${this.#notesConfig}></contentment-property-editor-ui-editor-notes>
 						<uui-box>
 							<div class="gfm">${unsafeHTML(this._markup)}</div>
 						</uui-box>
