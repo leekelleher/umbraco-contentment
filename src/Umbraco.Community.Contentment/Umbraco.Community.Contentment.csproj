@@ -15,7 +15,7 @@
         <Version>6.0.0-alpha001</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
-        <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
+        <Copyright>$([System.DateTime]::Now.Year) Â© $(Company)</Copyright>
         <PackageId>Umbraco.Community.Contentment</PackageId>
         <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
@@ -39,9 +39,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="14.0.0-rc3" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="14.0.0-rc3" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0-rc3" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="14.0.0" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="14.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="14.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -60,8 +60,8 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
+    <!--<Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
         <Exec Command="npm run build" />
-    </Target>
+    </Target>-->
 
 </Project>
