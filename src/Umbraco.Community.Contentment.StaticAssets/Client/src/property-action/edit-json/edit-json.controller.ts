@@ -1,67 +1,52 @@
-// // SPDX-License-Identifier: MPL-2.0
-// // Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
 
-// import { html, customElement, property } from '@umbraco-cms/backoffice/external/lit';
-// import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-// import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-// import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
-// import type { UmbPropertyAction } from '@umbraco-cms/backoffice/property-action';
-// import type { UmbPropertyContext } from '@umbraco-cms/backoffice/property';
+import { customElement, property } from '@umbraco-cms/backoffice/external/lit';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyAction } from '@umbraco-cms/backoffice/property-action';
+import type { UmbPropertyContext } from '@umbraco-cms/backoffice/property';
 
-// @customElement('contentment-property-action-edit-json')
-// export class ContentmentPropertyActionEditJsonElement extends UmbPropertyAction {
-// 	// @property()
-// 	// value = '';
+@customElement('contentment-property-action-edit-json')
+export class ContentmentPropertyActionEditJsonElement extends UmbLitElement implements UmbPropertyAction {
+	@property()
+	value = '';
 
-// 	// args: any;
+	args: any;
 
-// 	// #propertyContext?: UmbPropertyContext;
+	#propertyContext?: UmbPropertyContext;
 
-// 	// constructor() {
-// 	// 	super();
+	constructor() {
+		super();
 
-// 	// 	this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext: UmbPropertyContext) => {
-// 	// 		this.#propertyContext = propertyContext;
-// 	// 	});
-// 	// }
+		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext: UmbPropertyContext) => {
+      console.log('UMB_PROPERTY_CONTEXT', propertyContext);
+			this.#propertyContext = propertyContext;
+		});
+	}
 
-// 	// public getHref(): Promise<string | undefined> {
-// 	// 	return Promise.resolve(undefined);
-// 	// }
+	getHref(): Promise<string | undefined> {
+		return Promise.resolve(undefined);
+	}
 
-// 	// public execute(): Promise<void> {
-// 	// 	return Promise.resolve();
-// 	// }
+	execute(): Promise<void> {
+		console.log('execute', this.#propertyContext);
 
-// 	// #onClick() {
-// 	// 	this.#editValue();
+		const value = this.#propertyContext?.getValue();
+		console.log('execute.value', value);
 
-// 	// 	// TODO: [LK] Find out how to close the property-action menu.
-// 	// 	this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
-// 	// }
+		this.#propertyContext?.setValue('value3');
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 
-// 	// #editValue() {
-// 	// 	// TODO: [LK] Wire up the modal for editing the JSON value.
+		return Promise.resolve();
+	}
+}
 
-// 	// 	const value = this.#propertyContext?.getValue();
-// 	// 	console.log('#editValue', [value, this.#propertyContext?.getValue()]);
+export default ContentmentPropertyActionEditJsonElement;
 
-// 	// 	this.dispatchEvent(new UmbPropertyValueChangeEvent());
-// 	// }
-
-// 	// render() {
-// 	// 	return html`
-// 	// 		<uui-menu-item label="Edit raw value" @click-label="${this.#onClick}">
-// 	// 			<uui-icon slot="icon" name="icon-brackets"></uui-icon>
-// 	// 		</uui-menu-item>
-// 	// 	`;
-// 	// }
-// }
-
-// export default ContentmentPropertyActionEditJsonElement;
-
-// declare global {
-// 	interface HTMLElementTagNameMap {
-// 		'contentment-property-action-edit-json': ContentmentPropertyActionEditJsonElement;
-// 	}
-// }
+declare global {
+	interface HTMLElementTagNameMap {
+		'contentment-property-action-edit-json': ContentmentPropertyActionEditJsonElement;
+	}
+}

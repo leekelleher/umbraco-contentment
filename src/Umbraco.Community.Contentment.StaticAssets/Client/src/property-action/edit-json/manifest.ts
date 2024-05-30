@@ -8,9 +8,10 @@ export const manifest: ManifestPropertyAction = {
 	kind: 'default',
 	alias: 'Umb.Contentment.PropertyAction.EditJson',
 	name: '[Contentment] Edit JSON Property Action',
-	//api: () => import('./edit-json.controller.js'),
+	api: () => import('./edit-json.controller.js'),
 	forPropertyEditorUis: [
 		'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+		'Umb.Contentment.PropertyEditorUi.CodeEditor',
 		'Umb.Contentment.PropertyEditorUi.DataList',
 		'Umb.Contentment.PropertyEditorUi.EditorNotes',
 		'Umb.Contentment.PropertyEditorUi.Notes',
