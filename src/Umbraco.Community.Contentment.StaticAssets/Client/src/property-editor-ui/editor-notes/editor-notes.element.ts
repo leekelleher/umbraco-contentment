@@ -30,7 +30,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		this.#alertType = config.getValueByAlias('alertType');
+		this.#alertType = config.getValueByAlias('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
 		this.#message = (config.getValueByAlias('message') as unknown as any).markup;
@@ -88,6 +88,10 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 
 				padding: 1rem;
 			}
+
+      #note  > div {
+        flex: 1;
+      }
 
 			umb-icon {
 				font-size: 3rem;

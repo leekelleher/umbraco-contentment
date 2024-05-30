@@ -21,10 +21,7 @@ type ContentmentDataListButtonOption = ContentmentDataListItem & { selected: boo
 const ELEMENT_NAME = 'contentment-property-editor-ui-buttons';
 
 @customElement(ELEMENT_NAME)
-export class ContentmentPropertyEditorUIButtonsElement
-	extends UmbLitElement
-	implements UmbPropertyEditorUiElement
-{
+export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) ? value : value ? [value] : [];
@@ -59,14 +56,14 @@ export class ContentmentPropertyEditorUIButtonsElement
 	@state()
 	private _size: 's' | 'm' | 'l' = 'm';
 
-	#onClick(item: ContentmentDataListButtonOption) {
-		item.selected = !item.selected;
+	#onClick(option: ContentmentDataListButtonOption) {
+		option.selected = !option.selected;
 
 		const values: Array<string> = [];
 
 		this._items.forEach((item) => {
 			if (!this._enableMultiple) {
-				item.selected = item.value === item.value;
+				item.selected = item.value === option.value;
 			}
 
 			if (item.selected) {
@@ -146,7 +143,7 @@ export class ContentmentPropertyEditorUIButtonsElement
 	];
 }
 
-export {ContentmentPropertyEditorUIButtonsElement as element};
+export { ContentmentPropertyEditorUIButtonsElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {

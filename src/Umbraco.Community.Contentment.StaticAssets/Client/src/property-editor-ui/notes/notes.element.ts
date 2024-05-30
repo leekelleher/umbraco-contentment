@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import { customElement, property, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, property, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
@@ -21,7 +21,8 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		this.#notes = (config.getValueByAlias('notes') as unknown as any).markup;
+		const notes = config.getValueByAlias('notes');
+		this.#notes = typeof notes === 'string' ? notes : (notes as unknown as any).markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 	}
 
@@ -34,7 +35,14 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 		return unsafeHTML(this.#notes);
 	}
 
-	static styles = [UmbTextStyles];
+	static styles = [
+		UmbTextStyles,
+		css`
+			details > summary {
+				cursor: pointer;
+			}
+		`,
+	];
 }
 
 export { ContentmentPropertyEditorUINotesElement as element };
