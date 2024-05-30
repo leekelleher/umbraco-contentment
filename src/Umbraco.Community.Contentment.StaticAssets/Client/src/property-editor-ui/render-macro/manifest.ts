@@ -18,7 +18,7 @@ export const schema: ManifestPropertyEditorSchema = {
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.RenderMacro',
-	name: '[Contentment] Render Macro',
+	name: '[Contentment] Render Macro Property Editor UI',
 	element: () => import('./render-macro.element.js'),
 	meta: {
 		label: '[Contentment] Render Macro',

@@ -8,7 +8,7 @@ import type {
 
 export const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
-	name: '[Contentment] Bytes',
+	name: '[Contentment] Bytes Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.Bytes',
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.Bytes',
@@ -18,7 +18,7 @@ export const schema: ManifestPropertyEditorSchema = {
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.Bytes',
-	name: '[Contentment] Bytes',
+	name: '[Contentment] Bytes Property Editor UI',
 	element: () => import('./bytes.element.js'),
 	meta: {
 		label: '[Contentment] Bytes',

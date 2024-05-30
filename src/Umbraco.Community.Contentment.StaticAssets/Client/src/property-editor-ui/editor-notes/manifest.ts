@@ -6,7 +6,7 @@ import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension
 export const manifest: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.EditorNotes',
-	name: '[Contentment] Editor Notes',
+	name: '[Contentment] Editor Notes Property Editor UI',
 	element: () => import('./editor-notes.element.js'),
 	meta: {
 		label: '[Contentment] Editor Notes',

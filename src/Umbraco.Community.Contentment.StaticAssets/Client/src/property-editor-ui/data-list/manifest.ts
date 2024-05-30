@@ -8,7 +8,7 @@ import type {
 
 const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
-	name: '[Contentment] Data List',
+	name: '[Contentment] Data List  Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.DataList',
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DataList',
@@ -22,6 +22,7 @@ const schema: ManifestPropertyEditorSchema = {
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
 						{ alias: 'configurationType', value: 'dataSource' },
+						{ alias: 'maxItems', value: 1 },
 					],
 				},
 				{
@@ -32,6 +33,7 @@ const schema: ManifestPropertyEditorSchema = {
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' },
 						{ alias: 'configurationType', value: 'listEditor' },
+						{ alias: 'maxItems', value: 1 },
 					],
 				},
 			],
@@ -42,7 +44,7 @@ const schema: ManifestPropertyEditorSchema = {
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.DataList',
-	name: '[Contentment] Data List',
+	name: '[Contentment] Data List Property Editor UI',
 	element: () => import('./data-list.element.js'),
 	meta: {
 		label: '[Contentment] Data List',

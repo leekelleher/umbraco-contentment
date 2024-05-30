@@ -8,7 +8,7 @@ import type {
 
 export const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
-	name: '[Contentment] Icon Picker',
+	name: '[Contentment] Icon Picker Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.IconPicker',
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
@@ -18,7 +18,7 @@ export const schema: ManifestPropertyEditorSchema = {
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
-	name: '[Contentment] Icon Picker',
+	name: '[Contentment] Icon Picker Property Editor UI',
 	element: () => import('./icon-picker.element.js'),
 	meta: {
 		label: '[Contentment] Icon Picker',

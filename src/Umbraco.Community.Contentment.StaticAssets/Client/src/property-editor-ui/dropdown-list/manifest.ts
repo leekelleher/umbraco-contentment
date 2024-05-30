@@ -3,7 +3,7 @@ import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension
 export const manifest: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
-	name: '[Contentment] Dropdown List',
+	name: '[Contentment] Dropdown List Property Editor UI',
 	element: () => import('./dropdown-list.element.js'),
 	meta: {
 		label: '[Contentment] Dropdown List',

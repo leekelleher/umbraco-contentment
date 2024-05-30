@@ -8,7 +8,7 @@ import type {
 
 export const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
-	name: '[Contentment] Notes',
+	name: '[Contentment] Notes Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.Notes',
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.Notes',
@@ -18,7 +18,7 @@ export const schema: ManifestPropertyEditorSchema = {
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.Notes',
-	name: '[Contentment] Notes',
+	name: '[Contentment] Notes Property Editor UI',
 	element: () => import('./notes.element.js'),
 	meta: {
 		label: '[Contentment] Notes',
