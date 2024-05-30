@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Enable filter?";
             Description = "Select to enable the search filter in the overlay selection panel.";
             View = "boolean";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }
 }

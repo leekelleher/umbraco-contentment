@@ -16,26 +16,26 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             DefaultConfiguration.Add("size", "s");
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "size",
-                Name = "Numeric size",
-                Description = "How big will the number get?",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
-                        {
-                            new DataListItem { Name = "Small", Value = "s", Description = "Ideal for numbers under 100, comfortably fits 3 digits." },
-                            new DataListItem { Name = "Medium", Value = "m", Description = "Better when dealing with hundreds and thousands, comfortably fits 6 digits." },
-                            new DataListItem { Name = "Large", Value = "l", Description = "Did you know a 18 digit number is called a quintillion!" },
-                            new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>" },
-                        }
-                    },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "s" },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "size",
+            //    Name = "Numeric size",
+            //    Description = "How big will the number get?",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+            //            {
+            //                new DataListItem { Name = "Small", Value = "s", Description = "Ideal for numbers under 100, comfortably fits 3 digits." },
+            //                new DataListItem { Name = "Medium", Value = "m", Description = "Better when dealing with hundreds and thousands, comfortably fits 6 digits." },
+            //                new DataListItem { Name = "Large", Value = "l", Description = "Did you know a 18 digit number is called a quintillion!" },
+            //                new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>" },
+            //            }
+            //        },
+            //        { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+            //        { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "s" },
+            //    }
+            //});
 
             // TODO: [LK:2020-12-11] Commented out the value-type feature for the time being. Adds additional complexity that I don't currently need.
             //// NOTE: When using the key "umbracoDataValueType", Umbraco will auto-set the database type.
@@ -59,13 +59,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             // TODO: [LK:2020-12-11] Add "min/max" and "step" fields.
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "placeholderText",
-                Name = "Placeholder text",
-                Description = "Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.",
-                View = "textstring",
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "placeholderText",
+            //    Name = "Placeholder text",
+            //    Description = "Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.",
+            //    View = "textstring",
+            //});
         }
     }
 }

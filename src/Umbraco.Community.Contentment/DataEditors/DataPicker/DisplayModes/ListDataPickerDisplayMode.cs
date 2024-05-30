@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "displayMode", "list" },
         };
 
-        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public OverlaySize OverlaySize => OverlaySize.Small;
     }

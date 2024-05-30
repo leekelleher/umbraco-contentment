@@ -16,20 +16,20 @@ namespace Umbraco.Community.Contentment.DataEditors
         public NotesConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Notes,
-                Name = nameof(Notes),
-                Description = "Enter the notes to be displayed for the content editor.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Notes,
+            //    Name = nameof(Notes),
+            //    Description = "Enter the notes to be displayed for the content editor.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
+            //    }
+            //});
 
-            Fields.Add(new HideLabelConfigurationField());
-            Fields.Add(new HidePropertyGroupConfigurationField());
+            //Fields.Add(new HideLabelConfigurationField());
+            //Fields.Add(new HidePropertyGroupConfigurationField());
         }
     }
 }

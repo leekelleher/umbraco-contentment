@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Allow clear?";
             Description = "Select to enable the 'Clear selection' property action.";
             View = "views/propertyeditors/boolean/boolean.html";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
             Config = new Dictionary<string, object>
             {
                 { "default", Constants.Values.False }

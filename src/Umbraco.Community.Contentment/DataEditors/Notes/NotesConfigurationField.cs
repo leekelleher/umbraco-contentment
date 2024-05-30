@@ -19,8 +19,9 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = Notes;
             Name = nameof(Notes);
             View = ioHelper.ResolveRelativeOrVirtualUrl(NotesDataEditor.DataEditorViewPath);
-            Config = new Dictionary<string, object> { { Notes, notes } };
-            HideLabel = hideLabel;
+            PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Notes";
+            Config = new Dictionary<string, object> { { Notes, notes }, { nameof(hideLabel), hideLabel } };
+            //HideLabel = hideLabel;
         }
     }
 }

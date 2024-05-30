@@ -52,77 +52,77 @@ namespace Umbraco.Community.Contentment.DataEditors
             DefaultConfiguration.Add("overlaySize", defaultOverlaySize);
             DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = DataSource,
-                Name = "Data source",
-                Description = "Select and configure a data source.",
-                View = configEditorViewPath,
-                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
-                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
-                    { "help", new {
-                        @class = "alert alert-info",
-                        title = "Do you need a custom data-source?",
-                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data Picker with your own custom data source.</p>
-<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-picker.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
-                }
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = DataSource,
+//                Name = "Data source",
+//                Description = "Select and configure a data source.",
+//                View = configEditorViewPath,
+//                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
+//                {
+//                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
+//                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
+//                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+//                    { "help", new {
+//                        @class = "alert alert-info",
+//                        title = "Do you need a custom data-source?",
+//                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data Picker with your own custom data source.</p>
+//<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-picker.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
+//                }
+//            });
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = DisplayMode,
-                Name = "Display mode",
-                Description = "Select display mode for the picker editor.",
-                View = configEditorViewPath,
-                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDisplayMode" },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
-                }
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = DisplayMode,
+//                Name = "Display mode",
+//                Description = "Select display mode for the picker editor.",
+//                View = configEditorViewPath,
+//                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
+//                {
+//                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDisplayMode" },
+//                    { Constants.Conventions.ConfigurationFieldAliases.Items, displayModes },
+//                }
+//            });
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "pageSize",
-                Name = "Page size",
-                Description = "How many items to display per page? The default value is 12.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = "pageSize",
+//                Name = "Page size",
+//                Description = "How many items to display per page? The default value is 12.",
+//                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
+//            });
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "overlaySize",
-                Name = "Editor overlay size",
-                Description = $"Select the size of the overlay panel. The default is '{defaultOverlaySize}'.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
-                        {
-                            new DataListItem { Name = "Small", Value = "small" },
-                            new DataListItem { Name = "Medium", Value = "medium" },
-                            new DataListItem { Name = "Large", Value = "large" }
-                        }
-                    },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultOverlaySize },
-                    { "labelStyle", "text" },
-                    { "size", "m" },
-                }
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = "overlaySize",
+//                Name = "Editor overlay size",
+//                Description = $"Select the size of the overlay panel. The default is '{defaultOverlaySize}'.",
+//                View = ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
+//                Config = new Dictionary<string, object>
+//                {
+//                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+//                        {
+//                            new DataListItem { Name = "Small", Value = "small" },
+//                            new DataListItem { Name = "Medium", Value = "medium" },
+//                            new DataListItem { Name = "Large", Value = "large" }
+//                        }
+//                    },
+//                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, defaultOverlaySize },
+//                    { "labelStyle", "text" },
+//                    { "size", "m" },
+//                }
+//            });
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "hideSearch",
-                Name = "Hide search box?",
-                Description = "Hide the search box in the overlay panel.",
-                View = "boolean",
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = "hideSearch",
+//                Name = "Hide search box?",
+//                Description = "Hide the search box in the overlay panel.",
+//                View = "boolean",
+//            });
 
-            Fields.Add(new MaxItemsConfigurationField(ioHelper));
-            Fields.Add(new EnableDevModeConfigurationField());
+//            Fields.Add(new MaxItemsConfigurationField(ioHelper));
+//            Fields.Add(new EnableDevModeConfigurationField());
         }
 
         public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)

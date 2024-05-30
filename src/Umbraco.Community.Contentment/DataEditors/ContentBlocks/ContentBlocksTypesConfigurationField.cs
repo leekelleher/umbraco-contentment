@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
-        private IEnumerable<ConfigurationField> GetConfigurationFields(IContentType contentType)
+        private IEnumerable<ContentmentConfigurationField> GetConfigurationFields(IContentType contentType)
         {
             return new[]
             {
@@ -64,8 +64,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         { "name", contentType.Name ?? contentType.Alias },
                         { "icon", contentType.Icon ?? UmbConstants.Icons.DefaultIcon },
                         { "description", contentType.GetUdi().ToString() },
+                        { "hideLabel", Constants.Values.True },
                     },
-                    HideLabel = true,
                 },
                 new ContentmentConfigurationField
                 {

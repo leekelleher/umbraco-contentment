@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             // TODO: [LK:2022-10-21] Add in "Display Mode" field.
 

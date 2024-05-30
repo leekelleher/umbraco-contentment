@@ -61,7 +61,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>

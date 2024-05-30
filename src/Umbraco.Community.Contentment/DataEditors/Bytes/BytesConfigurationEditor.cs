@@ -18,39 +18,39 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public BytesConfigurationEditor(IIOHelper ioHelper)
         {
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Kilo,
-                Name = "Kilobytes?",
-                Description = "How many bytes do you prefer in your kilobyte?",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
-                        {
-                            new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong> (decimal)." },
-                            new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong> (binary). Today, this is known as a kibibyte." },
-                        }
-                    },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "1024" },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Kilo,
+            //    Name = "Kilobytes?",
+            //    Description = "How many bytes do you prefer in your kilobyte?",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+            //            {
+            //                new DataListItem { Name = "1000 bytes", Value = "1000", Description = "The modern standard for a kilobyte is <strong>1000 bytes</strong> (decimal)." },
+            //                new DataListItem { Name = "1024 bytes", Value = "1024", Description = "Computationally, there are <strong>1024 bytes</strong> (binary). Today, this is known as a kibibyte." },
+            //            }
+            //        },
+            //        { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+            //        { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "1024" },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Decimals,
-                Name = "Decimal places",
-                Description = "How many decimal places would you like?",
-                View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
-                Config = new Dictionary<string, object>
-                {
-                    { "initVal1", 2 },
-                    { "minVal", 0 },
-                    { "maxVal", 10 },
-                    { "step", 1 }
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Decimals,
+            //    Name = "Decimal places",
+            //    Description = "How many decimal places would you like?",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "initVal1", 2 },
+            //        { "minVal", 0 },
+            //        { "maxVal", 10 },
+            //        { "step", 1 }
+            //    }
+            //});
         }
 
         public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)

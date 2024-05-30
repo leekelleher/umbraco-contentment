@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>

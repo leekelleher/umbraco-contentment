@@ -4,6 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -13,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         Dictionary<string, object>? DefaultValues { get; }
 
-        IEnumerable<ConfigurationField> Fields { get; }
+        IEnumerable<ContentmentConfigurationField> Fields { get; }
 
         string? Group { get; }
 

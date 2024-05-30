@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields
+        public override IEnumerable<ContentmentConfigurationField> Fields
         {
             get
             {

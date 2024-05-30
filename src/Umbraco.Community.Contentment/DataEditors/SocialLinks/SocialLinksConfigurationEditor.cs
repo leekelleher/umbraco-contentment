@@ -114,33 +114,33 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             };
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Networks,
-                Name = "Social networks",
-                Description = "Define the icon set for the available social networks.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { "allowDuplicates", Constants.Values.True },
-                    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                    { "displayMode", "cards" },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Networks,
+            //    Name = "Social networks",
+            //    Description = "Define the icon set for the available social networks.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "allowDuplicates", Constants.Values.True },
+            //        { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
+            //        { "displayMode", "cards" },
+            //        { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+            //        { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "confirmRemoval",
-                Name = "Confirm removals?",
-                Description = "Select to enable a confirmation prompt when removing an item.",
-                View = "boolean",
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "confirmRemoval",
+            //    Name = "Confirm removals?",
+            //    Description = "Select to enable a confirmation prompt when removing an item.",
+            //    View = "boolean",
+            //});
 
-            DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
-            Fields.Add(new MaxItemsConfigurationField(ioHelper));
-            Fields.Add(new EnableDevModeConfigurationField());
+            //DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
+            //Fields.Add(new MaxItemsConfigurationField(ioHelper));
+            //Fields.Add(new EnableDevModeConfigurationField());
         }
 
         public override IDictionary<string, object> FromConfigurationEditor(IDictionary<string, object> configuration)

@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public abstract string Group { get; }
 
-        public abstract IEnumerable<ConfigurationField> Fields { get; }
+        public abstract IEnumerable<ContentmentConfigurationField> Fields { get; }
 
         public abstract Dictionary<string, object>? DefaultValues { get; }
 

@@ -59,8 +59,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             var type = item.GetType();
 
             var fields = ignoreFields == false
-                ? item.Fields ?? Enumerable.Empty<ConfigurationField>()
-                : Enumerable.Empty<ConfigurationField>();
+                ? item.Fields ?? Enumerable.Empty<ContentmentConfigurationField>()
+                : Enumerable.Empty<ContentmentConfigurationField>();
 
             var model = new ConfigurationEditorModel
             {

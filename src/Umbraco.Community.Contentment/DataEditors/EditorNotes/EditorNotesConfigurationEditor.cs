@@ -27,53 +27,53 @@ namespace Umbraco.Community.Contentment.DataEditors
                 new { name = string.Format(format, "well", "Well", "An informational message, displaying inset on a gray background."), value = "well" },
             };
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "alertType",
-                Name = "Alert type",
-                Description = string.Empty,
-                View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { "defaultValue", "alert alert-warning" },
-                    { "items", items },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "alertType",
+            //    Name = "Alert type",
+            //    Description = string.Empty,
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "defaultValue", "alert alert-warning" },
+            //        { "items", items },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "icon",
-                Name = "Icon",
-                Description = "Select an icon to be displayed next to the message.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { "size", "small" },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "icon",
+            //    Name = "Icon",
+            //    Description = "Select an icon to be displayed next to the message.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "size", "small" },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "heading",
-                Name = "Heading",
-                Description = string.Empty,
-                View = "textstring"
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "heading",
+            //    Name = "Heading",
+            //    Description = string.Empty,
+            //    View = "textstring"
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Message,
-                Name = nameof(Message),
-                Description = "Enter the notes to be displayed for the content editor.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Message,
+            //    Name = nameof(Message),
+            //    Description = "Enter the notes to be displayed for the content editor.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(RichTextEditorDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { "editor", Constants.Conventions.DefaultConfiguration.RichTextEditor }
+            //    }
+            //});
 
-            Fields.Add(new HideLabelConfigurationField());
-            Fields.Add(new HidePropertyGroupConfigurationField());
+            //Fields.Add(new HideLabelConfigurationField());
+            //Fields.Add(new HidePropertyGroupConfigurationField());
         }
     }
 }

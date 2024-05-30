@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Hide property group container?";
             Description = "Select to hide the editor's containing property group box. Making it appear above/outside the property group.";
             View = "boolean";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }
 }

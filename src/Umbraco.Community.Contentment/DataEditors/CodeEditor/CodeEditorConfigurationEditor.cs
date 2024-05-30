@@ -30,80 +30,80 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (modes.Count > 0)
             {
                 DefaultConfiguration.Add(Mode, "razor");
-                Fields.Add(new ContentmentConfigurationField
-                {
-                    Key = Mode,
-                    Name = "Language mode",
-                    Description = "Select the programming language mode. The default mode is 'Razor'.",
-                    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
-                    Config = new Dictionary<string, object>
-                    {
-                        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                        { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
-                    }
-                });
+                //Fields.Add(new ContentmentConfigurationField
+                //{
+                //    Key = Mode,
+                //    Name = "Language mode",
+                //    Description = "Select the programming language mode. The default mode is 'Razor'.",
+                //    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                //    Config = new Dictionary<string, object>
+                //    {
+                //        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                //        { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
+                //    }
+                //});
             }
 
             if (themes.Count > 0)
             {
                 DefaultConfiguration.Add(Theme, "chrome");
-                Fields.Add(new ContentmentConfigurationField
-                {
-                    Key = Theme,
-                    Name = nameof(Theme),
-                    Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
-                    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
-                    Config = new Dictionary<string, object>
-                    {
-                        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
-                        { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
-                    }
-                });
+                //Fields.Add(new ContentmentConfigurationField
+                //{
+                //    Key = Theme,
+                //    Name = nameof(Theme),
+                //    Description = "Set the theme for the code editor. The default theme is 'Chrome'.",
+                //    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                //    Config = new Dictionary<string, object>
+                //    {
+                //        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                //        { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
+                //    }
+                //});
             }
 
             if (modes.Count > 0 || themes.Count > 0)
             {
-                Fields.Add(new NotesConfigurationField(ioHelper, $@"<details class=""well well-small"">
-<summary>Would you like to add more <strong>language modes</strong> and <strong>themes</strong>?</summary>
-<p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> library that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
-<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>~/{targetPath}/</code> folder in the web root of this Umbraco installation.</p>
-<p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options above.</p>
-</details>", true));
+//                Fields.Add(new NotesConfigurationField(ioHelper, $@"<details class=""well well-small"">
+//<summary>Would you like to add more <strong>language modes</strong> and <strong>themes</strong>?</summary>
+//<p>This property editor makes use of <a href=""https://ace.c9.io/"" target=""_blank""><strong>AWS Cloud 9's Ace editor</strong></a> library that is distributed with Umbraco. By default, Umbraco ships a streamlined set of programming language modes and themes.</p>
+//<p>If you would like to add more modes and themes, you can do this by <a href=""https://github.com/ajaxorg/ace-builds/releases"" target=""_blank""><strong>downloading the latest pre-packaged version of the Ace editor</strong></a> and copy any of the <code>mode-*</code> or <code>theme-*</code> files from the <code>src-min-noconflict</code> folder over to the <code>~/{targetPath}/</code> folder in the web root of this Umbraco installation.</p>
+//<p>When you reload this screen, the new programming language modes and themes will appear in the dropdown options above.</p>
+//</details>", true));
             }
 
             DefaultConfiguration.Add(FontSize, "small");
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = FontSize,
-                Name = "Font size",
-                Description = @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
-                Config = new Dictionary<string, object>
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[] {
-                        new DataListItem { Name = "Extra extra small", Value = "xx-small" },
-                        new DataListItem { Name = "Extra small", Value = "x-small" },
-                        new DataListItem { Name = "Small", Value = "small" },
-                        new DataListItem { Name = "Medium", Value = "medium" },
-                        new DataListItem { Name = "Large", Value = "large" },
-                        new DataListItem { Name = "Extra large", Value = "x-large" },
-                        new DataListItem { Name = "Extra extra large", Value = "xx-large" },
-                        new DataListItem { Name = "Extra extra extra large", Value = "xxx-large" },
-                        new DataListItem { Name = "Use pixels?", Value = "14px" },
-                        new DataListItem { Name = "Use percentage?", Value = "80%" },
-                        new DataListItem { Name = "Use ems?", Value = "0.8em" },
-                        new DataListItem { Name = "Use rems?", Value = "1.2rem" },
-                    } },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = FontSize,
+            //    Name = "Font size",
+            //    Description = @"Set the font size. The value must be a valid CSS <a href=""https://developer.mozilla.org/en-US/docs/Web/CSS/font-size"" target=""_blank""  rel=""noopener""><strong>font-size</strong></a> value. The default size is 'small'.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { Constants.Conventions.ConfigurationFieldAliases.Items, new[] {
+            //            new DataListItem { Name = "Extra extra small", Value = "xx-small" },
+            //            new DataListItem { Name = "Extra small", Value = "x-small" },
+            //            new DataListItem { Name = "Small", Value = "small" },
+            //            new DataListItem { Name = "Medium", Value = "medium" },
+            //            new DataListItem { Name = "Large", Value = "large" },
+            //            new DataListItem { Name = "Extra large", Value = "x-large" },
+            //            new DataListItem { Name = "Extra extra large", Value = "xx-large" },
+            //            new DataListItem { Name = "Extra extra extra large", Value = "xxx-large" },
+            //            new DataListItem { Name = "Use pixels?", Value = "14px" },
+            //            new DataListItem { Name = "Use percentage?", Value = "80%" },
+            //            new DataListItem { Name = "Use ems?", Value = "0.8em" },
+            //            new DataListItem { Name = "Use rems?", Value = "1.2rem" },
+            //        } },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = UseWrapMode,
-                Name = "Word wrapping",
-                Description = "Select to enable word wrapping.",
-                View = "boolean"
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = UseWrapMode,
+            //    Name = "Word wrapping",
+            //    Description = "Select to enable word wrapping.",
+            //    View = "boolean"
+            //});
 
             // NOTE: [LK:2019-06-07] Hidden the advanced options (for now), need to review.
             //Fields.Add("showGutter", "Show gutter?", "Select to show the left-hand side gutter in the code editor.", "boolean");
@@ -119,22 +119,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             //Fields.Add("readonly", "readonly", "[A friendly description]", "boolean");// readonly: 0,
 
             DefaultConfiguration.Add(MinLines, 12);
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = MinLines,
-                Name = "Minimum lines",
-                Description = "Set the minimum number of lines that the editor will be. The default is 12 lines.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = MinLines,
+            //    Name = "Minimum lines",
+            //    Description = "Set the minimum number of lines that the editor will be. The default is 12 lines.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
+            //});
 
             DefaultConfiguration.Add(MaxLines, 30);
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = MaxLines,
-                Name = "Maximum lines",
-                Description = "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.",
-                View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = MaxLines,
+            //    Name = "Maximum lines",
+            //    Description = "Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.",
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath)
+            //});
         }
 
         private (List<DataListItem>, List<DataListItem>) GetAceOptions(

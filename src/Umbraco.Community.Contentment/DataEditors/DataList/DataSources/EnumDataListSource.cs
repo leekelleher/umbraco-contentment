@@ -49,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Dictionary<string, object>? DefaultValues => default;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
             new ContentmentConfigurationField
             {
@@ -57,6 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 //Config = new Dictionary<string, object>
                 //{
                 //    { CascadingDropdownListDataEditor.APIs, new[]
@@ -72,7 +73,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
-                View = "boolean"
+                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 

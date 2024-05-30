@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields
+        public override IEnumerable<ContentmentConfigurationField> Fields
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
                     });
 
-                return new ConfigurationField[]
+                return new ContentmentConfigurationField[]
                 {
                     new ContentmentConfigurationField
                     {

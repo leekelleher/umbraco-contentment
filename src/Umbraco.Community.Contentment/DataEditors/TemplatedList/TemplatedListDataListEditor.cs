@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with your custom template?</strong></summary>

@@ -15,11 +15,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select multiple values from a list of checkboxes.";
 
-        public string Icon => "icon-fa fa-check-square-o";
+        public string Icon => "icon-bulleted-list"; // "icon-fa fa-check-square-o";
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new ContentmentConfigurationField
             {

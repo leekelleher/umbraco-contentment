@@ -35,7 +35,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "enablePreview", Constants.Values.False },
         };
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"" open>
 <summary><strong>A note about block type previews.</strong></summary>

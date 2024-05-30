@@ -39,45 +39,45 @@ namespace Umbraco.Community.Contentment.DataEditors
             var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListSource>());
             var listEditors = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListEditor>());
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = DataSource,
-                Name = localizedTextService.LocalizeContentment("labelDataSource", "Data source"),
-                Description = localizedTextService.LocalizeContentment("configureDataSource", "Select and configure a data source."),
-                View = configEditorViewPath,
-                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
-                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
-                    { "help", new {
-                        @class = "alert alert-info",
-                        title = "Do you need a custom data-source?",
-                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data List with your own custom data source.</p>
-<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
-                }
-            });
+//            Fields.Add(new ContentmentConfigurationField
+//            {
+//                Key = DataSource,
+//                Name = localizedTextService.LocalizeContentment("labelDataSource", "Data source"),
+//                Description = localizedTextService.LocalizeContentment("configureDataSource", "Select and configure a data source."),
+//                View = configEditorViewPath,
+//                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
+//                {
+//                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
+//                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+//                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
+//                    { "help", new {
+//                        @class = "alert alert-info",
+//                        title = "Do you need a custom data-source?",
+//                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data List with your own custom data source.</p>
+//<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
+//                }
+//            });
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = ListEditor,
-                Name = localizedTextService.LocalizeContentment("labelListEditor", "List editor"),
-                Description = localizedTextService.LocalizeContentment("configureListEditor", "Select and configure a list editor."),
-                View = configEditorViewPath,
-                Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-                {
-                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
-                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
-                    { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors },
-                }
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = ListEditor,
+            //    Name = localizedTextService.LocalizeContentment("labelListEditor", "List editor"),
+            //    Description = localizedTextService.LocalizeContentment("configureListEditor", "Select and configure a list editor."),
+            //    View = configEditorViewPath,
+            //    Config = new Dictionary<string, object>(defaultConfigEditorConfig)
+            //    {
+            //        { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
+            //        { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
+            //        { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors },
+            //    }
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = Preview,
-                Name = nameof(Preview),
-                View = ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = Preview,
+            //    Name = nameof(Preview),
+            //    View = ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
+            //});
         }
 
         public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)

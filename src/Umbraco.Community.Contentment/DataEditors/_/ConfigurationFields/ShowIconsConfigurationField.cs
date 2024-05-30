@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Show icons?";
             Description = "Enable to display the icon for the item, (if available).";
             View = "views/propertyeditors/boolean/boolean.html";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
             Config = new Dictionary<string, object>
             {
                 { "default", Constants.Values.False }

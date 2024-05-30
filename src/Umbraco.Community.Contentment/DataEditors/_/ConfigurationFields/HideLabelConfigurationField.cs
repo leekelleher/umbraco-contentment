@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Hide label?";
             Description = "Select to hide the label and have the editor take up the full width of the panel.";
             View = "boolean";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }
 }

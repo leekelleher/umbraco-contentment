@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
@@ -46,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>Perfect for font-awesome icons or surfacing similar icon or background image choices to the editor.&rdquo;</p>
 </blockquote>
 <p>As a mark of respect to the loyal fans of the original package, I hereby offer this data source as tribute.</p>
-<p class=""text-center""><img ng-src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName""></p>
+<p style=""text-align:center;""><img src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName"" loading=""lazy""></p>
 </details>", true),
             new ContentmentConfigurationField
             {
@@ -54,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "PathToStylesheet",
                 Description = "Put in the relative path to the stylesheet",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -61,6 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Class Name Regex",
                 Description = "put in the regex pattern that matches the class names",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -68,6 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Exclusions",
                 Description = "comma delimited list of styles to exclude",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -75,6 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Icon Pattern",
                 Description = "Class name pattern to display icon, eg 'icon icon-{0}'",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

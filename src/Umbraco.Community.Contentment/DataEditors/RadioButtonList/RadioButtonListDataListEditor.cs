@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),

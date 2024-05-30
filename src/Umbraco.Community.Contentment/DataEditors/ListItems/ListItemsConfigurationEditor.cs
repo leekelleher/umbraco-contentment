@@ -13,33 +13,33 @@ namespace Umbraco.Community.Contentment.DataEditors
         public ListItemsConfigurationEditor(IIOHelper ioHelper)
             : base()
         {
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "hideIcon",
-                Name = "Hide icon field?",
-                Description = "Select to hide the icon picker.",
-                View = "boolean",
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "hideIcon",
+            //    Name = "Hide icon field?",
+            //    Description = "Select to hide the icon picker.",
+            //    View = "boolean",
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "hideDescription",
-                Name = "Hide description field?",
-                Description = "Select to hide the description text field.",
-                View = "boolean",
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "hideDescription",
+            //    Name = "Hide description field?",
+            //    Description = "Select to hide the description text field.",
+            //    View = "boolean",
+            //});
 
-            Fields.Add(new ContentmentConfigurationField
-            {
-                Key = "confirmRemoval",
-                Name = "Confirm removals?",
-                Description = "Select to enable a confirmation prompt when removing an item.",
-                View = "boolean",
-            });
+            //Fields.Add(new ContentmentConfigurationField
+            //{
+            //    Key = "confirmRemoval",
+            //    Name = "Confirm removals?",
+            //    Description = "Select to enable a confirmation prompt when removing an item.",
+            //    View = "boolean",
+            //});
 
-            DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
-            Fields.Add(new MaxItemsConfigurationField(ioHelper));
-            Fields.Add(new EnableDevModeConfigurationField());
+            //DefaultConfiguration.Add(MaxItemsConfigurationField.MaxItems, 0);
+            //Fields.Add(new MaxItemsConfigurationField(ioHelper));
+            //Fields.Add(new EnableDevModeConfigurationField());
         }
     }
 }

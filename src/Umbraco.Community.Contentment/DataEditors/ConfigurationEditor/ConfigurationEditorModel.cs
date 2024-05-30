@@ -14,9 +14,9 @@ namespace Umbraco.Community.Contentment.DataEditors
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public sealed class ConfigurationEditorModel : IConfigurationEditorItem
     {
-        public string? Key { get; set; }
+        public required string Key { get; set; }
 
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         public string? Description { get; set; }
 
@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string? Group { get; set; }
 
-        public IEnumerable<ConfigurationField> Fields { get; set; } = Enumerable.Empty<ConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields { get; set; } = Enumerable.Empty<ContentmentConfigurationField>();
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, object>? DefaultValues { get; set; }

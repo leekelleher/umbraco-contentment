@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "enablePreview", Constants.Values.True },
         };
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
             new ContentmentConfigurationField
             {

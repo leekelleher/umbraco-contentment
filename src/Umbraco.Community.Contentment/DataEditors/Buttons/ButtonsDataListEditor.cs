@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new ContentmentConfigurationField
             {
@@ -36,6 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.IconPicker",
             },
             new ContentmentConfigurationField
             {
@@ -43,6 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Size",
                 Description = "Select the button size. By default this is set to 'medium'.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -52,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "Large", Value = "l" },
                         }
                     },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "m" }
+                    //{ Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "m" }
                 }
             },
             new ContentmentConfigurationField
@@ -61,6 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Label style",
                 Description = "Select the style of the button's label.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -81,6 +84,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
                 View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
         };
 
@@ -88,6 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },
+            { "size", "m" },
         };
 
         public Dictionary<string, object>? DefaultConfig => default;

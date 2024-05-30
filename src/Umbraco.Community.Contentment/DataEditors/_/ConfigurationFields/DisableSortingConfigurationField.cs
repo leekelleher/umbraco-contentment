@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Disable sorting?";
             Description = "Select to disable sorting of the items.";
             View = "boolean";
+            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }
 }

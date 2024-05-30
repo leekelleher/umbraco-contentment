@@ -42,7 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields
+        public IEnumerable<ContentmentConfigurationField> Fields
         {
             get
             {
