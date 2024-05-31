@@ -33,7 +33,8 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		this.#alertType = config.getValueByAlias('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
-		this.#message = (config.getValueByAlias('message') as unknown as any).markup;
+    const message = config.getValueByAlias('message');
+    this.#message = typeof message === 'string' ? message : (message as unknown as any).markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 
 		if (this.#icon) {

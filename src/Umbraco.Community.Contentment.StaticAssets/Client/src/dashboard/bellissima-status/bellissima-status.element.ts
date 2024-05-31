@@ -58,7 +58,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | :green_circle:  | **Bytes**           | **Done** | Implemented as standalone component, doesn't reuse Umbraco's Label editor. |
 | :large_blue_circle:  | Code Editor     | _Started_ | Property editor built; configuration needs more work. |
 | :red_circle:  | Content Blocks  | _Undecided_   | :no_entry_sign: Considering dropping; potentially migrate to Block List? |
-| :green_circle: | **Data List**       | **Done** | Property-editor work is done, **BUT!** The data-type configuration depends on the internal **Configuration Editor**, which is still being worked on, _(see below)_. |
+| :green_circle: | **Data List**       | **Done** | Property-editor work is done, **BUT!** The data-type configuration depends on the internal **Configuration Editor** and various list-editors, which are still under development, _(see below)_. |
 | :large_blue_circle: | Data Picker     | _Started_   | A read-only placeholder editor is available. |
 | :large_blue_circle:  | Editor Notes    | _Started_ | Property editor built; configuration needs more work. |
 | :green_circle: | **Icon Picker**     | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
