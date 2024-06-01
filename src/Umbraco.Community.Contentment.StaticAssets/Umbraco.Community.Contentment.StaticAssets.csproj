@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     </PropertyGroup>
-    <!--<Target Name="ContentmentPrepareAssets" BeforeTargets="DispatchToInnerBuilds">
+    <!--<Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
         <Exec Command="npm run build" />
     </Target>-->
 </Project>

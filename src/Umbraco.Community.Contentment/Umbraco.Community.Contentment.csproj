@@ -51,7 +51,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Umbraco.Community.Contentment.StaticAssets\Umbraco.Community.Contentment.StaticAssets.csproj" />
+        <ProjectReference Include="..\Umbraco.Community.Contentment.StaticAssets\Umbraco.Community.Contentment.StaticAssets.csproj" />
     </ItemGroup>
 
     <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
@@ -59,9 +59,5 @@
             <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
         </ItemGroup>
     </Target>
-
-    <!--<Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
-        <Exec Command="npm run build" />
-    </Target>-->
 
 </Project>
