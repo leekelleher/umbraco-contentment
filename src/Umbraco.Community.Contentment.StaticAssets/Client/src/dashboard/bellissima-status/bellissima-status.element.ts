@@ -15,7 +15,7 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 const elementName = 'umb-bellissima-status-dashboard-element';
 @customElement(elementName)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
-	#started = 22;
+	#started = 36;
 	#total = 63;
 	#percentage = Math.floor((this.#started / this.#total) * 100);
 
@@ -29,9 +29,9 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 				markup: `
 <p>During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of progress on Contentment for Umbraco Bellissima.</p>
 <p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong> from stable releases.</p>
-<p>Development on <strong>${this.#started} of ${
+<p>Development has started on <strong>${this.#started} of the ${
 					this.#total
-				}</strong> UI components has been commenced. Package migration is <strong>${
+				}</strong> UI components. Package migration is <strong>${
 					this.#percentage
 				}% complete</strong>.</p>
 <uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>`,
@@ -43,7 +43,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 		':no_entry_sign:': '🚫',
 		':grey_question:': '❔',
 		':thinking:': '🤔',
-		':octocat:': '🐱',
+		':octocat:': '🚥',
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
 		':red_circle:': '🔴',
@@ -57,8 +57,8 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle:  | **Bytes**           | **Done** | Implemented as standalone component, doesn't reuse Umbraco's Label editor. |
 | :large_blue_circle:  | Code Editor     | _Started_ | Property editor built; configuration needs more work. |
-| :red_circle:  | Content Blocks  | _Undecided_   | :no_entry_sign: Considering dropping; potentially migrate to Block List? |
-| :green_circle: | **Data List**       | **Done** | Property-editor work is done, **BUT!** The data-type configuration depends on the internal **Configuration Editor** and various list-editors, which are still under development, _(see below)_. |
+| :red_circle:  | Content Blocks  | _Undecided_   | :no_entry_sign: Considering deprecating; potentially migrate to Block List? |
+| :green_circle: | **Data List**       | **Done** | Property-editor work is done. **BUT!** The data-sources and list-editors are under active development, _(see below for status)_. |
 | :large_blue_circle: | Data Picker     | _Started_   | A read-only placeholder editor is available. |
 | :large_blue_circle:  | Editor Notes    | _Started_ | Property editor built; configuration needs more work. |
 | :green_circle: | **Icon Picker**     | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
@@ -78,7 +78,7 @@ Status of components used internally within Contentment.
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
 | :grey_question: | Cascading Dropdown List | _Pending_ | I haven't thought about it yet. |
-| :large_blue_circle: | **Configuration Editor** | _Started_ | This is the centrepiece of Contentment, there is **A LOT** of work to do here! |
+| :green_circle: | **Configuration Editor** | **Done** | |
 | :grey_question: | Content Picker | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Data Table | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Dictionary Picker | _Pending_ | I haven't thought about it yet. |
@@ -107,19 +107,19 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :grey_question: | .NET Countries | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | .NET Currencies | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **.NET Countries** | **Done** | |
+| :green_circle: | **.NET Currencies** | **Done** | |
 | :grey_question: | .NET Enum | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Examine | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | JSON | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | .NET Languages | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **.NET Languages** | **Done** | |
+| :green_circle: | **.NET Time Zone** | **Done** | |
+| :green_circle: | Examine | **Done** | |
+| :green_circle: | **JSON** | **Done** | |
 | :grey_question: | Number Range | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Physical File System | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | Physical File System | _Started_ | UI done; needs more testing. |
 | :grey_question: | SQL | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Text Delimited | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Time Zone | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | uCssClassName | _Pending_ | I haven't thought about it yet. |
-| :no_entry_sign: | Umbraco Backoffice Sections | **Deprecated** | Backoffice sections are registered client-side, unable to query on the server. |
+| :green_circle: | **Text Delimited** | **Done** | |
+| :green_circle: | **uCssClassName** | **Done** | |
+| :thinking: | Umbraco Backoffice Sections | _Researching_ | :no_entry_sign: Backoffice sections are now registered client-side, unable to query on the server. Exploring alternative options. |
 | :grey_question: | Umbraco Content | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Content Properties | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Content Property Value | _Pending_ | I haven't thought about it yet. |
@@ -129,17 +129,17 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 | :grey_question: | Umbraco Entity | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Files | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Image Crop | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Languages | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Member Group | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Umbraco Languages** | **Done** |  |
+| :green_circle: | **Umbraco Member Group** | **Done** | |
 | :grey_question: | Umbraco Members | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Tags | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Templates | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco User Group | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Umbraco User Group** | **Done** | |
 | :grey_question: | Umbraco Users | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | User Defined | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | XML | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | XML Sitemap Change Frequency | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | XML Sitemap Priority | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **XML** | **Done** | |
+| :green_circle: | **XML Sitemap Change Frequency** | **Done** | |
+| :green_circle: | **XML Sitemap Priority** | **Done** | |
 `;
 
 	@state()
