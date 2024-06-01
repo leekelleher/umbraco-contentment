@@ -33,15 +33,20 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		// const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
-		// const defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
-		// const defaultValue = config.getValueByAlias('defaultValue') ?? [];
+		const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
+		const allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
+		const defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
+		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this._labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
 		this._size = config.getValueByAlias('size') ?? 'm';
 
 		const items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
+
+		if (!this.value) {
+			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
+		}
 	}
 
 	@state()

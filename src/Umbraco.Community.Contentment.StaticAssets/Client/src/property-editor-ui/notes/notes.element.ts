@@ -41,6 +41,21 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 			details > summary {
 				cursor: pointer;
 			}
+
+			details.well {
+				background-color: var(--uui-color-divider);
+				border: 1px solid var(--uui-color-divider-standalone);
+				border-radius: var(--uui-border-radius, 3px);
+				padding: var(--uui-size-space-5);
+			}
+
+			details + details {
+				margin-top: var(--uui-size-space-3);
+			}
+
+			details p {
+				margin-bottom: 0;
+			}
 		`,
 	];
 }
