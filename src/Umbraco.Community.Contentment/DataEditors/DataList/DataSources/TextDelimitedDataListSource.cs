@@ -55,21 +55,24 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the text-delimited data source.<br>This can be either a remote URL, or local relative file path.",
-                View = "textstring"
+                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
                 Key = "delimiter",
                 Name = "Delimiter",
                 Description = "Enter the character to use as the delimiter.<br>The default delimiter is a comma, <code>,</code>.",
-                View = "textstring"
+                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
                 Key = "ignoreFirstLine",
                 Name = "Ignore the first line?",
                 Description = "Select to ignore the first line. Typically with text delimited data sources, the first line can be used for column headings.",
-                View = "boolean"
+                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
             {
@@ -77,6 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
             },
             new ContentmentConfigurationField
             {
@@ -84,6 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
             },
             new ContentmentConfigurationField
             {
@@ -91,6 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
             },
             new ContentmentConfigurationField
             {
@@ -98,6 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
             }
         };
 

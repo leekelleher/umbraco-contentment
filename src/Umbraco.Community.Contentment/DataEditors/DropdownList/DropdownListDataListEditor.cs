@@ -36,6 +36,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Allow empty?",
                 Description = "Enable to allow an empty option at the top of the dropdown list.<br>When disabled, the default value will be set to the first option.",
                 View = "views/propertyeditors/boolean/boolean.html",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                 Config = new Dictionary<string, object>
                 {
                     { "default", Constants.Values.True }

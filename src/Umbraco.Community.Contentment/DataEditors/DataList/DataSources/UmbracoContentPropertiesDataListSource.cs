@@ -74,14 +74,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "includeName",
                         Name = "Include \"Name\" property?",
                         Description = "Select to include an option called \"Name\", for the content item's name.",
-                        View = "boolean"
+                        View = "boolean",
+                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     },
                     new ContentmentConfigurationField
                     {
                         Key = "sortAlphabetically",
                         Name = "Sort alphabetically?",
                         Description = "Select to sort the properties in alphabetical order.<br>By default, the order is defined by the order they appear on the document type.",
-                        View = "boolean"
+                        View = "boolean",
+                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     },
                 };
             }

@@ -47,7 +47,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
-                View = "textstring"
+                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
@@ -63,6 +64,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Items XPath",
                 Description = "Enter the XPath expression to select the items from the XML data source.",
                 View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -70,6 +72,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Name XPath",
                 Description = "Enter the XPath expression to select the name from the item.",
                 View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -77,6 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Value XPath",
                 Description = "Enter the XPath expression to select the value (key) from the item.",
                 View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -84,6 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Icon XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the icon from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -91,6 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Description XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the description from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

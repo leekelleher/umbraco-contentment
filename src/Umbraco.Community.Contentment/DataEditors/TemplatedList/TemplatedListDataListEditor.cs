@@ -54,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "template",
                 Name = "Template",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CodeEditor",
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "razor" },
@@ -68,6 +69,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
                 View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new HtmlAttributesConfigurationField(_ioHelper),
         };

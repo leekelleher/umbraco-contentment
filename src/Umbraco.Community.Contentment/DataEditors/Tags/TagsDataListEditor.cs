@@ -29,6 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Confirm removals?",
                 Description = "Select to enable a confirmation prompt when removing an item.",
                 View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 

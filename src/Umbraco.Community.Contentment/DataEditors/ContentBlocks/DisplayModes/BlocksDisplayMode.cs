@@ -42,6 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
                 View = "views/propertyeditors/boolean/boolean.html",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
             {
@@ -49,6 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Allow create content template?",
                 Description = "Select to enable the 'Create content template' feature.",
                 View = "views/propertyeditors/boolean/boolean.html",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 

@@ -55,6 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "URL",
                 Description = "Enter the URL of the JSON data source.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -62,6 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Items JSONPath",
                 Description = "Enter the JSONPath expression to select the items from the JSON data source.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -69,6 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Name JSONPath",
                 Description = "Enter the JSONPath expression to select the name from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -76,6 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Value JSONPath",
                 Description = "Enter the JSONPath expression to select the value (key) from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -83,6 +87,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Icon JSONPath",
                 Description = "<em>(optional)</em> Enter the JSONPath expression to select the icon from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {
@@ -90,6 +95,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Description JSONPath",
                 Description = "<em>(optional)</em> Enter the JSONPath expression to select the description from the item.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

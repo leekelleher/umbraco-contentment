@@ -82,6 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "SQL query",
                 Description = "Enter your SQL query.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CodeEditor",
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
@@ -95,6 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Connection string",
                 Description = "Select the connection string.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.DropdownList",
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },

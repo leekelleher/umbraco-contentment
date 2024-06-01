@@ -98,6 +98,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     Name = "Enable preview?",
                     Description = "Select to enable a rich preview for this content block type.",
                     View = "views/propertyeditors/boolean/boolean.html",
+                    PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     Config = new Dictionary<string, object>
                     {
                         { "default", Constants.Values.False }
