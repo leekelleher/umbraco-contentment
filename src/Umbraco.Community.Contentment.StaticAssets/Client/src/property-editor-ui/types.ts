@@ -3,7 +3,7 @@ import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/prope
 
 export type ContentmentConfigurationEditorValue = {
 	key: string;
-	value: any;
+	value: Record<string, unknown>;
 };
 
 export type ContentmentConfigurationEditorModel = {

@@ -3,12 +3,20 @@
 
 import type { ManifestModal, ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
 
-const modal: ManifestModal = {
-	type: 'modal',
-	alias: 'Umb.Contentment.Modal.ConfigurationEditor',
-  name: '[Contentment] Configuration Editor Modal',
-	element: () => import('./configuration-editor-modal.element.js'),
-};
+const modals: Array<ManifestModal> = [
+	{
+		type: 'modal',
+		alias: 'Umb.Contentment.Modal.ConfigurationEditor.Selection',
+		name: '[Contentment] Configuration Editor Selection Modal',
+		element: () => import('./configuration-editor-selection-modal.element.js'),
+	},
+  {
+		type: 'modal',
+		alias: 'Umb.Contentment.Modal.ConfigurationEditor.Workspace',
+		name: '[Contentment] Configuration Editor Workspace Modal',
+		element: () => import('./configuration-editor-workspace-modal.element.js'),
+	},
+];
 
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
@@ -22,4 +30,4 @@ const editorUi: ManifestPropertyEditorUi = {
 	},
 };
 
-export const manifests = [modal, editorUi];
+export const manifests = [...modals, editorUi];
