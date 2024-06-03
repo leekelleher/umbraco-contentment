@@ -58,6 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
                 Name = "Content node",
                 Description = "Set the content node to take the property value from.",
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
@@ -65,6 +66,7 @@ namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
                 Name = "Property alias",
                 Description = "Set the property alias to populate the data source with, (from the content node).",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

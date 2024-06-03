@@ -3,7 +3,7 @@
 // * License, v. 2.0. If a copy of the MPL was not distributed with this
 // * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-//using System.ComponentModel;
+using System.ComponentModel;
 //using System.Reflection;
 //using Microsoft.AspNetCore.Mvc;
 //using Umbraco.Cms.Core.Strings;
@@ -12,14 +12,14 @@
 //using Umbraco.Community.Contentment.DataEditors;
 //using Umbraco.Extensions;
 
-//namespace Umbraco.Community.Contentment.Web.Controllers
-//{
-//    [EditorBrowsable(EditorBrowsableState.Never)]
+namespace Umbraco.Community.Contentment.Web.Controllers
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
 //    [PluginController(Constants.Internals.PluginControllerName), IsBackOffice]
-//    public sealed class EnumDataSourceApiController : UmbracoAuthorizedJsonController
-//    {
-//        internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
-//        internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
+    public sealed class EnumDataSourceApiController //: UmbracoAuthorizedJsonController
+    {
+        internal const string GetAssembliesUrl = "backoffice/Contentment/EnumDataSourceApi/GetAssemblies";
+        internal const string GetEnumsUrl = "backoffice/Contentment/EnumDataSourceApi/GetEnums?assembly={0}";
 
 //        private readonly IShortStringHelper _shortStringHelper;
 
@@ -96,5 +96,5 @@
 
 //            return options.Values;
 //        }
-//    }
-//}
+    }
+}

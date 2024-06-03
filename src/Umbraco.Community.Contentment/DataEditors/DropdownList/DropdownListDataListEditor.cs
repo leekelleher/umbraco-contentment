@@ -12,6 +12,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string AllowEmpty = "allowEmpty";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.DropdownList";
 
         private readonly IIOHelper _ioHelper;
 
@@ -58,6 +59,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.DropdownList";
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

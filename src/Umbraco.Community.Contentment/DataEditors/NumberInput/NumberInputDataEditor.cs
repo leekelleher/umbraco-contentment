@@ -19,6 +19,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "number-input.html";
         internal const string DataEditorIcon = "icon-coin";
 
+        // TODO: [LK] This property-editor UI needs to be developed.
+        internal const string DataEditorUiAlias = "Umb.PropertyEditorUi.Decimal";
+
         private readonly IIOHelper _ioHelper;
 
         public NumberInputDataEditor(IIOHelper ioHelper, IDataValueEditorFactory dataValueEditorFactory)

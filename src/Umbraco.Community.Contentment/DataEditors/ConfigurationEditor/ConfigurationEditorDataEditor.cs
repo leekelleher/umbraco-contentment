@@ -13,5 +13,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorInlineViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.inline.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.overlay.html";
         internal const string DataEditorIcon = UmbConstants.Icons.Package;
+
+        // TODO: [LK] This property-editor UI needs to be developed.
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ReadOnly";
     }
 }

@@ -53,6 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Name = "Image Cropper",
                         Description = "Select a Data Type that uses the Image Cropper.",
                         View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                        PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                         Config = new Dictionary<string, object>
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },

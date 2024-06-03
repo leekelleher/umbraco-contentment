@@ -60,6 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Name = "Content Type",
                         Description = "Select a Content Type to list the properties from.",
                         View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
+                        PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
                         Config = new Dictionary<string, object>
                         {
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },

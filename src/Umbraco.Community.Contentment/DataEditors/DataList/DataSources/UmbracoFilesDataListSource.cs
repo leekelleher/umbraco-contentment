@@ -51,6 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "File type",
                 Description = "Select the Umbraco file type to use.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -74,6 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueType",
                 Name = "Value type",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of value to reference the file.",
                 Config = new Dictionary<string, object>
                 {

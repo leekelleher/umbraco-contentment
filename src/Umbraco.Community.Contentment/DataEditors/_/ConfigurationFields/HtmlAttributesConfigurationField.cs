@@ -22,13 +22,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "name",
                     Name = "Name",
-                    View = "textstring"
+                    View = "textstring",
+                    PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 },
                 new ContentmentConfigurationField
                 {
                     Key = "value",
                     Name = "Value",
-                    View = "textstring"
+                    View = "textstring",
+                    PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 }
             };
 
@@ -36,6 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "HTML attributes";
             Description = "<em>(optional)</em> Use this field to add any HTML attributes to the list editor.";
             View = ioHelper.ResolveRelativeOrVirtualUrl(DataTableDataEditor.DataEditorViewPath);
+            PropertyEditorUiAlias = DataTableDataEditor.DataEditorUiAlias;
             Config = new Dictionary<string, object>()
             {
                 { DataTableConfigurationEditor.FieldItems, listFields },

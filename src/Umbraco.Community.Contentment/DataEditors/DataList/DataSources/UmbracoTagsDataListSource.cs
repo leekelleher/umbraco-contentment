@@ -38,6 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Tag group",
                 Description = "Enter a tag group, or leave empty to use all groups.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

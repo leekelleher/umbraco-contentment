@@ -12,6 +12,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class TemplatedListDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.TemplatedList";
 
         private readonly IIOHelper _ioHelper;
 
@@ -87,6 +88,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.TemplatedList";
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

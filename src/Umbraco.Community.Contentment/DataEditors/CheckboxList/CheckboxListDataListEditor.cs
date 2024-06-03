@@ -10,6 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class CheckboxListDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CheckBoxList";
 
         public string Name => "Checkbox List";
 
@@ -43,6 +44,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.CheckBoxList";
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

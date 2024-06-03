@@ -7,12 +7,11 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
-//using Umbraco.Community.Contentment.Web.Controllers;
+using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -57,16 +56,16 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
-                //Config = new Dictionary<string, object>
-                //{
-                //    { CascadingDropdownListDataEditor.APIs, new[]
-                //        {
-                //            EnumDataSourceApiController.GetAssembliesUrl,
-                //            EnumDataSourceApiController.GetEnumsUrl,
-                //        }
-                //    }
-                //}
+                PropertyEditorUiAlias = CascadingDropdownListDataEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { CascadingDropdownListDataEditor.APIs, new[]
+                        {
+                            EnumDataSourceApiController.GetAssembliesUrl,
+                            EnumDataSourceApiController.GetEnumsUrl,
+                        }
+                    }
+                }
             },
             new ContentmentConfigurationField
             {

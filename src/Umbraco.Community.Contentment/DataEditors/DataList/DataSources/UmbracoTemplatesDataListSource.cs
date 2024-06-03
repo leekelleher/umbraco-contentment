@@ -42,6 +42,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueType",
                 Name = "Value type",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of reference to store as the value for the template.",
                 Config = new Dictionary<string, object>
                 {

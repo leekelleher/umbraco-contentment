@@ -34,6 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Start",
                 Description = "The value of the first number in the sequence.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -46,6 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "End",
                 Description = "The value of the last number in the sequence.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -58,6 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Step",
                 Description = "The number of steps between each number.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { "step", 0.1D },
@@ -70,6 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Decimal places",
                 Description = "How many decimal places would you like?",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Slider",
                 Config = new Dictionary<string, object>
                 {
                     { "initVal1", 0 },

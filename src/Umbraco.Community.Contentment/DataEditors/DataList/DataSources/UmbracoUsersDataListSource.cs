@@ -54,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Name = "User Group",
                         Description = "Select a user group to filter the users by. If left empty, all users will be used.",
                         View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
+                        PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
                         Config = new Dictionary<string, object>
                         {
                             { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },

@@ -62,6 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
                 View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
@@ -69,6 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
                 View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
             {

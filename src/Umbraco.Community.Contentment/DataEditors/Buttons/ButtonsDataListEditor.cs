@@ -13,6 +13,8 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Buttons";
+
         private readonly IIOHelper _ioHelper;
 
         public ButtonsDataListEditor(IIOHelper ioHelper)
@@ -106,6 +108,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => DataEditorViewPath;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.Buttons";
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

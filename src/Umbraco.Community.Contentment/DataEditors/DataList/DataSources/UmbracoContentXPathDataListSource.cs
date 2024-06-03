@@ -46,6 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "XPath",
                 Description = "Enter the XPath expression to select the content.",
                 View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>

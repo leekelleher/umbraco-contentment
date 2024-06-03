@@ -54,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "contentTypes",
                 Name = "Content types",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CheckboxListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = CheckboxListDataListEditor.DataEditorUiAlias,
                 Description = "Select the types to use.",
                 Config = new Dictionary<string, object>
                 {

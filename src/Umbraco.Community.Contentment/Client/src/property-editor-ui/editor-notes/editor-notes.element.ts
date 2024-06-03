@@ -33,8 +33,8 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		this.#alertType = config.getValueByAlias('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
-    const message = config.getValueByAlias('message');
-    this.#message = typeof message === 'string' ? message : (message as unknown as any).markup;
+		const message = config.getValueByAlias('message');
+		this.#message = (message as unknown as any)?.markup ?? message;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 
 		if (this.#icon) {
@@ -90,9 +90,9 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 				padding: 1rem;
 			}
 
-      #note  > div {
-        flex: 1;
-      }
+			#note > div {
+				flex: 1;
+			}
 
 			umb-icon {
 				font-size: 3rem;
@@ -107,6 +107,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 
 			details > summary {
 				cursor: pointer;
+				font-weight: bold;
 			}
 		`,
 	];

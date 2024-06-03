@@ -15,7 +15,7 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 const elementName = 'umb-bellissima-status-dashboard-element';
 @customElement(elementName)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
-	#started = 36;
+	#started = 40;
 	#total = 63;
 	#percentage = Math.floor((this.#started / this.#total) * 100);
 
@@ -29,12 +29,10 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 				markup: `
 <p>During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of progress on Contentment for Umbraco Bellissima.</p>
 <p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong> from stable releases.</p>
-<p>Development has started on <strong>${this.#started} of the ${
-					this.#total
-				}</strong> UI components. Package migration is <strong>${
-					this.#percentage
-				}% complete</strong>.</p>
-<uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>`,
+<p>Development has started on <strong>${this.#started} of the ${this.#total}</strong> UI components. Package migration is <strong>${this.#percentage}% complete</strong>.</p>
+<uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>
+<p>If you find any bugs, or feel something is amiss, then please raise an issue on <a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener">the Contentment source-code repository on GitHub</a>.</p>
+<p>Pleaes do keep in mind that I am a solo developer on this project, working on it in my own free time.</p>`,
 			},
 		},
 	]);
@@ -92,13 +90,13 @@ Status of list-editors used by the Data List editor.
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle: | **Buttons** | **Done** |  |
+| :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
-| :green_circle: | **Dropdown List** | **Done** |  |
+| :large_blue_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes" UI.  |
 | :grey_question: | Item Picker | _Pending_ | I haven't thought about it yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
 | :grey_question: | Tags | _Pending_ | I haven't thought about it yet. |
-| :thinking: | Templated List | _Researching_ | Exploring alternative options. |
+| :thinking: | Templated List | _Researching_ | Exploring alternative options. :warning: Missing "HTML attributes" UI. |
 
 ### Data List sources
 
@@ -109,7 +107,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle: | **.NET Countries** | **Done** | |
 | :green_circle: | **.NET Currencies** | **Done** | |
-| :grey_question: | .NET Enum | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | .NET Enum | _Reviewed_ | Missing "Enumeration type" UI. |
 | :green_circle: | **.NET Languages** | **Done** | |
 | :green_circle: | **.NET Time Zone** | **Done** | |
 | :green_circle: | Examine | **Done** | |
@@ -120,23 +118,23 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 | :green_circle: | **Text Delimited** | **Done** | |
 | :green_circle: | **uCssClassName** | **Done** | |
 | :thinking: | Umbraco Backoffice Sections | _Researching_ | :no_entry_sign: Backoffice sections are now registered client-side, unable to query on the server. Exploring alternative options. |
-| :grey_question: | Umbraco Content | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Content Properties | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | Umbraco Content | _Reviewed_ | Missing "Parent node" UI. |
+| :large_blue_circle: | Umbraco Content Properties | _Reviewed_ | Missing "Content Type UI". |
 | :grey_question: | Umbraco Content Property Value | _Pending_ | I haven't thought about it yet. |
 | :grey_question: | Umbraco Content Types | _Pending_ | I haven't thought about it yet. |
 | :no_entry_sign: | Umbraco Content XPath | **Deprecated** | Umbraco 14 doesn't support XPath in the content cache. |
-| :grey_question: | Umbraco Dictionary | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Entity | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | Umbraco Dictionary | _Reviewed_ | Missing "Dictionary Item" UI. |
+| :green_circle: | **Umbraco Entity** | **Done** | |
 | :grey_question: | Umbraco Files | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Image Crop | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Umbraco Image Crop** | **Done** | |
 | :green_circle: | **Umbraco Languages** | **Done** |  |
 | :green_circle: | **Umbraco Member Group** | **Done** | |
-| :grey_question: | Umbraco Members | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Tags | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Templates | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | Umbraco Members | _Reviewed_ | Missing "Member Type" UI. |
+| :green_circle: | **Umbraco Tags** | **Done** | |
+| :green_circle: | **Umbraco Templates** | **Done** | |
 | :green_circle: | **Umbraco User Group** | **Done** | |
-| :grey_question: | Umbraco Users | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | User Defined | _Pending_ | I haven't thought about it yet. |
+| :large_blue_circle: | Umbraco Users | _Reviewed_ | Missing "User Group" UI. |
+| :large_blue_circle: | User Defined | _Reviewed_ | Missing "Options" UI. |
 | :green_circle: | **XML** | **Done** | |
 | :green_circle: | **XML Sitemap Change Frequency** | **Done** | |
 | :green_circle: | **XML Sitemap Priority** | **Done** | |
