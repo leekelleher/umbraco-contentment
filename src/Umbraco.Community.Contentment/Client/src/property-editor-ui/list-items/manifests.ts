@@ -8,30 +8,36 @@ import type {
 
 const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
-	name: '[Contentment] Social Links Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.SocialLinks',
+	name: '[Contentment] List Items Property Editor Schema',
+	alias: 'Umbraco.Community.Contentment.ListItems',
 	meta: {
-		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.SocialLinks',
+		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ListItems',
 	},
 };
 
 const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
-	alias: 'Umb.Contentment.PropertyEditorUi.SocialLinks',
-	name: '[Contentment] Social Links Property Editor UI',
-	element: () => import('../templated-label/templated-label.element.js'),
+	alias: 'Umb.Contentment.PropertyEditorUi.ListItems',
+	name: '[Contentment] List Items Property Editor UI',
+	element: () => import('../read-only/read-only.element.js'),
 	meta: {
-		label: '[Contentment] Social Links',
+		label: '[Contentment] List Items',
 		icon: 'icon-hearts',
 		group: 'lists',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.SocialLinks',
+		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ListItems',
 		settings: {
 			properties: [
 				{
-					alias: 'networks',
-					label: 'Social networks',
-					description: 'Define the icon set for the available social networks.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					alias: 'hideIcon',
+					label: 'Hide icon field?',
+					description: 'Select to hide the icon picker.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'hideDescription',
+					label: 'Hide description field?',
+					description: 'Select to hide the description text field.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 				{
 					alias: 'confirmRemoval',
@@ -52,6 +58,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 			],
+			defaultData: [{ alias: 'maxItems', value: 0 }],
 		},
 	},
 };

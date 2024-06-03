@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.TextboxList',
 	name: '[Contentment] Textbox List Property Editor UI',
-	element: () => import('../templated-label/templated-label.element.js'),
+	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Textbox List',
 		icon: 'icon-hearts',

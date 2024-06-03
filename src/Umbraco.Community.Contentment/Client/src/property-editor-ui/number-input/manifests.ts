@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 	name: '[Contentment] Number Input Property Editor UI',
-	element: () => import('../templated-label/templated-label.element.js'),
+	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Number Input',
 		icon: 'icon-hearts',

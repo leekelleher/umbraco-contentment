@@ -1,4 +1,4 @@
-import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
+import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
@@ -21,27 +21,8 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	}
 
 	render() {
-		return html`
-			<div class="flex">
-				<umb-code-block language="config" copy>${JSON.stringify(this.config, null, 2)}</umb-code-block>
-				<umb-code-block language="value" copy>${JSON.stringify(this.value, null, 2)}</umb-code-block>
-			</div>
-		`;
+		return html`<umb-code-block language="value" copy>${JSON.stringify(this.value, null, 2)}</umb-code-block>`;
 	}
-
-	static styles = [
-		css`
-			.flex {
-				display: flex;
-				gap: var(--uui-size-layout-1);
-			}
-
-			.flex > umb-code-block {
-				flex: 1;
-				max-width: 50%;
-			}
-		`,
-	];
 }
 
 export { ContentmentPropertyEditorUITemplatedLabelElement as element };

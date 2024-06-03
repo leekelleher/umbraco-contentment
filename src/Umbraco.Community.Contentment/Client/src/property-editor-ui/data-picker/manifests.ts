@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.DataPicker',
 	name: '[Contentment] Data Picker Property Editor UI',
-	element: () => import('../templated-label/templated-label.element.js'),
+	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Data Picker',
 		icon: 'icon-hearts',

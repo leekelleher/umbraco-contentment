@@ -1,1 +1,1 @@
-dotnet pack ..\src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj --configuration Release --output ..\artifacts 
+dotnet pack ..\src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj --configuration Release --output ..\artifacts

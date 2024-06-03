@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.TextInput',
 	name: '[Contentment] Text Input Property Editor UI',
-	element: () => import('../templated-label/templated-label.element.js'),
+	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Text Input',
 		icon: 'icon-hearts',

@@ -33,9 +33,9 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
-		const allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
-		const defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
+		// const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
+		// const allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
+		// const defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this._labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
