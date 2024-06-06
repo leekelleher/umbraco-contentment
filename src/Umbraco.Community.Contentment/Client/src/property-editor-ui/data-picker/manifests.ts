@@ -31,13 +31,13 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'dataSource',
 					label: 'Data source',
 					description: 'Select and configure a data source.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
 				},
 				{
 					alias: 'displayMode',
 					label: 'Display mode',
 					description: 'Select display mode for the picker editor.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
 				},
 				{
 					alias: 'pageSize',

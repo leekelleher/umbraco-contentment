@@ -55,14 +55,19 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'dataSource',
 					label: 'Data source',
 					description: 'Select and configure a data source.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'configurationType', value: 'dataSource' },
+						{ alias: 'maxItems', value: 1 },
+					],
 				},
 				{
 					alias: 'maxChars',
 					label: 'Maximum allowed characters',
 					description:
 						'Enter the maximum number of characters allowed for the text input.<br>The default limit is 500 characters.',
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 				{
 					alias: 'autocomplete',

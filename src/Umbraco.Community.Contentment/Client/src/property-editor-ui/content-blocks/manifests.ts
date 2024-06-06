@@ -31,13 +31,13 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'displayMode',
 					label: 'Display mode',
 					description: 'Select and configure how to display the blocks in the editor.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
 				},
 				{
 					alias: 'contentBlockTypes',
 					label: 'Block types',
 					description: 'Configure the element types to be used as blocks.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
 				},
 				{
 					alias: 'enableFilter',

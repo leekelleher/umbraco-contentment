@@ -31,7 +31,12 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'dataSource',
 					label: 'Data source',
 					description: 'Select and configure a data source.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'configurationType', value: 'dataSource' },
+						{ alias: 'maxItems', value: 1 },
+					],
 				},
 				{
 					alias: 'defaultIcon',
