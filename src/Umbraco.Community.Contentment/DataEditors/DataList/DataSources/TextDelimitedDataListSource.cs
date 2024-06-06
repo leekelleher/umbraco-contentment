@@ -80,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
+               PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
@@ -96,7 +96,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
@@ -104,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer",
+               PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             }
         };
 

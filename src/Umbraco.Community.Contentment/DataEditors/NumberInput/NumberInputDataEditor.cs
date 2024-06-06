@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-coin";
 
         // TODO: [LK] This property-editor UI needs to be developed.
-        internal const string DataEditorUiAlias = "Umb.PropertyEditorUi.Decimal";
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.NumberInput";
 
         private readonly IIOHelper _ioHelper;
 

@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 	name: '[Contentment] Number Input Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('../number-input/number-input.element.js'),
 	meta: {
 		label: '[Contentment] Number Input',
 		icon: 'icon-hearts',
@@ -52,7 +52,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
 				},
 			],
-			defaultData: [{ alias: 'items', value: 's' }],
+			defaultData: [{ alias: 'size', value: 's' }],
 		},
 	},
 };

@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             Name = "Maximum items";
             Description = "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.";
             View = ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath);
-            PropertyEditorUiAlias = "Umb.PropertyEditorUi.Integer";
+            PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias;
         }
     }
 }

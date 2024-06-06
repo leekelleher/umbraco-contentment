@@ -58,14 +58,14 @@ export const manifest: ManifestPropertyEditorUi = {
 					alias: 'minLines',
 					label: 'Minimum lines',
 					description: 'Set the minimum number of lines that the editor will be. The default is 12 lines.',
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Integer',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 				{
 					alias: 'maxLines',
 					label: 'Maximum lines',
 					description:
 						'Set the maximum number of lines that the editor can be. If left empty, the editor will not auto-scale.',
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Integer',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 			],
 			defaultData: [

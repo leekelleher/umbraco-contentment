@@ -43,7 +43,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'pageSize',
 					label: 'Page size',
 					description: 'How many items to display per page? The default value is 12.',
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Integer',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 				{
 					alias: 'overlaySize',
@@ -61,7 +61,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'maxItems',
 					label: 'Maximum items',
 					description: "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Integer',
+          propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 				{
 					alias: 'enableDevMode',
