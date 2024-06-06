@@ -35,10 +35,14 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
+		this._defaultValue = config.getValueByAlias<string>('defaultValue') ?? '';
 		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
 		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
 		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 	}
+
+	@state()
+	private _defaultValue = '';
 
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
@@ -57,7 +61,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	render() {
 		return html`
-			<uui-radio-group .value=${this.value} @change=${this.#onChange}>
+			<uui-radio-group .value=${this.value || this._defaultValue} @change=${this.#onChange}>
 				${repeat(
 					this._items,
 					(item) => item.value,

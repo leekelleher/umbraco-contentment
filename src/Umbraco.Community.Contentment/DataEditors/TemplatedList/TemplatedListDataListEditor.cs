@@ -47,15 +47,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>If you need assistance with AngularJS expression syntax, please refer to this resource: <a href=""https://docs.angularjs.org/guide/expression"" target=""_blank""><strong>docs.angularjs.org</strong></a>.</p>
 <hr>
 <p>If you would like a starting point for your custom template, here is an example.</p>
-<umb-code-snippet language=""'AngularJS template'"">&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
-&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-snippet>
+<umb-code-block language=""'AngularJS template'"" copy>&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
+&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-block>
 </details>", true),
             new ContentmentConfigurationField
             {
                 Key = "template",
                 Name = "Template",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CodeEditor",
+                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "razor" },

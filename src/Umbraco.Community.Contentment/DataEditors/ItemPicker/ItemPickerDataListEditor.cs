@@ -41,8 +41,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "overlaySize",
                 Name = "Editor overlay size",
                 Description = "Select the size of the overlay editing panel. The default is 'small', although if the editor fields require a wider panel, do consider using 'medium' or 'large'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Buttons",
+                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -53,8 +53,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" },
-                    { "labelStyle", "text" },
-                    { "size", "m" },
                 }
             },
             new ContentmentConfigurationField
@@ -63,7 +61,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "List type",
                 Description = "Select the style of list to be displayed in the overlay.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -82,7 +80,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon, <em>(for when no icon is available)</em>.",
                 View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.IconPicker",
+                PropertyEditorUiAlias = IconPickerDataEditor.DataEditorUiAlias,
             },
             new EnableFilterConfigurationField
             {
