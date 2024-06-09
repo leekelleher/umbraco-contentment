@@ -4,7 +4,10 @@
 
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
-[![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Our.Umbraco.Community.Contentment.Core?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
+[![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt.Umbraco.Community.Contentment?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
+
+> [!IMPORTANT]
+> If you are looking for **Contentment for Umbraco 14** (Bellissima, the new backoffice), [please see the latest progress updates](https://github.com/leekelleher/umbraco-contentment/discussions/357)!
 
 ### What is it?
 
