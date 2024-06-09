@@ -49,11 +49,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 config.currentPageId = -1;
             }
 
-            $scope.model.value = $scope.model.value || config.defaultValue;
-
-            if (Array.isArray($scope.model.value) === false) {
-                $scope.model.value = [$scope.model.value];
-            }
+            ensureValueIsArray();
 
             if (Array.isArray(config.displayMode) === true) {
                 config.displayMode = config.displayMode[0];
@@ -120,6 +116,8 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 },
                 submit: function (selection) {
 
+                    ensureValueIsArray();
+
                     if (selection) {
                         Object.entries(selection).forEach(item => {
                             vm.itemLookup[item[0]] = item[1];
@@ -140,6 +138,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             });
         };
+
+        function ensureValueIsArray() {
+            $scope.model.value = $scope.model.value || config.defaultValue;
+
+            if (Array.isArray($scope.model.value) === false) {
+                $scope.model.value = [$scope.model.value];
+            }
+        }
 
         function load() {
             if ($scope.model.value.length) {
