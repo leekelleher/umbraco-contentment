@@ -67,7 +67,87 @@ This interface contains two methods;
 
 The `DataListItem` model is made up of four `string` properties: `Name`, `Value`, `Description` _(optional)_ and `Icon` _(optional)_.
 
-> `// TODO: Add a code snippet example of a custom data source.`
+```csharp
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Community.Contentment.DataEditors;
+
+namespace CodeExample;
+
+public class EventDataSource : IDataPickerSource
+{
+    private readonly IEventService _eventService;
+
+    public EventDataSource(IEventService eventService)
+    {
+        _eventService = eventService;
+    }
+
+    public string Name => "Events";
+    public string Description => "List of events";
+    public string Icon => "icon-movie-alt";
+    public Dictionary<string, object>? DefaultValues => default;
+    public IEnumerable<ConfigurationField>? Fields => default;
+    public string Group => "Custom datasources";
+    public OverlaySize OverlaySize => OverlaySize.Small;
+
+    public async Task<IEnumerable<DataListItem>> GetItemsAsync(
+        Dictionary<string, object> config,
+        IEnumerable<string> values
+    )
+    {
+        var items = new List<DataListItem>();
+
+        var events = (await _eventService.GetEventsAsync()).ToList();
+
+        if (events.Count == 0)
+        {
+            return items;
+        }
+
+        foreach (var eventItem in events)
+        {
+            items.Add(new DataListItem { Name = eventItem.Name, Value = eventItem.Id.ToString() });
+        }
+
+        return items.OrderBy(x => x.Name);
+    }
+
+    public async Task<PagedResult<DataListItem>> SearchAsync(
+        Dictionary<string, object> config,
+        int pageNumber = 1,
+        int pageSize = 12,
+        string query = ""
+    )
+    {
+        var items = new List<DataListItem>();
+
+        var events = await _eventService.SearchEventsAsync(query, null, null, null, null);
+
+        if (!events.Events.Any())
+        {
+            return new PagedResult<DataListItem>(0, pageNumber, pageSize) { Items = items };
+        }
+
+        foreach (var eventItem in events.Events)
+        {
+            items.Add(
+                new DataListItem
+                {
+                    Name = eventItem.Name,
+                    Value = eventItem.Id.ToString(),
+                    Icon = "icon-movie-alt"
+                }
+            );
+        }
+
+        return new PagedResult<DataListItem>(events.EventCount, pageNumber, pageSize)
+        {
+            Items = items
+        };
+    }
+}
+```
 
 
 ##### Accessing contextual content
