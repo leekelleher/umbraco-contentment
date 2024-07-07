@@ -1,4 +1,5 @@
 import { css, customElement, html, ifDefined, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { parseInt } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
@@ -23,13 +24,8 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 	@state()
 	private _size?: string;
 
-	#parseInt(input: unknown): number | undefined {
-		const num = Number(input);
-		return Number.isNaN(num) ? undefined : num;
-	}
-
 	#onInput(event: InputEvent & { target: HTMLInputElement }) {
-		this.value = this.#parseInt(event.target.value);
+		this.value = parseInt(event.target.value);
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
