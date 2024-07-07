@@ -21,16 +21,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IFileService _fileService;
         private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _textService;
 
         public UmbracoFilesDataListSource(
             IFileService fileService,
-            IIOHelper ioHelper,
-            ILocalizedTextService textService)
+            IIOHelper ioHelper)
         {
             _fileService = fileService;
             _ioHelper = ioHelper;
-            _textService = textService;
         }
 
         public override string Name => "Umbraco Files";
@@ -58,12 +55,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             new DataListItem
                             {
-                                Name = _textService.Localize("treeHeaders", "scripts"),
+                                Name = "#treeHeaders_scripts",
                                 Value = UmbConstants.UdiEntityType.Script
                             },
                             new DataListItem
                             {
-                                Name = _textService.Localize("treeHeaders", "stylesheets"),
+                                Name = "#treeHeaders_stylesheets",
                                 Value = UmbConstants.UdiEntityType.Stylesheet
                             }
                         }
@@ -83,13 +80,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             new DataListItem
                             {
-                                Name = _textService.Localize("content", "alias"),
+                                Name = "#content_alias",
                                 Value = "alias",
                                 Description = "The alias of the file's name, e.g. `styles`",
                             },
                             new DataListItem
                             {
-                                Name = _textService.Localize("general", "path"),
+                                Name = "#general_path",
                                 Value = "path",
                                 Description = "The path of the file, e.g. `/css/styles.css`",
                             }

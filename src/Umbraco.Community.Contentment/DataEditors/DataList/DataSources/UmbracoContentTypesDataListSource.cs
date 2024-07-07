@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.IO;
@@ -94,7 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var types = config.GetValueAs("contentTypes", defaultValue: default(JArray))?.ToObject<IEnumerable<string>>();
+            var types = config.GetValueAs("contentTypes", defaultValue: default(IEnumerable<string>));
 
             var isDocumentTypeWithTemplate = types?.InvariantContains("documentTypesTemplates") == true;
             var isDocumentType = types?.InvariantContains("documentTypes") == true;
