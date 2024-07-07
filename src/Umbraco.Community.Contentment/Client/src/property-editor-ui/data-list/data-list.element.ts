@@ -65,7 +65,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 	}
 
 	protected async firstUpdated() {
-		await Promise.all([await this.#init()]);
+		await Promise.all([await this.#init().catch(() => undefined)]);
 		this._initialized = true;
 	}
 
