@@ -79,7 +79,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 						() => html`<umb-icon name=${ifDefined(icon)} color=${ifDefined(color)}></umb-icon>`
 					)}
 					<uui-form-layout-item>
-						<span slot="label">${item.name}</span>
+						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(
 							this._showDescriptions && item.description,
 							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`

@@ -109,7 +109,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				@click=${() => this.#onClick(item)}>
 				<div>
 					${when(this._labelStyle !== 'text', () => this.#renderIcon(item))}
-					${when(this._labelStyle !== 'icon', () => html`<span>${item.name}</span>`)}
+					${when(this._labelStyle !== 'icon', () => html`<span>${this.localize.string(item.name)}</span>`)}
 				</div>
 			</uui-button>
 		`;
