@@ -23,14 +23,14 @@ internal sealed class AddEditorUiToDataType : MigrationBase
     protected override void Migrate()
     {
         var sql = Sql()
-         .Select<DataTypeDto>()
-         .AndSelect<NodeDto>()
-         .From<DataTypeDto>()
-         .InnerJoin<NodeDto>()
-         .On<DataTypeDto, NodeDto>(left => left.NodeId, right => right.NodeId)
-         .Where<DataTypeDto>(x => x.EditorAlias.StartsWith(Constants.Internals.DataEditorAliasPrefix) && x.EditorUiAlias == x.EditorAlias);
+            .Select<DataTypeDto>()
+            .AndSelect<NodeDto>()
+            .From<DataTypeDto>()
+            .InnerJoin<NodeDto>()
+            .On<DataTypeDto, NodeDto>(left => left.NodeId, right => right.NodeId)
+            .Where<DataTypeDto>(x => x.EditorAlias.StartsWith(Constants.Internals.DataEditorAliasPrefix) && x.EditorUiAlias == x.EditorAlias);
 
-       var dataTypeDtos = Database.Fetch<DataTypeDto>(sql);
+        var dataTypeDtos = Database.Fetch<DataTypeDto>(sql);
 
         foreach (var dataTypeDto in dataTypeDtos)
         {
