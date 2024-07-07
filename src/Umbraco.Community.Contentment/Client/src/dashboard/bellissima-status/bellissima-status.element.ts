@@ -15,24 +15,26 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 const elementName = 'umb-bellissima-status-dashboard-element';
 @customElement(elementName)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
-	#started = 40;
+  // alpha001 was 40 started, 63 total = 63% complete
+	#started = 51;
+  #completed = 41;
 	#total = 63;
-	#percentage = Math.floor((this.#started / this.#total) * 100);
+	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
 
 	#notesConfig = new UmbPropertyEditorConfigCollection([
 		{ alias: 'alertType', value: 'current' },
-		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha001' },
+		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha002' },
 		{ alias: 'icon', value: 'icon-contentment' },
 		{
 			alias: 'message',
 			value: {
 				markup: `
 <p>During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of progress on Contentment for Umbraco Bellissima.</p>
-<p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong> from stable releases.</p>
-<p>Development has started on <strong>${this.#started} of the ${this.#total}</strong> UI components. Package migration is <strong>${this.#percentage}% complete</strong>.</p>
+<p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong> once the release is <strong>stable</strong>.</p>
+<p>Development has started on <strong>${this.#started}</strong> of the <strong>${this.#total}</strong> UI components, (with <strong>${this.#completed}</strong> complete). Package migration is <strong>${this.#percentage}% complete</strong>.</p>
 <uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>
 <p>If you find any bugs, or feel something is amiss, then please raise an issue on <a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener">the Contentment source-code repository on GitHub</a>.</p>
-<p>Pleaes do keep in mind that I am a solo developer on this project, working on it in my own free time.</p>`,
+<p>Please do keep in mind that I am a solo developer on this project, working on it in my own free time.</p>`,
 			},
 		},
 	]);
@@ -45,6 +47,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
 		':red_circle:': '🔴',
+    ':shrug:': '🤷',
 		':warning:': '⚠️',
 	};
 
@@ -53,21 +56,21 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle:  | **Bytes**           | **Done** | Implemented as standalone component, doesn't reuse Umbraco's Label editor. |
-| :large_blue_circle:  | Code Editor     | _Started_ | Property editor built; configuration needs more work. |
-| :red_circle:  | Content Blocks  | _Undecided_   | :no_entry_sign: Considering deprecating; potentially migrate to Block List? |
-| :green_circle: | **Data List**       | **Done** | Property-editor work is done. **BUT!** The data-sources and list-editors are under active development, _(see below for status)_. |
-| :large_blue_circle: | Data Picker     | _Started_   | A read-only placeholder editor is available. |
-| :large_blue_circle:  | Editor Notes    | _Started_ | Property editor built; configuration needs more work. |
-| :green_circle: | **Icon Picker**     | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
-| :large_blue_circle: | List Items      | _Started_   | A read-only placeholder editor is available. |
-| :large_blue_circle:  | Notes           | _Started_ | Property editor built; configuration needs more work. |
-| :large_blue_circle: | Number Input    | _Started_   | A read-only placeholder editor is available. |
-| :green_circle:  | **Render Macro**    | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
-| :large_blue_circle: | Social Links    | _Started_   | A read-only placeholder editor is available. |
-| :large_blue_circle: | Templated Label | _Started_   | A read-only placeholder editor is available; I'm still researching the templating possibilities. |
-| :large_blue_circle: | Textbox List    | _Started_   | A read-only placeholder editor is available. |
-| :large_blue_circle: | Text Input      | _Started_   | A read-only placeholder editor is available. |
+| :green_circle: | **Bytes** | **Done** | |
+| :large_blue_circle: | Code Editor | _Started_ | 80% done; Property editor built; configuration needs migration work. |
+| :red_circle: | Content Blocks | _Undecided_ | :no_entry_sign: Considering deprecating; potentially migrate to Block List? :thinking: |
+| :green_circle: | **Data List** | **Done** | Property-editor work is done.<br>**BUT!** The data-sources and list-editors are under active development, _(see below for status)_. |
+| :large_blue_circle: | Data Picker | _Started_ | 1% done; A read-only placeholder editor is available. |
+| :green_circle: | **Editor Notes** | **Done** | |
+| :green_circle: | **Icon Picker** | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
+| :large_blue_circle: | List Items | _Started_ | 1% done; A read-only placeholder editor is available. |
+| :green_circle: | **Notes** | **Done** | |
+| :green_circle: | **Number Input** | **Done** | |
+| :green_circle: | ~Render Macro~ | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
+| :green_circle: | **Social Links** | **Done** | :warning: Missing sort ordering. |
+| :large_blue_circle: | Templated Label | _Started_ | 1% done; A read-only placeholder editor is available; I'm still researching the templating possibilities. |
+| :green_circle: | **Textbox List** | **Done** | |
+| :green_circle: | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
 
 ### Internal components
 
@@ -75,14 +78,14 @@ Status of components used internally within Contentment.
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :grey_question: | Cascading Dropdown List | _Pending_ | I haven't thought about it yet. |
-| :green_circle: | **Configuration Editor** | **Done** | |
-| :grey_question: | Content Picker | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Data Table | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Dictionary Picker | _Pending_ | I haven't thought about it yet. |
-| :red_circle:    | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been deprecated in Umbraco. |
+| :grey_question: | Cascading Dropdown List | _Pending_ | I haven't thought about it yet. :shrug: |
+| :green_circle:  | **Configuration Editor** | **Done** | |
+| :grey_question: | Content Picker | _Pending_ | I haven't thought about it yet. :shrug: |
+| :grey_question: | Data Table | _Pending_ | I haven't thought about it yet. :shrug: |
+| :grey_question: | Dictionary Picker | _Pending_ | I haven't thought about it yet. :shrug: |
+| :red_circle:    | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
 | :grey_question: | Read Only | _Pending_ | This component was only used in the Content Block configuration, so may no longer be needed. |
-| :grey_question: | Rich Text Editor | _Pending_ | Hopefully, I can reuse Umbraco's RTE component again. |
+| :red_circle:    | ~Rich Text Editor~ | _Deprecated_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
 
 ### Data List editors
 
@@ -92,11 +95,11 @@ Status of list-editors used by the Data List editor.
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
-| :large_blue_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes" UI.  |
-| :grey_question: | Item Picker | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes", Data Table UI.  |
+| :grey_question: | Item Picker | _Pending_ | I haven't thought about it yet. :shrug: |
 | :green_circle: | **Radio Button List** | **Done** |  |
-| :grey_question: | Tags | _Pending_ | I haven't thought about it yet. |
-| :thinking: | Templated List | _Researching_ | Exploring alternative options. :warning: Missing "HTML attributes" UI. |
+| :grey_question: | Tags | _Pending_ | I haven't thought about it yet. :shrug: |
+| :thinking: | Templated List | _Researching_ | :thinking: Exploring alternative options.<br>:warning: Missing "HTML attributes", Data Table UI. |
 
 ### Data List sources
 
@@ -107,34 +110,34 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle: | **.NET Countries** | **Done** | |
 | :green_circle: | **.NET Currencies** | **Done** | |
-| :large_blue_circle: | .NET Enum | _Reviewed_ | Missing "Enumeration type" UI. |
+| :large_blue_circle: | .NET Enum | _Reviewed_ | Missing "Enumeration type", Cascading Dropdown List UI. |
 | :green_circle: | **.NET Languages** | **Done** | |
 | :green_circle: | **.NET Time Zone** | **Done** | |
-| :green_circle: | Examine | **Done** | |
+| :green_circle: | **Examine** | **Done** | |
 | :green_circle: | **JSON** | **Done** | |
-| :grey_question: | Number Range | _Pending_ | I haven't thought about it yet. |
-| :large_blue_circle: | Physical File System | _Started_ | UI done; needs more testing. |
-| :grey_question: | SQL | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Number Range** | **Done** | |
+| :green_circle: | **Physical File System** | **Done** | |
+| :green_circle: | **SQL** | **Done** | |
 | :green_circle: | **Text Delimited** | **Done** | |
 | :green_circle: | **uCssClassName** | **Done** | |
-| :thinking: | Umbraco Backoffice Sections | _Researching_ | :no_entry_sign: Backoffice sections are now registered client-side, unable to query on the server. Exploring alternative options. |
-| :large_blue_circle: | Umbraco Content | _Reviewed_ | Missing "Parent node" UI. |
-| :large_blue_circle: | Umbraco Content Properties | _Reviewed_ | Missing "Content Type UI". |
-| :grey_question: | Umbraco Content Property Value | _Pending_ | I haven't thought about it yet. |
-| :grey_question: | Umbraco Content Types | _Pending_ | I haven't thought about it yet. |
-| :no_entry_sign: | Umbraco Content XPath | **Deprecated** | Umbraco 14 doesn't support XPath in the content cache. |
-| :large_blue_circle: | Umbraco Dictionary | _Reviewed_ | Missing "Dictionary Item" UI. |
+| :thinking: | Umbraco Backoffice Sections | _Researching_ | :no_entry_sign: Backoffice sections are now registered client-side, unable to query on the server.<br>:thinking: Exploring alternative options. |
+| :large_blue_circle: | Umbraco Content | _Reviewed_ | Missing "Parent node", Content Picker UI. |
+| :large_blue_circle: | Umbraco Content Properties | _Reviewed_ | Missing "Content Type", Item Picker UI. |
+| :large_blue_circle: | Umbraco Content Property Value | _Reviewed_ | Missing "Content node", Content Picker UI. |
+| :green_circle: | **Umbraco Content Types** | **Done** | |
+| :no_entry_sign: | ~Umbraco Content XPath~ | _Deprecated_ | :no_entry_sign: XPath has been removed in Umbraco 14. |
+| :large_blue_circle: | Umbraco Dictionary | _Reviewed_ | Missing "Dictionary Item", Dictionary Picker UI. |
 | :green_circle: | **Umbraco Entity** | **Done** | |
-| :grey_question: | Umbraco Files | _Pending_ | I haven't thought about it yet. |
+| :green_circle: | **Umbraco Files** | **Done** | |
 | :green_circle: | **Umbraco Image Crop** | **Done** | |
 | :green_circle: | **Umbraco Languages** | **Done** |  |
 | :green_circle: | **Umbraco Member Group** | **Done** | |
-| :large_blue_circle: | Umbraco Members | _Reviewed_ | Missing "Member Type" UI. |
+| :large_blue_circle: | Umbraco Members | _Reviewed_ | Missing "Member Type", Item Picker UI. |
 | :green_circle: | **Umbraco Tags** | **Done** | |
 | :green_circle: | **Umbraco Templates** | **Done** | |
 | :green_circle: | **Umbraco User Group** | **Done** | |
-| :large_blue_circle: | Umbraco Users | _Reviewed_ | Missing "User Group" UI. |
-| :large_blue_circle: | User Defined | _Reviewed_ | Missing "Options" UI. |
+| :large_blue_circle: | Umbraco Users | _Reviewed_ | Missing "User Group", Item Picker UI. |
+| :large_blue_circle: | User Defined | _Reviewed_ | Missing "Options", List Items UI. |
 | :green_circle: | **XML** | **Done** | |
 | :green_circle: | **XML Sitemap Change Frequency** | **Done** | |
 | :green_circle: | **XML Sitemap Priority** | **Done** | |
