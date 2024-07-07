@@ -22,10 +22,7 @@ namespace Umbraco.Community.Contentment.Migrations
                .To<Upgrade.V_6_0_0.AddEditorUiToDataType>(Upgrade.V_6_0_0.AddEditorUiToDataType.State)
                .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
-
-            // TODO: [LK] Migration for updated Data List Source namespace;
-            // from "Umbraco.Community.Contentment.DataEditors.DataList.DataSources.UmbracoContentPropertyValueDataListSource"
-            // to   "Umbraco.Community.Contentment.DataEditors.UmbracoContentPropertyValueDataListSource."
+               .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
             ;
         }
     }
