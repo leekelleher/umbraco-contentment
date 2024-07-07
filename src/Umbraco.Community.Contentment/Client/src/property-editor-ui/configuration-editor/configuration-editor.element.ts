@@ -21,9 +21,6 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	@property({ type: Array })
-	public value?: Array<ContentmentConfigurationEditorValue>;
-
 	@state()
 	_items?: Array<ContentmentConfigurationEditorModel>;
 
@@ -36,6 +33,9 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	#maxItems = Infinity;
 
 	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
+
+	@property({ type: Array })
+	public value?: Array<ContentmentConfigurationEditorValue>;
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
@@ -89,7 +89,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.#populateItemLookup();
 	}
 
-	#getItemByKey(key: string): ContentmentConfigurationEditorModel | undefined {
+	#getModelByKey(key: string): ContentmentConfigurationEditorModel | undefined {
 		return this.#lookup[key];
 	}
 
@@ -117,17 +117,35 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	async #onChoose() {
 		if (!this.#modalManager) return;
 
-		const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
-			data: { items: this._items ?? [] },
-		});
+		if (this._items?.length === 1) {
+			// TODO: [LK] Reuse `#onEdit`?
+			const model = this._items[0];
 
-		const data = await modal.onSubmit().catch(() => undefined);
+			const item = {
+				key: model.key,
+				value: model.defaultValues ?? {},
+			};
 
-		this.#setValue(data, this.value?.length ?? 0);
+			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
+				data: { item, model },
+			});
+
+			const data = await modal.onSubmit().catch(() => undefined);
+
+			this.#setValue(data, this.value?.length ?? 0);
+		} else {
+			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
+				data: { items: this._items ?? [] },
+			});
+
+			const data = await modal.onSubmit().catch(() => undefined);
+
+			this.#setValue(data, this.value?.length ?? 0);
+		}
 	}
 
 	async #onEdit(item: ContentmentConfigurationEditorValue, index: number) {
-		const model = this.#getItemByKey(item.key);
+		const model = this.#getModelByKey(item.key);
 
 		if (!model?.fields?.length || !this.#modalManager) return;
 
@@ -165,6 +183,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		if (this.value && this.value.length >= this.#maxItems) return nothing;
 		return html`
 			<uui-button
+				id="btn-add"
 				label=${this.localize.term(this.#buttonLabelKey)}
 				look="placeholder"
 				@click=${this.#onChoose}></uui-button>
@@ -185,14 +204,16 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	}
 
 	#renderItem(item: ContentmentConfigurationEditorValue, index: number) {
-		const model = this.#getItemByKey(item.key);
+		const model = this.#getModelByKey(item.key);
+		if (!model) return;
+		const icon = this.#renderLabel(item, model, 'icon');
 		return html`
 			<uui-ref-node
-				name=${model?.name ?? item.key}
-				detail=${model?.description ?? item.key}
+				name=${this.#renderLabel(item, model, 'name') ?? item.key}
+				detail=${this.#renderLabel(item, model, 'description') ?? item.key}
 				?standalone=${this.#maxItems === 1}
 				@open=${() => this.#onEdit(item, index)}>
-				${when(model?.icon, () => html`<uui-icon slot="icon" name=${model!.icon!}></uui-icon>`)}
+				${when(icon, () => html`<uui-icon slot="icon" name=${icon!}></uui-icon>`)}
 				<uui-action-bar slot="actions">
 					${when(
 						model?.fields?.length,
@@ -211,10 +232,23 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		`;
 	}
 
+	#renderLabel(
+		item: ContentmentConfigurationEditorValue,
+		model: ContentmentConfigurationEditorModel,
+		key: string
+	): string | unknown | undefined {
+		const expression = model.expressions?.[key];
+		if (expression && typeof expression === 'function') {
+			return expression(item.value);
+		}
+
+		return model[key] ?? item.value[key];
+	}
+
 	static styles = [
 		css`
-			uui-button {
-				width: 100%;
+			#btn-add {
+				display: block;
 			}
 		`,
 	];

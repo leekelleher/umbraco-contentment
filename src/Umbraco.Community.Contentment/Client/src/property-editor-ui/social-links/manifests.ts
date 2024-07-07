@@ -2,9 +2,17 @@
 // Copyright © 2024 Lee Kelleher
 
 import type {
+	ManifestModal,
 	ManifestPropertyEditorSchema,
 	ManifestPropertyEditorUi,
 } from '@umbraco-cms/backoffice/extension-registry';
+
+const modal: ManifestModal = {
+	type: 'modal',
+	alias: 'Umb.Contentment.Modal.SocialLinks.Selection',
+	name: '[Contentment] Social Links Selection Modal',
+	element: () => import('./social-links-selection-modal.element.js'),
+};
 
 const schema: ManifestPropertyEditorSchema = {
 	type: 'propertyEditorSchema',
@@ -19,7 +27,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.SocialLinks',
 	name: '[Contentment] Social Links Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('../social-links/social-links.element.js'),
 	meta: {
 		label: '[Contentment] Social Links',
 		icon: 'icon-hearts',
@@ -33,7 +41,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					description: 'Define the icon set for the available social networks.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
-						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureSocialNetwork' },
 						{
 							alias: 'items',
 							value: [
@@ -43,13 +51,15 @@ const editorUi: ManifestPropertyEditorUi = {
 									icon: 'icon-document',
 									defaultValues: {
 										icon: 'icon-document',
+										backgroundColor: '#fff',
+										iconColor: '#000',
 									},
 									expressions: {
-										name: '{{ name }}',
-										description: '{{ url }}',
-										icon: '{{ icon.split(" ")[0] }}',
-										cardStyle: '{ "background-color": "{{ backgroundColor }}" }',
-										iconStyle: '{ "color": "{{ iconColor }}" }',
+										name: (item: any) => item.name,
+										description: (item: any) => item.url,
+										icon: (item: any) => item.icon.split(' ')[0],
+										cardStyle: (item: any) => ({ 'background-color': item.backgroundColor }),
+										iconStyle: (item: any) => ({ color: item.iconColor }),
 									},
 									fields: [
 										{
@@ -58,21 +68,18 @@ const editorUi: ManifestPropertyEditorUi = {
 											description: 'An alias for the social network. This will be used as the value of the selection.',
 											propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
 										},
-
 										{
 											key: 'name',
 											name: 'Name',
 											description: 'This will be used as the label of the social network in selection modal.',
 											propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
 										},
-
 										{
 											key: 'url',
 											name: 'Base URL',
 											description: "This will be the starting part of the social network's profile URL.",
 											propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
 										},
-
 										{
 											key: 'icon',
 											name: 'Icon',
@@ -83,14 +90,12 @@ const editorUi: ManifestPropertyEditorUi = {
 												size: 'small',
 											},
 										},
-
 										{
 											key: 'backgroundColor',
 											name: 'Background color',
 											description: 'The background color for the icon.',
 											propertyEditorUiAlias: 'Umb.PropertyEditorUi.EyeDropper',
 										},
-
 										{
 											key: 'iconColor',
 											name: 'Icon color',
@@ -223,4 +228,4 @@ const editorUi: ManifestPropertyEditorUi = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+export const manifests = [modal, schema, editorUi];

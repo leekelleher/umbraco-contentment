@@ -13,9 +13,10 @@ export type ContentmentConfigurationEditorModel = {
 	icon?: string;
 	group?: string;
 	defaultValues?: Record<string, unknown>;
-	expressions?: Record<string, string>;
+	expressions?: Record<string, unknown>;
 	fields?: Array<any>;
 	overlaySize?: UUIModalSidebarSize;
+	[index: string]: unknown;
 };
 
 export type ContentmentDataListItem = {
@@ -28,4 +29,19 @@ export type ContentmentDataListItem = {
 export type ContentmentDataListEditor = {
 	propertyEditorUiAlias?: string | null;
 	config?: UmbPropertyEditorConfigCollection;
+};
+
+export type ContentmentSocialLinkValue = {
+	name: string;
+	network: string;
+	url: string;
+};
+
+export type ContentmentSocialNetworkModel = {
+	network: string;
+	name: string;
+	url: string;
+	icon: string;
+	backgroundColor: string;
+	iconColor: string;
 };
