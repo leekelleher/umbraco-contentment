@@ -21,7 +21,7 @@ using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
 
-namespace Umbraco.Community.Contentment.DataEditors.DataList.DataSources
+namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentPropertyValueDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
