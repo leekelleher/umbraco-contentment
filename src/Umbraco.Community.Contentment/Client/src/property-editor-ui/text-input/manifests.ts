@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.TextInput',
 	name: '[Contentment] Text Input Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('./text-input.element.js'),
 	meta: {
 		label: '[Contentment] Text Input',
 		icon: 'icon-hearts',
@@ -54,7 +54,8 @@ const editorUi: ManifestPropertyEditorUi = {
 				{
 					alias: 'dataSource',
 					label: 'Data source',
-					description: 'Select and configure a data source.',
+					description:
+						'_(optional)_ Select and configure a data source to provide a HTML5 `<datalist>` for this text input.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
