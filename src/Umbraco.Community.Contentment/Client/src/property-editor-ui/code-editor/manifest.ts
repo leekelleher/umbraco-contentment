@@ -18,7 +18,7 @@ export const manifest: ManifestPropertyEditorUi = {
 				{
 					alias: 'mode',
 					label: 'Language mode',
-					description: 'WIP: Use one of the following: `razor`, `javascript`.',
+					description: 'Select the programming language mode. The default mode is "Razor (CSHTML)".',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
 					config: [
 						{
