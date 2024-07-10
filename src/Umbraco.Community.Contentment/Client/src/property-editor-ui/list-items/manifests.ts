@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.ListItems',
 	name: '[Contentment] List Items Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('../list-items/list-items.element.js'),
 	meta: {
 		label: '[Contentment] List Items',
 		icon: 'icon-hearts',

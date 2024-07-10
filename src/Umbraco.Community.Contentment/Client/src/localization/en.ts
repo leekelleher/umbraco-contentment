@@ -17,10 +17,16 @@ export default {
 		checkboxListCheckAll: 'Check all',
 		checkboxListUncheckAll: 'Uncheck all',
 
-    // Social Links
-    configureSocialNetwork: 'Configure a social network',
-    addSocialLink: 'Add social link',
-    selectSocialNetwork: 'Select a social network...',
-    emptySocialNetworks: 'There are no social networks to select.',
+		// List Items
+		addItem: 'Add item',
+
+		// Social Links
+		configureSocialNetwork: 'Configure a social network',
+		addSocialLink: 'Add social link',
+		selectSocialNetwork: 'Select a social network...',
+		emptySocialNetworks: 'There are no social networks to select.',
+	},
+	placeholders: {
+		enterValue: 'Enter a value...',
 	},
 } as UmbLocalizationDictionary;

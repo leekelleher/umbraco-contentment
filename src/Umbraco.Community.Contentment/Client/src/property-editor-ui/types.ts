@@ -31,6 +31,13 @@ export type ContentmentDataListEditor = {
 	config?: UmbPropertyEditorConfigCollection;
 };
 
+export type ContentmentListItemValue = {
+	name: string;
+	value: string;
+	icon?: string;
+	description?: string;
+};
+
 export type ContentmentSocialLinkValue = {
 	name: string;
 	network: string;
