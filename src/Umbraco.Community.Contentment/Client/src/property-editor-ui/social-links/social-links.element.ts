@@ -15,6 +15,7 @@ import {
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
+import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
 import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import { CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL } from './social-links-selection-modal.element.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
@@ -23,25 +24,27 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
+import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-social-links';
 
 @customElement(ELEMENT_NAME)
 export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement implements UmbPropertyEditorUiElement {
-	// #sorter = new UmbSorterController<ContentmentSocialLinkValue>(this, {
-	//   getUniqueOfElement: (element) => {
-	//     return element.id;
-	//   },
-	//   getUniqueOfModel: (modelEntry) => {
-	//     return this.#getUnique(modelEntry);
-	//   },
-	//   itemSelector: '.item',
-	//   containerSelector: '#wrapper',
-	//   onChange: ({ model }) => {
-	//     this.value = model;
-	//     //this.dispatchEvent(new UmbPropertyValueChangeEvent());
-	//   },
-	// });
+	#sorter = new UmbSorterController<ContentmentSocialLinkValue>(this, {
+		getUniqueOfElement: (element) => {
+			return element.id;
+		},
+		getUniqueOfModel: (modelEntry) => {
+			return this.#getUnique(modelEntry);
+		},
+		draggableSelector: '.handle',
+		itemSelector: '.item',
+		containerSelector: '#wrapper',
+		onChange: ({ model }) => {
+			this.value = model;
+			this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		},
+	});
 
 	#confirmRemoval = false;
 
@@ -56,7 +59,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	@property({ type: Array })
 	public set value(value: Array<ContentmentSocialLinkValue> | undefined) {
 		this.#value = value ?? [];
-		//this.#sorter.setModel(this.#value);
+		this.#sorter.setModel(this.#value);
 	}
 	public get value(): Array<ContentmentSocialLinkValue> | undefined {
 		return this.#value;
@@ -79,8 +82,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				this.#networks?.push(model);
 			});
 		}
-
-		console.log('config', [this.value, this.#networks, this.#lookup]);
 	}
 
 	constructor() {
@@ -93,6 +94,10 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 	#getNetworkByKey(key: string): ContentmentSocialNetworkModel | undefined {
 		return this.#lookup[key];
+	}
+
+	#getUnique(item: ContentmentSocialLinkValue): string {
+		return 'x' + simpleHashCode(item.network + item.name + item.url).toString(16);
 	}
 
 	async #onChoose() {
@@ -187,7 +192,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 			<div id="wrapper">
 				${repeat(
 					this.value,
-					(item, index) => item.network + index,
+					(item) => this.#getUnique(item),
 					(item, index) => this.#renderItem(item, index)
 				)}
 			</div>
@@ -197,15 +202,15 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	#renderItem(item: ContentmentSocialLinkValue, index: number) {
 		const network = this.#getNetworkByKey(item.network);
 		return html`
-			<div class="item">
-				<uui-icon name="icon-navigation"></uui-icon>
+			<div class="item" id=${this.#getUnique(item)}>
+				<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>
 
 				${when(
 					!network,
 					() => html`
 						<uui-button
 							look="placeholder"
-							label="Add social network"
+							label=${this.localize.term('contentment_selectSocialNetwork')}
 							@click=${() => this.#onChangeNetwork(index)}>
 							<uui-icon name="add"></uui-icon>
 						</uui-button>
@@ -213,7 +218,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 					() => html`
 						<uui-button
 							look="default"
-							label="Change social network"
+							label=${this.localize.term('contentment_selectSocialNetwork')}
 							style="--uui-button-background-color: ${network!.backgroundColor};"
 							@click=${() => this.#onChangeNetwork(index)}>
 							<uui-icon name=${network!.icon} style="--uui-icon-color: ${network!.iconColor};"></uui-icon>
@@ -225,7 +230,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 					<uui-input
 						label="Enter a social network name"
 						value=${ifDefined(item.name)}
-						placeholder="Enter a name..."
+						placeholder=${this.localize.term('placeholders_entername')}
 						${umbFocus()}
 						@change=${(e: UUIInputEvent) => this.#onChangeName(e, index)}></uui-input>
 					<uui-input
@@ -267,6 +272,10 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 				padding: var(--uui-size-3) var(--uui-size-6);
 				background-color: var(--uui-color-surface-alt);
+			}
+
+			.item[drag-placeholder] {
+				opacity: 0.5;
 			}
 
 			.item > uui-icon {
