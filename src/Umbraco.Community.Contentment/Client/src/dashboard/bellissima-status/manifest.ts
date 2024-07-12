@@ -13,7 +13,7 @@ export const manifest: ManifestDashboard = {
 	conditions: [
 		{
 			alias: 'Umb.Condition.SectionAlias',
-			oneOf: ['Umb.Section.Content', 'Umb.Section.Settings'],
+			match: 'Umb.Section.Settings',
 		},
 	],
 };
