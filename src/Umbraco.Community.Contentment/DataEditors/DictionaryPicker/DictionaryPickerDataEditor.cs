@@ -9,7 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dictionary-picker.html";
 
-        // TODO: [LK] This property-editor UI needs to be developed.
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ReadOnly";
+        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.DictionaryPicker";
     }
 }
