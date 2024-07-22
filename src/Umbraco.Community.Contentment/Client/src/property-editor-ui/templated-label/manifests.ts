@@ -62,6 +62,18 @@ const editorUi: ManifestPropertyEditorUi = {
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.CodeEditor',
 					config: [{ alias: 'mode', value: 'javascript' }],
 				},
+				{
+					alias: 'hideLabel',
+					label: 'Hide label?',
+					description: 'Select to hide the label and have the editor take up the full width of the panel.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'enableDevMode',
+					label: 'Developer mode?',
+					description: 'Enable a property action to edit the raw data for the editor value.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
 			],
 		},
 	},
