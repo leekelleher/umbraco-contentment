@@ -7,6 +7,7 @@ import { manifest as checkboxList } from './checkbox-list/manifest.js';
 import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifests as configurationEditor } from './configuration-editor/manifests.js';
 import { manifests as contentBlocks } from './content-blocks/manifests.js';
+import { manifest as contentSource } from './content-source/manifests.js';
 import { manifest as dictionaryPicker } from './dictionary-picker/manifests.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
@@ -37,6 +38,7 @@ export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | Man
 	codeEditor,
 	...configurationEditor,
 	...contentBlocks,
+	contentSource,
 	dictionaryPicker,
 	...dataList,
 	...dataPicker,
