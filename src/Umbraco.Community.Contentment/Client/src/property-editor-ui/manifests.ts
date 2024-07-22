@@ -19,6 +19,7 @@ import { manifest as radioButtonList } from './radio-button-list/manifest.js';
 import { manifest as readOnly } from './read-only/manifest.js';
 import { manifests as renderMacro } from './render-macro/manifest.js';
 import { manifests as socialLinks } from './social-links/manifests.js';
+import { manifest as tags } from './tags/manifest.js';
 import { manifests as templatedLabel } from './templated-label/manifests.js';
 import { manifests as textboxList } from './textbox-list/manifests.js';
 import { manifests as textInput } from './text-input/manifests.js';
@@ -47,6 +48,7 @@ export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | Man
 	readOnly,
 	...renderMacro,
 	...socialLinks,
+	tags,
 	...templatedLabel,
 	...textboxList,
 	...textInput,
