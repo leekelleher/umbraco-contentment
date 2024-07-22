@@ -16,14 +16,14 @@ const elementName = 'umb-bellissima-status-dashboard-element';
 @customElement(elementName)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
   // alpha001 was 40 started, 63 total = 63% complete
-	#started = 51;
-  #completed = 41;
+	#started = 55;
+  #completed = 44;
 	#total = 63;
 	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
 
 	#notesConfig = new UmbPropertyEditorConfigCollection([
 		{ alias: 'alertType', value: 'current' },
-		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha002' },
+		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha003' },
 		{ alias: 'icon', value: 'icon-contentment' },
 		{
 			alias: 'message',
@@ -57,18 +57,18 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle: | **Bytes** | **Done** | |
-| :large_blue_circle: | Code Editor | _Started_ | 80% done; Property editor built; configuration needs migration work. |
+| :green_circle: | **Code Editor** | **Done** | Done, but based on Umbraco's internal component, doesn't have all the previous features. |
 | :red_circle: | Content Blocks | _Undecided_ | :no_entry_sign: Considering deprecating; potentially migrate to Block List? :thinking: |
 | :green_circle: | **Data List** | **Done** | Property-editor work is done.<br>**BUT!** The data-sources and list-editors are under active development, _(see below for status)_. |
 | :large_blue_circle: | Data Picker | _Started_ | 1% done; A read-only placeholder editor is available. |
 | :green_circle: | **Editor Notes** | **Done** | |
 | :green_circle: | **Icon Picker** | **Done** | Implemented to reuse Umbraco's internal Icon Picker editor. |
-| :large_blue_circle: | List Items | _Started_ | 1% done; A read-only placeholder editor is available. |
+| :green_circle: | **List Items** | **Done** | |
 | :green_circle: | **Notes** | **Done** | |
 | :green_circle: | **Number Input** | **Done** | |
 | :green_circle: | ~Render Macro~ | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
 | :green_circle: | **Social Links** | **Done** | :warning: Missing sort ordering. |
-| :large_blue_circle: | Templated Label | _Started_ | 1% done; A read-only placeholder editor is available; I'm still researching the templating possibilities. |
+| :thinking: | Templated Label | _Researching_ | 1% done; A read-only placeholder editor is available; I'm still researching the templating possibilities. |
 | :green_circle: | **Textbox List** | **Done** | |
 | :green_circle: | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
 
@@ -80,11 +80,11 @@ Status of components used internally within Contentment.
 | --------------- | --------------- | ----------- | ------- |
 | :grey_question: | Cascading Dropdown List | _Pending_ | I haven't thought about it yet. :shrug: |
 | :green_circle:  | **Configuration Editor** | **Done** | |
-| :grey_question: | Content Picker | _Pending_ | I haven't thought about it yet. :shrug: |
+| :thinking:      | Content Picker | _Researching_ | Investigated to see how to reuse Umbraco's internal editor. |
 | :grey_question: | Data Table | _Pending_ | I haven't thought about it yet. :shrug: |
-| :grey_question: | Dictionary Picker | _Pending_ | I haven't thought about it yet. :shrug: |
+| :thinking:      | Dictionary Picker | _Researching_ | Investigated to see how to reuse Umbraco's internal editor. |
 | :red_circle:    | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
-| :grey_question: | Read Only | _Pending_ | This component was only used in the Content Block configuration, so may no longer be needed. |
+| :red_circle:    | ~Read Only~ | _Deprecated_ | :no_entry_sign: Not required, as was only used in the Content Block configuration. |
 | :red_circle:    | ~Rich Text Editor~ | _Deprecated_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
 
 ### Data List editors
@@ -98,7 +98,7 @@ Status of list-editors used by the Data List editor.
 | :green_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes", Data Table UI.  |
 | :grey_question: | Item Picker | _Pending_ | I haven't thought about it yet. :shrug: |
 | :green_circle: | **Radio Button List** | **Done** |  |
-| :grey_question: | Tags | _Pending_ | I haven't thought about it yet. :shrug: |
+| :large_blue_circle: | Tags | _Started_ | |
 | :thinking: | Templated List | _Researching_ | :thinking: Exploring alternative options.<br>:warning: Missing "HTML attributes", Data Table UI. |
 
 ### Data List sources
