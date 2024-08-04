@@ -13,13 +13,19 @@
  */
 
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
+using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Infrastructure.PublishedCache;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
+using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -27,20 +33,27 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
         private readonly IContentmentContentContext _contentmentContentContext;
+        private readonly IDynamicRootService _dynamicRootService;
         private readonly IIOHelper _ioHelper;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public UmbracoContentPropertyValueDataListSource(
             ContentmentDataListItemPropertyValueConverterCollection converters,
             IContentmentContentContext contentmentContentContext,
+            IDynamicRootService dynamicRootService,
             IIOHelper ioHelper,
+            IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _converters = converters;
             _contentmentContentContext = contentmentContentContext;
+            _dynamicRootService = dynamicRootService;
             _ioHelper = ioHelper;
+            _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
+
 
         public override string Name => "Umbraco Content Property Values";
 
@@ -81,28 +94,60 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (string.IsNullOrWhiteSpace(contentNode) == false &&
                 string.IsNullOrWhiteSpace(propertyAlias) == false &&
-                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
+                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache)
             {
                 var preview = true;
                 var startNode = default(IPublishedContent);
 
-                if (contentNode.InvariantStartsWith("umb://document/") == false)
+                // if (contentNode.InvariantStartsWith("umb://document/") == false)
+                // {
+                //     IEnumerable<string> getPath(int id) => umbracoContext.Content?.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
+                //     bool publishedContentExists(int id) => umbracoContext.Content?.GetById(preview, id) != null;
+
+                //     var parsed = _contentmentContentContext.ParseXPathQuery(contentNode, getPath, publishedContentExists);
+
+                //     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
+                //     {
+                //         startNode = umbracoContext.Content?.GetSingleByXPath(preview, parsed);
+                //     }
+                // }
+
+                // Content Picker
+                if (UdiParser.TryParse(contentNode, out GuidUdi? udi) == true && udi is not null && udi.Guid != Guid.Empty)
                 {
-                    IEnumerable<string> getPath(int id) => umbracoContext.Content?.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
-                    bool publishedContentExists(int id) => umbracoContext.Content?.GetById(preview, id) != null;
-
-                    var parsed = _contentmentContentContext.ParseXPathQuery(contentNode, getPath, publishedContentExists);
-
-                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
-                    {
-//#pragma warning disable CS0618 // Type or member is obsolete
-//                        startNode = umbracoContext.Content?.GetSingleByXPath(preview, parsed);
-//#pragma warning restore CS0618 // Type or member is obsolete
-                    }
+                    startNode = contentCache.GetById(preview, udi.Guid);
                 }
-                else if (UdiParser.TryParse(contentNode, out GuidUdi? udi) == true && udi is not null && udi.Guid != Guid.Empty)
+                // Dynamic Root
+                else if (contentNode?.DetectIsJson() == true)
                 {
-                    startNode = umbracoContext.Content?.GetById(preview, udi.Guid);
+                    var current = _contentmentContentContext.GetCurrentContent(out var isParent);
+
+                    var model = _jsonSerializer.Deserialize<DynamicRoot>(contentNode);
+                    if (model is not null)
+                    {
+                        var query = new DynamicRootNodeQuery
+                        {
+                            Context = new DynamicRootContext
+                            {
+                                CurrentKey = current?.Key,
+                                ParentKey = (isParent == true ? current?.Key : current?.Parent?.Key) ?? Guid.Empty
+                            },
+                            OriginAlias = model.OriginAlias,
+                            OriginKey = model.OriginKey,
+                            QuerySteps = model.QuerySteps.Select(x => new DynamicRootQueryStep
+                            {
+                                Alias = x.Alias,
+                                AnyOfDocTypeKeys = x.AnyOfDocTypeKeys
+                            }),
+                        };
+
+                        var startNodes = _dynamicRootService.GetDynamicRootsAsync(query).GetAwaiter().GetResult();
+                        if (startNodes?.Any() == true)
+                        {
+                            startNode = contentCache.GetById(preview, startNodes.First());
+                        }
+                    }
                 }
 
                 if (startNode != null)
