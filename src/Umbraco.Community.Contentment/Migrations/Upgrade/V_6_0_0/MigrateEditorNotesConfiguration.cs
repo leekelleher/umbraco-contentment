@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Infrastructure.Migrations;

@@ -28,7 +28,7 @@ public class ConfigurationEditorController : ContentmentControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEditorModels(string type)
     {
-        // ¯\_(ツ)_/¯
+        // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
 
         switch (type)

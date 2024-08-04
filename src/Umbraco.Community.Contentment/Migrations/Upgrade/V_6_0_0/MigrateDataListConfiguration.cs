@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 using System.Text.Json.Nodes;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.Serialization;

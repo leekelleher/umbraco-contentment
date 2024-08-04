@@ -29,7 +29,7 @@ public class DataListController : ContentmentControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEditor(DataListConfigurationRequestModel model)
     {
-        // ¯\_(ツ)_/¯
+        // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
 
         var propertyEditorUiAlias = string.Empty;
