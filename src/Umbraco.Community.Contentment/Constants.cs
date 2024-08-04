@@ -116,9 +116,9 @@ namespace Umbraco.Community.Contentment
 
         internal static partial class Values
         {
-            public const string True = "1";
+            public const bool True = true;
 
-            public const string False = "0";
+            public const bool False = false;
         }
     }
 }

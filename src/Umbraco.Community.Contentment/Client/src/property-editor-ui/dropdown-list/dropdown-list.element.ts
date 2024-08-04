@@ -1,3 +1,4 @@
+import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import {
 	css,
 	customElement,
@@ -9,7 +10,6 @@ import {
 	unsafeHTML,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
-import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentDataListItem } from '../types.js';
@@ -72,7 +72,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	#renderItem(item: ContentmentDataListItem) {
 		const [icon, color] = item.icon?.split(' ') ?? [];
 		return html`
-			<uui-combobox-list-option display-value=${item.name} value=${item.value}>
+			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
 					${when(
 						this._showIcons && icon,

@@ -135,6 +135,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 					label=${item.name}
 					value=${item.value}
 					?checked=${item.checked}
+					?disabled=${item.disabled}
 					@change=${() => this.#onClick(item)}>
 					<div class="outer">
 						${when(this._showIcons, () => this.#renderIcon(item))}

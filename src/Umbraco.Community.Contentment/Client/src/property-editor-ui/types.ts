@@ -24,6 +24,9 @@ export type ContentmentDataListItem = {
 	value: string;
 	description?: string;
 	icon?: string;
+	group?: string;
+	disabled?: boolean;
+	[alias: string]: unknown;
 };
 
 export type ContentmentDataListEditor = {

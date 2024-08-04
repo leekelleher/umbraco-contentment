@@ -74,7 +74,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 	#renderItem(item: ContentmentDataListItem) {
 		const [icon, color] = item.icon?.split(' ') ?? [];
 		return html`
-			<uui-radio value=${item.value}>
+			<uui-radio value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
 					${when(
 						this._showIcons && item.icon,

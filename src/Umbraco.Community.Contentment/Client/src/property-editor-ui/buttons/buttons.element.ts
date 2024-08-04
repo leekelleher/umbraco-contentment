@@ -109,6 +109,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				class=${classMap(classes)}
 				look="secondary"
 				title=${ifDefined(title)}
+				?disabled=${item.disabled}
 				@click=${() => this.#onClick(item)}>
 				<div>
 					${when(this._labelStyle !== 'text', () => this.#renderIcon(item))}
