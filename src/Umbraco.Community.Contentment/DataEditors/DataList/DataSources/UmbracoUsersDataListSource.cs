@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.Membership;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -16,11 +16,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IIOHelper _ioHelper;
         private readonly IUserService _userService;
+        private readonly IUserGroupService _userGroupService;
 
-        public UmbracoUsersDataListSource(IIOHelper ioHelper, IUserService userService)
+        public UmbracoUsersDataListSource(IIOHelper ioHelper, IUserService userService, IUserGroupService userGroupService)
         {
             _ioHelper = ioHelper;
             _userService = userService;
+            _userGroupService = userGroupService;
         }
 
         public override string Name => "Umbraco Users";
@@ -35,8 +37,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             get
             {
-                var items = _userService
-                    .GetAllUserGroups()
+                var items = _userGroupService
+                    .GetAllAsync(0, int.MaxValue).GetAwaiter().GetResult()
+                    .Items
                     .Select(x => new DataListItem
                     {
                         Name = x.Name,
@@ -82,12 +85,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = user.Username,
             };
 
-            if (config.TryGetValueAs("userGroup", out JArray? array) == true &&
-                array?.Count > 0 &&
-                array[0].Value<string>() is string alias &&
+            if (config.TryGetValueAs("userGroup", out string? alias) == true &&
                 string.IsNullOrWhiteSpace(alias) == false)
             {
-                var userGroup = _userService.GetUserGroupByAlias(alias);
+                var userGroup = _userGroupService.GetAsync(alias).GetAwaiter().GetResult();
                 if (userGroup != null)
                 {
                     return _userService.GetAllInGroup(userGroup.Id).Select(mapUser);
