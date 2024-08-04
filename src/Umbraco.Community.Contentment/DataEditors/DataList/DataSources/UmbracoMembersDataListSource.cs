@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using System;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
@@ -46,16 +47,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             get
             {
-                var items = _memberTypeService
-                    .GetAll()
-                    .Select(x => new DataListItem
-                    {
-                        Icon = x.Icon,
-                        Description = x.Description,
-                        Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.MemberType, x.Key).ToString(),
-                    })
-                    .ToList();
+                //var items = _memberTypeService
+                //    .GetAll()
+                //    .Select(x => new DataListItem
+                //    {
+                //        Icon = x.Icon,
+                //        Description = x.Description,
+                //        Name = x.Name,
+                //        Value = Udi.Create(UmbConstants.UdiEntityType.MemberType, x.Key).ToString(),
+                //    })
+                //    .ToList();
 
                 return new[]
                 {
@@ -64,17 +65,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "memberType",
                         Name = "Member Type",
                         Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
-                        PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
-                        Config = new Dictionary<string, object>
-                        {
-                            { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
-                            { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                            { MaxItemsConfigurationField.MaxItems, 1 },
-                        }
+                        //View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
+                        PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.MemberTypePicker",
+                        //Config = new Dictionary<string, object>
+                        //{
+                        //    { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
+                        //    { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
+                        //    { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+                        //    { "listType", "list" },
+                        //    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
+                        //    { MaxItemsConfigurationField.MaxItems, 1 },
+                        //}
                     }
                 };
             }
@@ -152,14 +153,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private IMemberType? GetMemberType(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("memberType", out JArray? array) == true &&
-               array?.Count > 0 &&
-               array[0].Value<string>() is string str &&
-               string.IsNullOrWhiteSpace(str) == false &&
-               UdiParser.TryParse(str, out GuidUdi? udi) == true &&
-               udi is not null)
+            if (config.TryGetValueAs("memberType", out string? guid) == true &&
+               string.IsNullOrWhiteSpace(guid) == false &&
+               Guid.TryParse(guid, out var key) == true &&
+               key.Equals(Guid.Empty) == false)
             {
-                return _memberTypeService.Get(udi.Guid);
+                return _memberTypeService.Get(key);
             }
 
             return default;

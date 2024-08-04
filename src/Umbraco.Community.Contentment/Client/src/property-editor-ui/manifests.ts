@@ -15,6 +15,7 @@ import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifest as editorNotes } from './editor-notes/manifest.js';
 import { manifests as iconPicker } from './icon-picker/manifests.js';
 import { manifests as listItems } from './list-items/manifests.js';
+import { manifest as memberTypePicker } from './member-type-picker/manifest.js';
 import { manifests as notes } from './notes/manifests.js';
 import { manifests as numberInput } from './number-input/manifests.js';
 import { manifest as radioButtonList } from './radio-button-list/manifest.js';
@@ -46,6 +47,7 @@ export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | Man
 	editorNotes,
 	...iconPicker,
 	...listItems,
+	memberTypePicker,
 	...notes,
 	...numberInput,
 	radioButtonList,
