@@ -278,10 +278,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				opacity: 0.5;
 			}
 
-			.item > uui-icon {
-				flex: 0 0 var(--uui-size-6);
-			}
-
 			.item > uui-button {
 				--uui-button-background-color-hover: var(--uui-button-background-color);
 

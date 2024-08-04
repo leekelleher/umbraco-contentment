@@ -83,7 +83,7 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 				place-items: start;
 				justify-content: space-between;
 
-				max-width: 40vw;
+				max-width: 45vw;
 			}
 
 			.inner {

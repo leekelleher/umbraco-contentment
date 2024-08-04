@@ -271,10 +271,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				opacity: 0.5;
 			}
 
-			.item > uui-icon {
-				flex: 0 0 var(--uui-size-6);
-			}
-
 			.item > uui-button:not([compact]) {
 				flex: 0 0 var(--uui-size-10);
 
