@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
-import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
+import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
@@ -18,6 +18,9 @@ export class ContentmentPropertyEditorUIContentSourceElement
 	implements UmbPropertyEditorUiElement
 {
 	#umbBackofficePath = '/umbraco';
+
+	@state()
+	private _loaded = false;
 
 	@property({ type: Object })
 	public value?: unknown;
@@ -36,8 +39,9 @@ export class ContentmentPropertyEditorUIContentSourceElement
 
 	override async firstUpdated() {
 		const path =
-			'/backoffice/packages/property-editors/content-picker/config/source/input-content-picker-source/input-content-picker-source.element.js';
+			'/backoffice/packages/property-editors/content-picker/dynamic-root/input-content-picker-document-root/input-content-picker-document-root.element.js';
 		await import(this.#umbBackofficePath + path);
+		this._loaded = true;
 	}
 
 	#onChange(event: CustomEvent & { target: { data: unknown } }) {
@@ -45,7 +49,8 @@ export class ContentmentPropertyEditorUIContentSourceElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
+		if (!this._loaded) return html`<uui-loader></uui-loader>`;
 		return html`
 			<umb-input-content-picker-document-root .data=${this.value} @change=${this.#onChange}>
 			</umb-input-content-picker-document-root>
