@@ -15,14 +15,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
-        private readonly ILocalizationService _localizationService;
+        private readonly IDictionaryItemService _dictionaryItemService;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoDictionaryDataListSource(
-            ILocalizationService localizationService,
+            IDictionaryItemService dictionaryItemService,
             IIOHelper ioHelper)
         {
-            _localizationService = localizationService;
+            _dictionaryItemService = dictionaryItemService;
             _ioHelper = ioHelper;
         }
 
@@ -56,28 +56,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("item", out JArray? array) == true &&
-                array?.Count > 0 &&
-                array[0] is JObject dictItem)
+            if (config.TryGetValueAs("item", out string? guid) == true &&
+                string.IsNullOrWhiteSpace(guid) == false &&
+                Guid.TryParse(guid, out var key) == true &&
+                key.Equals(Guid.Empty) == false)
             {
-                var parent = default(IDictionaryItem);
-
-                if (dictItem.Value<string>("key") is string guid && Guid.TryParse(guid, out var key) == true && key.Equals(Guid.Empty) == false)
-                {
-                    parent = _localizationService.GetDictionaryItemById(key);
-                }
-                else if (dictItem.Value<int>("id") is int id && id > 0)
-                {
-                    // NOTE: Fallback on the `int` ID (for backwards-compatibility)
-                    parent = _localizationService.GetDictionaryItemById(id);
-                }
-
-                if (parent != null)
+                var parent = _dictionaryItemService.GetAsync(key).GetAwaiter().GetResult();
+                if (parent is not null)
                 {
                     var cultureName = CultureInfo.CurrentCulture.Name;
 
-                    return _localizationService
-                        .GetDictionaryItemChildren(parent.Key)
+                    return _dictionaryItemService
+                        .GetChildrenAsync(parent.Key).GetAwaiter().GetResult()
                         .OrderBy(x => x.ItemKey)
                         .Select(x => new DataListItem
                         {
