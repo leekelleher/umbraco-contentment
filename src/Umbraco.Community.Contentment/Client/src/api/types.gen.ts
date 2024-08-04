@@ -482,6 +482,16 @@ export type DataListEditorResponseModel = {
     config?: Array<(DataTypePropertyPresentationModel)> | null;
 };
 
+export type DataListItem = {
+    description?: string | null;
+    disabled: boolean;
+    group?: string | null;
+    icon?: string | null;
+    name?: string | null;
+    value?: string | null;
+    [key: string]: (unknown) | undefined;
+};
+
 export type DataTypeChangeModeModel = 'True' | 'False' | 'FalseWithHelpText';
 
 export type DataTypeContentTypeReferenceModel = {
@@ -2740,6 +2750,53 @@ export type $OpenApiTs = {
                  * The authenticated user do not have access to this resource
                  */
                 403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/contentment/data/assemblies': {
+        get: {
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<(DataListItem)>;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/contentment/data/enums': {
+        get: {
+            req: {
+                assembly?: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: Array<(DataListItem)>;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
                 /**
                  * Not Found
                  */

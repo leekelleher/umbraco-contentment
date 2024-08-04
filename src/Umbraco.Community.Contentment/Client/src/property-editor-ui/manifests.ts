@@ -3,6 +3,7 @@
 
 import { manifest as buttons } from './buttons/manifest.js';
 import { manifests as bytes } from './bytes/manifests.js';
+import { manifest as cascadingDropdownList } from './cascading-dropdown-list/manifest.js';
 import { manifest as checkboxList } from './checkbox-list/manifest.js';
 import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifests as configurationEditor } from './configuration-editor/manifests.js';
@@ -35,6 +36,7 @@ import type {
 export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | ManifestPropertyEditorUi> = [
 	buttons,
 	...bytes,
+	cascadingDropdownList,
 	checkboxList,
 	codeEditor,
 	...configurationEditor,

@@ -47,6 +47,43 @@ export class ContentmentService {
         });
     }
     
+    /**
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getContentmentDataAssemblies(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data/assemblies']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/data/assemblies',
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.assembly
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getContentmentDataEnums(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data/enums']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data/enums']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/data/enums',
+            query: {
+                assembly: data.assembly
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
 }
 
 export class CultureService {

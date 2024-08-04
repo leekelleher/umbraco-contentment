@@ -7,11 +7,10 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Api.Management.Controllers.Contentment;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Community.Contentment.Web.Controllers;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -61,8 +60,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     { CascadingDropdownListDataEditor.APIs, new[]
                         {
-                            EnumDataSourceApiController.GetAssembliesUrl,
-                            EnumDataSourceApiController.GetEnumsUrl,
+                            AssemblyEnumController.GetAssembliesUrl,
+                            AssemblyEnumController.GetEnumsUrl,
                         }
                     }
                 }
@@ -140,39 +139,36 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type? GetValueType(Dictionary<string, object>? config)
         {
-            if (config?.TryGetValueAs("enumType", out JArray? array) == true)
+            if (config?.TryGetValueAs("enumType", out List<string>? enumType) == true &&
+                enumType?.Count > 1)
             {
-                var enumType = array?.ToObject<string[]>();
-                if (enumType?.Length > 1)
+                var assembly = default(Assembly);
+                try
                 {
-                    var assembly = default(Assembly);
+                    assembly = Assembly.Load(enumType[0]);
+                }
+                catch (Exception)
+                {
+                    // Unable to load target type.
+                    // Nobody wants an exception here. Wondering if `Assembly.TryLoad()` should be a thing? [LK]
+                }
+
+                if (assembly is not null)
+                {
+                    var type = default(Type);
                     try
                     {
-                        assembly = Assembly.Load(enumType[0]);
+                        type = assembly.GetType(enumType[1]);
                     }
                     catch (Exception)
                     {
-                        // Unable to load target type.
-                        // Nobody wants an exception here. Wondering if `Assembly.TryLoad()` should be a thing? [LK]
+                        // Unable to retrieve target type.
+                        // Again, what are users going to do about an exception here? `assembly.TryGetType()` anyone? [LK]
                     }
 
-                    if (assembly is not null)
+                    if (type?.IsEnum == true)
                     {
-                        var type = default(Type);
-                        try
-                        {
-                            type = assembly.GetType(enumType[1]);
-                        }
-                        catch (Exception)
-                        {
-                            // Unable to retrieve target type.
-                            // Again, what are users going to do about an exception here? `assembly.TryGetType()` anyone? [LK]
-                        }
-
-                        if (type?.IsEnum == true)
-                        {
-                            return type;
-                        }
+                        return type;
                     }
                 }
             }

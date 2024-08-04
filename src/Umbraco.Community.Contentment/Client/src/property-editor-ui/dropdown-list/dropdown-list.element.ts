@@ -105,7 +105,6 @@ export class ContentmentPropertyEditorUIDropdownListElement
 
 			uui-combobox-list-option {
 				padding-top: 5px;
-				padding-bottom: 5px;
 			}
 
 			uui-form-layout-item {
