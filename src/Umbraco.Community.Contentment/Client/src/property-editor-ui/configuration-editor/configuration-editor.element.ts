@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { parseInt } from '../../utils/index.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL } from './configuration-editor-selection-modal.element.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
 import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
@@ -41,7 +42,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		if (!config) return;
 		this.#buttonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? 'general_choose';
 		this.#configurationType = config.getValueByAlias('configurationType');
-		this.#maxItems = config.getValueByAlias('maxItems') ?? Infinity;
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		// disableSorting
 		// enableFilter
 		// help
@@ -206,11 +207,11 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	#renderItem(item: ContentmentConfigurationEditorValue, index: number) {
 		const model = this.#getModelByKey(item.key);
 		if (!model) return;
-		const icon = this.#renderLabel(item, model, 'icon');
+		const icon = this.#renderMetadata(item, model, 'icon');
 		return html`
 			<uui-ref-node
-				name=${this.#renderLabel(item, model, 'name') ?? item.key}
-				detail=${this.#renderLabel(item, model, 'description') ?? item.key}
+				name=${this.#renderMetadata(item, model, 'name') ?? item.key}
+				detail=${this.#renderMetadata(item, model, 'description') ?? item.key}
 				?standalone=${this.#maxItems === 1}
 				@open=${() => this.#onEdit(item, index)}>
 				${when(icon, () => html`<uui-icon slot="icon" name=${icon!}></uui-icon>`)}
@@ -232,7 +233,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		`;
 	}
 
-	#renderLabel(
+	#renderMetadata(
 		item: ContentmentConfigurationEditorValue,
 		model: ContentmentConfigurationEditorModel,
 		key: string

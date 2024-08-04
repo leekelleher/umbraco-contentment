@@ -15,6 +15,7 @@ import { manifests as dataPicker } from './data-picker/manifests.js';
 import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifest as editorNotes } from './editor-notes/manifest.js';
 import { manifests as iconPicker } from './icon-picker/manifests.js';
+import { manifests as itemPicker } from './item-picker/manifests.js';
 import { manifests as listItems } from './list-items/manifests.js';
 import { manifest as memberTypePicker } from './member-type-picker/manifest.js';
 import { manifests as notes } from './notes/manifests.js';
@@ -48,6 +49,7 @@ export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | Man
 	dropdownList,
 	editorNotes,
 	...iconPicker,
+	...itemPicker,
 	...listItems,
 	memberTypePicker,
 	...notes,
