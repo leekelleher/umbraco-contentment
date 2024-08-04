@@ -12,8 +12,9 @@ import '../../property-editor-ui/editor-notes/editor-notes.element.js';
 
 const UmbMarked = new Marked({ gfm: true, breaks: true });
 
-const elementName = 'umb-bellissima-status-dashboard-element';
-@customElement(elementName)
+const ELEMENT_NAME = 'umb-bellissima-status-dashboard-element';
+
+@customElement(ELEMENT_NAME)
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
   // alpha001 was 40 started, 63 total = 63% complete
 	#started = 55;
@@ -238,6 +239,6 @@ export { UmbBellissimaStatusDashboardElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[elementName]: UmbBellissimaStatusDashboardElement;
+		[ELEMENT_NAME]: UmbBellissimaStatusDashboardElement;
 	}
 }

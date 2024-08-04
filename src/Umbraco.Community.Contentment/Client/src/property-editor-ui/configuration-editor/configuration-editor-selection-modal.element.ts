@@ -23,9 +23,9 @@ export const CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL = new UmbModalToke
 	},
 });
 
-const elementName = 'contentment-property-editor-ui-configuration-editor-selection-modal';
+const ELEMENT_NAME = 'contentment-property-editor-ui-configuration-editor-selection-modal';
 
-@customElement(elementName)
+@customElement(ELEMENT_NAME)
 export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement extends UmbModalBaseElement<
 	ContentmentConfigurationEditorSelectionModalData,
 	ContentmentConfigurationEditorValue
@@ -174,6 +174,6 @@ export { ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement as 
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[elementName]: ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement;
 	}
 }

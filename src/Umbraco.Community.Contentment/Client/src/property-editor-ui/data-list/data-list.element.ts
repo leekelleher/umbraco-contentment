@@ -100,7 +100,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 
 	render() {
 		if (!this._initialized || !this.#listEditor) return html`<uui-loader></uui-loader>`;
-		if (!this.#listEditor.propertyEditorUiAlias) return html`<contentment-lee-was-here></contentment-lee-was-here>`;
+		if (!this.#listEditor.propertyEditorUiAlias) return html`<lee-was-here></lee-was-here>`;
 		//console.log('data-list', [this._entityUnique, this._propertyAlias, this._variantId]);
 		return html`
 			<contentment-property-editor-ui

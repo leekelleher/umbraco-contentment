@@ -9,6 +9,7 @@ import {
 	repeat,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
+import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 import { UmbLitElement, umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
@@ -24,7 +25,6 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
-import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-social-links';
 

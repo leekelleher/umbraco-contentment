@@ -22,9 +22,9 @@ export const CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL = new UmbModalToke
 	},
 });
 
-const elementName = 'contentment-property-editor-ui-configuration-editor-workspace-modal';
+const ELEMENT_NAME = 'contentment-property-editor-ui-configuration-editor-workspace-modal';
 
-@customElement(elementName)
+@customElement(ELEMENT_NAME)
 export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement extends UmbModalBaseElement<
 	ContentmentConfigurationEditorWorkspaceModalData,
 	ContentmentConfigurationEditorValue
@@ -114,6 +114,6 @@ export { ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement as 
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[elementName]: ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement;
 	}
 }

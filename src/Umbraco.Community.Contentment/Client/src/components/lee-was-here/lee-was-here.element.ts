@@ -3,7 +3,9 @@
 
 import { html, customElement, LitElement } from '@umbraco-cms/backoffice/external/lit';
 
-@customElement('contentment-lee-was-here')
+const ELEMENT_NAME = 'lee-was-here';
+
+@customElement(ELEMENT_NAME)
 export default class ContentmentLeeWasHereElement extends LitElement {
 	render() {
 		return html`
@@ -18,6 +20,6 @@ export default class ContentmentLeeWasHereElement extends LitElement {
 
 declare global {
 	interface HTMLElementTagNameMap {
-		'contentment-lee-was-here': ContentmentLeeWasHereElement;
+		[ELEMENT_NAME]: ContentmentLeeWasHereElement;
 	}
 }

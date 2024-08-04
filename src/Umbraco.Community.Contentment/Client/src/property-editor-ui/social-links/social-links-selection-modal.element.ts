@@ -18,9 +18,9 @@ export const CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL = new UmbModalToken<
 	},
 });
 
-const elementName = 'contentment-property-editor-ui-social-links-selection-modal';
+const ELEMENT_NAME = 'contentment-property-editor-ui-social-links-selection-modal';
 
-@customElement(elementName)
+@customElement(ELEMENT_NAME)
 export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends UmbModalBaseElement<
 	ContentmentSocialLinksSelectionModalData,
 	ContentmentSocialLinkValue
@@ -113,6 +113,6 @@ export { ContentmentPropertyEditorUISocialLinksSelectionModalElement as element 
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[elementName]: ContentmentPropertyEditorUISocialLinksSelectionModalElement;
+		[ELEMENT_NAME]: ContentmentPropertyEditorUISocialLinksSelectionModalElement;
 	}
 }
