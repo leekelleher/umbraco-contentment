@@ -5,12 +5,12 @@ import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension
 
 export const manifest: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
-	alias: 'Umb.Contentment.PropertyEditorUi.DictionaryPicker',
-	name: '[Contentment] Dictionary Picker Property Editor UI',
-	element: () => import('../dictionary-picker/dictionary-picker.element.js'),
+	alias: 'Umb.Contentment.PropertyEditorUi.ContentSource',
+	name: '[Contentment] Content Source Property Editor UI',
+	element: () => import('./content-source.element.js'),
 	meta: {
-		label: '[Contentment] Dictionary Picker',
-		icon: 'icon-book-alt',
+		label: '[Contentment] Content Source',
+		icon: 'icon-page-add',
 		group: 'pickers',
 	},
 };

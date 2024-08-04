@@ -3,12 +3,11 @@
 
 import { ManifestCondition } from '@umbraco-cms/backoffice/extension-api';
 import type { ManifestPropertyAction, ManifestTypes } from '@umbraco-cms/backoffice/extension-registry';
-import { CONTENTMENT_DEVELOPER_MODE_CONDITION } from './edit-json.condition.js';
 
 const condition: ManifestCondition = {
 	type: 'condition',
 	name: '[Contentment] Developer Mode Condition',
-	alias: CONTENTMENT_DEVELOPER_MODE_CONDITION,
+	alias: 'Umb.Contentment.Condition.DeveloperMode',
 	api: () => import('./edit-json.condition.js'),
 };
 
@@ -34,7 +33,7 @@ const propertyAction: ManifestPropertyAction = {
 		icon: 'icon-brackets',
 		label: 'Edit raw value',
 	},
-	conditions: [{ alias: CONTENTMENT_DEVELOPER_MODE_CONDITION }],
+	conditions: [{ alias: 'Umb.Contentment.Condition.DeveloperMode' }],
 };
 
 export const manifests: Array<ManifestTypes> = [condition, propertyAction];

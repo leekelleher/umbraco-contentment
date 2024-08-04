@@ -60,7 +60,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					label: 'Template',
 					description: 'Enter the AngularJS template to be displayed for the label.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.CodeEditor',
-					config: [{ alias: 'mode', value: 'javascript' }],
+					config: [{ alias: 'mode', value: 'html' }],
 				},
 				{
 					alias: 'hideLabel',

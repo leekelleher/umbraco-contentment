@@ -23,6 +23,7 @@ const schema: ManifestPropertyEditorSchema = {
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
 						{ alias: 'configurationType', value: 'dataSource' },
 						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
 					],
 				},
 				{
@@ -34,6 +35,7 @@ const schema: ManifestPropertyEditorSchema = {
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' },
 						{ alias: 'configurationType', value: 'listEditor' },
 						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
 					],
 				},
 			],
