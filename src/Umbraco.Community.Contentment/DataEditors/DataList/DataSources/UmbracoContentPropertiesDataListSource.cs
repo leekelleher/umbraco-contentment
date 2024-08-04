@@ -41,16 +41,16 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             get
             {
-                var items = _contentTypeService
-                    .GetAll()
-                    .Select(x => new DataListItem
-                    {
-                        Icon = x.Icon,
-                        Description = x.Description,
-                        Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
-                    })
-                    .ToList();
+                //var items = _contentTypeService
+                //    .GetAll()
+                //    .Select(x => new DataListItem
+                //    {
+                //        Icon = x.Icon,
+                //        Description = x.Description,
+                //        Name = x.Name,
+                //        Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
+                //    })
+                //    .ToList();
 
                 return new ContentmentConfigurationField[]
                 {
@@ -60,14 +60,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Name = "Content Type",
                         Description = "Select a Content Type to list the properties from.",
                         View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
-                        PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
+                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
                         Config = new Dictionary<string, object>
                         {
-                            { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                            { MaxItemsConfigurationField.MaxItems, 1 },
+                            // { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
+                            // { Constants.Conventions.ConfigurationFieldAliases.Items, items },
+                            // { "listType", "list" },
+                            // { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
+                            // { MaxItemsConfigurationField.MaxItems, 1 },
+                            { "validationLimit", new { min = 0, max = 1 } },
+                            { "onlyElementTypes", false },
+                            { "showOpenButton", false },
                         }
                     },
                     new ContentmentConfigurationField
@@ -96,14 +99,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("contentType", out JArray? array) == true &&
-                array?.Count > 0 &&
-                array[0].Value<string>() is string str &&
+            if (config.TryGetValueAs("contentType", out string? str) == true &&
                 string.IsNullOrWhiteSpace(str) == false &&
-                UdiParser.TryParse(str, out GuidUdi? udi) == true &&
-                udi is not null)
+                Guid.TryParse(str, out var guid) == true &&
+                guid.Equals(Guid.Empty) == false)
             {
-                var contentType = _contentTypeService.Get(udi.Guid);
+                var contentType = _contentTypeService.Get(guid);
                 if (contentType != null)
                 {
                     _icons ??= _dataEditors.Value.ToDictionary(x => x.Alias, x => "icon-document");
