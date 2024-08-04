@@ -1,7 +1,7 @@
 {
   "id": "Umbraco.Community.Contentment",
   "name": "Contentment",
-  "version": "6.0.0-alpha002",
+  "version": "6.0.0-alpha003",
   "allowTelemetry": true,
   "extensions": [
     {
