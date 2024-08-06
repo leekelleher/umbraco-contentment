@@ -6,7 +6,6 @@ import { DOMPurify } from '@umbraco-cms/backoffice/external/dompurify';
 import { Marked } from '@umbraco-cms/backoffice/external/marked';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../property-editor-ui/editor-notes/editor-notes.element.js';
 
@@ -18,32 +17,11 @@ const ELEMENT_NAME = 'umb-bellissima-status-dashboard-element';
 export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 	// alpha001 was 40 started, 63 total = 63% complete
 	// alpha002 was 51 started, 41 completed, 63 total = 73% complete
+	// alpha003 was 61 started, 55 completed, 63 total = 92% complete
 	#started = 61;
 	#completed = 55;
 	#total = 63;
 	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
-
-	#notesConfig = new UmbPropertyEditorConfigCollection([
-		{ alias: 'alertType', value: 'current' },
-		{ alias: 'heading', value: 'Status update for Contentment v6.0.0-alpha003' },
-		{ alias: 'icon', value: 'icon-contentment' },
-		{
-			alias: 'message',
-			value: {
-				markup: `
-<p>During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of progress on Contentment for Umbraco Bellissima.</p>
-<p>Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong>, until then consider this release as <strong>unstable</strong>.</p>
-<p>Development has started on <strong>${this.#started}</strong> of the <strong>${
-					this.#total
-				}</strong> UI components, (with <strong>${this.#completed}</strong> complete). Package migration is <strong>${
-					this.#percentage
-				}% complete</strong>.</p>
-<uui-progress-bar progress="${this.#percentage}" style="background-color:var(--uui-color-divider)"></uui-progress-bar>
-<p>If you find any bugs, or feel something is amiss, then please raise an issue on <a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener">the Contentment source-code repository on GitHub</a>.</p>
-<p>Please do keep in mind that I am a solo developer on this project, working on it in my own free time.</p>`,
-			},
-		},
-	]);
 
 	#emojis: { [key: string]: string } = {
 		':no_entry_sign:': '🚫',
@@ -167,15 +145,39 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 		return html`
 			<umb-body-layout headline="Migration status of Contentment for Umbraco Bellissima">
 				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Under active development</uui-tag></div>
+
+				<contentment-info-box
+					type="current"
+					icon="icon-contentment"
+					heading="Status update for Contentment v6.0.0-alpha004">
+					<p>
+						During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of
+						progress on Contentment for Umbraco Bellissima.
+					</p>
+					<p>
+						Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong>, until then
+						consider this release as <strong>unstable</strong>.
+					</p>
+					<p>
+						Development has started on <strong>${this.#started}</strong> of the <strong>${this.#total}</strong> UI
+						components, (with <strong>${this.#completed}</strong> complete). Package migration is
+						<strong>${this.#percentage}% complete</strong>.
+					</p>
+					<uui-progress-bar
+						progress=${this.#percentage}
+						style="background-color:var(--uui-color-divider)"></uui-progress-bar>
+					<p>
+						If you find any bugs, or feel something is amiss, then please raise an issue on
+						<a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener"
+							>the Contentment source-code repository on GitHub</a
+						>.
+					</p>
+					<p>Please do keep in mind that I am a solo developer on this project, working on it in my own free time.</p>
+				</contentment-info-box>
+
 				${when(
 					this._markup,
-					() => html`
-						<contentment-property-editor-ui-editor-notes
-							.config=${this.#notesConfig}></contentment-property-editor-ui-editor-notes>
-						<uui-box>
-							<div class="gfm">${unsafeHTML(this._markup)}</div>
-						</uui-box>
-					`,
+					() => html`<uui-box><div class="gfm">${unsafeHTML(this._markup)}</div></uui-box>`,
 					() => html`<uui-loader></uui-loader>`
 				)}
 			</umb-body-layout>
@@ -189,7 +191,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 				margin-right: var(--uui-size-layout-3);
 			}
 
-			contentment-property-editor-ui-editor-notes {
+			contentment-info-box {
 				display: block;
 				margin-bottom: var(--uui-size-layout-1);
 			}
