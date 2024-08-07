@@ -43,7 +43,7 @@ const schema: ManifestPropertyEditorSchema = {
 	},
 };
 
-const editorUi: ManifestPropertyEditorUi = {
+const dataList: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.DataList',
 	name: '[Contentment] Data List Property Editor UI',
@@ -53,7 +53,28 @@ const editorUi: ManifestPropertyEditorUi = {
 		icon: 'icon-list',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataList',
+		settings: {
+			properties: [
+				{
+					alias: 'preview',
+					label: 'Preview',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DataListPreview',
+				},
+			],
+		},
 	},
 };
 
-export const manifests = [schema, editorUi];
+const dataListPreview: ManifestPropertyEditorUi = {
+	type: 'propertyEditorUi',
+	alias: 'Umb.Contentment.PropertyEditorUi.DataListPreview',
+	name: '[Contentment] Data List Preview Property Editor UI',
+	element: () => import('./data-list-preview.element.js'),
+	meta: {
+		label: '[Contentment] Data List Preview',
+		icon: 'icon-list',
+		group: 'lists',
+	},
+};
+
+export const manifests = [schema, dataList, dataListPreview];
