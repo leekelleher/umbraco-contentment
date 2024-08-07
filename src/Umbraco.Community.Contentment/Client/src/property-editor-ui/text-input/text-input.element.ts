@@ -89,7 +89,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	#onInput(event: InputEvent & { target: HTMLInputElement }) {
-    // TODO: [LK] `maxChars` validation + threshold warning message.
+		// TODO: [LK] `maxChars` validation + threshold warning message.
 		this.value = event.target.value;
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
@@ -124,10 +124,9 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		`;
 	}
 
-	#renderIcon(str: string | null | undefined, slot: string) {
-		if (!str) return nothing;
-		const [icon, color] = str.split(' ') ?? [];
-		return html`<umb-icon slot=${slot} name=${ifDefined(icon)} color=${ifDefined(color)}></umb-icon>`;
+	#renderIcon(icon: string | null | undefined, slot: string) {
+		if (!icon) return nothing;
+		return html`<umb-icon slot=${slot} .name=${icon}></umb-icon>`;
 	}
 
 	static styles = [

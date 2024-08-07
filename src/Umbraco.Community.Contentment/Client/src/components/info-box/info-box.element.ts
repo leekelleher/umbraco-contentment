@@ -35,7 +35,7 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 			<div id="box" class="uui-text ${this.type}" style=${this.#getStyles()}>
 				${when(
 					this.icon,
-					() => html`<umb-icon name=${this.icon!} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
+					() => html`<umb-icon .name=${this.icon} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
 				)}
 				<div>
 					${when(this.heading, () => html`<h5>${this.heading}</h5>`)}

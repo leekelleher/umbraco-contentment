@@ -112,16 +112,11 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				?disabled=${item.disabled}
 				@click=${() => this.#onClick(item)}>
 				<div>
-					${when(this._labelStyle !== 'text', () => this.#renderIcon(item))}
+					${when(this._labelStyle !== 'text', () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
 					${when(this._labelStyle !== 'icon', () => html`<span>${this.localize.string(item.name)}</span>`)}
 				</div>
 			</uui-button>
 		`;
-	}
-
-	#renderIcon(item: ContentmentDataListItem) {
-		const [icon, color] = item.icon?.split(' ') ?? [];
-		return html`<umb-icon name=${ifDefined(icon)} color=${ifDefined(color)}></umb-icon>`;
 	}
 
 	static styles = [

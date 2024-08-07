@@ -103,7 +103,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		return html`
 			<div class="item">
 				<uui-label for="item-${item.value}" title=${item.value}>
-					${when(!this._hideIcon, () => this.#renderIcon(item))}
+					${when(!this._hideIcon, () => html`<umb-icon .name=${item.icon || this._defaultIcon}></umb-icon>`)}
 					${when(!this._hideLabel, () => html`<span>${item.name}</span>`)}
 				</uui-label>
 				<uui-input
@@ -113,11 +113,6 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 					@input=${(event: UUIInputEvent) => this.#onInput(item.value, event)}></uui-input>
 			</div>
 		`;
-	}
-
-	#renderIcon(item: ContentmentDataListItem) {
-		const [icon, color] = item.icon?.split(' ') ?? [];
-		return html`<umb-icon name=${ifDefined(icon || this._defaultIcon)} color=${ifDefined(color)}></umb-icon>`;
 	}
 
 	static styles = [

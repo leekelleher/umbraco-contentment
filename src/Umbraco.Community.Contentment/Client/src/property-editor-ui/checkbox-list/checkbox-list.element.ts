@@ -138,7 +138,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 					?disabled=${item.disabled}
 					@change=${() => this.#onClick(item)}>
 					<div class="outer">
-						${when(this._showIcons, () => this.#renderIcon(item))}
+						${when(this._showIcons, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
 						<uui-form-layout-item>
 							<span slot="label">${this.localize.string(item.name)}</span>
 							${when(
@@ -150,11 +150,6 @@ export class ContentmentPropertyEditorUICheckboxListElement
 				</uui-checkbox>
 			</li>
 		`;
-	}
-
-	#renderIcon(item: ContentmentDataListItem) {
-		const [icon, color] = item.icon?.split(' ') ?? [];
-		return html`<umb-icon name=${ifDefined(icon)} color=${ifDefined(color)}></umb-icon>`;
 	}
 
 	static styles = [
