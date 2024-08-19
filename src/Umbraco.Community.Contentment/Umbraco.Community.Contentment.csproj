@@ -52,8 +52,9 @@
 
     <ItemGroup>
         <Compile Remove="node_modules\**;wwwroot\**" />
+        <Content Remove="package.json;package-lock.json" />
         <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
-        <None Remove="node_modules\**;wwwroot\**" />
+        <None Remove="node_modules\**;wwwroot\**;package.json;package-lock.json" />
     </ItemGroup>
 
     <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">

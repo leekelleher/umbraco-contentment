@@ -75,6 +75,7 @@
     "text input"
   ],
   "Title": "Contentment",
+  "VersionDependencyMode": "Default",
   "VersionSpecificPackageIds": [
     {
       "UmbracoMajorVersion": 8,
