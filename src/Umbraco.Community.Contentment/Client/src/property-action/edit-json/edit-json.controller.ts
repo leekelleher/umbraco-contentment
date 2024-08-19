@@ -22,8 +22,6 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 
 		const value = propertyContext?.getValue();
 
-		if (!value) return;
-
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 
 		const modal = modalManager.open(this, UMB_CODE_EDITOR_MODAL, {
@@ -34,8 +32,6 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 				confirmLabel: '#bulk_done',
 			},
 		});
-
-		if (!modal) return;
 
 		const { content } = await modal.onSubmit();
 

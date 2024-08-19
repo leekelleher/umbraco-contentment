@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { CONTENTMENT_DEVELOPER_MODE_CONDITION } from './constants.js';
 import { UmbConditionBase } from '@umbraco-cms/backoffice/extension-registry';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
@@ -26,5 +27,3 @@ export { ContentmentDeveloperModeCondition as api };
 export type ContentmentDeveloperModeConditionConfig = UmbConditionConfigBase<
 	typeof CONTENTMENT_DEVELOPER_MODE_CONDITION
 >;
-
-export const CONTENTMENT_DEVELOPER_MODE_CONDITION = 'Umb.Contentment.Condition.DeveloperMode';

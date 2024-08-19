@@ -1,17 +1,10 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ManifestCondition } from '@umbraco-cms/backoffice/extension-api';
-import type { ManifestPropertyAction, ManifestTypes } from '@umbraco-cms/backoffice/extension-registry';
+import { CONTENTMENT_DEVELOPER_MODE_CONDITION } from '../../condition/dev-mode/constants.js';
+import type { ManifestPropertyAction } from '@umbraco-cms/backoffice/extension-registry';
 
-const condition: ManifestCondition = {
-	type: 'condition',
-	name: '[Contentment] Developer Mode Condition',
-	alias: 'Umb.Contentment.Condition.DeveloperMode',
-	api: () => import('./edit-json.condition.js'),
-};
-
-const propertyAction: ManifestPropertyAction = {
+export const manifest: ManifestPropertyAction = {
 	type: 'propertyAction',
 	kind: 'default',
 	alias: 'Umb.Contentment.PropertyAction.EditJson',
@@ -33,7 +26,5 @@ const propertyAction: ManifestPropertyAction = {
 		icon: 'icon-brackets',
 		label: 'Edit raw value',
 	},
-	conditions: [{ alias: 'Umb.Contentment.Condition.DeveloperMode' }],
+	conditions: [{ alias: CONTENTMENT_DEVELOPER_MODE_CONDITION }],
 };
-
-export const manifests: Array<ManifestTypes> = [condition, propertyAction];
