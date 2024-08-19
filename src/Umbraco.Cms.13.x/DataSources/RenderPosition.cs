@@ -1,9 +1,12 @@
-﻿using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.DataEditors;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
     public enum RenderPosition
     {
+        [DataListItem(Name = "Html", Description = "The root &lt;html&gt; tag", Disabled = true)]
+        Html = 3,
+
         [DataListItem(Name = "Head", Description = "Inside the &lt;head&gt; tags")]
         Head = 2,
 

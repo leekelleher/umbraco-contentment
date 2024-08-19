@@ -15,13 +15,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Description { get; set; }
 
-        public bool? Disabled { get; set; }
+        public bool Disabled { get; set; } = false;
 
         public string? Group { get; set; }
 
         public string? Icon { get; set; }
 
-        public bool? Ignore { get; set; }
+        public bool Ignore { get; set; } = false;
 
         public string? Name { get; set; }
 
