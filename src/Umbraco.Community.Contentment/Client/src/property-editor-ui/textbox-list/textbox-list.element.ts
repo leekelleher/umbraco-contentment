@@ -1,15 +1,4 @@
-import {
-	css,
-	customElement,
-	html,
-	ifDefined,
-	nothing,
-	property,
-	repeat,
-	state,
-	when,
-} from '@umbraco-cms/backoffice/external/lit';
-//import { parseBoolean } from '../../utils/index.js';
+import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
 import { ContentmentService } from '../../api/index.js';
@@ -32,7 +21,6 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		if (!config) return;
 		this._dataSource = config.getValueByAlias('dataSource');
 		this._defaultIcon = config.getValueByAlias<string>('defaultIcon');
-		//this._enableDevMode = parseBoolean(config.getValueByAlias('enableDevMode'));
 
 		const labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
 		this._hideIcon = labelStyle === 'text';

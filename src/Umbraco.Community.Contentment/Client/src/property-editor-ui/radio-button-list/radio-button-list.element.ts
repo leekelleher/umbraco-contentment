@@ -2,7 +2,6 @@ import {
 	css,
 	customElement,
 	html,
-	ifDefined,
 	property,
 	repeat,
 	state,
