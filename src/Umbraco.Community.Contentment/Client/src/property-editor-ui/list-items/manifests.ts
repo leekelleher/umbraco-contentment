@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('../list-items/list-items.element.js'),
 	meta: {
 		label: '[Contentment] List Items',
-		icon: 'icon-hearts',
+		icon: 'icon-fa-table-list',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ListItems',
 		settings: {

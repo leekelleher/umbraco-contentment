@@ -10,7 +10,7 @@ export const manifest: ManifestPropertyEditorUi = {
 	element: () => import('./tags.element.js'),
 	meta: {
 		label: '[Contentment] Tags',
-		icon: 'icon-tags',
+		icon: 'icon-fa-tags',
 		group: 'lists',
 	},
 };

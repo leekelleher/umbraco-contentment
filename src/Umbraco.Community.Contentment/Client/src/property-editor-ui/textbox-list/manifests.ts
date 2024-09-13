@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('./textbox-list.element.js'),
 	meta: {
 		label: '[Contentment] Textbox List',
-		icon: 'icon-hearts',
+		icon: 'icon-ordered-list',
 		group: 'common',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TextboxList',
 		settings: {

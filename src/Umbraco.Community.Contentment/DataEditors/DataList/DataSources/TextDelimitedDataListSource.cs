@@ -37,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? DescriptionTemplate => "{{ url }}";
 
-        public override string Icon => "icon-fa fa-file-text-o";
+        public override string Icon => "icon-fa-file-lines";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 

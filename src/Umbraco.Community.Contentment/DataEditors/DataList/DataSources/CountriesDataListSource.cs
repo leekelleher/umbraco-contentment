@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "All the countries available in the .NET Framework, (as installed on the web server).";
 
-        public string Icon => "icon-globe-inverted-europe-africa";
+        public string Icon => "icon-fa-earth-africa";
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 

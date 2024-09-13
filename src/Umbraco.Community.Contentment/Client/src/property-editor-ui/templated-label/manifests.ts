@@ -50,7 +50,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('./templated-label.element.js'),
 	meta: {
 		label: '[Contentment] Templated Label',
-		icon: 'icon-hearts',
+		icon: 'icon-fa-codepen',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TemplatedLabel',
 		settings: {

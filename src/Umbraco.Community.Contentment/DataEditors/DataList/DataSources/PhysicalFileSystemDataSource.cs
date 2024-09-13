@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? DescriptionTemplate => "{{ path }}; {{ filter }}";
 
-        public override string Icon => "icon-folder-close";
+        public override string Icon => "icon-fa-folder-tree";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 

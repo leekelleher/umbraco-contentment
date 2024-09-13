@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Use the backoffice sections to populate the data source.";
 
-        public override string Icon => "icon-section";
+        public override string Icon => "icon-block color-red";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 

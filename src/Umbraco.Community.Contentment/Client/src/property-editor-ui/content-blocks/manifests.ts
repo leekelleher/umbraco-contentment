@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Content Blocks',
-		icon: 'icon-hearts',
+		icon: 'icon-fa-server',
 		group: 'richContent',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ContentBlocks',
 		settings: {

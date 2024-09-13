@@ -50,7 +50,7 @@ const dataList: ManifestPropertyEditorUi = {
 	element: () => import('./data-list.element.js'),
 	meta: {
 		label: '[Contentment] Data List',
-		icon: 'icon-list',
+		icon: 'icon-fa-list-ul',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataList',
 		settings: {
@@ -72,7 +72,7 @@ const dataListPreview: ManifestPropertyEditorUi = {
 	element: () => import('./data-list-preview.element.js'),
 	meta: {
 		label: '[Contentment] Data List Preview',
-		icon: 'icon-list',
+		icon: 'icon-fa-list-ul',
 		group: 'lists',
 	},
 };

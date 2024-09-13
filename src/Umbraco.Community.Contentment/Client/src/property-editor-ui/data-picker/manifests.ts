@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('../read-only/read-only.element.js'),
 	meta: {
 		label: '[Contentment] Data Picker',
-		icon: 'icon-hearts',
+		icon: 'icon-fa-arrow-pointer',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataPicker',
 		settings: {

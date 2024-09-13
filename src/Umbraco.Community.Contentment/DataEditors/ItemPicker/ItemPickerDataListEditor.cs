@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select items from an Umbraco style overlay.";
 
-        public string Icon => "icon-fa fa-mouse-pointer";
+        public string Icon => "icon-fa-arrow-pointer";
 
         public string? Group => default;
 

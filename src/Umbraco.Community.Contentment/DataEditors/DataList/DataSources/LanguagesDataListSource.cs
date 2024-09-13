@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "All the languages available in the .NET Framework, (as installed on the web server).";
 
-        public string Icon => "icon-fa fa-language";
+        public string Icon => "icon-fa-language";
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 

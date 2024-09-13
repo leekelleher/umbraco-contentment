@@ -14,7 +14,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Populate the data source using XML Sitemap priority values.";
 
-        public override string Icon => "icon-fa fa-exclamation-circle";
+        public override string Icon => "icon-fa-circle-exclamation";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 

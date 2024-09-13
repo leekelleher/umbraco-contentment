@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('../number-input/number-input.element.js'),
 	meta: {
 		label: '[Contentment] Number Input',
-		icon: 'icon-hearts',
+		icon: 'icon-ordered-list',
 		group: 'common',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.NumberInput',
 		settings: {

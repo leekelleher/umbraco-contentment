@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Use an XPath query to select Umbraco content to use as the data source.";
 
-        public override string Icon => "icon-fa fa-file-code-o";
+        public override string Icon => "icon-block color-red";
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 

@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "A homage to @marcemarc's bingo-famous uCssClassNameDropdown package!";
 
-        public override string Icon => "icon-fa fa-css3";
+        public override string Icon => "icon-fa-css3";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 

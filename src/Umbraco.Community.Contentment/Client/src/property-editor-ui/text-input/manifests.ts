@@ -22,7 +22,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('./text-input.element.js'),
 	meta: {
 		label: '[Contentment] Text Input',
-		icon: 'icon-hearts',
+		icon: 'icon-autofill',
 		group: 'common',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TextInput',
 		settings: {

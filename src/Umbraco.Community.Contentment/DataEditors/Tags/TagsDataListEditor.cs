@@ -16,7 +16,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select items from an Umbraco Tags-like interface.";
 
-        public string Icon => "icon-fa fa-tags";
+        public string Icon => "icon-fa-tags";
 
         public string? Group => default;
 

@@ -22,7 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Generates a sequence of numbers within a specified range.";
 
-        public override string Icon => "icon-fa fa-sort-numeric-asc";
+        public override string Icon => "icon-fa-arrow-down-1-9";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 

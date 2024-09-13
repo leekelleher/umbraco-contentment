@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Populate the data source using a Content Type's properties.";
 
-        public override string Icon => "icon-fa fa-tasks";
+        public override string Icon => "icon-fa-list-check";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 

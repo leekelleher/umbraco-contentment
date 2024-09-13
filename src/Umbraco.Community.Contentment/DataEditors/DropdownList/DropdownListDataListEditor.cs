@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select a single value from a dropdown select list.";
 
-        public string Icon => "icon-fa fa-caret-square-o-down";
+        public string Icon => "icon-fa-square-caret-down";
 
         public string? Group => default;
 

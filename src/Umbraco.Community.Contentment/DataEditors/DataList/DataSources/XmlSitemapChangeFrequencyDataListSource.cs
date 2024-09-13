@@ -30,7 +30,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Populate the data source using XML Sitemap change frequency values.";
 
-        public override string Icon => "icon-fa fa-signal";
+        public override string Icon => "icon-fa-signal";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 

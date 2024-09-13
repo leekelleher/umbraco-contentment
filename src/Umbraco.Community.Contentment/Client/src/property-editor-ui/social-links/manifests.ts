@@ -30,7 +30,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('../social-links/social-links.element.js'),
 	meta: {
 		label: '[Contentment] Social Links',
-		icon: 'icon-hearts',
+		icon: 'icon-molecular-network',
 		group: 'lists',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.SocialLinks',
 		settings: {
