@@ -66,7 +66,8 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 
 		const oldElement = this._element;
 
-		this._element = element as ManifestPropertyEditorUi['ELEMENT_TYPE'];
+		this._element = element;
+
 		if (this._element) {
 			this._element.value = this.value;
 
@@ -78,7 +79,7 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 		this.requestUpdate('_element', oldElement);
 	}
 
-	// Disable the Shadow DOM for this element. The event propagation needs to pass-through.
+	// Disable the Shadow DOM for this element; as event propagation needs to pass-through.
 	createRenderRoot() {
 		return this;
 	}

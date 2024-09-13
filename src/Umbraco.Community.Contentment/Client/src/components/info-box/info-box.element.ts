@@ -49,6 +49,10 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 	static override styles = [
 		UmbTextStyles,
 		css`
+			:host {
+				display: block;
+			}
+
 			#box {
 				display: flex;
 				align-items: flex-start;

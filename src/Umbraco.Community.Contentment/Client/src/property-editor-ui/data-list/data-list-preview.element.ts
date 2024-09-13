@@ -62,7 +62,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 			this.observe(
 				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource'),
 				(dataSource) => {
-					console.log('dataSource', dataSource);
+					//console.log('dataSource', dataSource);
 					this._dataSource = dataSource;
 					this.#fetch();
 				},
@@ -72,7 +72,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 			this.observe(
 				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor'),
 				(listEditor) => {
-					console.log('listEditor', listEditor);
+					//console.log('listEditor', listEditor);
 					this._listEditor = listEditor;
 					this.#fetch();
 				},

@@ -27,6 +27,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
+        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.ReadOnly";
+
         public Dictionary<string, object>? DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
