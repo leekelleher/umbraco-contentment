@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import { UmbActionBase } from '@umbraco-cms/backoffice/action';
+import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyAction } from '@umbraco-cms/backoffice/property-action';
+
+export class ContentmentPropertyActionAllowClearElement<ArgsMetaType = never>
+	extends UmbActionBase<ArgsMetaType>
+	implements UmbPropertyAction<ArgsMetaType>
+{
+	args: any;
+
+	async getHref(): Promise<string | undefined> {
+		return Promise.resolve(undefined);
+	}
+
+	async execute(): Promise<void> {
+		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
+
+		propertyContext.clearValue();
+
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+
+		return Promise.resolve();
+	}
+}
+
+export { ContentmentPropertyActionAllowClearElement as api };
