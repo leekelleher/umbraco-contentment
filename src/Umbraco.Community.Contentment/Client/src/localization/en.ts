@@ -25,6 +25,9 @@ export default {
 		addSocialLink: 'Add social link',
 		selectSocialNetwork: 'Select a social network...',
 		emptySocialNetworks: 'There are no social networks to select.',
+
+		// Property Actions
+		editJson: 'Edit raw value',
 	},
 	placeholders: {
 		enterValue: 'Enter a value...',

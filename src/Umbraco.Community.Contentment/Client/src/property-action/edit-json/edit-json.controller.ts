@@ -20,7 +20,7 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 	async execute(): Promise<void> {
 		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
 
-		const value = propertyContext?.getValue();
+		const value = propertyContext.getValue();
 
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 
@@ -33,9 +33,10 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 			},
 		});
 
-		const { content } = await modal.onSubmit();
+		const data = await modal.onSubmit().catch(() => undefined);
+		if (!data) return;
 
-		propertyContext?.setValue(JSON.parse(content));
+		propertyContext.setValue(JSON.parse(data.content));
 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 

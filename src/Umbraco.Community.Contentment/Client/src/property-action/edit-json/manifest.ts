@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { CONTENTMENT_DEVELOPER_MODE_CONDITION } from '../../condition/dev-mode/constants.js';
+import { CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION } from '../../condition/property-config-flag/constants.js';
 import type { ManifestPropertyAction } from '@umbraco-cms/backoffice/extension-registry';
 
 export const manifest: ManifestPropertyAction = {
@@ -24,7 +24,8 @@ export const manifest: ManifestPropertyAction = {
 	],
 	meta: {
 		icon: 'icon-brackets',
-		label: 'Edit raw value',
+		label: '#contentment_editJson',
 	},
-	conditions: [{ alias: CONTENTMENT_DEVELOPER_MODE_CONDITION }],
+	// @ts-ignore: Unable to extend core's `ConditionTypes` type [LK]
+	conditions: [{ alias: CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION, propertyConfigAlias: 'enableDevMode' }],
 };
