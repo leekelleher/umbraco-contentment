@@ -17,7 +17,23 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ContentmentConfigurationField> Fields => [];
+        public override IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
+            {
+                Key = "unsupported",
+                Name = "Unsupported",
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.EditorNotes",
+                Config = new Dictionary<string, object>
+                {
+                    { "alertType", "warning" },
+                    { "icon", "icon-alert" },
+                    { "heading", "Umbraco Backoffice Sections is not yet supported" },
+                    { "message", "<p><em>Support will be added in a future version of Contentment.</em></p>" },
+                    { "hideLabel", true },
+                },
+            }
+         ];
 
         public override Dictionary<string, object>? DefaultValues => default;
 
