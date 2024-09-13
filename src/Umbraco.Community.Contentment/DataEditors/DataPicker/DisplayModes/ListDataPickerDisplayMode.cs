@@ -19,6 +19,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string View => Constants.Internals.EditorsPathRoot + "data-picker.html";
 
+        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.DataPicker.List";
+
         public Dictionary<string, object>? DefaultValues => default;
 
         public Dictionary<string, object> DefaultConfig => new()

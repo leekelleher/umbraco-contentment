@@ -492,6 +492,17 @@ export type DataListItem = {
     [key: string]: (unknown) | undefined;
 };
 
+export type DataPickerConfigurationRequestModel = {
+    dataSource?: Array<(ConfigurationEditorItemRequestModel)> | null;
+    displayMode?: Array<(ConfigurationEditorItemRequestModel)> | null;
+    values?: Array<(string)> | null;
+};
+
+export type DataPickerEditorResponseModel = {
+    propertyEditorUiAlias?: string | null;
+    config?: Array<(DataTypePropertyPresentationModel)> | null;
+};
+
 export type DataTypeChangeModeModel = 'True' | 'False' | 'FalseWithHelpText';
 
 export type DataTypeContentTypeReferenceModel = {
@@ -2742,6 +2753,31 @@ export type $OpenApiTs = {
                  * OK
                  */
                 200: DataListEditorResponseModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/contentment/data-picker/editor': {
+        post: {
+            req: {
+                requestBody?: DataPickerConfigurationRequestModel;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: DataPickerEditorResponseModel;
                 /**
                  * The resource is protected and requires an authentication token
                  */

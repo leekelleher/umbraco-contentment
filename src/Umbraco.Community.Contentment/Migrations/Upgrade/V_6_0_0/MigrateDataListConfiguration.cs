@@ -43,162 +43,167 @@ internal sealed class MigrateDataListConfiguration : MigrationBase
             if (configurationData.TryGetValueAs("dataSource", out JsonArray? dataSource) == true &&
                dataSource?.Count > 0)
             {
-                var item = dataSource[0]!;
-
-                var key = item["key"]?.ToString();
-
-                switch (key)
-                {
-                    case "Umbraco.Community.Contentment.DataEditors.UmbracoContentDataListSource, Umbraco.Community.Contentment":
-                    {
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var parentNode = value["parentNode"]?.ToString();
-                                if (string.IsNullOrWhiteSpace(parentNode) == false &&
-                                    UdiParser.TryParse(parentNode, out GuidUdi? udi) == true &&
-                                    udi?.Guid.Equals(Guid.Empty) == false)
-                                {
-                                    value["parentNode"] = new JsonObject
-                                    {
-                                        ["originKey"] = udi.Guid.ToString(),
-                                        ["originAlias"] = "ByKey",
-                                    };
-
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    case "Umbraco.Community.Contentment.DataEditors.UmbracoContentPropertiesDataListSource, Umbraco.Community.Contentment":
-                    {
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var contentTypes = value["contentType"]?.AsArray();
-                                if (contentTypes?.Count > 0)
-                                {
-                                    var uniques = contentTypes
-                                        .Select(x => UdiParser.TryParse(x?.ToString(), out GuidUdi? udi) == true ? udi.Guid : Guid.Empty)
-                                        .Where(x => x.Equals(Guid.Empty) == false);
-
-                                    value["contentType"] = string.Join(",", uniques);
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    case "Umbraco.Community.Contentment.DataEditors.DataList.DataSources.UmbracoContentPropertyValueDataListSource, Umbraco.Community.Contentment":
-                    {
-                        item["key"] = "Umbraco.Community.Contentment.DataEditors.UmbracoContentPropertyValueDataListSource, Umbraco.Community.Contentment";
-
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var contentNode = value["contentNode"]?.ToString();
-                                if (string.IsNullOrWhiteSpace(contentNode) == false &&
-                                    UdiParser.TryParse(contentNode, out GuidUdi? udi) == true &&
-                                    udi?.Guid.Equals(Guid.Empty) == false)
-                                {
-                                    value["contentNode"] = new JsonObject
-                                    {
-                                        ["originKey"] = udi.Guid.ToString(),
-                                        ["originAlias"] = "ByKey",
-                                    };
-
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    case "Umbraco.Community.Contentment.DataEditors.UmbracoDictionaryDataListSource, Umbraco.Community.Contentment":
-                    {
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var items = value["item"]?.AsArray();
-                                if (items?.Count > 0)
-                                {
-                                    var guid = items.FirstOrDefault()?["key"]?.ToString();
-                                    value["item"] = guid;
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    case "Umbraco.Community.Contentment.DataEditors.UmbracoMembersDataListSource, Umbraco.Community.Contentment":
-                    {
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var memberTypes = value["memberType"]?.AsArray();
-                                if (memberTypes?.Count > 0)
-                                {
-                                    var uniques = memberTypes
-                                        .Select(x => UdiParser.TryParse(x?.ToString(), out GuidUdi? udi) == true ? udi.Guid : Guid.Empty)
-                                        .Where(x => x.Equals(Guid.Empty) == false);
-
-                                    value["memberType"] = string.Join(",", uniques);
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    case "Umbraco.Community.Contentment.DataEditors.UmbracoUsersDataListSource, Umbraco.Community.Contentment":
-                    {
-                        try
-                        {
-                            var value = item["value"];
-                            if (value is not null)
-                            {
-                                var userGroups = value["userGroup"]?.AsArray();
-                                if (userGroups?.Count > 0)
-                                {
-                                    var aliases = userGroups.Select(x => x?.ToString());
-                                    value["userGroup"] = string.Join(",", aliases);
-                                    item["value"] = value;
-                                }
-                            }
-                        }
-                        catch { /* ¯\_(ツ)_/¯ */ }
-                        break;
-                    }
-
-                    default:
-                        break;
-                }
-
-                configurationData["dataSource"] = dataSource;
+                configurationData["dataSource"] = MigrateDataSourceConfiguration(dataSource);
             }
 
             dataTypeDto.Configuration = _configurationEditorJsonSerializer.Serialize(configurationData);
 
             _ = Database.Update(dataTypeDto);
         }
+    }
+
+    public static JsonArray MigrateDataSourceConfiguration(JsonArray dataSource)
+    {
+        var item = dataSource[0]!;
+
+        var key = item["key"]?.ToString();
+
+        switch (key)
+        {
+            case "Umbraco.Community.Contentment.DataEditors.UmbracoContentDataListSource, Umbraco.Community.Contentment":
+            {
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var parentNode = value["parentNode"]?.ToString();
+                        if (string.IsNullOrWhiteSpace(parentNode) == false &&
+                            UdiParser.TryParse(parentNode, out GuidUdi? udi) == true &&
+                            udi?.Guid.Equals(Guid.Empty) == false)
+                        {
+                            value["parentNode"] = new JsonObject
+                            {
+                                ["originKey"] = udi.Guid.ToString(),
+                                ["originAlias"] = "ByKey",
+                            };
+
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            case "Umbraco.Community.Contentment.DataEditors.UmbracoContentPropertiesDataListSource, Umbraco.Community.Contentment":
+            {
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var contentTypes = value["contentType"]?.AsArray();
+                        if (contentTypes?.Count > 0)
+                        {
+                            var uniques = contentTypes
+                                .Select(x => UdiParser.TryParse(x?.ToString(), out GuidUdi? udi) == true ? udi.Guid : Guid.Empty)
+                                .Where(x => x.Equals(Guid.Empty) == false);
+
+                            value["contentType"] = string.Join(",", uniques);
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            case "Umbraco.Community.Contentment.DataEditors.DataList.DataSources.UmbracoContentPropertyValueDataListSource, Umbraco.Community.Contentment":
+            {
+                item["key"] = "Umbraco.Community.Contentment.DataEditors.UmbracoContentPropertyValueDataListSource, Umbraco.Community.Contentment";
+
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var contentNode = value["contentNode"]?.ToString();
+                        if (string.IsNullOrWhiteSpace(contentNode) == false &&
+                            UdiParser.TryParse(contentNode, out GuidUdi? udi) == true &&
+                            udi?.Guid.Equals(Guid.Empty) == false)
+                        {
+                            value["contentNode"] = new JsonObject
+                            {
+                                ["originKey"] = udi.Guid.ToString(),
+                                ["originAlias"] = "ByKey",
+                            };
+
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            case "Umbraco.Community.Contentment.DataEditors.UmbracoDictionaryDataListSource, Umbraco.Community.Contentment":
+            {
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var items = value["item"]?.AsArray();
+                        if (items?.Count > 0)
+                        {
+                            var guid = items.FirstOrDefault()?["key"]?.ToString();
+                            value["item"] = guid;
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            case "Umbraco.Community.Contentment.DataEditors.UmbracoMembersDataListSource, Umbraco.Community.Contentment":
+            {
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var memberTypes = value["memberType"]?.AsArray();
+                        if (memberTypes?.Count > 0)
+                        {
+                            var uniques = memberTypes
+                                .Select(x => UdiParser.TryParse(x?.ToString(), out GuidUdi? udi) == true ? udi.Guid : Guid.Empty)
+                                .Where(x => x.Equals(Guid.Empty) == false);
+
+                            value["memberType"] = string.Join(",", uniques);
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            case "Umbraco.Community.Contentment.DataEditors.UmbracoUsersDataListSource, Umbraco.Community.Contentment":
+            {
+                try
+                {
+                    var value = item["value"];
+                    if (value is not null)
+                    {
+                        var userGroups = value["userGroup"]?.AsArray();
+                        if (userGroups?.Count > 0)
+                        {
+                            var aliases = userGroups.Select(x => x?.ToString());
+                            value["userGroup"] = string.Join(",", aliases);
+                            item["value"] = value;
+                        }
+                    }
+                }
+                catch { /* ¯\_(ツ)_/¯ */ }
+                break;
+            }
+
+            default:
+                break;
+        }
+
+        return dataSource;
     }
 }

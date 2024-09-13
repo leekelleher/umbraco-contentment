@@ -33,6 +33,20 @@ public class ConfigurationEditorController : ContentmentControllerBase
 
         switch (type)
         {
+            case "dataPickerSource":
+            {
+                var items = _utility.GetConfigurationEditorModels<IDataPickerSource>();
+                var model = new ConfigurationEditorModelsResponseModel { Items = items };
+                return Ok(model);
+            }
+
+            case "dataPickerDisplayMode":
+            {
+                var items = _utility.GetConfigurationEditorModels<IDataPickerDisplayMode>();
+                var model = new ConfigurationEditorModelsResponseModel { Items = items };
+                return Ok(model);
+            }
+
             case "dataSource":
             {
                 var items = _utility.GetConfigurationEditorModels<IDataListSource>();

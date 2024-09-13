@@ -44,7 +44,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | :green_circle: | **Code Editor** | **Done** | |
 | :red_circle: | Content Blocks | _Undecided_ | :no_entry_sign: Considering deprecating; potentially migrate to Block List? :thinking: |
 | :green_circle: | **Data List** | **Done** | Property-editor work is done.<br>**BUT!** A few of the data-sources and list-editors are still under active development, _(see below for status)_. |
-| :large_blue_circle: | Data Picker | _Started_ | 1% done; A read-only placeholder editor is available. |
+| :large_blue_circle: | Data Picker | _Started_ | 37% done. |
 | :green_circle: | **Editor Notes** | **Done** | |
 | :green_circle: | **Icon Picker** | **Done** | |
 | :green_circle: | **List Items** | **Done** | |

@@ -19,7 +19,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.DataPicker',
 	name: '[Contentment] Data Picker Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('./data-picker.element.js'),
 	meta: {
 		label: '[Contentment] Data Picker',
 		icon: 'icon-fa-arrow-pointer',
@@ -31,13 +31,25 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'dataSource',
 					label: 'Data source',
 					description: 'Select and configure a data source.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'configurationType', value: 'dataPickerSource' },
+						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
+					],
 				},
 				{
 					alias: 'displayMode',
 					label: 'Display mode',
 					description: 'Select display mode for the picker editor.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+						{ alias: 'configurationType', value: 'dataPickerDisplayMode' },
+						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
+					],
 				},
 				{
 					alias: 'pageSize',
@@ -61,7 +73,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					alias: 'maxItems',
 					label: 'Maximum items',
 					description: "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
-          propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 				},
 				{
 					alias: 'enableDevMode',

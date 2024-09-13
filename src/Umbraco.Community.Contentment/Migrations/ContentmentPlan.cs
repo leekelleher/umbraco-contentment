@@ -23,6 +23,7 @@ namespace Umbraco.Community.Contentment.Migrations
                .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
             ;
         }
     }

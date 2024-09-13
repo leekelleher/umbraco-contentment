@@ -13,21 +13,21 @@ using Umbraco.Community.Contentment.DataEditors;
 namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
 
 [ApiVersion("1.0")]
-[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/data-list")]
-public class DataListController : ContentmentControllerBase
+[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/data-picker")]
+public class DataPickerController : ContentmentControllerBase
 {
     private readonly ConfigurationEditorUtility _utility;
 
-    public DataListController(ConfigurationEditorUtility utility)
+    public DataPickerController(ConfigurationEditorUtility utility)
     {
         _utility = utility;
     }
 
     [HttpPost("editor")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(DataListEditorResponseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(DataPickerEditorResponseModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetEditor(DataListConfigurationRequestModel model)
+    public async Task<IActionResult> GetEditor(DataPickerConfigurationRequestModel model)
     {
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
@@ -41,23 +41,23 @@ public class DataListController : ContentmentControllerBase
         var key1 = model.DataSource?.FirstOrDefault()?.Key;
         if (string.IsNullOrWhiteSpace(key1) == false)
         {
-            var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
+            var source = _utility.GetConfigurationEditor<IDataPickerSource>(key1);
             var sourceConfig = model.DataSource?.FirstOrDefault()?.Value;
             if (source is not null && sourceConfig is not null)
             {
-                var items = source.GetItems(sourceConfig) ?? [];
+                var items = await source.GetItemsAsync(sourceConfig, model.Values ?? []) ?? [];
                 config.Add(nameof(items), items);
             }
         }
 
-        var key2 = model.ListEditor?.FirstOrDefault()?.Key;
+        var key2 = model.DisplayMode?.FirstOrDefault()?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
-            var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
+            var editor = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 
-            var editorConfig = model.ListEditor?.FirstOrDefault()?.Value;
+            var editorConfig = model.DisplayMode?.FirstOrDefault()?.Value;
             if (editorConfig is not null)
             {
                 foreach (var prop in editorConfig)

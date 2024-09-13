@@ -48,6 +48,26 @@ export class ContentmentService {
     }
     
     /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static postContentmentDataPickerEditor(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/editor']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/editor']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/umbraco/management/api/v1/contentment/data-picker/editor',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
      * @returns unknown OK
      * @throws ApiError
      */
