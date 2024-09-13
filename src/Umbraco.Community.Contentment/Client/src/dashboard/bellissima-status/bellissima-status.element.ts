@@ -18,8 +18,8 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 	// alpha001 was 40 started, 63 total = 63% complete
 	// alpha002 was 51 started, 41 completed, 63 total = 73% complete
 	// alpha003 was 61 started, 55 completed, 63 total = 92% complete
-	#started = 61;
-	#completed = 55;
+	#started = 62;
+	#completed = 56;
 	#total = 63;
 	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
 
@@ -80,7 +80,7 @@ Status of list-editors used by the Data List editor.
 | :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
 | :green_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes", Data Table UI.  |
-| :large_blue_circle: | Item Picker | _Started_ | 37% done. |
+| :green_circle: | **Item Picker** | **Done** | "Done", but sorting and "List type" haven't been implemented yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
 | :large_blue_circle: | Tags | _Started_ | 42% done. |
 | :thinking: | Templated List | _Researching_ | :thinking: Exploring alternative options.<br>:warning: Missing "HTML attributes", Data Table UI. |

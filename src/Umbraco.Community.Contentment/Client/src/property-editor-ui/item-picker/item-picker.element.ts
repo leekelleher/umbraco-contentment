@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { parseInt } from '../../utils/index.js';
+import { parseBoolean, parseInt } from '../../utils/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
@@ -12,6 +12,7 @@ import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-re
 import type { ContentmentDataListItem } from '../types.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
+import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-item-picker';
 
@@ -20,11 +21,27 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
 
+	#allowDuplicates = false;
+
+	#confirmRemoval = false;
+
+	#defaultIcon?: string;
+
+	#disableSorting = false;
+
+	#enableFilter = true;
+
+	#enableMultiple = false;
+
+	#listType = 'list';
+
 	#lookup: Record<string, ContentmentDataListItem> = {};
 
 	#maxItems = Infinity;
 
 	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
+
+	#overlaySize: UUIModalSidebarSize = 'small';
 
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
@@ -38,7 +55,15 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
+		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
+		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
+		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
+		this.#disableSorting = parseBoolean(config.getValueByAlias('disableSorting'));
+		this.#enableFilter = parseBoolean(config.getValueByAlias('enableFilter') ?? '1');
+		this.#enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
+		this.#listType = config.getValueByAlias<string>('listType') ?? 'list';
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#overlaySize = config.getValueByAlias<UUIModalSidebarSize>('overlaySize') ?? 'small';
 
 		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
 
@@ -55,6 +80,10 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#getItemByValue(value: string): ContentmentDataListItem | undefined {
 		return this.#lookup[value];
+	}
+
+	#getMetadata(item: ContentmentDataListItem, key: string): string | unknown | undefined {
+		return item[key];
 	}
 
 	#populateItemLookup() {
@@ -81,8 +110,20 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	async #onChoose() {
 		if (!this.#modalManager) return;
 
+		const items = this.#allowDuplicates
+			? this._items
+			: this._items.filter((x) => this.value?.some((y) => x.value === y) === false);
+
 		const modal = this.#modalManager.open(this, CONTENTMENT_ITEM_PICKER_MODAL, {
-			data: { items: this._items ?? [] },
+			data: {
+				defaultIcon: this.#defaultIcon,
+				enableFilter: this.#enableFilter,
+				enableMultiple: this.#enableMultiple,
+				items: items ?? [],
+				listType: this.#listType,
+				maxItems: this.#maxItems === 0 ? this.#maxItems : this.#maxItems - (this.value?.length ?? 0),
+			},
+			modal: { size: this.#overlaySize },
 		});
 
 		const data = await modal.onSubmit().catch(() => undefined);
@@ -91,17 +132,16 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	}
 
 	async #removeItem(item: ContentmentDataListItem, index: number) {
-		console.log('#removeItem', item);
-		//this.#pickerContext?.requestRemoveItem(item.unique);
-
 		if (!item || !this.value || index == -1) return;
 
-		await umbConfirmModal(this, {
-			color: 'danger',
-			headline: 'Remove item?',
-			content: 'Are you sure you want to remove this item?',
-			confirmLabel: this.localize.term('general_remove'),
-		});
+		if (this.#confirmRemoval) {
+			await umbConfirmModal(this, {
+				color: 'danger',
+				headline: 'Remove item?',
+				content: 'Are you sure you want to remove this item?',
+				confirmLabel: this.localize.term('general_remove'),
+			});
+		}
 
 		const tmp = [...this.value];
 		tmp.splice(index, 1);
@@ -141,13 +181,13 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	#renderItem(value: string, index: number) {
 		const item = this.#getItemByValue(value);
 		if (!item) return;
-		const icon = this.#renderMetadata(value, item, 'icon');
+		const icon = this.#getMetadata(item, 'icon') ?? this.#defaultIcon;
 		return html`
 			<uui-ref-node
-				name=${this.#renderMetadata(value, item, 'name') ?? value}
-				detail=${this.#renderMetadata(value, item, 'description') ?? ''}
+				name=${this.#getMetadata(item, 'name') ?? value}
+				detail=${this.#getMetadata(item, 'description') ?? ''}
 				?standalone=${this.#maxItems === 1}>
-				${when(icon, () => html`<uui-icon slot="icon" name=${icon!}></uui-icon>`)}
+				${when(icon, () => html`<umb-icon slot="icon" name=${icon!}></umb-icon>`)}
 				<uui-action-bar slot="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}
@@ -155,10 +195,6 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 				</uui-action-bar>
 			</uui-ref-node>
 		`;
-	}
-
-	#renderMetadata(value: string, item: ContentmentDataListItem, key: string): string | unknown | undefined {
-		return item[key] ?? value;
 	}
 
 	static override styles = [
