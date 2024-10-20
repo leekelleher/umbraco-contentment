@@ -130,7 +130,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 		tab.active = true;
 	}
 
-	render() {
+	override render() {
 		switch (this._state) {
 			case 'dataSourceConfigured':
 				return html`<p>Please select and configure a list editor.</p>`;

@@ -42,7 +42,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		}
 	}
 
-	connectedCallback() {
+	override connectedCallback() {
 		super.connectedCallback();
 		tryHideLabel(this, this.#hideLabel);
 	}

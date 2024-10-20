@@ -58,7 +58,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<uui-radio-group .value=${this.value || this._defaultValue} @change=${this.#onChange}>
 				${repeat(
@@ -87,7 +87,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			.outer {
 				display: flex;

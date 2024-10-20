@@ -8,7 +8,7 @@ export class ContentmentTemplatedLabelCodeBlockElement extends UmbLitElement {
 	@property({ attribute: false })
 	value?: unknown;
 
-	render() {
+	override render() {
 		return html`
 			<details>
 				<summary>View data</summary>
@@ -17,7 +17,7 @@ export class ContentmentTemplatedLabelCodeBlockElement extends UmbLitElement {
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			details > summary {
 				cursor: pointer;

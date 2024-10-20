@@ -29,7 +29,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<uui-input
 				type="number"
@@ -42,7 +42,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			.s {
 				width: 10ch;

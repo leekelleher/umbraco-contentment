@@ -37,7 +37,7 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<contentment-property-editor-ui
 				property-editor-ui-alias="Umb.PropertyEditorUi.IconPicker"

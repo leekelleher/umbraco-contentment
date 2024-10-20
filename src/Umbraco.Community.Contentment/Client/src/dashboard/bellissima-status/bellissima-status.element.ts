@@ -5,7 +5,6 @@ import { css, customElement, html, state, unsafeHTML, when } from '@umbraco-cms/
 import { DOMPurify } from '@umbraco-cms/backoffice/external/dompurify';
 import { Marked } from '@umbraco-cms/backoffice/external/marked';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
 import '../../property-editor-ui/editor-notes/editor-notes.element.js';
 
@@ -130,18 +129,14 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 	@state()
 	private _markup?: string;
 
-	constructor() {
-		super();
-	}
-
-	firstUpdated() {
+	override firstUpdated() {
 		const regex = new RegExp(Object.keys(this.#emojis).join('|'), 'gi');
 		const markdown = this.#gfm.replace(regex, (matched) => this.#emojis[matched]);
 		const markup = UmbMarked.parse(markdown) as string;
 		this._markup = DOMPurify.sanitize(markup);
 	}
 
-	render() {
+	override render() {
 		return html`
 			<umb-body-layout headline="Migration status of Contentment for Umbraco Bellissima">
 				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Under active development</uui-tag></div>
@@ -184,8 +179,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 		`;
 	}
 
-	static styles = [
-		UmbTextStyles,
+	static override styles = [
 		css`
 			div[slot='action-menu'] {
 				margin-right: var(--uui-size-layout-3);

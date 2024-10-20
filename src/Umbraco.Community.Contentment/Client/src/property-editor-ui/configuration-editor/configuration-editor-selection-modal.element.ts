@@ -45,7 +45,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 		});
 	}
 
-	connectedCallback() {
+	override connectedCallback() {
 		super.connectedCallback();
 		this.#groupItems(this.data?.items);
 	}
@@ -99,7 +99,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 		this.#debouncedFilter(query.toLowerCase());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<umb-body-layout headline=${this.localize.term('general_choose')}>
 				${this.#renderFilter()} ${this.#renderGroups()}
@@ -148,7 +148,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			h4 {
 				margin-top: 0.5rem;

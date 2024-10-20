@@ -151,7 +151,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`${this.#renderItems()}${this.#renderButton()}`;
 	}
 
@@ -243,7 +243,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#btn-add {
 				display: block;

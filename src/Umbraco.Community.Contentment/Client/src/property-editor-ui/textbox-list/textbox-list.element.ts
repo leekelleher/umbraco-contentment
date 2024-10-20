@@ -42,7 +42,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
 
-	protected async firstUpdated() {
+	override async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 	}
 
@@ -74,7 +74,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		if (!this._items?.length) return nothing;
 		return html`
 			<div id="wrapper">
@@ -103,7 +103,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#wrapper {
 				display: flex;

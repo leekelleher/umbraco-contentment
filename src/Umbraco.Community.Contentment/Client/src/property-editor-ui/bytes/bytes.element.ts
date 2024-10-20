@@ -41,7 +41,7 @@ export class ContentmentPropertyEditorUIBytesElement extends UmbLitElement imple
 		return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 	}
 
-	render() {
+	override render() {
 		return this.#formatBytes(this.value);
 	}
 }

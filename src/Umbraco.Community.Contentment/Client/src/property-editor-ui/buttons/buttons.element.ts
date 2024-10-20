@@ -84,7 +84,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<uui-button-group>
 				${repeat(
@@ -119,7 +119,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			uui-button.small {
 				font-size: 0.8rem;

@@ -94,7 +94,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		});
 	}
 
-	async firstUpdated() {
+	override async firstUpdated() {
 		this.#requestItems();
 	}
 
@@ -166,7 +166,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		this._totalPages = data?.total ?? 0;
 	}
 
-	render() {
+	override render() {
 		return html`
 			<umb-body-layout headline=${this.localize.term('general_choose')}>
 				${this.#renderFilter()} ${this.#renderInfo()} ${this.#renderItems()}
@@ -267,7 +267,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#filter {
 				width: 100%;

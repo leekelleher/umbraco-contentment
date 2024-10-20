@@ -35,11 +35,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 	@state()
 	private _values?: Array<UmbPropertyValueData>;
 
-	constructor() {
-		super();
-	}
-
-	connectedCallback() {
+	override connectedCallback() {
 		super.connectedCallback();
 
 		if (!this.data) return;
@@ -57,7 +53,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 		this._submitModal();
 	}
 
-	render() {
+	override render() {
 		if (!this._item) return nothing;
 		const fields = this._item.fields ?? [];
 		if (!this._values) this._values = [];
@@ -100,7 +96,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		UmbTextStyles,
 		css`
 			umb-property {

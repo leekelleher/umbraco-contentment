@@ -49,7 +49,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`
 			<div id="code-editor">
@@ -59,7 +59,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#code-editor {
 				display: flex;

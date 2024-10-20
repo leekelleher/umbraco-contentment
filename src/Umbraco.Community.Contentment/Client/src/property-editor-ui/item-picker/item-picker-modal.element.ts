@@ -58,7 +58,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
 
-	connectedCallback() {
+	override connectedCallback() {
 		super.connectedCallback();
 		this._items = this.data?.items ? this.data.items : [];
 	}
@@ -106,7 +106,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 		this.#debouncedFilter(event.target.value);
 	}
 
-	render() {
+	override render() {
 		return html`
 			<umb-body-layout headline=${this.localize.term('general_choose')}>
 				${this.#renderFilter()} ${this.#renderInfo()} ${this.#renderItems()}
@@ -188,7 +188,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#filter {
 				width: 100%;

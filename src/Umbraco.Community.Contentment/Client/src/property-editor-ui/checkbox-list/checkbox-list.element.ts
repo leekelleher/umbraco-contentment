@@ -101,7 +101,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			${when(this._checkAll, () => this.#renderCheckAll())}
 			<ul>
@@ -151,7 +151,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			ul {
 				list-style: none;

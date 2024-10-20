@@ -26,16 +26,16 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 	}
 
-	connectedCallback() {
+	override connectedCallback() {
 		super.connectedCallback();
 		tryHideLabel(this, this.#hideLabel);
 	}
 
-	render() {
+	override render() {
 		return unsafeHTML(this.#notes);
 	}
 
-	static styles = [
+	static override styles = [
 		UmbTextStyles,
 		css`
 			details > summary {

@@ -176,7 +176,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`${this.#renderItems()}${this.#renderButton()}`;
 	}
 
@@ -246,7 +246,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		return model[key] ?? item.value[key];
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#btn-add {
 				display: block;

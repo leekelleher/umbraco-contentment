@@ -80,11 +80,11 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 	}
 
 	// Disable the Shadow DOM for this element; as event propagation needs to pass-through.
-	createRenderRoot() {
+	override createRenderRoot() {
 		return this;
 	}
 
-	render() {
+	override render() {
 		if (this._element) return this._element;
 		if (this._undefined) return html`<contentment-lee-was-here></contentment-lee-was-here>`;
 		return nothing;

@@ -30,7 +30,7 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 		this._submitModal();
 	}
 
-	render() {
+	override render() {
 		return html`
 			<uui-dialog-layout .headline=${this.localize.term('contentment_selectSocialNetwork')}>
 				${this.#renderItems()}
@@ -73,7 +73,7 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#wrapper {
 				display: grid;

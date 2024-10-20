@@ -63,7 +63,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		if (!this.#extensionType) return html`<pre><code>Missing configuration for the extension type.</code></pre>`;
 		return html`${this.#renderItems()} ${this.#renderAddButton()}`;
 	}

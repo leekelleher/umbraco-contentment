@@ -116,12 +116,12 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		}
 	}
 
-	protected async firstUpdated() {
+	override async firstUpdated() {
 		this._options = await Promise.all(this._promises);
 		this._loading = false;
 	}
 
-	render() {
+	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`${repeat(
 			this._options,
@@ -153,7 +153,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			:host {
 				display: flex;

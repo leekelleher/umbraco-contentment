@@ -55,7 +55,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`
 			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange}>
 				<uui-combobox-list>
@@ -86,7 +86,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			uui-combobox {
 				width: 100%;

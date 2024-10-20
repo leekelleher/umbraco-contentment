@@ -21,7 +21,7 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 		this.#value = JSON.stringify(this.value, null, 2);
 	}
 
-	render() {
+	override render() {
 		return html`
 			<contentment-info-box type="warning" icon="icon-alert" heading="This editor has not been developed yet.">
 				<p><em>The property value and data-type configuration are in read-only mode.</em></p>

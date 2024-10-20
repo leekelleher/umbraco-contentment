@@ -171,7 +171,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		return html`${this.#renderItems()}${this.#renderButton()}`;
 	}
 
@@ -250,7 +250,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			#btn-add {
 				display: block;

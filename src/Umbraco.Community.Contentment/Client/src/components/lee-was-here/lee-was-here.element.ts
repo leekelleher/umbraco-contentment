@@ -7,7 +7,7 @@ const ELEMENT_NAME = 'lee-was-here';
 
 @customElement(ELEMENT_NAME)
 export default class ContentmentLeeWasHereElement extends LitElement {
-	render() {
+	override render() {
 		return html`
 			<img
 				src="/App_Plugins/Contentment/backoffice/contentment/lee-was-here.svg"

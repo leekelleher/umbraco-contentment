@@ -64,7 +64,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 		// });
 	}
 
-	protected async firstUpdated() {
+	override async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 		this._initialized = true;
 	}
@@ -98,7 +98,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		if (!this._initialized || !this.#listEditor) return html`<uui-loader></uui-loader>`;
 		if (!this.#listEditor.propertyEditorUiAlias) return html`<lee-was-here></lee-was-here>`;
 		//console.log('data-list', [this._entityUnique, this._propertyAlias, this._variantId]);

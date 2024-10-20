@@ -65,7 +65,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	@state()
 	private _append?: string;
 
-	protected async firstUpdated() {
+	override async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 	}
 
@@ -94,7 +94,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	render() {
+	override render() {
 		// TODO: [LK] Appears that `uui-input` doesn't support the `list` attribute.
 		return html`
 			<uui-input
@@ -129,7 +129,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		return html`<umb-icon slot=${slot} .name=${icon}></umb-icon>`;
 	}
 
-	static styles = [
+	static override styles = [
 		css`
 			uui-input {
 				width: 100%;
