@@ -17,7 +17,7 @@ const editorUi: ManifestPropertyEditorUi = {
 	element: () => import('./item-picker.element.js'),
 	meta: {
 		label: '[Contentment] Item Picker',
-		icon: 'icon-fa fa-mouse-pointer',
+		icon: 'icon-fa-arrow-pointer',
 		group: 'pickers',
 	},
 };
