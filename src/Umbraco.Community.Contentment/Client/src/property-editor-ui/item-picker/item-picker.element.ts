@@ -9,10 +9,10 @@ import {
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
-import type { ContentmentDataListItem } from '../types.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
 import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
+import type { ContentmentDataListItem } from '../types.js';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-item-picker';
 
@@ -27,7 +27,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#defaultIcon?: string;
 
-	#disableSorting = false;
+	//#disableSorting = false;
 
 	#enableFilter = true;
 
@@ -58,7 +58,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
-		this.#disableSorting = parseBoolean(config.getValueByAlias('disableSorting'));
+		//this.#disableSorting = parseBoolean(config.getValueByAlias('disableSorting'));
 		this.#enableFilter = parseBoolean(config.getValueByAlias('enableFilter') ?? '1');
 		this.#enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this.#listType = config.getValueByAlias<string>('listType') ?? 'list';

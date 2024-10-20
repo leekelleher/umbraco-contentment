@@ -9,6 +9,7 @@ using Umbraco.Community.Contentment;
 
 namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
 
+// TODO: [LK] Move this outside of Umbraco's Management API.
 [ApiExplorerSettings(GroupName = Constants.Internals.ProjectName)]
 [Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
 [VersionedApiBackOfficeRoute(Constants.Internals.ProjectAlias)]
