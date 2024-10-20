@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public virtual Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public virtual Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var items = default(IEnumerable<DataListItem>);
 
@@ -55,13 +55,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (items?.Any() == true)
             {
                 var offset = (pageNumber - 1) * pageSize;
-                return Task.FromResult(new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
+                return Task.FromResult(new PagedViewModel<DataListItem>
                 {
                     Items = items.Skip(offset).Take(pageSize),
+                    Total = pageSize > 0 ? (long)Math.Ceiling(items.Count() / (decimal)pageSize) : 1,
                 });
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
     }
 }

@@ -3,11 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
 using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -125,7 +125,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var start = GetStartContent(config);
             if (start != null)
@@ -144,19 +144,17 @@ namespace Umbraco.Community.Contentment.DataEditors
                         items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
                     }
 
-                    var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
+                    var results = new PagedViewModel<DataListItem>
                     {
-                        Items = items
-                            .Skip(offset)
-                            .Take(pageSize)
-                            .Select(x => ToDataListItem(x, imageAlias))
+                        Items = items.Skip(offset).Take(pageSize).Select(x => ToDataListItem(x, imageAlias)),
+                        Total = pageSize > 0 ? (long)Math.Ceiling(items.Count() / (decimal)pageSize) : 1,
                     };
 
                     return Task.FromResult(results);
                 }
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
@@ -225,10 +223,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                     {
-//#pragma warning disable CS0618 // Type or member is obsolete
-//                        return contentCache.GetSingleByXPath(preview, parsed);
+                        //#pragma warning disable CS0618 // Type or member is obsolete
+                        //                        return contentCache.GetSingleByXPath(preview, parsed);
                         return default;
-//#pragma warning restore CS0618 // Type or member is obsolete
+                        //#pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
             }

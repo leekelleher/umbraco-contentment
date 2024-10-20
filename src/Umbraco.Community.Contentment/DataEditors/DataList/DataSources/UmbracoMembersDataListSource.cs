@@ -3,8 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System;
-using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
@@ -109,7 +108,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var totalRecords = -1L;
             var pageIndex = pageNumber - 1;
@@ -119,18 +118,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (items?.Any() == true)
             {
                 var offset = pageIndex * pageSize;
-                var results = new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize)
+                var results = new PagedViewModel<DataListItem>
                 {
-                    Items = items
-                        .Skip(offset)
-                        .Take(pageSize)
-                        .Select(ToDataListItem)
+                    Items = items.Skip(offset).Take(pageSize).Select(ToDataListItem),
+                    Total = pageSize > 0 ? (long)Math.Ceiling(totalRecords / (decimal)pageSize) : 1,
                 };
 
                 return Task.FromResult(results);
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
