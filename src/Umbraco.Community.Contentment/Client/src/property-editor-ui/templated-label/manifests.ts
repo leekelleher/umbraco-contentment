@@ -56,11 +56,14 @@ const editorUi: ManifestPropertyEditorUi = {
 		settings: {
 			properties: [
 				{
-					alias: 'notes',
-					label: 'Template',
-					description: 'Enter the AngularJS template to be displayed for the label.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.CodeEditor',
-					config: [{ alias: 'mode', value: 'html' }],
+					alias: 'component',
+					label: 'Component',
+					description: 'Select the templated component to used for the label.',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ManifestPicker',
+					config: [
+						{ alias: 'extensionType', value: 'contentmentTemplatedLabel' },
+						{ alias: 'maxItems', value: 1 },
+					],
 				},
 				{
 					alias: 'hideLabel',
