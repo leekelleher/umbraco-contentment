@@ -68,6 +68,35 @@ export class ContentmentService {
     }
     
     /**
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.dataTypeKey
+     * @param data.pageNumber
+     * @param data.pageSize
+     * @param data.query
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getContentmentDataPickerSearch(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/search']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/data-picker/search',
+            query: {
+                id: data.id,
+                dataTypeKey: data.dataTypeKey,
+                pageNumber: data.pageNumber,
+                pageSize: data.pageSize,
+                query: data.query
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
      * @returns unknown OK
      * @throws ApiError
      */

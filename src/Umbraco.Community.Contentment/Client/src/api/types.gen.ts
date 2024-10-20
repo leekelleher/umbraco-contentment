@@ -492,7 +492,9 @@ export type DataListItem = {
     [key: string]: (unknown) | undefined;
 };
 
-export type DataPickerConfigurationRequestModel = {
+export type DataPickerEditorRequestModel = {
+    id: string;
+    dataTypeKey: string;
     dataSource?: Array<(ConfigurationEditorItemRequestModel)> | null;
     displayMode?: Array<(ConfigurationEditorItemRequestModel)> | null;
     values?: Array<(string)> | null;
@@ -1712,6 +1714,11 @@ export type PagedMemberTypeTreeItemResponseModel = {
     items: Array<(MemberTypeTreeItemResponseModel)>;
 };
 
+export type PagedModelDataListItemModel = {
+    items: Array<(DataListItem)>;
+    total: number;
+};
+
 export type PagedModelDataTypeItemResponseModel = {
     items: Array<(DataTypeItemResponseModel)>;
     total: number;
@@ -2771,7 +2778,7 @@ export type $OpenApiTs = {
     '/umbraco/management/api/v1/contentment/data-picker/editor': {
         post: {
             req: {
-                requestBody?: DataPickerConfigurationRequestModel;
+                requestBody?: DataPickerEditorRequestModel;
             };
             res: {
                 /**
@@ -2786,6 +2793,35 @@ export type $OpenApiTs = {
                  * The authenticated user do not have access to this resource
                  */
                 403: string;
+                /**
+                 * Not Found
+                 */
+                404: ProblemDetails;
+            };
+        };
+    };
+    '/umbraco/management/api/v1/contentment/data-picker/search': {
+        get: {
+            req: {
+                dataTypeKey?: string;
+                id?: string;
+                pageNumber?: number;
+                pageSize?: number;
+                query?: string;
+            };
+            res: {
+                /**
+                 * OK
+                 */
+                200: PagedModelDataListItemModel;
+                /**
+                 * The resource is protected and requires an authentication token
+                 */
+                401: unknown;
+                /**
+                 * The authenticated user do not have access to this resource
+                 */
+                403: unknown;
                 /**
                  * Not Found
                  */

@@ -7,6 +7,7 @@ import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
+import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
@@ -24,13 +25,19 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	#listEditorConfig?: UmbPropertyEditorConfig;
 
 	@state()
-	private _initialized = false;
-
-	@state()
 	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
 
 	@state()
+	private _dataTypeKey?: string;
+
+	@state()
 	private _displayMode?: Array<ContentmentConfigurationEditorValue>;
+
+	@state()
+	private _entityUnique?: string;
+
+	@state()
+	private _initialized = false;
 
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
@@ -48,6 +55,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this._displayMode = config.getValueByAlias('displayMode');
 
 		this.#listEditorConfig = [
+			{ alias: 'allowDuplicates', value: parseBoolean(config.getValueByAlias('allowDuplicates') ?? true) },
 			{ alias: 'hideSearch', value: parseBoolean(config.getValueByAlias('hideSearch')) },
 			{ alias: 'maxItems', value: parseInt(config.getValueByAlias('maxItems')) || Infinity },
 			{ alias: 'overlaySize', value: config.getValueByAlias<UUIModalSidebarSize>('overlaySize') ?? 'medium' },
@@ -57,18 +65,36 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 	constructor() {
 		super();
+
+		this.consumeContext('UmbMenuStructureWorkspaceContext', (context: any) => {
+			this.observe(context.structure, (structure: Array<{ unique: string }>) => {
+				this._entityUnique = structure.at(-1)?.unique;
+			});
+		});
+
+		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
+			this.observe(context.dataType, (dataType) => {
+				this._dataTypeKey = dataType?.unique;
+			});
+		});
 	}
 
-	protected async firstUpdated() {
+	async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 		this._initialized = true;
 	}
 
 	async #init() {
 		this.#listEditor = await new Promise<ContentmentDataListEditor>(async (resolve, reject) => {
-			if (!this._dataSource || !this._displayMode) return reject();
+			if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return reject();
 
-			const requestBody = { dataSource: this._dataSource, displayMode: this._displayMode, values: this.value };
+			const requestBody = {
+				id: this._entityUnique,
+				dataTypeKey: this._dataTypeKey,
+				dataSource: this._dataSource,
+				displayMode: this._displayMode,
+				values: this.value,
+			};
 
 			const { data } = await tryExecuteAndNotify(
 				this,
