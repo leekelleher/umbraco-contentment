@@ -61,7 +61,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					description: 'Select the templated component to used for the label.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ManifestPicker',
 					config: [
-						{ alias: 'extensionType', value: 'contentmentTemplatedLabel' },
+						{ alias: 'extensionType', value: 'contentmentTemplatedLabelUi' },
 						{ alias: 'maxItems', value: 1 },
 					],
 				},
@@ -78,6 +78,7 @@ const editorUi: ManifestPropertyEditorUi = {
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 			],
+			defaultData: [{ alias: 'component', value: ['Umb.Contentment.TemplatedLabelUi.CodeBlock'] }],
 		},
 	},
 };

@@ -1,10 +1,17 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import type { ContentmentTemplatedLabelUiElement } from '../types.js';
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 
-const ELEMENT_NAME = 'contentment-templated-label-code-block';
+const ELEMENT_NAME = 'contentment-templated-label-ui-code-block';
 
 @customElement(ELEMENT_NAME)
-export class ContentmentTemplatedLabelCodeBlockElement extends UmbLitElement {
+export class ContentmentTemplatedLabelUiCodeBlockElement
+	extends UmbLitElement
+	implements ContentmentTemplatedLabelUiElement
+{
 	@property({ attribute: false })
 	value?: unknown;
 
@@ -26,10 +33,10 @@ export class ContentmentTemplatedLabelCodeBlockElement extends UmbLitElement {
 	];
 }
 
-export { ContentmentTemplatedLabelCodeBlockElement as element };
+export { ContentmentTemplatedLabelUiCodeBlockElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentTemplatedLabelCodeBlockElement;
+		[ELEMENT_NAME]: ContentmentTemplatedLabelUiCodeBlockElement;
 	}
 }

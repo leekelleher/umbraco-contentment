@@ -34,7 +34,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		if (!this.#components?.length) return html`<p>A templated label component has not been configured.</p>`;
 		return html`
 			<umb-extension-slot
-				type="contentmentTemplatedLabel"
+				type="contentmentTemplatedLabelUi"
 				.filter=${(manifest: ManifestBase) => this.#components?.includes(manifest.alias)}
 				.props=${{ value: this.value }}>
 			</umb-extension-slot>
