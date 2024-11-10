@@ -7,19 +7,19 @@ import { Marked } from '@umbraco-cms/backoffice/external/marked';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
-import '../../property-editor-ui/editor-notes/editor-notes.element.js';
+import '../property-editor-ui/editor-notes/editor-notes.element.js';
 
 const UmbMarked = new Marked({ gfm: true, breaks: true });
 
-const ELEMENT_NAME = 'umb-bellissima-status-dashboard-element';
+const ELEMENT_NAME = 'contentment-workspace';
 
 @customElement(ELEMENT_NAME)
-export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
+export class ContentmentWorkspaceElement extends UmbLitElement {
 	// alpha001 was 40 started, 63 total = 63% complete
 	// alpha002 was 51 started, 41 completed, 63 total = 73% complete
 	// alpha003 was 61 started, 55 completed, 63 total = 92% complete
 	#started = 62;
-	#completed = 58;
+	#completed = 59;
 	#total = 63;
 	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
 
@@ -43,7 +43,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | :green_circle: | **Bytes** | **Done** | |
 | :green_circle: | **Code Editor** | **Done** | |
 | :red_circle: | Content Blocks | _Undecided_ | :no_entry_sign: Considering deprecating; potentially migrate to Block List? :thinking: |
-| :green_circle: | **Data List** | **Done** | Property-editor work is done.<br>**BUT!** A few of the data-sources and list-editors are still under active development, _(see below for status)_. |
+| :green_circle: | **Data List** | **Done** | _(see below for development status on individual components)_ |
 | :green_circle: | Data Picker | **Done** | |
 | :green_circle: | **Editor Notes** | **Done** | |
 | :green_circle: | **Icon Picker** | **Done** | |
@@ -52,7 +52,7 @@ export class UmbBellissimaStatusDashboardElement extends UmbLitElement {
 | :green_circle: | **Number Input** | **Done** | |
 | :green_circle: | ~Render Macro~ | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
 | :green_circle: | **Social Links** | **Done** | |
-| :green_circle: | Templated Label | **Done** | |
+| :green_circle: | **Templated Label** | **Done** | |
 | :green_circle: | **Textbox List** | **Done** | |
 | :green_circle: | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
 
@@ -83,7 +83,7 @@ Status of list-editors used by the Data List editor.
 | :green_circle: | **Item Picker** | **Done** | "Done", but sorting and "List type" haven't been implemented yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
 | :large_blue_circle: | Tags | _Started_ | 42% done. |
-| :thinking: | Templated List | _Researching_ | :thinking: Exploring alternative options.<br>:warning: Missing "HTML attributes", Data Table UI. |
+| :green_circle: | **Templated List** | **Done** | :warning: Missing "HTML attributes", Data Table UI. |
 
 ### Data List sources
 
@@ -238,10 +238,10 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 	];
 }
 
-export { UmbBellissimaStatusDashboardElement as element };
+export { ContentmentWorkspaceElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: UmbBellissimaStatusDashboardElement;
+		[ELEMENT_NAME]: ContentmentWorkspaceElement;
 	}
 }
