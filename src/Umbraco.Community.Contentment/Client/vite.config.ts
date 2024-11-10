@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: 'src/bundle.ts',
       formats: ['es'],
     },
     outDir: '../wwwroot/App_Plugins/Contentment',
