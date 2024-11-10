@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION } from './constants.js';
+import type { ContentmentPropertyConfigFlagConditionConfig } from './types.js';
 import { UmbConditionBase } from '@umbraco-cms/backoffice/extension-registry';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
-import type {
-	UmbConditionConfigBase,
-	UmbConditionControllerArguments,
-	UmbExtensionCondition,
-} from '@umbraco-cms/backoffice/extension-api';
+import type { UmbConditionControllerArguments, UmbExtensionCondition } from '@umbraco-cms/backoffice/extension-api';
 
 export class ContentmentPropertyConfigFlagCondition
 	extends UmbConditionBase<ContentmentPropertyConfigFlagConditionConfig>
@@ -30,9 +26,3 @@ export class ContentmentPropertyConfigFlagCondition
 }
 
 export { ContentmentPropertyConfigFlagCondition as api };
-
-export type ContentmentPropertyConfigFlagConditionConfig = UmbConditionConfigBase<
-	typeof CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION
-> & {
-	propertyConfigAlias?: string;
-};

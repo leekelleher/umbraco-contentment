@@ -114,7 +114,7 @@ declare global {
 	}
 }
 
-// TODO: [LK] Temporary. Remove this once `UmbMemberTypePickerContext` is publicly available.
+// TODO: [LK] Temporary. Remove this once `UmbMemberTypePickerInputContext` is publicly available.
 // https://github.com/umbraco/Umbraco.CMS.Backoffice/blob/v14.1.1/src/packages/members/member-type/components/input-member-type/input-member-type.context.ts
 
 class ContentmentMemberTypePickerContext extends UmbPickerInputContext<

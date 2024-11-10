@@ -111,7 +111,7 @@ declare global {
 	}
 }
 
-// TODO: [LK] Temporary. Remove this once `UmbDictionaryPickerContext` is publicly available.
+// TODO: [LK] Temporary. Remove this once `UmbDictionaryPickerInputContext` is publicly available.
 // https://github.com/umbraco/Umbraco.CMS.Backoffice/blob/v14.1.1/src/packages/dictionary/components/input-dictionary/input-dictionary.context.ts
 class ContentmentDictionaryPickerContext extends UmbPickerInputContext<
 	UmbDictionaryItemModel,

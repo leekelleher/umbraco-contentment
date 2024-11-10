@@ -37,7 +37,7 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 	@state()
 	private _undefined: boolean = false;
 
-	#observePropertyEditorUI(): void {
+	#observePropertyEditorUI() {
 		if (this.#propertyEditorUiAlias) {
 			this.observe(
 				umbExtensionsRegistry.byTypeAndAlias('propertyEditorUi', this.#propertyEditorUiAlias),
@@ -54,7 +54,7 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 		}
 	}
 
-	async #getPropertyEditorUI(manifest?: ManifestPropertyEditorUi | null): Promise<void> {
+	async #getPropertyEditorUI(manifest?: ManifestPropertyEditorUi | null) {
 		if (!manifest) return;
 
 		const element = await createExtensionElement(manifest);
@@ -86,7 +86,7 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 
 	override render() {
 		if (this._element) return this._element;
-		if (this._undefined) return html`<contentment-lee-was-here></contentment-lee-was-here>`;
+		if (this._undefined) return html`<lee-was-here></lee-was-here>`;
 		return nothing;
 	}
 }
