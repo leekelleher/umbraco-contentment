@@ -15,11 +15,9 @@ import {
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentDataListItem, ContentmentDataListOption } from '../types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
-
-type ContentmentDataListButtonOption = ContentmentDataListItem & { selected: boolean };
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-buttons';
 
@@ -56,7 +54,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 	private _enableMultiple = false;
 
 	@state()
-	private _items: Array<ContentmentDataListButtonOption> = [];
+	private _items: Array<ContentmentDataListOption> = [];
 
 	@state()
 	private _labelStyle: 'icon' | 'text' | 'both' = 'both';
@@ -64,7 +62,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 	@state()
 	private _size: 's' | 'm' | 'l' = 'm';
 
-	#onClick(option: ContentmentDataListButtonOption) {
+	#onClick(option: ContentmentDataListOption) {
 		option.selected = !option.selected;
 
 		const values: Array<string> = [];
@@ -96,7 +94,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		`;
 	}
 
-	#renderItem(item: ContentmentDataListButtonOption) {
+	#renderItem(item: ContentmentDataListOption) {
 		const classes = {
 			active: item.selected,
 			small: this._size === 's',

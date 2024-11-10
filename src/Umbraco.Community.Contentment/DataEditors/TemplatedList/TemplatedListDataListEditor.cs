@@ -31,36 +31,47 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
-<summary><strong>Do you need help with your custom template?</strong></summary>
-<p>Your custom template will be used to display an individual item from your configured data source.</p>
-<p>The data for the item will be in the following format:</p>
-<pre><code>{
-  ""name"": ""..."",
-  ""value"": ""..."",
-  ""description"": ""..."", // optional
-  ""icon"": ""..."", // optional
-  ""disabled"": ""true|false"", // optional
-  ""selected"": ""true|false"",
-}</code></pre>
-<p>If you are familiar with AngularJS template syntax, you can display the values using an expression: e.g. <code ng-non-bindable>{{ item.name }}</code>.</p>
-<p>If you need assistance with AngularJS expression syntax, please refer to this resource: <a href=""https://docs.angularjs.org/guide/expression"" target=""_blank""><strong>docs.angularjs.org</strong></a>.</p>
-<hr>
-<p>If you would like a starting point for your custom template, here is an example.</p>
-<umb-code-block language=""'AngularJS template'"" copy>&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
-&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-block>
-</details>", true),
+//            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+//<summary><strong>Do you need help with your custom template?</strong></summary>
+//<p>Your custom template will be used to display an individual item from your configured data source.</p>
+//<p>The data for the item will be in the following format:</p>
+//<pre><code>{
+//  ""name"": ""..."",
+//  ""value"": ""..."",
+//  ""description"": ""..."", // optional
+//  ""icon"": ""..."", // optional
+//  ""disabled"": ""true|false"", // optional
+//  ""selected"": ""true|false"",
+//}</code></pre>
+//<p>If you are familiar with AngularJS template syntax, you can display the values using an expression: e.g. <code ng-non-bindable>{{ item.name }}</code>.</p>
+//<p>If you need assistance with AngularJS expression syntax, please refer to this resource: <a href=""https://docs.angularjs.org/guide/expression"" target=""_blank""><strong>docs.angularjs.org</strong></a>.</p>
+//<hr>
+//<p>If you would like a starting point for your custom template, here is an example.</p>
+//<umb-code-block language=""'AngularJS template'"" copy>&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
+//&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-block>
+//</details>", true),
+            //new ContentmentConfigurationField
+            //{
+            //    Key = "template",
+            //    Name = "Template",
+            //    View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
+            //    PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
+            //    Config = new Dictionary<string, object>
+            //    {
+            //        { CodeEditorConfigurationEditor.Mode, "razor" },
+            //        { "minLines", 12 },
+            //        { "maxLines", 30 },
+            //    }
+            //},
             new ContentmentConfigurationField
             {
-                Key = "template",
-                Name = "Template",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
-                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
+                Key = "component",
+                Name = "Component",
+                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ManifestPicker",
                 Config = new Dictionary<string, object>
                 {
-                    { CodeEditorConfigurationEditor.Mode, "razor" },
-                    { "minLines", 12 },
-                    { "maxLines", 30 },
+                    { "extensionType", "contentmentDataListItemUi" },
+                    { "maxItems", 1 },
                 }
             },
             new AllowClearConfigurationField(),

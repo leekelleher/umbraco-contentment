@@ -29,6 +29,8 @@ export type ContentmentDataListItem = {
 	[alias: string]: unknown;
 };
 
+export type ContentmentDataListOption = ContentmentDataListItem & { selected: boolean };
+
 export type ContentmentDataListEditor = {
 	propertyEditorUiAlias?: string | null;
 	config?: UmbPropertyEditorConfigCollection;
