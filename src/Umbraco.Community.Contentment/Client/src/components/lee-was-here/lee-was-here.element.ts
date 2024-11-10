@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { html, customElement, LitElement } from '@umbraco-cms/backoffice/external/lit';
+import { html, customElement, LitElement, css } from '@umbraco-cms/backoffice/external/lit';
 
 const ELEMENT_NAME = 'lee-was-here';
 
@@ -16,6 +16,15 @@ export default class ContentmentLeeWasHereElement extends LitElement {
 				height="55" />
 		`;
 	}
+
+	static override readonly styles = [
+		css`
+			:host {
+				height: 55px;
+				width: 115px;
+			}
+		`,
+	];
 }
 
 declare global {
