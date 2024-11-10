@@ -1,11 +1,15 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import { parseInt } from '../../utils/index.js';
-import { customElement, html, nothing, property, repeat } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, nothing, property, repeat, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
+import { umbExtensionsRegistry, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
+import { UMB_ITEM_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-manifest-picker';
 
@@ -14,6 +18,8 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	#extensions: Array<typeof umbExtensionsRegistry.MANIFEST_TYPES> = [];
+
 	#extensionType?: string;
 
 	#maxItems = Infinity;
@@ -32,11 +38,39 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 
 		this.#extensionType = config.getValueByAlias('extensionType');
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+
+		this.#observeExtensions();
 	}
 
-	#onChoose(event: CustomEvent & { target: { value: { value: string } } }) {
-		const { value } = event.target.value;
-		this.#setValue([value], this.value?.length ?? 0);
+	#observeExtensions() {
+		if (!this.#extensionType) return;
+		this.observe(umbExtensionsRegistry.byType(this.#extensionType), (extensions) => {
+			this.#extensions = extensions.sort((a, b) => a.type.localeCompare(b.type) || a.alias.localeCompare(b.alias));
+		});
+	}
+
+	async #onClick() {
+		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
+		const modalContext = modalManager.open(this, UMB_ITEM_PICKER_MODAL, {
+			data: {
+				headline: `${this.localize.term('general_choose')}...`,
+				items: this.#extensions
+					.filter((ext) => ext.type === this.#extensionType)
+					.map((ext) => ({
+						label: (ext as any).meta?.name ?? ext.name,
+						value: ext.alias,
+						description: (ext as any).meta?.description ?? ext.alias,
+						icon: (ext as any).meta?.icon,
+					})),
+			},
+			modal: { size: 'medium' },
+		});
+
+		const modalValue = await modalContext.onSubmit();
+
+		if (!modalValue) return;
+
+		this.#setValue([modalValue.value], this.value?.length ?? 0);
 	}
 
 	async #removeItem(item: string, index: number) {
@@ -71,7 +105,11 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	#renderAddButton() {
 		if (!this.#extensionType || (this.value && this.value.length >= this.#maxItems)) return nothing;
 		return html`
-			<umb-input-manifest extension-type=${this.#extensionType} @change=${this.#onChoose}></umb-input-manifest>
+			<uui-button
+				color="default"
+				look="placeholder"
+				label=${this.localize.term('general_choose')}
+				@click=${this.#onClick}></uui-button>
 		`;
 	}
 
@@ -89,9 +127,13 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	}
 
 	#renderItem(alias: string, index: number) {
+		const ext = this.#extensions.find((ext) => ext.alias === alias) as any;
 		return html`
-			<uui-ref-node name="${alias}" ?standalone=${this.#maxItems === 1}>
-				<umb-icon slot="icon" name="icon-contentment"></umb-icon>
+			<uui-ref-node
+				name=${ext.meta?.name ?? ext.name}
+				detail=${ext.meta?.description ?? ext.alias}
+				?standalone=${this.#maxItems === 1}>
+				${when(ext.meta?.icon, () => html`<umb-icon slot="icon" name=${ext.meta.icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}
@@ -100,6 +142,15 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 			</uui-ref-node>
 		`;
 	}
+
+	static override readonly styles = [
+		css`
+			:host {
+				display: flex;
+				flex-direction: column;
+			}
+		`,
+	];
 }
 
 export { ContentmentPropertyEditorUIManifestPickerElement as element };
