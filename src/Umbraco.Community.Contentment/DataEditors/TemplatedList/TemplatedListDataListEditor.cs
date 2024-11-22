@@ -83,7 +83,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-            new HtmlAttributesConfigurationField(_ioHelper),
+            //new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object>? DefaultConfig => default;

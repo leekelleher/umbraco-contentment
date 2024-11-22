@@ -45,7 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
-            new HtmlAttributesConfigurationField(_ioHelper),
+            //new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object> DefaultValues => new()
