@@ -2,17 +2,8 @@
 // Copyright © 2024 Lee Kelleher
 
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
-import { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
-import {
-	UmbMemberTypeEntityType,
-	UmbMemberTypePickerModalData,
-	UmbMemberTypePickerModalValue,
-	UmbMemberTypeTreeItemModel,
-	UMB_MEMBER_TYPE_ITEM_REPOSITORY_ALIAS,
-	UMB_MEMBER_TYPE_PICKER_MODAL,
-} from '@umbraco-cms/backoffice/member-type';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPickerInputContext } from '@umbraco-cms/backoffice/picker-input';
+import { UmbMemberTypePickerInputContext } from '@umbraco-cms/backoffice/member-type';
 import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
@@ -23,7 +14,7 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#pickerContext = new ContentmentMemberTypePickerContext(this);
+	#pickerContext = new UmbMemberTypePickerInputContext(this);
 
 	@state()
 	private _items?: Array<UmbUniqueItemModel>;
@@ -110,19 +101,5 @@ export { ContentmentPropertyEditorUIMemberTypePickerElement as element };
 declare global {
 	interface HTMLElementTagNameMap {
 		[ELEMENT_NAME]: ContentmentPropertyEditorUIMemberTypePickerElement;
-	}
-}
-
-// TODO: [LK] Temporary. Remove this once `UmbMemberTypePickerInputContext` is publicly available.
-// https://github.com/umbraco/Umbraco.CMS.Backoffice/blob/v14.1.1/src/packages/members/member-type/components/input-member-type/input-member-type.context.ts
-
-class ContentmentMemberTypePickerContext extends UmbPickerInputContext<
-	{ entityType: UmbMemberTypeEntityType; unique: string; name: string; icon: string },
-	UmbMemberTypeTreeItemModel,
-	UmbMemberTypePickerModalData,
-	UmbMemberTypePickerModalValue
-> {
-	constructor(host: UmbControllerHost) {
-		super(host, UMB_MEMBER_TYPE_ITEM_REPOSITORY_ALIAS, UMB_MEMBER_TYPE_PICKER_MODAL);
 	}
 }

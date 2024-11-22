@@ -2,17 +2,9 @@
 // Copyright © 2024 Lee Kelleher
 
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
-import { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
-import {
-	UmbDictionaryItemModel,
-	UmbDictionaryTreeItemModel,
-	UMB_DICTIONARY_ITEM_REPOSITORY_ALIAS,
-	UMB_DICTIONARY_PICKER_MODAL,
-} from '@umbraco-cms/backoffice/dictionary';
+import { UmbDictionaryPickerInputContext } from '@umbraco-cms/backoffice/dictionary';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPickerInputContext } from '@umbraco-cms/backoffice/picker-input';
 import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import { UmbTreePickerModalData, UmbTreeItemModel, UmbTreePickerModalValue } from '@umbraco-cms/backoffice/tree';
 import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-dictionary-picker';
@@ -22,7 +14,7 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#pickerContext = new ContentmentDictionaryPickerContext(this);
+	#pickerContext = new UmbDictionaryPickerInputContext(this);
 
 	@state()
 	private _items?: Array<UmbUniqueItemModel>;
@@ -107,18 +99,5 @@ export { ContentmentPropertyEditorUIDictionaryPickerElement as element };
 declare global {
 	interface HTMLElementTagNameMap {
 		[ELEMENT_NAME]: ContentmentPropertyEditorUIDictionaryPickerElement;
-	}
-}
-
-// TODO: [LK] Temporary. Remove this once `UmbDictionaryPickerInputContext` is publicly available.
-// https://github.com/umbraco/Umbraco.CMS.Backoffice/blob/v14.1.1/src/packages/dictionary/components/input-dictionary/input-dictionary.context.ts
-class ContentmentDictionaryPickerContext extends UmbPickerInputContext<
-	UmbDictionaryItemModel,
-	UmbDictionaryTreeItemModel,
-	UmbTreePickerModalData<UmbTreeItemModel>,
-	UmbTreePickerModalValue
-> {
-	constructor(host: UmbControllerHost) {
-		super(host, UMB_DICTIONARY_ITEM_REPOSITORY_ALIAS, UMB_DICTIONARY_PICKER_MODAL);
 	}
 }
