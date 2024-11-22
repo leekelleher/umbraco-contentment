@@ -1,6 +1,7 @@
-import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2023 Lee Kelleher
 
-export const manifest: ManifestPropertyEditorUi = {
+export const manifest: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.RadioButtonList',
 	name: '[Contentment] Radio Button List Property Editor UI',

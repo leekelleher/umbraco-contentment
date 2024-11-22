@@ -11,14 +11,15 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { extractUmbColorVariable } from '@umbraco-cms/backoffice/resources';
 import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
-import { umbConfirmModal, UMB_ICON_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
+import { UMB_ICON_PICKER_MODAL } from '@umbraco-cms/backoffice/icon';
 import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import type { ContentmentListItemValue } from '../types.js';
 

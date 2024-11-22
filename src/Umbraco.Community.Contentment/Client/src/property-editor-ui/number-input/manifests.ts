@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type {
-	ManifestPropertyEditorSchema,
-	ManifestPropertyEditorUi,
-} from '@umbraco-cms/backoffice/extension-registry';
-
-const schema: ManifestPropertyEditorSchema = {
+const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Number Input Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.NumberInput',
@@ -15,7 +10,7 @@ const schema: ManifestPropertyEditorSchema = {
 	},
 };
 
-const editorUi: ManifestPropertyEditorUi = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
 	name: '[Contentment] Number Input Property Editor UI',
@@ -37,9 +32,18 @@ const editorUi: ManifestPropertyEditorUi = {
 							alias: 'items',
 							value: [
 								{ name: 'Small', value: 's', description: 'Ideal for numbers under 100, comfortably fits 3 digits.' },
-								{ name: 'Medium', value: 'm', description: 'Better when dealing with hundreds and thousands, comfortably fits 6 digits.' },
+								{
+									name: 'Medium',
+									value: 'm',
+									description: 'Better when dealing with hundreds and thousands, comfortably fits 6 digits.',
+								},
 								{ name: 'Large', value: 'l', description: 'Did you know a 18 digit number is called a quintillion!' },
-								{ name: 'Extra Large', value: 'xl', description: "Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>" },
+								{
+									name: 'Extra Large',
+									value: 'xl',
+									description:
+										"Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>",
+								},
 							],
 						},
 						{ alias: 'showDescriptions', value: true },
@@ -48,7 +52,8 @@ const editorUi: ManifestPropertyEditorUi = {
 				{
 					alias: 'placeholderText',
 					label: 'Placeholder text',
-					description: 'Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.',
+					description:
+						'Add placeholder text for the number input.<br>This is to be used as instructional information, not as a default value.',
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.TextBox',
 				},
 			],

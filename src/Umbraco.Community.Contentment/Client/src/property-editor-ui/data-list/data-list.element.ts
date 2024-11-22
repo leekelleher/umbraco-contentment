@@ -7,12 +7,12 @@ import { ContentmentService } from '../../api/services.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 // import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 // import { UMB_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/workspace';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
-import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 
 import '../../components/lee-was-here/lee-was-here.element.js';
 import '../../components/property-editor-ui/property-editor-ui.element.js';

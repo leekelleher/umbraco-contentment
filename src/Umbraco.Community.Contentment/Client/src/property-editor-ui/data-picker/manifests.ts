@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type {
-	ManifestModal,
-	ManifestPropertyEditorSchema,
-	ManifestPropertyEditorUi,
-} from '@umbraco-cms/backoffice/extension-registry';
-
-const schema: ManifestPropertyEditorSchema = {
+const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Data Picker Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.DataPicker',
@@ -16,7 +10,7 @@ const schema: ManifestPropertyEditorSchema = {
 	},
 };
 
-const editorUis: Array<ManifestPropertyEditorUi> = [
+const editorUis: Array<UmbExtensionManifest> = [
 	{
 		type: 'propertyEditorUi',
 		alias: 'Umb.Contentment.PropertyEditorUi.DataPicker',
@@ -122,7 +116,7 @@ const editorUis: Array<ManifestPropertyEditorUi> = [
 	},
 ];
 
-const modal: ManifestModal = {
+const modal: UmbExtensionManifest = {
 	type: 'modal',
 	alias: 'Umb.Contentment.Modal.DataPicker',
 	name: '[Contentment] Data Picker Modal',

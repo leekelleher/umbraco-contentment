@@ -14,9 +14,9 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import {
 	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { ContentmentDataListItem } from '../types.js';

@@ -9,9 +9,8 @@ import { manifests as menuItems } from './menu-item/manifests.js';
 import { manifests as propertyActions } from './property-action/manifests.js';
 import { manifests as propertyEditorUis } from './property-editor-ui/manifests.js';
 import { manifests as workspaces } from './workspace/manifests.js';
-import type { ManifestTypes, UmbBackofficeManifestKind } from '@umbraco-cms/backoffice/extension-registry';
 
-export const manifests: Array<ManifestTypes | UmbBackofficeManifestKind> = [
+export const manifests: Array<UmbExtensionManifest> = [
 	...conditions,
 	...extensions,
 	...icons,

@@ -1,20 +1,14 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type {
-	ManifestModal,
-	ManifestPropertyEditorSchema,
-	ManifestPropertyEditorUi,
-} from '@umbraco-cms/backoffice/extension-registry';
-
-const modal: ManifestModal = {
+const modal: UmbExtensionManifest = {
 	type: 'modal',
 	alias: 'Umb.Contentment.Modal.SocialLinks.Selection',
 	name: '[Contentment] Social Links Selection Modal',
 	element: () => import('./social-links-selection-modal.element.js'),
 };
 
-const schema: ManifestPropertyEditorSchema = {
+const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Social Links Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.SocialLinks',
@@ -23,7 +17,7 @@ const schema: ManifestPropertyEditorSchema = {
 	},
 };
 
-const editorUi: ManifestPropertyEditorUi = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.SocialLinks',
 	name: '[Contentment] Social Links Property Editor UI',

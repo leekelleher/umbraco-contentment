@@ -13,8 +13,7 @@ import {
 } from '@umbraco-cms/backoffice/member-type';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPickerInputContext } from '@umbraco-cms/backoffice/picker-input';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
+import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-member-type-picker';

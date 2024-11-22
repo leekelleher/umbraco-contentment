@@ -139,7 +139,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 
 	override render() {
 		return html`
-			<umb-body-layout headline="Migration status of Contentment for Umbraco Bellissima">
+			<umb-body-layout headline="Migration status of Contentment for Umbraco 15">
 				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Under active development</uui-tag></div>
 
 				<contentment-info-box
@@ -148,7 +148,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 					heading="Status update for Contentment v6.0.0-alpha004">
 					<p>
 						During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of
-						progress on Contentment for Umbraco Bellissima.
+						progress on Contentment for Umbraco 15.
 					</p>
 					<p>
 						Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong>, until then

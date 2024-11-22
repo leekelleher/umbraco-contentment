@@ -19,18 +19,18 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
-        private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+        private readonly IPublishedMemberCache _publishedMemberCache;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoMembersDataListSource(
             IMemberTypeService memberTypeService,
             IMemberService memberService,
-            IPublishedSnapshotAccessor publishedSnapshotAccessor,
+            IPublishedMemberCache publishedMemberCache,
             IIOHelper ioHelper)
         {
             _memberTypeService = memberTypeService;
             _memberService = memberService;
-            _publishedSnapshotAccessor = publishedSnapshotAccessor;
+            _publishedMemberCache = publishedMemberCache;
             _ioHelper = ioHelper;
         }
 
@@ -141,7 +141,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var member = _memberService.GetByKey(udi.Guid);
                 if (member != null)
                 {
-                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Members?.Get(member);
+                    return _publishedMemberCache.Get(member);
                 }
             }
 

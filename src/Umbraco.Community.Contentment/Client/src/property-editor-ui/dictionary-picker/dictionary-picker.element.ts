@@ -11,8 +11,7 @@ import {
 } from '@umbraco-cms/backoffice/dictionary';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPickerInputContext } from '@umbraco-cms/backoffice/picker-input';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
+import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UmbTreePickerModalData, UmbTreeItemModel, UmbTreePickerModalValue } from '@umbraco-cms/backoffice/tree';
 import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 

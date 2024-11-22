@@ -5,6 +5,7 @@
 
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.Validation;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 
@@ -21,8 +22,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _elementTypes = elementTypes;
         }
-
-        protected override IEnumerable<ElementTypeValidationModel> GetElementTypeValidation(object? value)
+        protected override IEnumerable<ElementTypeValidationModel> GetElementTypeValidation(object? value, PropertyValidationContext validationContext)
         {
             if (value is JArray array && array.Any() == true)
             {

@@ -1,6 +1,7 @@
-import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
 
-export const manifest: ManifestPropertyEditorUi = {
+export const manifest: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.CascadingDropdownList',
 	name: '[Contentment] Cascading Dropdown List Property Editor UI',

@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type { ManifestModal, ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
-
-const modal: ManifestModal = {
+const modal: UmbExtensionManifest = {
 	type: 'modal',
 	alias: 'Umb.Contentment.Modal.ItemPicker',
 	name: '[Contentment] Item Picker Modal',
 	element: () => import('./item-picker-modal.element.js'),
 };
 
-const editorUi: ManifestPropertyEditorUi = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.ItemPicker',
 	name: '[Contentment] Item Picker Property Editor UI',

@@ -5,8 +5,10 @@ import { customElement, html, property } from '@umbraco-cms/backoffice/external/
 import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
-import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/info-box/info-box.element.js';
 

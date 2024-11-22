@@ -78,7 +78,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 udi is not null)
             {
                 return _dataTypeService
-                    .GetDataType(udi.Guid)?
+                    .GetAsync(udi.Guid)?.GetAwaiter().GetResult()?
                     .ConfigurationAs<ImageCropperConfiguration>()?
                     .Crops?
                     .Select(x => new DataListItem

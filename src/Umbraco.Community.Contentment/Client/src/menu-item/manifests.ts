@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ManifestMenuItem } from '@umbraco-cms/backoffice/extension-registry';
-
-export const manifests: Array<ManifestMenuItem> = [
+export const manifests: Array<UmbExtensionManifest> = [
 	{
 		type: 'menuItem',
 		alias: 'Umb.Contentment.MenuItem.Contentment',

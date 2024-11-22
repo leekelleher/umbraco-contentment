@@ -19,18 +19,18 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ContentBlocksValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
         private readonly IApiElementBuilder _apiElementBuilder;
+        private readonly IPublishedContentTypeCache _publishedContentTypeCache;
         private readonly IPublishedModelFactory _publishedModelFactory;
-        private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 
         public ContentBlocksValueConverter(
             IApiElementBuilder apiElementBuilder,
-            IPublishedModelFactory publishedModelFactory,
-            IPublishedSnapshotAccessor publishedSnapshotAccessor)
+            IPublishedContentTypeCache publishedContentTypeCache,
+            IPublishedModelFactory publishedModelFactory)
             : base()
         {
             _apiElementBuilder = apiElementBuilder;
+            _publishedContentTypeCache = publishedContentTypeCache;
             _publishedModelFactory = publishedModelFactory;
-            _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
 
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(ContentBlocksDataEditor.DataEditorAlias);
@@ -65,10 +65,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         continue;
                     }
 
-                    var contentType = _publishedSnapshotAccessor
-                        .GetRequiredPublishedSnapshot()
-                        .Content?
-                        .GetContentType(item.ElementType);
+                    var contentType = _publishedContentTypeCache.Get(PublishedItemType.Element, item.ElementType);
 
                     if (contentType == null || contentType.IsElement == false)
                     {

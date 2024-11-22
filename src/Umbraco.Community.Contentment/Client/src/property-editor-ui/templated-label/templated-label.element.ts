@@ -1,8 +1,7 @@
 import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-templated-label';

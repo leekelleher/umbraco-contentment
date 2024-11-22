@@ -30,13 +30,8 @@ import { manifests as templatedLabel } from './templated-label/manifests.js';
 import { manifest as templatedList } from './templated-list/manifest.js';
 import { manifests as textboxList } from './textbox-list/manifests.js';
 import { manifests as textInput } from './text-input/manifests.js';
-import type {
-	ManifestModal,
-	ManifestPropertyEditorSchema,
-	ManifestPropertyEditorUi,
-} from '@umbraco-cms/backoffice/extension-registry';
 
-export const manifests: Array<ManifestModal | ManifestPropertyEditorSchema | ManifestPropertyEditorUi> = [
+export const manifests: Array<UmbExtensionManifest> = [
 	buttons,
 	...bytes,
 	cascadingDropdownList,

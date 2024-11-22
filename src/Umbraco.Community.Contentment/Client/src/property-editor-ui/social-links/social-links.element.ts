@@ -13,9 +13,9 @@ import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 import { UmbLitElement, umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
 import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import { CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL } from './social-links-selection-modal.element.js';

@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ManifestWorkspace } from '@umbraco-cms/backoffice/extension-registry';
-
-const workspace: ManifestWorkspace = {
+const workspace: UmbExtensionManifest = {
 	type: 'workspace',
 	alias: 'Umb.Contentment.Workspace.Contentment',
 	name: '[Contentment] Workspace',

@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import type { ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
-
-export const manifest: ManifestPropertyEditorUi = {
+export const manifest: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.CodeEditor',
 	name: '[Contentment] Code Editor Property Editor UI',

@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import type {
-	ManifestPropertyEditorSchema,
-	ManifestPropertyEditorUi,
-} from '@umbraco-cms/backoffice/extension-registry';
-
-export const schema: ManifestPropertyEditorSchema = {
+export const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Notes Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.Notes',
@@ -15,7 +10,7 @@ export const schema: ManifestPropertyEditorSchema = {
 	},
 };
 
-const editorUi: ManifestPropertyEditorUi = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.Notes',
 	name: '[Contentment] Notes Property Editor UI',

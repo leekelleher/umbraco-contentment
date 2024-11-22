@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _imageSourceParser = imageSourceParser;
         }
 
-        public IDictionary<string, object> FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
+        public async Task<IDictionary<string, object>> FromArtifactAsync(IDataType dataType, string? configuration, IContextCache contextCache, CancellationToken cancellationToken = default)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
@@ -39,8 +39,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes, contextCache);
-                notes = _imageSourceParser.FromArtifact(notes, contextCache);
+                notes = await _localLinkParser.FromArtifactAsync(notes, contextCache, cancellationToken);
+                notes = await _imageSourceParser.FromArtifactAsync(notes, contextCache, cancellationToken);
 
                 config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
 
@@ -50,7 +50,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return db;
         }
 
-        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
+        public async Task<string?> ToArtifactAsync(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache, CancellationToken cancellationToken = default)
         {
             if (dataType.ConfigurationObject is Dictionary<string, object> config &&
                 config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
@@ -58,8 +58,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
-                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
+                notes = await _localLinkParser.ToArtifactAsync(notes, udis, contextCache, cancellationToken);
+                notes = await _imageSourceParser.ToArtifactAsync(notes, udis, contextCache, cancellationToken);
 
                 foreach (var udi in udis)
                 {

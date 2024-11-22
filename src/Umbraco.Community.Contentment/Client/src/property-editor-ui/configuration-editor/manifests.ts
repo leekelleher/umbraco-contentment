@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type { ManifestModal, ManifestPropertyEditorUi } from '@umbraco-cms/backoffice/extension-registry';
-
-const modals: Array<ManifestModal> = [
+const modals: Array<UmbExtensionManifest> = [
 	{
 		type: 'modal',
 		alias: 'Umb.Contentment.Modal.ConfigurationEditor.Selection',
@@ -18,7 +16,7 @@ const modals: Array<ManifestModal> = [
 	},
 ];
 
-const editorUi: ManifestPropertyEditorUi = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 	name: '[Contentment] Configuration Editor Property Editor UI',

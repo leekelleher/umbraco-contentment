@@ -3,7 +3,8 @@
 
 import { UmbActionBase } from '@umbraco-cms/backoffice/action';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-import { UMB_CODE_EDITOR_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import { UMB_CODE_EDITOR_MODAL } from '@umbraco-cms/backoffice/code-editor';
+import { UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyAction } from '@umbraco-cms/backoffice/property-action';
 

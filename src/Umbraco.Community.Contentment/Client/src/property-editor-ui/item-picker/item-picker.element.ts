@@ -6,9 +6,9 @@ import { css, customElement, html, nothing, property, repeat, state, when } from
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/extension-registry';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
 import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
