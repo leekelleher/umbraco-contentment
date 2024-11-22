@@ -213,7 +213,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 				detail=${this.#renderMetadata(item, model, 'description') ?? item.key}
 				?standalone=${this.#maxItems === 1}
 				@open=${() => this.#onEdit(item, index)}>
-				${when(icon, () => html`<uui-icon slot="icon" name=${icon!}></uui-icon>`)}
+				${when(icon, () => html`<umb-icon slot="icon" name=${icon!}></umb-icon>`)}
 				<uui-action-bar slot="actions">
 					${when(
 						model?.fields?.length,
