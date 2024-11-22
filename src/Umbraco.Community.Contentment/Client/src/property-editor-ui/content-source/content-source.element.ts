@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UMB_APP_CONTEXT } from '@umbraco-cms/backoffice/app';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-content-source';
 
@@ -17,8 +16,6 @@ export class ContentmentPropertyEditorUIContentSourceElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#umbBackofficePath = '/umbraco';
-
 	@state()
 	private _loaded = false;
 
@@ -29,18 +26,9 @@ export class ContentmentPropertyEditorUIContentSourceElement
 		if (!config) return;
 	}
 
-	constructor() {
-		super();
-
-		this.consumeContext(UMB_APP_CONTEXT, (appContext) => {
-			this.#umbBackofficePath = appContext.getBackofficePath();
-		});
-	}
-
 	override async firstUpdated() {
-		const path =
-			'/backoffice/packages/property-editors/content-picker/dynamic-root/input-content-picker-document-root/input-content-picker-document-root.element.js';
-		await import(this.#umbBackofficePath + path);
+		// NOTE: In order to use the `umb-input-content-picker-document-root` element,
+		// we need to load the "Umb.PropertyEditorUi.ContentPicker.Source" property-editor first.
 		this._loaded = true;
 	}
 
@@ -50,12 +38,26 @@ export class ContentmentPropertyEditorUIContentSourceElement
 	}
 
 	override render() {
-		if (!this._loaded) return html`<uui-loader></uui-loader>`;
-		return html`
-			<umb-input-content-picker-document-root .data=${this.value} @change=${this.#onChange}>
-			</umb-input-content-picker-document-root>
-		`;
+		return when(
+			!this._loaded,
+			() => html`
+				<contentment-property-editor-ui property-editor-ui-alias="Umb.PropertyEditorUi.ContentPicker.Source">
+				</contentment-property-editor-ui>
+			`,
+			() => html`
+				<umb-input-content-picker-document-root .data=${this.value} @change=${this.#onChange}>
+				</umb-input-content-picker-document-root>
+			`
+		);
 	}
+
+	static override readonly styles = [
+		css`
+			contentment-property-editor-ui {
+				display: none;
+			}
+		`,
+	];
 }
 
 export { ContentmentPropertyEditorUIContentSourceElement as element };
