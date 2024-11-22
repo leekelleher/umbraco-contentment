@@ -57,13 +57,12 @@ Downloads are available on the [releases page](../releases).
 
 _**Please note...**_
 
-- v5.x supports **Umbraco v13.2.0  ** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
+- v6.x supports **Umbraco v15.0.0** (on .NET 9.0), consider this the cutting-edge version.
+- v5.x supports **Umbraco v13.2.0** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
 - v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
 - v2.x supports **Umbraco v8.14.0**, it will still work on latest Umbraco v8.x releases.
 - v1.x supports **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
-
-With Contentment v5, if you require support for Umbraco v8/v9/v10/v11/v12, please use Contentment v4.
 
 To understand more about which Umbraco CMS versions are actively supported by Umbraco HQ, please see [Umbraco's Long-term Support (LTS) and End-of-Life (EOL) policy](https://umbraco.com/products/knowledge-center/long-term-support-and-end-of-life/).
 
