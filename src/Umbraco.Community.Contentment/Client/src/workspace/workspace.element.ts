@@ -79,11 +79,11 @@ Status of list-editors used by the Data List editor.
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
-| :green_circle: | **Dropdown List** | **Done** | :warning: Missing "HTML attributes", Data Table UI.  |
+| :green_circle: | **Dropdown List** | **Done** |  |
 | :green_circle: | **Item Picker** | **Done** | "Done", but sorting and "List type" haven't been implemented yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
 | :large_blue_circle: | Tags | _Started_ | 42% done. |
-| :green_circle: | **Templated List** | **Done** | :warning: Missing "HTML attributes", Data Table UI. |
+| :green_circle: | **Templated List** | **Done** | |
 
 ### Data List sources
 
