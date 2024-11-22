@@ -110,7 +110,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{DCC8
 		..\umbraco-marketplace.json = ..\umbraco-marketplace.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Umbraco.Cms.14.x", "Umbraco.Cms.14.x\Umbraco.Cms.14.x.csproj", "{70402515-3231-4A6E-821F-CA4808C16312}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.15.x", "Umbraco.Cms.15.x\Umbraco.Cms.15.x.csproj", "{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,10 +122,10 @@ Global
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D440D19-44D0-474F-8BAB-A7DDF4062994}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70402515-3231-4A6E-821F-CA4808C16312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70402515-3231-4A6E-821F-CA4808C16312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70402515-3231-4A6E-821F-CA4808C16312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70402515-3231-4A6E-821F-CA4808C16312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

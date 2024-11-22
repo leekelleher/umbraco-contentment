@@ -5,7 +5,7 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddDeliveryApi()
     .AddComposers()
-    .AddContentment(x => x.DisableTelemetry = true)
+    //.AddContentment(x => x.DisableTelemetry = true)
     .Build();
 
 WebApplication app = builder.Build();
