@@ -26,22 +26,25 @@ export class ContentmentPropertyEditorUIContentSourceElement
 		if (!config) return;
 	}
 
-	override async firstUpdated() {
-		// NOTE: In order to use the `umb-input-content-picker-document-root` element,
-		// we need to load the "Umb.PropertyEditorUi.ContentPicker.Source" property-editor first.
-		this._loaded = true;
-	}
-
 	#onChange(event: CustomEvent & { target: { data: unknown } }) {
 		this.value = event.target.data ?? {};
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+	}
+
+	#onLoaded() {
+		// NOTE: In order to use the `umb-input-content-picker-document-root` element,
+		// we need to load the "Umb.PropertyEditorUi.ContentPicker.Source" property-editor first.
+		this._loaded = true;
 	}
 
 	override render() {
 		return when(
 			!this._loaded,
 			() => html`
-				<contentment-property-editor-ui property-editor-ui-alias="Umb.PropertyEditorUi.ContentPicker.Source">
+				<uui-loader></uui-loader>
+				<contentment-property-editor-ui
+					property-editor-ui-alias="Umb.PropertyEditorUi.ContentPicker.Source"
+					@loaded=${this.#onLoaded}>
 				</contentment-property-editor-ui>
 			`,
 			() => html`

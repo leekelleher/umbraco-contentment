@@ -57,7 +57,7 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 	async #getPropertyEditorUI(manifest?: ManifestPropertyEditorUi | null) {
 		if (!manifest) return;
 
-		const element = await createExtensionElement(manifest);
+		const element = await createExtensionElement(manifest, 'lee-was-here');
 
 		if (!element) {
 			console.error(`Failed to create extension element for manifest: ${manifest}`);
@@ -74,6 +74,8 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 			if (this.config) {
 				this._element.config = this.config;
 			}
+
+			this.dispatchEvent(new CustomEvent('loaded'));
 		}
 
 		this.requestUpdate('_element', oldElement);
