@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Checkbox List Property Editor UI',
 	element: () => import('./checkbox-list.element.js'),
 	meta: {
-		label: '[Contentment] Checkbox List',
+		label: 'Checkbox List',
 		icon: 'icon-checkbox',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

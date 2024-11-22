@@ -22,9 +22,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Configuration Editor Property Editor UI',
 	element: () => import('./configuration-editor.element.js'),
 	meta: {
-		label: '[Contentment] Configuration Editor',
+		label: 'Configuration Editor',
 		icon: 'icon-settings-alt',
-		group: 'data',
+		group: 'contentment',
 	},
 };
 

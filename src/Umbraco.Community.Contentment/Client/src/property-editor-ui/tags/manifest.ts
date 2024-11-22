@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Tags Property Editor UI',
 	element: () => import('./tags.element.js'),
 	meta: {
-		label: '[Contentment] Tags',
+		label: 'Tags',
 		icon: 'icon-fa-tags',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

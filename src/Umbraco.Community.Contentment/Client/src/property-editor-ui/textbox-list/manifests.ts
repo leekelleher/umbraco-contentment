@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Textbox List Property Editor UI',
 	element: () => import('./textbox-list.element.js'),
 	meta: {
-		label: '[Contentment] Textbox List',
-		icon: 'icon-ordered-list',
-		group: 'common',
+		label: 'Textbox List',
+		icon: 'icon-thumbnail-list',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TextboxList',
 		settings: {
 			properties: [

@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Bytes Property Editor UI',
 	element: () => import('./bytes.element.js'),
 	meta: {
-		label: '[Contentment] Bytes',
+		label: 'Bytes',
 		icon: 'icon-binarycode',
-		group: 'display',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.Bytes',
 		settings: {
 			properties: [

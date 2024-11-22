@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Content Source Property Editor UI',
 	element: () => import('./content-source.element.js'),
 	meta: {
-		label: '[Contentment] Content Source',
+		label: 'Content Source',
 		icon: 'icon-page-add',
-		group: 'pickers',
+		group: 'contentment',
 	},
 };

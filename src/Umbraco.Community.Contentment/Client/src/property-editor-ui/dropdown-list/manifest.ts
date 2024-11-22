@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Dropdown List Property Editor UI',
 	element: () => import('./dropdown-list.element.js'),
 	meta: {
-		label: '[Contentment] Dropdown List',
+		label: 'Dropdown List',
 		icon: 'icon-target',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

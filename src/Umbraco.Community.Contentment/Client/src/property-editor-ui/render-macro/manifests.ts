@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Render Macro Property Editor UI',
 	element: () => import('./render-macro.element.js'),
 	meta: {
-		label: '[Contentment] Render Macro',
+		label: 'Render Macro',
 		icon: 'icon-box',
-		group: 'display',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.RenderMacro',
 		settings: {
 			properties: [

@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Cascading Dropdown List Property Editor UI',
 	element: () => import('./cascading-dropdown-list.element.js'),
 	meta: {
-		label: '[Contentment] Cascading Dropdown List',
+		label: 'Cascading Dropdown List',
 		icon: 'icon-target',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

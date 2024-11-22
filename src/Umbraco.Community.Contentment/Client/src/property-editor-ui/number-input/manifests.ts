@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Number Input Property Editor UI',
 	element: () => import('../number-input/number-input.element.js'),
 	meta: {
-		label: '[Contentment] Number Input',
+		label: 'Number Input',
 		icon: 'icon-ordered-list',
-		group: 'common',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.NumberInput',
 		settings: {
 			properties: [

@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Templated List Property Editor UI',
 	element: () => import('./templated-list.element.js'),
 	meta: {
-		label: '[Contentment] Templated List',
+		label: 'Templated List',
 		icon: 'icon-fa-codepen',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

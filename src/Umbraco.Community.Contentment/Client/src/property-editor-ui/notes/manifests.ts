@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Notes Property Editor UI',
 	element: () => import('./notes.element.js'),
 	meta: {
-		label: '[Contentment] Notes',
+		label: 'Notes',
 		icon: 'icon-autofill',
-		group: 'display',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.Notes',
 		settings: {
 			properties: [

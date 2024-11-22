@@ -7,9 +7,9 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Code Editor Property Editor UI',
 	element: () => import('./code-editor.element.js'),
 	meta: {
-		label: '[Contentment] Code Editor',
+		label: 'Code Editor',
 		icon: 'icon-code',
-		group: 'code',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Plain.String',
 		settings: {
 			properties: [

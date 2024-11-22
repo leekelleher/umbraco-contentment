@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] List Items Property Editor UI',
 	element: () => import('../list-items/list-items.element.js'),
 	meta: {
-		label: '[Contentment] List Items',
+		label: 'List Items',
 		icon: 'icon-fa-table-list',
-		group: 'lists',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ListItems',
 		settings: {
 			properties: [

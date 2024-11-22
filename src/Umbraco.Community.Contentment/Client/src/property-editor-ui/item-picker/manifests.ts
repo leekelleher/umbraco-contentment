@@ -14,9 +14,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Item Picker Property Editor UI',
 	element: () => import('./item-picker.element.js'),
 	meta: {
-		label: '[Contentment] Item Picker',
+		label: 'Item Picker',
 		icon: 'icon-fa-arrow-pointer',
-		group: 'pickers',
+		group: 'contentment',
 	},
 };
 

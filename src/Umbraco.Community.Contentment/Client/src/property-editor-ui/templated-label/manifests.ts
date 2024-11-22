@@ -44,9 +44,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Templated Label Property Editor UI',
 	element: () => import('./templated-label.element.js'),
 	meta: {
-		label: '[Contentment] Templated Label',
+		label: 'Templated Label',
 		icon: 'icon-fa-codepen',
-		group: 'lists',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TemplatedLabel',
 		settings: {
 			properties: [

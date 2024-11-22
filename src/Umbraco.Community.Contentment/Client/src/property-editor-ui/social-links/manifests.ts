@@ -23,9 +23,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Social Links Property Editor UI',
 	element: () => import('../social-links/social-links.element.js'),
 	meta: {
-		label: '[Contentment] Social Links',
+		label: 'Social Links',
 		icon: 'icon-molecular-network',
-		group: 'lists',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.SocialLinks',
 		settings: {
 			properties: [

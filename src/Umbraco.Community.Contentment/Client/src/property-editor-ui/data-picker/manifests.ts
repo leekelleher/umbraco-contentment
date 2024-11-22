@@ -17,9 +17,9 @@ const editorUis: Array<UmbExtensionManifest> = [
 		name: '[Contentment] Data Picker Property Editor UI',
 		element: () => import('./data-picker.element.js'),
 		meta: {
-			label: '[Contentment] Data Picker',
+			label: 'Data Picker',
 			icon: 'icon-fa-arrow-pointer',
-			group: 'lists',
+			group: 'contentment',
 			propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataPicker',
 			settings: {
 				properties: [
@@ -98,9 +98,9 @@ const editorUis: Array<UmbExtensionManifest> = [
 		name: '[Contentment] Data Picker (Cards) Property Editor UI',
 		element: () => import('./data-picker-cards.element.js'),
 		meta: {
-			label: '[Contentment] Data Picker (Cards)',
+			label: 'Data Picker (Cards)',
 			icon: 'icon-playing-cards',
-			group: 'lists',
+			group: 'contentment',
 		},
 	},
 	{
@@ -109,9 +109,9 @@ const editorUis: Array<UmbExtensionManifest> = [
 		name: '[Contentment] Data Picker (List) Property Editor UI',
 		element: () => import('./data-picker-list.element.js'),
 		meta: {
-			label: '[Contentment] Data Picker (List)',
+			label: 'Data Picker (List)',
 			icon: 'icon-fa-list-ul',
-			group: 'lists',
+			group: 'contentment',
 		},
 	},
 ];

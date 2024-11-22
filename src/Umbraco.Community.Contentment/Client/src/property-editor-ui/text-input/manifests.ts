@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Text Input Property Editor UI',
 	element: () => import('./text-input.element.js'),
 	meta: {
-		label: '[Contentment] Text Input',
+		label: 'Text Input',
 		icon: 'icon-autofill',
-		group: 'common',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TextInput',
 		settings: {
 			properties: [

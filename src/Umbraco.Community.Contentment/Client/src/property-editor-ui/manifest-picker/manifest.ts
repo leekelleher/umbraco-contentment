@@ -7,9 +7,9 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Manifest Picker Property Editor UI',
 	element: () => import('./manifest-picker.element.js'),
 	meta: {
-		label: '[Contentment] Manifest Picker',
+		label: 'Manifest Picker',
 		icon: 'icon-fa-codepen',
-		group: 'pickers',
+		group: 'contentment',
 		settings: {
 			properties: [
 				{

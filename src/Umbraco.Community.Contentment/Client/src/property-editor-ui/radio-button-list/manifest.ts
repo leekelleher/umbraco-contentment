@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Radio Button List Property Editor UI',
 	element: () => import('./radio-button-list.element.js'),
 	meta: {
-		label: '[Contentment] Radio Button List',
+		label: 'Radio Button List',
 		icon: 'icon-target',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

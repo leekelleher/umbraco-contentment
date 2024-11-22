@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Read Only Property Editor UI',
 	element: () => import('./read-only.element.js'),
 	meta: {
-		label: '[Contentment] Read Only',
+		label: 'Read Only',
 		icon: 'icon-hearts',
-		group: 'display',
+		group: 'contentment',
 	},
 };

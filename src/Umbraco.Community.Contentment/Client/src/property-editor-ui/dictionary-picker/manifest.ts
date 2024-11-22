@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Dictionary Picker Property Editor UI',
 	element: () => import('./dictionary-picker.element.js'),
 	meta: {
-		label: '[Contentment] Dictionary Picker',
+		label: 'Dictionary Picker',
 		icon: 'icon-book-alt',
-		group: 'pickers',
+		group: 'contentment',
 	},
 };

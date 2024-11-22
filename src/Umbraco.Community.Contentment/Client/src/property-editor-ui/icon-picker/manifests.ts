@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Icon Picker Property Editor UI',
 	element: () => import('./icon-picker.element.js'),
 	meta: {
-		label: '[Contentment] Icon Picker',
-		icon: 'icon-circle-dotted',
-		group: 'pickers',
+		label: 'Icon Picker',
+		icon: 'icon-palette',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.IconPicker',
 		settings: {
 			properties: [

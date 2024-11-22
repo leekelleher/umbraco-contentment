@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Buttons Property Editor UI',
 	element: () => import('./buttons.element.js'),
 	meta: {
-		label: '[Contentment] Buttons',
+		label: 'Buttons',
 		icon: 'icon-tab',
-		group: 'lists',
+		group: 'contentment',
 	},
 };

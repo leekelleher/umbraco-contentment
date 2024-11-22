@@ -16,9 +16,9 @@ const editorUi: UmbExtensionManifest = {
 	name: '[Contentment] Content Blocks Property Editor UI',
 	element: () => import('../read-only/read-only.element.js'),
 	meta: {
-		label: '[Contentment] Content Blocks',
+		label: 'Content Blocks',
 		icon: 'icon-fa-server',
-		group: 'richContent',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ContentBlocks',
 		settings: {
 			properties: [

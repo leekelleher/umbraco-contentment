@@ -7,9 +7,9 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Editor Notes Property Editor UI',
 	element: () => import('./editor-notes.element.js'),
 	meta: {
-		label: '[Contentment] Editor Notes',
-		icon: 'icon-alert-alt',
-		group: 'display',
+		label: 'Editor Notes',
+		icon: 'icon-alert',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.Notes',
 		settings: {
 			properties: [

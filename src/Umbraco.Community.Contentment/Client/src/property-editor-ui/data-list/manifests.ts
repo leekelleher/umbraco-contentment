@@ -44,9 +44,9 @@ const dataList: UmbExtensionManifest = {
 	name: '[Contentment] Data List Property Editor UI',
 	element: () => import('./data-list.element.js'),
 	meta: {
-		label: '[Contentment] Data List',
+		label: 'Data List',
 		icon: 'icon-fa-list-ul',
-		group: 'lists',
+		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataList',
 		settings: {
 			properties: [
@@ -66,9 +66,9 @@ const dataListPreview: UmbExtensionManifest = {
 	name: '[Contentment] Data List Preview Property Editor UI',
 	element: () => import('./data-list-preview.element.js'),
 	meta: {
-		label: '[Contentment] Data List Preview',
+		label: 'Data List Preview',
 		icon: 'icon-fa-list-ul',
-		group: 'lists',
+		group: 'contentment',
 	},
 };
 

@@ -7,8 +7,8 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Member Type Picker Property Editor UI',
 	element: () => import('./member-type-picker.element.js'),
 	meta: {
-		label: '[Contentment] Member Type Picker',
+		label: 'Member Type Picker',
 		icon: 'icon-checkbox',
-		group: 'pickers',
+		group: 'contentment',
 	},
 };
