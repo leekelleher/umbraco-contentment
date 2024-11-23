@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -6,10 +6,11 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.ItemPicker.Controller", [
     "$scope",
     "editorService",
+    "eventsService",
     "focusService",
     "localizationService",
     "overlayService",
-    function ($scope, editorService, focusService, localizationService, overlayService) {
+    function ($scope, editorService, eventsService, focusService, localizationService, overlayService) {
 
         // console.log("item-picker.model", $scope.model);
 
@@ -36,7 +37,6 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         var vm = this;
 
         function init() {
-
             $scope.model.value = $scope.model.value || config.defaultValue;
 
             if (Array.isArray($scope.model.value) === false) {
@@ -108,10 +108,24 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     $scope.umbProperty.setPropertyActions(vm.propertyActions);
                 }
             }
+
+            var events = [];
+
+            events.push(eventsService.on("contentment.update.value", (event, args) => {
+                if (args.alias === $scope.model.alias) {
+                    $scope.model.value = args.value;
+                    init();
+                }
+            }));
+
+            $scope.$on("$destroy", () => {
+                for (var event in events) {
+                    eventsService.unsubscribe(events[event]);
+                }
+            });
         };
 
         function add() {
-
             focusService.rememberFocus();
 
             var items = Object.toBoolean(config.allowDuplicates)
