@@ -39,6 +39,7 @@ function js() {
 gulp.task("build", gulp.series(cshtml, css, html, js));
 
 gulp.task("watch", function () {
+    gulp.series("build")();
     gulp.watch(["./DataEditors/**/*.css", "./Web/UI/*.css"], gulp.series(css));
     gulp.watch(["./DataEditors/**/*.html"], gulp.series(html));
     gulp.watch(["./DataEditors/**/*.js", "./Web/UI/*.js"], gulp.series(js));
