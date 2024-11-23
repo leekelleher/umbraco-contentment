@@ -19,15 +19,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             { UmbConstants.UdiEntityType.Stylesheet, "icon-brackets" },
         };
 
-        private readonly IFileService _fileService;
         private readonly IIOHelper _ioHelper;
+        private readonly IScriptService _scriptService;
+        private readonly IStylesheetService _stylesheetService;
 
         public UmbracoFilesDataListSource(
-            IFileService fileService,
-            IIOHelper ioHelper)
+            IIOHelper ioHelper,
+            IScriptService scriptService,
+            IStylesheetService stylesheetService)
         {
-            _fileService = fileService;
             _ioHelper = ioHelper;
+            _scriptService = scriptService;
+            _stylesheetService = stylesheetService;
         }
 
         public override string Name => "Umbraco Files";
@@ -113,11 +116,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 switch (fileType)
                 {
                     case UmbConstants.UdiEntityType.Script:
-                        return _fileService.GetScripts();
+                        return _scriptService.GetAllAsync().GetAwaiter().GetResult();
 
                     case UmbConstants.UdiEntityType.Stylesheet:
                     default:
-                        return _fileService.GetStylesheets();
+                        return _stylesheetService.GetAllAsync().GetAwaiter().GetResult();
                 }
             };
 

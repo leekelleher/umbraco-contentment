@@ -7,9 +7,7 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -23,7 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
 
         public string Alias => DataEditorAlias;
@@ -43,13 +40,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         public TextboxListDataEditor(
             ConfigurationEditorUtility utility,
             IIOHelper ioHelper,
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
         {
             _utility = utility;
             _ioHelper = ioHelper;
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
@@ -58,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(Constants.Internals.EmptyEditorViewPath),
@@ -67,13 +62,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
-#if NET8_0_OR_GREATER
                 ConfigurationObject = configuration,
-#else
-                Configuration = configuration,
-#endif
                 ValueType = ValueTypes.Json,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };

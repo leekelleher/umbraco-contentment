@@ -27,7 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
-
         private const string DefaultImageAlias = "image";
 
         public UmbracoContentDataListSource(
@@ -117,7 +116,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return Task.FromResult(values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
-                    .Select(x => umbracoContext.Content.GetById(preview, x))
+                    .Select(x => umbracoContext.Content.GetById(preview, x.Guid))
                     .WhereNotNull()
                     .Select(x => ToDataListItem(x, imageAlias)));
             }
@@ -161,8 +160,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out var udi) == true && udi is not null && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
-                ? umbracoContext.Content?.GetById(udi)
+            return UdiParser.TryParse(value, out GuidUdi? udi) == true && udi is not null && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
+                ? umbracoContext.Content?.GetById(udi.Guid)
                 : default;
         }
 

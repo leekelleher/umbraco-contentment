@@ -37,13 +37,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             get
             {
                 var items = _dataTypeService
-                    .GetByEditorAlias(UmbConstants.PropertyEditors.Aliases.ImageCropper)
+                    .GetByEditorAliasAsync(UmbConstants.PropertyEditors.Aliases.ImageCropper).GetAwaiter().GetResult()?
                     .Select(x => new DataListItem
                     {
                         Icon = Icon,
                         Name = x.Name ?? x.EditorAlias,
                         Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
-                    });
+                    }) ?? Enumerable.Empty<DataListItem>();
 
                 return new ContentmentConfigurationField[]
                 {

@@ -105,10 +105,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object? ConvertValue(Type type, string value)
         {
-            return UdiParser.TryParse(value, out var udi) == true
+            return UdiParser.TryParse(value, out GuidUdi? udi) == true
                 && udi is not null
                 && _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true
-                ? umbracoContext.Content?.GetById(udi)
+                ? umbracoContext.Content?.GetById(udi.Guid)
                 : default;
         }
     }

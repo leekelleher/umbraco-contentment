@@ -21,17 +21,14 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-fa-codepen";
 
         private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public TemplatedLabelDataEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IIOHelper ioHelper)
         {
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
             _ioHelper = ioHelper;
@@ -56,7 +53,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IDataValueEditor GetValueEditor()
         {
             return new DataValueEditor(
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
             {
@@ -74,15 +70,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return new DataValueEditor(
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
             {
-#if NET8_0_OR_GREATER
                 ConfigurationObject = configuration,
-#else
-                Configuration = configuration,
-#endif
                 //HideLabel = hideLabel,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };

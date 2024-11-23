@@ -14,14 +14,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoTemplatesDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
-        private readonly IFileService _fileService;
+        private readonly ITemplateService _templateService;
         private readonly IIOHelper _ioHelper;
 
         public UmbracoTemplatesDataListSource(
-            IFileService fileService,
+            ITemplateService templateService,
             IIOHelper ioHelper)
         {
-            _fileService = fileService;
+            _templateService = templateService;
             _ioHelper = ioHelper;
         }
 
@@ -98,8 +98,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            return _fileService
-                .GetTemplates()
+            return _templateService
+                .GetAllAsync().GetAwaiter().GetResult()
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {

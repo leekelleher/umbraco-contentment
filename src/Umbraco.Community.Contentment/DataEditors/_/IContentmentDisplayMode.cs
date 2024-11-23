@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IContentmentDisplayMode : IContentmentEditorItem
     {
-        Dictionary<string, object> DefaultConfig { get; }
+        Dictionary<string, object>? DefaultConfig { get; }
 
         [Obsolete("Migrate to use `PropertyEditorUiAlias`.")]
         string View { get; }

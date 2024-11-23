@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object>? DefaultValues => default;
 
-        public Dictionary<string, object> DefaultConfig => default;
+        public Dictionary<string, object>? DefaultConfig => default;
 
         public IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 

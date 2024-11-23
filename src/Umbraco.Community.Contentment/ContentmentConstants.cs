@@ -100,6 +100,7 @@ public static class ContentmentConstants
 
             public const string ListItems = DataEditors.ListItemsDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string MacroPicker = DataEditors.MacroPickerDataEditor.DataEditorViewPath;
 
             public const string Notes = DataEditors.NotesDataEditor.DataEditorViewPath;

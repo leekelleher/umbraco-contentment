@@ -8,7 +8,6 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
@@ -19,10 +18,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IJsonSerializer _jsonSerializer;
 
         public DataListDataValueEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
-            : base(localizedTextService, shortStringHelper, jsonSerializer)
+            : base(shortStringHelper, jsonSerializer)
         {
             _jsonSerializer = jsonSerializer;
         }

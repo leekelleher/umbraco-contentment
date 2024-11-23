@@ -30,7 +30,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
         private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IPropertyValidationService _propertyValidationService;
 
@@ -39,7 +38,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             Lazy<PropertyEditorCollection> propertyEditors,
             IDataTypeConfigurationCache dataTypeConfigurationCache,
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             ConfigurationEditorUtility utility,
@@ -49,7 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeConfigurationCache = dataTypeConfigurationCache;
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
             _propertyEditors = propertyEditors;
@@ -80,7 +77,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _contentTypeService,
                 _propertyEditors.Value,
                 _dataTypeConfigurationCache,
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer,
                 _propertyValidationService)
@@ -92,47 +88,42 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            var view = default(string);
+            //var view = default(string);
 
-            if (configuration is Dictionary<string, object> config)
-            {
-                if (config.TryGetValue(ContentBlocksConfigurationEditor.DisplayMode, out var tmp1) == true)
-                {
-                    var displayMode = default(IContentBlocksDisplayMode);
+            //if (configuration is Dictionary<string, object> config)
+            //{
+            //    if (config.TryGetValue(ContentBlocksConfigurationEditor.DisplayMode, out var tmp1) == true)
+            //    {
+            //        var displayMode = default(IContentBlocksDisplayMode);
 
-                    if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
-                    {
-                        displayMode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
-                    }
-                    else if (tmp1 is JArray array1 &&
-                        array1.Count > 0 &&
-                        array1[0] is JObject item1 &&
-                        item1.Value<string>("key") is string key)
-                    {
-                        displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
-                    }
+            //        if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
+            //        {
+            //            displayMode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
+            //        }
+            //        else if (tmp1 is JArray array1 &&
+            //            array1.Count > 0 &&
+            //            array1[0] is JObject item1 &&
+            //            item1.Value<string>("key") is string key)
+            //        {
+            //            displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
+            //        }
 
-                    if (displayMode != null)
-                    {
-                        view = displayMode.View;
-                    }
-                }
-            }
+            //        if (displayMode != null)
+            //        {
+            //            view = displayMode.View;
+            //        }
+            //    }
+            //}
 
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
                 _dataTypeConfigurationCache,
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer,
                 _propertyValidationService)
             {
-#if NET8_0_OR_GREATER
                 ConfigurationObject = configuration,
-#else
-                Configuration = configuration,
-#endif
                 ValueType = ValueTypes.Json,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };

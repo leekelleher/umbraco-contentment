@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .Select(x => new ConfigurationEditorModel
                 {
                     Key = x.Key.ToString(),
-                    Name = x.Name,
+                    Name = x.Name ?? x.Key.ToString(),
                     Description = string.IsNullOrWhiteSpace(x.Description) == false ? x.Description : x.Alias,
                     Icon = x.Icon,
                     DefaultValues = new Dictionary<string, object>

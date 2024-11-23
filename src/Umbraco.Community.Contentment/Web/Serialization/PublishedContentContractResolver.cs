@@ -61,11 +61,11 @@ namespace Umbraco.Community.Contentment.Web.Serialization
 
             _ignoreFromContent = new HashSet<string>(_ignoreFromElement, StringComparer.OrdinalIgnoreCase)
             {
-                nameof(IPublishedContent.Children),
+                //nameof(IPublishedContent.Children),
                 //nameof(IPublishedContent.ChildrenForAllCultures),
                 nameof(IPublishedContent.CreatorId),
                 nameof(IPublishedContent.Cultures),
-                nameof(IPublishedContent.Parent),
+                //nameof(IPublishedContent.Parent),
                 nameof(IPublishedContent.TemplateId),
                 nameof(IPublishedContent.WriterId),
             };

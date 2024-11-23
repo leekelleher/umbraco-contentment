@@ -25,18 +25,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IJsonSerializer _jsonSerializer;
 
         public DataPickerDataEditor(
             IIOHelper ioHelper,
-            ILocalizedTextService localizedTextService,
             IJsonSerializer jsonSerializer,
             IShortStringHelper shortStringHelper,
             ConfigurationEditorUtility utility)
         {
             _ioHelper = ioHelper;
-            _localizedTextService = localizedTextService;
             _jsonSerializer = jsonSerializer;
             _shortStringHelper = shortStringHelper;
             _utility = utility;
@@ -60,7 +57,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
@@ -69,30 +66,26 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            var view = default(string);
+            //var view = default(string);
 
-            if (configuration is Dictionary<string, object> config)
-            {
-                if (config.TryGetValueAs(DataPickerConfigurationEditor.DisplayMode, out JArray? array1) == true &&
-                    array1?.Count > 0 &&
-                    array1[0] is JObject item1 &&
-                    item1.Value<string>("key") is string key1)
-                {
-                    var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key1);
-                    if (displayMode != null)
-                    {
-                        view = displayMode.View;
-                    }
-                }
-            }
+            //if (configuration is Dictionary<string, object> config)
+            //{
+            //    if (config.TryGetValueAs(DataPickerConfigurationEditor.DisplayMode, out JArray? array1) == true &&
+            //        array1?.Count > 0 &&
+            //        array1[0] is JObject item1 &&
+            //        item1.Value<string>("key") is string key1)
+            //    {
+            //        var displayMode = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key1);
+            //        if (displayMode != null)
+            //        {
+            //            view = displayMode.View;
+            //        }
+            //    }
+            //}
 
-            return new DataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
-#if NET8_0_OR_GREATER
                 ConfigurationObject = configuration,
-#else
-                Configuration = configuration,
-#endif
                 ValueType = ValueTypes.Json,
                 //View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };

@@ -41,11 +41,7 @@
 //            }
 //            else if (_dataTypeService.GetDataType(dataTypeKey) is IDataType dataType &&
 //                dataType?.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
-//#if NET8_0_OR_GREATER
 //                dataType.ConfigurationData is Dictionary<string, object> dataTypeConfig &&
-//#else
-//                dataType.Configuration is Dictionary<string, object> dataTypeConfig &&
-//#endif
 //                dataTypeConfig.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
 //                tmp1 is JArray array1 &&
 //                array1.Count > 0 &&
@@ -79,11 +75,7 @@
 //            }
 //            else if (_dataTypeService.GetDataType(dataTypeKey) is IDataType dataType &&
 //                dataType?.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
-//#if NET8_0_OR_GREATER
 //                dataType.ConfigurationData is Dictionary<string, object> dataTypeConfig &&
-//#else
-//                dataType.Configuration is Dictionary<string, object> dataTypeConfig &&
-//#endif
 //                dataTypeConfig.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
 //                tmp1 is JArray array1 &&
 //                array1.Count > 0 &&

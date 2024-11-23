@@ -47,7 +47,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return config;
             }
 
-            return db;
+            return db ?? new Dictionary<string, object>();
         }
 
         public async Task<string?> ToArtifactAsync(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache, CancellationToken cancellationToken = default)

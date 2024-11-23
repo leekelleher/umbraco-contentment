@@ -33,11 +33,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             PropertyEditorCollection propertyEditors,
             IDataTypeConfigurationCache dataTypeConfigurationCache,
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IPropertyValidationService propertyValidationService)
-            : base(localizedTextService, shortStringHelper, jsonSerializer)
+            : base(shortStringHelper, jsonSerializer)
         {
             _dataTypeConfigurationCache = dataTypeConfigurationCache;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));

@@ -11,11 +11,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoUserGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
-        private readonly IUserService _userService;
+        private readonly IUserGroupService _userGroupService;
 
-        public UmbracoUserGroupDataListSource(IUserService userService)
+        public UmbracoUserGroupDataListSource(IUserGroupService userGroupService)
         {
-            _userService = userService;
+            _userGroupService = userGroupService;
         }
 
         public override string Name => "Umbraco User Groups";
@@ -34,8 +34,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return _userService
-                .GetAllUserGroups()
+            return _userGroupService
+                .GetAllAsync(0, int.MaxValue).GetAwaiter().GetResult().Items
                 .Select(x => new DataListItem
                 {
                     Name = x.Name,
@@ -47,6 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IUserGroup);
 
-        public object? ConvertValue(Type type, string value) => _userService.GetUserGroupByAlias(value);
+        public object? ConvertValue(Type type, string value) => _userGroupService.GetAsync(value).GetAwaiter().GetResult();
     }
 }

@@ -66,11 +66,7 @@
 //            if (key.HasValue == true &&
 //                _dataTypeService.GetDataType(key.Value) is IDataType dataType &&
 //                dataType?.EditorAlias.InvariantEquals(DataListDataEditor.DataEditorAlias) == true &&
-//#if NET8_0_OR_GREATER
 //                dataType.ConfigurationObject is Dictionary<string, object> config &&
-//#else
-//                dataType.Configuration is Dictionary<string, object> config &&
-//#endif
 //                _propertyEditors.TryGet(dataType.EditorAlias, out var propertyEditor) == true)
 //            {
 //                var configurationEditor = propertyEditor.GetConfigurationEditor();

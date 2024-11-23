@@ -27,7 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
@@ -35,14 +34,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             IDataValueEditorFactory dataValueEditorFactory,
             IWebHostEnvironment webHostEnvironment,
             IIOHelper ioHelper,
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
             : base(dataValueEditorFactory)
         {
             _webHostEnvironment = webHostEnvironment;
             _ioHelper = ioHelper;
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
@@ -53,7 +50,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         protected override IDataValueEditor CreateValueEditor() => new TextOnlyValueEditor(
             Attribute!,
-            _localizedTextService,
             _shortStringHelper,
             _jsonSerializer,
             _ioHelper);
