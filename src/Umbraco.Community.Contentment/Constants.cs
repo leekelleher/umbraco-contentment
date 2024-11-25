@@ -62,6 +62,7 @@ namespace Umbraco.Community.Contentment
 
             internal static partial class DefaultConfiguration
             {
+                [Obsolete("To be removed in Contentment 7.0")]
                 public static readonly object RichTextEditor = new
                 {
                     maxImageSize = 500,

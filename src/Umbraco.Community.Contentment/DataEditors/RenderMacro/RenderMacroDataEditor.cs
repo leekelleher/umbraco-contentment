@@ -12,6 +12,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [Obsolete("To be removed in Contentment 7.0")]
     public sealed class RenderMacroDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "RenderMacro";

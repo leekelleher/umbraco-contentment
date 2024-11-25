@@ -5,10 +5,10 @@
 
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [Obsolete("To be removed in Contentment 7.0")]
     internal sealed class RenderMacroConfigurationEditor : ConfigurationEditor
     {
         internal const string Macro = "macro";

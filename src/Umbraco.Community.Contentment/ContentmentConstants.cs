@@ -35,6 +35,7 @@ public static class ContentmentConstants
 
             public const string NumberInput = DataEditors.NumberInputDataEditor.DataEditorAlias;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string RenderMacro = DataEditors.RenderMacroDataEditor.DataEditorAlias;
 
             public const string SocialLinks = DataEditors.SocialLinksDataEditor.DataEditorAlias;
