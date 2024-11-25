@@ -6,19 +6,17 @@ using System.Web;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Umbraco.Cms.Api.Management.Models.Contentment;
-using Umbraco.Cms.Api.Management.Routing;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
-namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
+[ApiExplorerSettings(GroupName = "Data Picker")]
 [ApiVersion("1.0")]
-[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/data-picker")]
+[ContentmentVersionedApiBackOfficeRoute("data-picker")]
 public class DataPickerController : ContentmentControllerBase
 {
     private readonly IDataTypeService _dataTypeService;
@@ -34,7 +32,7 @@ public class DataPickerController : ContentmentControllerBase
         _utility = utility;
     }
 
-    [HttpPost("editor")]
+    [HttpPost("editor", Name = "PostDataPickerEditor")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(DataPickerEditorResponseModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -98,7 +96,7 @@ public class DataPickerController : ContentmentControllerBase
         return Ok(result);
     }
 
-    [HttpGet("search")]
+    [HttpGet("search", Name = "GetDataPickerSearch")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

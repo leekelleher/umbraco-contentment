@@ -5,16 +5,15 @@ using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Umbraco.Cms.Api.Management.Routing;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
-namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
+[ApiExplorerSettings(GroupName = "Data")]
 [ApiVersion("1.0")]
-[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/data")]
+[ContentmentVersionedApiBackOfficeRoute("data")]
 public sealed class AssemblyEnumController : ContentmentControllerBase
 {
     internal const string GetAssembliesUrl = "/umbraco/management/api/v1/contentment/data/assemblies";
@@ -27,7 +26,7 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
         _shortStringHelper = shortStringHelper;
     }
 
-    [HttpGet("assemblies")]
+    [HttpGet("assemblies", Name = "GetAssembliesData")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(IEnumerable<DataListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -84,7 +83,7 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
         return Ok(result);
     }
 
-    [HttpGet("enums")]
+    [HttpGet("enums", Name = "GetEnumsData")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(IEnumerable<DataListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

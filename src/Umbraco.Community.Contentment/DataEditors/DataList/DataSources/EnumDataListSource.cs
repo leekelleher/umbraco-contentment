@@ -7,10 +7,10 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Umbraco.Cms.Api.Management.Controllers.Contentment;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
+using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors

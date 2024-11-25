@@ -3,9 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Api.Management.Controllers.Contentment;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Community.Contentment.Api.Management;
 
 namespace Umbraco.Community.Contentment.Notifications
 {

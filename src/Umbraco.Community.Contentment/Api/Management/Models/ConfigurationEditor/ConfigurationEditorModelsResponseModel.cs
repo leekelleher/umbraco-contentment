@@ -3,7 +3,7 @@
 
 using Umbraco.Community.Contentment.DataEditors;
 
-namespace Umbraco.Cms.Api.Management.Models.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
 public class ConfigurationEditorModelsResponseModel
 {

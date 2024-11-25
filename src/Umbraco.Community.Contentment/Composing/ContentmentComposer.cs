@@ -6,10 +6,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Umbraco.Cms.Api.Common.OpenApi;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
+using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Community.Contentment.Services;
@@ -24,7 +26,9 @@ namespace Umbraco.Community.Contentment.Composing
                 .Services
                     .AddSingleton<ConfigurationEditorUtility>()
                     .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
+                    .AddSingleton<IOperationIdHandler, ContentmentOperationIdHandler>()
                     .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
+                    .ConfigureOptions<ConfigureContentmentSwaggerGenOptions>()
              ;
 
             builder
@@ -43,7 +47,6 @@ namespace Umbraco.Community.Contentment.Composing
                 .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
-                //.AddNotificationHandler<UmbracoApplicationStartingNotification, ContentmentUmbracoApplicationStartingNotification>()
             ;
 
             builder.Services.Configure<UmbracoPipelineOptions>(opts =>

@@ -3,7 +3,7 @@
 
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
 
-namespace Umbraco.Cms.Api.Management.Models.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
 public sealed class DataPickerEditorResponseModel
 {

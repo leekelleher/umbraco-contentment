@@ -3,14 +3,16 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Umbraco.Cms.Api.Management.Routing;
+using Umbraco.Cms.Api.Common.Attributes;
+using Umbraco.Cms.Api.Common.Filters;
+using Umbraco.Cms.Api.Management.Controllers;
 using Umbraco.Cms.Web.Common.Authorization;
-using Umbraco.Community.Contentment;
 
-namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
-// TODO: [LK] Move this outside of Umbraco's Management API.
 [ApiExplorerSettings(GroupName = Constants.Internals.ProjectName)]
 [Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
-[VersionedApiBackOfficeRoute(Constants.Internals.ProjectAlias)]
+[ContentmentVersionedApiBackOfficeRoute("/")]
+[JsonOptionsName(UmbConstants.JsonOptionsNames.BackOffice)]
+[MapToApi(Constants.Internals.ProjectAlias)]
 public abstract class ContentmentControllerBase : ManagementApiControllerBase { }

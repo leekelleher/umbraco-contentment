@@ -4,16 +4,14 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Umbraco.Cms.Api.Management.Models.Contentment;
-using Umbraco.Cms.Api.Management.Routing;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
-using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.DataEditors;
 
-namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
+[ApiExplorerSettings(GroupName = "Data List")]
 [ApiVersion("1.0")]
-[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/data-list")]
+[ContentmentVersionedApiBackOfficeRoute("data-list")]
 public class DataListController : ContentmentControllerBase
 {
     private readonly ConfigurationEditorUtility _utility;
@@ -23,7 +21,7 @@ public class DataListController : ContentmentControllerBase
         _utility = utility;
     }
 
-    [HttpPost("editor")]
+    [HttpPost("editor", Name = "PostDataListEditor")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(DataListEditorResponseModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

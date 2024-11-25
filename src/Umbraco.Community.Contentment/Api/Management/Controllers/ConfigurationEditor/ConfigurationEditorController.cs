@@ -4,15 +4,13 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Umbraco.Cms.Api.Management.Models.Contentment;
-using Umbraco.Cms.Api.Management.Routing;
-using Umbraco.Community.Contentment;
 using Umbraco.Community.Contentment.DataEditors;
 
-namespace Umbraco.Cms.Api.Management.Controllers.Contentment;
+namespace Umbraco.Community.Contentment.Api.Management;
 
+[ApiExplorerSettings(GroupName = "Configuration Editor")]
 [ApiVersion("1.0")]
-[VersionedApiBackOfficeRoute($"{Constants.Internals.ProjectAlias}/configuration-editor")]
+[ContentmentVersionedApiBackOfficeRoute("configuration-editor")]
 public class ConfigurationEditorController : ContentmentControllerBase
 {
     private readonly ConfigurationEditorUtility _utility;
@@ -22,7 +20,7 @@ public class ConfigurationEditorController : ContentmentControllerBase
         _utility = utility;
     }
 
-    [HttpGet("models")]
+    [HttpGet("models", Name = "GetConfigurationEditorEditorModels")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(ConfigurationEditorModelsResponseModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
