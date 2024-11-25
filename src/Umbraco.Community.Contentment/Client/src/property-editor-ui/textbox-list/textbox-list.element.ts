@@ -1,7 +1,7 @@
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
-import { ContentmentService } from '../../api/index.js';
+import { DataListService } from '../../api/index.js';
 import { InputType, UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
@@ -56,7 +56,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 
 			const { data } = await tryExecuteAndNotify(
 				this,
-				ContentmentService.postContentmentDataListEditor({ requestBody })
+				DataListService.postDataListEditor({ requestBody })
 			);
 
 			if (!data) return reject();

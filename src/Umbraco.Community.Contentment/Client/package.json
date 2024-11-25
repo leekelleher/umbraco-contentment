@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "tsc && vite build --watch",
 		"build": "tsc && vite build",
-		"generate:server-api": "openapi-ts --input http://localhost:21183/umbraco/swagger/management/swagger.json --output src/api --debug true --format prettier --enums typescript --lint eslint --schemas false --exportCore false"
+		"generate:server-api": "openapi-ts --input http://localhost:21185/umbraco/swagger/contentment/swagger.json --output src/api --debug true --format prettier --enums typescript --lint eslint --schemas false --exportCore false"
 	},
 	"dependencies": {
 		"lit": "^3.2.0"

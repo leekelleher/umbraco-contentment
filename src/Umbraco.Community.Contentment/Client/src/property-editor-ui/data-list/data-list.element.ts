@@ -3,7 +3,7 @@
 
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import { ContentmentService } from '../../api/services.gen.js';
+import { DataListService } from '../../api/services.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
@@ -77,7 +77,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 
 			const { data } = await tryExecuteAndNotify(
 				this,
-				ContentmentService.postContentmentDataListEditor({ requestBody })
+				DataListService.postDataListEditor({ requestBody })
 			);
 
 			if (!data) return reject();

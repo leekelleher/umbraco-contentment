@@ -5,7 +5,7 @@ import { parseInt } from '../../utils/index.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL } from './configuration-editor-selection-modal.element.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
 import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
-import { ConfigurationEditorModel, ContentmentService } from '../../api/index.js';
+import { ConfigurationEditorModel, ConfigurationEditorService } from '../../api/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
@@ -69,7 +69,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		const requestData = { type: this.#configurationType };
 		const { data } = await tryExecuteAndNotify(
 			this,
-			ContentmentService.getContentmentConfigurationEditorModels(requestData)
+			ConfigurationEditorService.getConfigurationEditorEditorModels(requestData)
 		);
 
 		if (!data) return;

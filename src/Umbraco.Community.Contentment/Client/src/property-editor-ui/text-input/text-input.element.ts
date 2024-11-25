@@ -12,7 +12,7 @@ import {
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
-import { ContentmentService } from '../../api/index.js';
+import { DataListService } from '../../api/index.js';
 import { InputType } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
@@ -79,7 +79,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 
 			const { data } = await tryExecuteAndNotify(
 				this,
-				ContentmentService.postContentmentDataListEditor({ requestBody })
+				DataListService.postDataListEditor({ requestBody })
 			);
 
 			if (!data) return reject();

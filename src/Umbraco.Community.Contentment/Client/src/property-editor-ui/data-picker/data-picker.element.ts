@@ -1,7 +1,7 @@
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
-import { ContentmentService } from '../../api/services.gen.js';
+import { DataPickerService } from '../../api/services.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
@@ -98,7 +98,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 			const { data } = await tryExecuteAndNotify(
 				this,
-				ContentmentService.postContentmentDataPickerEditor({ requestBody })
+				DataPickerService.postDataPickerEditor({ requestBody })
 			);
 
 			if (!data) return reject();

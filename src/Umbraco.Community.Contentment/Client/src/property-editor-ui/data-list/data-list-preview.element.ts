@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ContentmentService } from '../../api/services.gen.js';
+import { DataListService } from '../../api/services.gen.js';
 import { css, customElement, html, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -95,7 +95,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 
 				const { data } = await tryExecuteAndNotify(
 					this,
-					ContentmentService.postContentmentDataListEditor({ requestBody })
+					DataListService.postDataListEditor({ requestBody })
 				);
 
 				if (!data) return reject();

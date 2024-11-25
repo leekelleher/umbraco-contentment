@@ -12,7 +12,7 @@ import { debounce } from '@umbraco-cms/backoffice/utils';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import { ContentmentDataListItem } from '../types.js';
-import { ContentmentService } from '../../api/services.gen.js';
+import { DataPickerService } from '../../api/services.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
@@ -152,7 +152,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			query: this._query,
 		};
 
-		const { data } = await tryExecuteAndNotify(this, ContentmentService.getContentmentDataPickerSearch(requestData));
+		const { data } = await tryExecuteAndNotify(this, DataPickerService.getDataPickerSearch(requestData));
 
 		this._items =
 			data?.items.map((item) => ({
