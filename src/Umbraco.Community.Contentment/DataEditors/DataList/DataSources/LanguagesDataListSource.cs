@@ -94,7 +94,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Name = culture.EnglishName,
                 Value = culture.TwoLetterISOLanguageName,
-                Icon = "icon-umb-translation",
+                Icon = "icon-fa-language",
                 Description = culture.TwoLetterISOLanguageName,
             };
         }

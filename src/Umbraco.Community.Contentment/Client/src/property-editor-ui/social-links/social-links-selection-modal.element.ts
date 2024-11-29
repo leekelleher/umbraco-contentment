@@ -78,7 +78,7 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 			#wrapper {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(var(--uui-size-40), 1fr));
-				grid-gap: var(--uui-size-layout-3);
+				gap: var(--uui-size-layout-1);
 				margin: var(--uui-size-layout-2);
 				place-items: start;
 				justify-content: space-between;
