@@ -44,28 +44,15 @@
         <PackageReference Include="Umbraco.Cms.Api.Management" Version="15.0.0" />
         <PackageReference Include="Umbraco.Cms.Core" Version="15.0.0" />
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="15.0.0" />
+        <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+        </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
-        <Content Remove="Client\**" />
-        <None Include="Client\public\umbraco-package.json" Pack="false" />
+        <Compile Remove="wwwroot\**" />
+        <EmbeddedResource Remove="wwwroot\**" />
+        <None Remove="wwwroot\**" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Compile Remove="node_modules\**;wwwroot\**" />
-        <Content Remove="package.json;package-lock.json" />
-        <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
-        <None Remove="node_modules\**;wwwroot\**;package.json;package-lock.json" />
-    </ItemGroup>
-
-    <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
-        <ItemGroup>
-            <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
-        </ItemGroup>
-    </Target>
-
-    <Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
-        <Exec Command="npm run build" WorkingDirectory="Client" />
-    </Target>
 
 </Project>

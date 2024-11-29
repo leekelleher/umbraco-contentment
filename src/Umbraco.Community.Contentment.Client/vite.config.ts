@@ -6,7 +6,7 @@ export default defineConfig({
       entry: 'src/bundle.ts',
       formats: ['es'],
     },
-    outDir: '../wwwroot/App_Plugins/Contentment',
+    outDir: '../Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment',
     emptyOutDir: true,
     sourcemap: true,
     rollupOptions: {

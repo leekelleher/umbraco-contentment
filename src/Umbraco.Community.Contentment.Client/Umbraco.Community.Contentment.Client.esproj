@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1738743">
+    <PropertyGroup>
+        <StartupCommand>npm run dev</StartupCommand>
+        <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
+        <ShouldRunBuildScript>false</ShouldRunBuildScript>
+        <StaticWebAssetSourceId>Umbraco.Community.Contentment</StaticWebAssetSourceId>
+        <DebugAssetsDirectory>$(MSBuildProjectDirectory)\dist</DebugAssetsDirectory>
+    </PropertyGroup>
+</Project>
