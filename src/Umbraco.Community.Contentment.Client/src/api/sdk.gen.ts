@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { $OpenApiTs } from './types.gen';
+import type { GetConfigurationEditorEditorModelsData, GetConfigurationEditorEditorModelsResponse, GetAssembliesDataResponse, GetEnumsDataData, GetEnumsDataResponse, PostDataListEditorData, PostDataListEditorResponse, PostDataPickerEditorData, PostDataPickerEditorResponse, GetDataPickerSearchData, GetDataPickerSearchResponse } from './types.gen';
 
 export class ConfigurationEditorService {
     /**
@@ -12,12 +12,52 @@ export class ConfigurationEditorService {
      * @returns unknown OK
      * @throws ApiError
      */
-    public static getConfigurationEditorEditorModels(data: $OpenApiTs['/umbraco/management/api/v1/contentment/configuration-editor/models']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/configuration-editor/models']['get']['res'][200]> {
+    public static getConfigurationEditorEditorModels(data: GetConfigurationEditorEditorModelsData = {}): CancelablePromise<GetConfigurationEditorEditorModelsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/umbraco/management/api/v1/contentment/configuration-editor/models',
             query: {
                 type: data.type
+            },
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+}
+
+export class DataService {
+    /**
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getAssembliesData(): CancelablePromise<GetAssembliesDataResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/data/assemblies',
+            errors: {
+                401: 'The resource is protected and requires an authentication token',
+                403: 'The authenticated user do not have access to this resource',
+                404: 'Not Found'
+            }
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.assembly
+     * @returns unknown OK
+     * @throws ApiError
+     */
+    public static getEnumsData(data: GetEnumsDataData = {}): CancelablePromise<GetEnumsDataResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/umbraco/management/api/v1/contentment/data/enums',
+            query: {
+                assembly: data.assembly
             },
             errors: {
                 401: 'The resource is protected and requires an authentication token',
@@ -36,7 +76,7 @@ export class DataListService {
      * @returns unknown OK
      * @throws ApiError
      */
-    public static postDataListEditor(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-list/editor']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-list/editor']['post']['res'][200]> {
+    public static postDataListEditor(data: PostDataListEditorData = {}): CancelablePromise<PostDataListEditorResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/umbraco/management/api/v1/contentment/data-list/editor',
@@ -59,7 +99,7 @@ export class DataPickerService {
      * @returns unknown OK
      * @throws ApiError
      */
-    public static postDataPickerEditor(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/editor']['post']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/editor']['post']['res'][200]> {
+    public static postDataPickerEditor(data: PostDataPickerEditorData = {}): CancelablePromise<PostDataPickerEditorResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/umbraco/management/api/v1/contentment/data-picker/editor',
@@ -83,7 +123,7 @@ export class DataPickerService {
      * @returns unknown OK
      * @throws ApiError
      */
-    public static getDataPickerSearch(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/search']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data-picker/search']['get']['res'][200]> {
+    public static getDataPickerSearch(data: GetDataPickerSearchData = {}): CancelablePromise<GetDataPickerSearchResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/umbraco/management/api/v1/contentment/data-picker/search',
@@ -93,46 +133,6 @@ export class DataPickerService {
                 pageNumber: data.pageNumber,
                 pageSize: data.pageSize,
                 query: data.query
-            },
-            errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource',
-                404: 'Not Found'
-            }
-        });
-    }
-    
-}
-
-export class DataService {
-    /**
-     * @returns unknown OK
-     * @throws ApiError
-     */
-    public static getAssembliesData(): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data/assemblies']['get']['res'][200]> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/contentment/data/assemblies',
-            errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource',
-                404: 'Not Found'
-            }
-        });
-    }
-    
-    /**
-     * @param data The data for the request.
-     * @param data.assembly
-     * @returns unknown OK
-     * @throws ApiError
-     */
-    public static getEnumsData(data: $OpenApiTs['/umbraco/management/api/v1/contentment/data/enums']['get']['req'] = {}): CancelablePromise<$OpenApiTs['/umbraco/management/api/v1/contentment/data/enums']['get']['res'][200]> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/contentment/data/enums',
-            query: {
-                assembly: data.assembly
             },
             errors: {
                 401: 'The resource is protected and requires an authentication token',
