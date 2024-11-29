@@ -1,15 +1,15 @@
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { ContentmentDataListItem } from '../types.js';
 import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 import { CONTENTMENT_DATA_PICKER_MODAL } from './data-picker-modal.element.js';
+import type { ContentmentDataListItem } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-data-picker-list';
 

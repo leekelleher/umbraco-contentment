@@ -12,7 +12,7 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 	extends UmbActionBase<ArgsMetaType>
 	implements UmbPropertyAction<ArgsMetaType>
 {
-	args: any;
+	override args: any;
 
 	async getHref(): Promise<string | undefined> {
 		return Promise.resolve(undefined);

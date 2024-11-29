@@ -4,7 +4,7 @@
 import { css, customElement, html, property, styleMap, when, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
+import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-info-box';
 

@@ -4,15 +4,19 @@
 import { parseInt } from '../../utils/index.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL } from './configuration-editor-selection-modal.element.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
-import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
-import { ConfigurationEditorModel, ConfigurationEditorService } from '../../api/index.js';
+import { ConfigurationEditorService } from '../../api/index.js';
+import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
+import type { ConfigurationEditorModel } from '../../api/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
-import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-configuration-editor';
 

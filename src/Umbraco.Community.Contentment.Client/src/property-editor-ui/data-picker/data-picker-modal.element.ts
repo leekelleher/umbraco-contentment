@@ -11,8 +11,8 @@ import {
 import { debounce } from '@umbraco-cms/backoffice/utils';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
-import { ContentmentDataListItem } from '../types.js';
-import { DataPickerService } from '../../api/services.gen.js';
+import type { ContentmentDataListItem } from '../types.js';
+import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';

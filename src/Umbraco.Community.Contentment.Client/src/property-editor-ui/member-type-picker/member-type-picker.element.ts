@@ -4,8 +4,9 @@
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbMemberTypePickerInputContext } from '@umbraco-cms/backoffice/member-type';
-import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
+import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-member-type-picker';
 

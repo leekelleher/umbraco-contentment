@@ -1,16 +1,16 @@
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
-import { DataPickerService } from '../../api/services.gen.js';
+import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
 import '../../components/lee-was-here/lee-was-here.element.js';
@@ -96,10 +96,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				values: this.value,
 			};
 
-			const { data } = await tryExecuteAndNotify(
-				this,
-				DataPickerService.postDataPickerEditor({ requestBody })
-			);
+			const { data } = await tryExecuteAndNotify(this, DataPickerService.postDataPickerEditor({ requestBody }));
 
 			if (!data) return reject();
 

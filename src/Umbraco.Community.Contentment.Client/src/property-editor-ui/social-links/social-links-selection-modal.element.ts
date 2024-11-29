@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ContentmentSocialLinkValue, ContentmentSocialNetworkModel } from '../types.js';
+import type { ContentmentSocialLinkValue, ContentmentSocialNetworkModel } from '../types.js';
 import { css, customElement, html, repeat } from '@umbraco-cms/backoffice/external/lit';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 

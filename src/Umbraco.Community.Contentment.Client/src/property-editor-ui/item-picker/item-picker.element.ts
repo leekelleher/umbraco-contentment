@@ -6,13 +6,13 @@ import { css, customElement, html, nothing, property, repeat, state, when } from
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
-import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 import type { ContentmentDataListItem } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-item-picker';
 

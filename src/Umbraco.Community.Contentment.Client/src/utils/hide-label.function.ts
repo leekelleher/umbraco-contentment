@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 export function tryHideLabel(element: UmbPropertyEditorUiElement, hideLabel: boolean): void {
 	if (hideLabel) {

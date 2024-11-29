@@ -7,10 +7,10 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_ITEM_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-manifest-picker';
 

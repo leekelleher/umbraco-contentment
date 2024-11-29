@@ -4,8 +4,9 @@
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbDictionaryPickerInputContext } from '@umbraco-cms/backoffice/dictionary';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
+import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-dictionary-picker';
 

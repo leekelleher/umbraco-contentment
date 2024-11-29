@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { DataListService } from '../../api/services.gen.js';
+import { DataListService } from '../../api/sdk.gen.js';
 import { css, customElement, html, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_PROPERTY_DATASET_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import './data-list.element.js';
 import '../../components/info-box/info-box.element.js';
@@ -93,10 +94,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 
 				const requestBody = { dataSource: this._dataSource, listEditor: this._listEditor };
 
-				const { data } = await tryExecuteAndNotify(
-					this,
-					DataListService.postDataListEditor({ requestBody })
-				);
+				const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
 
 				if (!data) return reject();
 

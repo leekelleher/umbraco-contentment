@@ -3,10 +3,10 @@
 
 import { css, customElement, html, property, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
+import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
-	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-content-source';

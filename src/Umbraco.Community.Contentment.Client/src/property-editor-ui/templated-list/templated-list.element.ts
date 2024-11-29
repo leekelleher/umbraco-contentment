@@ -15,9 +15,10 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
-import { createExtensionElement, ManifestBase } from '@umbraco-cms/backoffice/extension-api';
+import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,

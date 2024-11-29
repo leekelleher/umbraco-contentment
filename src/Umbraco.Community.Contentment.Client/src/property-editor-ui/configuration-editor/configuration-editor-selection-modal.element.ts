@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
-import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
+import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
 import {
 	css,
 	customElement,

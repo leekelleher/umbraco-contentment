@@ -15,13 +15,13 @@ import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoff
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
 import { UMB_ICON_PICKER_MODAL } from '@umbraco-cms/backoffice/icon';
-import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import type { ContentmentListItemValue } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-list-items';
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ContentmentDataListItem } from '../../../property-editor-ui/types.js';
+import type { ContentmentDataListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentDataListItemUiElement } from '../types.js';
 import { customElement, html, nothing, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';

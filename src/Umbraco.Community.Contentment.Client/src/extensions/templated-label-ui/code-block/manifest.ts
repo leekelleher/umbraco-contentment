@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ContentmentTemplatedLabelUiExtentionManifestType } from '../templated-label-ui.extension.js';
+import type { ContentmentTemplatedLabelUiExtentionManifestType } from '../templated-label-ui.extension.js';
 
 export const manifest: ContentmentTemplatedLabelUiExtentionManifestType = {
 	type: 'contentmentTemplatedLabelUi',

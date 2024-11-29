@@ -3,16 +3,16 @@
 
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import { DataListService } from '../../api/services.gen.js';
+import { DataListService } from '../../api/sdk.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 // import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 // import { UMB_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/workspace';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/lee-was-here/lee-was-here.element.js';
 import '../../components/property-editor-ui/property-editor-ui.element.js';
@@ -75,10 +75,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 
 			const requestBody = { dataSource: this._dataSource, listEditor: this._listEditor };
 
-			const { data } = await tryExecuteAndNotify(
-				this,
-				DataListService.postDataListEditor({ requestBody })
-			);
+			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
 
 			if (!data) return reject();
 

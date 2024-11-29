@@ -16,10 +16,10 @@ import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { ContentmentDataListItem } from '../types.js';
+import type { ContentmentDataListItem } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-tags';
 

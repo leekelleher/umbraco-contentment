@@ -1,5 +1,5 @@
-import { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
 export type ContentmentConfigurationEditorValue = {
 	key: string;

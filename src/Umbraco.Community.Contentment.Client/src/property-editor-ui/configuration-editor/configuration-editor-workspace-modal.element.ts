@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
+import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
 import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
 
 interface ContentmentConfigurationEditorWorkspaceModalData {
 	item: ContentmentConfigurationEditorValue;

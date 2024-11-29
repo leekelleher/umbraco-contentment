@@ -13,7 +13,6 @@ import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 import { UmbLitElement, umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
@@ -25,6 +24,7 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-social-links';
 
