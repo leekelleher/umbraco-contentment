@@ -3,7 +3,16 @@
 
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
 import { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
-import { css, customElement, html, ifDefined, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	nothing,
+	repeat,
+	state,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
 import { debounce } from '@umbraco-cms/backoffice/utils';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import { UmbModalBaseElement, UmbModalToken, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
@@ -35,6 +44,9 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 	@state()
 	private _grouped?: Array<{ alias: string; items: Array<ContentmentConfigurationEditorModel> }>;
 
+	@state()
+	private _hideFilter = false;
+
 	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
 
 	constructor() {
@@ -48,6 +60,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 	override connectedCallback() {
 		super.connectedCallback();
 		this.#groupItems(this.data?.items);
+		this._hideFilter = (this.data?.items.length ?? 0) <= 7;
 	}
 
 	#debouncedFilter = debounce((query: string) => {
@@ -111,6 +124,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 	}
 
 	#renderFilter() {
+		if (this._hideFilter) return nothing;
 		const label = this.localize.term('placeholders_filter');
 		return html`
 			<uui-input type="search" id="filter" label=${label} placeholder=${label} @input=${this.#onInput} ${umbFocus()}>
