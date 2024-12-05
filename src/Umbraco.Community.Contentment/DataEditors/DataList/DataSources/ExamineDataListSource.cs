@@ -16,9 +16,8 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ExamineDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class ExamineDataListSource : IDataListSource, IDataPickerSource
     {
-
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;
         private readonly IIdKeyMap _idKeyMap;
@@ -76,17 +75,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             _shortStringHelper = shortStringHelper;
         }
 
-        public override string Name => "Examine Query";
+        public string Name => "Examine Query";
 
-        public override string Description => "Populate the data source from an Examine query.";
+        public string Description => "Populate the data source from an Examine query.";
 
-        public override string Icon => "icon-search";
+        public string Icon => "icon-search";
 
-        public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
+        public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public IEnumerable<ConfigurationField> Fields => new[]
         {
             new ConfigurationField
             {
@@ -155,7 +154,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
         };
 
-        public override Dictionary<string, object> DefaultValues => new()
+        public Dictionary<string, object> DefaultValues => new()
         {
             { "examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName },
             { "luceneQuery", "+__IndexType:content" },
@@ -165,7 +164,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "descriptionField", string.Empty },
         };
 
-        public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+        public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
+            => GetExamineResults(config, pageSize: QueryOptions.DefaultMaxResults)?.Items ?? [];
+
+        public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
+            => Task.FromResult(GetExamineResults(config, pageSize: values.Count(), values: values)?.Items ?? []);
+
+        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+            => Task.FromResult(GetExamineResults(config, pageNumber, pageSize, query));
+
+        private PagedResult<DataListItem> GetExamineResults(
+            Dictionary<string, object> config,
+            int pageNumber = 1,
+            int pageSize = 12,
+            string? query = default,
+            IEnumerable<string>? values = default)
         {
             var examineIndex = config.GetValueAs("examineIndex", UmbConstants.UmbracoIndexes.ExternalIndexName);
             if (_examineManager.TryGetIndex(examineIndex, out var index) == true)
@@ -191,28 +204,46 @@ namespace Umbraco.Community.Contentment.DataEditors
                     var iconField = config.GetValueAs("iconField", _defaultIconField);
                     var descriptionField = config.GetValueAs("descriptionField", string.Empty);
 
+                    if (string.IsNullOrWhiteSpace(query) == false)
+                    {
+                        luceneQuery += $" +({nameField}:\"{query}\" OR {valueField}:\"{query}\")";
+                    }
+
+                    if (values?.Any() == true)
+                    {
+                        luceneQuery += string.Concat($" +({valueField}:\"", string.Join($"\" OR {valueField}:\"", values), "\")");
+                    }
+
+                    var offset = (pageNumber - 1) * pageSize;
+                    var queryOptions = QueryOptions.SkipTake(offset, pageSize);
+
                     var results = index
                         .Searcher
                         .CreateQuery()
                         .NativeQuery(luceneQuery)
-                        // NOTE: For any `OrderBy` complaints, refer to: https://github.com/Shazwazza/Examine/issues/126
+                        // NOTE: To enable text field sorting, refer to:
+                        // https://shazwazza.github.io/Examine/articles/sorting.html
+                        // https://github.com/umbraco/Umbraco-CMS/issues/13681#issuecomment-1384637840
                         .OrderBy(new SortableField(nameField, SortType.String))
-                        .Execute();
+                        .Execute(queryOptions);
 
                     if (results?.TotalItemCount > 0)
                     {
-                        return results.Select(x => new DataListItem
+                        return new PagedResult<DataListItem>(results.TotalItemCount, pageNumber, pageSize)
                         {
-                            Name = x.Values.ContainsKey(nameField) == true ? x.Values[nameField] : x.Values[_defaultNameField],
-                            Value = x.Values.ContainsKey(valueField) == true ? x.Values[valueField] : x.Values[_defaultValueField],
-                            Icon = x.Values.ContainsKey(iconField) == true ? x.Values[iconField] : x.Values[_defaultIconField],
-                            Description = x.Values.ContainsKey(descriptionField) == true ? x.Values[descriptionField] : null,
-                        });
+                            Items = results.Select(x => new DataListItem
+                            {
+                                Name = x.Values.ContainsKey(nameField) == true ? x.Values[nameField] : x.Values[_defaultNameField],
+                                Value = x.Values.ContainsKey(valueField) == true ? x.Values[valueField] : x.Values[_defaultValueField],
+                                Icon = x.Values.ContainsKey(iconField) == true ? x.Values[iconField] : x.Values[_defaultIconField],
+                                Description = x.Values.ContainsKey(descriptionField) == true ? x.Values[descriptionField] : null,
+                            })
+                        };
                     }
                 }
             }
 
-            return Enumerable.Empty<DataListItem>();
+            return new PagedResult<DataListItem>(-1, pageNumber, pageSize);
         }
     }
 }
