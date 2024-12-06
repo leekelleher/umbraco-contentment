@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
@@ -139,11 +139,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IDictionary<string, object> FromConfigurationEditor(IDictionary<string, object> configuration)
         {
-            if (configuration.TryGetValueAs(Networks, out JArray? networks) == true && networks?.Count > 0)
+            if (configuration.TryGetValueAs(Networks, out JsonArray? networks) == true && networks?.Count > 0)
             {
-                foreach (JObject network in networks)
+                foreach (JsonObject network in networks)
                 {
-                    var networkValue = network.GetValueAs("value", default(JObject));
+                    var networkValue = network?.GetValueAs("value", default(JsonObject));
                     if (networkValue?.ContainsKey("icon") == true)
                     {
                         var icon = networkValue.GetValueAs("icon", string.Empty);
@@ -162,13 +162,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(Networks, out JArray? array1) && array1?.Count > 0)
+            if (config.TryGetValueAs(Networks, out JsonArray? array1) && array1?.Count > 0)
             {
-                var networks = new List<JObject?>();
+                var networks = new List<JsonObject?>();
 
                 for (var i = 0; i < array1.Count; i++)
                 {
-                    networks.Add(array1[i]["value"] as JObject);
+                    networks.Add(array1[i]?["value"] as JsonObject);
                 }
 
                 config[Networks] = networks;

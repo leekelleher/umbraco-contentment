@@ -3,7 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Validation;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -24,9 +25,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
         protected override IEnumerable<ElementTypeValidationModel> GetElementTypeValidation(object? value, PropertyValidationContext validationContext)
         {
-            if (value is JArray array && array.Any() == true)
+            if (value is JsonArray array && array.Any() == true)
             {
-                var blocks = array.ToObject<IEnumerable<ContentBlock>>();
+                var blocks = array.Deserialize<IEnumerable<ContentBlock>>();
                 if (blocks?.Any() == true)
                 {
                     foreach (var block in blocks)

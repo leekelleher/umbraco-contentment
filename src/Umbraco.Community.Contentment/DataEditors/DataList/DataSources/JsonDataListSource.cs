@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
+// NOTE: Uses Newtonsoft.Json for JsonPath support. [LK]
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class JsonDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem

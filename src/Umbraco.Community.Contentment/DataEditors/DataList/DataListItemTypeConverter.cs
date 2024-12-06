@@ -5,7 +5,8 @@
 
 using System.ComponentModel;
 using System.Globalization;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -21,8 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 case IPublishedContent content:
                     return content.ToDataListItem();
 
-                case JObject jobj:
-                    return jobj.ToObject(typeof(DataListItem)) as DataListItem;
+                case JsonObject jobj:
+                    return jobj.Deserialize<DataListItem>();
 
                 case SocialLink link:
                     return link.ToDataListItem();

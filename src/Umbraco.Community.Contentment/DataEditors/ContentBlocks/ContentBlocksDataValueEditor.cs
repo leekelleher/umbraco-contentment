@@ -10,8 +10,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Editors;
@@ -26,6 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class ContentBlocksDataValueEditor : DataValueEditor, IDataValueReference
     {
         private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly Lazy<Dictionary<Guid, IContentType>> _elementTypes;
         private readonly PropertyEditorCollection _propertyEditors;
 
@@ -39,6 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base(shortStringHelper, jsonSerializer)
         {
             _dataTypeConfigurationCache = dataTypeConfigurationCache;
+            _jsonSerializer = jsonSerializer;
             _elementTypes = new Lazy<Dictionary<Guid, IContentType>>(() => contentTypeService.GetAllElementTypes().ToDictionary(x => x.Key));
             _propertyEditors = propertyEditors;
 
@@ -50,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var value = base.ToEditor(property, culture, segment)?.ToString();
             if (string.IsNullOrWhiteSpace(value) == false)
             {
-                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+                var blocks = _jsonSerializer.Deserialize<IEnumerable<ContentBlock>>(value);
                 if (blocks?.Any() == true)
                 {
                     foreach (var block in blocks)
@@ -72,7 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                         var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
 
                                         block.Value[propertyType.Alias] = convertedValue is not null
-                                            ? JToken.FromObject(convertedValue)
+                                            ? JsonSerializer.SerializeToNode(convertedValue)
                                             : null;
                                     }
                                     else
@@ -96,7 +97,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             var value = editorValue.Value?.ToString();
             if (string.IsNullOrWhiteSpace(value) == false)
             {
-                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+                var blocks = _jsonSerializer.Deserialize<IEnumerable<ContentBlock>>(value);
                 if (blocks?.Any() == true)
                 {
                     foreach (var block in blocks)
@@ -119,14 +120,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, blockPropertyValue);
 
                                     block.Value[propertyType.Alias] = convertedValue != null
-                                        ? JToken.FromObject(convertedValue)
+                                        ? JsonSerializer.SerializeToNode(convertedValue)
                                         : null;
                                 }
                             }
                         }
                     }
 
-                    return JsonConvert.SerializeObject(blocks, Formatting.None);
+                    return _jsonSerializer.Serialize(blocks);
                 }
             }
 
@@ -137,7 +138,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (value is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
             {
-                var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(str);
+                var blocks = _jsonSerializer.Deserialize<IEnumerable<ContentBlock>>(str);
                 if (blocks?.Any() == true)
                 {
                     foreach (var block in blocks)

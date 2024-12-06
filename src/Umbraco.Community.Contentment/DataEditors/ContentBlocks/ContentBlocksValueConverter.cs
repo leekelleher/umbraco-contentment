@@ -3,14 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Community.Contentment.Web.PublishedCache;
 using Umbraco.Extensions;
 
@@ -19,16 +20,19 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ContentBlocksValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
         private readonly IApiElementBuilder _apiElementBuilder;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly IPublishedContentTypeCache _publishedContentTypeCache;
         private readonly IPublishedModelFactory _publishedModelFactory;
 
         public ContentBlocksValueConverter(
             IApiElementBuilder apiElementBuilder,
+            IJsonSerializer jsonSerializer,
             IPublishedContentTypeCache publishedContentTypeCache,
             IPublishedModelFactory publishedModelFactory)
             : base()
         {
             _apiElementBuilder = apiElementBuilder;
+            _jsonSerializer = jsonSerializer;
             _publishedContentTypeCache = publishedContentTypeCache;
             _publishedModelFactory = publishedModelFactory;
         }
@@ -41,12 +45,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (source is string value)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(value);
+                return _jsonSerializer.Deserialize<IEnumerable<ContentBlock>>(value);
             }
 
-            if (source is JArray array && array.Any() == true)
+            if (source is JsonArray array && array.Any() == true)
             {
-                return array.ToObject<IEnumerable<ContentBlock>>();
+                return array.Deserialize<IEnumerable<ContentBlock>>();
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);

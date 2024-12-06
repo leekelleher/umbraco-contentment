@@ -3,7 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -21,75 +22,24 @@ namespace Umbraco.Community.Contentment.DataEditors
             : base()
         {
             _utility = utility;
-
-            //var configEditorViewPath = ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorViewPath);
-            //var defaultConfigEditorConfig = new Dictionary<string, object>
-            //{
-            //    { MaxItemsConfigurationField.MaxItems, 1 },
-            //    { DisableSortingConfigurationField.DisableSorting, Constants.Values.True },
-            //    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
-            //    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
-            //};
-
-            //var dataSources = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListSource>());
-            //var listEditors = new List<ConfigurationEditorModel>(utility.GetConfigurationEditorModels<IDataListEditor>());
-
-            //Fields.Add(new ContentmentConfigurationField
-            //{
-            //    Key = DataSource,
-            //    Name = localizedTextService.LocalizeContentment("labelDataSource", "Data source"),
-            //    Description = localizedTextService.LocalizeContentment("configureDataSource", "Select and configure a data source."),
-            //    View = configEditorViewPath,
-            //    Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-            //                {
-            //                    { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureDataSource" },
-            //                    { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
-            //                    { Constants.Conventions.ConfigurationFieldAliases.Items, dataSources },
-            //                    { "help", new {
-            //                        @class = "alert alert-info",
-            //                        title = "Do you need a custom data-source?",
-            //                        notes = $@"<p>If one of the data-sources above does not fit your needs, you can extend Data List with your own custom data source.</p>
-            //<p>To do this, read the documentation on <a href=""{Constants.Internals.RepositoryUrl}/blob/develop/docs/editors/data-list.md#extending-with-your-own-custom-data-source"" target=""_blank"" rel=""noopener""><strong>extending with your own custom data source</strong></a>.</p>" } },
-            //                }
-            //});
-
-            //Fields.Add(new ContentmentConfigurationField
-            //{
-            //    Key = ListEditor,
-            //    Name = localizedTextService.LocalizeContentment("labelListEditor", "List editor"),
-            //    Description = localizedTextService.LocalizeContentment("configureListEditor", "Select and configure a list editor."),
-            //    View = configEditorViewPath,
-            //    Config = new Dictionary<string, object>(defaultConfigEditorConfig)
-            //    {
-            //        { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureListEditor" },
-            //        { EnableFilterConfigurationField.EnableFilter, dataSources.Count > 10 ? Constants.Values.True : Constants.Values.False },
-            //        { Constants.Conventions.ConfigurationFieldAliases.Items, listEditors },
-            //    }
-            //});
-
-            //Fields.Add(new ContentmentConfigurationField
-            //{
-            //    Key = Preview,
-            //    Name = nameof(Preview),
-            //    View = ioHelper.ResolveRelativeOrVirtualUrl(DataListDataEditor.DataEditorPreviewViewPath)
-            //});
         }
 
+        // TODO: [LK] Check if `ToValueEditor` is still being called/used by the backoffice.
         public override IDictionary<string, object> ToValueEditor(IDictionary<string, object> configuration)
         {
             var config = base.ToValueEditor(configuration);
 
             var toValueEditor = new Dictionary<string, object>();
 
-            if (config.TryGetValueAs(DataSource, out JArray? array1) == true &&
+            if (config.TryGetValueAs(DataSource, out JsonArray? array1) == true &&
                 array1?.Count > 0 &&
-                array1[0] is JObject item1 &&
-                item1.Value<string>("key") is string key1)
+                array1[0] is JsonObject item1 &&
+                item1.GetValueAsString("key") is string key1)
             {
                 var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
                 if (source != null)
                 {
-                    var sourceConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
+                    var sourceConfig = item1["value"]?.Deserialize<Dictionary<string, object>>();
                     if (sourceConfig is not null)
                     {
                         var items = source?.GetItems(sourceConfig) ?? Array.Empty<DataListItem>();
@@ -99,15 +49,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (config.TryGetValueAs(ListEditor, out JArray? array2) == true &&
+            if (config.TryGetValueAs(ListEditor, out JsonArray? array2) == true &&
                 array2?.Count > 0 &&
-                array2[0] is JObject item2 &&
-                item2.Value<string>("key") is string key2)
+                array2[0] is JsonObject item2 &&
+                item2.GetValueAsString("key") is string key2)
             {
                 var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
                 if (editor != null)
                 {
-                    var editorConfig = item2["value"]?.ToObject<Dictionary<string, object>>();
+                    var editorConfig = item2["value"]?.Deserialize<Dictionary<string, object>>();
                     if (editorConfig != null)
                     {
                         foreach (var prop in editorConfig)

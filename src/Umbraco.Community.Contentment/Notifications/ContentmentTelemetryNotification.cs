@@ -5,13 +5,13 @@
 
 using System.Net.Mime;
 using System.Text;
+using System.Text.Json.Nodes;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.Configuration;
 using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
 
@@ -21,17 +21,20 @@ namespace Umbraco.Community.Contentment.Notifications
     {
         private readonly ContentmentSettings _contentmentSettings;
         private readonly GlobalSettings _globalSettings;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IUmbracoVersion _umbracoVersion;
 
         public ContentmentTelemetryNotification(
             IOptions<ContentmentSettings> contentmentSettings,
             IOptions<GlobalSettings> globalSettings,
+            IJsonSerializer jsonSerializer,
             IHttpClientFactory httpClientFactory,
             IUmbracoVersion umbracoVersion)
         {
             _contentmentSettings = contentmentSettings.Value;
             _globalSettings = globalSettings.Value;
+            _jsonSerializer = jsonSerializer;
             _httpClientFactory = httpClientFactory;
             _umbracoVersion = umbracoVersion;
         }
@@ -65,9 +68,9 @@ namespace Umbraco.Community.Contentment.Notifications
                             void AddConfigurationEditorKey(string alias)
                             {
                                 if (config.ContainsKey(alias) == true &&
-                                    config.TryGetValueAs(alias, out JArray? array) == true &&
+                                    config.TryGetValueAs(alias, out JsonArray? array) == true &&
                                     array?.Count > 0 &&
-                                    array[0] is JObject item &&
+                                    array[0] is JsonObject item &&
                                     item.TryGetValueAs("key", out string? key) == true &&
                                     string.IsNullOrWhiteSpace(key) == false)
                                 {
@@ -119,7 +122,7 @@ namespace Umbraco.Community.Contentment.Notifications
                         };
 
                         var address = new Uri("https://leekelleher.com/umbraco/contentment/telemetry/");
-                        var json = JsonConvert.SerializeObject(data, Formatting.None);
+                        var json = _jsonSerializer.Serialize(data);
                         var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
                         var payload = new StringContent(base64, Encoding.UTF8, MediaTypeNames.Text.Plain);
 

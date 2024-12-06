@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -95,10 +95,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var config = base.ToValueEditor(configuration);
 
-            if (config.TryGetValueAs(DisplayMode, out JArray? array1) == true &&
+            if (config.TryGetValueAs(DisplayMode, out JsonArray? array1) == true &&
                 array1?.Count > 0 &&
-                array1[0] is JObject item1 &&
-                item1.Value<string>("key") is string key)
+                array1[0] is JsonObject item1 &&
+                item1.GetValueAsString("key") is string key)
             {
                 var displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
                 if (displayMode != null)
@@ -106,7 +106,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     // NOTE: Removing the raw configuration as the display mode may have the same key.
                     _ = config.Remove(DisplayMode);
 
-                    var editorConfig = item1["value"]?.ToObject<Dictionary<string, object>>();
+                    var editorConfig = item1["value"]?.ToDictionary<object>() as Dictionary<string, object> ?? [];
                     if (editorConfig != null)
                     {
                         foreach (var prop in editorConfig)
@@ -131,19 +131,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JArray? array2) &&
+            if (config.TryGetValueAs(ContentBlocksTypesConfigurationField.ContentBlockTypes, out JsonArray? array2) &&
                 array2?.Count > 0)
             {
                 var elementTypes = new List<ContentBlockType>();
 
                 for (var i = 0; i < array2.Count; i++)
                 {
-                    var item = (JObject)array2[i];
+                    var item = array2[i] as JsonObject;
 
-                    if (Guid.TryParse(item.Value<string>("key"), out var guid) &&
+                    if (Guid.TryParse(item?.GetValueAsString("key"), out var guid) &&
                         _elementTypes.TryGetValue(guid, out var elementType) == true)
                     {
-                        var settings = item["value"]?.ToObject<Dictionary<string, object>>();
+                        var settings = item["value"]?.ToDictionary<object>() as Dictionary<string, object> ?? [];
 
                         var blueprints = _elementBlueprints.Value.Contains(elementType.Id)
                             ? _elementBlueprints.Value[elementType.Id].Select(x => new ContentBlockType.BlueprintItem { Id = x.Id, Name = x.Name })

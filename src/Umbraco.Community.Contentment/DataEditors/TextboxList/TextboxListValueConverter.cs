@@ -4,7 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections.Specialized;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
@@ -21,7 +21,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (source is string str && string.IsNullOrWhiteSpace(str) == false && str.DetectIsJson() == true)
             {
-                return JObject.Parse(str);
+                return JsonObject.Parse(str);
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
@@ -29,7 +29,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override object? ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview)
         {
-            if (inter is JObject obj)
+            if (inter is JsonObject obj)
             {
                 var items = new NameValueCollection(obj.Count);
 

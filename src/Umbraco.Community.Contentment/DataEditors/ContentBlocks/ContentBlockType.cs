@@ -3,27 +3,25 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal sealed class ContentBlockType
     {
         public string? Alias { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Description { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Icon { get; set; }
 
         public string? Name { get; set; }
 
         public Guid Key { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? NameTemplate { get; set; }
 
         public string? OverlaySize { get; set; }
@@ -32,7 +30,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<BlueprintItem> Blueprints { get; set; } = Enumerable.Empty<BlueprintItem>();
 
-        [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
         internal sealed class BlueprintItem
         {
             public string? Name { get; set; }

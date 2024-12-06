@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json;
+using System.Text.Json;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return rawJson;
             }
 
-            var blocks = JsonConvert.DeserializeObject<IEnumerable<ContentBlock>>(rawJson) ?? Enumerable.Empty<ContentBlock>();
+            var blocks = JsonSerializer.Deserialize<IEnumerable<ContentBlock>>(rawJson) ?? Enumerable.Empty<ContentBlock>();
 
             foreach (var block in blocks)
             {
@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Infrastructure/PropertyEditors/NestedContentPropertyHandler.cs
             }
 
-            return JsonConvert.SerializeObject(blocks, Formatting.None);
+            return JsonSerializer.Serialize(blocks);
         }
     }
 }

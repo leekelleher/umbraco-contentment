@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
@@ -18,7 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "textbox-list.html";
         internal const string DataEditorIcon = "icon-thumbnail-list";
 
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly ConfigurationEditorUtility _utility;
         private readonly IJsonSerializer _jsonSerializer;
@@ -39,17 +37,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public TextboxListDataEditor(
             ConfigurationEditorUtility utility,
-            IIOHelper ioHelper,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
         {
             _utility = utility;
-            _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
 
-        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility, _ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility);
 
         public IDataValueEditor GetValueEditor()
         {
