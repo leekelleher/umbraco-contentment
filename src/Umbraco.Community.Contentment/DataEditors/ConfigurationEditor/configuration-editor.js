@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -65,11 +65,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
                     config.expressions[item.key] = {};
 
-                    if (item.nameTemplate) { // TODO: [LK:2022-07-05] Deprecated.
+                    if (item.nameTemplate) {
                         config.expressions[item.key]["name"] = $interpolate(item.nameTemplate);
                     }
 
-                    if (item.descriptionTemplate) { // TODO: [LK:2022-07-05] Deprecated.
+                    if (item.descriptionTemplate) {
                         config.expressions[item.key]["description"] = $interpolate(item.descriptionTemplate);
                     }
 

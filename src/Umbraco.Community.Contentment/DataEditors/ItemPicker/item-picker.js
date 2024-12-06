@@ -84,7 +84,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 });
 
                 if (orphaned.length > 0) {
-                    $scope.model.value = _.difference($scope.model.value, orphaned); // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                    $scope.model.value = _.difference($scope.model.value, orphaned);
 
                     if (config.maxItems === 0 || $scope.model.value.length < config.maxItems) {
                         vm.allowAdd = true;
@@ -148,7 +148,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 submit: function (selectedItems) {
 
                     selectedItems.forEach(item => {
-                        vm.items.push(angular.copy(item)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
+                        vm.items.push(angular.copy(item));
                         $scope.model.value.push(item.value);
                     });
 

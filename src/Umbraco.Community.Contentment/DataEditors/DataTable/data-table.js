@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -105,7 +105,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         };
 
         function add() {
-            vm.items.push(angular.copy(config.fields)); // TODO: Replace AngularJS dependency. [LK:2020-12-17]
+            vm.items.push(angular.copy(config.fields));
 
             if (config.maxItems !== 0 && vm.items.length >= config.maxItems) {
                 vm.allowAdd = false;
