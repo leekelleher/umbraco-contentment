@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpPost]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public async Task<IActionResult> GetItems([FromQuery] int id, Guid dataTypeKey, [FromBody] string[] values)
+        public async Task<IActionResult> GetItems([FromQuery] string id, Guid dataTypeKey, [FromBody] string[] values)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
@@ -68,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         [HttpGet]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public async Task<IActionResult> Search(int id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+        public async Task<IActionResult> Search(string id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
