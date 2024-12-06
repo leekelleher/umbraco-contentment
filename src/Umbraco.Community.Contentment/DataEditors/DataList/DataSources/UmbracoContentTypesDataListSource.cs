@@ -15,7 +15,8 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentTypesDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoContentTypesDataListSource
+        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedContentTypeCache _publishedContentTypeCache;
@@ -144,5 +145,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return default;
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(string);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContentType contentType ? contentType.Alias : value;
     }
 }

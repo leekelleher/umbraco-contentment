@@ -11,7 +11,8 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoUsersDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoUsersDataListSource
+        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IIOHelper _ioHelper;
         private readonly IUserService _userService;
@@ -100,5 +101,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IUser);
 
         public object? ConvertValue(Type type, string value) => _userService.GetByUsername(value);
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(string);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false) => value;
     }
 }

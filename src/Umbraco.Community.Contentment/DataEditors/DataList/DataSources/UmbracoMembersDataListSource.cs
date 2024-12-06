@@ -5,8 +5,9 @@
 
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -15,23 +16,24 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class UmbracoMembersDataListSource
+        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
+        private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
         private readonly IPublishedMemberCache _publishedMemberCache;
-        private readonly IIOHelper _ioHelper;
 
         public UmbracoMembersDataListSource(
+            IApiElementBuilder apiElementBuilder,
             IMemberTypeService memberTypeService,
             IMemberService memberService,
-            IPublishedMemberCache publishedMemberCache,
-            IIOHelper ioHelper)
+            IPublishedMemberCache publishedMemberCache)
         {
+            _apiElementBuilder = apiElementBuilder;
             _memberTypeService = memberTypeService;
             _memberService = memberService;
             _publishedMemberCache = publishedMemberCache;
-            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Members";
@@ -147,6 +149,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return default(IPublishedContent);
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(IApiElement);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContent content ? _apiElementBuilder.Build(content) : default;
 
         private IMemberType? GetMemberType(Dictionary<string, object> config)
         {

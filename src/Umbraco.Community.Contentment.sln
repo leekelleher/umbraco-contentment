@@ -64,7 +64,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{7E3CB058-A757-42C9-9277-EB949E1D7D0E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		Umbraco.Community.Contentment.sln.licenseheader = Umbraco.Community.Contentment.sln.licenseheader
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Sources", "Data Sources", "{40B5A85D-28D1-4742-87E7-6306CC5F08C1}"

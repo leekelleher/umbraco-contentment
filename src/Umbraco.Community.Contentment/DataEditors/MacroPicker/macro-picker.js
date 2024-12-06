@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -55,7 +55,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value])) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value]))
                     });
 
                     if ((config.maxItems !== 0 && config.maxItems !== "0") && $scope.model.value.length >= config.maxItems) {
@@ -86,7 +86,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                         udi: model.selectedMacro.udi,
                         name: model.selectedMacro.name,
                         alias: model.selectedMacro.alias,
-                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value])) // TODO: Replace Underscore.js dependency. [LK:2020-03-02]
+                        params: _.object(_.map(model.macroParams, p => [p.alias, p.value]))
                     };
 
                     setDirty();

@@ -4,7 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -14,20 +15,21 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentXPathDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoContentXPathDataListSource
+        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
+        private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-        private readonly IIOHelper _ioHelper;
 
         public UmbracoContentXPathDataListSource(
+            IApiContentBuilder apiContentBuilder,
             IContentmentContentContext contentmentContentContext,
-            IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IUmbracoContextAccessor umbracoContextAccessor)
         {
+            _apiContentBuilder = apiContentBuilder;
             _contentmentContentContext = contentmentContentContext;
             _umbracoContextAccessor = umbracoContextAccessor;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Content by XPath";
@@ -111,5 +113,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? umbracoContext.Content?.GetById(udi.Guid)
                 : default;
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(IApiContent);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContent content ? _apiContentBuilder.Build(content) : default;
     }
 }

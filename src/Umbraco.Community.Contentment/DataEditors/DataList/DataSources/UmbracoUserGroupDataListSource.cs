@@ -9,7 +9,8 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoUserGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoUserGroupDataListSource
+        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IUserGroupService _userGroupService;
 
@@ -48,5 +49,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IUserGroup);
 
         public object? ConvertValue(Type type, string value) => _userGroupService.GetAsync(value).GetAwaiter().GetResult();
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(string);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false) => value;
     }
 }

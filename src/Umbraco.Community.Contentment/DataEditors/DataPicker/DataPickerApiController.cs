@@ -31,7 +31,7 @@
 //        }
 
 //        [HttpPost]
-//        public async Task<IActionResult> GetItems([FromQuery] int id, Guid dataTypeKey, [FromBody] string[] values)
+//        public async Task<IActionResult> GetItems([FromQuery] string id, Guid dataTypeKey, [FromBody] string[] values)
 //        {
 //            if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
 //            {
@@ -65,7 +65,7 @@
 //        }
 
 //        [HttpGet]
-//        public async Task<IActionResult> Search(int id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+//        public async Task<IActionResult> Search(string id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
 //        {
 //            if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
 //            {

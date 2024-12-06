@@ -5,9 +5,11 @@
 
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
 using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -19,17 +21,21 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class UmbracoContentDataListSource
+        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
+        private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDynamicRootService _dynamicRootService;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IIOHelper _ioHelper;
+
         private const string DefaultImageAlias = "image";
 
         public UmbracoContentDataListSource(
+            IApiContentBuilder apiContentBuilder,
             IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
             IDynamicRootService dynamicRootService,
@@ -37,6 +43,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IUmbracoContextAccessor umbracoContextAccessor,
             IIOHelper ioHelper)
         {
+            _apiContentBuilder = apiContentBuilder;
             _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
             _dynamicRootService = dynamicRootService;
@@ -164,6 +171,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? umbracoContext.Content?.GetById(udi.Guid)
                 : default;
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(IApiContent);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContent content ? _apiContentBuilder.Build(content) : default;
 
         private IPublishedContent? GetStartContent(Dictionary<string, object> config)
         {
