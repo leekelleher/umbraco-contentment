@@ -42,11 +42,26 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             // NOTE: [LK] Adds context of the current page, for potential future data-sources.
             // If the page is new, then it doesn't have an id, so the parentId will be used.
             config.currentPage = $scope.node || editorState.getCurrent();
-            config.currentPageId = config.currentPage.id > 0 ? config.currentPage.id : config.currentPage.parentId;
 
-            // Support Content not in Content / Media Tree
-            if (!config.currentPageId) {
-                config.currentPageId = -1;
+            if (typeof config.currentPage.id === 'string') {
+                // Support stringified IDs (e.g. Umbraco UI Builder)
+                const emptyGuid = "00000000-0000-0000-0000-000000000000";
+                config.currentPageId = config.currentPage.id !== emptyGuid
+                    ? config.currentPage.id
+                    : config.currentPage.parentId;
+
+                if (!config.currentPageId) {
+                    config.currentPageId = emptyGuid;
+                }
+            } else {
+                // Support Content not in Content / Media Tree
+                config.currentPageId = config.currentPage.id > 0
+                    ? config.currentPage.id
+                    : config.currentPage.parentId;
+
+                if (!config.currentPageId) {
+                    config.currentPageId = -1;
+                }
             }
 
             ensureValueIsArray();

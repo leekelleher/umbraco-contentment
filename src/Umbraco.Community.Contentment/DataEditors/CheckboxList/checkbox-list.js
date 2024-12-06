@@ -1,12 +1,13 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.CheckboxList.Controller", [
     "$scope",
+    "eventsService",
     "localizationService",
-    function ($scope, localizationService) {
+    function ($scope, eventsService, localizationService) {
 
         // console.log("checkboxlist.model", $scope.model);
 
@@ -60,6 +61,21 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.toggle = toggle;
                 vm.toggleChecked = vm.items.every(item => item.checked);
             }
+
+            var events = [];
+
+            events.push(eventsService.on("contentment.update.value", (event, args) => {
+                if (args.alias === $scope.model.alias) {
+                    $scope.model.value = args.value;
+                    init();
+                }
+            }));
+
+            $scope.$on("$destroy", () => {
+                for (var event in events) {
+                    eventsService.unsubscribe(events[event]);
+                }
+            });
         };
 
         function changed(item) {

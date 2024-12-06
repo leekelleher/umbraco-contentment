@@ -3,10 +3,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -15,8 +19,12 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMembersDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class UmbracoMembersDataListSource
+        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
+        // NOTE: Statically injected, so to preserve binary backwards-compatibility. [LK]
+        private readonly IApiElementBuilder _apiElementBuilder = StaticServiceProvider.Instance.GetRequiredService<IApiElementBuilder>();
+
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
         private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
@@ -148,6 +156,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return default(IPublishedContent);
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(IApiElement);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContent content ? _apiElementBuilder.Build(content) : default;
 
         private IMemberType? GetMemberType(Dictionary<string, object> config)
         {

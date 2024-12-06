@@ -3,11 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -19,8 +23,12 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class UmbracoContentDataListSource
+        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
+        // NOTE: Statically injected, so to preserve binary backwards-compatibility. [LK]
+        private readonly IApiContentBuilder _apiContentBuilder = StaticServiceProvider.Instance.GetRequiredService<IApiContentBuilder>();
+
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDynamicRootService _dynamicRootService;
@@ -164,6 +172,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? umbracoContext.Content?.GetById(udi)
                 : default;
         }
+
+        public Type? GetDeliveryApiValueType(Dictionary<string, object>? config) => typeof(IApiContent);
+
+        public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
+            => ConvertValue(type, value) is IPublishedContent content ? _apiContentBuilder.Build(content) : default;
 
         private IPublishedContent? GetStartContent(Dictionary<string, object> config)
         {

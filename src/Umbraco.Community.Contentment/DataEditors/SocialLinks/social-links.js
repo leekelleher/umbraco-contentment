@@ -1,15 +1,14 @@
-﻿/* Copyright © 2022 Lee Kelleher.
+/* Copyright © 2022 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.SocialLinks.Controller", [
     "$scope",
-    "editorService",
     "localizationService",
     "overlayService",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, editorService, localizationService, overlayService, devModeService) {
+    function ($scope, localizationService, overlayService, devModeService) {
 
         //console.log("social-links.model", $scope.model);
 
@@ -80,6 +79,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
 
             vm.focusIdx = -1;
 
+            if (!$scope.model.value) {
+                $scope.model.value = [];
+            }
+
             $scope.model.value.push({
                 network: "",
                 name: "",
@@ -98,6 +101,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
         function edit() {
             devModeService.editValue($scope.model, function () {
                 // NOTE: Any future validation can be done here.
+                if (!$scope.model.value) {
+                    $scope.model.value = [];
+                }
             });
         };
 
