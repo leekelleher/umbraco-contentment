@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string AllowClear = "allowClear";
 
         public AllowClearConfigurationField()
-            : base()
         {
             Key = AllowClear;
             Name = "Allow clear?";
             Description = "Select to enable the 'Clear selection' property action.";
-            View = "views/propertyeditors/boolean/boolean.html";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
             Config = new Dictionary<string, object>
             {

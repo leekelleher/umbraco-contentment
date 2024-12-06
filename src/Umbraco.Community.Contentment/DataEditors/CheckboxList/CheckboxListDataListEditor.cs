@@ -27,7 +27,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "checkAll",
                 Name = "Check all?",
                 Description = "Include a toggle button to select or deselect all the options?",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ShowDescriptionsConfigurationField(),

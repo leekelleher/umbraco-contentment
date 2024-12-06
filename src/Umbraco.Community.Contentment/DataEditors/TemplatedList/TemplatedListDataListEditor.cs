@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -13,13 +12,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
         internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.TemplatedList";
-
-        private readonly IIOHelper _ioHelper;
-
-        public TemplatedListDataListEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
 
         public string Name => "Templated List";
 
@@ -80,7 +72,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             //new HtmlAttributesConfigurationField(_ioHelper),

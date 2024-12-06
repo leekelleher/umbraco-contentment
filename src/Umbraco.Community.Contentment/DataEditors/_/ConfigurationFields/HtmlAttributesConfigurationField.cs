@@ -3,9 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,8 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string HtmlAttributes = "htmlAttributes";
 
-        public HtmlAttributesConfigurationField(IIOHelper ioHelper)
-            : base()
+        public HtmlAttributesConfigurationField()
         {
             var listFields = new[]
             {
@@ -22,14 +19,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                 {
                     Key = "name",
                     Name = "Name",
-                    View = "textstring",
                     PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 },
                 new ContentmentConfigurationField
                 {
                     Key = "value",
                     Name = "Value",
-                    View = "textstring",
                     PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 }
             };
@@ -37,7 +32,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             Key = HtmlAttributes;
             Name = "HTML attributes";
             Description = "<em>(optional)</em> Use this field to add any HTML attributes to the list editor.";
-            View = ioHelper.ResolveRelativeOrVirtualUrl(DataTableDataEditor.DataEditorViewPath);
             PropertyEditorUiAlias = DataTableDataEditor.DataEditorUiAlias;
             Config = new Dictionary<string, object>()
             {

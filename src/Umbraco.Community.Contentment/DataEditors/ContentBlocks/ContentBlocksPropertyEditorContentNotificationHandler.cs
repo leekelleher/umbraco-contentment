@@ -9,6 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    // TODO: [LK:2024-12-06] Figure out if this is still needed?
     internal sealed class ContentBlocksPropertyEditorContentNotificationHandler : ComplexPropertyEditorContentNotificationHandler
     {
         protected override string EditorAlias => ContentBlocksDataEditor.DataEditorAlias;

@@ -43,25 +43,11 @@ namespace Umbraco.Community.Contentment.Composing
 
             builder
                 .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
+                // TODO: [LK:2024-12-06] Figure out if this is still needed?
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
                 .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
-                .AddNotificationHandler<ServerVariablesParsingNotification, ContentmentServerVariablesParsingNotification>()
             ;
-
-            builder.Services.Configure<UmbracoPipelineOptions>(opts =>
-            {
-                opts.AddFilter(new UmbracoPipelineFilter("UmbBlockListGetEmptyByKeysRequest_EnableBuffering")
-                {
-                    // HACK:  [LK] To support `IContentmentContentContext` inside the BlockList editor,
-                    // we need to re-access the `Request.Body` to extract the `parentId` value.
-                    // The `GetEmptyByKeys` path has been hard-coded, as unsure how else to generate it at this stage.
-                    PrePipeline = app => app.UseWhen(
-                        ctx => ctx.Request.Path.StartsWithSegments("/umbraco/backoffice/umbracoapi/content/GetEmptyByKeys"),
-                        app2 => app2.Use(async (ctx, next) => { ctx.Request.EnableBuffering(); await next(ctx); })
-                    ),
-                });
-            });
         }
     }
 }

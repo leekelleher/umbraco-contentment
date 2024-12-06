@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EnableFilter = "enableFilter";
 
         public EnableFilterConfigurationField()
-            : base()
         {
             Key = EnableFilter;
             Name = "Enable filter?";
             Description = "Select to enable the search filter in the overlay selection panel.";
-            View = "boolean";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }

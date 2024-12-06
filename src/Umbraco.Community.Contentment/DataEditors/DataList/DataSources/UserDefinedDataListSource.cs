@@ -6,7 +6,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -14,13 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UserDefinedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
-        private readonly IIOHelper _ioHelper;
-
-        public UserDefinedDataListSource(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-
         public override string Name => "User-defined List";
 
         public string? NameTemplate => default;
@@ -40,7 +32,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(ListItemsDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ListItems",
                 Config = new Dictionary<string, object>()
                 {

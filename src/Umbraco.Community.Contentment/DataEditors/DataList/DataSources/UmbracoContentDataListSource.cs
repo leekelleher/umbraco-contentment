@@ -8,7 +8,6 @@ using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
 using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -30,7 +29,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IDynamicRootService _dynamicRootService;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-        private readonly IIOHelper _ioHelper;
 
         private const string DefaultImageAlias = "image";
 
@@ -40,8 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IDynamicRootService dynamicRootService,
             IJsonSerializer jsonSerializer,
-            IUmbracoContextAccessor umbracoContextAccessor,
-            IIOHelper ioHelper)
+            IUmbracoContextAccessor umbracoContextAccessor)
         {
             _apiContentBuilder = apiContentBuilder;
             _contentmentContentContext = contentmentContentContext;
@@ -49,7 +46,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _dynamicRootService = dynamicRootService;
             _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
-            _ioHelper = ioHelper;
         }
 
         public string Name => "Umbraco Content";
@@ -67,7 +63,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "parentNode",
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
@@ -75,7 +70,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "imageAlias",
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
-                View =  "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -83,7 +77,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the content items in alphabetical order.<br>By default, the order is defined by the Umbraco content sort order.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
         };

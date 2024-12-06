@@ -15,6 +15,8 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    // TODO: [LK:2024-12-06] Figure out if this is still needed?
+    [Obsolete("To be removed in Contentment 7.0")]
     public sealed class UmbracoContentXPathDataListSource
         : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
@@ -61,7 +63,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "xpath",
                 Name = "XPath",
                 Description = "Enter the XPath expression to select the content.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         ];

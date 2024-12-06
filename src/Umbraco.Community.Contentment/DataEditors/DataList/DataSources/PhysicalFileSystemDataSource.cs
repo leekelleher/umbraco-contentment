@@ -56,7 +56,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "path",
                 Name = "Folder path",
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -64,7 +63,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "filter",
                 Name = "Filename filter",
                 Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -72,7 +70,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "friendlyName",
                 Name = "Use friendly filenames?",
                 Description = "Enabling this option will remove the file extension and spaces-out any uppercase letters, hyphens and underscores from the item name.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

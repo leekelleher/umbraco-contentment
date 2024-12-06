@@ -6,7 +6,6 @@
 using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -18,7 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly ConfigurationEditorUtility _utility;
 
         public TextboxListConfigurationEditor(ConfigurationEditorUtility utility, IIOHelper ioHelper)
-
             : base()
         {
             _utility = utility;

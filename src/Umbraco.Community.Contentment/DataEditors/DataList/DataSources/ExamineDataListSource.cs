@@ -6,7 +6,6 @@
 using Examine;
 using Examine.Search;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -22,7 +21,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;
         private readonly IIdKeyMap _idKeyMap;
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
         private const string _defaultNameField = UmbracoExamineFieldNames.NodeNameFieldName;
@@ -66,13 +64,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentmentContentContext contentmentContentContext,
             IExamineManager examineManager,
             IIdKeyMap idKeyMap,
-            IIOHelper ioHelper,
             IShortStringHelper shortStringHelper)
         {
             _contentmentContentContext = contentmentContentContext;
             _examineManager = examineManager;
             _idKeyMap = idKeyMap;
-            _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
         }
 
@@ -93,7 +89,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "examineIndex",
                 Name = "Examine Index",
                 Description = "Select the Examine index.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
                 Config = new Dictionary<string, object>
                 {
@@ -105,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }) },
                 }
             },
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),
@@ -114,7 +109,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias ="Umb.Contentment.PropertyEditorUi.CodeEditor",
                 Config = new Dictionary<string, object>
                 {
@@ -128,7 +122,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 Config = _examineFieldConfig
             },
@@ -137,7 +130,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 Config = _examineFieldConfig
             },
@@ -146,7 +138,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 Config = _examineFieldConfig
             },
@@ -155,7 +146,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
                 Config = _examineFieldConfig
             },

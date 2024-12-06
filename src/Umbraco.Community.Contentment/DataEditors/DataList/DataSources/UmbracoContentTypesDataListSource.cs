@@ -5,12 +5,10 @@
 
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Dictionary;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -20,7 +18,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedContentTypeCache _publishedContentTypeCache;
-        private readonly IIOHelper _ioHelper;
         private readonly ILocalizedTextService _localizedTextService;
         private readonly ICultureDictionary _cultureDictionary;
 
@@ -28,14 +25,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IPublishedContentTypeCache publishedContentTypeCache,
             ILocalizedTextService localizedTextService,
-            ICultureDictionary cultureDictionary,
-            IIOHelper ioHelper)
+            ICultureDictionary cultureDictionary)
         {
             _contentTypeService = contentTypeService;
             _publishedContentTypeCache = publishedContentTypeCache;
             _localizedTextService = localizedTextService;
             _cultureDictionary = cultureDictionary;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Content Types";
@@ -54,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "contentTypes",
                 Name = "Content types",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CheckboxListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = CheckboxListDataListEditor.DataEditorUiAlias,
                 Description = "Select the types to use.",
                 Config = new Dictionary<string, object>

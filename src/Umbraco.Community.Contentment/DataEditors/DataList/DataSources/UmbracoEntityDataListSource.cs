@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Entities;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -40,18 +39,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             { nameof(UmbracoObjectTypes.MemberType), UmbConstants.Icons.MemberType },
         };
 
-        private readonly IIOHelper _ioHelper;
         private readonly Lazy<IEntityService> _entityService;
         private readonly IShortStringHelper _shortStringHelper;
 
         public UmbracoEntityDataListSource(
             Lazy<IEntityService> entityService,
-            IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
+            IShortStringHelper shortStringHelper)
         {
             _entityService = entityService;
             _shortStringHelper = shortStringHelper;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Entities";
@@ -64,7 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>A note about supported Umbraco entity types.</strong></summary>
 <p>Umbraco's <a href=""https://github.com/umbraco/Umbraco-CMS/blob/release-8.17.0/src/Umbraco.Core/Services/Implement/EntityService.cs"" target=""_blank""><code>EntityService</code></a> API (currently) has limited support for querying entity types by <abbr title=""Globally Unique Identifier"">GUID</abbr> or <abbr title=""Umbraco Data Identifier"">UDI</abbr>.</p>
 <p>Supported entity types are available in the list below.</p>
@@ -74,7 +70,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "entityType",
                 Name = "Entity type",
                 Description = "Select the Umbraco entity type to use.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {

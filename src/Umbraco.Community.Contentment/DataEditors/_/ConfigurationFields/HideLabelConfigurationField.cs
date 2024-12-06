@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string HideLabelAlias = "hideLabel";
 
         public HideLabelConfigurationField()
-            : base()
         {
             Key = HideLabelAlias;
             Name = "Hide label?";
             Description = "Select to hide the label and have the editor take up the full width of the panel.";
-            View = "boolean";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }

@@ -115,6 +115,7 @@ namespace Umbraco.Community.Contentment
             public const string ContentTemplate = "icon-blueprint";
         }
 
+        // TODO: [LK:2024-12-06] Figure out if this is still needed?
         internal static partial class Values
         {
             public const bool True = true;

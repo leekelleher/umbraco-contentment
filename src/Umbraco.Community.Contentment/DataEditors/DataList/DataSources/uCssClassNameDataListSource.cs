@@ -5,7 +5,6 @@
 
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -16,14 +15,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 #pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
-        public uCssClassNameDataListSource(
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+        public uCssClassNameDataListSource(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "uCssClassName";
@@ -36,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
 <p>Welcome to a piece of Umbraco package history.</p>
 <p>First released back in 2013 by <a href=""http://tooorangey.co.uk/"" target=""_blank"">Marc Goodson</a>, <a href=""https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/"" target=""_blank""><strong>uCssClassNameDropdown</strong></a> became one of the most popular packages for Umbraco v4.11.3.</p>
@@ -53,7 +48,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "cssPath",
                 Name = "PathToStylesheet",
                 Description = "Put in the relative path to the stylesheet",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -61,7 +55,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "cssRegex",
                 Name = "Class Name Regex",
                 Description = "put in the regex pattern that matches the class names",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -69,7 +62,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "excludeList",
                 Name = "Exclusions",
                 Description = "comma delimited list of styles to exclude",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -77,7 +69,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconPattern",
                 Name = "Icon Pattern",
                 Description = "Class name pattern to display icon, eg 'icon icon-{0}'",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };

@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DisableSorting = "disableSorting";
 
         public DisableSortingConfigurationField()
-            : base()
         {
             Key = DisableSorting;
             Name = "Disable sorting?";
             Description = "Select to disable sorting of the items.";
-            View = "boolean";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }

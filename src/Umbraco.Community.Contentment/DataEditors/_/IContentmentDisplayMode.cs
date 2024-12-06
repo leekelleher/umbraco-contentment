@@ -12,7 +12,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         Dictionary<string, object>? DefaultConfig { get; }
 
-        [Obsolete("Migrate to use `PropertyEditorUiAlias`.")]
+        [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
         string View { get; }
 
         string PropertyEditorUiAlias { get; }

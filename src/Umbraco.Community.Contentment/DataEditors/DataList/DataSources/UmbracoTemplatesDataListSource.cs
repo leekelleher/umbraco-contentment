@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -15,14 +14,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoTemplatesDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
         private readonly ITemplateService _templateService;
-        private readonly IIOHelper _ioHelper;
 
-        public UmbracoTemplatesDataListSource(
-            ITemplateService templateService,
-            IIOHelper ioHelper)
+        public UmbracoTemplatesDataListSource(ITemplateService templateService)
         {
             _templateService = templateService;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Templates";
@@ -41,7 +36,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "valueType",
                 Name = "Value type",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of reference to store as the value for the template.",
                 Config = new Dictionary<string, object>

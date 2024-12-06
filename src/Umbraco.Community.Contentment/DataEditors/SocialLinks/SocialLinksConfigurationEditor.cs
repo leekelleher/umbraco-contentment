@@ -62,35 +62,31 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = Network,
                             Name = nameof(Network),
                             Description = "An alias for the social network. This will be used as the value of the selection.",
-                            View = "textstring",
                         },
                         new ContentmentConfigurationField
                         {
                             Key = "name",
                             Name = "Name",
                             Description = "This will be used as the label of the social network in selection modal.",
-                            View = "textstring",
                         },
                         new ContentmentConfigurationField
                         {
                             Key = "url",
                             Name = "Base URL",
                             Description = "This will be the starting part of the social network's profile URL.",
-                            View = "textstring",
                         },
                         new ContentmentConfigurationField
                         {
                             Key = "icon",
                             Name = "Icon",
                             Description = "Typically select the logo for the social network.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl(IconPickerDataEditor.DataEditorViewPath),
                             Config = new Dictionary<string, object>
                             {
                                 { "hideColors", Constants.Values.True },
                                 { "size", "small" },
                             }
                         },
-                        new NotesConfigurationField(ioHelper, $@"<details class=""alert alert-info"">
+                        new NotesConfigurationField($@"<details class=""alert alert-info"">
 <summary>Would you like to use a <strong>custom icon</strong>?</summary>
 <p>To add your own custom icons to the Umbraco backoffice, add any SVG icon files to a custom plugin folder, e.g. <code>~/App_Plugins/[YourPluginName]/backoffice/icons/</code>.</p>
 <p>For a step-by-step guide, Warren Buckley has a video tutorial: <a href=""https://www.youtube.com/watch?v=m90uxZBVFOw"" target=""_blank""><strong>How to Add Custom SVG icons to Umbraco Icon Picker</strong></a>.</p>
@@ -100,14 +96,12 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Key = "backgroundColor",
                             Name = "Background color",
                             Description = "The background color for the icon.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/eyedropper/eyedropper.html"),
                         },
                         new ContentmentConfigurationField
                         {
                             Key = "iconColor",
                             Name = "Icon color",
                             Description = "The foreground color of the icon.",
-                            View = ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/eyedropper/eyedropper.html"),
                         },
                     },
                     OverlaySize = OverlaySize.Medium,

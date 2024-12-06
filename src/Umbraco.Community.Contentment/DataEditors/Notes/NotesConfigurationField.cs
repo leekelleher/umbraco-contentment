@@ -3,9 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
-using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -13,15 +11,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string Notes = "notes";
 
-        public NotesConfigurationField(IIOHelper ioHelper, string notes, bool hideLabel = true)
-            : base()
+        public NotesConfigurationField(string notes, bool hideLabel = true)
         {
             Key = Notes;
             Name = nameof(Notes);
-            View = ioHelper.ResolveRelativeOrVirtualUrl(NotesDataEditor.DataEditorViewPath);
             PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Notes";
             Config = new Dictionary<string, object> { { Notes, notes }, { nameof(hideLabel), hideLabel } };
-            //HideLabel = hideLabel;
         }
     }
 }

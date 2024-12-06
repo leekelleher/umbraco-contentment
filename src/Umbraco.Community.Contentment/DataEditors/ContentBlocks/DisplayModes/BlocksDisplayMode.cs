@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.PropertyEditors;
-using UmbIcons = Umbraco.Cms.Core.Constants.Icons;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
@@ -14,10 +13,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Blocks will be displayed in a list similar to the Block List editor.";
 
-        public string Icon => UmbIcons.ListView;
+        public string Icon => UmbConstants.Icons.ListView;
 
         public string? Group => default;
 
+        [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
         public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.ReadOnly";
@@ -43,7 +43,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCopy",
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
@@ -51,7 +50,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCreateContentTemplate",
                 Name = "Allow create content template?",
                 Description = "Select to enable the 'Create content template' feature.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

@@ -7,7 +7,6 @@ using System.Net;
 using System.Xml;
 using System.Xml.XPath;
 using Microsoft.AspNetCore.Hosting;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -16,14 +15,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
-        public XmlDataListSource(
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+        public XmlDataListSource(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "XML Data";
@@ -47,10 +42,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://developer.mozilla.org/en-US/docs/Web/XPath"" target=""_blank""><strong>MDN Web Docs</strong></a>.</p>
 </details>
@@ -63,7 +57,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "itemsXPath",
                 Name = "Items XPath",
                 Description = "Enter the XPath expression to select the items from the XML data source.",
-                View =  "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -71,7 +64,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameXPath",
                 Name = "Name XPath",
                 Description = "Enter the XPath expression to select the name from the item.",
-                View =  "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -79,7 +71,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueXPath",
                 Name = "Value XPath",
                 Description = "Enter the XPath expression to select the value (key) from the item.",
-                View =  "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -87,7 +78,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconXPath",
                 Name = "Icon XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the icon from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -95,7 +85,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionXPath",
                 Name = "Description XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the description from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };

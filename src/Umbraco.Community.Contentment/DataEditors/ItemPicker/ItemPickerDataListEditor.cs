@@ -39,7 +39,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "overlaySize",
                 Name = "Editor overlay size",
                 Description = "Select the size of the overlay editing panel. The default is 'small', although if the editor fields require a wider panel, do consider using 'medium' or 'large'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -58,7 +57,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "listType",
                 Name = "List type",
                 Description = "Select the style of list to be displayed in the overlay.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -77,26 +75,23 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon, <em>(for when no icon is available)</em>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
                 PropertyEditorUiAlias = IconPickerDataEditor.DataEditorUiAlias,
             },
             new EnableFilterConfigurationField
             {
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                 Config = new Dictionary<string, object>
                 {
                     { "default", Constants.Values.True }
                 },
             },
-            new MaxItemsConfigurationField(_ioHelper),
+            new MaxItemsConfigurationField(),
             new AllowClearConfigurationField(),
             new ContentmentConfigurationField
             {
                 Key = "allowDuplicates",
                 Name = "Allow duplicates?",
                 Description = "Select to allow the editor to select duplicate items.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
@@ -104,7 +99,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new DisableSortingConfigurationField(),
@@ -113,7 +107,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key ="confirmRemoval",
                 Name = "Confirm removals?",
                 Description = "Select to enable a confirmation prompt when removing an item.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

@@ -3,9 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -16,17 +13,14 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;
-        private readonly IIOHelper _ioHelper;
         private Dictionary<string, string>? _icons;
 
         public UmbracoContentPropertiesDataListSource(
             IContentTypeService contentTypeService,
-            Lazy<PropertyEditorCollection> dataEditors,
-            IIOHelper ioHelper)
+            Lazy<PropertyEditorCollection> dataEditors)
         {
             _contentTypeService = contentTypeService;
             _dataEditors = dataEditors;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Content Properties";
@@ -59,7 +53,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "contentType",
                         Name = "Content Type",
                         Description = "Select a Content Type to list the properties from.",
-                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
                         PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
                         Config = new Dictionary<string, object>
                         {
@@ -78,7 +71,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "includeName",
                         Name = "Include \"Name\" property?",
                         Description = "Select to include an option called \"Name\", for the content item's name.",
-                        View = "boolean",
                         PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     },
                     new ContentmentConfigurationField
@@ -86,7 +78,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "sortAlphabetically",
                         Name = "Sort alphabetically?",
                         Description = "Select to sort the properties in alphabetical order.<br>By default, the order is defined by the order they appear on the document type.",
-                        View = "boolean",
                         PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     },
                 };

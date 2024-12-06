@@ -65,6 +65,7 @@ public static class ContentmentConstants
             public const string Display = Constants.Conventions.PropertyGroups.Display;
         }
 
+        // TODO: [LK:2024-12-06] Figure out if this is still needed?
         public static class Views
         {
             public const string Buttons = DataEditors.ButtonsDataListEditor.DataEditorViewPath;
@@ -124,5 +125,8 @@ public static class ContentmentConstants
 
             public const string TextInput = DataEditors.TextInputDataEditor.DataEditorViewPath;
         }
+
+
+        // TODO: [LK:2024-12-06] Add the constants for PropertyEditorUiAlias(es).
     }
 }

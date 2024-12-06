@@ -7,7 +7,6 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Community.Contentment.Api.Management;
@@ -18,17 +17,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
-        public EnumDataListSource(
-            IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
+        public EnumDataListSource(IShortStringHelper shortStringHelper)
         {
             _lookup = new ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
 
             _shortStringHelper = shortStringHelper;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => ".NET Enumeration";
@@ -54,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enumType",
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = CascadingDropdownListDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -71,7 +65,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

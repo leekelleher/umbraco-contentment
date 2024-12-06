@@ -52,6 +52,7 @@ namespace Umbraco.Community.Contentment.Services
                 return parentId;
             }
 
+            // TODO: [LK:2024-12-06] Figure out if this is still needed?
             var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
             if (string.IsNullOrWhiteSpace(json) == false)
             {

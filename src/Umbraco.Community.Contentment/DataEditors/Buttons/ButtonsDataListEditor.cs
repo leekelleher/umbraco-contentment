@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -14,13 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
         internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Buttons";
-
-        private readonly IIOHelper _ioHelper;
-
-        public ButtonsDataListEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
 
         public string Name => "Buttons";
 
@@ -37,7 +29,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.IconPicker",
             },
             new ContentmentConfigurationField
@@ -45,7 +36,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "size",
                 Name = "Size",
                 Description = "Select the button size. By default this is set to 'medium'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
                 Config = new Dictionary<string, object>
                 {
@@ -64,7 +54,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "labelStyle",
                 Name = "Label style",
                 Description = "Select the style of the button's label.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
                 Config = new Dictionary<string, object>
                 {
@@ -85,7 +74,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
-                View = "boolean",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
         };

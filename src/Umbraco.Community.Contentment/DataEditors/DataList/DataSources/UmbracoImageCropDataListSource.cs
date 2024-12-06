@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -14,14 +13,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly IDataTypeService _dataTypeService;
-        private readonly IIOHelper _ioHelper;
 
-        public UmbracoImageCropDataListSource(
-            IDataTypeService dataTypeService,
-            IIOHelper ioHelper)
+        public UmbracoImageCropDataListSource(IDataTypeService dataTypeService)
         {
             _dataTypeService = dataTypeService;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Image Crops";
@@ -52,7 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "imageCropper",
                         Name = "Image Cropper",
                         Description = "Select a Data Type that uses the Image Cropper.",
-                        View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                         PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                         Config = new Dictionary<string, object>
                         {

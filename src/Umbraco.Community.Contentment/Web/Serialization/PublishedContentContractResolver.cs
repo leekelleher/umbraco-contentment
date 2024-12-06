@@ -25,6 +25,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Web.Serialization
 {
+    // TODO: [LK:2024-12-06] Figure out if this is still needed?
     public sealed class PublishedContentContractResolver : DefaultContractResolver
     {
         public static readonly PublishedContentContractResolver Instance = new PublishedContentContractResolver();

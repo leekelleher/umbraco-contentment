@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -11,13 +10,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class NumberRangeDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
     {
-        private readonly IIOHelper _ioHelper;
-
-        public NumberRangeDataListSource(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-
         public override string Name => "Number Range";
 
         public override string Description => "Generates a sequence of numbers within a specified range.";
@@ -33,7 +25,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "start",
                 Name = "Start",
                 Description = "The value of the first number in the sequence.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -46,7 +37,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "end",
                 Name = "End",
                 Description = "The value of the last number in the sequence.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -59,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "step",
                 Name = "Step",
                 Description = "The number of steps between each number.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
@@ -72,7 +61,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "decimals",
                 Name = "Decimal places",
                 Description = "How many decimal places would you like?",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/slider/slider.html"),
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Slider",
                 Config = new Dictionary<string, object>
                 {

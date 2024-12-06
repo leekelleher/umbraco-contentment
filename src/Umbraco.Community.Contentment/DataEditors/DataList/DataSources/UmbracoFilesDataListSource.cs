@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -19,16 +18,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             { UmbConstants.UdiEntityType.Stylesheet, "icon-brackets" },
         };
 
-        private readonly IIOHelper _ioHelper;
         private readonly IScriptService _scriptService;
         private readonly IStylesheetService _stylesheetService;
 
         public UmbracoFilesDataListSource(
-            IIOHelper ioHelper,
             IScriptService scriptService,
             IStylesheetService stylesheetService)
         {
-            _ioHelper = ioHelper;
             _scriptService = scriptService;
             _stylesheetService = stylesheetService;
         }
@@ -50,7 +46,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "fileType",
                 Name = "File type",
                 Description = "Select the Umbraco file type to use.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
@@ -74,7 +69,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "valueType",
                 Name = "Value type",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of value to reference the file.",
                 Config = new Dictionary<string, object>

@@ -17,7 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "data-picker.html";
+        [Obsolete("To be removed in Contentment 7.0.")]
+        public string View => string.Empty;
 
         public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.DataPicker.Cards";
 

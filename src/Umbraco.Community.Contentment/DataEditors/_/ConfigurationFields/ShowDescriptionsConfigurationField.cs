@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string ShowDescriptions = "showDescriptions";
 
         public ShowDescriptionsConfigurationField()
-            : base()
         {
             Key = ShowDescriptions;
             Name = "Show descriptions?";
             Description = "Enable to display the description for the item, (if available).";
-            View = "views/propertyeditors/boolean/boolean.html";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
             Config = new Dictionary<string, object>
             {

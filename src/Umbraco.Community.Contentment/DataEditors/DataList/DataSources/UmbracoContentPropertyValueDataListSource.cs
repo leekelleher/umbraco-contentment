@@ -15,7 +15,6 @@
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DynamicRoot;
 using Umbraco.Cms.Core.DynamicRoot.QuerySteps;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -32,7 +31,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IDynamicRootService _dynamicRootService;
-        private readonly IIOHelper _ioHelper;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
@@ -40,14 +38,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             ContentmentDataListItemPropertyValueConverterCollection converters,
             IContentmentContentContext contentmentContentContext,
             IDynamicRootService dynamicRootService,
-            IIOHelper ioHelper,
             IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _converters = converters;
             _contentmentContentContext = contentmentContentContext;
             _dynamicRootService = dynamicRootService;
-            _ioHelper = ioHelper;
             _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -68,7 +64,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "contentNode",
                 Name = "Content node",
                 Description = "Set the content node to take the property value from.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(ContentPickerDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
@@ -76,7 +71,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "propertyAlias",
                 Name = "Property alias",
                 Description = "Set the property alias to populate the data source with, (from the content node).",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };

@@ -17,7 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
+        [Obsolete("To be removed in Contentment 7.0.")]
+        public string View => string.Empty;
 
         public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.ReadOnly";
 
@@ -42,7 +43,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCopy",
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
@@ -50,7 +50,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCreateContentTemplate",
                 Name = "Allow create content template?",
                 Description = "Select to enable the 'Create content template' feature.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

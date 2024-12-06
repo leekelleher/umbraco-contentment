@@ -7,7 +7,6 @@ using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -16,14 +15,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class JsonDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
-        public JsonDataListSource(
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+        public JsonDataListSource(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "JSON Data";
@@ -42,7 +37,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"">
+            new NotesConfigurationField($@"<details class=""well well-small"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
 <p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
 <p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank""><strong>goessner.net/articles/JsonPath</strong></a>.</p>
@@ -54,7 +49,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the JSON data source.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -62,7 +56,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "itemsJsonPath",
                 Name = "Items JSONPath",
                 Description = "Enter the JSONPath expression to select the items from the JSON data source.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -70,7 +63,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameJsonPath",
                 Name = "Name JSONPath",
                 Description = "Enter the JSONPath expression to select the name from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -78,7 +70,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueJsonPath",
                 Name = "Value JSONPath",
                 Description = "Enter the JSONPath expression to select the value (key) from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -86,7 +77,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconJsonPath",
                 Name = "Icon JSONPath",
                 Description = "<em>(optional)</em> Enter the JSONPath expression to select the icon from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -94,7 +84,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionJsonPath",
                 Name = "Description JSONPath",
                 Description = "<em>(optional)</em> Enter the JSONPath expression to select the description from the item.",
-                View = "textstring",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
@@ -186,7 +175,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (Exception)
             {
-               // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
+                // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
                 // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
             }
 

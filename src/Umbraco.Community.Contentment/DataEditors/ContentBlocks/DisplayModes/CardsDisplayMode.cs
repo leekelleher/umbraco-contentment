@@ -3,20 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal class CardsDisplayMode : IContentBlocksDisplayMode
     {
-        private readonly IIOHelper _ioHelper;
-
-        public CardsDisplayMode(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
-
         public string Name => "Cards";
 
         public string Description => "Blocks will be displayed as cards.";
@@ -25,7 +17,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
+        [Obsolete("To be removed in Contentment 7.0.")]
+        public string View => string.Empty;
 
         public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.ReadOnly";
 
@@ -45,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(_ioHelper, $@"<details class=""well well-small"" open>
+            new NotesConfigurationField($@"<details class=""well well-small"" open>
 <summary><strong>A note about block type previews.</strong></summary>
 <p>Currently, the preview feature for block types has not been implemented for the {Name} display mode and has been temporarily disabled.</p>
 </details>", true),
@@ -54,7 +47,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCopy",
                 Name = "Allow copy?",
                 Description = "Select to enable copying content blocks.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
@@ -62,7 +54,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "allowCreateContentTemplate",
                 Name = "Allow create content template?",
                 Description = "Select to enable the 'Create content template' feature.",
-                View = "views/propertyeditors/boolean/boolean.html",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };

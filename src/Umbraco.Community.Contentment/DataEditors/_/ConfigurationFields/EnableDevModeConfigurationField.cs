@@ -12,12 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string EnableDevMode = "enableDevMode";
 
         public EnableDevModeConfigurationField()
-            : base()
         {
             Key = EnableDevMode;
             Name = "Developer mode?";
             Description = "Enable a property action to edit the raw data for the editor value.";
-            View = "boolean";
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
         }
     }

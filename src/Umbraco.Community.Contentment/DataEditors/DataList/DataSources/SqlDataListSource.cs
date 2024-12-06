@@ -6,7 +6,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using NPoco;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Scoping;
@@ -18,7 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
-        private readonly IIOHelper _ioHelper;
         private readonly IConfiguration _configuration;
         private readonly IDbProviderFactoryCreator _dbProviderFactoryCreator;
         private readonly IScopeProvider _scopeProvider;
@@ -27,8 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration,
             IDbProviderFactoryCreator dbProviderFactoryCreator,
-            IScopeProvider scopeProvider,
-            IIOHelper ioHelper)
+            IScopeProvider scopeProvider)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
             _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
@@ -48,7 +45,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _configuration = configuration;
             _dbProviderFactoryCreator = dbProviderFactoryCreator;
             _scopeProvider = scopeProvider;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "SQL Data";
@@ -63,7 +59,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well well-small"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>
@@ -81,7 +77,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "query",
                 Name = "SQL query",
                 Description = "Enter your SQL query.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CodeEditor",
                 Config = new Dictionary<string, object>
                 {
@@ -95,7 +90,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "connectionString",
                 Name = "Connection string",
                 Description = "Select the connection string.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.DropdownList",
                 Config = new Dictionary<string, object>
                 {

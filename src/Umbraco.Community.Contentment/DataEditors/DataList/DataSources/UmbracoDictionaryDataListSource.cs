@@ -4,9 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Globalization;
-using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -16,14 +13,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IDataListSource
     {
         private readonly IDictionaryItemService _dictionaryItemService;
-        private readonly IIOHelper _ioHelper;
 
-        public UmbracoDictionaryDataListSource(
-            IDictionaryItemService dictionaryItemService,
-            IIOHelper ioHelper)
+        public UmbracoDictionaryDataListSource(IDictionaryItemService dictionaryItemService)
         {
             _dictionaryItemService = dictionaryItemService;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Dictionary Items";
@@ -41,7 +34,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "item",
                 Name = "Dictionary item",
                 Description = "Select a parent dictionary item to display the child items.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DictionaryPickerDataEditor.DataEditorViewPath),
                 PropertyEditorUiAlias = DictionaryPickerDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
