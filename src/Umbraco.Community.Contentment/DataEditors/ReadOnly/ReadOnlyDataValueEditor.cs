@@ -5,13 +5,14 @@
 
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ReadOnlyDataValueEditor : DataValueEditor
     {
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ReadOnly";
+
         public ReadOnlyDataValueEditor(
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)

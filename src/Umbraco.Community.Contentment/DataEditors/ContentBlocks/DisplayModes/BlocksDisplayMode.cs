@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => Constants.Internals.EditorsPathRoot + "content-blocks.html";
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.ReadOnly";
+        public string PropertyEditorUiAlias => ReadOnlyDataValueEditor.DataEditorUiAlias;
 
         public Dictionary<string, object> DefaultValues => new()
         {

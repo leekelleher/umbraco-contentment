@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "items",
                 Name = "Options",
                 Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ListItems",
+                PropertyEditorUiAlias = ListItemsDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
                     { "confirmRemoval", Constants.Values.True },

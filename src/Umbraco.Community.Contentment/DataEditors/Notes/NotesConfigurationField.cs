@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             Key = Notes;
             Name = nameof(Notes);
-            PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Notes";
+            PropertyEditorUiAlias = NotesDataEditor.DataEditorUiAlias;
             Config = new Dictionary<string, object> { { Notes, notes }, { nameof(hideLabel), hideLabel } };
         }
     }

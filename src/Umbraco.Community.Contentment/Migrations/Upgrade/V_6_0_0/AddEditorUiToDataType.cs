@@ -36,21 +36,21 @@ internal sealed class AddEditorUiToDataType : MigrationBase
         {
             dataTypeDto.EditorUiAlias = dataTypeDto.EditorAlias switch
             {
-                ContentmentConstants.PropertyEditors.Aliases.Bytes => "Umb.Contentment.PropertyEditorUi.Bytes",
-                ContentmentConstants.PropertyEditors.Aliases.CodeEditor => "Umb.Contentment.PropertyEditorUi.CodeEditor",
-                ContentmentConstants.PropertyEditors.Aliases.ContentBlocks => "Umb.Contentment.PropertyEditorUi.ContentBlocks",
-                ContentmentConstants.PropertyEditors.Aliases.DataList => "Umb.Contentment.PropertyEditorUi.DataList",
-                ContentmentConstants.PropertyEditors.Aliases.DataPicker => "Umb.Contentment.PropertyEditorUi.DataPicker",
-                ContentmentConstants.PropertyEditors.Aliases.EditorNotes => "Umb.Contentment.PropertyEditorUi.EditorNotes",
-                ContentmentConstants.PropertyEditors.Aliases.IconPicker => "Umb.Contentment.PropertyEditorUi.IconPicker",
-                ContentmentConstants.PropertyEditors.Aliases.ListItems => "Umb.Contentment.PropertyEditorUi.ListItems",
-                ContentmentConstants.PropertyEditors.Aliases.Notes => "Umb.Contentment.PropertyEditorUi.Notes",
-                ContentmentConstants.PropertyEditors.Aliases.NumberInput => "Umb.Contentment.PropertyEditorUi.NumberInput",
-                ContentmentConstants.PropertyEditors.Aliases.RenderMacro => "Umb.Contentment.PropertyEditorUi.RenderMacro",
-                ContentmentConstants.PropertyEditors.Aliases.SocialLinks => "Umb.Contentment.PropertyEditorUi.SocialLinks",
-                ContentmentConstants.PropertyEditors.Aliases.TemplatedLabel => "Umb.Contentment.PropertyEditorUi.TemplatedLabel",
-                ContentmentConstants.PropertyEditors.Aliases.TextboxList => "Umb.Contentment.PropertyEditorUi.TextboxList",
-                ContentmentConstants.PropertyEditors.Aliases.TextInput => "Umb.Contentment.PropertyEditorUi.TextInput",
+                ContentmentConstants.PropertyEditors.Aliases.Bytes => ContentmentConstants.PropertyEditors.UiAliases.Bytes,
+                ContentmentConstants.PropertyEditors.Aliases.CodeEditor => ContentmentConstants.PropertyEditors.UiAliases.CodeEditor,
+                ContentmentConstants.PropertyEditors.Aliases.ContentBlocks => ContentmentConstants.PropertyEditors.UiAliases.ContentBlocks,
+                ContentmentConstants.PropertyEditors.Aliases.DataList => ContentmentConstants.PropertyEditors.UiAliases.DataList,
+                ContentmentConstants.PropertyEditors.Aliases.DataPicker => ContentmentConstants.PropertyEditors.UiAliases.DataPicker,
+                ContentmentConstants.PropertyEditors.Aliases.EditorNotes => ContentmentConstants.PropertyEditors.UiAliases.EditorNotes,
+                ContentmentConstants.PropertyEditors.Aliases.IconPicker => ContentmentConstants.PropertyEditors.UiAliases.IconPicker,
+                ContentmentConstants.PropertyEditors.Aliases.ListItems => ContentmentConstants.PropertyEditors.UiAliases.ListItems,
+                ContentmentConstants.PropertyEditors.Aliases.Notes => ContentmentConstants.PropertyEditors.UiAliases.Notes,
+                ContentmentConstants.PropertyEditors.Aliases.NumberInput => ContentmentConstants.PropertyEditors.UiAliases.NumberInput,
+                ContentmentConstants.PropertyEditors.Aliases.RenderMacro => Constants.Internals.DataEditorUiAliasPrefix + "RenderMacro",
+                ContentmentConstants.PropertyEditors.Aliases.SocialLinks => ContentmentConstants.PropertyEditors.UiAliases.SocialLinks,
+                ContentmentConstants.PropertyEditors.Aliases.TemplatedLabel => ContentmentConstants.PropertyEditors.UiAliases.TemplatedLabel,
+                ContentmentConstants.PropertyEditors.Aliases.TextboxList => ContentmentConstants.PropertyEditors.UiAliases.TextboxList,
+                ContentmentConstants.PropertyEditors.Aliases.TextInput => ContentmentConstants.PropertyEditors.UiAliases.TextInput,
                 _ => null
             };
 

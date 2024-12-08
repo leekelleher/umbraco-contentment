@@ -29,14 +29,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.IconPicker",
+                PropertyEditorUiAlias = IconPickerDataEditor.DataEditorUiAlias,
             },
             new ContentmentConfigurationField
             {
                 Key = "size",
                 Name = "Size",
                 Description = "Select the button size. By default this is set to 'medium'.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -54,7 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "labelStyle",
                 Name = "Label style",
                 Description = "Select the style of the button's label.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]

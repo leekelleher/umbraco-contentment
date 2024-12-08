@@ -89,7 +89,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "examineIndex",
                 Name = "Examine Index",
                 Description = "Select the Examine index.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.RadioButtonList",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
@@ -109,7 +109,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
-                PropertyEditorUiAlias ="Umb.Contentment.PropertyEditorUi.CodeEditor",
+                PropertyEditorUiAlias =CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { CodeEditorConfigurationEditor.Mode, "text" },

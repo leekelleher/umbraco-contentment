@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "unsupported",
                 Name = "Unsupported",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.EditorNotes",
+                PropertyEditorUiAlias = EditorNotesDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { "alertType", "warning" },
