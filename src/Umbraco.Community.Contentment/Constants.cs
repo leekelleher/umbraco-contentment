@@ -21,18 +21,22 @@ namespace Umbraco.Community.Contentment
 
             internal const string DataEditorUiAliasPrefix = $"Umb.{ProjectName}.PropertyEditorUi.";
 
+            [Obsolete("To be removed in Contentment 7.0")]
             internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
 
             internal const string PackagePathRoot = $"{UmbConstants.SystemDirectories.AppPlugins}/{ProjectName}/";
 
             internal const string PluginControllerName = ProjectName;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             internal const string BackOfficePathRoot = $"{PackagePathRoot}backoffice/{TreeAlias}/";
 
+            [Obsolete("To be removed in Contentment 7.0")]
             internal const string TreeAlias = ProjectAlias;
 
             internal const string ConfigurationSection = $"{nameof(Umbraco)}:{nameof(Contentment)}";
 
+            [Obsolete("To be removed in Contentment 7.0")]
             internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";

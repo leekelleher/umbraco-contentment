@@ -93,10 +93,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
-            {
-                config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
-            }
+            //if (config.ContainsKey(Constants.Conventions.ConfigurationFieldAliases.OverlayView) == false)
+            //{
+            //    config.Add(Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataPickerDataEditor.DataEditorOverlayViewPath) ?? string.Empty);
+            //}
 
             return config;
         }

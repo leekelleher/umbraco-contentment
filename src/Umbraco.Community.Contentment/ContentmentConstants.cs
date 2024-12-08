@@ -87,16 +87,16 @@ public static class ContentmentConstants
             public const string ConfigurationEditor = DataEditors.ConfigurationEditorDataEditor.DataEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
-            public const string ContentBlocks = DataEditors.ContentBlocksDataEditor.DataEditorViewPath;
+            public const string ContentBlocks = Constants.Internals.EmptyEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
             public const string ContentPicker = DataEditors.ContentPickerDataEditor.DataEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
-            public const string DataList = DataEditors.DataListDataEditor.DataEditorViewPath;
+            public const string DataList = Constants.Internals.EmptyEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
-            public const string DataPicker = DataEditors.DataPickerDataEditor.DataEditorViewPath;
+            public const string DataPicker = Constants.Internals.EmptyEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
             public const string DataTable = DataEditors.DataTableDataEditor.DataEditorViewPath;
