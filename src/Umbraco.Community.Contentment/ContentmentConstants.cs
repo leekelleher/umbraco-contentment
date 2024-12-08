@@ -65,64 +65,91 @@ public static class ContentmentConstants
             public const string Display = Constants.Conventions.PropertyGroups.Display;
         }
 
-        // TODO: [LK:2024-12-06] Figure out if this is still needed?
+        [Obsolete("To be removed in Contentment 7.0")]
         public static class Views
         {
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string Buttons = DataEditors.ButtonsDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string Bytes = DataEditors.BytesDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string CascadingDropdownList = DataEditors.CascadingDropdownListDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string CheckboxList = DataEditors.ButtonsDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string CodeEditor = DataEditors.CodeEditorDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string ConfigurationEditor = DataEditors.ConfigurationEditorDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string ContentBlocks = DataEditors.ContentBlocksDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string ContentPicker = DataEditors.ContentPickerDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string DataList = DataEditors.DataListDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string DataPicker = DataEditors.DataPickerDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string DataTable = DataEditors.DataTableDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string DictionaryPicker = DataEditors.DictionaryPickerDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string DropdownList = DataEditors.DropdownListDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string EditorNotes = DataEditors.EditorNotesDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string IconPicker = DataEditors.IconPickerDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string ItemPicker = DataEditors.ItemPickerDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string ListItems = DataEditors.ListItemsDataEditor.DataEditorViewPath;
 
             [Obsolete("To be removed in Contentment 7.0")]
             public const string MacroPicker = DataEditors.MacroPickerDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string Notes = DataEditors.NotesDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string NumberInput = DataEditors.NumberInputDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string RadioButtonList = DataEditors.RadioButtonListDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string RenderMacro = DataEditors.RenderMacroDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string SocialLinks = DataEditors.SocialLinksDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string Tags = DataEditors.TagsDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string TemplatedLabel = DataEditors.TemplatedLabelDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string TemplatedList = DataEditors.TemplatedListDataListEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string TextboxList = DataEditors.TextboxListDataEditor.DataEditorViewPath;
 
+            [Obsolete("To be removed in Contentment 7.0")]
             public const string TextInput = DataEditors.TextInputDataEditor.DataEditorViewPath;
         }
 
