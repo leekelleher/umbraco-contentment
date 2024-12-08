@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Editor Notes";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "editor-notes.html";
         internal const string DataEditorIcon = "icon-alert-alt";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "EditorNotes";
 
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;

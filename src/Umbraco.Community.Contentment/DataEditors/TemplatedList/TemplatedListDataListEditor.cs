@@ -11,7 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class TemplatedListDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.TemplatedList";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TemplatedList";
 
         public string Name => "Templated List";
 

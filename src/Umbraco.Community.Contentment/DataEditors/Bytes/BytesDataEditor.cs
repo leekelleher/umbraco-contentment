@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Bytes";
         internal const string DataEditorViewPath = "readonlyvalue";
         internal const string DataEditorIcon = "icon-binarycode";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Bytes";
 
         private readonly IIOHelper _ioHelper;
 

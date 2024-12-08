@@ -18,7 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Number Input";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "number-input.html";
         internal const string DataEditorIcon = "icon-coin";
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.NumberInput";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "NumberInput";
 
         private readonly IIOHelper _ioHelper;
 

@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class TagsDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Tags";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Tags";
 
         public string Name => "Tags";
 

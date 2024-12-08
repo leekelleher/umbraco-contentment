@@ -18,6 +18,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EmptyEditorViewPath;
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "data-picker.overlay.html";
         internal const string DataEditorIcon = "icon-fa-arrow-pointer";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "DataPicker";
 
         private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;

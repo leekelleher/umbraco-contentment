@@ -153,7 +153,59 @@ public static class ContentmentConstants
             public const string TextInput = DataEditors.TextInputDataEditor.DataEditorViewPath;
         }
 
+        public static class UiAliases
+        {
+            public const string Buttons = DataEditors.ButtonsDataListEditor.DataEditorUiAlias;
 
-        // TODO: [LK:2024-12-06] Add the constants for PropertyEditorUiAlias(es).
+            public const string Bytes = DataEditors.BytesDataEditor.DataEditorUiAlias;
+
+            public const string CascadingDropdownList = DataEditors.CascadingDropdownListDataEditor.DataEditorUiAlias;
+
+            public const string CheckboxList = DataEditors.ButtonsDataListEditor.DataEditorUiAlias;
+
+            public const string CodeEditor = DataEditors.CodeEditorDataEditor.DataEditorUiAlias;
+
+            public const string ConfigurationEditor = DataEditors.ConfigurationEditorDataEditor.DataEditorUiAlias;
+
+            public const string ContentBlocks = DataEditors.ContentBlocksDataEditor.DataEditorUiAlias;
+
+            public const string ContentPicker = DataEditors.ContentPickerDataEditor.DataEditorUiAlias;
+
+            public const string DataList = DataEditors.DataListDataEditor.DataEditorUiAlias;
+
+            public const string DataPicker = DataEditors.DataPickerDataEditor.DataEditorUiAlias;
+
+            public const string DataTable = DataEditors.DataTableDataEditor.DataEditorUiAlias;
+
+            public const string DictionaryPicker = DataEditors.DictionaryPickerDataEditor.DataEditorUiAlias;
+
+            public const string DropdownList = DataEditors.DropdownListDataListEditor.DataEditorUiAlias;
+
+            public const string EditorNotes = DataEditors.EditorNotesDataEditor.DataEditorUiAlias;
+
+            public const string IconPicker = DataEditors.IconPickerDataEditor.DataEditorUiAlias;
+
+            public const string ItemPicker = DataEditors.ItemPickerDataListEditor.DataEditorUiAlias;
+
+            public const string ListItems = DataEditors.ListItemsDataEditor.DataEditorUiAlias;
+
+            public const string Notes = DataEditors.NotesDataEditor.DataEditorUiAlias;
+
+            public const string NumberInput = DataEditors.NumberInputDataEditor.DataEditorUiAlias;
+
+            public const string RadioButtonList = DataEditors.RadioButtonListDataListEditor.DataEditorUiAlias;
+
+            public const string SocialLinks = DataEditors.SocialLinksDataEditor.DataEditorUiAlias;
+
+            public const string Tags = DataEditors.TagsDataListEditor.DataEditorUiAlias;
+
+            public const string TemplatedLabel = DataEditors.TemplatedLabelDataEditor.DataEditorUiAlias;
+
+            public const string TemplatedList = DataEditors.TemplatedListDataListEditor.DataEditorUiAlias;
+
+            public const string TextboxList = DataEditors.TextboxListDataEditor.DataEditorUiAlias;
+
+            public const string TextInput = DataEditors.TextInputDataEditor.DataEditorUiAlias;
+        }
     }
 }

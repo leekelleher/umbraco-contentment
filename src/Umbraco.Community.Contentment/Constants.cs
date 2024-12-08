@@ -19,6 +19,8 @@ namespace Umbraco.Community.Contentment
 
             internal const string DataEditorAliasPrefix = $"{ProjectNamespace}.";
 
+            internal const string DataEditorUiAliasPrefix = $"Umb.{ProjectName}.PropertyEditorUi.";
+
             internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
 
             internal const string PackagePathRoot = $"{UmbConstants.SystemDirectories.AppPlugins}/{ProjectName}/";

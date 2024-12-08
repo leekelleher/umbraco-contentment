@@ -11,6 +11,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "cascading-dropdown-list.html";
 
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.CascadingDropdownList";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "CascadingDropdownList";
     }
 }

@@ -12,7 +12,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.Buttons";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Buttons";
 
         public string Name => "Buttons";
 

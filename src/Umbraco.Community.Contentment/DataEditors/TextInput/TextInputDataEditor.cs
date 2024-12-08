@@ -17,6 +17,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Text Input";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "text-input.html";
         internal const string DataEditorIcon = "icon-autofill";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TextInput";
 
         private readonly ConfigurationEditorUtility _utility;
 

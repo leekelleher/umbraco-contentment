@@ -20,6 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EmptyEditorViewPath;
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "content-blocks.overlay.html";
         internal const string DataEditorIcon = "icon-fa-server";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ContentBlocks";
 
         private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;

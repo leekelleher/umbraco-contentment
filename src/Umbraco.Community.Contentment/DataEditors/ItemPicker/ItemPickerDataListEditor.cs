@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ItemPicker";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ItemPicker";
 
         private readonly IIOHelper _ioHelper;
 

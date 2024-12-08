@@ -13,6 +13,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-item-arrangement";
 
         // TODO: [LK] This property-editor UI needs to be developed.
-        internal const string DataEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ReadOnly";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ReadOnly";
     }
 }
