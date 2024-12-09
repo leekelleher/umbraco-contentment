@@ -24,8 +24,8 @@ export class ContentmentPropertyEditorUIBytesElement extends UmbLitElement imple
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		const decimals = Number(config.getValueByAlias('decimals'));
-		this._decimals = decimals > 0 ? decimals : 2;
+		const decimals = config.getValueByAlias<{ from: number, to: number }>('decimals');
+		this._decimals = decimals?.from && decimals.from > 0 ? decimals.from : 2;
 
 		const kilo = Number(config.getValueByAlias('kilo'));
 		this._kilo = kilo > 0 ? kilo : 1024;
