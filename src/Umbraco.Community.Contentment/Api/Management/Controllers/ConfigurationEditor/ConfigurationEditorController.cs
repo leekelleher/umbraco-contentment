@@ -29,6 +29,7 @@ public class ConfigurationEditorController : ContentmentControllerBase
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
 
+        // TODO: [LK:2024-12-08] Figure out how to get rid of the hard-coded string/aliases.
         switch (type)
         {
             case "dataPickerSource":
@@ -45,6 +46,7 @@ public class ConfigurationEditorController : ContentmentControllerBase
                 return Ok(model);
             }
 
+            case "dataListSource":
             case "dataSource":
             {
                 var items = _utility.GetConfigurationEditorModels<IDataListSource>();
@@ -52,6 +54,7 @@ public class ConfigurationEditorController : ContentmentControllerBase
                 return Ok(model);
             }
 
+            case "dataListEditor":
             case "listEditor":
             {
                 var items = _utility.GetConfigurationEditorModels<IDataListEditor>();
