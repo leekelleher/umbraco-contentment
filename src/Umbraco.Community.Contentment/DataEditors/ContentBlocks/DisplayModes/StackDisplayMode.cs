@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "allowCopy", Constants.Values.True },
             { "allowCreateContentTemplate", Constants.Values.True },
-            { ContentBlocksConfigurationEditor.DisplayMode, "stack" },
+            { "displayMode", "stack" },
             { "enablePreview", Constants.Values.True },
         };
 

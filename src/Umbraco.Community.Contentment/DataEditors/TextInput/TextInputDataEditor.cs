@@ -19,16 +19,9 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-autofill";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TextInput";
 
-        private readonly ConfigurationEditorUtility _utility;
-
         public TextInputDataEditor(
-            ConfigurationEditorUtility utility,
             IDataValueEditorFactory dataValueEditorFactory)
             : base(dataValueEditorFactory)
-        {
-            _utility = utility;
-        }
-
-        protected override IConfigurationEditor CreateConfigurationEditor() => new TextInputConfigurationEditor(_utility);
+        { }
     }
 }

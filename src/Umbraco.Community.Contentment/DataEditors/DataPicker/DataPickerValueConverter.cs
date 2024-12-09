@@ -79,7 +79,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             converter = default;
 
             if (propertyType.DataType.ConfigurationObject is Dictionary<string, object> configuration &&
-                configuration.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
+                configuration.TryGetValue("dataSource", out var tmp1) == true &&
                 tmp1 is JsonArray array1 && array1.Count > 0 && array1[0] is JsonObject obj1 &&
                 obj1.GetValueAsString("key") is string key1)
             {

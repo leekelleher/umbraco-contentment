@@ -78,10 +78,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             converter = default;
 
             if (propertyType.DataType.ConfigurationObject is Dictionary<string, object> configuration &&
-                configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) == true &&
+                configuration.TryGetValue("dataSource", out var tmp1) == true &&
                 tmp1 is JsonArray array1 && array1.Count > 0 && array1[0] is JsonObject obj1 &&
                 obj1.GetValueAsString("key") is string key1 &&
-                configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) == true &&
+                configuration.TryGetValue("listEditor", out var tmp2) == true &&
                 tmp2 is JsonArray array2 && array2.Count > 0 && array2[0] is JsonObject obj2 &&
                 obj2.GetValueAsString("key") is string key2)
             {

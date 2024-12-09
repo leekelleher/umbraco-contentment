@@ -17,18 +17,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-fa-list-ul";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "DataList";
 
-        private readonly ConfigurationEditorUtility _utility;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public DataListDataEditor(
             IJsonSerializer jsonSerializer,
-            IShortStringHelper shortStringHelper,
-            ConfigurationEditorUtility utility)
+            IShortStringHelper shortStringHelper)
         {
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
-            _utility = utility;
         }
 
         public string Alias => DataEditorAlias;
@@ -45,39 +42,22 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new DataListConfigurationEditor(_utility);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {
             return new DataListDataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            //var view = default(string);
-
-            //if (configuration is Dictionary<string, object> config &&
-            //    config.TryGetValueAs(DataListConfigurationEditor.ListEditor, out JArray? array) == true &&
-            //    array?.Count > 0 &&
-            //    array[0] is JObject item &&
-            //    item.Value<string>("key") is string key)
-            //{
-            //    var editor = _utility.GetConfigurationEditor<IDataListEditor>(key);
-            //    if (editor != null)
-            //    {
-            //        view = editor.View;
-            //    }
-            //}
-
             return new DataListDataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ConfigurationObject = configuration,
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

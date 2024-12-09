@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
-            { ContentBlocksConfigurationEditor.DisplayMode, "list" },
+            { "displayMode", "list" },
             { "enablePreview", Constants.Values.False },
         };
 

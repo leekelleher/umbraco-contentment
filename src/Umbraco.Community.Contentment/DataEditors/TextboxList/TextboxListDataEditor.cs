@@ -19,7 +19,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TextboxList";
 
         private readonly IShortStringHelper _shortStringHelper;
-        private readonly ConfigurationEditorUtility _utility;
         private readonly IJsonSerializer _jsonSerializer;
 
         public string Alias => DataEditorAlias;
@@ -37,23 +36,20 @@ namespace Umbraco.Community.Contentment.DataEditors
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
         public TextboxListDataEditor(
-            ConfigurationEditorUtility utility,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
         {
-            _utility = utility;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
 
-        public IConfigurationEditor GetConfigurationEditor() => new TextboxListConfigurationEditor(_utility);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {
             return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(Constants.Internals.EmptyEditorViewPath),
             };
         }
 
@@ -63,7 +59,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 ConfigurationObject = configuration,
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
     }

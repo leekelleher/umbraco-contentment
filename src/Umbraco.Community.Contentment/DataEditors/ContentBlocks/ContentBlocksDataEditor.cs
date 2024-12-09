@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.Cache;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
@@ -20,35 +19,26 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-fa-server";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ContentBlocks";
 
-        private readonly IContentService _contentService;
         private readonly IContentTypeService _contentTypeService;
         private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
         private readonly Lazy<PropertyEditorCollection> _propertyEditors;
         private readonly IShortStringHelper _shortStringHelper;
-        private readonly ConfigurationEditorUtility _utility;
-        private readonly IIOHelper _ioHelper;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IPropertyValidationService _propertyValidationService;
 
         public ContentBlocksDataEditor(
-            IContentService contentService,
             IContentTypeService contentTypeService,
             Lazy<PropertyEditorCollection> propertyEditors,
             IDataTypeConfigurationCache dataTypeConfigurationCache,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
-            ConfigurationEditorUtility utility,
-            IIOHelper ioHelper,
             IPropertyValidationService propertyValidationService)
         {
-            _contentService = contentService;
             _contentTypeService = contentTypeService;
             _dataTypeConfigurationCache = dataTypeConfigurationCache;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
             _propertyEditors = propertyEditors;
-            _utility = utility;
-            _ioHelper = ioHelper;
             _propertyValidationService = propertyValidationService;
         }
 
@@ -66,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new ContentBlocksConfigurationEditor(_contentService, _contentTypeService, _utility, _ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {
@@ -79,39 +69,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _propertyValidationService)
             {
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
             };
         }
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            //var view = default(string);
-
-            //if (configuration is Dictionary<string, object> config)
-            //{
-            //    if (config.TryGetValue(ContentBlocksConfigurationEditor.DisplayMode, out var tmp1) == true)
-            //    {
-            //        var displayMode = default(IContentBlocksDisplayMode);
-
-            //        if (tmp1 is string str1 && str1?.InvariantStartsWith(Constants.Internals.EditorsPathRoot) == true)
-            //        {
-            //            displayMode = _utility.FindConfigurationEditor<IContentBlocksDisplayMode>(x => str1.InvariantEquals(x.View) == true);
-            //        }
-            //        else if (tmp1 is JArray array1 &&
-            //            array1.Count > 0 &&
-            //            array1[0] is JObject item1 &&
-            //            item1.Value<string>("key") is string key)
-            //        {
-            //            displayMode = _utility.GetConfigurationEditor<IContentBlocksDisplayMode>(key);
-            //        }
-
-            //        if (displayMode != null)
-            //        {
-            //            view = displayMode.View;
-            //        }
-            //    }
-            //}
-
             return new ContentBlocksDataValueEditor(
                 _contentTypeService,
                 _propertyEditors.Value,
@@ -122,7 +84,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 ConfigurationObject = configuration,
                 ValueType = ValueTypes.Json,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(view ?? DataEditorViewPath),
             };
         }
     }

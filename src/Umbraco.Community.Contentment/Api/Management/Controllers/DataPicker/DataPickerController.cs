@@ -110,7 +110,7 @@ public class DataPickerController : ContentmentControllerBase
         else if (await _dataTypeService.GetAsync(dataTypeKey) is IDataType dataType &&
             dataType?.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
             dataType.ConfigurationData is Dictionary<string, object> dataTypeConfig &&
-            dataTypeConfig.TryGetValue(DataPickerConfigurationEditor.DataSource, out var tmp1) == true &&
+            dataTypeConfig.TryGetValue("dataSource", out var tmp1) == true &&
             tmp1 is JsonArray array1 &&
             array1.Count > 0 &&
             array1[0] is JsonObject item1)

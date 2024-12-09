@@ -88,17 +88,17 @@ namespace Umbraco.Community.Contentment.Notifications
                             switch (entity.EditorAlias)
                             {
                                 case DataListDataEditor.DataEditorAlias:
-                                    AddConfigurationEditorKey(DataListConfigurationEditor.DataSource);
-                                    AddConfigurationEditorKey(DataListConfigurationEditor.ListEditor);
+                                    AddConfigurationEditorKey("dataSource");
+                                    AddConfigurationEditorKey("listEditor");
                                     break;
 
                                 case DataPickerDataEditor.DataEditorAlias:
-                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DisplayMode);
-                                    AddConfigurationEditorKey(DataPickerConfigurationEditor.DataSource);
+                                    AddConfigurationEditorKey("displayMode");
+                                    AddConfigurationEditorKey("dataSource");
                                     break;
 
                                 case ContentBlocksDataEditor.DataEditorAlias:
-                                    AddConfigurationEditorKey(ContentBlocksConfigurationEditor.DisplayMode);
+                                    AddConfigurationEditorKey("displayMode");
                                     break;
 
                                 case TextInputDataEditor.DataEditorAlias:
