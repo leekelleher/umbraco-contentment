@@ -10,7 +10,7 @@ export default class ContentmentLeeWasHereElement extends LitElement {
 	override render() {
 		return html`
 			<img
-				src="/App_Plugins/Contentment/backoffice/contentment/lee-was-here.svg"
+				src="/App_Plugins/Contentment/lee-was-here.svg"
 				alt="Lee was here"
 				width="115"
 				height="55" />
