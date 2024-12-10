@@ -6,7 +6,7 @@ import type { ManifestCondition } from '@umbraco-cms/backoffice/extension-api';
 
 export const manifest: ManifestCondition = {
 	type: 'condition',
-	name: '[Contentment] Developer Mode Condition',
+	name: '[Contentment] Property Config Flag Condition',
 	alias: CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION,
 	api: () => import('./property-config-flag.condition.js'),
 };
