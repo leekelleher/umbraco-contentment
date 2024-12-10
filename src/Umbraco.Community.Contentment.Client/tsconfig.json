@@ -25,6 +25,9 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
+		"paths": {
+			"@umbraco-community/contentment": [ "./src/index.js" ]
+		},
 		"types": ["@umbraco-cms/backoffice/extension-types"]
 	},
 	"include": ["src"]
