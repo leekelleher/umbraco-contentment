@@ -7,45 +7,6 @@ export type ConfigurationEditorItemRequestModel = {
     } | null;
 };
 
-export type ConfigurationEditorModel = {
-    key: string;
-    name: string;
-    description?: (string) | null;
-    icon?: (string) | null;
-    group?: (string) | null;
-    fields: Array<(ContentmentConfigurationFieldModel)>;
-    defaultValues?: {
-        [key: string]: unknown;
-    } | null;
-    overlaySize: OverlaySize;
-    expressions?: {
-        [key: string]: (string);
-    } | null;
-    /**
-     * @deprecated
-     */
-    nameTemplate?: (string) | null;
-    /**
-     * @deprecated
-     */
-    descriptionTemplate?: (string) | null;
-};
-
-export type ConfigurationEditorModelsResponseModel = {
-    items: Array<(ConfigurationEditorModel)>;
-};
-
-export type ContentmentConfigurationFieldModel = {
-    key?: (string) | null;
-    name?: (string) | null;
-    description?: (string) | null;
-    view?: (string) | null;
-    propertyEditorUiAlias?: (string) | null;
-    config?: {
-        [key: string]: unknown;
-    } | null;
-};
-
 export type DataListConfigurationRequestModel = {
     dataSource?: Array<(ConfigurationEditorItemRequestModel)> | null;
     listEditor?: Array<(ConfigurationEditorItemRequestModel)> | null;
@@ -98,12 +59,6 @@ export type NotificationHeaderModel = {
     type: EventMessageTypeModel;
 };
 
-export enum OverlaySize {
-    SMALL = 'Small',
-    MEDIUM = 'Medium',
-    LARGE = 'Large'
-}
-
 export type PagedModelDataListItemModel = {
     items: Array<(DataListItem)>;
     total: number;
@@ -117,12 +72,6 @@ export type ProblemDetails = {
     instance?: (string) | null;
     [key: string]: (unknown | string | number) | undefined;
 };
-
-export type GetConfigurationEditorEditorModelsData = {
-    type?: string;
-};
-
-export type GetConfigurationEditorEditorModelsResponse = ((ConfigurationEditorModelsResponseModel));
 
 export type GetAssembliesDataResponse = (Array<(DataListItem)>);
 

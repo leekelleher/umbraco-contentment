@@ -3,31 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetConfigurationEditorEditorModelsData, GetConfigurationEditorEditorModelsResponse, GetAssembliesDataResponse, GetEnumsDataData, GetEnumsDataResponse, PostDataListEditorData, PostDataListEditorResponse, PostDataPickerEditorData, PostDataPickerEditorResponse, GetDataPickerSearchData, GetDataPickerSearchResponse } from './types.gen';
-
-export class ConfigurationEditorService {
-    /**
-     * @param data The data for the request.
-     * @param data.type
-     * @returns unknown OK
-     * @throws ApiError
-     */
-    public static getConfigurationEditorEditorModels(data: GetConfigurationEditorEditorModelsData = {}): CancelablePromise<GetConfigurationEditorEditorModelsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/umbraco/management/api/v1/contentment/configuration-editor/models',
-            query: {
-                type: data.type
-            },
-            errors: {
-                401: 'The resource is protected and requires an authentication token',
-                403: 'The authenticated user do not have access to this resource',
-                404: 'Not Found'
-            }
-        });
-    }
-    
-}
+import type { GetAssembliesDataResponse, GetEnumsDataData, GetEnumsDataResponse, PostDataListEditorData, PostDataListEditorResponse, PostDataPickerEditorData, PostDataPickerEditorResponse, GetDataPickerSearchData, GetDataPickerSearchResponse } from './types.gen';
 
 export class DataService {
     /**

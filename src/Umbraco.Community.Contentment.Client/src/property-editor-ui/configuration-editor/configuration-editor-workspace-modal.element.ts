@@ -5,7 +5,7 @@ import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEdito
 import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
 
 interface ContentmentConfigurationEditorWorkspaceModalData {
