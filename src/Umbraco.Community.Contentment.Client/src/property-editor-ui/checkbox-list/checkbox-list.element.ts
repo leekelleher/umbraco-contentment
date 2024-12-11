@@ -136,7 +136,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 					?disabled=${item.disabled}
 					@change=${() => this.#onClick(item)}>
 					<div class="outer">
-						${when(this._showIcons, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
+						${when(this._showIcons && item.icon, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
 						<uui-form-layout-item>
 							<span slot="label">${this.localize.string(item.name)}</span>
 							${when(

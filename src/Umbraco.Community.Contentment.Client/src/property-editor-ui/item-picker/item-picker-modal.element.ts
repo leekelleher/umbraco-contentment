@@ -15,7 +15,7 @@ import {
 import { debounce } from '@umbraco-cms/backoffice/utils';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
-import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
+import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
 import '../../components/info-box/info-box.element.js';
 

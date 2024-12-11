@@ -73,7 +73,10 @@ export class ContentmentPropertyEditorUIDropdownListElement
 
 	#renderItem(item: ContentmentDataListItem) {
 		return html`
-			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
+			<uui-combobox-list-option
+				display-value=${this.localize.string(item.name)}
+				value=${item.value}
+				?disabled=${item.disabled}>
 				<div class="outer">
 					${when(this._showIcons && item.icon, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
 					<uui-form-layout-item>

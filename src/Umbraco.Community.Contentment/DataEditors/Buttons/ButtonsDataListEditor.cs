@@ -22,8 +22,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
-        {
+        public IEnumerable<ContentmentConfigurationField> Fields =>
+        [
             new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
@@ -46,7 +46,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "Large", Value = "l" },
                         }
                     },
-                    //{ Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "m" }
                 }
             },
             new ContentmentConfigurationField
@@ -76,7 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Select to enable picking multiple items.",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-        };
+        ];
 
         public Dictionary<string, object> DefaultValues => new()
         {

@@ -16,7 +16,6 @@ import {
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
-import { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import { CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL } from './social-links-selection-modal.element.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import type {
@@ -25,6 +24,7 @@ import type {
 	ContentmentSocialNetworkModel,
 } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-social-links';
 

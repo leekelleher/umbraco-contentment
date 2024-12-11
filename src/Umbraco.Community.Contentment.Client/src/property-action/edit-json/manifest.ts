@@ -25,6 +25,5 @@ export const manifest: UmbExtensionManifest = {
 		icon: 'icon-brackets',
 		label: '#contentment_editJson',
 	},
-	// @ts-ignore: Unable to extend core's `ConditionTypes` type [LK]
 	conditions: [{ alias: CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION, propertyConfigAlias: 'enableDevMode' }],
 };

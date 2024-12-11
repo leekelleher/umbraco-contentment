@@ -11,6 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     [TypeConverter(typeof(DataListItemTypeConverter))]
     public class DataListItem
     {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string? Description { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
@@ -19,6 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string? Group { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string? Icon { get; set; }
 
         public string? Name { get; set; }

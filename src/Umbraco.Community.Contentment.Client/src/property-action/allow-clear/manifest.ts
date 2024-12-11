@@ -14,6 +14,5 @@ export const manifest: UmbExtensionManifest = {
 		icon: 'icon-trash',
 		label: '#buttons_clearSelection',
 	},
-	// @ts-ignore: Unable to extend core's `ConditionTypes` type [LK]
 	conditions: [{ alias: CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION, propertyConfigAlias: 'allowClear' }],
 };

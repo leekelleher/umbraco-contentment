@@ -37,8 +37,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 		// const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
-		// const allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
-		// const defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
+		this._defaultIcon = config.getValueByAlias('defaultIcon');
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this._labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
@@ -51,6 +50,9 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
 	}
+
+	@state()
+	private _defaultIcon?: string;
 
 	@state()
 	private _enableMultiple = false;
@@ -112,7 +114,10 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				?disabled=${item.disabled}
 				@click=${() => this.#onClick(item)}>
 				<div>
-					${when(this._labelStyle !== 'text', () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
+					${when(
+						this._labelStyle !== 'text',
+						() => html`<umb-icon .name=${item.icon ?? this._defaultIcon}></umb-icon>`
+					)}
 					${when(this._labelStyle !== 'icon', () => html`<span>${this.localize.string(item.name)}</span>`)}
 				</div>
 			</uui-button>
