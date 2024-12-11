@@ -2,6 +2,5 @@
 // Copyright © 2024 Lee Kelleher
 
 import { manifest as codeBlock } from './code-block/manifest.js';
-import type { ManifestElement } from '@umbraco-cms/backoffice/extension-api';
 
-export const manifests: Array<ManifestElement> = [codeBlock];
+export const manifests: Array<UmbExtensionManifest> = [codeBlock];

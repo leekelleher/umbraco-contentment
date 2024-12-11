@@ -13,13 +13,16 @@ namespace Umbraco.Community.Contentment;
 internal class ContentmentPackageManifestReader : IPackageManifestReader
 {
     private readonly ConfigurationEditorUtility _utility;
+    private readonly ContentmentListItemCollection _listItems;
     private readonly IShortStringHelper _shortStringHelper;
 
     public ContentmentPackageManifestReader(
         ConfigurationEditorUtility utility,
+        ContentmentListItemCollection listItems,
         IShortStringHelper shortStringHelper)
     {
         _utility = utility;
+        _listItems = listItems;
         _shortStringHelper = shortStringHelper;
     }
 
@@ -35,6 +38,9 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
                 js = $"{Constants.Internals.PackagePathRoot}umbraco-{Constants.Internals.ProjectAlias}.js"
             },
         };
+
+        extensions.AddRange(_listItems.GetExtensionsForManifest(_utility, _shortStringHelper));
+
         var manifest = new PackageManifest
         {
             Id = Constants.Internals.ProjectNamespace,

@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { manifests as dataListItems } from './data-list-item-ui/manifests.js';
-import { manifests as templatedLabels } from './templated-label-ui/manifests.js';
-import type { ManifestElement } from '@umbraco-cms/backoffice/extension-api';
+import { manifests as dataListItemUis } from './data-list-item-ui/manifests.js';
+import { manifests as dataSources } from './data-source/manifests.js';
+import { manifests as displayModes } from './display-mode/manifests.js';
+import { manifests as listEditors } from './list-editor/manifests.js';
+import { manifests as templatedLabelUis } from './templated-label-ui/manifests.js';
 
-export const manifests: Array<ManifestElement> = [...dataListItems, ...templatedLabels];
+export const manifests: Array<UmbExtensionManifest> = [
+	...dataListItemUis,
+	...dataSources,
+	...displayModes,
+	...listEditors,
+	...templatedLabelUis,
+];
