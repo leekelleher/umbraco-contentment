@@ -8,8 +8,8 @@ export type ConfigurationEditorItemRequestModel = {
 };
 
 export type DataListConfigurationRequestModel = {
-    dataSource?: Array<(ConfigurationEditorItemRequestModel)> | null;
-    listEditor?: Array<(ConfigurationEditorItemRequestModel)> | null;
+    dataSource?: ((ConfigurationEditorItemRequestModel) | null);
+    listEditor?: ((ConfigurationEditorItemRequestModel) | null);
 };
 
 export type DataListEditorResponseModel = {
@@ -30,8 +30,8 @@ export type DataListItem = {
 export type DataPickerEditorRequestModel = {
     id: string;
     dataTypeKey: string;
-    dataSource?: Array<(ConfigurationEditorItemRequestModel)> | null;
-    displayMode?: Array<(ConfigurationEditorItemRequestModel)> | null;
+    dataSource?: ((ConfigurationEditorItemRequestModel) | null);
+    displayMode?: ((ConfigurationEditorItemRequestModel) | null);
     values?: Array<(string)> | null;
 };
 

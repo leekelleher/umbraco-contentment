@@ -9,9 +9,9 @@ public sealed class DataPickerEditorRequestModel
 
     public Guid DataTypeKey { get; set; }
 
-    public IEnumerable<ConfigurationEditorItemRequestModel>? DataSource { get; set; }
+    public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
-    public IEnumerable<ConfigurationEditorItemRequestModel>? DisplayMode { get; set; }
+    public ConfigurationEditorItemRequestModel? DisplayMode { get; set; }
 
     public IEnumerable<string>? Values { get; set; }
 }

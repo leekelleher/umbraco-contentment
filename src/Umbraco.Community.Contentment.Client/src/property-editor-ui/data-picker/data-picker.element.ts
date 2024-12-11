@@ -91,8 +91,8 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			const requestBody = {
 				id: this._entityUnique,
 				dataTypeKey: this._dataTypeKey,
-				dataSource: this._dataSource,
-				displayMode: this._displayMode,
+				dataSource: this._dataSource[0],
+				displayMode: this._displayMode[0],
 				values: this.value,
 			};
 

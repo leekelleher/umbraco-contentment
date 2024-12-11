@@ -16,7 +16,7 @@ const schema: UmbExtensionManifest = {
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
-						{ alias: 'configurationType', value: 'dataSource' },
+						{ alias: 'configurationType', value: 'contentmentDataSource' },
 						{ alias: 'maxItems', value: 1 },
 						{ alias: 'enableDevMode', value: true },
 					],
@@ -28,7 +28,7 @@ const schema: UmbExtensionManifest = {
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' },
-						{ alias: 'configurationType', value: 'listEditor' },
+						{ alias: 'configurationType', value: 'contentmentListEditor' },
 						{ alias: 'maxItems', value: 1 },
 						{ alias: 'enableDevMode', value: true },
 					],
@@ -72,4 +72,11 @@ const dataListPreview: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, dataList, dataListPreview];
+export const repository: UmbExtensionManifest = {
+	type: 'repository',
+	alias: 'Umb.Contentment.Repository.DataList',
+	name: '[Contentment] Data List Repository',
+	api: () => import('./data-list.repository.js'),
+};
+
+export const manifests = [schema, dataList, dataListPreview, repository];

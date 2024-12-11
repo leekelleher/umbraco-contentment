@@ -5,7 +5,7 @@ namespace Umbraco.Community.Contentment.Api.Management;
 
 public sealed class DataListConfigurationRequestModel
 {
-    public IEnumerable<ConfigurationEditorItemRequestModel>? DataSource { get; set; }
+    public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
-    public IEnumerable<ConfigurationEditorItemRequestModel>? ListEditor { get; set; }
+    public ConfigurationEditorItemRequestModel? ListEditor { get; set; }
 }

@@ -30,7 +30,7 @@ const editorUis: Array<UmbExtensionManifest> = [
 						propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 						config: [
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
-							{ alias: 'configurationType', value: 'dataPickerSource' },
+							{ alias: 'configurationType', value: 'contentmentDataSource' },
 							{ alias: 'maxItems', value: 1 },
 							{ alias: 'enableDevMode', value: true },
 						],
@@ -42,7 +42,7 @@ const editorUis: Array<UmbExtensionManifest> = [
 						propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 						config: [
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
-							{ alias: 'configurationType', value: 'dataPickerDisplayMode' },
+							{ alias: 'configurationType', value: 'contentmentDisplayMode' },
 							{ alias: 'maxItems', value: 1 },
 							{ alias: 'enableDevMode', value: true },
 						],

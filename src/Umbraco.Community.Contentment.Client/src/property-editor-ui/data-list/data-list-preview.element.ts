@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { DataListService } from '../../api/sdk.gen.js';
+import { ContentmentDataListRepository } from './data-list.repository.js';
 import { css, customElement, html, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_PROPERTY_DATASET_CONTEXT } from '@umbraco-cms/backoffice/property';
@@ -29,6 +28,8 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 	#items: Array<any> = [];
 
 	#listEditor?: ContentmentDataListEditor;
+
+	#repository = new ContentmentDataListRepository(this);
 
 	#tabs: Array<ContentmentDataListPreviewTab> = [
 		{ alias: 'listEditor', label: 'Editor preview' },
@@ -62,7 +63,6 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 			this.observe(
 				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource'),
 				(dataSource) => {
-					//console.log('dataSource', dataSource);
 					this._dataSource = dataSource;
 					this.#fetch();
 				},
@@ -72,7 +72,6 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 			this.observe(
 				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor'),
 				(listEditor) => {
-					//console.log('listEditor', listEditor);
 					this._listEditor = listEditor;
 					this.#fetch();
 				},
@@ -89,24 +88,9 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 		this._state = 'loading';
 
 		if (this._dataSource && this._listEditor) {
-			this.#listEditor = await new Promise<ContentmentDataListEditor>(async (resolve, reject) => {
-				if (!this._dataSource || !this._listEditor) return reject();
+			this.#listEditor = await this.#repository.getEditor(this._dataSource[0], this._listEditor[0]);
 
-				const requestBody = { dataSource: this._dataSource, listEditor: this._listEditor };
-
-				const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
-
-				if (!data) return reject();
-
-				const listEditor = {
-					propertyEditorUiAlias: data.propertyEditorUiAlias,
-					config: new UmbPropertyEditorConfigCollection(data.config ?? []),
-				};
-
-				this.#items = listEditor.config?.getValueByAlias<any[]>('items') ?? [];
-
-				resolve(listEditor);
-			});
+			this.#items = this.#listEditor?.config?.getValueByAlias<any[]>('items') ?? [];
 
 			this._state = this.#items.length > 0 ? 'loaded' : 'noItems';
 

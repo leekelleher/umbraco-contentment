@@ -52,7 +52,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		this._items = await new Promise<Array<ContentmentDataListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
-			const requestBody = { dataSource: this._dataSource, listEditor: null };
+			const requestBody = { dataSource: this._dataSource[0], listEditor: null };
 
 			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
 

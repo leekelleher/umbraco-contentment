@@ -2,8 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import { DataListService } from '../../api/sdk.gen.js';
+import { ContentmentDataListRepository } from './data-list.repository.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
@@ -22,6 +21,8 @@ const ELEMENT_NAME = 'contentment-property-editor-ui-data-list';
 @customElement(ELEMENT_NAME)
 export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#listEditor?: ContentmentDataListEditor;
+
+	#repository = new ContentmentDataListRepository(this);
 
 	// @state()
 	// private _entityUnique?: string | null;
@@ -70,22 +71,8 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 	}
 
 	async #init() {
-		this.#listEditor = await new Promise<ContentmentDataListEditor>(async (resolve, reject) => {
-			if (!this._dataSource || !this._listEditor) return reject();
-
-			const requestBody = { dataSource: this._dataSource, listEditor: this._listEditor };
-
-			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
-
-			if (!data) return reject();
-
-			const listEditor = {
-				propertyEditorUiAlias: data.propertyEditorUiAlias,
-				config: new UmbPropertyEditorConfigCollection(data.config ?? []),
-			};
-
-			resolve(listEditor);
-		});
+		if (!this._dataSource || !this._listEditor) return;
+		this.#listEditor = await this.#repository.getEditor(this._dataSource[0], this._listEditor[0]);
 	}
 
 	#onChange(event: UmbPropertyValueChangeEvent & { target: UmbPropertyEditorUiElement }) {

@@ -49,10 +49,10 @@ public class DataPickerController : ContentmentControllerBase
             var items = await cached.Item1.GetItemsAsync(cached.Item2, model.Values ?? []) ?? [];
             config.Add(nameof(items), items);
         }
-        else if (model.DataSource?.FirstOrDefault()?.Key is string key1 && string.IsNullOrWhiteSpace(key1) == false)
+        else if (model.DataSource?.Key is string key1 && string.IsNullOrWhiteSpace(key1) == false)
         {
             var source = _utility.GetConfigurationEditor<IDataPickerSource>(key1);
-            var sourceConfig = model.DataSource?.FirstOrDefault()?.Value;
+            var sourceConfig = model.DataSource?.Value;
             if (source is not null && sourceConfig is not null)
             {
                 _ = _lookup.TryAdd(model.DataTypeKey, (source, sourceConfig));
@@ -62,14 +62,14 @@ public class DataPickerController : ContentmentControllerBase
             }
         }
 
-        var key2 = model.DisplayMode?.FirstOrDefault()?.Key;
+        var key2 = model.DisplayMode?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
             var editor = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 
-            var editorConfig = model.DisplayMode?.FirstOrDefault()?.Value;
+            var editorConfig = model.DisplayMode?.Value;
             if (editorConfig is not null)
             {
                 foreach (var prop in editorConfig)

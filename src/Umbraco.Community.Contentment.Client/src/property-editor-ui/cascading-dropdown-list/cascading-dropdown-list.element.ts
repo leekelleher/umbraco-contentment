@@ -11,13 +11,14 @@ import {
 	unsafeHTML,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
+import { ContentmentDataListRepository } from '../data-list/data-list.repository.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
-import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
 import type { UUIComboboxElement, UUIComboboxEvent } from '@umbraco-cms/backoffice/external/uui';
-import { OpenAPI } from '@umbraco-cms/backoffice/external/backend-api';
-import { request as __request } from '../../api/core/request.js';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-cascading-dropdown-list';
 
@@ -26,6 +27,8 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	#repository = new ContentmentDataListRepository(this);
+
 	@state()
 	private _apis: Array<string> = [];
 
@@ -58,27 +61,9 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 					url = url.replace(`{${j}}`, this.value[j]);
 				}
 
-				this._promises.push(this.#getItems(url));
+				this._promises.push(this.#repository.getItemsByUrl(url));
 			}
 		}
-	}
-
-	// TODO: [LK] Move this to its own repository.
-	async #getItems(url: string) {
-		const { data } = await tryExecuteAndNotify(
-			this,
-			__request(OpenAPI, {
-				method: 'GET',
-				url: url,
-				errors: {
-					401: 'The resource is protected and requires an authentication token',
-					403: 'The authenticated user do not have access to this resource',
-					404: 'Not Found',
-				},
-			})
-		);
-
-		return data as Array<ContentmentDataListItem>;
 	}
 
 	async #onChange(event: UUIComboboxEvent & { target: UUIComboboxElement }) {
@@ -102,7 +87,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 			});
 
 			if (typeof value !== 'number' && value) {
-				this._options[next] = await this.#getItems(url);
+				this._options[next] = await this.#repository.getItemsByUrl(url);
 			} else {
 				this._options = this._options.splice(0, next);
 			}

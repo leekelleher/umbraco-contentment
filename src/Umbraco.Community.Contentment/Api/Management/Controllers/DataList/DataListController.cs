@@ -36,11 +36,11 @@ public class DataListController : ContentmentControllerBase
 
         // TODO: [LK] Move all this logic to its own service.
 
-        var key1 = model.DataSource?.FirstOrDefault()?.Key;
+        var key1 = model.DataSource?.Key;
         if (string.IsNullOrWhiteSpace(key1) == false)
         {
             var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
-            var sourceConfig = model.DataSource?.FirstOrDefault()?.Value;
+            var sourceConfig = model.DataSource?.Value;
             if (source is not null && sourceConfig is not null)
             {
                 var items = source.GetItems(sourceConfig) ?? [];
@@ -48,14 +48,14 @@ public class DataListController : ContentmentControllerBase
             }
         }
 
-        var key2 = model.ListEditor?.FirstOrDefault()?.Key;
+        var key2 = model.ListEditor?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
             var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 
-            var editorConfig = model.ListEditor?.FirstOrDefault()?.Value;
+            var editorConfig = model.ListEditor?.Value;
             if (editorConfig is not null)
             {
                 foreach (var prop in editorConfig)
@@ -81,8 +81,4 @@ public class DataListController : ContentmentControllerBase
 
         return Ok(result);
     }
-
-    // TODO: [LK] Review whether I need to implement `GetPreview()`.
-    // TODO: [LK] Review whether I need to implement `GetDataSourceItems()`.
-    // TODO: [LK] Review whether I need to implement `GetDataSourceItemsByDataTypeKey()`.
 }

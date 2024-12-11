@@ -29,7 +29,7 @@ const editorUi: UmbExtensionManifest = {
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
-						{ alias: 'configurationType', value: 'dataSource' },
+						{ alias: 'configurationType', value: 'contentmentDataSource' },
 						{ alias: 'maxItems', value: 1 },
 					],
 				},
