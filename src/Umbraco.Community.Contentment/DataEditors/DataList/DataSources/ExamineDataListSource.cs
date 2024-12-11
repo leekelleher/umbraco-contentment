@@ -5,6 +5,7 @@
 
 using Examine;
 using Examine.Search;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -195,6 +196,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                             if (udi.Success == true)
                             {
                                 luceneQuery = string.Format(luceneQuery, udi.Result);
+                            }
+                        }
+                        else if (_contentmentContentContext is IContentmentContentContext2 ctx2)
+                        {
+                            var contentKey = ctx2.GetCurrentContentId<Guid?>(out _);
+                            if (contentKey.HasValue == true)
+                            {
+                                var udi = new GuidUdi(UmbConstants.UdiEntityType.Document, contentKey.Value);
+                                luceneQuery = string.Format(luceneQuery, udi);
                             }
                         }
                     }
