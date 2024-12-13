@@ -224,6 +224,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     config.elementTypeScaffoldCache[elementType.alias] = scaffold;
                 }
 
+                scaffold.key = item.key;
                 scaffold.name = name;
                 scaffold.variants[0].name = name;
 
