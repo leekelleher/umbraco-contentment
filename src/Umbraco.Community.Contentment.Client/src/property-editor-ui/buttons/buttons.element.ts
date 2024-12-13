@@ -73,7 +73,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 		this._items.forEach((item) => {
 			if (!this._enableMultiple) {
-				item.selected = item.value === option.value;
+				item.selected = option.selected && item.value === option.value;
 			}
 
 			if (item.selected) {
