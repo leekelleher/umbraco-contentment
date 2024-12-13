@@ -102,7 +102,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
             vm.items.forEach(x => {
 
                 if (vm.multiple === false) {
-                    x.selected = x.value === item.value;
+                    x.selected = item.selected && x.value === item.value;
                 }
 
                 if (x.selected) {
