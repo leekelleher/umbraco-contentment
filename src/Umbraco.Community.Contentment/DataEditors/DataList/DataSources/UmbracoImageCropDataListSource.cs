@@ -51,7 +51,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Config = new Dictionary<string, object>
                         {
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
+                            { ShowIconsConfigurationField.ShowIcons, true },
                             { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value ?? string.Empty }
                         }
                     }

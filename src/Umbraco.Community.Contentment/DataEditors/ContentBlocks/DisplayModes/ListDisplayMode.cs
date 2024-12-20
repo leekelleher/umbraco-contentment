@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Dictionary<string, object> DefaultConfig => new Dictionary<string, object>
         {
             { "displayMode", "list" },
-            { "enablePreview", Constants.Values.False },
+            { "enablePreview", false },
         };
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]

@@ -56,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
                         Config = new Dictionary<string, object>
                         {
-                            // { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
+                            // { "enableFilter", items.Count > 5 ? true : false },
                             // { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             // { "listType", "list" },
                             // { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },

@@ -93,7 +93,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = DropdownListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListDataListEditor.AllowEmpty, false },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _connectionStrings },
                 }
             },

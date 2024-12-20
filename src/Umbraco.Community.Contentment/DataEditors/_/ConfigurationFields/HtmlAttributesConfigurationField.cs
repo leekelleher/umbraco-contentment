@@ -37,8 +37,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 { DataTableConfigurationEditor.FieldItems, listFields },
                 { MaxItemsConfigurationField.MaxItems, 0 },
-                { DataTableConfigurationEditor.RestrictWidth, Constants.Values.True },
-                { DataTableConfigurationEditor.UsePrevalueEditors, Constants.Values.True }
+                { DataTableConfigurationEditor.RestrictWidth, true },
+                { DataTableConfigurationEditor.UsePrevalueEditors, true }
             };
         }
     }

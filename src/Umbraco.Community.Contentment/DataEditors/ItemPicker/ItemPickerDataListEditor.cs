@@ -70,7 +70,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "List", Value = "list", Description = "Displays as a single column menu, (with descriptions, if available)." }
                         }
                     },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
             new ContentmentConfigurationField
@@ -85,7 +85,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                 Config = new Dictionary<string, object>
                 {
-                    { "default", Constants.Values.True }
+                    { "default", true }
                 },
             },
             new MaxItemsConfigurationField(),
@@ -118,7 +118,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "listType", "list" },
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
-            { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
+            { EnableFilterConfigurationField.EnableFilter, true },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 

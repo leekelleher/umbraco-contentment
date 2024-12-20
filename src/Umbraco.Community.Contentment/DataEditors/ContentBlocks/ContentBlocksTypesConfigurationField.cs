@@ -38,10 +38,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             Config = new Dictionary<string, object>
             {
                 { Constants.Conventions.ConfigurationFieldAliases.AddButtonLabelKey, "contentment_configureElementType" },
-                { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
+                { EnableFilterConfigurationField.EnableFilter, true },
                 { Constants.Conventions.ConfigurationFieldAliases.OverlayView, ioHelper.ResolveRelativeOrVirtualUrl(ConfigurationEditorDataEditor.DataEditorOverlayViewPath) ?? string.Empty },
                 { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+                { EnableDevModeConfigurationField.EnableDevMode, true },
             };
         }
 
@@ -58,7 +58,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         { "name", contentType.Name ?? contentType.Alias },
                         { "icon", contentType.Icon ?? UmbConstants.Icons.DefaultIcon },
                         { "description", contentType.GetUdi().ToString() },
-                        { "hideLabel", Constants.Values.True },
+                        { "hideLabel", true },
                     },
                 },
                 new ContentmentConfigurationField
@@ -92,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                     Config = new Dictionary<string, object>
                     {
-                        { "default", Constants.Values.False }
+                        { "default", false }
                     }
                 }
             };

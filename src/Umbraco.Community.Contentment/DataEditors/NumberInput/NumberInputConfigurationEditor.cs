@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             //                new DataListItem { Name = "Extra Large", Value = "xl", Description = "Useful when aligning with full width text inputs. Fits 88 digits <em>- that's over an octovigintillion!</em>" },
             //            }
             //        },
-            //        { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+            //        { ShowDescriptionsConfigurationField.ShowDescriptions, true },
             //        { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "s" },
             //    }
             //});
@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             //                new DataListItem { Name = nameof(ValueTypes.Integer), Value = ValueTypes.Integer, Description = "Accepts positive and negative whole numbers." },
             //            }
             //        },
-            //        { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+            //        { ShowDescriptionsConfigurationField.ShowDescriptions, true },
             //        { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, ValueTypes.Integer },
             //    });
 

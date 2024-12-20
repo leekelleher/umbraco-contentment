@@ -64,7 +64,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "both" },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
             new ContentmentConfigurationField

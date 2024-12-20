@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 //    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 //    Config = new Dictionary<string, object>
                 //    {
-                //        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                //        { DropdownListDataListEditor.AllowEmpty, false },
                 //        { Constants.Conventions.ConfigurationFieldAliases.Items, modes },
                 //    }
                 //});
@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 //    View = ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
                 //    Config = new Dictionary<string, object>
                 //    {
-                //        { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                //        { DropdownListDataListEditor.AllowEmpty, false },
                 //        { Constants.Conventions.ConfigurationFieldAliases.Items, themes },
                 //    }
                 //});

@@ -24,16 +24,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new()
         {
-            { "allowCopy", Constants.Values.True },
-            { "allowCreateContentTemplate", Constants.Values.True },
+            { "allowCopy", true },
+            { "allowCreateContentTemplate", true },
         };
 
         public Dictionary<string, object> DefaultConfig => new()
         {
-            { "allowCopy", Constants.Values.True },
-            { "allowCreateContentTemplate", Constants.Values.True },
+            { "allowCopy", true },
+            { "allowCreateContentTemplate", true },
             { "displayMode", "blocks" },
-            { "enablePreview", Constants.Values.True },
+            { "enablePreview", true },
         };
 
         public IEnumerable<ContentmentConfigurationField> Fields => new[]

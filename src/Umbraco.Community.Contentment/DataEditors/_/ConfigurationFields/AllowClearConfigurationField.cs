@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle";
             Config = new Dictionary<string, object>
             {
-                { "default", Constants.Values.False }
+                { "default", false }
             };
         }
     }

@@ -73,7 +73,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
-                    { "allowEmpty", Constants.Values.False },
+                    { "allowEmpty", false },
                     { "items", SupportedEntityTypes.Keys.Select(x => new DataListItem
                         {
                             Name = x.SplitPascalCasing(_shortStringHelper),

@@ -79,8 +79,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "documentTypesTemplates" },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
-                    { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
+                    { ShowIconsConfigurationField.ShowIcons, true },
                 }
             },
         };

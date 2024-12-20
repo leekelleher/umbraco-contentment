@@ -92,7 +92,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListDataListEditor.AllowEmpty, false },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem
                         {
                             Name = x.Name.SplitPascalCasing(_shortStringHelper),

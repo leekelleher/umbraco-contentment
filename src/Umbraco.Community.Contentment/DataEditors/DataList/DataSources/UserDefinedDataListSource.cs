@@ -35,8 +35,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = ListItemsDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
-                    { "confirmRemoval", Constants.Values.True },
-                    { EnableDevModeConfigurationField.EnableDevMode, Constants.Values.True },
+                    { "confirmRemoval", true },
+                    { EnableDevModeConfigurationField.EnableDevMode, true },
                     { MaxItemsConfigurationField.MaxItems, 0 },
                     { NotesConfigurationField.Notes, @"<details class=""well well-small"">
 <summary><strong><em>Advanced:</em> Paste in the raw JSON?</strong></summary>

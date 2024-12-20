@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                 Config = new Dictionary<string, object>
                 {
-                    { "default", Constants.Values.True }
+                    { "default", true }
                 }
             },
             new ShowDescriptionsConfigurationField(),
@@ -41,7 +41,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object> DefaultValues => new()
         {
-            { AllowEmpty, Constants.Values.True }
+            { AllowEmpty, true }
         };
 
         public Dictionary<string, object>? DefaultConfig => default;

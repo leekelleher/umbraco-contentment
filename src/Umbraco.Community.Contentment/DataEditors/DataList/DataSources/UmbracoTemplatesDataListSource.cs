@@ -62,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             },
                         }
                     },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
         };
