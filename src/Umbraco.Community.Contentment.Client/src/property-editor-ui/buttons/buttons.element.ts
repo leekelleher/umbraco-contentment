@@ -20,6 +20,7 @@ import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIInterfaceLook } from '@umbraco-cms/backoffice/external/uui';
 
 const ELEMENT_NAME = 'contentment-property-editor-ui-buttons';
 
@@ -41,6 +42,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this._labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
+		this._look = config.getValueByAlias('look') ?? 'secondary';
 		this._size = config.getValueByAlias('size') ?? 'm';
 
 		const items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
@@ -62,6 +64,9 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	@state()
 	private _labelStyle: 'icon' | 'text' | 'both' = 'both';
+
+	@state()
+	private _look: UUIInterfaceLook = 'secondary';
 
 	@state()
 	private _size: 's' | 'm' | 'l' = 'm';
@@ -109,7 +114,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		return html`
 			<uui-button
 				class=${classMap(classes)}
-				look="secondary"
+				look=${this._look}
 				title=${ifDefined(title)}
 				?disabled=${item.disabled}
 				@click=${() => this.#onClick(item)}>
@@ -126,6 +131,9 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	static override styles = [
 		css`
+			uui-button-group {
+				flex-wrap: wrap;
+			}
 			uui-button.small {
 				font-size: 0.8rem;
 			}
@@ -137,12 +145,14 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			}
 			uui-button.active {
 				--uui-button-background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
+				--uui-button-contrast: var(--uui-color-default-standalone, #1c233b);
 			}
 			uui-button.active:hover {
 				--uui-button-background-color-hover: var(
 					--uui-menu-item-background-color-active-hover,
 					var(--uui-color-current-emphasis, #f8d6d3)
 				);
+				--uui-button-contrast-hover: var(--uui-color-default-standalone, #1c233b);
 			}
 			uui-button > div {
 				display: flex;

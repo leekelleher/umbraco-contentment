@@ -67,6 +67,25 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
                 }
             },
+            new ContentmentConfigurationField
+            {
+                Key = "look",
+                Name = "Button style",
+                Description = "Select the style of the button. The fallback style is 'secondary'.",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Default", Value = "default" },
+                            new DataListItem { Name = "Outline", Value = "outline" },
+                            new DataListItem { Name = "Placeholder", Value = "placeholder" },
+                            new DataListItem { Name = "Primary", Value = "primary" },
+                            new DataListItem { Name = "Secondary", Value = "secondary" },
+                        }
+                    },
+                }
+            },
             new AllowClearConfigurationField(),
             new ContentmentConfigurationField
             {
@@ -81,6 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },
+            { "look", "secondary" },
             { "size", "m" },
         };
 
