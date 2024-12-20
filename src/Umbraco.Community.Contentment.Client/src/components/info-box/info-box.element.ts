@@ -6,9 +6,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-info-box';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-info-box')
 export class ContentmentInfoBoxElement extends UmbLitElement {
 	@property()
 	heading?: string;
@@ -100,6 +98,6 @@ export { ContentmentInfoBoxElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentInfoBoxElement;
+		'contentment-info-box': ContentmentInfoBoxElement;
 	}
 }

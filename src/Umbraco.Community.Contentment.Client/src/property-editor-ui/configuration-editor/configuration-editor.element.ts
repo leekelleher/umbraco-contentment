@@ -16,9 +16,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-configuration-editor';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-configuration-editor')
 export class ContentmentPropertyEditorUIConfigurationEditorElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -250,6 +248,6 @@ export { ContentmentPropertyEditorUIConfigurationEditorElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIConfigurationEditorElement;
+		'contentment-property-editor-ui-configuration-editor': ContentmentPropertyEditorUIConfigurationEditorElement;
 	}
 }

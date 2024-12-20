@@ -10,9 +10,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-textbox-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-textbox-list')
 export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#inputTypes = ['color', 'email', 'number', 'password', 'tel', 'text', 'url'];
 
@@ -143,6 +141,6 @@ export { ContentmentPropertyEditorUITextboxListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUITextboxListElement;
+		'contentment-property-editor-ui-textbox-list': ContentmentPropertyEditorUITextboxListElement;
 	}
 }

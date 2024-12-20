@@ -8,9 +8,7 @@ import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/prope
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-member-type-picker';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-member-type-picker')
 export class ContentmentPropertyEditorUIMemberTypePickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -101,6 +99,6 @@ export { ContentmentPropertyEditorUIMemberTypePickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIMemberTypePickerElement;
+		'contentment-property-editor-ui-member-type-picker': ContentmentPropertyEditorUIMemberTypePickerElement;
 	}
 }

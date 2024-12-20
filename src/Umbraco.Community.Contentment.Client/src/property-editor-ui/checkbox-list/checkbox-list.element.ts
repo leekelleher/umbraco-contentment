@@ -19,9 +19,7 @@ import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } fr
 
 type ContentmentDataListCheckboxOption = ContentmentDataListItem & { checked: boolean };
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-checkbox-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-checkbox-list')
 export class ContentmentPropertyEditorUICheckboxListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -180,6 +178,6 @@ export { ContentmentPropertyEditorUICheckboxListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUICheckboxListElement;
+		'contentment-property-editor-ui-checkbox-list': ContentmentPropertyEditorUICheckboxListElement;
 	}
 }

@@ -8,9 +8,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-bytes';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-bytes')
 export class ContentmentPropertyEditorUIBytesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
 	private _decimals = 0;
@@ -52,6 +50,6 @@ export { ContentmentPropertyEditorUIBytesElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIBytesElement;
+		'contentment-property-editor-ui-bytes': ContentmentPropertyEditorUIBytesElement;
 	}
 }

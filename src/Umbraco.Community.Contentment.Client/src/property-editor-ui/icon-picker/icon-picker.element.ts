@@ -11,9 +11,7 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 
 import '../../components/property-editor-ui/property-editor-ui.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-icon-picker';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-icon-picker')
 export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
 	private _config?: UmbPropertyEditorConfigCollection;
@@ -53,6 +51,6 @@ export { ContentmentPropertyEditorUIIconPickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIIconPickerElement;
+		'contentment-property-editor-ui-icon-picker': ContentmentPropertyEditorUIIconPickerElement;
 	}
 }

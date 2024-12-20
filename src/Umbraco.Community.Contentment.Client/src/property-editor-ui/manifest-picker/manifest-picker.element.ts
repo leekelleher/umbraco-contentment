@@ -12,9 +12,7 @@ import {
 import { UMB_ITEM_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-manifest-picker';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-manifest-picker')
 export class ContentmentPropertyEditorUIManifestPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -158,6 +156,6 @@ export { ContentmentPropertyEditorUIManifestPickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIManifestPickerElement;
+		'contentment-property-editor-ui-manifest-picker': ContentmentPropertyEditorUIManifestPickerElement;
 	}
 }

@@ -26,9 +26,7 @@ import type {
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-social-links';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-social-links')
 export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#sorter = new UmbSorterController<ContentmentSocialLinkValue>(this, {
 		getUniqueOfElement: (element) => {
@@ -309,6 +307,6 @@ export { ContentmentPropertyEditorUISocialLinksElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUISocialLinksElement;
+		'contentment-property-editor-ui-social-links': ContentmentPropertyEditorUISocialLinksElement;
 	}
 }

@@ -21,9 +21,7 @@ import {
 import type { ContentmentDataListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-tags';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-tags')
 export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property({ type: Array })
 	value?: Array<string> = [];
@@ -427,6 +425,6 @@ export default ContentmentPropertyEditorUITagsElement;
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUITagsElement;
+		'contentment-property-editor-ui-tags': ContentmentPropertyEditorUITagsElement;
 	}
 }

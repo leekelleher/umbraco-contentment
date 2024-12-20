@@ -6,9 +6,7 @@ import type { ContentmentDataListItemUiElement } from '../types.js';
 import { customElement, html, nothing, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 
-const ELEMENT_NAME = 'contentment-data-list-item-ui-code-block';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-data-list-item-ui-code-block')
 export class ContentmentDataListItemUiCodeBlockElement
 	extends UmbLitElement
 	implements ContentmentDataListItemUiElement
@@ -26,6 +24,6 @@ export { ContentmentDataListItemUiCodeBlockElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentDataListItemUiCodeBlockElement;
+		'contentment-data-list-item-ui-code-block': ContentmentDataListItemUiCodeBlockElement;
 	}
 }

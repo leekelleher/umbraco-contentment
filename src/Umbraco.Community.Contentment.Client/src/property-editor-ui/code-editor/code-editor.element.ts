@@ -11,9 +11,7 @@ import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } fr
 
 type CodeEditorLanguage = UmbCodeEditorElement['language'];
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-code-editor';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
 	private _loading = true;
@@ -76,6 +74,6 @@ export { ContentmentPropertyEditorUICodeEditorElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUICodeEditorElement;
+		'contentment-property-editor-ui-code-editor': ContentmentPropertyEditorUICodeEditorElement;
 	}
 }

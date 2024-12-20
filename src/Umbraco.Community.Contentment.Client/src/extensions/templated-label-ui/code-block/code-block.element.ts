@@ -5,9 +5,7 @@ import type { ContentmentTemplatedLabelUiElement } from '../types.js';
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 
-const ELEMENT_NAME = 'contentment-templated-label-ui-code-block';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-templated-label-ui-code-block')
 export class ContentmentTemplatedLabelUiCodeBlockElement
 	extends UmbLitElement
 	implements ContentmentTemplatedLabelUiElement
@@ -37,6 +35,6 @@ export { ContentmentTemplatedLabelUiCodeBlockElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentTemplatedLabelUiCodeBlockElement;
+		'contentment-templated-label-ui-code-block': ContentmentTemplatedLabelUiCodeBlockElement;
 	}
 }

@@ -16,9 +16,7 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 import '../../components/lee-was-here/lee-was-here.element.js';
 import '../../components/property-editor-ui/property-editor-ui.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-data-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-data-list')
 export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#listEditor?: ContentmentDataListEditor;
 
@@ -101,6 +99,6 @@ export { ContentmentPropertyEditorUIDataListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIDataListElement;
+		'contentment-property-editor-ui-data-list': ContentmentPropertyEditorUIDataListElement;
 	}
 }

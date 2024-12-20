@@ -21,9 +21,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-text-input';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-text-input')
 export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property()
 	value?: string;
@@ -156,6 +154,6 @@ export { ContentmentPropertyEditorUITextInputElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUITextInputElement;
+		'contentment-property-editor-ui-text-input': ContentmentPropertyEditorUITextInputElement;
 	}
 }

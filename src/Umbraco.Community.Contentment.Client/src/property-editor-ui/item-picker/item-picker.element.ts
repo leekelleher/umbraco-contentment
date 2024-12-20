@@ -14,9 +14,7 @@ import type { ContentmentDataListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-item-picker';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-item-picker')
 export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
 	private _items: Array<ContentmentDataListItem> = [];
@@ -210,6 +208,6 @@ export { ContentmentPropertyEditorUIItemPickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIItemPickerElement;
+		'contentment-property-editor-ui-item-picker': ContentmentPropertyEditorUIItemPickerElement;
 	}
 }

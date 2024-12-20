@@ -8,9 +8,7 @@ import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/prope
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-dictionary-picker';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-dictionary-picker')
 export class ContentmentPropertyEditorUIDictionaryPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -99,6 +97,6 @@ export { ContentmentPropertyEditorUIDictionaryPickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIDictionaryPickerElement;
+		'contentment-property-editor-ui-dictionary-picker': ContentmentPropertyEditorUIDictionaryPickerElement;
 	}
 }

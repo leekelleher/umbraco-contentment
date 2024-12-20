@@ -10,9 +10,7 @@ import type {
 
 import '../../components/info-box/info-box.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-render-macro';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-render-macro')
 export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#json = '';
 
@@ -56,6 +54,6 @@ export { ContentmentPropertyEditorUIRenderMacroElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIRenderMacroElement;
+		'contentment-property-editor-ui-render-macro': ContentmentPropertyEditorUIRenderMacroElement;
 	}
 }

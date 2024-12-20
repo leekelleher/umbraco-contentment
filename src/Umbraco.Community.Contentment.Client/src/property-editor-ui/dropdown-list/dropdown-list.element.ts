@@ -19,9 +19,7 @@ import type {
 } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIComboboxElement } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-dropdown-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-dropdown-list')
 export class ContentmentPropertyEditorUIDropdownListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -124,6 +122,6 @@ export { ContentmentPropertyEditorUIDropdownListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIDropdownListElement;
+		'contentment-property-editor-ui-dropdown-list': ContentmentPropertyEditorUIDropdownListElement;
 	}
 }

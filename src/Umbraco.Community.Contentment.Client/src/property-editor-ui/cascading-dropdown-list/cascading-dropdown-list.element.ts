@@ -20,9 +20,7 @@ import type {
 } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIComboboxElement, UUIComboboxEvent } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-cascading-dropdown-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-cascading-dropdown-list')
 export class ContentmentPropertyEditorUICascadingDropdownListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -172,6 +170,6 @@ export { ContentmentPropertyEditorUICascadingDropdownListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUICascadingDropdownListElement;
+		'contentment-property-editor-ui-cascading-dropdown-list': ContentmentPropertyEditorUICascadingDropdownListElement;
 	}
 }

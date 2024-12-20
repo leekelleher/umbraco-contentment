@@ -5,9 +5,7 @@ import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/prope
 import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-templated-label';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-templated-label')
 export class ContentmentPropertyEditorUITemplatedLabelElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -46,6 +44,6 @@ export { ContentmentPropertyEditorUITemplatedLabelElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUITemplatedLabelElement;
+		'contentment-property-editor-ui-templated-label': ContentmentPropertyEditorUITemplatedLabelElement;
 	}
 }

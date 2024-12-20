@@ -7,9 +7,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-number-input';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-number-input')
 export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property({ type: Number })
 	value?: number;
@@ -69,6 +67,6 @@ export { ContentmentPropertyEditorUINumberInputElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUINumberInputElement;
+		'contentment-property-editor-ui-number-input': ContentmentPropertyEditorUINumberInputElement;
 	}
 }

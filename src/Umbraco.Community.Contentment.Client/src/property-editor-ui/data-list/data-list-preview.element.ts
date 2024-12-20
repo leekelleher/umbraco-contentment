@@ -18,9 +18,7 @@ type ContentmentDataListPreviewTab = {
 	active?: boolean;
 };
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-data-list-preview';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-data-list-preview')
 export class ContentmentPropertyEditorUIDataListPreviewElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -223,6 +221,6 @@ export { ContentmentPropertyEditorUIDataListPreviewElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIDataListPreviewElement;
+		'contentment-property-editor-ui-data-list-preview': ContentmentPropertyEditorUIDataListPreviewElement;
 	}
 }

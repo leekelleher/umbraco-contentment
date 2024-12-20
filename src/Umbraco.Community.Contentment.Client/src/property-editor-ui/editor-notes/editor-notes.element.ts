@@ -12,9 +12,7 @@ import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
 import '../../components/info-box/info-box.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-editor-notes';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
 
@@ -65,6 +63,6 @@ export { ContentmentPropertyEditorUIEditorNotesElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIEditorNotesElement;
+		'contentment-property-editor-ui-editor-notes': ContentmentPropertyEditorUIEditorNotesElement;
 	}
 }

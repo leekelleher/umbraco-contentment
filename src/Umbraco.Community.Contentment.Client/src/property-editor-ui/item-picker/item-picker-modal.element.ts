@@ -42,9 +42,7 @@ export const CONTENTMENT_ITEM_PICKER_MODAL = new UmbModalToken<
 	},
 });
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-item-picker-modal';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-item-picker-modal')
 export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalBaseElement<
 	ContentmentItemPickerModalData,
 	ContentmentItemPickerModalValue
@@ -213,6 +211,6 @@ export { ContentmentPropertyEditorUIItemPickerModalElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIItemPickerModalElement;
+		'contentment-property-editor-ui-item-picker-modal': ContentmentPropertyEditorUIItemPickerModalElement;
 	}
 }

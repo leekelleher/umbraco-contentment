@@ -23,9 +23,7 @@ import type { ContentmentListItemValue } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-list-items';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-list-items')
 export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#sorter = new UmbSorterController<ContentmentListItemValue>(this, {
 		getUniqueOfElement: (element) => {
@@ -311,6 +309,6 @@ export { ContentmentPropertyEditorUIListItemsElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIListItemsElement;
+		'contentment-property-editor-ui-list-items': ContentmentPropertyEditorUIListItemsElement;
 	}
 }

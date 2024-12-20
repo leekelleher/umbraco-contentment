@@ -18,9 +18,7 @@ import type {
 } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIRadioEvent } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-radio-button-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-radio-button-list')
 export class ContentmentPropertyEditorUIRadioButtonListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -113,6 +111,6 @@ export { ContentmentPropertyEditorUIRadioButtonListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIRadioButtonListElement;
+		'contentment-property-editor-ui-radio-button-list': ContentmentPropertyEditorUIRadioButtonListElement;
 	}
 }

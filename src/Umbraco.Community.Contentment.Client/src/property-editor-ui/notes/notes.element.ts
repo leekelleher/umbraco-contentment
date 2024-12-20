@@ -10,9 +10,7 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-notes';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-notes')
 export class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
 
@@ -66,6 +64,6 @@ export { ContentmentPropertyEditorUINotesElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUINotesElement;
+		'contentment-property-editor-ui-notes': ContentmentPropertyEditorUINotesElement;
 	}
 }

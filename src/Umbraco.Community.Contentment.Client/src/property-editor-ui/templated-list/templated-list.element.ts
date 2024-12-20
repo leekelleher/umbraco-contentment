@@ -26,9 +26,7 @@ import type {
 
 import '../../components/lee-was-here/lee-was-here.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-templated-list';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-templated-list')
 export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
@@ -197,6 +195,6 @@ export { ContentmentPropertyEditorUITemplatedListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUITemplatedListElement;
+		'contentment-property-editor-ui-templated-list': ContentmentPropertyEditorUITemplatedListElement;
 	}
 }

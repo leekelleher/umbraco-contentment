@@ -4,9 +4,7 @@ import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } fr
 
 import '../../components/info-box/info-box.element.js';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-read-only';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-read-only')
 export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#config?: string;
 	#value?: string;
@@ -63,6 +61,6 @@ export { ContentmentPropertyEditorUIReadOnlyElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIReadOnlyElement;
+		'contentment-property-editor-ui-read-only': ContentmentPropertyEditorUIReadOnlyElement;
 	}
 }

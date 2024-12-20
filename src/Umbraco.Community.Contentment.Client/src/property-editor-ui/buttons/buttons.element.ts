@@ -22,9 +22,7 @@ import type {
 } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInterfaceLook } from '@umbraco-cms/backoffice/external/uui';
 
-const ELEMENT_NAME = 'contentment-property-editor-ui-buttons';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-property-editor-ui-buttons')
 export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
@@ -166,6 +164,6 @@ export { ContentmentPropertyEditorUIButtonsElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentPropertyEditorUIButtonsElement;
+		'contentment-property-editor-ui-buttons': ContentmentPropertyEditorUIButtonsElement;
 	}
 }

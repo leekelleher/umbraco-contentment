@@ -11,9 +11,7 @@ import '../property-editor-ui/editor-notes/editor-notes.element.js';
 
 const UmbMarked = new Marked({ gfm: true, breaks: true });
 
-const ELEMENT_NAME = 'contentment-workspace';
-
-@customElement(ELEMENT_NAME)
+@customElement('contentment-workspace')
 export class ContentmentWorkspaceElement extends UmbLitElement {
 	// alpha001 was 40 started, 63 total = 63% complete
 	// alpha002 was 51 started, 41 completed, 63 total = 73% complete
@@ -242,6 +240,6 @@ export { ContentmentWorkspaceElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
-		[ELEMENT_NAME]: ContentmentWorkspaceElement;
+		'contentment-workspace': ContentmentWorkspaceElement;
 	}
 }
