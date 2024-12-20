@@ -42,24 +42,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 //<umb-code-block language=""'AngularJS template'"" copy>&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
 //&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-block>
 //</details>", true),
-            //new ContentmentConfigurationField
-            //{
-            //    Key = "template",
-            //    Name = "Template",
-            //    View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
-            //    PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
-            //    Config = new Dictionary<string, object>
-            //    {
-            //        { CodeEditorConfigurationEditor.Mode, "razor" },
-            //        { "minLines", 12 },
-            //        { "maxLines", 30 },
-            //    }
-            //},
             new ContentmentConfigurationField
             {
                 Key = "component",
                 Name = "Component",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ManifestPicker",
+                PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ManifestPicker",
                 Config = new Dictionary<string, object>
                 {
                     { "extensionType", "contentmentDataListItemUi" },
@@ -74,7 +61,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Select to enable picking multiple items.",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-            //new HtmlAttributesConfigurationField(_ioHelper),
         };
 
         public Dictionary<string, object>? DefaultConfig => default;

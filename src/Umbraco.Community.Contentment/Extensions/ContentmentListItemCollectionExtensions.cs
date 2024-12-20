@@ -34,9 +34,9 @@ internal static class ContentmentListItemCollectionExtensions
 
             var itemType = listItem.GetType();
 
-            var type = $"{InternalConstants.ProjectAlias}{suffix}";
+            var type = InternalConstants.ProjectAlias + suffix;
             var name = InternalConstants.DataEditorNamePrefix + itemType.Name.SplitPascalCasing(shortStringHelper);
-            var alias = $"Umb.{InternalConstants.ProjectName}.{suffix}.{itemType.Name}";
+            var alias = InternalConstants.ManifestAliasPrefix + suffix + "." + itemType.Name;
             var meta = utility.GetConfigurationEditorModel((IContentmentEditorItem)listItem);
 
             extensions.Add(new { type, alias, name, meta });

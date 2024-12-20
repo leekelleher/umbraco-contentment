@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [Obsolete("To be removed in Contentment 7.0.")]
         public string View => string.Empty;
 
-        public string PropertyEditorUiAlias => "Umb.Contentment.PropertyEditorUi.DataPicker.List";
+        public string PropertyEditorUiAlias => Constants.Internals.DataEditorUiAliasPrefix + "DataPicker.List";
 
         public Dictionary<string, object>? DefaultValues => default;
 

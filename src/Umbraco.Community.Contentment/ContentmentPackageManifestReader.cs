@@ -38,7 +38,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             new
             {
                 type = "bundle",
-                alias = $"Umb.{Constants.Internals.ProjectName}.Bundle",
+                alias = Constants.Internals.ManifestAliasPrefix + "Bundle",
                 name = Constants.Internals.ManifestNamePrefix + "Bundle",
                 js = $"{Constants.Internals.PackagePathRoot}umbraco-{Constants.Internals.ProjectAlias}.js"
             },
@@ -49,7 +49,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             extensions.Add(new
             {
                 type = "menuItem",
-                alias = $"Umb.{Constants.Internals.ProjectName}.MenuItem.{Constants.Internals.ProjectName}",
+                alias = $"{Constants.Internals.ManifestAliasPrefix}.MenuItem.{Constants.Internals.ProjectName}",
                 name = Constants.Internals.ManifestNamePrefix + "Menu Item",
                 meta = new
                 {

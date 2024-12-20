@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment
 
             internal const string DataEditorAliasPrefix = $"{ProjectNamespace}.";
 
-            internal const string DataEditorUiAliasPrefix = $"Umb.{ProjectName}.PropertyEditorUi.";
+            internal const string DataEditorUiAliasPrefix = ManifestAliasPrefix + "PropertyEditorUi.";
 
             [Obsolete("To be removed in Contentment 7.0")]
             internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
@@ -38,6 +38,8 @@ namespace Umbraco.Community.Contentment
 
             [Obsolete("To be removed in Contentment 7.0")]
             internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
+
+            internal const string ManifestAliasPrefix = $"Umb.{ProjectName}.";
 
             internal const string ManifestNamePrefix = $"[{ProjectName}] ";
 

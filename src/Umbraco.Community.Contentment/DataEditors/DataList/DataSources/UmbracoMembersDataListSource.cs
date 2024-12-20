@@ -48,17 +48,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             get
             {
-                //var items = _memberTypeService
-                //    .GetAll()
-                //    .Select(x => new DataListItem
-                //    {
-                //        Icon = x.Icon,
-                //        Description = x.Description,
-                //        Name = x.Name,
-                //        Value = Udi.Create(UmbConstants.UdiEntityType.MemberType, x.Key).ToString(),
-                //    })
-                //    .ToList();
-
                 return new[]
                 {
                     new ContentmentConfigurationField
@@ -66,18 +55,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         Key = "memberType",
                         Name = "Member Type",
                         Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        //View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
-                        PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.MemberTypePicker",
-                        //Config = new Dictionary<string, object>
-                        //{
-                        //    { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
-                        //    { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                        //    { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                        //    { "listType", "list" },
-                        //    { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                        //    { MaxItemsConfigurationField.MaxItems, 1 },
-                        //}
-                    }
+                        PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "MemberTypePicker",
+                     }
                 };
             }
         }
