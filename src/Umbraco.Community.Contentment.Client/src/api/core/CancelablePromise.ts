@@ -1,15 +1,4 @@
-export { CancelablePromise } from '@umbraco-cms/backoffice/external/backend-api';
-
-export class CancelError extends Error {
-	constructor(message: string) {
-		super(message);
-		this.name = 'CancelError';
-	}
-
-	public get isCancelled(): boolean {
-		return true;
-	}
-}
+export { CancelablePromise, CancelError } from '@umbraco-cms/backoffice/external/backend-api';
 
 export interface OnCancel {
 	readonly isResolved: boolean;
