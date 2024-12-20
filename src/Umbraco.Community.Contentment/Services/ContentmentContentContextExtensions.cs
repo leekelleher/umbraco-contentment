@@ -13,7 +13,6 @@ namespace Umbraco.Community.Contentment.Services
 
         public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
 
-        // TODO: [LK:2024-12-06] Figure out if this is still needed?
         [Obsolete("To be removed in Contentment 7.0")]
         public static string ParseXPathQuery(
             this IContentmentContentContext ctx,

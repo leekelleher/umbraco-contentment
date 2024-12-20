@@ -59,10 +59,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                         PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
                         Config = new Dictionary<string, object>
                         {
-                            { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
+                            { "enableFilter", items.Count > 5 },
                             { Constants.Conventions.ConfigurationFieldAliases.Items, items },
                             { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
                             { MaxItemsConfigurationField.MaxItems, 1 },
                         }
                     }

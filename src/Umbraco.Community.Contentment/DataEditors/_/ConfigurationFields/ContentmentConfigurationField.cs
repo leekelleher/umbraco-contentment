@@ -3,7 +3,6 @@
 
 namespace Umbraco.Cms.Core.PropertyEditors;
 
-// TODO: [LK] Review this temporary class to allow the project to build.
 public class ContentmentConfigurationField
 {
     public string? Key { get; set; }
@@ -12,7 +11,6 @@ public class ContentmentConfigurationField
 
     public string? Description { get; set; }
 
-    // TODO: [LK] Deprecate this; migrate to use `PropertyEditorUiAlias`.
     [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
     public string? View { get; set; }
 

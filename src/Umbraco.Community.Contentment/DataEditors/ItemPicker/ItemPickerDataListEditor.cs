@@ -12,7 +12,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class ItemPickerDataListEditor : IDataListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
+
+        [Obsolete("To be removed in Contentment 7.0", true)]
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
+
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ItemPicker";
 
         private readonly IIOHelper _ioHelper;
@@ -119,11 +122,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
-        public Dictionary<string, object> DefaultConfig => new()
-        {
-            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) ?? string.Empty },
-            { "overlayOrderBy", string.Empty },
-        };
+        public Dictionary<string, object>? DefaultConfig => default;
 
         public bool HasMultipleValues(Dictionary<string, object>? config)
         {
