@@ -13,11 +13,8 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 
 @customElement('contentment-workspace')
 export class ContentmentWorkspaceElement extends UmbLitElement {
-	// alpha001 was 40 started, 63 total = 63% complete
-	// alpha002 was 51 started, 41 completed, 63 total = 73% complete
-	// alpha003 was 61 started, 55 completed, 63 total = 92% complete
 	#started = 62;
-	#completed = 59;
+	#completed = 60;
 	#total = 63;
 	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
 
@@ -102,7 +99,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 | :green_circle: | **SQL** | **Done** | |
 | :green_circle: | **Text Delimited** | **Done** | |
 | :green_circle: | **uCssClassName** | **Done** | |
-| :thinking: | Umbraco Backoffice Sections | _Researching_ | :no_entry_sign: Backoffice sections are now registered on the client-side, unable to query from the server. I'd like to explore a way to have client-side data-sources. |
+| :green_circle: | **Umbraco Backoffice Sections** | **Done** | |
 | :green_circle: | **Umbraco Content** | **Done** | |
 | :green_circle: | **Umbraco Content Properties** | **Done** | |
 | :green_circle: | **Umbraco Content Property Value** | **Done**  | |

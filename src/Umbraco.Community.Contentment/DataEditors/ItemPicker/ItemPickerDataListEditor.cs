@@ -35,8 +35,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            // TODO: [LK:2022-10-21] Add in "Display Mode" field.
-
             new ContentmentConfigurationField
             {
                 Key = "overlaySize",

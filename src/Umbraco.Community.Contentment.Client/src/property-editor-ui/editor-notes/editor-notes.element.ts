@@ -37,7 +37,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 
 		if (this.#icon) {
-			// HACK: To workaround the `color-text` part of the value. [LK]
+			// NOTE: To workaround the `color-text` part of the value. [LK]
 			this.#icon = this.#icon.split(' ')[0];
 		}
 	}

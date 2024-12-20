@@ -11,8 +11,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Data Table";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "data-table.html";
         internal const string DataEditorIcon = "icon-item-arrangement";
-
-        // TODO: [LK] This property-editor UI needs to be developed.
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ReadOnly";
     }
 }

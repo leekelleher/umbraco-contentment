@@ -15,7 +15,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    // TODO: [LK:2024-12-06] Figure out if this is still needed?
     [Obsolete("To be removed in Contentment 7.0")]
     public sealed class UmbracoContentXPathDataListSource
         : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
@@ -91,13 +90,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
                 {
-                    //#pragma warning disable CS0618 // Type or member is obsolete
-                    //                    return contentCache
-                    //                        .GetByXPath(preview, parsed)
-                    //                        .Select(DataListItemExtensions.ToDataListItem)
-                    //                        .ToList();
                     return Enumerable.Empty<DataListItem>();
-                    //#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
 
