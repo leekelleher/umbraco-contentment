@@ -39,6 +39,8 @@ namespace Umbraco.Community.Contentment
             [Obsolete("To be removed in Contentment 7.0")]
             internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
 
+            internal const string ManifestNamePrefix = $"[{ProjectName}] ";
+
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
 

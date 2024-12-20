@@ -7,7 +7,6 @@ namespace Umbraco.Community.Contentment
 {
     public class ContentmentSettings
     {
-        // TODO: [LK:2024-12-06] Figure out if this is still needed?
         public bool DisableTree { get; set; } = false;
 
         public bool DisableTelemetry { get; set; } = false;
