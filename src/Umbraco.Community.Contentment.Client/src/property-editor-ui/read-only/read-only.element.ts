@@ -1,6 +1,9 @@
 import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/info-box/info-box.element.js';
 
@@ -20,9 +23,7 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 	override render() {
 		return html`
-			<contentment-info-box type="warning" icon="icon-alert" heading="This editor has not been developed yet.">
-				<p><em>The property value and data-type configuration are in read-only mode.</em></p>
-
+			<contentment-info-box type="warning" icon="icon-alert" heading="This property editor is in read-only mode.">
 				${when(
 					this.#value,
 					() =>
@@ -51,7 +52,6 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 		css`
 			details > summary {
 				cursor: pointer;
-				font-weight: bold;
 			}
 		`,
 	];

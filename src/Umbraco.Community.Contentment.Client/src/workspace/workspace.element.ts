@@ -13,20 +13,12 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 
 @customElement('contentment-workspace')
 export class ContentmentWorkspaceElement extends UmbLitElement {
-	#started = 62;
-	#completed = 60;
-	#total = 63;
-	#percentage = Math.floor(((this.#started + this.#completed) / (this.#total * 2)) * 100);
-
 	#emojis: { [key: string]: string } = {
 		':no_entry_sign:': '🚫',
-		':grey_question:': '❔',
 		':thinking:': '🤔',
 		':octocat:': '🚥',
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
-		':red_circle:': '🔴',
-		':shrug:': '🤷',
 		':warning:': '⚠️',
 	};
 
@@ -35,21 +27,21 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle: | **Bytes** | **Done** | |
-| :green_circle: | **Code Editor** | **Done** | |
-| :red_circle: | Content Blocks | _Undecided_ | :no_entry_sign: Considering deprecating; potentially migrate to Block List? :thinking: |
-| :green_circle: | **Data List** | **Done** | _(see below for development status on individual components)_ |
-| :green_circle: | Data Picker | **Done** | |
-| :green_circle: | **Editor Notes** | **Done** | |
-| :green_circle: | **Icon Picker** | **Done** | |
-| :green_circle: | **List Items** | **Done** | |
-| :green_circle: | **Notes** | **Done** | |
-| :green_circle: | **Number Input** | **Done** | |
-| :green_circle: | ~Render Macro~ | **Done** | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
-| :green_circle: | **Social Links** | **Done** | |
-| :green_circle: | **Templated Label** | **Done** | |
-| :green_circle: | **Textbox List** | **Done** | |
-| :green_circle: | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
+| :green_circle:  | **Bytes** | **Done** | |
+| :green_circle:  | **Code Editor** | **Done** | |
+| :no_entry_sign:    | Content Blocks | _Deprecated_ | :no_entry_sign: Deprecating; How to migrate to Block List? :thinking: |
+| :green_circle:  | **Data List** | **Done** | _(see below for development status on individual components)_ |
+| :green_circle:  | Data Picker | **Done** | |
+| :green_circle:  | **Editor Notes** | **Done** | |
+| :green_circle:  | **Icon Picker** | **Done** | |
+| :green_circle:  | **List Items** | **Done** | |
+| :green_circle:  | **Notes** | **Done** | |
+| :green_circle:  | **Number Input** | **Done** | |
+| :no_entry_sign: | ~Render Macro~ | _Deprecated_ | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
+| :green_circle:  | **Social Links** | **Done** | |
+| :green_circle:  | **Templated Label** | **Done** | |
+| :green_circle:  | **Textbox List** | **Done** | |
+| :green_circle:  | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
 
 ### Internal components
 
@@ -60,11 +52,11 @@ Status of components used internally within Contentment.
 | :green_circle:  | **Cascading Dropdown List** | **Done** | |
 | :green_circle:  | **Configuration Editor** | **Done** | |
 | :green_circle:  | **Content Picker** | **Done** | |
-| :large_blue_circle: | Data Table | _Started_ | 1% done; A read-only placeholder editor is available. |
+| :no_entry_sign: | ~Data Table~ | _Deprecated_ | :no_entry_sign: No longer used internally. |
 | :green_circle:  | **Dictionary Picker** | **Done** | |
-| :red_circle:    | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
-| :red_circle:    | ~Read Only~ | _Deprecated_ | :no_entry_sign: Not required, as was only used in the Content Block configuration. |
-| :red_circle:    | ~Rich Text Editor~ | _Deprecated_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
+| :no_entry_sign: | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
+| :no_entry_sign: | ~Read Only~ | _Deprecated_ | :no_entry_sign: Not required, as was only used in the Content Block configuration. |
+| :no_entry_sign: | ~Rich Text Editor~ | _Deprecated_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
 
 ### Data List editors
 
@@ -75,7 +67,7 @@ Status of list-editors used by the Data List editor.
 | :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
 | :green_circle: | **Dropdown List** | **Done** |  |
-| :green_circle: | **Item Picker** | **Done** | "Done", but sorting and "List type" haven't been implemented yet. |
+| :green_circle: | **Item Picker** | **Done** | :warning: Done, but sorting and "List type" haven't been implemented yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
 | :large_blue_circle: | Tags | _Started_ | 42% done. |
 | :green_circle: | **Templated List** | **Done** | |
@@ -135,28 +127,13 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 	override render() {
 		return html`
 			<umb-body-layout headline="Migration status of Contentment for Umbraco 15">
-				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Under active development</uui-tag></div>
+				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Beta testing</uui-tag></div>
 
 				<contentment-info-box
-					type="current"
+					type="divider"
 					icon="icon-contentment"
-					heading="Status update for Contentment v6.0.0-alpha004">
-					<p>
-						During the alpha phase of Contentment v6.0, this dashboard will appear to provide a status update of
-						progress on Contentment for Umbraco 15.
-					</p>
-					<p>
-						Once the development is out of the alpha phase, this dashboard <strong>will be removed</strong>, until then
-						consider this release as <strong>unstable</strong>.
-					</p>
-					<p>
-						Development has started on <strong>${this.#started}</strong> of the <strong>${this.#total}</strong> UI
-						components, (with <strong>${this.#completed}</strong> complete). Package migration is
-						<strong>${this.#percentage}% complete</strong>.
-					</p>
-					<uui-progress-bar
-						progress=${this.#percentage}
-						style="background-color:var(--uui-color-divider)"></uui-progress-bar>
+					heading="Status update for Contentment v6.0.0-beta001">
+					<p>Contentment v6.0 is in beta. Your testing and feedback of the package is essential.</p>
 					<p>
 						If you find any bugs, or feel something is amiss, then please raise an issue on
 						<a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener"

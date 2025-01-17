@@ -18,7 +18,7 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 	message?: string;
 
 	@property()
-	type?: UUIInterfaceColor | 'current';
+	type?: UUIInterfaceColor | 'border' | 'current' | 'disabled' | 'divider' | 'selected';
 
 	#getStyles() {
 		return styleMap({
