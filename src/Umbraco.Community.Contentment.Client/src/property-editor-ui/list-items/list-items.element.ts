@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import {
 	css,
@@ -9,19 +12,23 @@ import {
 	repeat,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
-import { extractUmbColorVariable } from '@umbraco-cms/backoffice/resources';
 import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
-import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
-import { UMB_ICON_PICKER_MODAL } from '@umbraco-cms/backoffice/icon';
 import type { ContentmentListItemValue } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
+import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
+import type { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+
+type UmbIconPickerChangeEvent = UmbChangeEvent & { target: ContentmentIconPickerElement };
+
+import '../../components/icon-picker/icon-picker.element.js';
 
 @customElement('contentment-property-editor-ui-list-items')
 export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -91,15 +98,14 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.#updateValue({ description }, index);
 	}
 
-	async #onChangeIcon(icon: typeof UMB_ICON_PICKER_MODAL.VALUE, index: number) {
-		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
-		const modal = modalManager.open(this, UMB_ICON_PICKER_MODAL, { value: icon });
-		const picked = await modal?.onSubmit();
-		if (!picked) return;
+	#onChange(event: UmbIconPickerChangeEvent, index: number) {
+		const icon = event.target.value;
+		if (!icon) return;
 
 		const values = [...(this.value ?? [])];
-		values[index] = { ...values[index], icon: `${picked.icon} color-${picked.color}` };
+		values[index] = { ...values[index], icon };
 		this.value = values;
+
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
@@ -128,11 +134,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.value = values;
 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
-	}
-
-	#parseIcon(iconString: string | undefined): typeof UMB_ICON_PICKER_MODAL.VALUE {
-		const [icon, color] = iconString?.split(' ') ?? [];
-		return { icon, color: color?.replace('color-', '') };
 	}
 
 	#updateValue(partial: Partial<ContentmentListItemValue>, index: number) {
@@ -179,9 +180,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 	}
 
 	#renderItem(item: ContentmentListItemValue, index: number) {
-		const icon = this.#parseIcon(item.icon);
-		const varName = icon.color ? extractUmbColorVariable(icon.color) : undefined;
-
 		return html`
 			<div class="item" id=${this.#getUnique(item)}>
 				<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>
@@ -189,18 +187,10 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				${when(
 					!this.#hideIcon,
 					() => html`
-						<uui-button
-							look="outline"
-							label=${this.localize.term('defaultdialogs_selectIcon')}
-							?compact=${this.#hideDescription}
-							@click=${() => this.#onChangeIcon(icon, index)}
-							${umbFocus()}>
-							${when(
-								icon.color,
-								() => html`<uui-icon name=${ifDefined(icon.icon)} style="color:var(${varName})"></uui-icon>`,
-								() => html`<uui-icon name=${ifDefined(icon.icon)}></uui-icon>`
-							)}
-						</uui-button>
+						<contentment-icon-picker
+							.value=${item.icon}
+							@change=${(event: UmbIconPickerChangeEvent) => this.#onChange(event, index)}>
+						</contentment-icon-picker>
 					`
 				)}
 
@@ -264,42 +254,42 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 
 				padding: var(--uui-size-3) var(--uui-size-6);
 				background-color: var(--uui-color-surface-alt);
-			}
 
-			.item[drag-placeholder] {
-				opacity: 0.5;
-			}
+				&[drag-placeholder] {
+					opacity: 0.5;
+				}
 
-			.item > uui-button:not([compact]) {
-				flex: 0 0 var(--uui-size-10);
+				& > contentment-icon-picker {
+					flex: 0 0 var(--uui-size-10);
 
-				font-size: var(--uui-size-layout-2);
-				height: var(--uui-size-layout-4);
-				width: var(--uui-size-layout-4);
-			}
+					font-size: var(--uui-size-layout-2);
+					height: var(--uui-size-layout-4);
+					width: var(--uui-size-layout-4);
+				}
 
-			.item > .inputs {
-				flex: 1;
+				& > .inputs {
+					flex: 1;
 
-				display: flex;
-				flex-direction: column;
-				gap: var(--uui-size-1);
-			}
+					display: flex;
+					flex-direction: column;
+					gap: var(--uui-size-1);
 
-			.item > .inputs > div {
-				display: flex;
-				justify-content: space-between;
-				gap: var(--uui-size-1);
-			}
+					& > div {
+						display: flex;
+						justify-content: space-between;
+						gap: var(--uui-size-1);
 
-			.item > .inputs > div > * {
-				flex: 1;
-			}
+						& > * {
+							flex: 1;
+						}
+					}
+				}
 
-			.item > .actions {
-				flex: 0 0 auto;
-				display: flex;
-				justify-content: flex-end;
+				& > .actions {
+					flex: 0 0 auto;
+					display: flex;
+					justify-content: flex-end;
+				}
 			}
 		`,
 	];

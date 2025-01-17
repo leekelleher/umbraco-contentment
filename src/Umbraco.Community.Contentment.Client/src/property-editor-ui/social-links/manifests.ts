@@ -81,7 +81,6 @@ const editorUi: UmbExtensionManifest = {
 											propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
 											config: {
 												hideColors: true,
-												size: 'small',
 											},
 										},
 										{

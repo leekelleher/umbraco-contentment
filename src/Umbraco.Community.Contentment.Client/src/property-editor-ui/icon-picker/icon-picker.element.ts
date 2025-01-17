@@ -7,17 +7,18 @@ import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
+import type { ContentmentIconPickerElement, IconSize } from '../../components/icon-picker/icon-picker.element.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/property-editor-ui/property-editor-ui.element.js';
+import '../../components/icon-picker/icon-picker.element.js';
 
 @customElement('contentment-property-editor-ui-icon-picker')
 export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
-	private _config?: UmbPropertyEditorConfigCollection;
+	private _defaultIcon: string = '';
 
 	@state()
-	private _defaultIcon: string = '';
+	private _size: IconSize = 'large';
 
 	@property()
 	public value?: string;
@@ -25,24 +26,23 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 		this._defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
-		this._config = new UmbPropertyEditorConfigCollection(config.filter((x) => x.alias !== 'defaultIcon'));
+		this._size = config.getValueByAlias<IconSize>('size') ?? 'large';
 	}
 
-	#onChange(event: UmbPropertyValueChangeEvent & { target: UmbPropertyEditorUiElement }) {
-		var element = event.target;
-		if (!element || element.value === this.value) return;
-		this.value = element.value as any;
+	#onChange(event: CustomEvent & { target: ContentmentIconPickerElement }) {
+		if (!event.target || event.target.value === this.value) return;
+		this.value = event.target.value;
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
 	override render() {
 		return html`
-			<contentment-property-editor-ui
-				property-editor-ui-alias="Umb.PropertyEditorUi.IconPicker"
-				.config=${this._config}
-				.value=${this.value || this._defaultIcon}
+			<contentment-icon-picker
+				.defaultIcon=${this._defaultIcon}
+				.size=${this._size}
+				.value=${this.value}
 				@change=${this.#onChange}>
-			</contentment-property-editor-ui>
+			</contentment-icon-picker>
 		`;
 	}
 }

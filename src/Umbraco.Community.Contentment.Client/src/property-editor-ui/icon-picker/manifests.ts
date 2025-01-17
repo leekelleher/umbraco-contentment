@@ -28,7 +28,24 @@ const editorUi: UmbExtensionManifest = {
 					description: 'Select an icon to be displayed as the default icon, (for when no icon has been selected).',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
 				},
+				{
+					alias: 'size',
+					label: 'Size',
+					description: 'Select the size of icon picker. The default is "large".',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.RadioButtonList',
+					config: [
+						{
+							alias: 'items',
+							value: [
+								{ name: 'Small', value: 'small' },
+								{ name: 'Large', value: 'large' },
+							],
+						},
+						{ alias: 'defaultValue', value: 'large' },
+					],
+				},
 			],
+			defaultData: [{ alias: 'size', value: 'large' }],
 		},
 	},
 };
