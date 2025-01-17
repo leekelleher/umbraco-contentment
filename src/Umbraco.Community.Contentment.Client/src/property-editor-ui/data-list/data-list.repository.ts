@@ -43,7 +43,10 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 
 	public async getEditor(
 		dataSource: ContentmentConfigurationEditorValue | null | undefined,
-		listEditor: ContentmentConfigurationEditorValue | null | undefined
+		listEditor: ContentmentConfigurationEditorValue | null | undefined,
+		entityUnique?: string | null,
+		propertyAlias?: string | null,
+		variantId?: string | null
 	): Promise<ContentmentDataListEditor | undefined> {
 		if (!dataSource || !listEditor) return;
 
@@ -63,7 +66,13 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 
 		// TODO: [LK] Implement the `listEditor` lookup (for client-side only registrations).
 
-		const requestBody = { dataSource: dataSource, listEditor: listEditor };
+		const requestBody = {
+			alias: propertyAlias,
+			dataSource,
+			id: entityUnique,
+			listEditor,
+			variant: variantId,
+		};
 
 		const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
 

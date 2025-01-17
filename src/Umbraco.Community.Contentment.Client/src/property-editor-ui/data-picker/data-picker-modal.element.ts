@@ -15,6 +15,7 @@ import type { ContentmentDataListItem } from '../types.js';
 import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 
 import '../../components/info-box/info-box.element.js';
@@ -71,10 +72,16 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	private _pageNumber = 1;
 
 	@state()
+	private _propertyAlias?: string;
+
+	@state()
 	private _query = '';
 
 	@state()
 	private _totalPages = 0;
+
+	@state()
+	private _variantId?: string;
 
 	constructor() {
 		super();
@@ -89,6 +96,11 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			this.observe(context.dataType, (dataType) => {
 				this._dataTypeKey = dataType?.unique;
 			});
+		});
+
+		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
+			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
+			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
 	}
 
@@ -143,11 +155,13 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 	async #requestItems() {
 		const requestData = {
+			alias: this._propertyAlias,
 			dataTypeKey: this._dataTypeKey,
 			id: this._entityUnique,
 			pageNumber: this._pageNumber,
 			pageSize: this.data?.pageSize ?? 12,
 			query: this._query,
+			variant: this._variantId,
 		};
 
 		const { data } = await tryExecuteAndNotify(this, DataPickerService.getDataPickerSearch(requestData));

@@ -8,8 +8,11 @@ export type ConfigurationEditorItemRequestModel = {
 };
 
 export type DataListConfigurationRequestModel = {
+    alias?: (string) | null;
     dataSource?: ((ConfigurationEditorItemRequestModel) | null);
+    id?: (string) | null;
     listEditor?: ((ConfigurationEditorItemRequestModel) | null);
+    variant?: (string) | null;
 };
 
 export type DataListEditorResponseModel = {
@@ -28,11 +31,13 @@ export type DataListItem = {
 };
 
 export type DataPickerEditorRequestModel = {
-    id: string;
-    dataTypeKey: string;
+    alias?: (string) | null;
     dataSource?: ((ConfigurationEditorItemRequestModel) | null);
+    dataTypeKey: string;
     displayMode?: ((ConfigurationEditorItemRequestModel) | null);
+    id: string;
     values?: Array<(string)> | null;
+    variant?: (string) | null;
 };
 
 export type DataPickerEditorResponseModel = {
@@ -94,11 +99,13 @@ export type PostDataPickerEditorData = {
 export type PostDataPickerEditorResponse = ((DataPickerEditorResponseModel));
 
 export type GetDataPickerSearchData = {
+    alias?: string;
     dataTypeKey?: string;
     id?: string;
     pageNumber?: number;
     pageSize?: number;
     query?: string;
+    variant?: string;
 };
 
 export type GetDataPickerSearchResponse = ((PagedModelDataListItemModel));

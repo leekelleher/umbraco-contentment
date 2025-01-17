@@ -8,9 +8,9 @@ import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-// import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
-// import { UMB_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/workspace';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
+import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/lee-was-here/lee-was-here.element.js';
@@ -22,45 +22,49 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 
 	#repository = new ContentmentDataListRepository(this);
 
-	// @state()
-	// private _entityUnique?: string | null;
+	@state()
+	private _entityUnique?: string | null;
 
-	// @state()
-	// private _propertyAlias?: string;
+	@state()
+	private _propertyAlias?: string;
 
-	// @state()
-	// private _variantId?: string;
+	@state()
+	private _variantId?: string;
 
 	@state()
 	private _initialized = false;
 
 	@state()
-	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
+	private _dataSource?: ContentmentConfigurationEditorValue;
 
 	@state()
-	private _listEditor?: Array<ContentmentConfigurationEditorValue>;
+	private _listEditor?: ContentmentConfigurationEditorValue;
 
 	@property()
 	public value?: string | string[];
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		this._dataSource = config.getValueByAlias('dataSource');
-		this._listEditor = config.getValueByAlias('listEditor');
+		this._dataSource = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource')?.[0];
+		this._listEditor = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor')?.[0];
 	}
 
 	constructor() {
 		super();
 
-		// this.consumeContext(UMB_WORKSPACE_CONTEXT, (entityContext) => {
-		// 	// @ts-ignore
-		// 	this.observe(entityContext.unique, (unique) => (this._entityUnique = unique));
-		// });
+		this.consumeContext(
+			'UmbMenuStructureWorkspaceContext',
+			(menuStructureWorkspaceContext: UmbMenuStructureWorkspaceContext) => {
+				this.observe(menuStructureWorkspaceContext.structure, (structure) => {
+					this._entityUnique = structure.at(-1)?.unique;
+				});
+			}
+		);
 
-		// this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
-		// 	this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
-		// 	this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
-		// });
+		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
+			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
+			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
+		});
 	}
 
 	override async firstUpdated() {
@@ -70,7 +74,14 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 
 	async #init() {
 		if (!this._dataSource || !this._listEditor) return;
-		this.#listEditor = await this.#repository.getEditor(this._dataSource[0], this._listEditor[0]);
+
+		this.#listEditor = await this.#repository.getEditor(
+			this._dataSource,
+			this._listEditor,
+			this._entityUnique,
+			this._propertyAlias,
+			this._variantId
+		);
 	}
 
 	#onChange(event: UmbPropertyValueChangeEvent & { target: UmbPropertyEditorUiElement }) {

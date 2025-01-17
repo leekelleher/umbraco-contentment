@@ -8,7 +8,9 @@ import {
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
+import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
@@ -23,16 +25,22 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	#listEditorConfig?: UmbPropertyEditorConfig;
 
 	@state()
-	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
+	private _dataSource?: ContentmentConfigurationEditorValue;
 
 	@state()
 	private _dataTypeKey?: string;
 
 	@state()
-	private _displayMode?: Array<ContentmentConfigurationEditorValue>;
+	private _displayMode?: ContentmentConfigurationEditorValue;
 
 	@state()
-	private _entityUnique?: string;
+	private _entityUnique?: string | null;
+
+	@state()
+	private _propertyAlias?: string;
+
+	@state()
+	private _variantId?: string;
 
 	@state()
 	private _initialized = false;
@@ -49,8 +57,8 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		this._dataSource = config.getValueByAlias('dataSource');
-		this._displayMode = config.getValueByAlias('displayMode');
+		this._dataSource = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource')?.[0];
+		this._displayMode = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('displayMode')?.[0];
 
 		this.#listEditorConfig = [
 			{ alias: 'allowDuplicates', value: parseBoolean(config.getValueByAlias('allowDuplicates') ?? true) },
@@ -64,16 +72,22 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	constructor() {
 		super();
 
-		this.consumeContext('UmbMenuStructureWorkspaceContext', (context: any) => {
-			this.observe(context.structure, (structure: Array<{ unique: string }>) => {
-				this._entityUnique = structure.at(-1)?.unique;
-			});
-		});
+		this.consumeContext(
+			'UmbMenuStructureWorkspaceContext',
+			(menuStructureWorkspaceContext: UmbMenuStructureWorkspaceContext) => {
+				this.observe(menuStructureWorkspaceContext.structure, (structure) => {
+					this._entityUnique = structure.at(-1)?.unique;
+				});
+			}
+		);
 
 		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
-			this.observe(context.dataType, (dataType) => {
-				this._dataTypeKey = dataType?.unique;
-			});
+			this.observe(context.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
+		});
+
+		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
+			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
+			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
 	}
 
@@ -87,11 +101,13 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return reject();
 
 			const requestBody = {
-				id: this._entityUnique,
+				alias: this._propertyAlias,
 				dataTypeKey: this._dataTypeKey,
-				dataSource: this._dataSource[0],
-				displayMode: this._displayMode[0],
+				dataSource: this._dataSource,
+				displayMode: this._displayMode,
+				id: this._entityUnique,
 				values: this.value,
+				variant: this._variantId,
 			};
 
 			const { data } = await tryExecuteAndNotify(this, DataPickerService.postDataPickerEditor({ requestBody }));

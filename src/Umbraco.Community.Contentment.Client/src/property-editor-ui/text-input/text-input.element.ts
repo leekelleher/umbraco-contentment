@@ -30,7 +30,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		if (!config) return;
 		this._inputType = config.getValueByAlias<InputType>('inputType') ?? 'text';
 		this._placeholderText = config.getValueByAlias<string>('placeholderText');
-		this._dataSource = config.getValueByAlias('dataSource');
+		this._dataSource = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource')?.[0];
 		this._maxChars = parseInt(config.getValueByAlias('maxChars')) || 500;
 		this._autocomplete = parseBoolean(config.getValueByAlias('autocomplete'));
 		this._spellcheck = parseBoolean(config.getValueByAlias('spellcheck'));
@@ -39,7 +39,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	@state()
-	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
+	private _dataSource?: ContentmentConfigurationEditorValue;
 
 	@state()
 	private _inputType: InputType = 'text';
@@ -73,7 +73,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		this._items = await new Promise<Array<ContentmentDataListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
-			const requestBody = { dataSource: this._dataSource[0], listEditor: null };
+			const requestBody = { dataSource: this._dataSource, listEditor: null };
 
 			const { data } = await tryExecuteAndNotify(
 				this,

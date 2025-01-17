@@ -100,14 +100,22 @@ public class DataPickerController : ContentmentControllerBase
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Search(string id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+    public async Task<IActionResult> Search(
+        string id,
+        Guid dataTypeKey,
+        int pageNumber = 1,
+        int pageSize = 12,
+        string query = "",
+        string? alias = default,
+        string? variant = default)
     {
         if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
         {
             var results = await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
             return Ok(results);
         }
-        else if (await _dataTypeService.GetAsync(dataTypeKey) is IDataType dataType &&
+
+        if (await _dataTypeService.GetAsync(dataTypeKey) is IDataType dataType &&
             dataType?.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
             dataType.ConfigurationData is Dictionary<string, object> dataTypeConfig &&
             dataTypeConfig.TryGetValue("dataSource", out var tmp1) == true &&

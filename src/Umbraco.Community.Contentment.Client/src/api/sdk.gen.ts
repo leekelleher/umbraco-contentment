@@ -96,6 +96,8 @@ export class DataPickerService {
      * @param data.pageNumber
      * @param data.pageSize
      * @param data.query
+     * @param data.alias
+     * @param data.variant
      * @returns unknown OK
      * @throws ApiError
      */
@@ -108,7 +110,9 @@ export class DataPickerService {
                 dataTypeKey: data.dataTypeKey,
                 pageNumber: data.pageNumber,
                 pageSize: data.pageSize,
-                query: data.query
+                query: data.query,
+                alias: data.alias,
+                variant: data.variant
             },
             errors: {
                 401: 'The resource is protected and requires an authentication token',
