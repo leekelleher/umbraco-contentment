@@ -17,13 +17,13 @@ internal static class ContentmentListItemCollectionExtensions
     {
         var extensions = new List<object>();
 
-        foreach (var listItem in listItems)
+        foreach (var listItem in listItems.OfType<IContentmentEditorItem>())
         {
             var suffix = listItem switch
             {
                 IDataListEditor => "ListEditor",
                 IDataListSource => "DataSource",
-                IDataPickerDisplayMode => "DisplayMode",
+                IContentmentDisplayMode => "DisplayMode",
                 _ => null,
             };
 
@@ -37,7 +37,7 @@ internal static class ContentmentListItemCollectionExtensions
             var type = InternalConstants.ProjectAlias + suffix;
             var name = InternalConstants.DataEditorNamePrefix + itemType.Name.SplitPascalCasing(shortStringHelper);
             var alias = InternalConstants.ManifestAliasPrefix + suffix + "." + itemType.Name;
-            var meta = utility.GetConfigurationEditorModel((IContentmentEditorItem)listItem);
+            var meta = utility.GetConfigurationEditorModel(listItem);
 
             extensions.Add(new { type, alias, name, meta });
         }
