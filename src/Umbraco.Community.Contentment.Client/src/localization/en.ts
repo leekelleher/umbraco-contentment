@@ -7,6 +7,17 @@ export default {
 	contentment: {
 		name: 'Contentment',
 
+		// General
+		removeItemMessage: 'Are you sure you want to remove this item?',
+		removeItemButton: 'Yes, remove',
+
+		// Configuration Editor
+		missingItemName: 'This item is no longer available',
+		missingItemDescription: 'Please remove this configuration and select another item.',
+
+		// Content Blocks
+		labelDisplayMode: 'Display mode',
+		configureDisplayMode: 'Select and configure a display mode',
 		// Data List
 		labelDataSource: 'Data source',
 		labelListEditor: 'List editor',

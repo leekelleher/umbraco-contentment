@@ -25,8 +25,8 @@ const editorUis: Array<UmbExtensionManifest> = [
 				properties: [
 					{
 						alias: 'dataSource',
-						label: 'Data source',
-						description: 'Select and configure a data source.',
+						label: '#contentment_labelDataSource',
+						description: '#contentment_configureDataSource.',
 						propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 						config: [
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
@@ -37,11 +37,11 @@ const editorUis: Array<UmbExtensionManifest> = [
 					},
 					{
 						alias: 'displayMode',
-						label: 'Display mode',
+						label: '#contentment_labelDisplayMode',
 						description: 'Select display mode for the picker editor.',
 						propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 						config: [
-							{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
+							{ alias: 'addButtonLabelKey', value: 'contentment_configureDisplayMode' },
 							{ alias: 'configurationType', value: 'contentmentDisplayMode' },
 							{ alias: 'maxItems', value: 1 },
 							{ alias: 'enableDevMode', value: true },
