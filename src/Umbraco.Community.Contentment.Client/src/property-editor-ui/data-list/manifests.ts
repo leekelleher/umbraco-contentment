@@ -12,7 +12,7 @@ const schema: UmbExtensionManifest = {
 				{
 					alias: 'dataSource',
 					label: '#contentment_labelDataSource',
-					description: '#contentment_configureDataSource.',
+					description: '{#contentment_configureDataSource}.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
@@ -24,7 +24,7 @@ const schema: UmbExtensionManifest = {
 				{
 					alias: 'listEditor',
 					label: '#contentment_labelListEditor',
-					description: '#contentment_configureListEditor.',
+					description: '{#contentment_configureListEditor}.',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureListEditor' },
