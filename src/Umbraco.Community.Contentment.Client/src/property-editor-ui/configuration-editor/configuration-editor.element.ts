@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { parseInt } from '../../utils/index.js';
+import { parseBoolean, parseInt } from '../../utils/index.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL } from './configuration-editor-selection-modal.element.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
 import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
@@ -16,6 +16,8 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-property-editor-ui-configuration-editor')
 export class ContentmentPropertyEditorUIConfigurationEditorElement
 	extends UmbLitElement
@@ -27,6 +29,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	#buttonLabelKey: string = 'general_add';
 
 	#configurationType?: string;
+
+	#disableSorting = false;
 
 	#lookup: Record<string, ContentmentConfigurationEditorModel> = {};
 
@@ -42,7 +46,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.#buttonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? 'general_choose';
 		this.#configurationType = config.getValueByAlias('configurationType');
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
-		// disableSorting
+		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 		// enableFilter
 		// help
 
@@ -165,6 +169,14 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
+	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+		const items = [...(this.value ?? [])];
+		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		this.value = items;
+
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+	}
+
 	override render() {
 		return html`${this.#renderItems()}${this.#renderButton()}`;
 	}
@@ -183,13 +195,17 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	#renderItems() {
 		if (!this.value) return nothing;
 		return html`
-			<uui-ref-list>
+			<contentment-sortable-list
+				class="uui-ref-list"
+				item-selector="uui-ref-node"
+				?disabled=${this.#disableSorting}
+				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
 					(item) => item.key,
 					(item, index) => this.#renderItem(item, index)
 				)}
-			</uui-ref-list>
+			</contentment-sortable-list>
 		`;
 	}
 

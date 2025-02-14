@@ -12,43 +12,26 @@ import {
 	repeat,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
-import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
-import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
+import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
+import type { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
-import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
-import type { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 
 type UmbIconPickerChangeEvent = UmbChangeEvent & { target: ContentmentIconPickerElement };
 
 import '../../components/icon-picker/icon-picker.element.js';
+import '../../components/sortable-list/sortable-list.element.js';
 
 @customElement('contentment-property-editor-ui-list-items')
 export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
-	#sorter = new UmbSorterController<ContentmentListItemValue>(this, {
-		getUniqueOfElement: (element) => {
-			return element.id;
-		},
-		getUniqueOfModel: (modelEntry) => {
-			return this.#getUnique(modelEntry);
-		},
-		draggableSelector: '.handle',
-		itemSelector: '.item',
-		containerSelector: '#wrapper',
-		onChange: ({ model }) => {
-			this.value = model;
-			this.dispatchEvent(new UmbPropertyValueChangeEvent());
-		},
-	});
-
 	#confirmRemoval = false;
+
+	#disableSorting = false;
 
 	#hideDescription = false;
 
@@ -59,7 +42,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 	@property({ type: Array })
 	public set value(value: Array<ContentmentListItemValue> | undefined) {
 		this.#value = value ?? [];
-		this.#sorter.setModel(this.#value);
 	}
 	public get value(): Array<ContentmentListItemValue> | undefined {
 		return this.#value;
@@ -73,10 +55,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.#hideDescription = parseBoolean(config.getValueByAlias('hideDescription'));
 		this.#hideIcon = parseBoolean(config.getValueByAlias('hideIcon'));
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
-	}
-
-	#getUnique(item: ContentmentListItemValue): string {
-		return 'x' + simpleHashCode(item.value + item.name + item.icon).toString(16);
+		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 	}
 
 	#onAdd() {
@@ -136,6 +115,14 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
+	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+		const items = [...(this.value ?? [])];
+		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		this.value = items;
+
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+	}
+
 	#updateValue(partial: Partial<ContentmentListItemValue>, index: number) {
 		if (!partial || index === -1) return;
 
@@ -169,21 +156,27 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 	#renderItems() {
 		if (!this.value || this.value.length === 0) return nothing;
 		return html`
-			<div id="wrapper">
+			<contentment-sortable-list
+				item-selector=".item"
+				handle-selector=".handle"
+				?disabled=${this.#disableSorting}
+				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
-					(item, index) => item.name + index,
+					(item, index) => item.value + index,
 					(item, index) => this.#renderItem(item, index)
 				)}
-			</div>
+			</contentment-sortable-list>
 		`;
 	}
 
 	#renderItem(item: ContentmentListItemValue, index: number) {
 		return html`
-			<div class="item" id=${this.#getUnique(item)}>
-				<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>
-
+			<div class="item">
+				${when(
+					!this.#disableSorting,
+					() => html`<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>`
+				)}
 				${when(
 					!this.#hideIcon,
 					() => html`
@@ -193,7 +186,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 						</contentment-icon-picker>
 					`
 				)}
-
 				<div class="inputs">
 					<div>
 						<uui-input
@@ -221,7 +213,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 						`
 					)}
 				</div>
-
 				<div class="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}
@@ -238,7 +229,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				display: block;
 			}
 
-			#wrapper {
+			contentment-sortable-list {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;

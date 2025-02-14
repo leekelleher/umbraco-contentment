@@ -12,13 +12,11 @@ import {
 	repeat,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
-import { simpleHashCode } from '@umbraco-cms/backoffice/observable-api';
 import { UmbLitElement, umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyValueChangeEvent,
 } from '@umbraco-cms/backoffice/property-editor';
-import { UmbSorterController } from '@umbraco-cms/backoffice/sorter';
 import { CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL } from './social-links-selection-modal.element.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import type {
@@ -29,25 +27,13 @@ import type {
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-property-editor-ui-social-links')
 export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement implements UmbPropertyEditorUiElement {
-	#sorter = new UmbSorterController<ContentmentSocialLinkValue>(this, {
-		getUniqueOfElement: (element) => {
-			return element.id;
-		},
-		getUniqueOfModel: (modelEntry) => {
-			return this.#getUnique(modelEntry);
-		},
-		draggableSelector: '.handle',
-		itemSelector: '.item',
-		containerSelector: '#wrapper',
-		onChange: ({ model }) => {
-			this.value = model;
-			this.dispatchEvent(new UmbPropertyValueChangeEvent());
-		},
-	});
-
 	#confirmRemoval = false;
+
+	#disableSorting = false;
 
 	#lookup: Record<string, ContentmentSocialNetworkModel> = {};
 
@@ -60,7 +46,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	@property({ type: Array })
 	public set value(value: Array<ContentmentSocialLinkValue> | undefined) {
 		this.#value = value ?? [];
-		this.#sorter.setModel(this.#value);
 	}
 	public get value(): Array<ContentmentSocialLinkValue> | undefined {
 		return this.#value;
@@ -72,6 +57,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 
 		const networks = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('networks');
 
@@ -95,10 +81,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 	#getNetworkByKey(key: string): ContentmentSocialNetworkModel | undefined {
 		return this.#lookup[key];
-	}
-
-	#getUnique(item: ContentmentSocialLinkValue): string {
-		return 'x' + simpleHashCode(item.network + item.name + item.url).toString(16);
 	}
 
 	async #onChoose() {
@@ -157,6 +139,14 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		return await modal.onSubmit().catch(() => undefined);
 	}
 
+	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+		const items = [...(this.value ?? [])];
+		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		this.value = items;
+
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+	}
+
 	#updateValue(partial: Partial<ContentmentSocialLinkValue>, index: number) {
 		if (!partial || index === -1) return;
 
@@ -190,22 +180,28 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	#renderItems() {
 		if (!this.value || this.value.length === 0) return nothing;
 		return html`
-			<div id="wrapper">
+			<contentment-sortable-list
+				item-selector=".item"
+				handle-selector=".handle"
+				?disabled=${this.#disableSorting}
+				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
-					(item) => this.#getUnique(item),
+					(item) => item.network + item.name + item.url,
 					(item, index) => this.#renderItem(item, index)
 				)}
-			</div>
+			</contentment-sortable-list>
 		`;
 	}
 
 	#renderItem(item: ContentmentSocialLinkValue, index: number) {
 		const network = this.#getNetworkByKey(item.network);
 		return html`
-			<div class="item" id=${this.#getUnique(item)}>
-				<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>
-
+			<div class="item">
+				${when(
+					!this.#disableSorting,
+					() => html`<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>`
+				)}
 				${when(
 					!network,
 					() => html`
@@ -226,7 +222,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 						</uui-button>
 					`
 				)}
-
 				<div class="inputs">
 					<uui-input
 						label="Enter a social network name"
@@ -240,7 +235,6 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 						placeholder="Enter a URL..."
 						@change=${(e: UUIInputEvent) => this.#onChangeUrl(e, index)}></uui-input>
 				</div>
-
 				<div class="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}
@@ -257,7 +251,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				display: block;
 			}
 
-			#wrapper {
+			contentment-sortable-list {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;

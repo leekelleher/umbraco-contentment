@@ -14,6 +14,8 @@ import type { ContentmentDataListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-property-editor-ui-item-picker')
 export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
@@ -25,7 +27,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#defaultIcon?: string;
 
-	//#disableSorting = false;
+	#disableSorting = false;
 
 	#enableFilter = true;
 
@@ -56,12 +58,12 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
-		//this.#disableSorting = parseBoolean(config.getValueByAlias('disableSorting'));
 		this.#enableFilter = parseBoolean(config.getValueByAlias('enableFilter') ?? '1');
 		this.#enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this.#listType = config.getValueByAlias<string>('listType') ?? 'list';
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#overlaySize = config.getValueByAlias<UUIModalSidebarSize>('overlaySize') ?? 'small';
+		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 
 		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
 
@@ -148,6 +150,14 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
+	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+		const items = [...(this.value ?? [])];
+		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		this.value = items;
+
+		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+	}
+
 	override render() {
 		return html`${this.#renderItems()} ${this.#renderAddButton()}`;
 	}
@@ -166,13 +176,17 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	#renderItems() {
 		if (!this.value) return;
 		return html`
-			<uui-ref-list>
+			<contentment-sortable-list
+				class="uui-ref-list"
+				item-selector="uui-ref-node"
+				?disabled=${this.#disableSorting}
+				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
 					(value) => value,
 					(value, index) => this.#renderItem(value, index)
 				)}
-			</uui-ref-list>
+			</contentment-sortable-list>
 		`;
 	}
 
