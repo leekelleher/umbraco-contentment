@@ -94,7 +94,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 				<uui-input
 					type=${this.#inputTypes.includes(item.value) ? (item.value as InputType) : 'text'}
 					id="item-${item.value}"
-					.value=${this.value?.[item.value]}
+					.value=${this.value?.[item.value] ?? ''}
 					@input=${(event: UUIInputEvent) => this.#onInput(item.value, event)}></uui-input>
 			</div>
 		`;

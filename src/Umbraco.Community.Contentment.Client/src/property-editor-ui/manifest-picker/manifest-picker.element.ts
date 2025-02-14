@@ -132,7 +132,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 				name=${ext.meta?.name ?? ext.name}
 				detail=${ext.meta?.description ?? ext.alias}
 				?standalone=${this.#maxItems === 1}>
-				${when(ext.meta?.icon, () => html`<umb-icon slot="icon" name=${ext.meta.icon}></umb-icon>`)}
+				${when(ext.meta?.icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}

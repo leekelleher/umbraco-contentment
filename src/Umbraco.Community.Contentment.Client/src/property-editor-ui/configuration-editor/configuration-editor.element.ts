@@ -212,14 +212,14 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	#renderItem(item: ContentmentConfigurationEditorValue, index: number) {
 		const model = this.#getModelByKey(item.key);
 		if (!model) return;
-		const icon = this.#renderMetadata(item, model, 'icon');
+		const icon = this.#renderMetadata(item, model, 'icon') ?? '';
 		return html`
 			<uui-ref-node
 				name=${this.#renderMetadata(item, model, 'name') ?? item.key}
 				detail=${this.#renderMetadata(item, model, 'description') ?? item.key}
 				?standalone=${this.#maxItems === 1}
 				@open=${() => this.#onEdit(item, index)}>
-				${when(icon, () => html`<umb-icon slot="icon" name=${icon!}></umb-icon>`)}
+				${when(icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">
 					${when(
 						model?.fields?.length,

@@ -15,7 +15,10 @@ import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentDataListItem } from '../types.js';
-import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
 
 type ContentmentDataListCheckboxOption = ContentmentDataListItem & { checked: boolean };
 
@@ -134,7 +137,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 					?disabled=${item.disabled}
 					@change=${() => this.#onClick(item)}>
 					<div class="outer">
-						${when(this._showIcons && item.icon, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
+						${when(this._showIcons && item.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
 						<uui-form-layout-item>
 							<span slot="label">${this.localize.string(item.name)}</span>
 							${when(

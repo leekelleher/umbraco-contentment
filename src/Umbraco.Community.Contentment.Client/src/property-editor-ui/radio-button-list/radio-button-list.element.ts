@@ -74,7 +74,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		return html`
 			<uui-radio value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
-					${when(this._showIcons && item.icon, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
+					${when(this._showIcons && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
 					<uui-form-layout-item>
 						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(

@@ -125,7 +125,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		return html`
 			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
-					${when(item.icon, () => html`<umb-icon .name=${item.icon}></umb-icon>`)}
+					${when(item.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
 					<uui-form-layout-item>
 						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(item.description, () => html`<span slot="description">${unsafeHTML(item.description)}</span>`)}
