@@ -149,7 +149,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 										name=${item.name}
 										detail=${ifDefined(item.description)}
 										icon=${ifDefined(item.icon)}
-										@click=${() => this.#onChoose(item)}>
+										@open=${() => this.#onChoose(item)}>
 									</umb-ref-item>
 								`
 							)}
