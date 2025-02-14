@@ -8,7 +8,7 @@ export default {
 		name: 'Contentment',
 
 		// General
-		removeItemHeadline: 'Remove item?',
+		removeItemHeadline: (name: string | null | undefined) => `Remove ${name ?? 'item'}?`,
 		removeItemMessage: 'Are you sure you want to remove this item?',
 		removeItemButton: 'Yes, remove',
 

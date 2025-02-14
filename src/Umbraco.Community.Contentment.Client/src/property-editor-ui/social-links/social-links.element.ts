@@ -116,9 +116,9 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		if (this.#confirmRemoval) {
 			await umbConfirmModal(this, {
 				color: 'danger',
-				headline: `Remove ${item.name}?`,
-				content: 'Are you sure you want to remove this item.',
-				confirmLabel: 'Remove',
+				headline: this.localize.term('contentment_removeItemHeadline', [item.name]),
+				content: this.localize.term('contentment_removeItemMessage'),
+				confirmLabel: this.localize.term('contentment_removeItemButton'),
 			});
 		}
 
