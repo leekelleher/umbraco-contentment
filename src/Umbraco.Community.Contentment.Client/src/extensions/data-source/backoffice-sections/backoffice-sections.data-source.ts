@@ -5,7 +5,6 @@ import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registr
 import { UmbControllerBase } from '@umbraco-cms/backoffice/class-api';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentDataSourceApi } from '../types.js';
-import type { ContentmentDataSourceExtentionManifestType } from '../data-source.extension.js';
 import type { ManifestSection } from '@umbraco-cms/backoffice/section';
 import type { UmbControllerAlias, UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
 
@@ -22,8 +21,6 @@ export class ContentmentUmbracoBackofficeSectionsDataSourceApi
 			this.#sections = sections;
 		});
 	}
-
-	manifest?: ContentmentDataSourceExtentionManifestType;
 
 	async getItems(): Promise<Array<ContentmentListItem>> {
 		return (
