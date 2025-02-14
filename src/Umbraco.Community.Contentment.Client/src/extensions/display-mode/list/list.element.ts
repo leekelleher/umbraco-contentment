@@ -21,8 +21,6 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 
 	#defaultIcon?: string;
 
-	#disableSorting = false;
-
 	#maxItems = Infinity;
 
 	@property({ type: Boolean, attribute: 'allow-add' })
@@ -34,6 +32,9 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 	@property({ type: Boolean, attribute: 'allow-remove' })
 	allowRemove = false;
 
+	@property({ type: Boolean, attribute: 'allow-sort' })
+	allowSort = false;
+
 	@property({ type: Array })
 	public items?: Array<string> = [];
 
@@ -43,7 +44,6 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
-		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 	}
 
 	constructor() {
@@ -71,9 +71,9 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 		if (this.#confirmRemoval) {
 			await umbConfirmModal(this, {
 				color: 'danger',
-				headline: 'Remove item?',
-				content: 'Are you sure you want to remove this item?',
-				confirmLabel: this.localize.term('general_remove'),
+				headline: this.localize.term('contentment_removeItemHeadline'),
+				content: this.localize.term('contentment_removeItemMessage'),
+				confirmLabel: this.localize.term('contentment_removeItemButton'),
 			});
 		}
 
@@ -114,7 +114,7 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 			<contentment-sortable-list
 				class="uui-ref-list"
 				item-selector="uui-ref-node"
-				?disabled=${this.#disableSorting}
+				?disabled=${!this.allowSort}
 				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.items,

@@ -21,8 +21,6 @@ export class ContentmentDisplayModeCardsElement extends UmbLitElement implements
 
 	#defaultIcon: string = 'icon-document';
 
-	#disableSorting = false;
-
 	#maxItems = Infinity;
 
 	@property({ type: Boolean, attribute: 'allow-add' })
@@ -34,6 +32,9 @@ export class ContentmentDisplayModeCardsElement extends UmbLitElement implements
 	@property({ type: Boolean, attribute: 'allow-remove' })
 	allowRemove = false;
 
+	@property({ type: Boolean, attribute: 'allow-sort' })
+	allowSort = false;
+
 	@property({ type: Array })
 	public items?: Array<string> = [];
 
@@ -43,7 +44,6 @@ export class ContentmentDisplayModeCardsElement extends UmbLitElement implements
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon') ?? 'icon-document';
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
-		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 	}
 
 	constructor() {
@@ -93,7 +93,7 @@ export class ContentmentDisplayModeCardsElement extends UmbLitElement implements
 		return html`
 			<contentment-sortable-list
 				class="container"
-				?disabled=${this.#disableSorting}
+				?disabled=${!this.allowSort}
 				item-selector="uui-card-media"
 				@sort-end=${this.#onSortEnd}>
 				${this.#renderItems()} ${this.#renderAddButton()}

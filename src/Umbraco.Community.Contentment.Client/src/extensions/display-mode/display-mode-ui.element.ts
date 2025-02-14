@@ -21,6 +21,9 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 	@property({ type: Boolean, attribute: 'allow-remove' })
 	allowRemove = false;
 
+	@property({ type: Boolean, attribute: 'allow-sort' })
+	allowSort = false;
+
 	@property({ attribute: false })
 	config?: UmbPropertyEditorConfigCollection | undefined;
 
@@ -78,6 +81,7 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 			this._element.allowAdd = this.allowAdd;
 			this._element.allowEdit = this.allowEdit;
 			this._element.allowRemove = this.allowRemove;
+			this._element.allowSort = this.allowSort;
 			this._element.items = this.items;
 
 			if (this.config) {

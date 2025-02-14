@@ -14,6 +14,7 @@ export interface ContentmentDisplayModeElement extends HTMLElement {
 	allowAdd: boolean;
 	allowEdit: boolean;
 	allowRemove: boolean;
+	allowSort: boolean;
 	items?: unknown;
 	config?: UmbPropertyEditorConfigCollection;
 	destroy?: () => void;

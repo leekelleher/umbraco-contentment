@@ -37,6 +37,8 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 	#defaultIcon?: string;
 
+	#disableSorting = false;
+
 	#hideSearch = true;
 
 	#listEditor?: ContentmentDataListEditor;
@@ -158,6 +160,9 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			const items = listEditor.config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
 			this.#context.populateItemLookup(items.map((x) => ({ ...x, unique: x.value })));
 
+			this.#disableSorting =
+				this.#maxItems === 1 ? true : parseBoolean(listEditor.config.getValueByAlias('disableSorting'));
+
 			resolve(listEditor);
 		});
 	}
@@ -217,6 +222,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			<contentment-display-mode-ui
 				allow-add
 				allow-remove
+				?allow-sort=${!this.#disableSorting}
 				.config=${this.#listEditor.config}
 				.items=${[]}
 				.uiAlias=${this.#listEditor.propertyEditorUiAlias}
