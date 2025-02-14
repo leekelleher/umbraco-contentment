@@ -131,7 +131,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.#setValue(data?.selection, this.value?.length ?? 0);
 	}
 
-	async #removeItem(item: ContentmentDataListItem, index: number) {
+	async #onRemove(item: ContentmentDataListItem, index: number) {
 		if (!item || !this.value || index == -1) return;
 
 		if (this.#confirmRemoval) {
@@ -203,7 +203,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 				<uui-action-bar slot="actions">
 					<uui-button
 						label=${this.localize.term('general_remove')}
-						@click=${() => this.#removeItem(item, index)}></uui-button>
+						@click=${() => this.#onRemove(item, index)}></uui-button>
 				</uui-action-bar>
 			</uui-ref-node>
 		`;

@@ -8,6 +8,7 @@ export default {
 		name: 'Contentment',
 
 		// General
+		removeItemHeadline: 'Remove item?',
 		removeItemMessage: 'Are you sure you want to remove this item?',
 		removeItemButton: 'Yes, remove',
 
