@@ -9,12 +9,14 @@
 		"generate:server-api": "openapi-ts"
 	},
 	"dependencies": {
-		"lit": "^3.2.0"
+		"lit": "^3.2.0",
+		"sortablejs": "^1.15.6"
 	},
 	"devDependencies": {
 		"@hey-api/openapi-ts": "^0.57.1",
-		"@umbraco-cms/backoffice": "^15.0.0",
-		"typescript": "^5.7.2",
+		"@types/sortablejs": "^1.15.8",
+		"@umbraco-cms/backoffice": "^15.2.1",
+		"typescript": "^5.7.3",
 		"vite": "^5.4.11"
 	}
 }
