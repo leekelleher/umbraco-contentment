@@ -22,11 +22,11 @@ export type ContentmentConfigurationEditorModel = {
 export type ContentmentDataListItem = {
 	name: string;
 	value: string;
-	description?: string;
-	icon?: string;
-	group?: string;
+	description?: string | null;
+	icon?: string | null;
+	group?: string | null;
 	disabled?: boolean;
-	[alias: string]: unknown;
+	[key: string]: unknown;
 };
 
 export type ContentmentDataListOption = ContentmentDataListItem & { selected: boolean };

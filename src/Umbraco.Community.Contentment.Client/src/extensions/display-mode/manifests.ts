@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-export const manifests: Array<UmbExtensionManifest> = [];
+import { manifest as cards } from './cards/manifest.js';
+import { manifest as list } from './list/manifest.js';
+
+export const manifests: Array<UmbExtensionManifest> = [cards, list];

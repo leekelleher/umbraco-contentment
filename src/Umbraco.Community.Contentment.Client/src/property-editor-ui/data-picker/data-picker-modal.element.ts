@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import {
 	css,
 	customElement,
@@ -168,10 +171,9 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 		this._items =
 			data?.items.map((item) => ({
-				name: item.name ?? '',
+				...item,
+				name: item.name ?? item.value ?? '',
 				value: item.value ?? '',
-				description: item.description ?? '',
-				icon: item.icon ?? '',
 			})) ?? [];
 
 		this._loading = false;
@@ -243,22 +245,30 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		if (!this._totalPages) return this.#renderNoItems();
 		return html`
-			<uui-box>
-				<uui-ref-list>
-					${repeat(
-						this._items,
-						(item) => item.key,
-						(item) => html`
-							<umb-ref-item
-								name=${item.name}
-								detail=${ifDefined(item.description)}
-								icon=${ifDefined(item.icon ?? 'icon-document' ?? this.data?.defaultIcon)}
-								@click=${() => this.#onSelect(item)}>
-							</umb-ref-item>
-						`
-					)}
-				</uui-ref-list>
-			</uui-box>
+			${when(
+				// HACK: [LK] Until I figure out how to render custom display modes in the modal.
+				this.data?.listType === 'cards',
+				() => html`
+					<section>
+						${repeat(
+							this._items,
+							(item) => item.key,
+							(item) => this.#renderItem(item)
+						)}
+					</section>
+				`,
+				() => html`
+					<uui-box>
+						<uui-ref-list>
+							${repeat(
+								this._items,
+								(item) => item.key,
+								(item) => this.#renderItem(item)
+							)}
+						</uui-ref-list>
+					</uui-box>
+				`
+			)}
 			${when(
 				this._totalPages > 1,
 				() => html`
@@ -267,6 +277,32 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 				`
 			)}
 		`;
+	}
+
+	#renderItem(item: ContentmentDataListItem) {
+		return when(
+			// HACK: [LK] Until I figure out how to render custom display modes in the modal.
+			this.data?.listType === 'cards',
+			() => html`
+				<uui-card-media
+					name=${item.name}
+					detail=${ifDefined(item.description ?? undefined)}
+					select-only
+					selectable
+					@selected=${() => this.#onSelect(item)}>
+					${when(!item.image && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
+					${when(item.image, () => html`<img src=${item.image!} alt="" />`)}
+				</uui-card-media>
+			`,
+			() => html`
+				<umb-ref-item
+					name=${item.name}
+					detail=${ifDefined(item.description ?? undefined)}
+					icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
+					@click=${() => this.#onSelect(item)}>
+				</umb-ref-item>
+			`
+		);
 	}
 
 	#renderNoItems() {
@@ -296,6 +332,14 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			contentment-info-box,
 			uui-box {
 				margin-bottom: var(--uui-size-space-4);
+			}
+
+			section {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+				grid-auto-rows: 150px;
+				gap: var(--uui-size-space-4);
+				margin-bottom: var(--uui-size-space-5);
 			}
 		`,
 	];
