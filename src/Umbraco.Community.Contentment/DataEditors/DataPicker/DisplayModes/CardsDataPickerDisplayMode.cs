@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class CardsDataPickerDisplayMode : IDataPickerDisplayMode
+    internal class CardsDataPickerDisplayMode : IContentmentDisplayMode
     {
         public string Name => "Cards";
 
@@ -20,7 +20,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         [Obsolete("To be removed in Contentment 7.0.")]
         public string View => string.Empty;
 
-        public string PropertyEditorUiAlias => Constants.Internals.DataEditorUiAliasPrefix + "DataPicker.Cards";
+        public string PropertyEditorUiAlias => "Umb.Contentment.DisplayMode.Cards";
 
         public Dictionary<string, object>? DefaultValues => default;
 
