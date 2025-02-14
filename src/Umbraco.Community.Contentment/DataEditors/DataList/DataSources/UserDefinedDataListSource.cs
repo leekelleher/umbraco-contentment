@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UserDefinedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class UserDefinedDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         public override string Name => "User-defined List";
 

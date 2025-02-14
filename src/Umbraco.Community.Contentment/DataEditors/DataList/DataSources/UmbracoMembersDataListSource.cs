@@ -17,7 +17,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoMembersDataListSource
-        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IMemberTypeService _memberTypeService;

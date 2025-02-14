@@ -8,7 +8,7 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoLanguagesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoLanguagesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly ILanguageService _languageService;
 

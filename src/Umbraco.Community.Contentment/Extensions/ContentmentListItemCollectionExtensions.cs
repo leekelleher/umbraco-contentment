@@ -21,8 +21,8 @@ internal static class ContentmentListItemCollectionExtensions
         {
             var suffix = listItem switch
             {
-                IDataListSource => "DataSource",
                 IContentmentListEditor => "ListEditor",
+                IContentmentDataSource => "DataSource",
                 IContentmentDisplayMode => "DisplayMode",
                 _ => null,
             };

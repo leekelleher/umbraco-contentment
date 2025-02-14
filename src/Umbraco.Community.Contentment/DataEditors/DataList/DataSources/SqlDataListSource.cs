@@ -13,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;

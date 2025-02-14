@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class LanguagesDataListSource : IDataListSource, IDataPickerSource
+    public sealed class LanguagesDataListSource : IContentmentDataSource, IDataPickerSource
     {
         public string Name => ".NET Languages (ISO 639-1)";
 

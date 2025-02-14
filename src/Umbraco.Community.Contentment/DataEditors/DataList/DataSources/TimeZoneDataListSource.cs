@@ -9,7 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TimeZoneDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class TimeZoneDataListSource : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 

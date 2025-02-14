@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTagsDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoTagsDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

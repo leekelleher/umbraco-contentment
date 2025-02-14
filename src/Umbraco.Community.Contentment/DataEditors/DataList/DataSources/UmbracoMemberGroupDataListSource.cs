@@ -9,7 +9,7 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMemberGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoMemberGroupDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
         private readonly IMemberGroupService _memberGroupService;
 

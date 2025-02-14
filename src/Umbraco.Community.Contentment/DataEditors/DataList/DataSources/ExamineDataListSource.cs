@@ -16,7 +16,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ExamineDataListSource : IDataListSource, IDataPickerSource
+    public sealed class ExamineDataListSource : IContentmentDataSource, IDataPickerSource
     {
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;

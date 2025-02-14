@@ -9,7 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public abstract class DataListToDataPickerSourceBridge : IDataListSource, IDataPickerSource
+    public abstract class DataListToDataPickerSourceBridge : IContentmentDataSource, IDataPickerSource
     {
         public abstract string Name { get; }
 

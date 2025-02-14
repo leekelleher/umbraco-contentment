@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private static readonly Dictionary<string, string> _icons = new()
         {

@@ -13,7 +13,7 @@ using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;

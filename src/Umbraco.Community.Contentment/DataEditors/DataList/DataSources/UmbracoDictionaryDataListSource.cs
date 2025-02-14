@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IDictionaryItemService _dictionaryItemService;
 

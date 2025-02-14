@@ -5,7 +5,7 @@
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public interface IDataSourceValueConverter : IContentmentEditorItem
+    public interface IDataSourceValueConverter : IContentmentDataSource
     {
         Type? GetValueType(Dictionary<string, object>? config);
 

@@ -58,7 +58,7 @@ You can extend Data Picker with your own custom data sources and display modes.
 
 #### Extending with your own custom data source
 
-For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerSource`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerSource.cs) interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerSource`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerSource.cs) interface.
 
 This interface contains two methods;
 
@@ -152,17 +152,17 @@ public class EventDataSource : IDataPickerSource
 
 ##### Accessing contextual content
 
-See Data List's documentation for [**Accessing contextual content**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v4.x/docs/editors/data-list.md#accessing-contextual-content).
+See Data List's documentation for [**Accessing contextual content**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/docs/editors/data-list.md#accessing-contextual-content).
 
 
 #### Providing custom values for published content models
 
-See Data List's documentation for [**Providing custom values for published content models**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v4.x/docs/editors/data-list.md#providing-custom-values-for-published-content-models).
+See Data List's documentation for [**Providing custom values for published content models**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/docs/editors/data-list.md#providing-custom-values-for-published-content-models).
 
 
 #### Extending with your own custom display modes
 
-For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerDisplayMode.cs) interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentDisplayMode.cs) interface.
 
 > `// TODO: Write documentation on developing custom display modes.`
 

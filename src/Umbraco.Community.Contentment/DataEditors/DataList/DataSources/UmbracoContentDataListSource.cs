@@ -21,7 +21,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentDataListSource
-        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
@@ -91,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start is not null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
-                var items = start.Children?.Select(x => ToDataListItem(x, imageAlias)) ?? Enumerable.Empty<DataListItem>();
+                var items = start.Children()?.Select(x => ToDataListItem(x, imageAlias)) ?? Enumerable.Empty<DataListItem>();
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
                 {
@@ -131,7 +131,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var items = string.IsNullOrWhiteSpace(query) == false
                     ? start.SearchChildren(query).Select(x => x.Content)
-                    : start.Children;
+                    : start.Children();
 
                 if (items?.Any() == true)
                 {
@@ -199,7 +199,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Context = new DynamicRootContext
                             {
                                 CurrentKey = current?.Key,
-                                ParentKey = (isParent == true ? current?.Key : current?.Parent?.Key) ?? Guid.Empty
+                                ParentKey = (isParent == true ? current?.Key : current?.Parent()?.Key) ?? Guid.Empty
                             },
                             OriginAlias = model.OriginAlias,
                             OriginKey = model.OriginKey,
@@ -215,22 +215,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             return contentCache.GetById(preview, startNodes.First());
                         }
-                    }
-                }
-                // XPath
-                else if (string.IsNullOrWhiteSpace(parentNode) == false)
-                {
-                    IEnumerable<string> getPath(int id) => contentCache.GetById(preview, id)?.Path.ToDelimitedList().Reverse() ?? UmbConstants.System.RootString.AsEnumerableOfOne();
-                    bool publishedContentExists(int id) => contentCache.GetById(preview, id) != null;
-
-                    var parsed = _contentmentContentContext.ParseXPathQuery(parentNode, getPath, publishedContentExists);
-
-                    if (string.IsNullOrWhiteSpace(parsed) == false && parsed.StartsWith('$') == false)
-                    {
-                        //#pragma warning disable CS0618 // Type or member is obsolete
-                        //                        return contentCache.GetSingleByXPath(preview, parsed);
-                        return default;
-                        //#pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }
             }

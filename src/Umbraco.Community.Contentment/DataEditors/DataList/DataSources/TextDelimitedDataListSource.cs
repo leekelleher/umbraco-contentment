@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TextDelimitedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class TextDelimitedDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

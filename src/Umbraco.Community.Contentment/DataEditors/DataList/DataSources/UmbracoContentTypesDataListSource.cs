@@ -14,7 +14,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentTypesDataListSource
-        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedContentTypeCache _publishedContentTypeCache;

@@ -26,7 +26,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentPropertyValueDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoContentPropertyValueDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly ContentmentDataListItemPropertyValueConverterCollection _converters;
         private readonly IContentmentContentContext _contentmentContentContext;
@@ -123,7 +123,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             Context = new DynamicRootContext
                             {
                                 CurrentKey = current?.Key,
-                                ParentKey = (isParent == true ? current?.Key : current?.Parent?.Key) ?? Guid.Empty
+                                ParentKey = (isParent == true ? current?.Key : current?.Parent()?.Key) ?? Guid.Empty
                             },
                             OriginAlias = model.OriginAlias,
                             OriginKey = model.OriginKey,

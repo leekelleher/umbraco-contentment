@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class NumberRangeDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class NumberRangeDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
         public override string Name => "Number Range";
 

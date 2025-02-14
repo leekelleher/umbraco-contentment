@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapPriorityDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class XmlSitemapPriorityDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         public override string Name => "XML Sitemap: Priority";
 

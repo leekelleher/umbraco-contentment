@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
 #pragma warning disable IDE1006 // Naming Styles
-    public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
 #pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

@@ -13,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new()
         {

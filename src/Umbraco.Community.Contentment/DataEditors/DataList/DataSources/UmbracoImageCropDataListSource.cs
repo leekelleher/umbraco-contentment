@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IDataTypeService _dataTypeService;
 

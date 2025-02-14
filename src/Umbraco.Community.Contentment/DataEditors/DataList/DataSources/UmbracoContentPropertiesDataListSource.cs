@@ -9,7 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoContentPropertiesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoContentPropertiesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly Lazy<PropertyEditorCollection> _dataEditors;

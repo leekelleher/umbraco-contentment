@@ -12,7 +12,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

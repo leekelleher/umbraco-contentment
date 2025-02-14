@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class CountriesDataListSource : IDataListSource, IDataPickerSource
+    public sealed class CountriesDataListSource : IContentmentDataSource, IDataPickerSource
     {
         public string Name => ".NET Countries (ISO 3166-1)";
 

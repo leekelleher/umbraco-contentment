@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.Membership;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -12,15 +11,13 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoUsersDataListSource
-        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
-        private readonly IIOHelper _ioHelper;
         private readonly IUserService _userService;
         private readonly IUserGroupService _userGroupService;
 
-        public UmbracoUsersDataListSource(IIOHelper ioHelper, IUserService userService, IUserGroupService userGroupService)
+        public UmbracoUsersDataListSource(IUserService userService, IUserGroupService userGroupService)
         {
-            _ioHelper = ioHelper;
             _userService = userService;
             _userGroupService = userGroupService;
         }

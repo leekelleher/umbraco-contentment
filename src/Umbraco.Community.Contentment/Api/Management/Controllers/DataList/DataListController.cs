@@ -39,7 +39,7 @@ public class DataListController : ContentmentControllerBase
         var key1 = model.DataSource?.Key;
         if (string.IsNullOrWhiteSpace(key1) == false)
         {
-            var source = _utility.GetConfigurationEditor<IDataListSource>(key1);
+            var source = _utility.GetConfigurationEditor<IContentmentDataSource>(key1);
             var sourceConfig = model.DataSource?.Value;
             if (source is not null && sourceConfig is not null)
             {

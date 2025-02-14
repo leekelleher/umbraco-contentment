@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapChangeFrequencyDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class XmlSitemapChangeFrequencyDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly string[] _options;
 

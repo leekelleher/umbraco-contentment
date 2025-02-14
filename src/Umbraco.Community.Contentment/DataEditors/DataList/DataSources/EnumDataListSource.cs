@@ -14,7 +14,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
+    public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
         private readonly IShortStringHelper _shortStringHelper;

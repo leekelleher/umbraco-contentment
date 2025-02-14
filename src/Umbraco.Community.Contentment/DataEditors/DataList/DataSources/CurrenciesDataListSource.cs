@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class CurrenciesDataListSource : IDataListSource, IDataPickerSource
+    public sealed class CurrenciesDataListSource : IContentmentDataSource, IDataPickerSource
     {
         public string Name => ".NET Currencies (ISO 4217)";
 
