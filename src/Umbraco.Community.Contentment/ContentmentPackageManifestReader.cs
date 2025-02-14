@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-using System.Xml.Linq;
 using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Manifest;
 using Umbraco.Cms.Core.Strings;
@@ -33,6 +32,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
 
     public Task<IEnumerable<PackageManifest>> ReadPackageManifestsAsync()
     {
+        var indexJs = $"{Constants.Internals.PackagePathRoot}umbraco-{Constants.Internals.ProjectAlias}.js";
         var extensions = new List<object>()
         {
             new
@@ -40,7 +40,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
                 type = "bundle",
                 alias = Constants.Internals.ManifestAliasPrefix + "Bundle",
                 name = Constants.Internals.ManifestNamePrefix + "Bundle",
-                js = $"{Constants.Internals.PackagePathRoot}umbraco-{Constants.Internals.ProjectAlias}.js"
+                js = indexJs,
             },
         };
 
@@ -70,6 +70,13 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             Version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild() ?? "0.0.0",
             AllowTelemetry = true,
             Extensions = extensions.ToArray(),
+            Importmap = new PackageManifestImportmap
+            {
+                Imports = new()
+                {
+                    { $"@umbraco-community/{Constants.Internals.ProjectAlias}", indexJs },
+                }
+            },
         };
 
         return Task.FromResult(manifest.AsEnumerableOfOne());

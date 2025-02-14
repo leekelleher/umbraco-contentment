@@ -26,7 +26,7 @@
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"paths": {
-			"@umbraco-community/contentment": [ "./src/index.js" ]
+			"@umbraco-community/contentment": ["./src/index.ts"]
 		},
 		"types": ["@umbraco-cms/backoffice/extension-types"]
 	},
