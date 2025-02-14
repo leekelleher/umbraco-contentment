@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class CheckboxListDataListEditor : IDataListEditor
+    public sealed class CheckboxListDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "CheckBoxList";

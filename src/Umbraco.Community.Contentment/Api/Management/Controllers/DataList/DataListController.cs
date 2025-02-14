@@ -51,7 +51,7 @@ public class DataListController : ContentmentControllerBase
         var key2 = model.ListEditor?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
-            var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
+            var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 

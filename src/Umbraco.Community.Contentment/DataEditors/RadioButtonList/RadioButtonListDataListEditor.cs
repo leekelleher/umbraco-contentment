@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class RadioButtonListDataListEditor : IDataListEditor
+    public sealed class RadioButtonListDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "RadioButtonList";

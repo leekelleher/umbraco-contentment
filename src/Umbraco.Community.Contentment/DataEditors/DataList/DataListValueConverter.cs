@@ -102,7 +102,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
+                var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
                 if (editor is not null)
                 {
                     var config = obj2["value"]?.Deserialize<Dictionary<string, object>>();

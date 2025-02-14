@@ -213,11 +213,11 @@ This ensures that you'll get the value as `IEnumerable<TimeZoneInfo>` instead of
 
 #### Extending with your own custom list editor
 
-For creating your own custom list editor, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataListEditor`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListEditor.cs) interface.
+For creating your own custom list editor, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentListEditor`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentListEditor.cs) interface.
 
-This interface contains two properties, `View` and `DefaultConfig` _(optional)_, and one method `HasMultipleValues(config)` returning a boolean value for whether the list editor can select multiple or single values.
+This interface contains two properties, `PropertyEditorUiAlias` and `DefaultConfig` _(optional)_, and one method `HasMultipleValues(config)` returning a boolean value for whether the list editor can select multiple or single values.
 
-The `View` property should set the path of the AngularJS view file. This can be whatever you want it to be. The only requirement is that the AngularJS controller (for the view) will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessible by `$scope.model.config.items`.
+The `PropertyEditorUiAlias` property should set the alias of the property-editor manifest. You can develop this to be whatever you want it to be. The only requirement is that the property-editor component will be passed the data source items, (an object array - a serialization of the `DataListItem` model), accessible from the configuration object under the key of `items`.
 
 #### Using dependency injection (IoC/DI)
 

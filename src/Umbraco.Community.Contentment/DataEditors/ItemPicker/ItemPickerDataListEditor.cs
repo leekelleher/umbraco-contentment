@@ -9,7 +9,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ItemPickerDataListEditor : IDataListEditor
+    public sealed class ItemPickerDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
 

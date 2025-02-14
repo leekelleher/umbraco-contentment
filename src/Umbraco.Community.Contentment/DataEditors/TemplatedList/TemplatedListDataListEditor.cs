@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TemplatedListDataListEditor : IDataListEditor
+    public sealed class TemplatedListDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TemplatedList";

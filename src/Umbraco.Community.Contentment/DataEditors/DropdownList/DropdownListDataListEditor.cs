@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class DropdownListDataListEditor : IDataListEditor
+    public sealed class DropdownListDataListEditor : IContentmentListEditor
     {
         internal const string AllowEmpty = "allowEmpty";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dropdown-list.html";

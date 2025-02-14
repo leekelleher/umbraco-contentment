@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ButtonsDataListEditor : IDataListEditor
+    public sealed class ButtonsDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
