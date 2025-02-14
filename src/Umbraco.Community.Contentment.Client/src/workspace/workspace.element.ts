@@ -29,7 +29,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle:  | **Bytes** | **Done** | |
 | :green_circle:  | **Code Editor** | **Done** | |
-| :no_entry_sign:    | Content Blocks | _Deprecated_ | :no_entry_sign: Deprecating; How to migrate to Block List? :thinking: |
+| :large_blue_circle: | Content Blocks | _In progress_ | :warning: Not implemented yet. |
 | :green_circle:  | **Data List** | **Done** | _(see below for development status on individual components)_ |
 | :green_circle:  | Data Picker | **Done** | |
 | :green_circle:  | **Editor Notes** | **Done** | |
@@ -67,9 +67,9 @@ Status of list-editors used by the Data List editor.
 | :green_circle: | **Buttons** | **Done** | |
 | :green_circle: | **Checkbox List** | **Done** |  |
 | :green_circle: | **Dropdown List** | **Done** |  |
-| :green_circle: | **Item Picker** | **Done** | :warning: Done, but sorting and "List type" haven't been implemented yet. |
+| :green_circle: | **Item Picker** | **Done** | :warning: Done, but sorting and "List type" config hasn't been implemented yet. |
 | :green_circle: | **Radio Button List** | **Done** |  |
-| :large_blue_circle: | Tags | _Started_ | 42% done. |
+| :large_blue_circle: | Tags | _In progress_ | 42% done. |
 | :green_circle: | **Templated List** | **Done** | |
 
 ### Data List sources
