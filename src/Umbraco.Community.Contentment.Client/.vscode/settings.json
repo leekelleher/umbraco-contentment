@@ -1,0 +1,10 @@
+{
+	"files.exclude": {
+		"node_modules": true,
+		"obj": true,
+		".nvmrc": true,
+		"package-lock.json": true,
+		"tsconfig.tsbuildinfo": true,
+		"Umbraco.Community.Contentment.Client.esproj": true
+	}
+}
