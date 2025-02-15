@@ -19,28 +19,26 @@ export type ContentmentConfigurationEditorModel = {
 	[index: string]: unknown;
 };
 
-export type ContentmentDataListItem = {
+export type ContentmentListItemValue = {
 	name: string;
 	value: string;
-	description?: string | null;
 	icon?: string | null;
+	description?: string | null;
+};
+
+export type ContentmentListItem = ContentmentListItemValue & {
 	group?: string | null;
 	disabled?: boolean;
 	[key: string]: unknown;
 };
+
+export type ContentmentDataListItem = ContentmentListItem;
 
 export type ContentmentDataListOption = ContentmentDataListItem & { selected: boolean };
 
 export type ContentmentDataListEditor = {
 	propertyEditorUiAlias?: string | null;
 	config?: UmbPropertyEditorConfigCollection;
-};
-
-export type ContentmentListItemValue = {
-	name: string;
-	value: string;
-	icon?: string;
-	description?: string;
 };
 
 export type ContentmentSocialLinkValue = {

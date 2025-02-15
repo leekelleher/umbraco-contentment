@@ -1,87 +1,40 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, nothing, property, repeat, when } from '@umbraco-cms/backoffice/external/lit';
-import { parseBoolean, parseInt } from '../../../utils/index.js';
-import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
+import { parseInt } from '../../../utils/index.js';
+import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { CONTENTMENT_DISPLAY_MODE_CONTEXT } from '../display-mode.context-token.js';
-import type { ContentmentDataListItem } from '../../../property-editor-ui/types.js';
-import type { ContentmentDisplayModeElement } from '../display-mode.extension.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
+import type { ContentmentDataListItem, ContentmentListItem } from '../../../property-editor-ui/types.js';
 
 import '../../../components/sortable-list/sortable-list.element.js';
 
 @customElement('contentment-display-mode-list')
-export class ContentmentDisplayModeListElement extends UmbLitElement implements ContentmentDisplayModeElement {
-	#confirmRemoval = false;
-
-	#context?: typeof CONTENTMENT_DISPLAY_MODE_CONTEXT.TYPE;
-
+export class ContentmentDisplayModeListElement extends ContentmentDisplayModeElement {
 	#defaultIcon?: string;
 
 	#maxItems = Infinity;
 
-	@property({ type: Boolean, attribute: 'allow-add' })
-	allowAdd = false;
+	override connectedCallback() {
+		super.connectedCallback();
 
-	@property({ type: Boolean, attribute: 'allow-edit' })
-	allowEdit = false;
-
-	@property({ type: Boolean, attribute: 'allow-remove' })
-	allowRemove = false;
-
-	@property({ type: Boolean, attribute: 'allow-sort' })
-	allowSort = false;
-
-	@property({ type: Array })
-	public items?: Array<string> = [];
-
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
-		if (!config) return;
-
-		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
-		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
-		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#defaultIcon = this.getConfigByAlias<string>('defaultIcon');
+		this.#maxItems = parseInt(this.getConfigByAlias('maxItems')) || Infinity;
 	}
 
-	constructor() {
-		super();
-
-		this.consumeContext(CONTENTMENT_DISPLAY_MODE_CONTEXT, (context) => {
-			this.#context = context;
-			this.observe(context.items, (items) => {
-				this.items = items.map((x) => x.unique);
-			});
-		});
+	#onAdd(event: Event) {
+		event.stopPropagation();
+		this.dispatchEvent(new CustomEvent('add', { bubbles: true, detail: { listType: 'list' } }));
 	}
 
-	#getMetadata(item: ContentmentDataListItem, key: string): string | unknown | undefined {
-		return item[key];
+	#onEdit(event: Event, item: ContentmentDataListItem, index: number) {
+		event.stopPropagation();
+		this.dispatchEvent(new CustomEvent('edit', { bubbles: true, detail: { item, index } }));
 	}
 
-	#onChoose() {
-		this.dispatchEvent(new CustomEvent('open', { bubbles: true, detail: 'list' }));
-	}
-
-	async #onRemove(item: ContentmentDataListItem, index: number) {
-		if (!item || !this.items || index == -1) return;
-
-		if (this.#confirmRemoval) {
-			await umbConfirmModal(this, {
-				color: 'danger',
-				headline: this.localize.term('contentment_removeItemHeadline'),
-				content: this.localize.term('contentment_removeItemMessage'),
-				confirmLabel: this.localize.term('contentment_removeItemButton'),
-			});
-		}
-
-		const tmp = [...this.items];
-		tmp.splice(index, 1);
-		this.items = tmp;
-
-		this.dispatchEvent(new UmbChangeEvent());
+	#onRemove(event: Event, item: ContentmentDataListItem, index: number) {
+		event.stopPropagation();
+		this.dispatchEvent(new CustomEvent('remove', { bubbles: true, detail: { item, index } }));
 	}
 
 	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
@@ -98,13 +51,12 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 
 	#renderAddButton() {
 		if (!this.allowAdd) return nothing;
-		if (this.items && this.items.length >= this.#maxItems) return nothing;
 		return html`
 			<uui-button
 				id="btn-add"
 				label=${this.localize.term('general_choose')}
 				look="placeholder"
-				@click=${this.#onChoose}></uui-button>
+				@click=${this.#onAdd}></uui-button>
 		`;
 	}
 
@@ -118,30 +70,42 @@ export class ContentmentDisplayModeListElement extends UmbLitElement implements 
 				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.items,
-					(value) => value,
-					(value, index) => this.#renderItem(value, index)
+					(item) => item.value,
+					(item, index) => this.#renderItem(item, index)
 				)}
 			</contentment-sortable-list>
 		`;
 	}
 
-	#renderItem(value: string, index: number) {
-		const item = this.#context?.getItem(value);
+	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return;
-		const icon = this.#getMetadata(item, 'icon') ?? this.#defaultIcon;
 		return html`
 			<uui-ref-node
-				name=${this.#getMetadata(item, 'name') ?? value}
-				detail=${this.#getMetadata(item, 'description') ?? ''}
-				?standalone=${this.#maxItems === 1}>
-				${when(icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
+				name=${item.name}
+				detail=${item.description ?? ''}
+				?standalone=${this.items?.length === 1 && this.#maxItems === 1}
+				@open=${(event: Event) => this.#onEdit(event, item, index)}>
+				${when(item.icon ?? this.#defaultIcon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				${when(
-					this.allowRemove,
+					this.allowEdit || this.allowRemove,
 					() => html`
 						<uui-action-bar slot="actions">
-							<uui-button
-								label=${this.localize.term('general_remove')}
-								@click=${() => this.#onRemove(item, index)}></uui-button>
+							${when(
+								this.allowEdit,
+								() => html`
+									<uui-button
+										label=${this.localize.term('general_edit')}
+										@click=${(event: Event) => this.#onEdit(event, item, index)}></uui-button>
+								`
+							)}
+							${when(
+								this.allowRemove,
+								() => html`
+									<uui-button
+										label=${this.localize.term('general_remove')}
+										@click=${(event: Event) => this.#onRemove(event, item, index)}></uui-button>
+								`
+							)}
 						</uui-action-bar>
 					`
 				)}

@@ -1,33 +1,52 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
+import { ContentmentDisplayModeContext } from './display-mode.context.js';
 import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ContentmentDisplayModeExtentionManifestType } from './display-mode.extension.js';
+import type { ContentmentListItem } from '../../property-editor-ui/types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/lee-was-here/lee-was-here.element.js';
 
 @customElement('contentment-display-mode-ui')
 export default class ContentmentDisplayModeUIElement extends UmbLitElement {
-	@property({ type: Boolean, attribute: 'allow-add' })
-	allowAdd = false;
+	#context = new ContentmentDisplayModeContext(this);
 
-	@property({ type: Boolean, attribute: 'allow-edit' })
-	allowEdit = false;
+	@property({ type: Boolean })
+	public set allowAdd(value: boolean) {
+		this.#context.setAllowAdd(value);
+	}
 
-	@property({ type: Boolean, attribute: 'allow-remove' })
-	allowRemove = false;
+	@property({ type: Boolean })
+	public set allowEdit(value: boolean) {
+		this.#context.setAllowEdit(value);
+	}
 
-	@property({ type: Boolean, attribute: 'allow-sort' })
-	allowSort = false;
+	@property({ type: Boolean })
+	public set allowRemove(value: boolean) {
+		this.#context.setAllowRemove(value);
+	}
 
-	@property({ attribute: false })
-	config?: UmbPropertyEditorConfigCollection | undefined;
+	@property({ type: Boolean })
+	public set allowSort(value: boolean) {
+		this.#context.setAllowSort(value);
+	}
 
-	@property({ type: String, attribute: 'ui-alias' })
+	@property({ type: Object, attribute: false })
+	public set config(value: UmbPropertyEditorConfigCollection | undefined) {
+		this.#context.setConfig(value);
+	}
+
+	@property({ type: Array, attribute: false })
+	public set items(value: Array<ContentmentListItem> | undefined) {
+		this.#context.setItems(value);
+	}
+
+	@property()
 	public set uiAlias(value: string | undefined) {
 		this.#uiAlias = value;
 		this.#observePropertyEditorUI();
@@ -35,10 +54,7 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 	public get uiAlias(): string | undefined {
 		return this.#uiAlias;
 	}
-	#uiAlias?: string;
-
-	@property()
-	items?: any;
+	#uiAlias?: string | undefined;
 
 	@state()
 	private _element?: ContentmentDisplayModeExtentionManifestType['ELEMENT_TYPE'];
@@ -74,22 +90,9 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 		}
 
 		const oldElement = this._element;
-
 		this._element = element;
 
-		if (this._element) {
-			this._element.allowAdd = this.allowAdd;
-			this._element.allowEdit = this.allowEdit;
-			this._element.allowRemove = this.allowRemove;
-			this._element.allowSort = this.allowSort;
-			this._element.items = this.items;
-
-			if (this.config) {
-				this._element.config = this.config;
-			}
-
-			this.dispatchEvent(new CustomEvent('loaded'));
-		}
+		this.dispatchEvent(new CustomEvent('loaded'));
 
 		this.requestUpdate('_element', oldElement);
 	}

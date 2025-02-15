@@ -10,5 +10,6 @@ export const manifest: UmbExtensionManifest = {
 		key: 'Umbraco.Community.Contentment.DataEditors.ListDataPickerDisplayMode, Umbraco.Community.Contentment',
 		name: 'List',
 		icon: 'icon-fa-list-ul',
+		description: 'Items will be displayed in a list similar to a content picker.',
 	},
 };

@@ -171,13 +171,16 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 				<uui-ref-list>
 					${repeat(
 						this._items,
-						(item) => item.key,
+						(item) => item.value,
 						(item) => html`
 							<umb-ref-item
 								name=${item.name}
-								detail=${ifDefined(item.description)}
-								icon=${ifDefined(item.icon ?? 'icon-document' ?? this.data?.defaultIcon)}
-								@click=${() => this.#onSelect(item)}>
+								detail=${ifDefined(item.description ?? undefined)}
+								icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
+								select-only
+								selectable
+								@selected=${() => this.#onSelect(item)}
+								@deselected=${() => this.#onSelect(item)}>
 							</umb-ref-item>
 						`
 					)}

@@ -299,7 +299,10 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					name=${item.name}
 					detail=${ifDefined(item.description ?? undefined)}
 					icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
-					@click=${() => this.#onSelect(item)}>
+					select-only
+					selectable
+					@selected=${() => this.#onSelect(item)}
+					@deselected=${() => this.#onSelect(item)}>
 				</umb-ref-item>
 			`
 		);

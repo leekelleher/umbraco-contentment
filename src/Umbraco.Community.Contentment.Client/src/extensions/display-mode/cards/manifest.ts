@@ -10,5 +10,6 @@ export const manifest: UmbExtensionManifest = {
 		key: 'Umbraco.Community.Contentment.DataEditors.CardsDataPickerDisplayMode, Umbraco.Community.Contentment',
 		name: 'Cards',
 		icon: 'icon-playing-cards',
+		description: 'Items will be displayed as cards.',
 	},
 };

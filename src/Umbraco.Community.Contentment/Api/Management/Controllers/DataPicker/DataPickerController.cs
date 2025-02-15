@@ -65,7 +65,7 @@ public class DataPickerController : ContentmentControllerBase
         var key2 = model.DisplayMode?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
-            var editor = _utility.GetConfigurationEditor<IDataPickerDisplayMode>(key2);
+            var editor = _utility.GetConfigurationEditor<IContentmentDisplayMode>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 

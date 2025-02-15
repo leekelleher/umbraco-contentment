@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2025 Lee Kelleher
+
+import { state } from '@umbraco-cms/backoffice/external/lit';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { CONTENTMENT_DISPLAY_MODE_CONTEXT } from './display-mode.context-token.js';
+import type { ContentmentListItem } from '../../property-editor-ui/types.js';
+
+export abstract class ContentmentDisplayModeElement extends UmbLitElement {
+	#context?: typeof CONTENTMENT_DISPLAY_MODE_CONTEXT.TYPE;
+
+	@state()
+	protected allowAdd = false;
+
+	@state()
+	protected allowEdit = false;
+
+	@state()
+	protected allowRemove = false;
+
+	@state()
+	protected allowSort = false;
+
+	@state()
+	protected items?: Array<ContentmentListItem> = [];
+
+	constructor() {
+		super();
+
+		this.consumeContext(CONTENTMENT_DISPLAY_MODE_CONTEXT, (context) => {
+			this.#context = context;
+
+			this.observe(context.allowAdd, (allowAdd) => (this.allowAdd = allowAdd));
+			this.observe(context.allowEdit, (allowEdit) => (this.allowEdit = allowEdit));
+			this.observe(context.allowRemove, (allowRemove) => (this.allowRemove = allowRemove));
+			this.observe(context.allowSort, (allowSort) => (this.allowSort = allowSort));
+			this.observe(context.items, (items) => (this.items = items));
+		});
+	}
+
+	getConfigByAlias<T>(alias: string): T | undefined {
+		return this.#context?.getConfigByAlias<T>(alias);
+	}
+
+	readonly getItems = () => this.#context?.getItems();
+}
