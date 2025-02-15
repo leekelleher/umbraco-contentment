@@ -36,13 +36,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             var db = dataTypeConfigurationEditor?.FromDatabase(configuration, _configurationEditorJsonSerializer);
 
             if (db is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
+                config.TryGetValueAs("message", out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 notes = await _localLinkParser.FromArtifactAsync(notes, contextCache, cancellationToken);
                 notes = await _imageSourceParser.FromArtifactAsync(notes, contextCache, cancellationToken);
 
-                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
+                config["message"] = notes ?? string.Empty;
 
                 return config;
             }
@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public async Task<string?> ToArtifactAsync(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache, CancellationToken cancellationToken = default)
         {
             if (dataType.ConfigurationObject is Dictionary<string, object> config &&
-                config.TryGetValueAs(EditorNotesConfigurationEditor.Message, out string? notes) == true &&
+                config.TryGetValueAs("message", out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
@@ -71,7 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }
 
-                config[EditorNotesConfigurationEditor.Message] = notes ?? string.Empty;
+                config["message"] = notes ?? string.Empty;
             }
 
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();

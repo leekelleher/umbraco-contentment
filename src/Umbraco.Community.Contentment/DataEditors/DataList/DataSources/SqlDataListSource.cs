@@ -80,9 +80,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
-                    { CodeEditorConfigurationEditor.MinLines, 20 },
-                    { CodeEditorConfigurationEditor.MaxLines, 40 },
+                    { "mode", _codeEditorMode },
+                    { "minLines", 20 },
+                    { "maxLines", 40 },
                 }
             },
             new ContentmentConfigurationField

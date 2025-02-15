@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
@@ -20,16 +19,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "render-macro.html";
         internal const string DataEditorIcon = UmbConstants.Icons.Package;
 
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public RenderMacroDataEditor(
-            IIOHelper ioHelper,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
         {
-            _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
         }
@@ -48,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new RenderMacroConfigurationEditor(_ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {

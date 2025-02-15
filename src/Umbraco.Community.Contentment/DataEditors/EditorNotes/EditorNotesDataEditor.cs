@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
@@ -20,18 +19,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorIcon = "icon-alert-alt";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "EditorNotes";
 
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public EditorNotesDataEditor(
             IShortStringHelper shortStringHelper,
-            IJsonSerializer jsonSerializer,
-            IIOHelper ioHelper)
+            IJsonSerializer jsonSerializer)
         {
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
-            _ioHelper = ioHelper;
         }
 
         public string Alias => DataEditorAlias;
@@ -48,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new EditorNotesConfigurationEditor(_ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {
