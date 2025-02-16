@@ -45,6 +45,12 @@ internal sealed class MigrateDataPickerConfiguration : MigrationBase
                 configurationData["dataSource"] = MigrateDataListConfiguration.MigrateDataSourceConfiguration(dataSource);
             }
 
+            if (configurationData.TryGetValueAs("displayMode", out JsonArray? displayMode) == true &&
+               displayMode?.Count > 0)
+            {
+                configurationData["displayMode"] = MigrateDisplayModeConfiguration(displayMode);
+            }
+
             if (configurationData.TryGetValueAs("overlaySize", out List<string>? overlaySize) == true &&
               overlaySize?.Count > 0)
             {
@@ -55,5 +61,38 @@ internal sealed class MigrateDataPickerConfiguration : MigrationBase
 
             _ = Database.Update(dataTypeDto);
         }
+    }
+
+    public static JsonArray MigrateDisplayModeConfiguration(JsonArray displayMode)
+    {
+        var item = displayMode[0]!;
+
+        var key = item["key"]?.ToString();
+
+        switch (key)
+        {
+            case "Umbraco.Community.Contentment.DataEditors.BlocksDisplayMode, Umbraco.Community.Contentment":
+            case "Umbraco.Community.Contentment.DataEditors.StackDisplayMode, Umbraco.Community.Contentment":
+            {
+                item["key"] = "Umb.Contentment.DisplayMode.Blocks";
+                break;
+            }
+            case "Umbraco.Community.Contentment.DataEditors.CardsDisplayMode, Umbraco.Community.Contentment":
+            case "Umbraco.Community.Contentment.DataEditors.CardsDataPickerDisplayMode, Umbraco.Community.Contentment":
+            {
+                item["key"] = "Umb.Contentment.DisplayMode.Cards";
+                break;
+            }
+            case "Umbraco.Community.Contentment.DataEditors.ListDataPickerDisplayMode, Umbraco.Community.Contentment":
+            case "Umbraco.Community.Contentment.DataEditors.ListDisplayMode, Umbraco.Community.Contentment":
+            {
+                item["key"] = "Umb.Contentment.DisplayMode.List";
+                break;
+            }
+            default:
+                break;
+        }
+
+        return displayMode;
     }
 }
