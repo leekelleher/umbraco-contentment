@@ -4,8 +4,13 @@
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL } from './configuration-editor-selection-modal.element.js';
 import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuration-editor-workspace-modal.element.js';
-import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
-import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import type {
+	ContentmentConfigurationEditorModel,
+	ContentmentConfigurationEditorValue,
+	ContentmentDataListItem,
+	ContentmentListItem,
+} from '../types.js';
+import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -16,17 +21,21 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/sortable-list/sortable-list.element.js';
+import '../../components/lee-was-here/lee-was-here.element.js';
+import '../../extensions/display-mode/display-mode-ui.element.js';
 
 @customElement('contentment-property-editor-ui-configuration-editor')
 export class ContentmentPropertyEditorUIConfigurationEditorElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	@state()
-	_items?: Array<ContentmentConfigurationEditorModel>;
+	#allowEditLookup = new Set<string>();
 
 	#buttonLabelKey: string = 'general_add';
+
+	#canEdit = (item: ContentmentListItem) => this.#allowEditLookup.has(item.value);
+
+	#config?: UmbPropertyEditorConfigCollection;
 
 	#configurationType?: string;
 
@@ -38,24 +47,38 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
 
+	#models?: Array<ContentmentConfigurationEditorModel>;
+
+	#uiAlias: string = 'Umb.Contentment.DisplayMode.List';
+
+	@state()
+	private _initialized = false;
+
+	@state()
+	private _items?: Array<ContentmentListItem>;
+
 	@property({ type: Array })
 	public value?: Array<ContentmentConfigurationEditorValue>;
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
+
+		this.#config = config;
+
 		this.#buttonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? 'general_choose';
 		this.#configurationType = config.getValueByAlias('configurationType');
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
+		this.#uiAlias = config.getValueByAlias('uiAlias') ?? 'Umb.Contentment.DisplayMode.List';
 		// enableFilter
 		// help
 
-		this._items = config.getValueByAlias('items');
+		this.#models = config.getValueByAlias('items');
 
-		if (this._items) {
-			this.#populateItemLookup();
+		if (this.#models) {
+			this.#populateModelLookup();
 		} else {
-			this.#getItems();
+			this.#getModels();
 		}
 	}
 
@@ -67,20 +90,20 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		});
 	}
 
-	async #getItems() {
-		if (this._items || !this.#configurationType) return;
+	#getModels() {
+		if (this.#models || !this.#configurationType) return;
 
-		this.observe(umbExtensionsRegistry.byType(this.#configurationType), (items) => {
-			this._items = items
-				.map((item: any) => ({
-					...item.meta,
-					key: item.meta?.key ?? item.alias,
-					name: item.meta?.name ?? item.name,
-					overlaySize: (item.meta?.overlaySize?.toLowerCase() as UUIModalSidebarSize) ?? 'small',
+		this.observe(umbExtensionsRegistry.byType(this.#configurationType), (manifests) => {
+			this.#models = manifests
+				.map((manifest: any) => ({
+					...manifest.meta,
+					key: manifest.meta?.key ?? manifest.alias,
+					name: manifest.meta?.name ?? manifest.name,
+					overlaySize: (manifest.meta?.overlaySize?.toLowerCase() as UUIModalSidebarSize) ?? 'small',
 				}))
 				.sort((a, b) => a.name.localeCompare(b.name));
 
-			this.#populateItemLookup();
+			this.#populateModelLookup();
 		});
 	}
 
@@ -88,11 +111,53 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		return this.#lookup[key];
 	}
 
-	#populateItemLookup() {
-		if (!this._items) return;
-		this._items.forEach((item) => {
-			this.#lookup[item.key] = item;
+	#populateModelLookup() {
+		if (!this.#models) return;
+
+		this.#models.forEach((model) => {
+			this.#lookup[model.key] = model;
+
+			if (model.fields?.length) {
+				this.#allowEditLookup.add(model.key);
+			}
 		});
+
+		this.#populateItems();
+	}
+
+	#populateItems() {
+		const getItemValue = (
+			item: ContentmentConfigurationEditorValue,
+			model: ContentmentConfigurationEditorModel,
+			key: string
+		) => {
+			const expression = model.expressions?.[key];
+			if (expression && typeof expression === 'function') {
+				return expression(item.value);
+			}
+
+			return model[key] ?? item.value[key];
+		};
+
+		const items: Array<ContentmentListItem> = [];
+
+		this.value?.forEach((item) => {
+			const model = this.#getModelByKey(item.key);
+			if (model) {
+				items.push({
+					name: getItemValue(item, model, 'name')?.toString() ?? item.key,
+					icon: getItemValue(item, model, 'icon')?.toString(),
+					description: getItemValue(item, model, 'description')?.toString(),
+					value: item.key,
+					cardStyle: getItemValue(item, model, 'cardStyle'),
+					iconStyle: getItemValue(item, model, 'iconStyle'),
+				});
+			}
+		});
+
+		this._items = items;
+
+		this._initialized = true;
 	}
 
 	#setValue(value: ContentmentConfigurationEditorValue | undefined, index: number) {
@@ -106,14 +171,16 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		tmp[index] = value;
 		this.value = tmp;
 
+		this.#populateItems();
+
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	async #onChoose() {
+	async #onAdd() {
 		if (!this.#modalManager) return;
 
-		if (this._items?.length === 1) {
-			const model = this._items[0];
+		if (this.#models?.length === 1) {
+			const model = this.#models[0];
 
 			const item = {
 				key: model.key,
@@ -129,7 +196,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 			this.#setValue(data, this.value?.length ?? 0);
 		} else {
 			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
-				data: { items: this._items ?? [] },
+				data: { items: this.#models ?? [] },
 			});
 
 			const data = await modal.onSubmit().catch(() => undefined);
@@ -138,22 +205,26 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		}
 	}
 
-	async #onEdit(item: ContentmentConfigurationEditorValue, index: number) {
-		const model = this.#getModelByKey(item.key);
+	async #onEdit(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
+		if (!this.#modalManager || !this.#canEdit(event.detail.item)) return;
 
-		if (!model?.fields?.length || !this.#modalManager) return;
+		const model = this.#getModelByKey(event.detail.item.value);
+		if (!model?.fields?.length) return;
+
+		const value = this.value?.[event.detail.index];
+		if (!value) return;
 
 		const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
-			data: { item, model },
+			data: { item: value, model },
 		});
 
 		const data = await modal.onSubmit().catch(() => undefined);
 
-		this.#setValue(data, index);
+		this.#setValue(data, event.detail.index);
 	}
 
-	async #onRemove(item: ContentmentConfigurationEditorValue, index: number) {
-		if (!item || !this.value || index == -1) return;
+	async #onRemove(event: CustomEvent<{ item: ContentmentDataListItem; index: number }>) {
+		if (!event.detail.item || !this.value || event.detail.index == -1) return;
 
 		await umbConfirmModal(this, {
 			color: 'danger',
@@ -162,102 +233,45 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 			confirmLabel: this.localize.term('contentment_removeItemButton'),
 		});
 
-		const tmp = [...this.value];
-		tmp.splice(index, 1);
-		this.value = tmp;
+		const items = [...this.value];
+		items.splice(event.detail.index, 1);
+		this.value = items;
+
+		this.#populateItems();
 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
-	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+	#onSort(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
 		const items = [...(this.value ?? [])];
 		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
 		this.value = items;
+
+		this.#populateItems();
 
 		this.dispatchEvent(new UmbPropertyValueChangeEvent());
 	}
 
 	override render() {
-		return html`${this.#renderItems()}${this.#renderButton()}`;
-	}
-
-	#renderButton() {
-		if (this.value && this.value.length >= this.#maxItems) return nothing;
+		if (!this._initialized) return html`<uui-loader></uui-loader>`;
+		if (!this.#uiAlias) return html`<lee-was-here></lee-was-here>`;
 		return html`
-			<uui-button
-				id="btn-add"
-				label=${this.localize.term(this.#buttonLabelKey)}
-				look="placeholder"
-				@click=${this.#onChoose}></uui-button>
+			<contentment-display-mode-ui
+				?allowAdd=${!this.value || this.value.length < this.#maxItems}
+				?allowRemove=${true}
+				?allowSort=${!this.#disableSorting}
+				.canEdit=${(item: ContentmentListItem) => this.#canEdit(item)}
+				.addButtonLabelKey=${this.#buttonLabelKey}
+				.config=${this.#config}
+				.items=${this._items}
+				.uiAlias=${this.#uiAlias}
+				@add=${this.#onAdd}
+				@edit=${this.#onEdit}
+				@remove=${this.#onRemove}
+				@sort=${this.#onSort}>
+			</contentment-display-mode-ui>
 		`;
 	}
-
-	#renderItems() {
-		if (!this.value) return nothing;
-		return html`
-			<contentment-sortable-list
-				class="uui-ref-list"
-				item-selector="uui-ref-node"
-				?disabled=${this.#disableSorting}
-				@sort-end=${this.#onSortEnd}>
-				${repeat(
-					this.value,
-					(item) => item.key,
-					(item, index) => this.#renderItem(item, index)
-				)}
-			</contentment-sortable-list>
-		`;
-	}
-
-	#renderItem(item: ContentmentConfigurationEditorValue, index: number) {
-		const model = this.#getModelByKey(item.key);
-		if (!model) return;
-		const icon = this.#renderMetadata(item, model, 'icon') ?? '';
-		return html`
-			<uui-ref-node
-				name=${this.#renderMetadata(item, model, 'name') ?? item.key}
-				detail=${this.#renderMetadata(item, model, 'description') ?? item.key}
-				?standalone=${this.#maxItems === 1}
-				@open=${() => this.#onEdit(item, index)}>
-				${when(icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
-				<uui-action-bar slot="actions">
-					${when(
-						model?.fields?.length,
-						() =>
-							html`
-								<uui-button
-									label=${this.localize.term('general_edit')}
-									@click=${() => this.#onEdit(item, index)}></uui-button>
-							`
-					)}
-					<uui-button
-						label=${this.localize.term('general_remove')}
-						@click=${() => this.#onRemove(item, index)}></uui-button>
-				</uui-action-bar>
-			</uui-ref-node>
-		`;
-	}
-
-	#renderMetadata(
-		item: ContentmentConfigurationEditorValue,
-		model: ContentmentConfigurationEditorModel,
-		key: string
-	): string | unknown | undefined {
-		const expression = model.expressions?.[key];
-		if (expression && typeof expression === 'function') {
-			return expression(item.value);
-		}
-
-		return model[key] ?? item.value[key];
-	}
-
-	static override styles = [
-		css`
-			#btn-add {
-				display: block;
-			}
-		`,
-	];
 }
 
 export { ContentmentPropertyEditorUIConfigurationEditorElement as element };

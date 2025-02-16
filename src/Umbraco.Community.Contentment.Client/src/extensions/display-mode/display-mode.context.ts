@@ -8,6 +8,8 @@ import type { ContentmentListItem } from '../../property-editor-ui/types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
 export class ContentmentDisplayModeContext extends UmbContextBase<ContentmentDisplayModeContext> {
+	#canEdit?: (item: ContentmentListItem, index: number) => boolean;
+
 	#config?: UmbPropertyEditorConfigCollection;
 
 	#allowAdd = new UmbBooleanState(false);
@@ -29,6 +31,9 @@ export class ContentmentDisplayModeContext extends UmbContextBase<ContentmentDis
 		super(host, 'ContentmentDisplayModeContext');
 	}
 
+	readonly canEdit = (item: ContentmentListItem, index: number): boolean =>
+		this.#canEdit?.(item, index) ?? this.#allowEdit.getValue();
+
 	getConfigByAlias<T>(alias: string): T | undefined {
 		return this.#config?.getValueByAlias<T>(alias);
 	}
@@ -42,6 +47,8 @@ export class ContentmentDisplayModeContext extends UmbContextBase<ContentmentDis
 	readonly setAllowRemove = (value: boolean) => this.#allowRemove.setValue(value);
 
 	readonly setAllowSort = (value: boolean) => this.#allowSort.setValue(value);
+
+	readonly setCanEdit = (callback: (item: ContentmentListItem, index: number) => boolean) => (this.#canEdit = callback);
 
 	readonly setConfig = (config?: UmbPropertyEditorConfigCollection) => (this.#config = config);
 

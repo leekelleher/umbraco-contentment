@@ -9,6 +9,8 @@ import type { ContentmentListItem } from '../../property-editor-ui/types.js';
 export abstract class ContentmentDisplayModeElement extends UmbLitElement {
 	#context?: typeof CONTENTMENT_DISPLAY_MODE_CONTEXT.TYPE;
 
+	addButtonLabelKey: string = 'general_add';
+
 	@state()
 	protected allowAdd = false;
 
@@ -37,6 +39,9 @@ export abstract class ContentmentDisplayModeElement extends UmbLitElement {
 			this.observe(context.items, (items) => (this.items = items));
 		});
 	}
+
+	readonly canEdit = (item: ContentmentListItem, index: number): boolean =>
+		this.#context?.canEdit(item, index) ?? this.allowEdit;
 
 	getConfigByAlias<T>(alias: string): T | undefined {
 		return this.#context?.getConfigByAlias<T>(alias);

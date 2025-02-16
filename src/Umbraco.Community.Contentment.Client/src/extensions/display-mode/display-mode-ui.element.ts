@@ -16,6 +16,9 @@ import '../../components/lee-was-here/lee-was-here.element.js';
 export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 	#context = new ContentmentDisplayModeContext(this);
 
+	@property()
+	addButtonLabelKey: string = 'general_add';
+
 	@property({ type: Boolean })
 	public set allowAdd(value: boolean) {
 		this.#context.setAllowAdd(value);
@@ -36,6 +39,11 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 		this.#context.setAllowSort(value);
 	}
 
+	@property({ attribute: false })
+	public set canEdit(callback: (item: ContentmentListItem, index: number) => boolean) {
+		this.#context.setCanEdit(callback);
+	}
+
 	@property({ type: Object, attribute: false })
 	public set config(value: UmbPropertyEditorConfigCollection | undefined) {
 		this.#context.setConfig(value);
@@ -46,7 +54,7 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 		this.#context.setItems(value);
 	}
 
-	@property()
+	@property({ attribute: 'ui-alias' })
 	public set uiAlias(value: string | undefined) {
 		this.#uiAlias = value;
 		this.#observePropertyEditorUI();
@@ -91,6 +99,10 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 
 		const oldElement = this._element;
 		this._element = element;
+
+		if (this._element) {
+			this._element.addButtonLabelKey = this.addButtonLabelKey;
+		}
 
 		this.dispatchEvent(new CustomEvent('loaded'));
 

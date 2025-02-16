@@ -23,9 +23,6 @@ internal static class ContentmentListItemCollectionExtensions
             {
                 IContentmentListEditor => "ListEditor",
                 IContentmentDataSource => "DataSource",
-                // TODO: [LK] Temporarily commented out,
-                // while I figure out how to have both client/server registered display modes with the same alias.
-                //IContentmentDisplayMode => "DisplayMode",
                 _ => null,
             };
 

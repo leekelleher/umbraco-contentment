@@ -54,7 +54,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 		return html`
 			<uui-button
 				id="btn-add"
-				label=${this.localize.term('general_choose')}
+				label=${this.localize.term(this.addButtonLabelKey ?? 'general_choose')}
 				look="placeholder"
 				@click=${this.#onAdd}></uui-button>
 		`;
@@ -91,7 +91,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 					() => html`
 						<uui-action-bar slot="actions">
 							${when(
-								this.allowEdit,
+								this.allowEdit || this.canEdit(item, index),
 								() => html`
 									<uui-button
 										label=${this.localize.term('general_edit')}

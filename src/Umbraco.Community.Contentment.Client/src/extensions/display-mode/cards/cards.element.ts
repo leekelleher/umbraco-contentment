@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, nothing, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentDataListItem, ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { SortableEvent } from '../../../external/sortablejs/index.js';
+import type { StyleInfo } from '@umbraco-cms/backoffice/external/lit';
 
 import '../../../components/sortable-list/sortable-list.element.js';
 
@@ -47,10 +48,11 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 	#renderAddButton() {
 		if (!this.allowAdd) return nothing;
+		const label = this.localize.term(this.addButtonLabelKey ?? 'general_choose');
 		return html`
-			<uui-button id="btn-add" label=${this.localize.term('general_choose')} look="placeholder" @click=${this.#onAdd}>
+			<uui-button id="btn-add" label=${label} look="placeholder" @click=${this.#onAdd}>
 				<uui-icon name="icon-add"></uui-icon>
-				<umb-localize key="general_choose">Choose</umb-localize>
+				<span>${label}</span>
 			</uui-button>
 		`;
 	}
@@ -68,15 +70,18 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return;
+		const cardStyle = item.cardStyle as StyleInfo;
+		const iconStyle = item.iconStyle as StyleInfo;
 		return html`
 			<uui-card-media
 				name=${item.name}
 				detail=${item.description ?? ''}
+				style=${styleMap(cardStyle)}
 				@open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(
 					item.image,
 					() => html`<img src=${item.image!} alt="" />`,
-					() => html`<umb-icon name=${item.icon ?? this.#defaultIcon}></umb-icon>`
+					() => html`<umb-icon name=${item.icon ?? this.#defaultIcon} style=${styleMap(iconStyle)}></umb-icon>`
 				)}
 				${when(
 					this.allowEdit || this.allowRemove,
@@ -89,7 +94,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 										label=${this.localize.term('general_edit')}
 										look="secondary"
 										@click=${(event: Event) => this.#onEdit(event, item, index)}>
-										<uui-icon name="icon-pencil"></uui-icon>
+										<uui-icon name="icon-edit"></uui-icon>
 									</uui-button>
 								`
 							)}
@@ -141,6 +146,8 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 				umb-icon {
 					font-size: var(--uui-size-8);
+					/* HACK: To make the icon position appear vertically centred within the top half of the card. [LK] */
+					padding-bottom: var(--uui-size-12);
 				}
 			}
 

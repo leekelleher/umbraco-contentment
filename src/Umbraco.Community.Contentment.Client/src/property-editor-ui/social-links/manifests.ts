@@ -100,7 +100,8 @@ const editorUi: UmbExtensionManifest = {
 								},
 							],
 						},
-						{ alias: 'view', value: 'cards' },
+						{ alias: 'enableDevMode', value: true },
+						{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.Cards' },
 					],
 				},
 				{
