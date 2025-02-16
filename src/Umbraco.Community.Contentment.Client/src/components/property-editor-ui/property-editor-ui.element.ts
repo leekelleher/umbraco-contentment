@@ -9,7 +9,10 @@ import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type { ManifestPropertyEditorUi, UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type {
+	ManifestPropertyEditorUi,
+	UmbPropertyEditorConfigCollection,
+} from '@umbraco-cms/backoffice/property-editor';
 
 import '../lee-was-here/lee-was-here.element.js';
 
