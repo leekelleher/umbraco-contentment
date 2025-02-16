@@ -97,6 +97,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 			this.#models = manifests
 				.map((manifest: any) => ({
 					...manifest.meta,
+					// TODO: [LK] Review this, as `key` shouldn't be a required field, and `alias` should be used as the fallback.
+					// I probably need to separate `ContentmentConfigurationEditorModel` from the manufest type.
 					key: manifest.meta?.key ?? manifest.alias,
 					name: manifest.meta?.name ?? manifest.name,
 					overlaySize: (manifest.meta?.overlaySize?.toLowerCase() as UUIModalSidebarSize) ?? 'small',

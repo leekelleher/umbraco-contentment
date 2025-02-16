@@ -7,7 +7,7 @@ export const manifest: UmbExtensionManifest = {
 	name: '[Contentment] Cards Display Mode UI',
 	element: () => import('./cards.element.js'),
 	meta: {
-		key: 'Umbraco.Community.Contentment.DataEditors.CardsDataPickerDisplayMode, Umbraco.Community.Contentment',
+		key: 'Umb.Contentment.DisplayMode.Cards',
 		name: 'Cards',
 		icon: 'icon-playing-cards',
 		description: 'Items will be displayed as cards.',

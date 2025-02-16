@@ -24,9 +24,15 @@ const editorUi: UmbExtensionManifest = {
 			properties: [
 				{
 					alias: 'displayMode',
-					label: 'Display mode',
+					label: '#contentment_labelDisplayMode',
 					description: 'Select and configure how to display the blocks in the editor.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ReadOnly',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
+					config: [
+						{ alias: 'addButtonLabelKey', value: 'contentment_configureDisplayMode' },
+						{ alias: 'configurationType', value: 'contentmentDisplayMode' },
+						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
+					],
 				},
 				{
 					alias: 'contentBlockTypes',
