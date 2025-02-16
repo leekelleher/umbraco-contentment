@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import { parseInt } from '../../utils/parse-int.function.js';
 import type { ContentmentDataListItem } from '../types.js';
 import {

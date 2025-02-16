@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import { css, customElement, html, ifDefined, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { parseInt } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -36,7 +39,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 				class=${this._size ?? 's'}
 				pattern="[-0-9]*"
 				placeholder=${ifDefined(this._placeholderText)}
-				.value=${this.value}
+				.value=${this.value?.toString() ?? ''}
 				@input=${this.#onInput}>
 			</uui-input>
 		`;

@@ -75,7 +75,7 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 	#renderItem(item: UmbUniqueItemModel) {
 		if (!item.unique) return;
 		return html`
-			<uui-ref-node name=${item.name} id=${item.unique}>
+			<uui-ref-node name=${item.name} id=${item.unique} ?standalone=${this._items?.length === 1}>
 				<umb-icon slot="icon" name="icon-book-alt"></umb-icon>
 				<uui-action-bar slot="actions">
 					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#removeItem(item)}></uui-button>

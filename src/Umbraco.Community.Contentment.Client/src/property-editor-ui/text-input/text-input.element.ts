@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import {
 	css,
 	customElement,
@@ -75,10 +78,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 
 			const requestBody = { dataSource: this._dataSource, listEditor: null };
 
-			const { data } = await tryExecuteAndNotify(
-				this,
-				DataListService.postDataListEditor({ requestBody })
-			);
+			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
 
 			if (!data) return reject();
 

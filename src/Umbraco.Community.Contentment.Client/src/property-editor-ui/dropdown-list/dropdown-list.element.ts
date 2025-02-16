@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import {
 	css,
