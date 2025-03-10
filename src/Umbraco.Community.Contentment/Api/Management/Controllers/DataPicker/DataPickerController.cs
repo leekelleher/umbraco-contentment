@@ -67,7 +67,7 @@ public class DataPickerController : ContentmentControllerBase
         {
             var editor = _utility.GetConfigurationEditor<IContentmentDisplayMode>(key2);
 
-            propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
+            propertyEditorUiAlias = editor?.PropertyEditorUiAlias ?? key2;
 
             var editorConfig = model.DisplayMode?.Value;
             if (editorConfig is not null)

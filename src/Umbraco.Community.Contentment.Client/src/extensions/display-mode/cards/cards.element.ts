@@ -70,8 +70,8 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return;
-		const cardStyle = item.cardStyle as StyleInfo;
-		const iconStyle = item.iconStyle as StyleInfo;
+		const cardStyle = (item.cardStyle as StyleInfo) ?? {};
+		const iconStyle = (item.iconStyle as StyleInfo) ?? {};
 		return html`
 			<uui-card-media
 				name=${item.name}
