@@ -16,7 +16,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDataListRepository } from '../data-list/data-list.repository.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -78,7 +78,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		currentValue[index] = value;
 		this.value = currentValue;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 
 		if (this._apis.length > next) {
 			this._loading = true;

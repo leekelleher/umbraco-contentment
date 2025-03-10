@@ -17,7 +17,7 @@ import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -115,7 +115,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

@@ -14,7 +14,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
 import type { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -69,7 +69,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 			},
 		];
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onChangeDescription(event: UUIInputEvent, index: number) {
@@ -85,7 +85,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		values[index] = { ...values[index], icon };
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onChangeName(event: UUIInputEvent, index: number) {
@@ -112,7 +112,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		values.splice(index, 1);
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
@@ -120,7 +120,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
 		this.value = items;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#updateValue(partial: Partial<ContentmentListItemValue>, index: number) {
@@ -135,7 +135,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		values[index] = { ...target, ...partial };
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

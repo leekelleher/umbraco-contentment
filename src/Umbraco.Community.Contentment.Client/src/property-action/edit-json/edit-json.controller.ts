@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { UmbActionBase } from '@umbraco-cms/backoffice/action';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UMB_CODE_EDITOR_MODAL } from '@umbraco-cms/backoffice/code-editor';
 import { UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
@@ -39,7 +39,7 @@ export class ContentmentPropertyActionEditJsonElement<ArgsMetaType = never>
 
 		propertyContext.setValue(JSON.parse(data.content));
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 
 		return Promise.resolve();
 	}

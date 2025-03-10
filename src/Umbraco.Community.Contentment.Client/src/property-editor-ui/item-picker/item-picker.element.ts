@@ -3,14 +3,12 @@
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
 import type { ContentmentDataListItem } from '../types.js';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
@@ -104,7 +102,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		tmp.splice(index, 0, ...value);
 		this.value = tmp;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	async #onChoose() {
@@ -147,7 +145,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		tmp.splice(index, 1);
 		this.value = tmp;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
@@ -155,7 +153,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
 		this.value = items;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

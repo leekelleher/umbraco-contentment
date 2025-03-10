@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { UmbActionBase } from '@umbraco-cms/backoffice/action';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyAction } from '@umbraco-cms/backoffice/property-action';
 
@@ -21,7 +21,7 @@ export class ContentmentPropertyActionAllowClearElement<ArgsMetaType = never>
 
 		propertyContext.clearValue();
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 
 		return Promise.resolve();
 	}

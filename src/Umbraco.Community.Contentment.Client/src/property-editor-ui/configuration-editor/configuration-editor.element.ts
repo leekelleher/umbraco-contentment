@@ -14,7 +14,7 @@ import { customElement, html, property, state } from '@umbraco-cms/backoffice/ex
 import { umbConfirmModal, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -175,7 +175,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 		this.#populateItems();
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	async #onAdd() {
@@ -241,7 +241,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 		this.#populateItems();
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onSort(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
@@ -251,7 +251,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 		this.#populateItems();
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

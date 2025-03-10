@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDataListRepository } from './data-list.repository.js';
+import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -84,11 +82,11 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 		);
 	}
 
-	#onChange(event: UmbPropertyValueChangeEvent & { target: UmbPropertyEditorUiElement }) {
+	#onChange(event: UmbChangeEvent & { target: UmbPropertyEditorUiElement }) {
 		var element = event.target;
 		if (!element || element.value === this.value) return;
 		this.value = element.value as any;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

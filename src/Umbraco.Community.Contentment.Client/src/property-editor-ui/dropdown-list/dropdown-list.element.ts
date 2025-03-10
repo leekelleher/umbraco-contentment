@@ -14,7 +14,7 @@ import {
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentDataListItem } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -55,7 +55,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
 		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
 		this.value = event.target.value as string;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

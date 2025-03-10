@@ -2,12 +2,10 @@
 // Copyright © 2024 Lee Kelleher
 
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentIconPickerElement, IconSize } from '../../components/icon-picker/icon-picker.element.js';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../components/icon-picker/icon-picker.element.js';
@@ -32,7 +30,7 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 	#onChange(event: CustomEvent & { target: ContentmentIconPickerElement }) {
 		if (!event.target || event.target.value === this.value) return;
 		this.value = event.target.value;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

@@ -5,7 +5,7 @@ import { css, customElement, html, nothing, property, repeat, state, when } from
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
 import type { InputType, UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import type {
@@ -71,7 +71,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 
 	#onInput(key: string, event: UUIInputEvent) {
 		this.value = { ...this.value, [key]: event.target.value as string };
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

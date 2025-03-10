@@ -18,7 +18,7 @@ import type { ContentmentConfigurationEditorValue, ContentmentDataListItem } fro
 import { DataListService } from '../../api/index.js';
 import type { InputType } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -91,7 +91,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	#onInput(event: InputEvent & { target: HTMLInputElement }) {
 		// TODO: [LK] `maxChars` validation + threshold warning message.
 		this.value = event.target.value;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

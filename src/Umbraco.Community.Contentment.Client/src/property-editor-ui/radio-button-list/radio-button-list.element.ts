@@ -13,7 +13,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentDataListItem } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -58,7 +58,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 	#onChange(event: UUIRadioEvent) {
 		if (event.target.nodeName !== 'UUI-RADIO') return;
 		this.value = event.target.value;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

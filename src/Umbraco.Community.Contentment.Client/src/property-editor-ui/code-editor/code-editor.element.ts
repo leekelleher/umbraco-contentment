@@ -5,7 +5,7 @@ import { css, customElement, html, property, state } from '@umbraco-cms/backoffi
 import { loadCodeEditor } from '@umbraco-cms/backoffice/code-editor';
 import { UmbInputEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
 import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
@@ -43,7 +43,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	#onChange(event: UmbInputEvent & { target: UmbCodeEditorElement }) {
 		if (!(event instanceof UmbInputEvent)) return;
 		this.value = event.target.code;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

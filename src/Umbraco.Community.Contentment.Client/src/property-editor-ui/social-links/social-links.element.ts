@@ -12,11 +12,8 @@ import {
 	repeat,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement, umbFocus } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import { CONTENTMENT_SOCIAL_LINKS_SELECTION_MODAL } from './social-links-selection-modal.element.js';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import type {
@@ -24,6 +21,7 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -91,7 +89,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		values.push(value);
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onChangeName(event: UUIInputEvent, index: number) {
@@ -126,7 +124,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		values.splice(index, 1);
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	async #openSelection(): Promise<ContentmentSocialLinkValue | undefined> {
@@ -144,7 +142,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
 		this.value = items;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#updateValue(partial: Partial<ContentmentSocialLinkValue>, index: number) {
@@ -159,7 +157,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		values[index] = { ...target, ...partial };
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

@@ -3,13 +3,11 @@
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { DataPickerService } from '../../api/sdk.gen.js';
+import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
+import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { CONTENTMENT_DATA_PICKER_MODAL } from './data-picker-modal.element.js';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
@@ -166,11 +164,11 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		});
 	}
 
-	#onChange(event: UmbPropertyValueChangeEvent & { target: ContentmentDisplayModeElement }) {
+	#onChange(event: UmbChangeEvent & { target: ContentmentDisplayModeElement }) {
 		var values = event.target?.getItems()?.map((x) => x.value);
 		if (values === this.value) return;
 		this.value = values;
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	async #onAdd(event: CustomEvent<{ listType: string }>) {
@@ -209,7 +207,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 		this.value = this._items.map((x) => x.value);
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	async #onRemove(event: CustomEvent<{ item: ContentmentDataListItem; index: number }>) {
@@ -230,7 +228,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 		this.value = this._items.map((x) => x.value);
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onSort(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
@@ -240,7 +238,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 		this.value = this._items.map((x) => x.value);
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

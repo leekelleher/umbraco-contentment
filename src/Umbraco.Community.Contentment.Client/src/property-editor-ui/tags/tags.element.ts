@@ -12,14 +12,12 @@ import {
 	state,
 	repeat,
 } from '@umbraco-cms/backoffice/external/lit';
-import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentDataListItem } from '../types.js';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-tags')
 export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -120,7 +118,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 		this._tagInput.value = '';
 		this._currentInput = '';
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#inputError(error: boolean) {
@@ -140,7 +138,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 		currentItems.splice(index, 1);
 		currentItems.length ? (this.value = [...currentItems]) : (this.value = []);
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	/** Dropdown */

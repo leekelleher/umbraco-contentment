@@ -14,7 +14,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyValueChangeEvent } from '@umbraco-cms/backoffice/property-editor';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentDataListItem, ContentmentDataListOption } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -86,7 +86,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 		this.value = values;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {

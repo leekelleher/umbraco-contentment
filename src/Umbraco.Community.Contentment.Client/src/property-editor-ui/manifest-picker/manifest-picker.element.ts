@@ -3,13 +3,11 @@
 
 import { parseInt } from '../../utils/index.js';
 import { css, customElement, html, nothing, property, repeat, when } from '@umbraco-cms/backoffice/external/lit';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
-import {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyValueChangeEvent,
-} from '@umbraco-cms/backoffice/property-editor';
 import { UMB_ITEM_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-manifest-picker')
@@ -79,7 +77,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 		tmp.splice(index, 1);
 		this.value = tmp;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#setValue(value: Array<string> | undefined, index: number) {
@@ -93,7 +91,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 		tmp.splice(index, 0, ...value);
 		this.value = tmp;
 
-		this.dispatchEvent(new UmbPropertyValueChangeEvent());
+		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {
