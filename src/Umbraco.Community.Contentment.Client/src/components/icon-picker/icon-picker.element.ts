@@ -18,7 +18,7 @@ export class ContentmentIconPickerElement extends UmbLitElement {
 	public size?: IconSize = 'large';
 
 	@property()
-	public value?: string;
+	public value?: string | null;
 
 	async #openIconPicker() {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
@@ -33,7 +33,7 @@ export class ContentmentIconPickerElement extends UmbLitElement {
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#parseIcon(iconString: string | undefined): typeof UMB_ICON_PICKER_MODAL.VALUE {
+	#parseIcon(iconString: string | null | undefined): typeof UMB_ICON_PICKER_MODAL.VALUE {
 		const [icon, color] = iconString?.split(' ') ?? [];
 		return { icon, color: color?.replace('color-', '') };
 	}

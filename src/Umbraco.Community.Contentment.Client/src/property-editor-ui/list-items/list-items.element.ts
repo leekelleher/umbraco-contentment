@@ -17,7 +17,6 @@ import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
-import type { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
@@ -206,7 +205,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 							<div>
 								<uui-input
 									label=${this.localize.term('placeholders_enterDescription')}
-									value=${ifDefined(item.description)}
+									value=${ifDefined(item.description ?? undefined)}
 									placeholder=${this.localize.term('placeholders_enterDescription')}
 									@change=${(e: UUIInputEvent) => this.#onChangeDescription(e, index)}></uui-input>
 							</div>

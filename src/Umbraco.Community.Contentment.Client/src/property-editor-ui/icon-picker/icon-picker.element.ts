@@ -29,7 +29,7 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 
 	#onChange(event: CustomEvent & { target: ContentmentIconPickerElement }) {
 		if (!event.target || event.target.value === this.value) return;
-		this.value = event.target.value;
+		this.value = event.target.value ?? undefined;
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
