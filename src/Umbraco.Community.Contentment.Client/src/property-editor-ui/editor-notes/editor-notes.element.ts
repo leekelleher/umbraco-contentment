@@ -2,8 +2,9 @@
 // Copyright © 2023 Lee Kelleher
 
 import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
-import { parseBoolean, tryHideLabel } from '../../utils/index.js';
+import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -15,6 +16,8 @@ import '../../components/info-box/info-box.element.js';
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
+
+	#hidePropertyGroup: boolean = false;
 
 	#alertType?: UUIInterfaceColor;
 
@@ -29,12 +32,14 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
+
 		this.#alertType = config.getValueByAlias('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
 		const message = config.getValueByAlias('message');
 		this.#message = (message as unknown as any)?.markup ?? message;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
+		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 
 		if (this.#icon) {
 			// NOTE: To workaround the `color-text` part of the value. [LK]
@@ -42,9 +47,11 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		}
 	}
 
-	override connectedCallback() {
-		super.connectedCallback();
+	protected override firstUpdated(_changedProperties: PropertyValues): void {
+		super.firstUpdated(_changedProperties);
+
 		tryHideLabel(this, this.#hideLabel);
+		tryMoveBeforePropertyGroup(this, this.#hidePropertyGroup);
 	}
 
 	override render() {

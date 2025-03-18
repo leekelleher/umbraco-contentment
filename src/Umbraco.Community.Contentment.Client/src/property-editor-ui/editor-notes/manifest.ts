@@ -35,7 +35,8 @@ export const manifest: UmbExtensionManifest = {
 					alias: 'icon',
 					label: 'Icon',
 					description: 'Select an icon to be displayed next to the message.',
-					propertyEditorUiAlias: 'Umb.PropertyEditorUi.IconPicker',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.IconPicker',
+					config: [{ alias: 'hideColors', value: true }],
 				},
 				{
 					alias: 'heading',
@@ -88,6 +89,12 @@ export const manifest: UmbExtensionManifest = {
 					alias: 'hideLabel',
 					label: 'Hide label?',
 					description: 'Select to hide the label and have the editor take up the full width of the panel.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'hidePropertyGroup',
+					label: 'Move above property group container?',
+					description: '<em>(experimental)</em> Select to move the note above/outside the property group.',
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 			],
