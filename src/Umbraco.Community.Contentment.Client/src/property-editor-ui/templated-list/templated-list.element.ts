@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type { ContentmentDataListItem, ContentmentDataListOption } from '../types.js';
+import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
 import type { ContentmentDataListItemUiElement } from '../../extensions/index.js';
 import {
 	classMap,
@@ -60,7 +60,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const components = config.getValueByAlias<Array<string>>('component') ?? [];
 		this.#component = components[0];
 
-		const items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
 		if (!this.value) {

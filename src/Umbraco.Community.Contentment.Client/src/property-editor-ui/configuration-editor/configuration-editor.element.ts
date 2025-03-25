@@ -7,7 +7,6 @@ import { CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL } from './configuratio
 import type {
 	ContentmentConfigurationEditorModel,
 	ContentmentConfigurationEditorValue,
-	ContentmentDataListItem,
 	ContentmentListItem,
 } from '../types.js';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
@@ -225,7 +224,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.#setValue(data, event.detail.index);
 	}
 
-	async #onRemove(event: CustomEvent<{ item: ContentmentDataListItem; index: number }>) {
+	async #onRemove(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
 		if (!event.detail.item || !this.value || event.detail.index == -1) return;
 
 		await umbConfirmModal(this, {

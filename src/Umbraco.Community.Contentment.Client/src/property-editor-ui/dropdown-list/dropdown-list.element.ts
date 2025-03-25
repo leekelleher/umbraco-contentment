@@ -15,7 +15,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -38,13 +38,13 @@ export class ContentmentPropertyEditorUIDropdownListElement
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
-		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
 		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 	}
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	@state()
 	private _showDescriptions = false;
@@ -72,7 +72,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 		`;
 	}
 
-	#renderItem(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentListItem) {
 		return html`
 			<uui-combobox-list-option
 				display-value=${this.localize.string(item.name)}

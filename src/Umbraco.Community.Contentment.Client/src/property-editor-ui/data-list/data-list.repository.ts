@@ -14,7 +14,7 @@ import type { ContentmentDataSourceExtentionManifestType } from '../../extension
 import type { UmbApi } from '@umbraco-cms/backoffice/extension-api';
 import type { UmbControllerHost, UmbControllerAlias } from '@umbraco-cms/backoffice/controller-api';
 import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-editor';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import type { ContentmentListEditorExtentionManifestType } from '../../extensions/list-editor/list-editor.extension.js';
 
 export class ContentmentDataListRepository extends UmbRepositoryBase implements UmbApi {
@@ -87,7 +87,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		return { propertyEditorUiAlias, config: new UmbPropertyEditorConfigCollection(config) };
 	}
 
-	public async getItemsByUrl(url: string): Promise<ContentmentDataListItem[]> {
+	public async getItemsByUrl(url: string): Promise<ContentmentListItem[]> {
 		const { data } = await tryExecuteAndNotify(
 			this,
 			__request(OpenAPI, {
@@ -101,7 +101,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 			})
 		);
 
-		return data as Array<ContentmentDataListItem>;
+		return data as Array<ContentmentListItem>;
 	}
 }
 

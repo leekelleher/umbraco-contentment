@@ -35,9 +35,10 @@ export type ContentmentListItem = ContentmentListItemValue & {
 	[key: string]: unknown;
 };
 
+/** @deprecated */
 export type ContentmentDataListItem = ContentmentListItem;
 
-export type ContentmentDataListOption = ContentmentDataListItem & { selected: boolean };
+export type ContentmentDataListOption = ContentmentListItem & { selected: boolean };
 
 export type ContentmentDataListEditor = {
 	propertyEditorUiAlias?: string | null;

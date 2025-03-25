@@ -15,7 +15,7 @@ import {
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ContentmentDataListItem, ContentmentDataListOption } from '../types.js';
+import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -43,7 +43,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		this._look = config.getValueByAlias('look') ?? 'secondary';
 		this._size = config.getValueByAlias('size') ?? 'm';
 
-		const items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
 		if (!this.value) {

@@ -7,7 +7,7 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
@@ -17,7 +17,7 @@ import '../../components/sortable-list/sortable-list.element.js';
 @customElement('contentment-property-editor-ui-item-picker')
 export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	#allowDuplicates = false;
 
@@ -33,7 +33,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#listType = 'list';
 
-	#lookup: Record<string, ContentmentDataListItem> = {};
+	#lookup: Record<string, ContentmentListItem> = {};
 
 	#maxItems = Infinity;
 
@@ -63,7 +63,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.#overlaySize = config.getValueByAlias<UUIModalSidebarSize>('overlaySize') ?? 'small';
 		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 
-		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 
 		this.#populateItemLookup();
 	}
@@ -76,11 +76,11 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		});
 	}
 
-	#getItemByValue(value: string): ContentmentDataListItem | undefined {
+	#getItemByValue(value: string): ContentmentListItem | undefined {
 		return this.#lookup[value];
 	}
 
-	#getMetadata(item: ContentmentDataListItem, key: string): string | unknown | undefined {
+	#getMetadata(item: ContentmentListItem, key: string): string | unknown | undefined {
 		return item[key];
 	}
 
@@ -129,7 +129,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.#setValue(data?.selection, this.value?.length ?? 0);
 	}
 
-	async #onRemove(item: ContentmentDataListItem, index: number) {
+	async #onRemove(item: ContentmentListItem, index: number) {
 		if (!item || !this.value || index == -1) return;
 
 		if (this.#confirmRemoval) {

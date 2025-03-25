@@ -14,7 +14,7 @@ import {
 import { debounce } from '@umbraco-cms/backoffice/utils';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
@@ -35,7 +35,7 @@ interface ContentmentDataPickerModalData {
 }
 
 interface ContentmentDataPickerModalValue {
-	selection: Array<ContentmentDataListItem>;
+	selection: Array<ContentmentListItem>;
 }
 
 export const CONTENTMENT_DATA_PICKER_MODAL = new UmbModalToken<
@@ -66,7 +66,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	private _itemCount = 0;
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	@state()
 	private _loading = false;
@@ -123,7 +123,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		this.#debouncedFilter(event.target.value);
 	}
 
-	#onSelect(item: ContentmentDataListItem) {
+	#onSelect(item: ContentmentListItem) {
 		if (item.disabled) return;
 
 		if (this.data?.enableMultiple) {
@@ -142,7 +142,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	#onSubmit() {
-		const selection: Array<ContentmentDataListItem> = [];
+		const selection: Array<ContentmentListItem> = [];
 
 		this._items.forEach((item) => {
 			if (item.selected) {
@@ -279,7 +279,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		`;
 	}
 
-	#renderItem(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentListItem) {
 		return when(
 			// HACK: [LK] Until I figure out how to render custom display modes in the modal.
 			this.data?.listType === 'cards',

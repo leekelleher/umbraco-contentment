@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import {
 	css,
 	customElement,
@@ -23,7 +23,7 @@ interface ContentmentItemPickerModalData {
 	defaultIcon?: string;
 	enableFilter: boolean;
 	enableMultiple: boolean;
-	items: Array<ContentmentDataListItem>;
+	items: Array<ContentmentListItem>;
 	listType: string;
 	maxItems: number;
 }
@@ -54,7 +54,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 	private _itemCount = 0;
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	override connectedCallback() {
 		super.connectedCallback();
@@ -67,12 +67,12 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 		this._items = query ? this.data.items.filter((item) => this.#predicate(query, item)) : this.data.items;
 	}, 100);
 
-	#predicate = (query: string, item: ContentmentDataListItem) =>
+	#predicate = (query: string, item: ContentmentListItem) =>
 		item.name.toLocaleLowerCase().includes(query) ||
 		item.value.toLocaleLowerCase().includes(query) ||
 		item.description?.toLocaleLowerCase().includes(query);
 
-	#onSelect(item: ContentmentDataListItem) {
+	#onSelect(item: ContentmentListItem) {
 		if (item.disabled) return;
 
 		if (this.data?.enableMultiple) {

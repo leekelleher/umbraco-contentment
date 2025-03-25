@@ -14,7 +14,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import type { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
+import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import { DataListService } from '../../api/index.js';
 import type { InputType } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -48,7 +48,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	private _inputType: InputType = 'text';
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	@state()
 	private _maxChars = 500;
@@ -73,7 +73,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	async #init() {
-		this._items = await new Promise<Array<ContentmentDataListItem>>(async (resolve, reject) => {
+		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
 			const requestBody = { dataSource: this._dataSource, listEditor: null };
@@ -82,7 +82,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 
 			if (!data) return reject();
 
-			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentDataListItem>) ?? [];
+			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
 
 			resolve(items);
 		});

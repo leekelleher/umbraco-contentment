@@ -15,7 +15,7 @@ import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type {
 	ContentmentConfigurationEditorValue,
 	ContentmentDataListEditor,
-	ContentmentDataListItem,
+	ContentmentListItem,
 } from '../types.js';
 import type { ContentmentDisplayModeElement } from '../../extensions/display-mode/display-mode-base.element.js';
 import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
@@ -65,7 +65,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	private _initialized = false;
 
 	@state()
-	private _items?: Array<ContentmentDataListItem>;
+	private _items?: Array<ContentmentListItem>;
 
 	@state()
 	private _propertyAlias?: string;
@@ -152,7 +152,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				config: new UmbPropertyEditorConfigCollection([...(data.config ?? []), ...(this.#config ?? [])]),
 			};
 
-			const items = listEditor.config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+			const items = listEditor.config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 			this._items = items;
 
 			this.#disableSorting =
@@ -210,7 +210,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	async #onRemove(event: CustomEvent<{ item: ContentmentDataListItem; index: number }>) {
+	async #onRemove(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
 		if (!event.detail.item || !this._items || event.detail.index == -1) return;
 
 		if (this.#confirmRemoval) {

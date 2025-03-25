@@ -3,7 +3,7 @@
 
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbControllerBase } from '@umbraco-cms/backoffice/class-api';
-import type { ContentmentDataListItem } from '../../../property-editor-ui/types.js';
+import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentDataSourceApi } from '../types.js';
 import type { ContentmentDataSourceExtentionManifestType } from '../data-source.extension.js';
 import type { ManifestSection } from '@umbraco-cms/backoffice/section';
@@ -25,7 +25,7 @@ export class ContentmentUmbracoBackofficeSectionsDataSourceApi
 
 	manifest?: ContentmentDataSourceExtentionManifestType;
 
-	async getItems(): Promise<Array<ContentmentDataListItem>> {
+	async getItems(): Promise<Array<ContentmentListItem>> {
 		return (
 			this.#sections?.map((section) => ({
 				name: section.meta.label,

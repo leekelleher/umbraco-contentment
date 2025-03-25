@@ -6,7 +6,7 @@ import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ContentmentConfigurationEditorValue, ContentmentDataListItem } from '../types.js';
+import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import type { InputType, UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import type {
 	UmbPropertyEditorConfigCollection,
@@ -43,14 +43,14 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	private _hideLabel = false;
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	override async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 	}
 
 	async #init() {
-		this._items = await new Promise<Array<ContentmentDataListItem>>(async (resolve, reject) => {
+		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
 			const requestBody = { dataSource: this._dataSource[0], listEditor: null };
@@ -59,7 +59,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 
 			if (!data) return reject();
 
-			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentDataListItem>) ?? [];
+			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
 
 			if (!this.value && items.length > 0) {
 				this.value = Object.fromEntries(items.map((item) => [item.value, '']));
@@ -87,7 +87,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		`;
 	}
 
-	#renderItem(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentListItem) {
 		return html`
 			<div class="item">
 				<uui-label for="item-${item.value}" title=${item.value}>

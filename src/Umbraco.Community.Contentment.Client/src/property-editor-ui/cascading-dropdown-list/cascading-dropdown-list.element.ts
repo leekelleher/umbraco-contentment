@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { parseInt } from '../../utils/parse-int.function.js';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import {
 	css,
 	customElement,
@@ -37,10 +37,10 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	private _loading = true;
 
 	@state()
-	private _options: Array<Array<ContentmentDataListItem>> = [];
+	private _options: Array<Array<ContentmentListItem>> = [];
 
 	@state()
-	private _promises: Array<Promise<Array<ContentmentDataListItem>>> = [];
+	private _promises: Array<Promise<Array<ContentmentListItem>>> = [];
 
 	@property({ type: Array })
 	public value?: Array<string>;
@@ -124,7 +124,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		)}`;
 	}
 
-	#renderItem(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentListItem) {
 		return html`
 			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">

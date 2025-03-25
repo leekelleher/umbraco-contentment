@@ -14,7 +14,7 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
@@ -30,14 +30,14 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 		// this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 		// this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
 
-		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 	}
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	@state()
-	private _matches: Array<ContentmentDataListItem> = [];
+	private _matches: Array<ContentmentListItem> = [];
 
 	@state()
 	private _currentInput = '';
@@ -217,8 +217,8 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 			<div id="matchlist">
 				${repeat(
 					matchfilter.slice(0, 5),
-					(tag: ContentmentDataListItem) => tag.value,
-					(tag: ContentmentDataListItem, index: number) => {
+					(tag: ContentmentListItem) => tag.value,
+					(tag: ContentmentListItem, index: number) => {
 						return html`
 							<input
 								class="options"

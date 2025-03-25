@@ -14,7 +14,7 @@ import {
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ContentmentDataListItem } from '../types.js';
+import type { ContentmentListItem } from '../types.js';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
@@ -38,7 +38,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 		this._defaultValue = config.getValueByAlias<string>('defaultValue') ?? '';
-		this._items = config.getValueByAlias<Array<ContentmentDataListItem>>('items') ?? [];
+		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
 		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 	}
@@ -47,7 +47,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 	private _defaultValue = '';
 
 	@state()
-	private _items: Array<ContentmentDataListItem> = [];
+	private _items: Array<ContentmentListItem> = [];
 
 	@state()
 	private _showDescriptions = false;
@@ -73,7 +73,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		`;
 	}
 
-	#renderItem(item: ContentmentDataListItem) {
+	#renderItem(item: ContentmentListItem) {
 		return html`
 			<uui-radio value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
