@@ -1,43 +1,57 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import { css, customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
-import { loadCodeEditor } from '@umbraco-cms/backoffice/code-editor';
+import { classMap, css, customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbInputEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
-import type { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type {
+	UmbPropertyEditorConfigCollection,
+	UmbPropertyEditorUiElement,
+} from '@umbraco-cms/backoffice/property-editor';
+import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 
 type CodeEditorLanguage = UmbCodeEditorElement['language'];
 
 @customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	#language?: CodeEditorLanguage;
+
 	@state()
 	private _loading = true;
 
-	constructor() {
-		super();
-		this.#loadCodeEditor();
-	}
-
-	async #loadCodeEditor() {
-		try {
-			await loadCodeEditor();
-			this._loading = false;
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	#language?: CodeEditorLanguage;
+	@state()
+	private _hideMargin = false;
 
 	@property()
 	public value?: string;
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
+
 		this.#language = config.getValueByAlias<CodeEditorLanguage>('mode');
+	}
+
+	constructor() {
+		super();
+
+		this.#loadCodeEditor();
+
+		this.consumeContext(UMB_PROPERTY_CONTEXT, (context) => {
+			this.observe(context.appearance, (appearance) => {
+				this._hideMargin = appearance?.labelOnTop ?? false;
+			});
+		});
+	}
+
+	async #loadCodeEditor() {
+		try {
+			await import('@umbraco-cms/backoffice/code-editor');
+			this._loading = false;
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	#onChange(event: UmbInputEvent & { target: UmbCodeEditorElement }) {
@@ -49,7 +63,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`
-			<div id="code-editor">
+			<div id="code-editor" class=${classMap({ margin: !this._hideMargin })}>
 				<umb-code-editor language=${this.#language ?? 'razor'} .code=${this.value ?? ''} @input=${this.#onChange}>
 				</umb-code-editor>
 			</div>
@@ -61,10 +75,14 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			#code-editor {
 				display: flex;
 				height: 200px;
-				margin-left: -30px;
-			}
-			#code-editor > umb-code-editor {
-				width: 100%;
+
+				&.margin {
+					margin-left: -30px;
+				}
+
+				> umb-code-editor {
+					width: 100%;
+				}
 			}
 		`,
 	];
