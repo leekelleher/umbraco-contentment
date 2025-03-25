@@ -12,11 +12,7 @@ import { CONTENTMENT_DATA_PICKER_MODAL } from './data-picker-modal.element.js';
 import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
-import type {
-	ContentmentConfigurationEditorValue,
-	ContentmentDataListEditor,
-	ContentmentListItem,
-} from '../types.js';
+import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, ContentmentListItem } from '../types.js';
 import type { ContentmentDisplayModeElement } from '../../extensions/display-mode/display-mode-base.element.js';
 import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -42,8 +38,6 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	#listEditor?: ContentmentDataListEditor;
 
 	#maxItems = Infinity;
-
-	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
 
 	#overlaySize: UUIModalSidebarSize = 'small';
 
@@ -114,10 +108,6 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			this.observe(context.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
 		});
 
-		this.consumeContext(UMB_MODAL_MANAGER_CONTEXT, (modalManager) => {
-			this.#modalManager = modalManager;
-		});
-
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
 			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
 			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
@@ -172,9 +162,10 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	}
 
 	async #onAdd(event: CustomEvent<{ listType: string }>) {
-		if (!this.#modalManager) return;
+		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
+		if (!modalManager) return;
 
-		const modal = this.#modalManager.open(this, CONTENTMENT_DATA_PICKER_MODAL, {
+		const modal = modalManager.open(this, CONTENTMENT_DATA_PICKER_MODAL, {
 			data: {
 				allowDuplicates: this.#allowDuplicates,
 				defaultIcon: this.#defaultIcon,
