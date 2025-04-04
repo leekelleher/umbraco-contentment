@@ -14,7 +14,7 @@
         <Product>Umbraco.Community.Contentment</Product>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <Version>6.0.0-beta001</Version>
+        <Version>6.0.0-alpha005</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
         <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
