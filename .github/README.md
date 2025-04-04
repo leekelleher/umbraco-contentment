@@ -1,4 +1,4 @@
-<img src="../docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Contentment for Umbraco
 
@@ -14,7 +14,6 @@
 This is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
 
 Some components may be innovative, others may be a reimagining of existing components, property-editors, features and other community packages.
-
 
 #### Why should I use it?
 
@@ -57,7 +56,7 @@ Downloads are available on the [releases page](../releases).
 
 _**Please note...**_
 
-- v6.x supports **Umbraco v15.0.0** (on .NET 9.0), consider this the cutting-edge version.
+- v6.x supports **Umbraco v15.3.0** (on .NET 9.0), consider this the cutting-edge version.
 - v5.x supports **Umbraco v13.2.0** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
 - v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
@@ -83,13 +82,6 @@ Please note, you may find other components within Contentment that have not yet 
 _Let's call those "life's little surprises"._
 
 
-#### Known issues
-
-- **Data List**
-  - When using the **Umbraco Content** data source with an XPath query, inside a Nested Content or Block List editors, it will not be able to identify the contextual containing node ID. e.g. your XPath query will not work. [See #30 for details.](https://github.com/leekelleher/umbraco-contentment/issues/30)
-  - When using the **Umbraco Content** data source with an XPath query that contains a `$` prefix parameter, the preview will not display the items. [See #120 for details.](https://github.com/leekelleher/umbraco-contentment/issues/120)
-
-
 ### [Roadmap](ROADMAP.md)
 
 If you would like to know what is coming up in future releases, then take a look at the [roadmap](ROADMAP.md).
@@ -97,14 +89,14 @@ If you would like to know what is coming up in future releases, then take a look
 
 ### Support
 
-I'll try to help the best I can, but I've been doing open source for a long time, and I have suffered my fair share of burnout and empathy fatigue.
-
-I reserve the right to address bug reports or feature requests **in my own time**, or ignore them completely.
+I'll try to help the best I can, but I've been doing open source for a long time, and I have experienced my fair share of burnout and empathy fatigue.
 
 **Any feedback is welcome and appreciated.** Please keep in mind, I am not your personal support developer.
 
+I reserve the right to address bug reports or feature requests **in my own time**, or ignore them completely.
+
 If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.
-Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or the [Community Discord Server](https://community.umbraco.com/get-involved/community-discord-server/), I am sure someone can help you there.
+Ask for help on the [Umbraco community forum](https://forum.umbraco.com/), or the [Community Discord Server](https://community.umbraco.com/get-involved/community-discord-server/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
@@ -148,7 +140,7 @@ For more information about the **Mozilla Public License**, please visit: <https:
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~1,840+ hours</b> (between 2019-03-13 to 2024-04-19)</summary>
+<summary>Current development effort: <b>~2,260+ hours</b> (between 2019-03-13 to 2025-04-04)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 

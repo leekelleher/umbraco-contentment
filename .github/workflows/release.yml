@@ -11,6 +11,10 @@ jobs:
 
     runs-on: windows-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
 
     - name: Checkout repository
@@ -28,4 +32,4 @@ jobs:
       run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
 
     - name: Push to GitHub NuGet
-      run: dotnet nuget push **\*.nupkg -k ${{secrets.LK_GITHUB_PAT}} -s https://nuget.pkg.github.com/leekelleher/index.json
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json
