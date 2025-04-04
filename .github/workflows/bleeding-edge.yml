@@ -1,0 +1,30 @@
+name: Bleeding Edge Package
+
+on:
+  push:
+    branches:
+      - develop
+      - dev/v*
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+-*"
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Build and pack
+      run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
+
+    - name: Push to GitHub NuGet
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json

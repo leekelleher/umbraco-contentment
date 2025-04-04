@@ -113,6 +113,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.15.x", "Umbraco
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Umbraco.Community.Contentment.Client", "Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj", "{D7EC70F1-8B18-433A-B4DF-4B28D0696FE1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\bleeding-edge.yml = ..\.github\workflows\bleeding-edge.yml
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +152,7 @@ Global
 		{7E3CB058-A757-42C9-9277-EB949E1D7D0E} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
 		{40B5A85D-28D1-4742-87E7-6306CC5F08C1} = {9C956438-0434-40DD-BBA0-7F837E8FF1C8}
 		{DCC84B25-30A6-41E5-8411-525C3A144F7D} = {D4F87338-D989-4C50-BF8E-EF4AF179B459}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {49BDDD3C-6B40-4BE9-BD7E-10C85E55A59F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8F86B45-B473-45E7-85C7-863A10E21554}
