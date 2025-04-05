@@ -3,8 +3,7 @@ name: Release Package
 on:
   push:
     tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
-      - "![0-9]+.[0-9]+.[0-9]+-*"
+      - "[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
   build:
@@ -29,6 +28,7 @@ jobs:
       run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
 
     - name: Push to NuGet
+      if: contains(github.ref_name, '-') == false
       run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
 
     - name: Push to GitHub NuGet
