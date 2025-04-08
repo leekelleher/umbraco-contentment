@@ -88,7 +88,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(key1);
                 if (source is not null)
                 {
-                    var config = obj1["value"]?.Deserialize<Dictionary<string, object>>();
+                    var config = _jsonSerializer.Deserialize<Dictionary<string, object>>(obj1["value"]?.ToString() ?? "{}");
 
                     if (isDeliveryApi && source is IDataSourceDeliveryApiValueConverter deliveryApiSource)
                     {
@@ -105,7 +105,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
                 if (editor is not null)
                 {
-                    var config = obj2["value"]?.Deserialize<Dictionary<string, object>>();
+                    var config = _jsonSerializer.Deserialize<Dictionary<string, object>>(obj2["value"]?.ToString() ?? "{}");
                     hasMultipleValues = editor.HasMultipleValues(config);
                 }
             }

@@ -47,14 +47,8 @@ namespace Umbraco.Extensions
 
         public static bool TryGetValueAs<TKey, TValue, TValueOut>(this IDictionary<TKey, TValue> config, TKey key, out TValueOut? value)
         {
-            if (config.TryGetValue(key, out var tmp0) == true)
+            if (config.TryGetValue(key, out var tmp1) == true)
             {
-                // NOTE: Deserializing `JsonObject` to `Dictionary<string, object>` will use
-                // the object type of `JsonElement`, so we need to handle that "edge-case". [LK]
-                object? tmp1 = tmp0 is JsonElement jsonElement
-                    ? jsonElement.Deserialize<TValueOut>()
-                    : tmp0;
-
                 if (tmp1 is TValueOut tmp2)
                 {
                     value = tmp2;
