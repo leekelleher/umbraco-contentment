@@ -7,6 +7,7 @@ import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/moda
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import { parseBoolean, parseInt } from '../../utils/index.js';
 
 interface ContentmentConfigurationEditorWorkspaceModalData {
 	item: ContentmentConfigurationEditorValue;
@@ -28,6 +29,15 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 	ContentmentConfigurationEditorWorkspaceModalData,
 	ContentmentConfigurationEditorValue
 > {
+	// In v13, some boolean values were stored as numeric strings ("0" or "1") instead of booleans.
+	// or numeric values were stores as strings. These may be unsupported by the new property-editors,
+	// this is a workaround to convert those values to the correct object-type. [LK]
+	#legacyValueConverters: Record<string, (x: unknown) => unknown> = {
+		'Umb.PropertyEditorUi.Integer': (x) => parseInt(x),
+		'Umb.PropertyEditorUi.Toggle': (x) => parseBoolean(x),
+		'Umb.Contentment.PropertyEditorUi.NumberInput': (x) => parseInt(x),
+	};
+
 	@state()
 	private _item?: ContentmentConfigurationEditorModel;
 
@@ -40,7 +50,19 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 		if (!this.data) return;
 
 		this._item = this.data.model;
-		this._values = Object.entries(this.data.item.value).map(([alias, value]) => ({ alias, value }));
+
+		const values = { ...this.data.item.value };
+		(this._item.fields ?? []).forEach((field) => {
+			if (!field.key) return;
+			const value = values[field.key];
+			if (!field.propertyEditorUiAlias) return;
+			const converter = this.#legacyValueConverters[field.propertyEditorUiAlias];
+			if (converter) {
+				values[field.key] = converter(value);
+			}
+		});
+
+		this._values = Object.entries(values).map(([alias, value]) => ({ alias, value }));
 	}
 
 	#onChange(event: Event & { target: UmbPropertyDatasetElement }) {
