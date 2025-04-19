@@ -30,41 +30,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ContentmentConfigurationField> Fields
-        {
-            get
+        public override IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
             {
-                var items = _userGroupService
-                    .GetAllAsync(0, int.MaxValue).GetAwaiter().GetResult()
-                    .Items
-                    .Select(x => new DataListItem
-                    {
-                        Name = x.Name,
-                        Value = x.Alias,
-                        Icon = x.Icon ?? UmbConstants.Icons.UserGroup,
-                        Description = string.Join(", ", x.AllowedSections)
-                    })
-                    .ToList();
-
-                return new[]
+                Key = "userGroup",
+                Name = "User Group",
+                Description = "Select a user group to filter the users by. If left empty, all users will be used.",
+                PropertyEditorUiAlias = DataListDataEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>
                 {
-                    new ContentmentConfigurationField
-                    {
-                        Key = "userGroup",
-                        Name = "User Group",
-                        Description = "Select a user group to filter the users by. If left empty, all users will be used.",
-                        PropertyEditorUiAlias = ItemPickerDataListEditor.DataEditorUiAlias,
-                        Config = new Dictionary<string, object>
-                        {
-                            { "enableFilter", items.Count > 5 },
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { "listType", "list" },
-                            { MaxItemsConfigurationField.MaxItems, 1 },
-                        }
-                    }
-                };
+                    { "dataSource", new[] { new { key = typeof(UmbracoUserGroupDataListSource).GetFullNameWithAssembly(), value = new { } } } },
+                    { "listEditor", new[] { new { key = typeof(ItemPickerDataListEditor).GetFullNameWithAssembly(), value = new { overlaySize = "small", listType = "list", enableFilter = true, maxItems = 1, } } } }
+                }
             }
-        }
+        ];
 
         public override Dictionary<string, object>? DefaultValues => default;
 
