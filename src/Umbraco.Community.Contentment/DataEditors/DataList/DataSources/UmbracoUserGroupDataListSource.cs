@@ -36,7 +36,8 @@ namespace Umbraco.Community.Contentment.DataEditors
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             return _userGroupService
-                .GetAllAsync(0, int.MaxValue).GetAwaiter().GetResult().Items
+                .GetAllAsync(0, int.MaxValue).GetAwaiter().GetResult()
+                .Items
                 .Select(x => new DataListItem
                 {
                     Name = x.Name,

@@ -111,7 +111,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
-                PropertyEditorUiAlias =CodeEditorDataEditor.DataEditorUiAlias,
+                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { "mode", "text" },
@@ -124,7 +124,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
             new ContentmentConfigurationField
@@ -132,7 +132,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
             new ContentmentConfigurationField
@@ -140,7 +140,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
             new ContentmentConfigurationField
@@ -148,7 +148,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
         };

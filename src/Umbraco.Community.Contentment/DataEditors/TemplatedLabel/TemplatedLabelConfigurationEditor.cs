@@ -8,6 +8,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    // NOTE: This configuration editor is required, so we can make use of Umbraco's `LabelValueConverter`. [LK]
     internal sealed class TemplatedLabelConfigurationEditor : ConfigurationEditor<LabelConfiguration>
     {
         public TemplatedLabelConfigurationEditor(IIOHelper ioHelper) : base(ioHelper) { }

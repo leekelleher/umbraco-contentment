@@ -14,11 +14,11 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
-import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import { DataListService } from '../../api/index.js';
-import type { InputType } from '@umbraco-cms/backoffice/external/uui';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
+import type { InputType } from '@umbraco-cms/backoffice/external/uui';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
