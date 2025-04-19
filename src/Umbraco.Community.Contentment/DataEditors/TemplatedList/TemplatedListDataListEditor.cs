@@ -23,6 +23,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
+            // TODO: [LK] Add a note to explain why this has changed from AngularJS template to a web component.
+
 //            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
 //<summary><strong>Do you need help with your custom template?</strong></summary>
 //<p>Your custom template will be used to display an individual item from your configured data source.</p>

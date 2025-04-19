@@ -93,6 +93,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Config = new Dictionary<string, object>
                 {
                     { DropdownListDataListEditor.AllowEmpty, false },
+                    // NOTE: in Contentment v6, the list of Examine Indexes is static at browser load-time. [LK]
+                    // Currently unsure whether this needs to be moved to its own data-source; feels overkill.
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem
                         {
                             Name = x.Name.SplitPascalCasing(_shortStringHelper),

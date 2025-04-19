@@ -75,6 +75,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Dictionary<string, object>? DefaultValues => new()
         {
+            // TODO: I need to find an alternative, since FontAwesome no longer ships with Umbraco. [LK]
             { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
             { "excludeList", "" },
