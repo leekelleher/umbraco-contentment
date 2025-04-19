@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -31,58 +32,36 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ContentmentConfigurationField> Fields
-        {
-            get
+        public override IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
             {
-                //var items = _contentTypeService
-                //    .GetAll()
-                //    .Select(x => new DataListItem
-                //    {
-                //        Icon = x.Icon,
-                //        Description = x.Description,
-                //        Name = x.Name,
-                //        Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
-                //    })
-                //    .ToList();
-
-                return new ContentmentConfigurationField[]
+                Key = "contentType",
+                Name = "Content Type",
+                Description = "Select a Content Type to list the properties from.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
+                Config = new Dictionary<string, object>
                 {
-                    new ContentmentConfigurationField
-                    {
-                        Key = "contentType",
-                        Name = "Content Type",
-                        Description = "Select a Content Type to list the properties from.",
-                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
-                        Config = new Dictionary<string, object>
-                        {
-                            // { "enableFilter", items.Count > 5 ? true : false },
-                            // { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            // { "listType", "list" },
-                            // { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                            // { MaxItemsConfigurationField.MaxItems, 1 },
-                            { "validationLimit", new { min = 0, max = 1 } },
-                            { "onlyElementTypes", false },
-                            { "showOpenButton", false },
-                        }
-                    },
-                    new ContentmentConfigurationField
-                    {
-                        Key = "includeName",
-                        Name = "Include \"Name\" property?",
-                        Description = "Select to include an option called \"Name\", for the content item's name.",
-                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
-                    },
-                    new ContentmentConfigurationField
-                    {
-                        Key = "sortAlphabetically",
-                        Name = "Sort alphabetically?",
-                        Description = "Select to sort the properties in alphabetical order.<br>By default, the order is defined by the order they appear on the document type.",
-                        PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
-                    },
-                };
-            }
-        }
+                    { "validationLimit", new { min = 0, max = 1 } },
+                    { "onlyElementTypes", false },
+                    { "showOpenButton", false },
+                }
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "includeName",
+                Name = "Include \"Name\" property?",
+                Description = "Select to include an option called \"Name\", for the content item's name.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "sortAlphabetically",
+                Name = "Sort alphabetically?",
+                Description = "Select to sort the properties in alphabetical order.<br>By default, the order is defined by the order they appear on the document type.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
+            },
+        ];
 
         public override Dictionary<string, object>? DefaultValues => default;
 
@@ -90,10 +69,19 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("contentType", out string? str) == true &&
-                string.IsNullOrWhiteSpace(str) == false &&
-                Guid.TryParse(str, out var guid) == true &&
-                guid.Equals(Guid.Empty) == false)
+            // Checks if the value is either a Guid or UDI, to support backwards-compatibility. [LK]
+            var guid = Guid.Empty;
+            var str = config.GetValueAs("contentType", string.Empty);
+            if (Guid.TryParse(str, out var tmp0) == true)
+            {
+                guid = tmp0;
+            }
+            else if (UdiParser.TryParse(str, out GuidUdi? udi) == true && udi is not null)
+            {
+                guid = udi.Guid;
+            }
+
+            if (guid.Equals(Guid.Empty) == false)
             {
                 var contentType = _contentTypeService.Get(guid);
                 if (contentType != null)
@@ -112,7 +100,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 Icon = UmbConstants.Icons.DataType
                             };
                         }
-                    };
+                    }
 
                     var includeName = config.GetValueAs("includeName", false);
 
