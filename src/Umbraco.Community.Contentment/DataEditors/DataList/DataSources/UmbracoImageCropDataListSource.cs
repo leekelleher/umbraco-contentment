@@ -27,37 +27,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ContentmentConfigurationField> Fields
-        {
-            get
+        public override IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
             {
-                var items = _dataTypeService
-                    .GetByEditorAliasAsync(UmbConstants.PropertyEditors.Aliases.ImageCropper).GetAwaiter().GetResult()?
-                    .Select(x => new DataListItem
+                Key = "imageCropper",
+                Name = "Image Cropper",
+                Description = "Select a Data Type that uses the Image Cropper.",
+                    PropertyEditorUiAlias = DataListDataEditor.DataEditorUiAlias,
+                    Config = new Dictionary<string, object>
                     {
-                        Icon = Icon,
-                        Name = x.Name ?? x.EditorAlias,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
-                    }) ?? Enumerable.Empty<DataListItem>();
-
-                return new ContentmentConfigurationField[]
-                {
-                    new ContentmentConfigurationField
-                    {
-                        Key = "imageCropper",
-                        Name = "Image Cropper",
-                        Description = "Select a Data Type that uses the Image Cropper.",
-                        PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
-                        Config = new Dictionary<string, object>
-                        {
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { ShowIconsConfigurationField.ShowIcons, true },
-                            { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value ?? string.Empty }
-                        }
+                        { "dataSource", new[] { new { key = typeof(UmbracoDataTypesDataListSource).GetFullNameWithAssembly(), value = new { editorAlias = UmbConstants.PropertyEditors.Aliases.ImageCropper } } } },
+                        { "listEditor", new[] { new { key = typeof(RadioButtonListDataListEditor).GetFullNameWithAssembly(), value = new { } } } }
                     }
-                };
             }
-        }
+        ];
 
         public override Dictionary<string, object>? DefaultValues => default;
 
