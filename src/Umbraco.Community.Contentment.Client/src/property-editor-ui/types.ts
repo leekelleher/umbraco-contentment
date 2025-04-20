@@ -12,13 +12,19 @@ export type ContentmentConfigurationEditorValue = {
 export type ContentmentConfigurationEditorModel = {
 	key: string;
 	name: string;
-	description?: string;
-	icon?: string;
-	group?: string;
-	defaultValues?: Record<string, unknown>;
-	expressions?: Record<string, unknown>;
-	fields?: Array<any>;
-	overlaySize?: UUIModalSidebarSize;
+	description?: string | null;
+	icon?: string | null;
+	group?: string | null;
+	defaultValues?: Record<string, unknown> | null;
+	expressions?: Record<string, unknown> | null;
+	fields?: Array<{
+		key?: string | null;
+		name?: string | null;
+		description?: string | null;
+		propertyEditorUiAlias?: string | null;
+		config?: Record<string, unknown> | null;
+	}> | null;
+	overlaySize?: UUIModalSidebarSize | null;
 	[index: string]: unknown;
 };
 

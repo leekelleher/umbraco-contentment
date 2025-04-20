@@ -46,8 +46,6 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
 
-	#models?: Array<ContentmentConfigurationEditorModel>;
-
 	#uiAlias: string = 'Umb.Contentment.DisplayMode.List';
 
 	@state()
@@ -55,6 +53,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 	@state()
 	private _items?: Array<ContentmentListItem>;
+
+	protected models?: Array<ContentmentConfigurationEditorModel>;
 
 	@property({ type: Array })
 	public value?: Array<ContentmentConfigurationEditorValue>;
@@ -69,15 +69,16 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
 		this.#uiAlias = config.getValueByAlias('uiAlias') ?? 'Umb.Contentment.DisplayMode.List';
+
 		// enableFilter
 		// help
 
-		this.#models = config.getValueByAlias('items');
+		this.models = config.getValueByAlias('items');
 
-		if (this.#models) {
-			this.#populateModelLookup();
+		if (this.models) {
+			this.populateModelLookup();
 		} else {
-			this.#getModels();
+			this.getModels();
 		}
 	}
 
@@ -89,22 +90,20 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		});
 	}
 
-	#getModels() {
-		if (this.#models || !this.#configurationType) return;
+	protected getModels() {
+		if (this.models || !this.#configurationType) return;
 
 		this.observe(umbExtensionsRegistry.byType(this.#configurationType), (manifests) => {
-			this.#models = manifests
+			this.models = manifests
 				.map((manifest: any) => ({
 					...manifest.meta,
-					// TODO: [LK] Review this, as `key` shouldn't be a required field, and `alias` should be used as the fallback.
-					// I probably need to separate `ContentmentConfigurationEditorModel` from the manufest type.
 					key: manifest.meta?.key ?? manifest.alias,
 					name: manifest.meta?.name ?? manifest.name,
 					overlaySize: (manifest.meta?.overlaySize?.toLowerCase() as UUIModalSidebarSize) ?? 'small',
 				}))
 				.sort((a, b) => a.name.localeCompare(b.name));
 
-			this.#populateModelLookup();
+			this.populateModelLookup();
 		});
 	}
 
@@ -112,10 +111,10 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		return this.#lookup[key];
 	}
 
-	#populateModelLookup() {
-		if (!this.#models) return;
+	protected populateModelLookup() {
+		if (!this.models) return;
 
-		this.#models.forEach((model) => {
+		this.models.forEach((model) => {
 			this.#lookup[model.key] = model;
 
 			if (model.fields?.length) {
@@ -180,8 +179,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	async #onAdd() {
 		if (!this.#modalManager) return;
 
-		if (this.#models?.length === 1) {
-			const model = this.#models[0];
+		if (this.models?.length === 1) {
+			const model = this.models[0];
 
 			const item = {
 				key: model.key,
@@ -197,7 +196,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 			this.#setValue(data, this.value?.length ?? 0);
 		} else {
 			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
-				data: { items: this.#models ?? [] },
+				data: { items: this.models ?? [] },
 			});
 
 			const data = await modal.onSubmit().catch(() => undefined);
@@ -229,7 +228,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 		await umbConfirmModal(this, {
 			color: 'danger',
-			headline: this.localize.term('contentment_removeItemHeadline'),
+			headline: this.localize.term('contentment_removeItemHeadline', [event.detail.item.name]),
 			content: this.localize.term('contentment_removeItemMessage'),
 			confirmLabel: this.localize.term('contentment_removeItemButton'),
 		});
