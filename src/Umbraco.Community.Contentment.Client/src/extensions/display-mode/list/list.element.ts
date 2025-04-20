@@ -3,9 +3,9 @@
 
 import { parseInt } from '../../../utils/index.js';
 import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
-import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
+import type { SortableEvent } from '../../../external/sortablejs/index.js';
 
 import '../../../components/sortable-list/sortable-list.element.js';
 
@@ -37,12 +37,10 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 		this.dispatchEvent(new CustomEvent('remove', { bubbles: true, detail: { item, index } }));
 	}
 
-	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
-		const items = [...(this.items ?? [])];
-		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
-		this.items = items;
-
-		this.dispatchEvent(new UmbChangeEvent());
+	#onSort(event: CustomEvent<SortableEvent>) {
+		event.stopPropagation();
+		const { newIndex, oldIndex } = event.detail;
+		this.dispatchEvent(new CustomEvent('sort', { bubbles: true, detail: { newIndex, oldIndex } }));
 	}
 
 	override render() {
@@ -67,7 +65,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 				class="uui-ref-list"
 				item-selector="uui-ref-node"
 				?disabled=${!this.allowSort}
-				@sort-end=${this.#onSortEnd}>
+				@sort-end=${this.#onSort}>
 				${repeat(
 					this.items,
 					(item) => item.value,

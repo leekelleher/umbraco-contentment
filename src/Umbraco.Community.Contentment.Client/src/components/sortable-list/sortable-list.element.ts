@@ -35,10 +35,6 @@ export class ContentmentSortableListElement extends UmbLitElement {
 		});
 	}
 
-	// protected override createRenderRoot() {
-	// 	return this;
-	// }
-
 	override render() {
 		return html`<slot></slot>`;
 	}
