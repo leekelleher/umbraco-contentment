@@ -70,8 +70,8 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return;
-		const cardStyle = (item.cardStyle as StyleInfo) ?? {};
-		const iconStyle = (item.iconStyle as StyleInfo) ?? {};
+		const cardStyle = (item.cardStyle as StyleInfo | null | undefined) ?? {};
+		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? {};
 		return html`
 			<uui-card-media
 				name=${item.name}
@@ -124,9 +124,9 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 
 			.container {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-				grid-auto-rows: 150px;
-				gap: var(--uui-size-space-5);
+				gap: var(--uui-size-space-3);
+				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+				grid-template-rows: repeat(auto-fill, minmax(160px, 1fr));
 			}
 
 			#btn-add {
