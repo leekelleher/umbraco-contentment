@@ -1,5 +1,3 @@
-// Umbraco.Community.Contentment.DataEditors.BlocksDisplayMode, Umbraco.Community.Contentment
-
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 

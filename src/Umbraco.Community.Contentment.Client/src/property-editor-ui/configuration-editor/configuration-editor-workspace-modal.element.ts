@@ -93,7 +93,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 											alias=${field.key}
 											label=${field.name}
 											description=${field.description}
-											property-editor-ui-alias=${field.propertyEditorUiAlias}
+											.propertyEditorUiAlias=${field.propertyEditorUiAlias}
 											.config=${field.config
 												? Object.entries(field.config).map(([alias, value]) => ({ alias, value }))
 												: []}>

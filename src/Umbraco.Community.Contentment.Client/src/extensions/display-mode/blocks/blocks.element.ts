@@ -9,7 +9,7 @@ import '../../../components/sortable-list/sortable-list.element.js';
 @customElement('contentment-property-editor-ui-blocks')
 export class ContentmentPropertyEditorUIBlocksElement extends ContentmentDisplayModeElement {
 	override render() {
-		return html`'contentment-property-editor-ui-blocks'`;
+		return html`${this.tagName}`;
 	}
 }
 
