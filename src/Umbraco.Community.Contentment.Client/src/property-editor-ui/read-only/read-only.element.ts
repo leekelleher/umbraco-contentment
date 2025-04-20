@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type {
@@ -13,6 +14,9 @@ import '../../components/info-box/info-box.element.js';
 @customElement('contentment-property-editor-ui-read-only')
 export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#config?: string;
+
+	#hideLabel: boolean = false;
+
 	#value?: string;
 
 	@property({ attribute: false })
@@ -20,8 +24,15 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
+
 		this.#config = JSON.stringify(config, null, 2);
+		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#value = JSON.stringify(this.value, null, 2);
+	}
+
+	override connectedCallback() {
+		super.connectedCallback();
+		tryHideLabel(this, this.#hideLabel);
 	}
 
 	override render() {
