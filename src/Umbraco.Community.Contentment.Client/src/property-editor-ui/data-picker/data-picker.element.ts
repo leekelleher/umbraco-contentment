@@ -13,7 +13,6 @@ import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, ContentmentListItem } from '../types.js';
-import type { ContentmentDisplayModeElement } from '../../extensions/display-mode/display-mode-base.element.js';
 import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
@@ -154,13 +153,6 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		});
 	}
 
-	#onChange(event: UmbChangeEvent & { target: ContentmentDisplayModeElement }) {
-		var values = event.target?.getItems()?.map((x) => x.value);
-		if (values === this.value) return;
-		this.value = values;
-		this.dispatchEvent(new UmbChangeEvent());
-	}
-
 	async #onAdd(event: CustomEvent<{ listType: string }>) {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 		if (!modalManager) return;
@@ -244,7 +236,6 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				.items=${this._items}
 				.uiAlias=${this.#listEditor.propertyEditorUiAlias}
 				@add=${this.#onAdd}
-				@change=${this.#onChange}
 				@remove=${this.#onRemove}
 				@sort=${this.#onSort}>
 			</contentment-display-mode-ui>
