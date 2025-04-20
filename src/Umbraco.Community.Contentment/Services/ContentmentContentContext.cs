@@ -5,6 +5,7 @@
 
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Web;
@@ -12,7 +13,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public sealed class ContentmentContentContext : IContentmentContentContext
+    public sealed class ContentmentContentContext : IContentmentContentContext2
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IJsonSerializer _jsonSerializer;
@@ -31,49 +32,54 @@ namespace Umbraco.Community.Contentment.Services
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
-        public int? GetCurrentContentId(out bool isParent)
+        public T? GetCurrentContentId<T>(out bool isParent)
         {
             isParent = false;
 
-            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.PublishedRequest?.PublishedContent is not null)
             {
-                if (umbracoContext.PublishedRequest?.PublishedContent != null)
+                var attempt = umbracoContext.PublishedRequest.PublishedContent.Id.TryConvertTo<T>();
+                if (attempt.Success)
                 {
-                    isParent = false;
-                    return umbracoContext.PublishedRequest.PublishedContent.Id;
+                    return attempt.Result;
                 }
             }
 
             // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-            if (int.TryParse(_requestAccessor.GetRequestValue("id"), out var currentId) == true)
+            var attempt1 = _requestAccessor.GetRequestValue("id")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
+            if (attempt1.Success)
             {
-                return currentId;
+                return attempt1.Result;
             }
-            else if (int.TryParse(_requestAccessor.GetRequestValue("parentId"), out var parentId) == true)
+
+            var attempt2 = _requestAccessor.GetRequestValue("parentId")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
+            if (attempt2.Success)
             {
                 isParent = true;
-
-                return parentId;
+                return attempt2.Result;
             }
 
             // TODO: [LK:2024-12-06] Figure out if this is still needed?
             var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
             if (string.IsNullOrWhiteSpace(json) == false)
             {
-                var obj = DeserializeAnonymousType(json, new { id = 0, parentId = 0 });
-                if (obj?.id > 0)
+                var obj = DeserializeAnonymousType(json, new { id = (object?)null, parentId = (object?)null });
+                if (obj is not null && obj.id is not null)
                 {
-                    return obj.id;
+                    return obj.id.TryConvertTo<T>().Result;
                 }
-                else if (obj?.parentId > 0)
+                else if (obj is not null && obj.parentId is not null)
                 {
                     isParent = true;
-                    return obj.parentId;
+                    return obj.parentId.TryConvertTo<T>().Result;
                 }
             }
 
             return default;
         }
+
+        public int? GetCurrentContentId(out bool isParent) => GetCurrentContentId<int>(out isParent);
 
         public IPublishedContent? GetCurrentContent(out bool isParent)
         {
@@ -86,11 +92,20 @@ namespace Umbraco.Community.Contentment.Services
                     return umbracoContext.PublishedRequest.PublishedContent;
                 }
 
-                var currentContentId = GetCurrentContentId(out isParent);
+                // NOTE: First we check for an integer ID.
+                var currentContentId = GetCurrentContentId<int?>(out isParent);
 
                 if (currentContentId.HasValue == true)
                 {
                     return umbracoContext.Content?.GetById(true, currentContentId.Value);
+                }
+
+                // NOTE: Next we check for a GUID ID.
+                var currentContentKey = GetCurrentContentId<Guid?>(out isParent);
+
+                if (currentContentKey.HasValue == true)
+                {
+                    return umbracoContext.Content?.GetById(true, currentContentKey.Value);
                 }
             }
 

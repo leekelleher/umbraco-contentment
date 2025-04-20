@@ -96,7 +96,7 @@ I'll try to help the best I can, but I've been doing open source for a long time
 I reserve the right to address bug reports or feature requests **in my own time**, or ignore them completely.
 
 If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.
-Ask for help on the [Umbraco community forum](https://forum.umbraco.com/), or the [Community Discord Server](https://community.umbraco.com/get-involved/community-discord-server/), I am sure someone can help you there.
+Ask for help on the [Umbraco community forum](https://forum.umbraco.com/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
