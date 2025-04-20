@@ -105,7 +105,7 @@ I reserve the right to address bug reports or feature requests **in my own time*
 **Any feedback is welcome and appreciated.** Please keep in mind, I am not your personal support developer.
 
 If you are really stuck, do remember that the Umbraco community is amongst the friendliest on our planet, learn to embrace it.
-Ask for help on the [Our Umbraco support forum](https://our.umbraco.com/), or the [Community Discord Server](https://community.umbraco.com/get-involved/community-discord-server/), I am sure someone can help you there.
+Ask for help on the [Umbraco support forum](https://forum.umbraco.com/), I am sure someone can help you there.
 
 
 ### Contributions, collaborations, rules of engagement
