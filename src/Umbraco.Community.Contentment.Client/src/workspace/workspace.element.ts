@@ -29,9 +29,9 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | --------------- | --------------- | ----------- | ------- |
 | :green_circle:  | **Bytes** | **Done** | |
 | :green_circle:  | **Code Editor** | **Done** | |
-| :large_blue_circle: | Content Blocks | _In progress_ | :warning: Not implemented yet. |
+| :large_blue_circle: | Content Blocks | _In progress_ | 37% done. |
 | :green_circle:  | **Data List** | **Done** | _(see below for development status on individual components)_ |
-| :green_circle:  | Data Picker | **Done** | |
+| :green_circle:  | **Data Picker** | **Done** | |
 | :green_circle:  | **Editor Notes** | **Done** | |
 | :green_circle:  | **Icon Picker** | **Done** | |
 | :green_circle:  | **List Items** | **Done** | |
@@ -52,11 +52,11 @@ Status of components used internally within Contentment.
 | :green_circle:  | **Cascading Dropdown List** | **Done** | |
 | :green_circle:  | **Configuration Editor** | **Done** | |
 | :green_circle:  | **Content Picker** | **Done** | |
-| :no_entry_sign: | ~Data Table~ | _Deprecated_ | :no_entry_sign: No longer used internally. |
+| :no_entry_sign: | ~Data Table~ | _Removed_ | :no_entry_sign: No longer used internally. |
 | :green_circle:  | **Dictionary Picker** | **Done** | |
-| :no_entry_sign: | ~Macro Picker~ | _Deprecated_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
-| :no_entry_sign: | ~Read Only~ | _Deprecated_ | :no_entry_sign: Not required, as was only used in the Content Block configuration. |
-| :no_entry_sign: | ~Rich Text Editor~ | _Deprecated_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
+| :no_entry_sign: | ~Macro Picker~ | _Removed_ | :no_entry_sign: Macros have been removed in Umbraco 14. |
+| :no_entry_sign: | ~Read Only~ | _Removed_ | :no_entry_sign: Not required, as was only used in the Content Block configuration. |
+| :no_entry_sign: | ~Rich Text Editor~ | _Removed_ | :no_entry_sign: Not required, reuses Umbraco's RTE component. |
 
 ### Data List editors
 
