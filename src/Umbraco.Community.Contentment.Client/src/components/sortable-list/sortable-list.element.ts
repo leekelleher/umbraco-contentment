@@ -4,8 +4,8 @@
 
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { Sortable } from '../../external/sortablejs/index.js';
-import type { SortableEvent } from '../../external/sortablejs/index.js';
+import { Sortable } from '@umbraco-community/backoffice/external/sortablejs';
+import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
 
 @customElement('contentment-sortable-list')
 export class ContentmentSortableListElement extends UmbLitElement {

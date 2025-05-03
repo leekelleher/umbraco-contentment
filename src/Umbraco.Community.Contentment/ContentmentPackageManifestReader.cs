@@ -32,7 +32,6 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
 
     public Task<IEnumerable<PackageManifest>> ReadPackageManifestsAsync()
     {
-        var indexJs = $"{Constants.Internals.PackagePathRoot}umbraco-{Constants.Internals.ProjectAlias}.js";
         var extensions = new List<object>()
         {
             new
@@ -40,7 +39,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
                 type = "bundle",
                 alias = Constants.Internals.ManifestAliasPrefix + "Bundle",
                 name = Constants.Internals.ManifestNamePrefix + "Bundle",
-                js = indexJs,
+                js = Constants.Internals.PackagePathRoot + "manifests.js",
             },
         };
 
@@ -74,7 +73,8 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             {
                 Imports = new()
                 {
-                    { $"@umbraco-community/{Constants.Internals.ProjectAlias}", indexJs },
+                    { Constants.Internals.ImportMapAlias, Constants.Internals.PackagePathRoot + "index.js" },
+                    { "@umbraco-community/backoffice/external/sortablejs", Constants.Internals.PackagePathRoot + "sortablejs.js" },
                 }
             },
         };

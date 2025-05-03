@@ -5,7 +5,7 @@ import { parseInt } from '../../../utils/index.js';
 import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
-import type { SortableEvent } from '../../../external/sortablejs/index.js';
+import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
 
 import '../../../components/sortable-list/sortable-list.element.js';
 

@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
-import type { ContentmentDataListItemUiElement } from '../../extensions/index.js';
+import type { ContentmentDataListItemUiElement } from '../../extensions/types.js';
 import {
 	classMap,
 	css,

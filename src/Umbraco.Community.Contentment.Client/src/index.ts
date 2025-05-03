@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// Copyright © 2025 Lee Kelleher
 
-export type * from './extensions/index.js';
+export * from './api/index.js';
+export * from './components/index.js';
+export * from './utils/index.js';
