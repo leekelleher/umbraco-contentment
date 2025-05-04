@@ -23,37 +23,33 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            // TODO: [LK] Add a note to explain why this has changed from AngularJS template to a web component.
-
-//            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
-//<summary><strong>Do you need help with your custom template?</strong></summary>
-//<p>Your custom template will be used to display an individual item from your configured data source.</p>
-//<p>The data for the item will be in the following format:</p>
-//<pre><code>{
-//  ""name"": ""..."",
-//  ""value"": ""..."",
-//  ""description"": ""..."", // optional
-//  ""icon"": ""..."", // optional
-//  ""disabled"": ""true|false"", // optional
-//  ""selected"": ""true|false"",
-//}</code></pre>
-//<p>If you are familiar with AngularJS template syntax, you can display the values using an expression: e.g. <code ng-non-bindable>{{ item.name }}</code>.</p>
-//<p>If you need assistance with AngularJS expression syntax, please refer to this resource: <a href=""https://docs.angularjs.org/guide/expression"" target=""_blank""><strong>docs.angularjs.org</strong></a>.</p>
-//<hr>
-//<p>If you would like a starting point for your custom template, here is an example.</p>
-//<umb-code-block language=""'AngularJS template'"" copy>&lt;i class=""icon"" ng-class=""item.icon""&gt;&lt;/i&gt;
-//&lt;span ng-bind=""item.name""&gt;&lt;/span&gt;</umb-code-block>
-//</details>", true),
+            new NotesConfigurationField(@"<details class=""well"">
+<summary><strong>Do you need help with your custom template?</strong></summary>
+<p>Your custom template will be used to display an individual item from your configured data source.</p>
+<p>The data for the item will have the following structure:</p>
+<pre><code>{
+  ""name"": ""..."",
+  ""value"": ""..."",
+  ""description"": ""..."", // optional
+  ""icon"": ""..."", // optional
+  ""disabled"": ""true|false"", // optional
+  ""selected"": ""true|false"",
+}</code></pre>
+<p>If you are familiar with Liquid template syntax, you can display the values using an expression: e.g. <code>{{ item.name }}</code>.</p>
+<p>If you need assistance with Liquid template syntax, please refer to this resource: <a href=""https://liquidjs.com/"" target=""_blank""><strong>liquidjs.com</strong></a>.</p>
+<hr>
+<p>If you would like a starting point for your custom template, here is an example.</p>
+<umb-code-block language=""Liquid template"" copy>&lt;contentment-info-box
+  type=""transparent""
+  icon=""{{ item.icon }}""
+  message=""{{ item.name }}""&gt;
+&lt;/contentment-info-box&gt;</umb-code-block>
+</details>", true),
             new ContentmentConfigurationField
             {
-                Key = "component",
-                Name = "Component",
-                PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ManifestPicker",
-                Config = new Dictionary<string, object>
-                {
-                    { "extensionType", "contentmentDataListItemUi" },
-                    { "maxItems", 1 },
-                }
+                Key = "template",
+                Name = "Template",
+                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
             },
             new AllowClearConfigurationField(),
             new ContentmentConfigurationField

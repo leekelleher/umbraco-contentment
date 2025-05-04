@@ -2,7 +2,6 @@
 // Copyright © 2024 Lee Kelleher
 
 import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
-import type { ContentmentDataListItemUiElement } from '../../extensions/types.js';
 import {
 	classMap,
 	css,
@@ -13,13 +12,14 @@ import {
 	property,
 	repeat,
 	state,
+	unsafeHTML,
+	until,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
-import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
+import { Liquid } from '../../external/liquidjs/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
+import type { Template } from '../../external/liquidjs/index.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-list')
@@ -27,10 +27,9 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#component?: string;
+	#engine = new Liquid({ cache: true });
 
-	@state()
-	private _element?: ContentmentDataListItemUiElement;
+	#template?: Array<Template>;
 
 	@state()
 	private _enableMultiple = false;
@@ -62,8 +61,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 
-		const components = config.getValueByAlias<Array<string>>('component') ?? [];
-		this.#component = components[0];
+		const template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
+		this.#template = this.#engine.parse(template);
 
 		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 
@@ -76,36 +75,6 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		if (!this.value) {
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
-
-		this.#observeComponent();
-	}
-
-	#observeComponent() {
-		if (this.#component) {
-			this.observe(
-				umbExtensionsRegistry.byTypeAndAlias('contentmentDataListItemUi', this.#component),
-				(manifest) => {
-					if (manifest) {
-						this.#getComponent(manifest);
-					} else {
-						console.error(`Failed to find manifest for Contentment Data List Item UI alias: ${this.#component}`);
-					}
-				},
-				'_observeComponent'
-			);
-		}
-	}
-
-	async #getComponent(manifest?: ManifestBase | null) {
-		if (!manifest) return;
-
-		const element = await createExtensionElement(manifest);
-
-		if (!element) {
-			console.error(`Failed to create extension element for manifest: ${manifest}`);
-		}
-
-		this._element = element;
 	}
 
 	#onClick(option: ContentmentDataListOption) {
@@ -129,7 +98,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	}
 
 	override render() {
-		if (!this._element) return html`<lee-was-here></lee-was-here>`;
+		if (!this._items?.length) return nothing;
 
 		if (!this._items?.length) {
 			return html`
@@ -153,14 +122,23 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	}
 
 	#renderItem(item: ContentmentDataListOption) {
-		if (!this._element) return nothing;
-		const element = this._element.cloneNode(true) as ContentmentDataListItemUiElement;
-		element.item = item;
+		if (!item) return nothing;
 		return html`
 			<li class=${classMap({ selected: item.selected })} style=${ifDefined(this._listItemStyles)}>
-				<button ?disabled=${item.disabled} @click=${() => this.#onClick(item)}>${element}</button>
+				<button
+					class=${classMap({ selected: item.selected })}
+					?disabled=${item.disabled}
+					@click=${() => this.#onClick(item)}>
+					${until(this.#renderTemplate(item))}
+				</button>
 			</li>
 		`;
+	}
+
+	async #renderTemplate(item: ContentmentDataListOption) {
+		if (!this.#engine || !this.#template) return null;
+		const markup = await this.#engine.render(this.#template, { item });
+		return markup ? unsafeHTML(markup) : nothing;
 	}
 
 	static override styles = [

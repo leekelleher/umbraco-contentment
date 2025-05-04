@@ -43,7 +43,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 	message?: string;
 
 	@property()
-	type?: ContentmentInfoBoxElementType = 'default';
+	type?: ContentmentInfoBoxElementType = 'transparent';
 
 	#getClasses() {
 		return classMap({

@@ -12,6 +12,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [DataEditor(DataEditorAlias, ValueType = ValueTypes.Json)]
     public sealed class TemplatedLabelDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "TemplatedLabel";
@@ -48,34 +49,30 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new TemplatedLabelConfigurationEditor(_ioHelper);
+        // NOTE: Reuses Umbraco's `LabelConfigurationEditor`. [LK]
+        public IConfigurationEditor GetConfigurationEditor() => new LabelConfigurationEditor(_ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor(
-                _shortStringHelper,
-                _jsonSerializer)
-            {
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
-            };
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer) { };
         }
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            var hideLabel = false;
+            var valueType = ValueTypes.String;
 
-            if (configuration is Dictionary<string, object> config && config.TryGetValue(HideLabelConfigurationField.HideLabelAlias, out var obj) == true)
+            if (configuration is Dictionary<string, object> config &&
+                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string? str) == true &&
+                string.IsNullOrWhiteSpace(str) == false &&
+                ValueTypes.IsValue(str) == true)
             {
-                hideLabel = obj.TryConvertTo<bool>().Result;
+                valueType = str;
             }
 
-            return new DataValueEditor(
-                _shortStringHelper,
-                _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
                 ConfigurationObject = configuration,
-                //HideLabel = hideLabel,
-                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                ValueType = valueType,
             };
         }
     }
