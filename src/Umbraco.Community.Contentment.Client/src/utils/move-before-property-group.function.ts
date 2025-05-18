@@ -5,7 +5,7 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 
 export function tryMoveBeforePropertyGroup(element: UmbPropertyEditorUiElement, attempt: boolean): void {
 	if (attempt) {
-		// HACK: Yet another dirty DOM hack! [LK]
+		// HACK: Members of the jury, I present to you, yet another dirty DOM hack! [LK]
 
 		// @ts-ignore
 		const umbProperty = element.getRootNode()?.host as HTMLElement;

@@ -18,16 +18,16 @@ const schema: UmbExtensionManifest = {
 						{
 							alias: 'items',
 							value: [
-								{ name: 'Bigint', value: 'BIGINT' },
+								{ name: 'Big Integer', value: 'BIGINT' },
 								{ name: 'Date', value: 'DATE' },
-								{ name: 'DateTime', value: 'DATETIME' },
+								{ name: 'Date/Time', value: 'DATETIME' },
 								{ name: 'Decimal', value: 'DECIMAL' },
 								{ name: 'Integer', value: 'INT' },
-								{ name: 'Json', value: 'JSON' },
+								{ name: 'JSON', value: 'JSON' },
 								{ name: 'String', value: 'STRING' },
 								{ name: 'Text', value: 'TEXT' },
 								{ name: 'Time', value: 'TIME' },
-								{ name: 'Xml', value: 'XML' },
+								{ name: 'XML', value: 'XML' },
 							],
 						},
 					],
@@ -64,6 +64,12 @@ const editorUi: UmbExtensionManifest = {
 					alias: 'hideLabel',
 					label: 'Hide label?',
 					description: 'Select to hide the label and have the editor take up the full width of the panel.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'hidePropertyGroup',
+					label: 'Move above property group container?',
+					description: '<em>(experimental)</em> Select to move the note above/outside the property group.',
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 				{

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { parseBoolean, tryHideLabel } from '../../utils/index.js';
+import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
+import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-label')
@@ -17,6 +18,8 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 
 	#hideLabel: boolean = false;
 
+	#hidePropertyGroup: boolean = false;
+
 	@property({ attribute: false })
 	public value?: unknown;
 
@@ -24,11 +27,14 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		if (!config) return;
 		this.#components = config.getValueByAlias('component') ?? [];
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
+		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 	}
 
-	override connectedCallback() {
-		super.connectedCallback();
+	protected override firstUpdated(_changedProperties: PropertyValues): void {
+		super.firstUpdated(_changedProperties);
+
 		tryHideLabel(this, this.#hideLabel);
+		tryMoveBeforePropertyGroup(this, this.#hidePropertyGroup);
 	}
 
 	override render() {
