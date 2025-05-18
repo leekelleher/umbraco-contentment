@@ -92,16 +92,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var totalRecords = -1L;
-            var pageIndex = pageNumber - 1;
+            var skip = (pageNumber - 1) * pageSize;
             var memberType = GetMemberType(config);
-            var items = _memberService.GetAll(pageIndex, pageSize, out totalRecords, "LoginName", Direction.Ascending, memberType?.Alias, query);
+            var items = _memberService.GetAll(skip, pageSize, out totalRecords, "LoginName", Direction.Ascending, memberType?.Alias, query);
 
             if (items?.Any() == true)
             {
-                var offset = pageIndex * pageSize;
                 var results = new PagedViewModel<DataListItem>
                 {
-                    Items = items.Skip(offset).Take(pageSize).Select(ToDataListItem),
+                    Items = items.Select(ToDataListItem),
                     Total = pageSize > 0 ? (long)Math.Ceiling(totalRecords / (decimal)pageSize) : 1,
                 };
 
