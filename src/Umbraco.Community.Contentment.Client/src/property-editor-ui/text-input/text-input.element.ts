@@ -6,7 +6,6 @@ import {
 	customElement,
 	html,
 	ifDefined,
-	nothing,
 	property,
 	repeat,
 	state,
@@ -106,8 +105,8 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 				.value=${this.value ?? ''}
 				?spellcheck=${this._spellcheck}
 				@input=${this.#onInput}>
-				${when(this._prepend, () => this.#renderIcon(this._prepend, 'prepend'))}
-				${when(this._append, () => this.#renderIcon(this._append, 'append'))}
+				${when(this._prepend, (icon) => html`<umb-icon slot="prepend" name=${icon}></umb-icon>`)}
+				${when(this._append, (icon) => html`<umb-icon slot="append" name=${icon}></umb-icon>`)}
 			</uui-input>
 			${when(
 				this._items,
@@ -122,11 +121,6 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 				`
 			)}
 		`;
-	}
-
-	#renderIcon(icon: string | null | undefined, slot: string) {
-		if (!icon) return nothing;
-		return html`<umb-icon slot=${slot} .name=${icon}></umb-icon>`;
 	}
 
 	static override styles = [

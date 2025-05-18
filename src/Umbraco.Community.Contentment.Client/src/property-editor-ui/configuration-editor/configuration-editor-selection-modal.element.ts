@@ -147,8 +147,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 								(item) => html`
 									<umb-ref-item
 										name=${item.name}
-										detail=${ifDefined(item.description)}
-										icon=${ifDefined(item.icon)}
+										detail=${ifDefined(item.description ?? undefined)}
+										icon=${ifDefined(item.icon ?? undefined)}
 										@open=${() => this.#onChoose(item)}>
 									</umb-ref-item>
 								`

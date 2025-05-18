@@ -37,6 +37,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 			<uui-input
 				type="number"
 				class=${this._size ?? 's'}
+				autocomplete="off"
 				pattern="[-0-9]*"
 				placeholder=${ifDefined(this._placeholderText)}
 				.value=${this.value?.toString() ?? ''}

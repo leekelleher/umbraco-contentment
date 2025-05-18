@@ -17,15 +17,17 @@ export type ContentmentConfigurationEditorModel = {
 	group?: string | null;
 	defaultValues?: Record<string, unknown> | null;
 	expressions?: Record<string, unknown> | null;
-	fields?: Array<{
-		key?: string | null;
-		name?: string | null;
-		description?: string | null;
-		propertyEditorUiAlias?: string | null;
-		config?: Record<string, unknown> | null;
-	}> | null;
+	fields?: Array<ContentmentConfigurationEditorModelField> | null;
 	overlaySize?: UUIModalSidebarSize | null;
 	[index: string]: unknown;
+};
+
+export type ContentmentConfigurationEditorModelField = {
+	key?: string | null;
+	name?: string | null;
+	description?: string | null;
+	propertyEditorUiAlias?: string | null;
+	config?: Record<string, unknown> | null;
 };
 
 export type ContentmentListItemValue = {

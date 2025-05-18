@@ -1,8 +1,21 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import type { ContentmentConfigurationEditorModel, ContentmentConfigurationEditorValue } from '../types.js';
-import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import type {
+	ContentmentConfigurationEditorModel,
+	ContentmentConfigurationEditorModelField,
+	ContentmentConfigurationEditorValue,
+} from '../types.js';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	nothing,
+	repeat,
+	state,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
@@ -30,7 +43,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 	ContentmentConfigurationEditorValue
 > {
 	// In v13, some boolean values were stored as numeric strings ("0" or "1") instead of booleans.
-	// or numeric values were stores as strings. These may be unsupported by the new property-editors,
+	// or numeric values were stored as strings. These may be unsupported by the new property-editors,
 	// this is a workaround to convert those values to the correct object-type. [LK]
 	#legacyValueConverters: Record<string, (x: unknown) => unknown> = {
 		'Umb.PropertyEditorUi.Integer': (x) => parseInt(x),
@@ -69,8 +82,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 		this._values = event.target.value;
 	}
 
-	#onSubmit(item: ContentmentConfigurationEditorModel) {
-		this.value = { key: item.key, value: Object.fromEntries(this._values?.map((x) => [x.alias, x.value]) ?? []) };
+	#onSubmit(item?: ContentmentConfigurationEditorModel) {
+		this.value = { key: item!.key, value: Object.fromEntries(this._values?.map((x) => [x.alias, x.value]) ?? []) };
 		this._submitModal();
 	}
 
@@ -88,17 +101,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 								${repeat(
 									fields,
 									(field) => field.key,
-									(field) => html`
-										<umb-property
-											alias=${field.key}
-											label=${field.name}
-											description=${field.description}
-											.propertyEditorUiAlias=${field.propertyEditorUiAlias}
-											.config=${field.config
-												? Object.entries(field.config).map(([alias, value]) => ({ alias, value }))
-												: []}>
-										</umb-property>
-									`
+									(field) => this.#renderField(field)
 								)}
 							</umb-property-dataset>
 						`,
@@ -111,9 +114,22 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 						color="positive"
 						look="primary"
 						label=${this.localize.term('bulk_done')}
-						@click=${() => this.#onSubmit(this._item!)}></uui-button>
+						@click=${() => this.#onSubmit(this._item)}></uui-button>
 				</div>
 			</umb-body-layout>
+		`;
+	}
+	#renderField(field: ContentmentConfigurationEditorModelField) {
+		if (!field.key) return nothing;
+		if (!field.propertyEditorUiAlias) return nothing;
+		return html`
+			<umb-property
+				alias=${field.key}
+				label=${field.name ?? field.key}
+				description=${ifDefined(field.description ?? undefined)}
+				.propertyEditorUiAlias=${field.propertyEditorUiAlias}
+				.config=${field.config ? Object.entries(field.config).map(([alias, value]) => ({ alias, value })) : []}>
+			</umb-property>
 		`;
 	}
 
