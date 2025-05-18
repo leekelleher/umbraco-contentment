@@ -1,7 +1,7 @@
 {
     "name": "umbraco-community-contentment",
     "private": true,
-    "version": "5.0.0-develop",
+    "version": "5.1.1",
     "scripts": {
         "dev": "gulp watch",
         "build": "gulp build"
