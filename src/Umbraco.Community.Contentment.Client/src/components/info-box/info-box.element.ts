@@ -7,7 +7,7 @@ import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-info-box')
-export class ContentmentInfoBoxElement extends UmbLitElement {
+export default class ContentmentInfoBoxElement extends UmbLitElement {
 	@property()
 	heading?: string;
 
@@ -18,7 +18,7 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 	message?: string;
 
 	@property()
-	type?: UUIInterfaceColor | 'border' | 'current' | 'disabled' | 'divider' | 'selected';
+	type?: UUIInterfaceColor | 'border' | 'current' | 'disabled' | 'divider' | 'selected' = 'default';
 
 	#getStyles() {
 		return styleMap({
@@ -33,11 +33,11 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 			<div id="box" class="uui-text ${this.type}" style=${this.#getStyles()}>
 				${when(
 					this.icon,
-					() => html`<umb-icon .name=${this.icon} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
+					(icon) => html`<umb-icon name=${icon} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
 				)}
 				<div>
-					${when(this.heading, () => html`<h5>${this.heading}</h5>`)}
-					${when(this.message, () => html`<div>${unsafeHTML(this.message)}</div>`)}
+					${when(this.heading, (heading) => html`<h5>${heading}</h5>`)}
+					${when(this.message, (message) => html`<div>${unsafeHTML(message)}</div>`)}
 					<slot></slot>
 				</div>
 			</div>
@@ -93,8 +93,6 @@ export class ContentmentInfoBoxElement extends UmbLitElement {
 		`,
 	];
 }
-
-export { ContentmentInfoBoxElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {

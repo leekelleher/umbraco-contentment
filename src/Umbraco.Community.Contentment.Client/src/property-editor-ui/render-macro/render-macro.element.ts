@@ -8,8 +8,6 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/info-box/info-box.element.js';
-
 @customElement('contentment-property-editor-ui-render-macro')
 export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#json = '';

@@ -9,8 +9,6 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/property-editor-ui/property-editor-ui.element.js';
-
 @customElement('contentment-property-editor-ui-content-source')
 export class ContentmentPropertyEditorUIContentSourceElement
 	extends UmbLitElement

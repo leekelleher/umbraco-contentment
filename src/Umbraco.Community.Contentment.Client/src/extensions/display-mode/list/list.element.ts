@@ -7,8 +7,6 @@ import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
 
-import '../../../components/sortable-list/sortable-list.element.js';
-
 @customElement('contentment-display-mode-list')
 export class ContentmentDisplayModeListElement extends ContentmentDisplayModeElement {
 	#defaultIcon?: string;

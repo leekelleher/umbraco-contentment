@@ -9,9 +9,6 @@ import { UMB_PROPERTY_DATASET_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/info-box/info-box.element.js';
-import '../../components/property-editor-ui/property-editor-ui.element.js';
-
 type ContentmentDataListPreviewTab = {
 	alias: 'dataSource' | 'listEditor' | 'rawJson';
 	label: string;

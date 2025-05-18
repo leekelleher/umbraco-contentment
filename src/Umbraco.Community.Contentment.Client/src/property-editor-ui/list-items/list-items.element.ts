@@ -15,16 +15,13 @@ import {
 import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { ContentmentIconPickerElement } from '../../components/icon-picker/icon-picker.element.js';
+import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
 type UmbIconPickerChangeEvent = UmbChangeEvent & { target: ContentmentIconPickerElement };
-
-import '../../components/icon-picker/icon-picker.element.js';
-import '../../components/sortable-list/sortable-list.element.js';
 
 @customElement('contentment-property-editor-ui-list-items')
 export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement implements UmbPropertyEditorUiElement {

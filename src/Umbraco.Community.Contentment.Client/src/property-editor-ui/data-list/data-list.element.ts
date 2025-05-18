@@ -11,9 +11,6 @@ import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } f
 import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/lee-was-here/lee-was-here.element.js';
-import '../../components/property-editor-ui/property-editor-ui.element.js';
-
 @customElement('contentment-property-editor-ui-data-list')
 export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#listEditor?: ContentmentDataListEditor;

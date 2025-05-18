@@ -4,11 +4,10 @@
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type { ContentmentIconPickerElement, IconSize } from '../../components/icon-picker/icon-picker.element.js';
+import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
+import type { IconSize } from '../../components/icon-picker/icon-picker.element.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-
-import '../../components/icon-picker/icon-picker.element.js';
 
 @customElement('contentment-property-editor-ui-icon-picker')
 export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {

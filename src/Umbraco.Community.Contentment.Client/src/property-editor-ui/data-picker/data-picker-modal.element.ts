@@ -21,8 +21,6 @@ import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 
-import '../../components/info-box/info-box.element.js';
-
 interface ContentmentDataPickerModalData {
 	allowDuplicates: boolean;
 	defaultIcon?: string;

@@ -20,7 +20,6 @@ import type {
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
 
-import '../../components/lee-was-here/lee-was-here.element.js';
 import '../../extensions/display-mode/display-mode-ui.element.js';
 
 @customElement('contentment-property-editor-ui-configuration-editor')

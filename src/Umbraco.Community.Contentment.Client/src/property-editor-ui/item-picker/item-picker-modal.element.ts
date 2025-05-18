@@ -17,8 +17,6 @@ import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
-import '../../components/info-box/info-box.element.js';
-
 interface ContentmentItemPickerModalData {
 	defaultIcon?: string;
 	enableFilter: boolean;

@@ -9,6 +9,8 @@ import { manifests as propertyActions } from './property-action/manifests.js';
 import { manifests as propertyEditorUis } from './property-editor-ui/manifests.js';
 import { manifests as workspaces } from './workspace/manifests.js';
 
+import './components/index.js';
+
 export const manifests: Array<UmbExtensionManifest> = [
 	...conditions,
 	...extensions,

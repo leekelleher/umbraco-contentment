@@ -25,8 +25,6 @@ import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
-import '../../components/sortable-list/sortable-list.element.js';
-
 @customElement('contentment-property-editor-ui-social-links')
 export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#confirmRemoval = false;

@@ -7,8 +7,6 @@ import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
 import type { StyleInfo } from '@umbraco-cms/backoffice/external/lit';
 
-import '../../../components/sortable-list/sortable-list.element.js';
-
 @customElement('contentment-display-mode-cards')
 export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeElement {
 	#defaultIcon: string = 'icon-document';

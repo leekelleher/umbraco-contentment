@@ -11,8 +11,6 @@ import type {
 } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
-import '../../components/info-box/info-box.element.js';
-
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;

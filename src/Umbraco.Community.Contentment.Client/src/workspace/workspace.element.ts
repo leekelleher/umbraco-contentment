@@ -7,8 +7,6 @@ import { Marked } from '@umbraco-cms/backoffice/external/marked';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
-import '../property-editor-ui/editor-notes/editor-notes.element.js';
-
 const UmbMarked = new Marked({ gfm: true, breaks: true });
 
 @customElement('contentment-workspace')
@@ -25,23 +23,23 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 	#gfm = `
 ### Property editors
 
-| :octocat:       | Editor          | Status      | Comment |
-| --------------- | --------------- | ----------- | ------- |
-| :green_circle:  | **Bytes** | **Done** | |
-| :green_circle:  | **Code Editor** | **Done** | |
-| :large_blue_circle: | Content Blocks | _In progress_ | 37% done. |
-| :green_circle:  | **Data List** | **Done** | _(see below for development status on individual components)_ |
-| :green_circle:  | **Data Picker** | **Done** | |
-| :green_circle:  | **Editor Notes** | **Done** | |
-| :green_circle:  | **Icon Picker** | **Done** | |
-| :green_circle:  | **List Items** | **Done** | |
-| :green_circle:  | **Notes** | **Done** | |
-| :green_circle:  | **Number Input** | **Done** | |
-| :no_entry_sign: | ~Render Macro~ | _Deprecated_ | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
-| :green_circle:  | **Social Links** | **Done** | |
-| :green_circle:  | **Templated Label** | **Done** | |
-| :green_circle:  | **Textbox List** | **Done** | |
-| :green_circle:  | **Text Input** | **Done** | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
+| :octocat:           | Editor              | Status        | Comment |
+| ------------------- | ------------------- | ------------- | ------- |
+| :green_circle:      | **Bytes**           | **Done**      | |
+| :green_circle:      | **Code Editor**     | **Done**      | |
+| :large_blue_circle: | Content Blocks      | _In progress_ | 37% done. |
+| :green_circle:      | **Data List**       | **Done**      | _(see below for development status on individual components)_ |
+| :green_circle:      | **Data Picker**     | **Done**      | |
+| :green_circle:      | **Editor Notes**    | **Done**      | |
+| :green_circle:      | **Icon Picker**     | **Done**      | |
+| :green_circle:      | **List Items**      | **Done**      | |
+| :green_circle:      | **Notes**           | **Done**      | |
+| :green_circle:      | **Number Input**    | **Done**      | |
+| :no_entry_sign:     | ~Render Macro~      | _Deprecated_  | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
+| :green_circle:      | **Social Links**    | **Done**      | |
+| :green_circle:      | **Templated Label** | **Done**      | |
+| :green_circle:      | **Textbox List**    | **Done**      | |
+| :green_circle:      | **Text Input**      | **Done**      | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
 
 ### Internal components
 
@@ -62,15 +60,15 @@ Status of components used internally within Contentment.
 
 Status of list-editors used by the Data List editor.
 
-| :octocat:       | Editor          | Status      | Comment |
-| --------------- | --------------- | ----------- | ------- |
-| :green_circle: | **Buttons** | **Done** | |
-| :green_circle: | **Checkbox List** | **Done** |  |
-| :green_circle: | **Dropdown List** | **Done** |  |
-| :green_circle: | **Item Picker** | **Done** | :warning: Done, but sorting and "List type" config hasn't been implemented yet. |
-| :green_circle: | **Radio Button List** | **Done** |  |
-| :large_blue_circle: | Tags | _In progress_ | 42% done. |
-| :green_circle: | **Templated List** | **Done** | |
+| :octocat:           | Editor                | Status    | Comment |
+| ------------------- | --------------------- | --------- | ------- |
+| :green_circle:      | **Buttons**           | **Done**  | |
+| :green_circle:      | **Checkbox List**     | **Done**  | |
+| :green_circle:      | **Dropdown List**     | **Done**  | |
+| :green_circle:      | **Item Picker**       | **Done**  | :warning: Done, but sorting and "List type" config hasn't been implemented yet. |
+| :green_circle:      | **Radio Button List** | **Done**  | |
+| :large_blue_circle: | Tags | _In progress_  | 42% done. | |
+| :green_circle:      | **Templated List**    | **Done**  | |
 
 ### Data List sources
 
@@ -79,39 +77,39 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 
 | :octocat:       | Editor          | Status      | Comment |
 | --------------- | --------------- | ----------- | ------- |
-| :green_circle: | **.NET Countries** | **Done** | |
-| :green_circle: | **.NET Currencies** | **Done** | |
-| :green_circle: | **.NET Enum** | **Done** | |
-| :green_circle: | **.NET Languages** | **Done** | |
-| :green_circle: | **.NET Time Zone** | **Done** | |
-| :green_circle: | **Examine** | **Done** | |
-| :green_circle: | **JSON** | **Done** | |
-| :green_circle: | **Number Range** | **Done** | |
-| :green_circle: | **Physical File System** | **Done** | |
-| :green_circle: | **SQL** | **Done** | |
-| :green_circle: | **Text Delimited** | **Done** | |
-| :green_circle: | **uCssClassName** | **Done** | |
-| :green_circle: | **Umbraco Backoffice Sections** | **Done** | |
-| :green_circle: | **Umbraco Content** | **Done** | |
-| :green_circle: | **Umbraco Content Properties** | **Done** | |
-| :green_circle: | **Umbraco Content Property Value** | **Done**  | |
-| :green_circle: | **Umbraco Content Types** | **Done** | |
+| :green_circle:  | **.NET Countries** | **Done** | |
+| :green_circle:  | **.NET Currencies** | **Done** | |
+| :green_circle:  | **.NET Enum** | **Done** | |
+| :green_circle:  | **.NET Languages** | **Done** | |
+| :green_circle:  | **.NET Time Zone** | **Done** | |
+| :green_circle:  | **Examine** | **Done** | |
+| :green_circle:  | **JSON** | **Done** | |
+| :green_circle:  | **Number Range** | **Done** | |
+| :green_circle:  | **Physical File System** | **Done** | |
+| :green_circle:  | **SQL** | **Done** | |
+| :green_circle:  | **Text Delimited** | **Done** | |
+| :green_circle:  | **uCssClassName** | **Done** | |
+| :green_circle:  | **Umbraco Backoffice Sections** | **Done** | |
+| :green_circle:  | **Umbraco Content** | **Done** | |
+| :green_circle:  | **Umbraco Content Properties** | **Done** | |
+| :green_circle:  | **Umbraco Content Property Value** | **Done**  | |
+| :green_circle:  | **Umbraco Content Types** | **Done** | |
 | :no_entry_sign: | ~Umbraco Content XPath~ | _Deprecated_ | :no_entry_sign: XPath has been removed in Umbraco 14. |
-| :green_circle: | **Umbraco Dictionary** | **Done** | |
-| :green_circle: | **Umbraco Entity** | **Done** | |
-| :green_circle: | **Umbraco Files** | **Done** | |
-| :green_circle: | **Umbraco Image Crop** | **Done** | |
-| :green_circle: | **Umbraco Languages** | **Done** |  |
-| :green_circle: | **Umbraco Member Group** | **Done** | |
-| :green_circle: | **Umbraco Members** | **Done** | |
-| :green_circle: | **Umbraco Tags** | **Done** | |
-| :green_circle: | **Umbraco Templates** | **Done** | |
-| :green_circle: | **Umbraco User Group** | **Done** | |
-| :green_circle: | **Umbraco Users** | **Done** | |
-| :green_circle: | **User Defined** | **Done** | |
-| :green_circle: | **XML** | **Done** | |
-| :green_circle: | **XML Sitemap Change Frequency** | **Done** | |
-| :green_circle: | **XML Sitemap Priority** | **Done** | |
+| :green_circle:  | **Umbraco Dictionary** | **Done** | |
+| :green_circle:  | **Umbraco Entity** | **Done** | |
+| :green_circle:  | **Umbraco Files** | **Done** | |
+| :green_circle:  | **Umbraco Image Crop** | **Done** | |
+| :green_circle:  | **Umbraco Languages** | **Done** |  |
+| :green_circle:  | **Umbraco Member Group** | **Done** | |
+| :green_circle:  | **Umbraco Members** | **Done** | |
+| :green_circle:  | **Umbraco Tags** | **Done** | |
+| :green_circle:  | **Umbraco Templates** | **Done** | |
+| :green_circle:  | **Umbraco User Group** | **Done** | |
+| :green_circle:  | **Umbraco Users** | **Done** | |
+| :green_circle:  | **User Defined** | **Done** | |
+| :green_circle:  | **XML** | **Done** | |
+| :green_circle:  | **XML Sitemap Change Frequency** | **Done** | |
+| :green_circle:  | **XML Sitemap Priority** | **Done** | |
 `;
 
 	@state()

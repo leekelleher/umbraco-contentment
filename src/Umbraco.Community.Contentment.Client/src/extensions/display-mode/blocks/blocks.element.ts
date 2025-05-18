@@ -4,8 +4,6 @@
 import { customElement, html } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 
-import '../../../components/sortable-list/sortable-list.element.js';
-
 @customElement('contentment-property-editor-ui-blocks')
 export class ContentmentPropertyEditorUIBlocksElement extends ContentmentDisplayModeElement {
 	override render() {

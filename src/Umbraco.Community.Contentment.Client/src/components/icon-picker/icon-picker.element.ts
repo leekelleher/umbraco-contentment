@@ -10,7 +10,7 @@ import { UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 export type IconSize = 'large' | 'small';
 
 @customElement('contentment-icon-picker')
-export class ContentmentIconPickerElement extends UmbLitElement {
+export default class ContentmentIconPickerElement extends UmbLitElement {
 	@property({ attribute: 'default-icon' })
 	public defaultIcon?: string = '';
 
@@ -60,8 +60,6 @@ export class ContentmentIconPickerElement extends UmbLitElement {
 		`,
 	];
 }
-
-export { ContentmentIconPickerElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {

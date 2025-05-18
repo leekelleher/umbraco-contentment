@@ -14,8 +14,6 @@ import type {
 	UmbPropertyEditorConfigCollection,
 } from '@umbraco-cms/backoffice/property-editor';
 
-import '../lee-was-here/lee-was-here.element.js';
-
 @customElement('contentment-property-editor-ui')
 export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
 	@property({ attribute: false })

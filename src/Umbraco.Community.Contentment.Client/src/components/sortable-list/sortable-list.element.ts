@@ -8,7 +8,7 @@ import { Sortable } from '@umbraco-community/backoffice/external/sortablejs';
 import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
 
 @customElement('contentment-sortable-list')
-export class ContentmentSortableListElement extends UmbLitElement {
+export default class ContentmentSortableListElement extends UmbLitElement {
 	@property({ type: Boolean })
 	disabled: boolean = false;
 
@@ -58,8 +58,6 @@ export class ContentmentSortableListElement extends UmbLitElement {
 		`,
 	];
 }
-
-export { ContentmentSortableListElement as element };
 
 declare global {
 	interface HTMLElementTagNameMap {
