@@ -124,13 +124,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (items?.Any() == true)
             {
-                var offset = pageIndex * pageSize;
                 var results = new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize)
                 {
-                    Items = items
-                        .Skip(offset)
-                        .Take(pageSize)
-                        .Select(ToDataListItem)
+                    Items = items.Select(ToDataListItem)
                 };
 
                 return Task.FromResult(results);
