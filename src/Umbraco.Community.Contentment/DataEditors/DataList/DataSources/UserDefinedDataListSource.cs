@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "confirmRemoval", true },
                     { EnableDevModeConfigurationField.EnableDevMode, true },
                     { MaxItemsConfigurationField.MaxItems, 0 },
-                    { NotesConfigurationField.Notes, @"<details class=""well well-small"">
+                    { NotesConfigurationField.Notes, @"<details class=""well"">
 <summary><strong><em>Advanced:</em> Paste in the raw JSON?</strong></summary>
 <p>If you have copied the raw JSON from the Data List preview panel, <button class=""btn-reset"" ng-click=""vm.edit()""><strong>you can paste it in here</strong></button>.</p>
 <p>The JSON format must be an array of the Data List item structure.<br />For example...</p>

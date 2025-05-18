@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
 <p>Welcome to a piece of Umbraco package history.</p>
 <p>First released back in 2013 by <a href=""http://tooorangey.co.uk/"" target=""_blank"">Marc Goodson</a>, <a href=""https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/"" target=""_blank""><strong>uCssClassNameDropdown</strong></a> became one of the most popular packages for Umbraco v4.11.3.</p>

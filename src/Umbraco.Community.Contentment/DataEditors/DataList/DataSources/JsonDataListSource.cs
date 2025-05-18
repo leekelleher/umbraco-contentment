@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField($@"<details class=""well well-small"">
+            new NotesConfigurationField($@"<details class=""well"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
 <p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
 <p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank""><strong>goessner.net/articles/JsonPath</strong></a>.</p>

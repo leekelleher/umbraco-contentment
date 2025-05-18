@@ -38,23 +38,29 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 	static override styles = [
 		UmbTextStyles,
 		css`
-			details > summary {
-				cursor: pointer;
-			}
+			details {
+				> summary {
+					cursor: pointer;
+				}
 
-			details.well {
-				background-color: var(--uui-color-divider);
-				border: 1px solid var(--uui-color-divider-standalone);
-				border-radius: var(--uui-border-radius, 3px);
-				padding: var(--uui-size-space-5);
-			}
+				&.well {
+					background-color: var(--uui-color-divider);
+					border: 1px solid var(--uui-color-divider-standalone);
+					border-radius: var(--uui-border-radius, 3px);
+					padding: var(--uui-size-space-5);
+				}
 
-			details + details {
-				margin-top: var(--uui-size-space-3);
-			}
+				& + details {
+					margin-top: var(--uui-size-space-3);
+				}
 
-			details p {
-				margin-bottom: 0;
+				p {
+					margin-bottom: 0;
+
+					&:last-of-type {
+						margin-bottom: var(--uui-size-space-3);
+					}
+				}
 			}
 		`,
 	];

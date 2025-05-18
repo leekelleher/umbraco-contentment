@@ -103,7 +103,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }) },
                 }
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),

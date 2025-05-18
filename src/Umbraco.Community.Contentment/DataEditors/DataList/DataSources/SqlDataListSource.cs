@@ -59,7 +59,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>

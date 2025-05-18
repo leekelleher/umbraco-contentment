@@ -52,6 +52,8 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.#hideIcon = parseBoolean(config.getValueByAlias('hideIcon'));
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
+
+		// TODO: [LK] Implement the "notes" configuration.
 	}
 
 	#onAdd() {

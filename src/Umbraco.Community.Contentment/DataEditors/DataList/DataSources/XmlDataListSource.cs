@@ -44,11 +44,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new NotesConfigurationField(@"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://developer.mozilla.org/en-US/docs/Web/XPath"" target=""_blank""><strong>MDN Web Docs</strong></a>.</p>
 </details>
-<details class=""well well-small"">
+<details class=""well"">
 <summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>
 <p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
 </details>", true),
