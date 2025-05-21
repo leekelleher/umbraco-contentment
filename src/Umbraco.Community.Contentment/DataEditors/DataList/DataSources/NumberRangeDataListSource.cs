@@ -4,12 +4,20 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class NumberRangeDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
+        private readonly IJsonSerializer _jsonSerializer;
+
+        public NumberRangeDataListSource(IJsonSerializer jsonSerializer)
+        {
+            _jsonSerializer = jsonSerializer;
+        }
+
         public override string Name => "Number Range";
 
         public override string Description => "Generates a sequence of numbers within a specified range.";
@@ -82,12 +90,25 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
+        private class SliderValue
+        {
+            public int? From { get; set; }
+            public int? To { get; set; }
+        }
+
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
             var start = config.GetValueAs("start", defaultValue: default(double));
             var end = config.GetValueAs("end", defaultValue: default(double));
             var step = config.GetValueAs("step", defaultValue: default(double));
-            var decimals = config.GetValueAs("decimals", defaultValue: default(int));
+
+            var decimals = 0;
+            var str = config.GetValueAs("decimals", defaultValue: default(string));
+            if (string.IsNullOrWhiteSpace(str) == false)
+            {
+                decimals = int.TryParse(str, out var i) == true ? i : _jsonSerializer.Deserialize<SliderValue>(str)?.From ?? 0;
+            }
+
             var format = string.Concat("N", decimals);
 
             DataListItem newItem(double i) => new() { Name = i.ToString(format), Value = i.ToString(format) };
