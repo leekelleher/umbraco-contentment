@@ -12,7 +12,8 @@ import {
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -75,9 +76,9 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
-			const requestBody = { dataSource: this._dataSource, listEditor: null };
+			const body = { dataSource: this._dataSource, listEditor: null };
 
-			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
+			const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
 
 			if (!data) return reject();
 

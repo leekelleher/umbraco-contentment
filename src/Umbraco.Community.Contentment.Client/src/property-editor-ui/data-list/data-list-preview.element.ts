@@ -56,7 +56,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 
 		this.consumeContext(UMB_PROPERTY_DATASET_CONTEXT, async (context) => {
 			this.observe(
-				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource'),
+				await context?.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource'),
 				(dataSource) => {
 					this._dataSource = dataSource;
 					this.#fetch();
@@ -65,7 +65,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 			);
 
 			this.observe(
-				await context.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor'),
+				await context?.propertyValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor'),
 				(listEditor) => {
 					this._listEditor = listEditor;
 					this.#fetch();

@@ -32,11 +32,11 @@ export abstract class ContentmentDisplayModeElement extends UmbLitElement {
 		this.consumeContext(CONTENTMENT_DISPLAY_MODE_CONTEXT, (context) => {
 			this.#context = context;
 
-			this.observe(context.allowAdd, (allowAdd) => (this.allowAdd = allowAdd));
-			this.observe(context.allowEdit, (allowEdit) => (this.allowEdit = allowEdit));
-			this.observe(context.allowRemove, (allowRemove) => (this.allowRemove = allowRemove));
-			this.observe(context.allowSort, (allowSort) => (this.allowSort = allowSort));
-			this.observe(context.items, (items) => (this.items = items));
+			this.observe(context?.allowAdd, (allowAdd) => (this.allowAdd = allowAdd ?? false));
+			this.observe(context?.allowEdit, (allowEdit) => (this.allowEdit = allowEdit ?? false));
+			this.observe(context?.allowRemove, (allowRemove) => (this.allowRemove = allowRemove ?? false));
+			this.observe(context?.allowSort, (allowSort) => (this.allowSort = allowSort ?? false));
+			this.observe(context?.items, (items) => (this.items = items));
 		});
 	}
 

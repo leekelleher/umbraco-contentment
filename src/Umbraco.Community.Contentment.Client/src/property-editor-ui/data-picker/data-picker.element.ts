@@ -2,18 +2,18 @@
 // Copyright © 2024 Lee Kelleher
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
 import { DataPickerService } from '../../api/sdk.gen.js';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { CONTENTMENT_DATA_PICKER_MODAL } from './data-picker-modal.element.js';
-import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_CONTENT_PROPERTY_CONTEXT, UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, ContentmentListItem } from '../types.js';
-import type { UmbMenuStructureWorkspaceContext } from '@umbraco-cms/backoffice/menu';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
@@ -93,22 +93,19 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	constructor() {
 		super();
 
-		this.consumeContext(
-			'UmbMenuStructureWorkspaceContext',
-			(menuStructureWorkspaceContext: UmbMenuStructureWorkspaceContext) => {
-				this.observe(menuStructureWorkspaceContext.structure, (structure) => {
-					this._entityUnique = structure.at(-1)?.unique;
-				});
-			}
-		);
+		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.unique, (unique) => {
+				this._entityUnique = unique;
+			});
+		});
 
 		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
-			this.observe(context.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
+			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
 		});
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
-			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
-			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
+			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
+			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
 	}
 
@@ -121,7 +118,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this.#listEditor = await new Promise<ContentmentDataListEditor>(async (resolve, reject) => {
 			if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return reject();
 
-			const requestBody = {
+			const body = {
 				alias: this._propertyAlias,
 				dataTypeKey: this._dataTypeKey,
 				dataSource: this._dataSource,
@@ -131,7 +128,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				variant: this._variantId,
 			};
 
-			const { data } = await tryExecuteAndNotify(this, DataPickerService.postDataPickerEditor({ requestBody }));
+			const { data } = await tryExecute(this, DataPickerService.postDataPickerEditor({ client: umbHttpClient, body }));
 
 			if (!data) return reject();
 

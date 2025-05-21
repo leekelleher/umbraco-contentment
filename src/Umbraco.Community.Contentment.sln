@@ -109,7 +109,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{DCC8
 		..\umbraco-marketplace.json = ..\umbraco-marketplace.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.15.x", "Umbraco.Cms.15.x\Umbraco.Cms.15.x.csproj", "{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.16.x", "Umbraco.Cms.16.x\Umbraco.Cms.16.x.csproj", "{677B90BF-E7AC-4C25-BC05-DD092C7FC79C}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Umbraco.Community.Contentment.Client", "Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj", "{D7EC70F1-8B18-433A-B4DF-4B28D0696FE1}"
 EndProject

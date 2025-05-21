@@ -19,7 +19,7 @@ export class ContentmentPropertyActionAllowClearElement<ArgsMetaType = never>
 	async execute(): Promise<void> {
 		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
 
-		propertyContext.clearValue();
+		propertyContext?.clearValue();
 
 		this.dispatchEvent(new UmbChangeEvent());
 

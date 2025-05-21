@@ -23,7 +23,7 @@ export default class ContentmentIconPickerElement extends UmbLitElement {
 	async #openIconPicker() {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 		const modalValue = this.#parseIcon(this.value);
-		const modal = modalManager.open(this, UMB_ICON_PICKER_MODAL, { value: modalValue });
+		const modal = modalManager?.open(this, UMB_ICON_PICKER_MODAL, { value: modalValue });
 
 		const picked = await modal?.onSubmit();
 		if (!picked) return;

@@ -39,7 +39,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		this.#loadCodeEditor();
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (context) => {
-			this.observe(context.appearance, (appearance) => {
+			this.observe(context?.appearance, (appearance) => {
 				this._hideMargin = appearance?.labelOnTop ?? false;
 			});
 		});

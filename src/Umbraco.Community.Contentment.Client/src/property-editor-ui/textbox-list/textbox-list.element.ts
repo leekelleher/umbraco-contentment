@@ -2,7 +2,8 @@
 // Copyright © 2024 Lee Kelleher
 
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -53,9 +54,9 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
 			if (!this._dataSource) return reject();
 
-			const requestBody = { dataSource: this._dataSource[0], listEditor: null };
+			const body = { dataSource: this._dataSource[0], listEditor: null };
 
-			const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
+			const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
 
 			if (!data) return reject();
 

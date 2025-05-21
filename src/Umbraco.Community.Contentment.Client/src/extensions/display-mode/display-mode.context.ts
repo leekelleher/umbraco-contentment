@@ -7,7 +7,7 @@ import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
 import type { ContentmentListItem } from '../../property-editor-ui/types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
-export class ContentmentDisplayModeContext extends UmbContextBase<ContentmentDisplayModeContext> {
+export class ContentmentDisplayModeContext extends UmbContextBase {
 	#canEdit?: (item: ContentmentListItem, index: number) => boolean;
 
 	#config?: UmbPropertyEditorConfigCollection;

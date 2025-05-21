@@ -48,7 +48,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 
 	async #onClick() {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
-		const modalContext = modalManager.open(this, UMB_ITEM_PICKER_MODAL, {
+		const modalContext = modalManager?.open(this, UMB_ITEM_PICKER_MODAL, {
 			data: {
 				headline: `${this.localize.term('general_choose')}...`,
 				items: this.#extensions
@@ -63,7 +63,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 			modal: { size: 'medium' },
 		});
 
-		const modalValue = await modalContext.onSubmit();
+		const modalValue = await modalContext?.onSubmit();
 
 		if (!modalValue) return;
 

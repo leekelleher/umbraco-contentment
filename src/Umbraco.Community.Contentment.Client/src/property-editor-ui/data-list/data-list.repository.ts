@@ -2,11 +2,10 @@
 // Copyright © 2024 Lee Kelleher
 
 import { createExtensionApi } from '@umbraco-cms/backoffice/extension-api';
-import { request as __request } from '../../api/core/request.js';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/sdk.gen.js';
-import { OpenAPI } from '@umbraco-cms/backoffice/external/backend-api';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { UmbRepositoryBase } from '@umbraco-cms/backoffice/repository';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../../property-editor-ui/types.js';
@@ -66,7 +65,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 
 		// TODO: [LK] Implement the `listEditor` lookup (for client-side only registrations).
 
-		const requestBody = {
+		const body = {
 			alias: propertyAlias,
 			dataSource,
 			id: entityUnique,
@@ -74,7 +73,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 			variant: variantId,
 		};
 
-		const { data } = await tryExecuteAndNotify(this, DataListService.postDataListEditor({ requestBody }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
 
 		if (data?.propertyEditorUiAlias) {
 			propertyEditorUiAlias = data.propertyEditorUiAlias;
@@ -88,18 +87,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 	}
 
 	public async getItemsByUrl(url: string): Promise<ContentmentListItem[]> {
-		const { data } = await tryExecuteAndNotify(
-			this,
-			__request(OpenAPI, {
-				method: 'GET',
-				url: url,
-				errors: {
-					401: 'The resource is protected and requires an authentication token',
-					403: 'The authenticated user do not have access to this resource',
-					404: 'Not Found',
-				},
-			})
-		);
+		const { data } = await tryExecute(this, umbHttpClient.get({ url }));
 
 		return data as Array<ContentmentListItem>;
 	}

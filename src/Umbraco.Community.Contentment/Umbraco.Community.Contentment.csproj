@@ -41,9 +41,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="15.3.0" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="15.3.0" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="15.3.0" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="16.0.0-rc3" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="16.0.0-rc3" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.0.0-rc3" />
         <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
             <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
         </ProjectReference>

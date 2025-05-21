@@ -12,12 +12,13 @@ import {
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
 import { debounce } from '@umbraco-cms/backoffice/utils';
-import { tryExecuteAndNotify } from '@umbraco-cms/backoffice/resources';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import type { ContentmentListItem } from '../types.js';
 import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
-import { UMB_CONTENT_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_CONTENT_PROPERTY_CONTEXT, UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -87,21 +88,22 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	constructor() {
 		super();
 
-		this.consumeContext('UmbMenuStructureWorkspaceContext', (context: any) => {
-			this.observe(context.structure, (structure: Array<{ unique: string }>) => {
-				this._entityUnique = structure.at(-1)?.unique;
+		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.unique, (unique) => {
+				if (!unique) return;
+				this._entityUnique = unique;
 			});
 		});
 
 		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
-			this.observe(context.dataType, (dataType) => {
+			this.observe(context?.dataType, (dataType) => {
 				this._dataTypeKey = dataType?.unique;
 			});
 		});
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
-			this.observe(propertyContext.alias, (alias) => (this._propertyAlias = alias));
-			this.observe(propertyContext.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
+			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
+			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
 	}
 
@@ -155,7 +157,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	async #requestItems() {
-		const requestData = {
+		const query = {
 			alias: this._propertyAlias,
 			dataTypeKey: this._dataTypeKey,
 			id: this._entityUnique,
@@ -165,7 +167,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			variant: this._variantId,
 		};
 
-		const { data } = await tryExecuteAndNotify(this, DataPickerService.getDataPickerSearch(requestData));
+		const { data } = await tryExecute(this, DataPickerService.getDataPickerSearch({ client: umbHttpClient, query }));
 
 		this._items =
 			data?.items.map((item) => ({

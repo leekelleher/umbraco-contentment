@@ -17,7 +17,7 @@ export class ContentmentPropertyConfigFlagCondition
 	) {
 		super(host, args);
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
-			this.observe(propertyContext.config, (config) => {
+			this.observe(propertyContext?.config, (config) => {
 				const alias = this.config.propertyConfigAlias;
 				this.permitted = !!alias && Boolean(config?.getValueByAlias(alias));
 			});
