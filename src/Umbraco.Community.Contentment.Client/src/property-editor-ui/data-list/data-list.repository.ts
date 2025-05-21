@@ -87,6 +87,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 	}
 
 	public async getItemsByUrl(url: string): Promise<ContentmentListItem[]> {
+		// TODO: [LK] This is returning a 401 unauthorized error. I need to figure out why!
 		const { data } = await tryExecute(this, umbHttpClient.get({ url }));
 
 		return data as Array<ContentmentListItem>;

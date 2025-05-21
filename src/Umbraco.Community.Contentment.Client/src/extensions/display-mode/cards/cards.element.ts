@@ -120,6 +120,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 				position: relative;
 			}
 
+			/* TODO: [LK] Something strange is happening with the grid. The heights are all messed up! */
 			.container {
 				display: grid;
 				gap: var(--uui-size-space-3);
