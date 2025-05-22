@@ -147,6 +147,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 					font-size: var(--uui-size-8);
 					/* HACK: To make the icon position appear vertically centred within the top half of the card. [LK] */
 					padding-bottom: var(--uui-size-12);
+					min-height: var(--uui-size-layout-6);
 				}
 			}
 
