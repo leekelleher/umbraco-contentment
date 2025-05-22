@@ -108,12 +108,13 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			medium: this._size === 'm',
 			large: this._size === 'l',
 		};
-		const title = this._labelStyle === 'icon' ? [item.name, item.description].join(', ') : item.description;
+		const description = this._labelStyle === 'icon' ? [item.name, item.description].join(', ') : item.description;
 		return html`
 			<uui-button
 				class=${classMap(classes)}
 				look=${this._look}
-				title=${ifDefined(title ?? undefined)}
+				label=${description ?? item.name}
+				title=${ifDefined(description ?? undefined)}
 				?disabled=${item.disabled}
 				@click=${() => this.#onClick(item)}>
 				<div>

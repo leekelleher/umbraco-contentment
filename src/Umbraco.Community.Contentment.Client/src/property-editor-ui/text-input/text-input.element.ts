@@ -27,6 +27,9 @@ import type {
 @customElement('contentment-property-editor-ui-text-input')
 export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property()
+	name?: string;
+
+	@property()
 	value?: string;
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
@@ -100,6 +103,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 			<uui-input
 				type=${this._inputType}
 				autocomplete=${this._autocomplete ? 'on' : 'off'}
+				label=${this.name ?? 'Text input'}
 				list="items"
 				max=${this._maxChars}
 				placeholder=${ifDefined(this._placeholderText)}

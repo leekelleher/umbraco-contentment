@@ -12,6 +12,9 @@ import type {
 
 @customElement('contentment-property-editor-ui-number-input')
 export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	@property()
+	name?: string;
+
 	@property({ type: Number })
 	value?: number;
 
@@ -37,6 +40,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 			<uui-input
 				type="number"
 				class=${this._size ?? 's'}
+				label=${this.name ?? 'Number input'}
 				autocomplete="off"
 				pattern="[-0-9]*"
 				placeholder=${ifDefined(this._placeholderText)}
