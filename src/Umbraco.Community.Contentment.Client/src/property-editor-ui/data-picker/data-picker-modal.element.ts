@@ -15,11 +15,14 @@ import { debounce } from '@umbraco-cms/backoffice/utils';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
-import type { ContentmentListItem } from '../types.js';
 import { DataPickerService } from '../../api/sdk.gen.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
-import { UMB_CONTENT_PROPERTY_CONTEXT, UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
+import {
+	UMB_CONTENT_WORKSPACE_CONTEXT,
+	UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT,
+} from '@umbraco-cms/backoffice/content';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import type { ContentmentListItem } from '../types.js';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 
 interface ContentmentDataPickerModalData {
@@ -89,16 +92,11 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		super();
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
-			this.observe(contentWorkspaceContext?.unique, (unique) => {
-				if (!unique) return;
-				this._entityUnique = unique;
-			});
+			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique || undefined));
 		});
 
-		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
-			this.observe(context?.dataType, (dataType) => {
-				this._dataTypeKey = dataType?.unique;
-			});
+		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
+			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
 		});
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {

@@ -10,7 +10,10 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { CONTENTMENT_DATA_PICKER_MODAL } from './data-picker-modal.element.js';
-import { UMB_CONTENT_PROPERTY_CONTEXT, UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
+import {
+	UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT,
+	UMB_CONTENT_WORKSPACE_CONTEXT,
+} from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, ContentmentListItem } from '../types.js';
@@ -99,7 +102,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			});
 		});
 
-		this.consumeContext(UMB_CONTENT_PROPERTY_CONTEXT, (context) => {
+		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
 			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
 		});
 

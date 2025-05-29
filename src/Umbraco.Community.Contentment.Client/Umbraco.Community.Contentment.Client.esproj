@@ -4,6 +4,5 @@
         <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
         <ShouldRunBuildScript>false</ShouldRunBuildScript>
         <StaticWebAssetSourceId>Umbraco.Community.Contentment</StaticWebAssetSourceId>
-        <DebugAssetsDirectory>$(MSBuildProjectDirectory)\dist</DebugAssetsDirectory>
     </PropertyGroup>
 </Project>
