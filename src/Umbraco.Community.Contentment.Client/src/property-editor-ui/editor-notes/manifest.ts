@@ -70,7 +70,7 @@ export const manifest: UmbExtensionManifest = {
 							value: [
 								[
 									['Umb.Tiptap.Toolbar.SourceEditor'],
-									['Umb.Tiptap.Toolbar.Bold', 'Umb.Tiptap.Toolbar.Italic', 'Umb.Tiptap.Toolbar.Underline'],
+									['Umb.Tiptap.Toolbar.StyleSelect', 'Umb.Tiptap.Toolbar.Bold', 'Umb.Tiptap.Toolbar.Italic', 'Umb.Tiptap.Toolbar.Underline'],
 									[
 										'Umb.Tiptap.Toolbar.TextAlignLeft',
 										'Umb.Tiptap.Toolbar.TextAlignCenter',
