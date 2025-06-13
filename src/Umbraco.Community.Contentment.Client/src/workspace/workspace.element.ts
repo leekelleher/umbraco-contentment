@@ -124,14 +124,14 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 
 	override render() {
 		return html`
-			<umb-body-layout headline="Migration status of Contentment for Umbraco 15">
-				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Beta testing</uui-tag></div>
+			<umb-body-layout headline="Migration status of Contentment for Umbraco 16">
+				<div slot="action-menu"><uui-tag color="positive" look="placeholder">Alpha testing</uui-tag></div>
 
 				<contentment-info-box
 					type="divider"
 					icon="icon-contentment"
-					heading="Status update for Contentment v6.0.0-beta001">
-					<p>Contentment v6.0 is in beta. Your testing and feedback of the package is essential.</p>
+					heading="Status update for Contentment v6.0.0-alpha008">
+					<p>Contentment v6.0 is in alpha. Your testing and feedback of the package is essential.</p>
 					<p>
 						If you find any bugs, or feel something is amiss, then please raise an issue on
 						<a href="https://github.com/leekelleher/umbraco-contentment/issues" target="_blank" rel="noopener"
