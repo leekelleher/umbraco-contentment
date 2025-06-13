@@ -80,13 +80,16 @@ export class ContentmentPropertyEditorUIDropdownListElement
 				?disabled=${item.disabled}>
 				<div class="outer">
 					${when(this._showIcons && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
-					<uui-form-layout-item>
-						<span slot="label">${this.localize.string(item.name)}</span>
-						${when(
-							this._showDescriptions && item.description,
-							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`
-						)}
-					</uui-form-layout-item>
+					${when(
+						this._showDescriptions && item.description,
+						() => html`
+							<uui-form-layout-item>
+								<span slot="label">${this.localize.string(item.name)}</span>
+								<span slot="description">${unsafeHTML(item.description)}</span>
+							</uui-form-layout-item>
+						`,
+						() => html`<span>${this.localize.string(item.name)}</span>`
+					)}
 				</div>
 			</uui-combobox-list-option>
 		`;
@@ -106,7 +109,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 			}
 
 			uui-combobox-list-option {
-				padding-top: 5px;
+				padding: 0.5rem;
 			}
 
 			uui-form-layout-item {
