@@ -81,7 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return Task.FromResult(values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
-                    .Select(x => _memberService.GetByKey(x.Guid))
+                    .Select(x => _memberService.GetById(x.Guid))
                     .WhereNotNull()
                     .Select(ToDataListItem));
             }
@@ -118,7 +118,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 udi is not null &&
                 udi.Guid.Equals(Guid.Empty) == false)
             {
-                var member = _memberService.GetByKey(udi.Guid);
+                var member = _memberService.GetById(udi.Guid);
                 if (member != null)
                 {
                     return _publishedMemberCache.Get(member);
