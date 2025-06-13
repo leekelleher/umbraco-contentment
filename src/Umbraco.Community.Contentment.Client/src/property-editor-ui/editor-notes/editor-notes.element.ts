@@ -4,12 +4,12 @@
 import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import type { ContentmentInfoBoxElementType } from '../../components/info-box/info-box.element.js';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
-import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -17,7 +17,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 
 	#hidePropertyGroup: boolean = false;
 
-	#alertType?: UUIInterfaceColor;
+	#alertType?: ContentmentInfoBoxElementType;
 
 	#icon?: string;
 

@@ -15,7 +15,7 @@ export const manifest: UmbExtensionManifest = {
 			properties: [
 				{
 					alias: 'alertType',
-					label: 'Alert type',
+					label: 'Style',
 					description: '',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
 					config: [
@@ -23,6 +23,7 @@ export const manifest: UmbExtensionManifest = {
 							alias: 'items',
 							value: [
 								{ name: 'Default', value: 'default', icon: 'icon-circle-dotted color-blue' },
+								{ name: 'Primary', value: 'primary', icon: 'icon-circle-dotted color-blue' },
 								{ name: 'Positive', value: 'positive', icon: 'icon-circle-dotted-active color-green' },
 								{ name: 'Warning', value: 'warning', icon: 'icon-alert color-orange' },
 								{ name: 'Danger', value: 'danger', icon: 'icon-application-error color-red' },
