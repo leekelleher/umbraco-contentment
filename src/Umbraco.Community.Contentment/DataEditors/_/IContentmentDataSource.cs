@@ -5,5 +5,5 @@ namespace Umbraco.Community.Contentment.DataEditors;
 
 public interface IContentmentDataSource : IContentmentEditorItem
 {
-    IEnumerable<DataListItem> GetItems(Dictionary<string, object> config);
+    public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config);
 }

@@ -11,10 +11,10 @@ namespace Umbraco.Community.Contentment.DataEditors
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IContentmentListItem : IDiscoverable
     {
-        string? Name { get; }
+        public string? Name { get; }
 
-        string? Description { get; }
+        public string? Description { get; }
 
-        string? Icon { get; }
+        public string? Icon { get; }
     }
 }

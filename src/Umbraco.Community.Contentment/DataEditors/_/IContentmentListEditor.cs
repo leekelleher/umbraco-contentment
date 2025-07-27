@@ -5,9 +5,9 @@ namespace Umbraco.Community.Contentment.DataEditors;
 
 public interface IContentmentListEditor : IContentmentEditorItem
 {
-    Dictionary<string, object>? DefaultConfig { get; }
+    public Dictionary<string, object>? DefaultConfig { get; }
 
-    bool HasMultipleValues(Dictionary<string, object>? config);
+    public bool HasMultipleValues(Dictionary<string, object>? config);
 
-    string PropertyEditorUiAlias { get; }
+    public string PropertyEditorUiAlias { get; }
 }
