@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-using Umbraco.Cms.Core.Strings;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
 using InternalConstants = Umbraco.Community.Contentment.Constants.Internals;
@@ -12,8 +11,7 @@ internal static class ContentmentListItemCollectionExtensions
 {
     public static IEnumerable<object> GetExtensionsForManifest(
         this ContentmentListItemCollection listItems,
-        ConfigurationEditorUtility utility,
-        IShortStringHelper shortStringHelper)
+        ConfigurationEditorUtility utility)
     {
         var extensions = new List<object>();
 
@@ -34,7 +32,7 @@ internal static class ContentmentListItemCollectionExtensions
             var itemType = listItem.GetType();
 
             var type = InternalConstants.ProjectAlias + suffix;
-            var name = InternalConstants.DataEditorNamePrefix + itemType.Name.SplitPascalCasing(shortStringHelper);
+            var name = InternalConstants.DataEditorNamePrefix + listItem.Name;
             var alias = InternalConstants.ManifestAliasPrefix + suffix + "." + itemType.Name;
             var meta = utility.GetConfigurationEditorModel(listItem);
 

@@ -3,7 +3,6 @@
 
 using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Manifest;
-using Umbraco.Cms.Core.Strings;
 using Umbraco.Cms.Infrastructure.Manifest;
 using Umbraco.Community.Contentment.Composing;
 using Umbraco.Community.Contentment.DataEditors;
@@ -16,18 +15,15 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
     private readonly ContentmentSettings _settings;
     private readonly ConfigurationEditorUtility _utility;
     private readonly ContentmentListItemCollection _listItems;
-    private readonly IShortStringHelper _shortStringHelper;
 
     public ContentmentPackageManifestReader(
         IOptions<ContentmentSettings> settings,
         ConfigurationEditorUtility utility,
-        ContentmentListItemCollection listItems,
-        IShortStringHelper shortStringHelper)
+        ContentmentListItemCollection listItems)
     {
         _settings = settings.Value;
         _utility = utility;
         _listItems = listItems;
-        _shortStringHelper = shortStringHelper;
     }
 
     public Task<IEnumerable<PackageManifest>> ReadPackageManifestsAsync()
@@ -60,7 +56,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             });
         }
 
-        extensions.AddRange(_listItems.GetExtensionsForManifest(_utility, _shortStringHelper));
+        extensions.AddRange(_listItems.GetExtensionsForManifest(_utility));
 
         var manifest = new PackageManifest
         {
