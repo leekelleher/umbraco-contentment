@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import type { UmbIconDictionary } from '@umbraco-cms/backoffice/icon';
+
 const iconPath = '/App_Plugins/Contentment/icons';
 
-const contentment = [{ name: 'icon-contentment', path: `${iconPath}/icon-contentment.js` }];
+const contentment: UmbIconDictionary = [{ name: 'icon-contentment', path: `${iconPath}/icon-contentment.js` }];
 
-const fontAwesome = [
+const fontAwesome: UmbIconDictionary = [
 	{ name: 'icon-fa-arrow-down-1-9', path: `${iconPath}/fa/icon-fa-arrow-down-1-9.js` },
 	{ name: 'icon-fa-arrow-pointer', path: `${iconPath}/fa/icon-fa-arrow-pointer.js` },
 	{ name: 'icon-fa-circle-exclamation', path: `${iconPath}/fa/icon-fa-circle-exclamation.js` },
@@ -24,7 +26,7 @@ const fontAwesome = [
 	{ name: 'icon-fa-tags', path: `${iconPath}/fa/icon-fa-tags.js` },
 ];
 
-const socials = [
+const socials: UmbIconDictionary = [
 	{ name: 'icon-bluesky', path: `${iconPath}/social/icon-bluesky.js` },
 	{ name: 'icon-discord', path: `${iconPath}/social/icon-discord.js` },
 	{ name: 'icon-instagram', path: `${iconPath}/social/icon-instagram.js` },
