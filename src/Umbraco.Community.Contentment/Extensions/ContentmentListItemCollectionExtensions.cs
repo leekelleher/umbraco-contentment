@@ -21,6 +21,7 @@ internal static class ContentmentListItemCollectionExtensions
             {
                 IContentmentListEditor => "ListEditor",
                 IContentmentDataSource => "DataSource",
+                IDataPickerSource => "DataSource", // TODO: [LK] Remove this once I've figured out how `IContentmentDataSource` can support search.
                 _ => null,
             };
 
