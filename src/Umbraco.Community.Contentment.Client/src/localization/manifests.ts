@@ -5,7 +5,7 @@ export const manifests: Array<UmbExtensionManifest> = [
 	{
 		type: 'localization',
 		name: '[Contentment] English',
-		alias: 'Umb.Contentment.Localization.En',
+		alias: 'Umb.Contentment.Localization.English',
 		js: () => import('./en.js'),
 		meta: {
 			culture: 'en',
