@@ -1,28 +1,11 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-.contentment .lk-icon-picker-small {
-    border: 1px dashed #d8d7d9;
-    color: #d8d7d9;
-    display: inline-block;
-    height: 20px;
-    padding: 5px 0;
-    text-align: center;
-    width: 30px;
+.contentment .umb-panel-header-icon .label-add {
+    font-size: 10px;
 }
-
-    .contentment .lk-icon-picker-small:focus,
-    .contentment .lk-icon-picker-small:hover {
-        border-color: #2152a3;
-        color: #2152a3;
-        text-decoration: none;
-    }
-
-    .contentment .lk-icon-picker-small i.color-black {
-        color: #000;
-    }
 
 .contentment .umb-mediapicker .umb-sortable-thumbnails__wrapper > .icon {
     font-size: 50px;
