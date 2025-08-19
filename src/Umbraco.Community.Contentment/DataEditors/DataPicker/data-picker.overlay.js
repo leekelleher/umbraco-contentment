@@ -19,6 +19,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             enableMultiple: false,
             hideSearch: false,
             listType: "cards",
+            maxItems: 0,
             pageSize: 12,
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
@@ -32,12 +33,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             vm.enableMultiple = config.enableMultiple;
             vm.hideSearch = config.hideSearch;
             vm.listType = config.listType;
+            vm.maxItems = config.maxItems;
 
             vm.loading = true;
+
             vm.items = [];
 
             vm.allowSubmit = false;
             vm.selection = {};
+            vm.selectionCount = 0;
 
             vm.searchOptions = {
                 dataTypeKey: config.dataTypeKey,
@@ -120,11 +124,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
 
                 if (vm.selection.hasOwnProperty(item.value) === false) {
                     vm.selection[item.value] = item;
+                    vm.selectionCount++;
                 } else {
                     delete vm.selection[item.value];
+                    vm.selectionCount--;
                 }
 
-                vm.allowSubmit = true;
+                vm.allowSubmit = vm.selectionCount > 0 && (config.maxItems === 0 || vm.selectionCount <= config.maxItems);
 
             } else {
 
