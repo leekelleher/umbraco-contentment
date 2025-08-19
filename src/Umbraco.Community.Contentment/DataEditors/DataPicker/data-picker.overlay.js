@@ -6,8 +6,9 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.DataPicker.Controller", [
     "$scope",
     "$http",
+    "$routeParams",
     "umbRequestHelper",
-    function ($scope, $http, umbRequestHelper) {
+    function ($scope, $http, $routeParams, umbRequestHelper) {
 
         //console.log("data-picker.overlay", $scope.model);
 
@@ -70,7 +71,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
                         dataTypeKey: vm.searchOptions.dataTypeKey,
                         pageNumber: vm.searchOptions.pageNumber,
                         pageSize: vm.searchOptions.pageSize,
-                        query: encodeURIComponent(vm.searchOptions.query)
+                        query: encodeURIComponent(vm.searchOptions.query),
+                        culture: $routeParams.cculture ?? $routeParams.mculture,
+                        segment: $routeParams.csegment
                     }
                 }),
                 "Failed to retrieve search data.")
