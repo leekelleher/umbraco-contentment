@@ -130,6 +130,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     listType: config.displayMode,
                     maxItems: config.maxItems === 0 ? config.maxItems : config.maxItems - $scope.model.value.length,
                     pageSize: config.pageSize,
+                    selectedItems: $scope.model.value,
                 },
                 submit: function (selection) {
 

@@ -21,6 +21,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             listType: "cards",
             maxItems: 0,
             pageSize: 12,
+            selectedItems: [],
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -69,7 +70,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             vm.loading = true;
 
             umbRequestHelper.resourcePromise(
-                $http.get("backoffice/Contentment/DataPickerApi/Search", {
+                $http.post("backoffice/Contentment/DataPickerApi/Search", config.selectedItems, {
                     params: {
                         id: config.currentPageId,
                         dataTypeKey: vm.searchOptions.dataTypeKey,
