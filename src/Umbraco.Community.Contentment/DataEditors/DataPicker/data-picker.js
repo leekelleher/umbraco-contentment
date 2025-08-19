@@ -128,6 +128,7 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     enableMultiple: config.maxItems !== 1,
                     hideSearch: Object.toBoolean(config.hideSearch),
                     listType: config.displayMode,
+                    maxItems: config.maxItems === 0 ? config.maxItems : config.maxItems - $scope.model.value.length,
                     pageSize: config.pageSize,
                 },
                 submit: function (selection) {
