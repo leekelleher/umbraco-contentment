@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
@@ -32,6 +32,11 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
+	#onClear() {
+		this.value = undefined;
+		this.dispatchEvent(new UmbChangeEvent());
+	}
+
 	override render() {
 		return html`
 			<contentment-icon-picker
@@ -40,8 +45,22 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 				.value=${this.value}
 				@change=${this.#onChange}>
 			</contentment-icon-picker>
+			${when(
+				this.value,
+				() =>
+					html`<uui-button compact label=${this.localize.term('general_clear')} @click=${this.#onClear}></uui-button>`
+			)}
 		`;
 	}
+
+	static override styles = [
+		css`
+			:host {
+				display: flex;
+				gap: var(--uui-size-2);
+			}
+		`,
+	];
 }
 
 export { ContentmentPropertyEditorUIIconPickerElement as element };

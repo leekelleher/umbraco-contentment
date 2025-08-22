@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_ICON_PICKER_MODAL } from '@umbraco-cms/backoffice/icon';
@@ -45,7 +45,11 @@ export default class ContentmentIconPickerElement extends UmbLitElement {
 				label=${this.localize.term('defaultdialogs_selectIcon')}
 				?compact=${this.size === 'small'}
 				@click=${this.#openIconPicker}>
-				<umb-icon name=${this.value || this.defaultIcon || 'add'}></umb-icon>
+				${when(
+					this.value || this.defaultIcon,
+					(icon) => html`<umb-icon name=${icon}></umb-icon>`,
+					() => html`<uui-icon name="add" style="--uui-icon-color: var(--uui-color-disabled-contrast);"></uui-icon>`
+				)}
 			</uui-button>
 		`;
 	}
