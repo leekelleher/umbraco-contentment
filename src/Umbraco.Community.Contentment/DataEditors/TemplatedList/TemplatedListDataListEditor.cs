@@ -77,6 +77,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "Vertical", Value = "vertical" },
                         }
                     },
+                    { "orientation", "horizontal" },
                 }
             },
             new()

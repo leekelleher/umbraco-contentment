@@ -25,9 +25,29 @@ namespace Umbraco.Community.Contentment.DataEditors
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
             new AllowClearConfigurationField(),
+            new ()
+            {
+                Key = "orientation",
+                Name = "Orientation",
+                Description = "Select the orientation of the list. By default this is set to 'vertical' (column).",
+                PropertyEditorUiAlias = DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Horizontal", Value = "horizontal" },
+                            new DataListItem { Name = "Vertical", Value = "vertical" },
+                        }
+                    },
+                    { "orientation", "horizontal" },
+                }
+            },
         };
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => new()
+        {
+            { "orientation", "vertical" },
+        };
 
         public Dictionary<string, object>? DefaultConfig => default;
 

@@ -26,6 +26,9 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	@state()
+	private _flexDirection: 'row' | 'column' = 'column';
+
 	@property()
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
@@ -41,6 +44,8 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
 		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
+
+		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 	}
 
 	@state()
@@ -63,7 +68,10 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	override render() {
 		return html`
-			<uui-radio-group .value=${this.value || this._defaultValue} @change=${this.#onChange}>
+			<uui-radio-group
+				class=${this._flexDirection}
+				.value=${this.value || this._defaultValue}
+				@change=${this.#onChange}>
 				${repeat(
 					this._items,
 					(item) => item.value,
@@ -92,6 +100,13 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	static override styles = [
 		css`
+			.row {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				gap: 1rem;
+			}
+
 			.outer {
 				display: flex;
 				flex-direction: row;
