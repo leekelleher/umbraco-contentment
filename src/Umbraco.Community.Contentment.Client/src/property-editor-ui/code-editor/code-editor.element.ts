@@ -16,7 +16,8 @@ type CodeEditorLanguage = UmbCodeEditorElement['language'];
 
 @customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
-	#language?: CodeEditorLanguage;
+	@state()
+	private _language?: CodeEditorLanguage;
 
 	@state()
 	private _loading = true;
@@ -30,7 +31,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		this.#language = config.getValueByAlias<CodeEditorLanguage>('mode');
+		this._language = config.getValueByAlias<CodeEditorLanguage>('mode');
 	}
 
 	constructor() {
@@ -64,7 +65,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`
 			<div id="code-editor" class=${classMap({ margin: !this._hideMargin })}>
-				<umb-code-editor language=${this.#language ?? 'razor'} .code=${this.value ?? ''} @input=${this.#onChange}>
+				<umb-code-editor language=${this._language ?? 'razor'} .code=${this.value ?? ''} @input=${this.#onChange}>
 				</umb-code-editor>
 			</div>
 		`;

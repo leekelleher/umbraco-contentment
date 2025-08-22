@@ -6,7 +6,7 @@ import type { ManifestElement } from '@umbraco-cms/backoffice/extension-api';
 export interface ContentmentTemplatedLabelUiExtentionManifestType extends ManifestElement {
 	type: 'contentmentTemplatedLabelUi';
 	meta?: {
-		name?: string;
+		label?: string;
 		description?: string;
 		icon?: string;
 	};

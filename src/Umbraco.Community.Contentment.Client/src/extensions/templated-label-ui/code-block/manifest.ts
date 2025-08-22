@@ -9,7 +9,7 @@ export const manifest: ContentmentTemplatedLabelUiExtentionManifestType = {
 	name: '[Contentment] Code Block Templated Label UI',
 	element: () => import('./code-block.element.js'),
   meta: {
-    name: 'Code Block',
+    label: 'Code Block',
     icon: 'icon-code',
   },
 };
