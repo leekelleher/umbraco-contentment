@@ -194,10 +194,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		const network = this.#getNetworkByKey(item.network);
 		return html`
 			<div class="item">
-				${when(
-					!this.#disableSorting,
-					() => html`<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>`
-				)}
+				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
 				${when(
 					!network,
 					() => html`
@@ -232,10 +229,9 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 						@change=${(e: UUIInputEvent) => this.#onChangeUrl(e, index)}></uui-input>
 				</div>
 				<div class="actions">
-					<uui-button
-						label=${this.localize.term('general_remove')}
-						look="secondary"
-						@click=${() => this.#onRemove(item, index)}></uui-button>
+					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item, index)}>
+						<uui-icon name="delete"></uui-icon>
+					</uui-button>
 				</div>
 			</div>
 		`;
@@ -263,34 +259,38 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 				padding: var(--uui-size-3) var(--uui-size-6);
 				background-color: var(--uui-color-surface-alt);
-			}
 
-			.item[drag-placeholder] {
-				opacity: 0.5;
-			}
+				&[drag-placeholder] {
+					opacity: 0.5;
+				}
 
-			.item > uui-button {
-				--uui-button-background-color-hover: var(--uui-button-background-color);
+				> .handle {
+					cursor: grab;
+				}
 
-				flex: 0 0 var(--uui-size-10);
+				> uui-button {
+					--uui-button-background-color-hover: var(--uui-button-background-color);
 
-				font-size: var(--uui-size-layout-2);
-				height: var(--uui-size-layout-4);
-				width: var(--uui-size-layout-4);
-			}
+					flex: 0 0 var(--uui-size-10);
 
-			.item > .inputs {
-				flex: 1;
+					font-size: var(--uui-size-layout-2);
+					height: var(--uui-size-layout-4);
+					width: var(--uui-size-layout-4);
+				}
 
-				display: flex;
-				flex-direction: column;
-				gap: var(--uui-size-1);
-			}
+				> .inputs {
+					flex: 1;
 
-			.item > .actions {
-				flex: 0 0 auto;
-				display: flex;
-				justify-content: flex-end;
+					display: flex;
+					flex-direction: column;
+					gap: var(--uui-size-1);
+				}
+
+				> .actions {
+					flex: 0 0 auto;
+					display: flex;
+					justify-content: flex-end;
+				}
 			}
 		`,
 	];

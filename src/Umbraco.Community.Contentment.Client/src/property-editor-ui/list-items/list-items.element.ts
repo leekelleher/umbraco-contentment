@@ -171,10 +171,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 	#renderItem(item: ContentmentListItemValue, index: number) {
 		return html`
 			<div class="item">
-				${when(
-					!this.#disableSorting,
-					() => html`<div class="handle"><uui-icon name="icon-navigation"></uui-icon></div>`
-				)}
+				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
 				${when(
 					!this.#hideIcon,
 					() => html`
@@ -212,10 +209,9 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 					)}
 				</div>
 				<div class="actions">
-					<uui-button
-						label=${this.localize.term('general_remove')}
-						look="secondary"
-						@click=${() => this.#onRemove(item, index)}></uui-button>
+					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item, index)}>
+						<uui-icon name="delete"></uui-icon>
+					</uui-button>
 				</div>
 			</div>
 		`;
@@ -248,7 +244,11 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 					opacity: 0.5;
 				}
 
-				& > contentment-icon-picker {
+				> .handle {
+					cursor: grab;
+				}
+
+				> contentment-icon-picker {
 					flex: 0 0 var(--uui-size-10);
 
 					font-size: var(--uui-size-layout-2);
@@ -256,25 +256,25 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 					width: var(--uui-size-layout-4);
 				}
 
-				& > .inputs {
+				> .inputs {
 					flex: 1;
 
 					display: flex;
 					flex-direction: column;
 					gap: var(--uui-size-1);
 
-					& > div {
+					> div {
 						display: flex;
 						justify-content: space-between;
 						gap: var(--uui-size-1);
 
-						& > * {
+						> * {
 							flex: 1;
 						}
 					}
 				}
 
-				& > .actions {
+				> .actions {
 					flex: 0 0 auto;
 					display: flex;
 					justify-content: flex-end;
