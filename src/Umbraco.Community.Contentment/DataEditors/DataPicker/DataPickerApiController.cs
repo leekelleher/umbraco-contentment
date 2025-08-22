@@ -66,14 +66,21 @@ namespace Umbraco.Community.Contentment.DataEditors
             return NotFound($"Unable to locate data source for data type: '{dataTypeKey}'");
         }
 
+        [Obsolete("Please call the `Search` endpoint using a POST method.")]
         [HttpGet]
-#pragma warning disable IDE0060 // Remove unused parameter
         public async Task<IActionResult> Search(string id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "")
+            => await Search(id, dataTypeKey, pageNumber, pageSize, query, []);
+
+        [HttpPost]
+#pragma warning disable IDE0060 // Remove unused parameter
+        public async Task<IActionResult> Search(string id, Guid dataTypeKey, int pageNumber = 1, int pageSize = 12, string query = "", [FromBody] string[]? values = null)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
             {
-                var results = await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                var results = cached.Item1 is IDataPickerSource2 source2
+                    ? await source2.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
+                    : await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
                 return Ok(results);
             }
@@ -92,7 +99,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                    var results = await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                    var results = source1 is IDataPickerSource2 source2
+                        ? await source2.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
+                        : await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
                     return Ok(results);
                 }
