@@ -107,11 +107,15 @@ public class DataPickerController : ContentmentControllerBase
         int pageSize = 12,
         string query = "",
         string? alias = default,
-        string? variant = default)
+        string? variant = default,
+        [FromBody] string[]? values = null)
     {
         if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
         {
-            var results = await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+            var results = cached.Item1 is IDataPickerSource2 source2
+                ? await source2.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
+                : await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+
             return Ok(results);
         }
 
@@ -130,7 +134,9 @@ public class DataPickerController : ContentmentControllerBase
 
                 _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
-                var results = await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+                var results = source1 is IDataPickerSource2 source2
+                    ? await source2.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
+                    : await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
                 return Ok(results);
             }
