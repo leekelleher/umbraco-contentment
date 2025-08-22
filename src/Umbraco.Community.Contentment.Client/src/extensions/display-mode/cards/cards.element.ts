@@ -49,8 +49,10 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		const label = this.localize.term(this.addButtonLabelKey ?? 'general_choose');
 		return html`
 			<uui-button id="btn-add" label=${label} look="placeholder" @click=${this.#onAdd}>
-				<uui-icon name="icon-add"></uui-icon>
-				<span>${label}</span>
+				<div>
+					<uui-icon name="icon-add"></uui-icon>
+					<span>${label}</span>
+				</div>
 			</uui-button>
 		`;
 	}
@@ -131,6 +133,19 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			#btn-add {
 				text-align: center;
 				height: 100%;
+
+				> div {
+					display: flex;
+					flex-direction: column;
+
+					line-height: 1.5;
+					margin: 0 var(--uui-size-6);
+
+					> uui-icon {
+						font-size: var(--uui-size-8);
+						margin-bottom: var(--uui-size-4);
+					}
+				}
 			}
 
 			uui-icon {
