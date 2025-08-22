@@ -8,4 +8,8 @@ export const manifest: ContentmentDataListItemUiExtentionManifestType = {
 	alias: 'Umb.Contentment.DataListItemUi.CodeBlock',
 	name: '[Contentment] Code Block Data List Item UI',
 	element: () => import('./code-block.element.js'),
+	meta: {
+		label: 'Code Block',
+		icon: 'icon-code',
+	},
 };

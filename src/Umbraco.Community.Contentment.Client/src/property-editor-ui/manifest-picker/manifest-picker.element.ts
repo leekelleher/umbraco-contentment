@@ -54,9 +54,9 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 				items: this.#extensions
 					.filter((ext) => ext.type === this.#extensionType)
 					.map((ext) => ({
-						label: (ext as any).meta?.name ?? ext.name,
+						label: (ext as any).meta?.label ?? ext.name,
 						value: ext.alias,
-						description: (ext as any).meta?.description ?? ext.alias,
+						description: (ext as any).meta?.description,
 						icon: (ext as any).meta?.icon,
 					})),
 			},
@@ -127,8 +127,8 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 		const ext = this.#extensions.find((ext) => ext.alias === alias) as any;
 		return html`
 			<uui-ref-node
-				name=${ext.meta?.name ?? ext.name}
-				detail=${ext.meta?.description ?? ext.alias}
+				name=${ext.meta?.label ?? ext.name}
+				detail=${ext.meta?.description}
 				?standalone=${this.#maxItems === 1}>
 				${when(ext.meta?.icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">

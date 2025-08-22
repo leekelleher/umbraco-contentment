@@ -5,6 +5,11 @@ import type { ManifestElement } from '@umbraco-cms/backoffice/extension-api';
 
 export interface ContentmentDataListItemUiExtentionManifestType extends ManifestElement {
 	type: 'contentmentDataListItemUi';
+	meta?: {
+		label?: string;
+		description?: string;
+		icon?: string;
+	};
 }
 
 declare global {
