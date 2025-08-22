@@ -6,8 +6,9 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.DataPicker.Controller", [
     "$scope",
     "$http",
+    "$routeParams",
     "umbRequestHelper",
-    function ($scope, $http, umbRequestHelper) {
+    function ($scope, $http, $routeParams, umbRequestHelper) {
 
         //console.log("data-picker.overlay", $scope.model);
 
@@ -18,7 +19,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             enableMultiple: false,
             hideSearch: false,
             listType: "cards",
+            maxItems: 0,
             pageSize: 12,
+            selectedItems: [],
         };
         var config = Object.assign({}, defaultConfig, $scope.model.config);
 
@@ -31,12 +34,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             vm.enableMultiple = config.enableMultiple;
             vm.hideSearch = config.hideSearch;
             vm.listType = config.listType;
+            vm.maxItems = config.maxItems;
 
             vm.loading = true;
+
             vm.items = [];
 
             vm.allowSubmit = false;
             vm.selection = {};
+            vm.selectionCount = 0;
 
             vm.searchOptions = {
                 dataTypeKey: config.dataTypeKey,
@@ -64,13 +70,15 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
             vm.loading = true;
 
             umbRequestHelper.resourcePromise(
-                $http.get("backoffice/Contentment/DataPickerApi/Search", {
+                $http.post("backoffice/Contentment/DataPickerApi/Search", config.selectedItems, {
                     params: {
                         id: config.currentPageId,
                         dataTypeKey: vm.searchOptions.dataTypeKey,
                         pageNumber: vm.searchOptions.pageNumber,
                         pageSize: vm.searchOptions.pageSize,
-                        query: encodeURIComponent(vm.searchOptions.query)
+                        query: encodeURIComponent(vm.searchOptions.query),
+                        culture: $routeParams.cculture ?? $routeParams.mculture,
+                        segment: $routeParams.csegment
                     }
                 }),
                 "Failed to retrieve search data.")
@@ -117,11 +125,13 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
 
                 if (vm.selection.hasOwnProperty(item.value) === false) {
                     vm.selection[item.value] = item;
+                    vm.selectionCount++;
                 } else {
                     delete vm.selection[item.value];
+                    vm.selectionCount--;
                 }
 
-                vm.allowSubmit = true;
+                vm.allowSubmit = vm.selectionCount > 0 && (config.maxItems === 0 || vm.selectionCount <= config.maxItems);
 
             } else {
 

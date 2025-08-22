@@ -6,13 +6,14 @@
 angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.DataPicker.Controller", [
     "$scope",
     "$http",
+    "$routeParams",
     "editorService",
     "editorState",
     "localizationService",
     "overlayService",
     "umbRequestHelper",
     "Umbraco.Community.Contentment.Services.DevMode",
-    function ($scope, $http, editorService, editorState, localizationService, overlayService, umbRequestHelper, devModeService) {
+    function ($scope, $http, $routeParams, editorService, editorState, localizationService, overlayService, umbRequestHelper, devModeService) {
 
         if ($scope.model.hasOwnProperty("contentTypeId")) {
             // NOTE: This will prevents the editor attempting to load whilst in the Content Type Editor's property preview panel.
@@ -127,7 +128,9 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                     enableMultiple: config.maxItems !== 1,
                     hideSearch: Object.toBoolean(config.hideSearch),
                     listType: config.displayMode,
+                    maxItems: config.maxItems === 0 ? config.maxItems : config.maxItems - $scope.model.value.length,
                     pageSize: config.pageSize,
+                    selectedItems: $scope.model.value,
                 },
                 submit: function (selection) {
 
@@ -167,7 +170,11 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 vm.loading = true;
                 umbRequestHelper.resourcePromise(
                     $http.post("backoffice/Contentment/DataPickerApi/GetItems?id=" + config.currentPageId, $scope.model.value, {
-                        params: { dataTypeKey: $scope.model.dataTypeKey }
+                        params: {
+                            dataTypeKey: $scope.model.dataTypeKey,
+                            culture: $routeParams.cculture ?? $routeParams.mculture,
+                            segment: $routeParams.csegment
+                        }
                     }),
                     "Failed to retrieve item data.")
                     .then(function (data) {

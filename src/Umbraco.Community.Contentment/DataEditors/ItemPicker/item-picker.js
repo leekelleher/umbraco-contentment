@@ -92,21 +92,14 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.DataEditors.
                 }
             }
 
-            if ($scope.umbProperty) {
+            vm.propertyActions = [];
 
-                vm.propertyActions = [];
-
-                if (Object.toBoolean(config.allowClear) === true) {
-                    vm.propertyActions.push({
-                        labelKey: "buttons_clearSelection",
-                        icon: "trash",
-                        method: clear
-                    });
-                }
-
-                if (vm.propertyActions.length > 0) {
-                    $scope.umbProperty.setPropertyActions(vm.propertyActions);
-                }
+            if (Object.toBoolean(config.allowClear) === true) {
+                vm.propertyActions.push({
+                    labelKey: "buttons_clearSelection",
+                    icon: "trash",
+                    method: clear
+                });
             }
 
             var events = [];

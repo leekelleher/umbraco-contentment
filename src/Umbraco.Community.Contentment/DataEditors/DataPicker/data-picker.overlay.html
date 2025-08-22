@@ -30,6 +30,10 @@
 
             <umb-load-indicator ng-show="vm.loading === true"></umb-load-indicator>
 
+            <div ng-if="vm.enableMultiple === true && vm.selectionCount > 0 && vm.maxItems > 0 && vm.selectionCount > vm.maxItems" class="alert alert-danger">
+                <span>Too many items selected, please unselect <strong>{{vm.selectionCount - vm.maxItems}}</strong> {{vm.selectionCount - vm.maxItems === 1 ? 'item' : 'items'}}.</span>
+            </div>
+
             <div class="umb-block-card-grid" ng-if="vm.listType === 'cards'" ng-show="vm.loading === false && vm.items.length !== 0">
                 <div class="umb-block-card"
                      ng-repeat="item in vm.items"
