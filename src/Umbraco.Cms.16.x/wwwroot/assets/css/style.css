@@ -1,4 +1,4 @@
-﻿/* Contentment Demo Website styles */
+/* Contentment Demo Website styles */
 
 /* new.css overrides */
 /*:root {
@@ -17,15 +17,19 @@ body > header > p {
     right: 1rem;
 }
 
+body > header > nav > a.current {
+  font-weight: bold;
+}
+
 /*
     Additional to new.css - as it doesn't have styles for <footer>.
     https://github.com/xz/new.css/pull/72
 */
 body > footer {
-    background: var(--nc-bg-2);
-    border-top: 1px solid var(--nc-bg-3);
-    padding: 2rem calc(50vw - 50%);
-    margin: 2rem calc(0px - (50vw - 50%)) -2rem;
+  background: var(--nc-bg-2);
+  border-top: 1px solid var(--nc-bg-3);
+  padding: 2rem calc(50vw - 50%);
+  margin: 2rem calc(0px - (50vw - 50%)) -2rem;
 }
 
     body > footer > *:first-child {
