@@ -8,6 +8,7 @@ import {
 	css,
 	customElement,
 	html,
+	ifDefined,
 	nothing,
 	property,
 	repeat,
@@ -38,7 +39,16 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	private _enableMultiple = false;
 
 	@state()
+	private _flexDirection: 'row' | 'column' = 'column';
+
+	@state()
 	private _items: Array<ContentmentDataListOption> = [];
+
+	@state()
+	private _listStyles?: string;
+
+	@state()
+	private _listItemStyles?: string;
 
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
@@ -57,6 +67,11 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 		const components = config.getValueByAlias<Array<string>>('component') ?? [];
 		this.#component = components[0];
+
+		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
+
+		this._listStyles = config.getValueByAlias('listStyles');
+		this._listItemStyles = config.getValueByAlias('listItemStyles');
 
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
@@ -119,7 +134,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	override render() {
 		if (!this._element) return html`<lee-was-here></lee-was-here>`;
 		return html`
-			<ul>
+			<ul class=${this._flexDirection} style=${ifDefined(this._listStyles)}>
 				${repeat(
 					this._items,
 					(item) => item.value,
@@ -134,13 +149,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const element = this._element.cloneNode(true) as ContentmentDataListItemUiElement;
 		element.item = item;
 		return html`
-			<li>
-				<button
-					class=${classMap({ selected: item.selected })}
-					?disabled=${item.disabled}
-					@click=${() => this.#onClick(item)}>
-					${element}
-				</button>
+			<li class=${classMap({ selected: item.selected })} style=${ifDefined(this._listItemStyles)}>
+				<button ?disabled=${item.disabled} @click=${() => this.#onClick(item)}>${element}</button>
 			</li>
 		`;
 	}
@@ -157,8 +167,16 @@ export class ContentmentPropertyEditorUITemplatedListElement
 				padding: 0;
 				margin: 0;
 
+				&.row {
+					flex-direction: row;
+				}
+
 				> li {
 					flex: 1;
+
+					&.selected {
+						background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
+					}
 
 					> button {
 						all: initial;
@@ -172,15 +190,12 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 						> * {
 							flex: 1;
+							pointer-events: none;
 						}
 
 						&[disabled] {
 							cursor: not-allowed !important;
 							opacity: 0.5;
-						}
-
-						&.selected {
-							background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
 						}
 					}
 				}
