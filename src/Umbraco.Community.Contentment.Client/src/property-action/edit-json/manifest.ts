@@ -20,6 +20,7 @@ export const manifest: UmbExtensionManifest = {
 		'Umb.Contentment.PropertyEditorUi.Notes',
 		'Umb.Contentment.PropertyEditorUi.SocialLinks',
 		'Umb.Contentment.PropertyEditorUi.TemplatedLabel',
+		'Umb.Contentment.PropertyEditorUi.TextboxList',
 	],
 	meta: {
 		icon: 'icon-brackets',
