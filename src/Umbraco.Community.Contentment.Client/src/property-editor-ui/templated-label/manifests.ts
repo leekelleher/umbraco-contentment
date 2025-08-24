@@ -63,13 +63,15 @@ const editorUi: UmbExtensionManifest = {
 				{
 					alias: 'hideLabel',
 					label: 'Hide label?',
-					description: 'Select to hide the label and have the editor take up the full width of the panel.',
+					description: `<uui-tag look="placeholder">experimental</uui-tag>
+Select to hide the label and have the editor take up the full width of the panel.`,
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 				{
 					alias: 'hidePropertyGroup',
 					label: 'Move above property group container?',
-					description: '<em>(experimental)</em> Select to move the note above/outside the property group.',
+					description: `<uui-tag look="placeholder">experimental</uui-tag>
+Select to move the note above/outside the property group.`,
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 				{

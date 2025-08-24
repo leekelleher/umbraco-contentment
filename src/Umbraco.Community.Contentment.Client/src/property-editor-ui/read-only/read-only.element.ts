@@ -30,7 +30,10 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 	override connectedCallback() {
 		super.connectedCallback();
-		tryHideLabel(this, this.#hideLabel);
+
+		if (this.#hideLabel) {
+			tryHideLabel(this);
+		}
 	}
 
 	override render() {

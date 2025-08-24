@@ -48,8 +48,13 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
 		super.firstUpdated(_changedProperties);
 
-		tryHideLabel(this, this.#hideLabel);
-		tryMoveBeforePropertyGroup(this, this.#hidePropertyGroup);
+		if (this.#hideLabel) {
+			tryHideLabel(this);
+		}
+
+		if (this.#hidePropertyGroup) {
+			tryMoveBeforePropertyGroup(this);
+		}
 	}
 
 	override render() {
