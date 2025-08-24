@@ -16,14 +16,14 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
-
 // TODO: [LK] This is a work-in-progress, likely to change in the v6-beta.
 export type ContentmentInfoBoxElementType =
 	| Exclude<UUIInterfaceColor, '' | 'invalid'>
 	| 'border'
 	| 'current'
 	| 'divider'
-	| 'selected';
+	| 'selected'
+	| 'transparent';
 
 @customElement('contentment-info-box')
 export default class ContentmentInfoBoxElement extends UmbLitElement {
