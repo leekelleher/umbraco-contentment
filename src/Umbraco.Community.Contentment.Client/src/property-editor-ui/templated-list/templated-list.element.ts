@@ -173,6 +173,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 				> li {
 					flex: 1;
+					border-radius: var(--uui-border-radius);
 
 					&.selected {
 						background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
@@ -196,6 +197,10 @@ export class ContentmentPropertyEditorUITemplatedListElement
 						&[disabled] {
 							cursor: not-allowed !important;
 							opacity: 0.5;
+						}
+
+						&:focus-visible {
+							outline: 2px solid var(--uui-color-focus);
 						}
 					}
 				}
