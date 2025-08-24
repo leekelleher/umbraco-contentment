@@ -61,7 +61,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 
 	#getExistingTags(query: string) {
 		this._matches = this._items.filter((tag) => tag.value.toLowerCase().includes(query.toLowerCase()));
-		console.log('getExistingTags', query, this._matches);
+		//console.log('getExistingTags', query, this._matches);
 	}
 
 	#onKeydown(e: KeyboardEvent) {
@@ -212,7 +212,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 	#renderTagOptions() {
 		if (!this._currentInput.length || !this._matches.length) return nothing;
 		const matchfilter = this._matches; //.filter((tag) => tag !== this._items.find((x) => x.value === tag.value));
-		console.log('matchfilter', matchfilter, this._matches, this._currentInput);
+		//console.log('matchfilter', matchfilter, this._matches, this._currentInput);
 		if (!matchfilter.length) return;
 		return html`
 			<div id="matchlist">
