@@ -65,7 +65,11 @@ export class DataPickerService {
                 }
             ],
             url: '/umbraco/management/api/v1/contentment/data-picker/search',
-            ...options
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options?.headers
+            }
         });
     }
     

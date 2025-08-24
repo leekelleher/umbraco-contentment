@@ -145,7 +145,7 @@ export type PostDataPickerEditorResponses = {
 export type PostDataPickerEditorResponse = PostDataPickerEditorResponses[keyof PostDataPickerEditorResponses];
 
 export type GetDataPickerSearchData = {
-    body?: never;
+    body?: Array<string>;
     path?: never;
     query?: {
         id?: string;
