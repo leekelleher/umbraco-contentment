@@ -31,7 +31,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		this.#alertType = config.getValueByAlias('alertType') || 'default';
+		this.#alertType = config.getValueByAlias<ContentmentInfoBoxElementType>('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
 		const message = config.getValueByAlias('message');

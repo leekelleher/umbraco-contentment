@@ -13,7 +13,7 @@ import { manifest as dictionaryPicker } from './dictionary-picker/manifest.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
 import { manifest as dropdownList } from './dropdown-list/manifest.js';
-import { manifest as editorNotes } from './editor-notes/manifest.js';
+import { manifests as editorNotes } from './editor-notes/manifests.js';
 import { manifests as iconPicker } from './icon-picker/manifests.js';
 import { manifests as itemPicker } from './item-picker/manifests.js';
 import { manifests as listItems } from './list-items/manifests.js';
@@ -44,7 +44,7 @@ export const manifests: Array<UmbExtensionManifest> = [
 	...dataList,
 	...dataPicker,
 	dropdownList,
-	editorNotes,
+	...editorNotes,
 	...iconPicker,
 	...itemPicker,
 	...listItems,

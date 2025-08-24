@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-export const manifest: UmbExtensionManifest = {
+const editorNotes: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.EditorNotes',
 	name: '[Contentment] Editor Notes Property Editor UI',
@@ -13,25 +13,6 @@ export const manifest: UmbExtensionManifest = {
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.Notes',
 		settings: {
 			properties: [
-				{
-					alias: 'alertType',
-					label: 'Style',
-					description: '',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
-					config: [
-						{
-							alias: 'items',
-							value: [
-								{ name: 'Default', value: 'default', icon: 'icon-circle-dotted color-blue' },
-								{ name: 'Primary', value: 'primary', icon: 'icon-circle-dotted color-blue' },
-								{ name: 'Positive', value: 'positive', icon: 'icon-circle-dotted-active color-green' },
-								{ name: 'Warning', value: 'warning', icon: 'icon-alert color-orange' },
-								{ name: 'Danger', value: 'danger', icon: 'icon-application-error color-red' },
-							],
-						},
-						{ alias: 'showIcons', value: true },
-					],
-				},
 				{
 					alias: 'icon',
 					label: 'Icon',
@@ -70,7 +51,12 @@ export const manifest: UmbExtensionManifest = {
 							value: [
 								[
 									['Umb.Tiptap.Toolbar.SourceEditor'],
-									['Umb.Tiptap.Toolbar.StyleSelect', 'Umb.Tiptap.Toolbar.Bold', 'Umb.Tiptap.Toolbar.Italic', 'Umb.Tiptap.Toolbar.Underline'],
+									[
+										'Umb.Tiptap.Toolbar.StyleSelect',
+										'Umb.Tiptap.Toolbar.Bold',
+										'Umb.Tiptap.Toolbar.Italic',
+										'Umb.Tiptap.Toolbar.Underline',
+									],
 									[
 										'Umb.Tiptap.Toolbar.TextAlignLeft',
 										'Umb.Tiptap.Toolbar.TextAlignCenter',
@@ -87,15 +73,23 @@ export const manifest: UmbExtensionManifest = {
 					],
 				},
 				{
+					alias: 'alertType',
+					label: 'Style',
+					description: 'Select the style of the note.',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.EditorNoteStyles',
+				},
+				{
 					alias: 'hideLabel',
 					label: 'Hide label?',
-					description: 'Select to hide the label and have the editor take up the full width of the panel.',
+					description: `<uui-tag look="placeholder">experimental</uui-tag>
+Select to hide the label and have the editor take up the full width of the panel.`,
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 				{
 					alias: 'hidePropertyGroup',
 					label: 'Move above property group container?',
-					description: '<em>(experimental)</em> Select to move the note above/outside the property group.',
+					description: `<uui-tag look="placeholder">experimental</uui-tag>
+Select to move the note above/outside the property group.`,
 					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
 				},
 			],
@@ -108,3 +102,17 @@ export const manifest: UmbExtensionManifest = {
 		},
 	},
 };
+
+const editorNoteStyles: UmbExtensionManifest = {
+	type: 'propertyEditorUi',
+	alias: 'Umb.Contentment.PropertyEditorUi.EditorNoteStyles',
+	name: '[Contentment] Editor Note Styles Property Editor UI',
+	element: () => import('./editor-note-styles.element.js'),
+	meta: {
+		label: 'Editor Note Styles',
+		icon: 'icon-contentment',
+		group: 'contentment',
+	},
+};
+
+export const manifests = [editorNotes, editorNoteStyles];
