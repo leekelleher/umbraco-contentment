@@ -130,7 +130,7 @@ The majority of this work is reliant on the internal **Configuration Editor** UI
 				<contentment-info-box
 					type="divider"
 					icon="icon-contentment"
-					heading="Status update for Contentment v6.0.0-alpha008">
+					heading="Status update for Contentment v6.0.0-alpha009">
 					<p>Contentment v6.0 is in alpha. Your testing and feedback of the package is essential.</p>
 					<p>
 						If you find any bugs, or feel something is amiss, then please raise an issue on
