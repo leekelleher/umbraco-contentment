@@ -8,13 +8,13 @@ using System.ComponentModel;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("To be removed in Contentment 7.0. Register a Display Mode UI on the client.")]
+    [Obsolete("To be removed in Contentment 8.0. Register a Display Mode UI on the client.")]
     public interface IContentmentDisplayMode : IContentmentEditorItem
     {
         public Dictionary<string, object>? DefaultConfig { get; }
 
 #pragma warning disable IDE0040 // Add accessibility modifiers
-        [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         string View { get; }
 #pragma warning restore IDE0040 // Add accessibility modifiers
 

@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
 
-        [Obsolete("To be removed in Contentment 7.0", true)]
+        [Obsolete("To be removed in Contentment 8.0", true)]
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
 
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ItemPicker";
@@ -129,7 +129,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Medium;
 
-        [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;

@@ -5,7 +5,7 @@
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Obsolete("To be removed in Contentment 7.0. Migrate to use `IContentmentDisplayMode`.")]
+    [Obsolete("To be removed in Contentment 8.0. Migrate to use `IContentmentDisplayMode`.")]
     public interface IDataPickerDisplayMode : IContentmentDisplayMode
     { }
 }

@@ -15,7 +15,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Obsolete("To be removed in Contentment 7.0")]
+    [Obsolete("To be removed in Contentment 8.0")]
     public sealed class UmbracoContentXPathDataListSource
         : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {

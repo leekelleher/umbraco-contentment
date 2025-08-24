@@ -5,7 +5,7 @@
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Obsolete("To be removed in Contentment 7.0")]
+    [Obsolete("To be removed in Contentment 8.0")]
     internal sealed class MacroPickerDataEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "macro-picker.html";

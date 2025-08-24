@@ -11,7 +11,7 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values);
 
-        [Obsolete("Use `SearchAsync` with the additional `values` parameter instead. This method will be removed in Contentment 7.0.")]
+        [Obsolete("Use `SearchAsync` with the additional `values` parameter instead. This method will be removed in Contentment 8.0.")]
         public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "");
     }
 

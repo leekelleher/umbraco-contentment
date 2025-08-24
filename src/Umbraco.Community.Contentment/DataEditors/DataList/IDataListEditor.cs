@@ -5,10 +5,10 @@
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    [Obsolete("To be removed in Contentment 7.0. Migrate to use `IContentmentListEditor`.")]
+    [Obsolete("To be removed in Contentment 8.0. Migrate to use `IContentmentListEditor`.")]
     public interface IDataListEditor : IContentmentListEditor
     {
-        [Obsolete("To be removed in Contentment 7.0. Migrate to use `PropertyEditorUiAlias`.")]
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         string View { get; }
     }
 }

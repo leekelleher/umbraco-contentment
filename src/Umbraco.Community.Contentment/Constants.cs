@@ -21,22 +21,22 @@ namespace Umbraco.Community.Contentment
 
             internal const string DataEditorUiAliasPrefix = ManifestAliasPrefix + "PropertyEditorUi.";
 
-            [Obsolete("To be removed in Contentment 7.0")]
+            [Obsolete("To be removed in Contentment 8.0")]
             internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
 
             internal const string PackagePathRoot = $"{UmbConstants.SystemDirectories.AppPlugins}/{ProjectName}/";
 
             internal const string PluginControllerName = ProjectName;
 
-            [Obsolete("To be removed in Contentment 7.0")]
+            [Obsolete("To be removed in Contentment 8.0")]
             internal const string BackOfficePathRoot = $"{PackagePathRoot}backoffice/{TreeAlias}/";
 
-            [Obsolete("To be removed in Contentment 7.0")]
+            [Obsolete("To be removed in Contentment 8.0")]
             internal const string TreeAlias = ProjectAlias;
 
             internal const string ConfigurationSection = $"{nameof(Umbraco)}:{nameof(Contentment)}";
 
-            [Obsolete("To be removed in Contentment 7.0")]
+            [Obsolete("To be removed in Contentment 8.0")]
             internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
 
             internal const string ManifestAliasPrefix = $"Umb.{ProjectName}.";
@@ -74,7 +74,7 @@ namespace Umbraco.Community.Contentment
 
             internal static partial class DefaultConfiguration
             {
-                [Obsolete("To be removed in Contentment 7.0")]
+                [Obsolete("To be removed in Contentment 8.0")]
                 public static readonly object RichTextEditor = new
                 {
                     maxImageSize = 500,

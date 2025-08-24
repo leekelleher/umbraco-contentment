@@ -17,7 +17,7 @@
 
 //        public string? Group => default;
 
-//        [Obsolete("To be removed in Contentment 7.0.")]
+//        [Obsolete("To be removed in Contentment 8.0.")]
 //        public string View => string.Empty;
 
 //        public string PropertyEditorUiAlias => "Umb.Contentment.DisplayMode.Cards";

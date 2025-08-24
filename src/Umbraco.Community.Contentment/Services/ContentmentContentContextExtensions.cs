@@ -13,7 +13,7 @@ namespace Umbraco.Community.Contentment.Services
 
         public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
 
-        [Obsolete("To be removed in Contentment 7.0")]
+        [Obsolete("To be removed in Contentment 8.0")]
         public static string ParseXPathQuery(
             this IContentmentContentContext ctx,
             string xpathExpression,
