@@ -13,7 +13,7 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 export class ContentmentWorkspaceElement extends UmbLitElement {
 	#emojis: { [key: string]: string } = {
 		':no_entry_sign:': '🚫',
-		':thinking:': '🤔',
+		':confounded:': '😖',
 		':octocat:': '🚥',
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
@@ -27,8 +27,8 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | ------------------- | ------------------- | ------------- | ------- |
 | :green_circle:      | **Bytes**           | **Done**      | |
 | :green_circle:      | **Code Editor**     | **Done**      | |
-| :large_blue_circle: | Content Blocks      | _In progress_ | 37% done. |
-| :green_circle:      | **Data List**       | **Done**      | _(see below for development status on individual components)_ |
+| :confounded:        | Content Blocks      | _Frustrated_  | :confounded: Burnt many hours on this, with little progress. :confounded: |
+| :green_circle:      | **Data List**       | **Done**      | |
 | :green_circle:      | **Data Picker**     | **Done**      | |
 | :green_circle:      | **Editor Notes**    | **Done**      | |
 | :green_circle:      | **Icon Picker**     | **Done**      | |
@@ -39,7 +39,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | :green_circle:      | **Social Links**    | **Done**      | |
 | :green_circle:      | **Templated Label** | **Done**      | |
 | :green_circle:      | **Textbox List**    | **Done**      | |
-| :green_circle:      | **Text Input**      | **Done**      | :warning: Unfortunately \`uui-input\` doesn't support \`datalist\` yet. |
+| :green_circle:      | **Text Input**      | **Done**      | :warning: [Unfortunately \`uui-input\` doesn't support \`datalist\` yet](https://github.com/umbraco/Umbraco.UI/issues/999). |
 
 ### Internal components
 
