@@ -171,6 +171,8 @@ public static class ContentmentConstants
 
             public const string ContentPicker = DataEditors.ContentPickerDataEditor.DataEditorUiAlias;
 
+            public const string CustomComponentList = DataEditors.CustomComponentListDataListEditor.DataEditorUiAlias;
+
             public const string DataList = DataEditors.DataListDataEditor.DataEditorUiAlias;
 
             public const string DataPicker = DataEditors.DataPickerDataEditor.DataEditorUiAlias;

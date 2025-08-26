@@ -9,6 +9,7 @@ import { manifest as codeEditor } from './code-editor/manifest.js';
 import { manifests as configurationEditor } from './configuration-editor/manifests.js';
 import { manifests as contentBlocks } from './content-blocks/manifests.js';
 import { manifest as contentSource } from './content-source/manifest.js';
+import { manifest as customComponentList } from './custom-component-list/manifest.js';
 import { manifest as dictionaryPicker } from './dictionary-picker/manifest.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
@@ -40,6 +41,7 @@ export const manifests: Array<UmbExtensionManifest> = [
 	...configurationEditor,
 	...contentBlocks,
 	contentSource,
+	customComponentList,
 	dictionaryPicker,
 	...dataList,
 	...dataPicker,
