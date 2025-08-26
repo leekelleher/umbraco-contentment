@@ -31,6 +31,7 @@ const editorUi: UmbExtensionManifest = {
 						{
 							alias: 'extensions',
 							value: [
+								'Umb.Tiptap.RichTextEssentials',
 								'Umb.Tiptap.Embed',
 								'Umb.Tiptap.Link',
 								'Umb.Tiptap.Figure',
