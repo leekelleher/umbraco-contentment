@@ -188,6 +188,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
 				data: { item, model },
+				modal: { size: model.overlaySize ?? 'medium' },
 			});
 
 			const data = await modal.onSubmit().catch(() => undefined);
@@ -215,6 +216,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 		const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
 			data: { item: value, model },
+			modal: { size: model.overlaySize ?? 'medium' },
 		});
 
 		const data = await modal.onSubmit().catch(() => undefined);
