@@ -18,8 +18,7 @@ export class ContentmentDataListItemUiInfoBoxElement extends UmbLitElement imple
 				type="transparent"
 				.icon=${this.item.icon ?? undefined}
 				.heading=${this.item.name ?? this.item.value}
-				.message=${this.item.description ?? undefined}>
-			</contentment-info-box>
+				.message=${this.item.description ?? undefined}></contentment-info-box>
 		`;
 	}
 }
