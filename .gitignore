@@ -20,7 +20,7 @@ build/build-push-nuget.ps1
 build/build-push-umb.ps1
 src/packages/*/**
 src/Umbraco.Cms.*.x/*
-!src/Umbraco.Cms.*.x/uSync/*
+!src/Umbraco.Cms.*.x/uSync/
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
 src/*/node_modules/*
 tools/*.exe
