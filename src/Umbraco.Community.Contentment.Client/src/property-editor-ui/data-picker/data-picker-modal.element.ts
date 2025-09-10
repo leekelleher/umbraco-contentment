@@ -341,6 +341,10 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 				grid-template-rows: repeat(auto-fill, minmax(160px, 1fr));
 				margin-bottom: var(--uui-size-space-5);
+
+				uui-card-media {
+					min-height: 160px;
+				}
 			}
 		`,
 	];
