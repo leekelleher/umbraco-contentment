@@ -5,7 +5,6 @@ import type { ContentmentListItem, ContentmentDataListOption } from '../types.js
 import type { ContentmentDataListItemUiElement } from '../../extensions/types.js';
 import {
 	classMap,
-	css,
 	customElement,
 	html,
 	ifDefined,
@@ -24,6 +23,7 @@ import type {
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
+import { ContentmentPropertyEditorUITemplatedListElement } from '../templated-list/templated-list.element.js';
 
 @customElement('contentment-property-editor-ui-custom-component-list')
 export default class ContentmentPropertyEditorUICustomComponentListElement
@@ -155,58 +155,7 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 		`;
 	}
 
-	static override styles = [
-		css`
-			ul {
-				display: flex;
-				flex-direction: column;
-				flex-wrap: wrap;
-				gap: var(--uui-size-2);
-
-				list-style: none;
-				padding: 0;
-				margin: 0;
-
-				&.row {
-					flex-direction: row;
-				}
-
-				> li {
-					flex: 1;
-					border-radius: var(--uui-border-radius);
-
-					&.selected {
-						background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
-					}
-
-					> button {
-						all: initial;
-						font: inherit;
-						color: inherit;
-
-						border-radius: calc(var(--uui-border-radius) * 2);
-						cursor: pointer;
-						display: flex;
-						width: 100%;
-
-						> * {
-							flex: 1;
-							pointer-events: none;
-						}
-
-						&[disabled] {
-							cursor: not-allowed !important;
-							opacity: 0.5;
-						}
-
-						&:focus-visible {
-							outline: 2px solid var(--uui-color-focus);
-						}
-					}
-				}
-			}
-		`,
-	];
+	static override styles = ContentmentPropertyEditorUITemplatedListElement.styles;
 }
 
 export { ContentmentPropertyEditorUICustomComponentListElement as element };

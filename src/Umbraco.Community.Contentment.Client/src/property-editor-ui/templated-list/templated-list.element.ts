@@ -161,7 +161,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 				display: flex;
 				flex-direction: column;
 				flex-wrap: wrap;
-				gap: var(--uui-size-2);
+				gap: var(--uui-size-3);
 
 				list-style: none;
 				padding: 0;
@@ -176,7 +176,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					border-radius: var(--uui-border-radius);
 
 					&.selected {
-						background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
+						outline: var(--uui-size-1) solid var(--uui-color-selected);
 					}
 
 					> button {
