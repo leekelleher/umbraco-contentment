@@ -55,7 +55,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Icon => "icon-umbraco";
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
