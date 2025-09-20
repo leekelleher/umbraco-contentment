@@ -6,7 +6,7 @@
 // Modifications are licensed under the Mozilla Public License.
 
 import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
-import { customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -89,6 +89,14 @@ export default class ContentmentPropertyEditorUiElement extends UmbLitElement im
 		if (this._undefined) return html`<lee-was-here></lee-was-here>`;
 		return nothing;
 	}
+
+	static override styles = [
+		css`
+			:host {
+				display: contents;
+			}
+		`,
+	];
 }
 
 declare global {
