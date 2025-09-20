@@ -56,10 +56,10 @@ public sealed class UmbracoDataTypesDataListSource : DataListToDataPickerSourceB
         {
             return _dataTypeService
                 .GetByEditorAliasAsync(editorAlias).GetAwaiter().GetResult()?
-                .Select(mapDataType) ?? Enumerable.Empty<DataListItem>();
+                .Select(mapDataType).OrderBy(x => x.Name) ?? Enumerable.Empty<DataListItem>();
         }
 
-        return _dataTypeService.GetAllAsync().GetAwaiter().GetResult().Select(mapDataType);
+        return _dataTypeService.GetAllAsync().GetAwaiter().GetResult().Select(mapDataType).OrderBy(x => x.Name);
     }
 
     public Type? GetValueType(Dictionary<string, object>? config) => typeof(IDataType);
