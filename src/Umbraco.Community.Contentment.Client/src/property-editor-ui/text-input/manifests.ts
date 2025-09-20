@@ -49,8 +49,7 @@ const editorUi: UmbExtensionManifest = {
 				{
 					alias: 'dataSource',
 					label: 'Data source',
-					description: `<uui-tag color="danger" look="placeholder">Not implemented yet</uui-tag>
-_(optional)_ Select and configure a data source to provide a HTML5 \`<datalist>\` for this text input.`,
+					description: `_(optional)_ Select and configure a data source to provide a HTML5 \`<datalist>\` for this text input.`,
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 					config: [
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },

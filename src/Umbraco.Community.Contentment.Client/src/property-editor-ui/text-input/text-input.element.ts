@@ -17,6 +17,7 @@ import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import { UUIInputElement } from '@umbraco-cms/backoffice/external/uui';
 import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import type { InputType } from '@umbraco-cms/backoffice/external/uui';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -95,23 +96,23 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	override render() {
-		// TODO: [LK] Appears that `uui-input` doesn't support the `list` attribute.
+		const hasItems = !!this._items?.length;
 		return html`
-			<uui-input
+			${when(this._prepend, (icon) => html`<umb-icon class="prepend" name=${icon}></umb-icon>`)}
+			<input
 				type=${this._inputType}
+				id="input"
 				autocomplete=${this._autocomplete ? 'on' : 'off'}
 				label=${this.name ?? 'Text input'}
-				list="items"
+				list=${ifDefined(hasItems ? 'items' : undefined)}
 				max=${this._maxChars}
 				placeholder=${ifDefined(this._placeholderText)}
 				.value=${this.value ?? ''}
-				?spellcheck=${this._spellcheck}
-				@input=${this.#onInput}>
-				${when(this._prepend, (icon) => html`<umb-icon slot="prepend" name=${icon}></umb-icon>`)}
-				${when(this._append, (icon) => html`<umb-icon slot="append" name=${icon}></umb-icon>`)}
-			</uui-input>
+				spellcheck=${this._spellcheck ? 'true' : 'false'}
+				@input=${this.#onInput} />
+			${when(this._append, (icon) => html`<umb-icon class="append" name=${icon}></umb-icon>`)}
 			${when(
-				this._items,
+				hasItems,
 				() => html`
 					<datalist id="items">
 						${repeat(
@@ -126,20 +127,23 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	static override styles = [
+		UUIInputElement.styles,
 		css`
-			uui-input {
+			:host {
 				width: 100%;
 			}
 
 			umb-icon {
 				display: flex;
+				align-items: center;
+				line-height: 1;
 				height: 100%;
 			}
 
-			umb-icon[slot='prepend'] {
+			umb-icon.prepend {
 				padding-left: var(--uui-size-space-2);
 			}
-			umb-icon[slot='append'] {
+			umb-icon.append {
 				padding-right: var(--uui-size-space-2);
 			}
 		`,
