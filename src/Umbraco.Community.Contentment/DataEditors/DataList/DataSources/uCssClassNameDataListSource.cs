@@ -82,7 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             { "iconPattern", "icon-fa fa-{0}" },
         };
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {

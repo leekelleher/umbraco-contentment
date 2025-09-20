@@ -34,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
@@ -176,7 +176,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             catch (Exception)
             {
-                // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
                 // Error finding items in the JSON. Please check the syntax of your JSONPath expressions.
             }
 

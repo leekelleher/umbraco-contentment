@@ -39,7 +39,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Icon => "icon-block color-red";
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<ContentmentConfigurationField> Fields =>
         [

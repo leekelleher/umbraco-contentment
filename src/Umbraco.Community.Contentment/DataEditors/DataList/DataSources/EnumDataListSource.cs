@@ -38,7 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override Dictionary<string, object>? DefaultValues => default;
 

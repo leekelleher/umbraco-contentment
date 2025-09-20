@@ -63,7 +63,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {

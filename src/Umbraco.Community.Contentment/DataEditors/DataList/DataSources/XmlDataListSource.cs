@@ -33,7 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
