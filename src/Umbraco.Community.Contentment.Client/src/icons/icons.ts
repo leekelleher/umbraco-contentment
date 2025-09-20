@@ -36,4 +36,6 @@ const socials: UmbIconDictionary = [
 	{ name: 'icon-youtube', path: `${iconPath}/social/icon-youtube.js` },
 ];
 
-export default [...contentment, ...fontAwesome, ...socials];
+const umbraco: UmbIconDictionary = [{ name: 'icon-umb-heart', path: `${iconPath}/icon-umb-heart.js` }];
+
+export default [...contentment, ...fontAwesome, ...socials, ...umbraco];
