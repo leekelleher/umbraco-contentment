@@ -6,10 +6,7 @@ import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../ut
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-notes')
 export class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -22,7 +19,7 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 	@property()
 	public value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		const notes = config.getValueByAlias('notes');
 		this.#notes = typeof notes === 'string' ? notes : (notes as unknown as any).markup;

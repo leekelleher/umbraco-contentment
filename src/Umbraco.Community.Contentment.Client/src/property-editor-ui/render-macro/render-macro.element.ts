@@ -3,10 +3,7 @@
 
 import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-render-macro')
 export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -15,7 +12,7 @@ export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement
 	@property()
 	public value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this.#json = JSON.stringify(config, null, 2);
 	}

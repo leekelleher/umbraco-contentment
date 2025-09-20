@@ -9,15 +9,12 @@ import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { customElement, html, nothing, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type {
-	ManifestPropertyEditorUi,
-	UmbPropertyEditorConfigCollection,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui')
-export default class ContentmentPropertyEditorUiElement extends UmbLitElement {
+export default class ContentmentPropertyEditorUiElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property({ attribute: false })
-	config?: UmbPropertyEditorConfigCollection | undefined;
+	config: UmbPropertyEditorUiElement['config'];
 
 	@property({ type: String, attribute: 'property-editor-ui-alias' })
 	public set propertyEditorUiAlias(value: string | undefined) {

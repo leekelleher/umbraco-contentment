@@ -4,7 +4,6 @@
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -23,7 +22,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	@property({ attribute: false })
 	public value?: unknown;
 
-	set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this.#components = config.getValueByAlias('component') ?? [];
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));

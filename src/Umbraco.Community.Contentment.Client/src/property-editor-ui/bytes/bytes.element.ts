@@ -3,10 +3,7 @@
 
 import { customElement, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-bytes')
 export class ContentmentPropertyEditorUIBytesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -19,10 +16,10 @@ export class ContentmentPropertyEditorUIBytesElement extends UmbLitElement imple
 	@property({ type: Number })
 	public value: number = 0;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
-		const decimals = config.getValueByAlias<{ from: number, to: number }>('decimals');
+		const decimals = config.getValueByAlias<{ from: number; to: number }>('decimals');
 		this._decimals = decimals?.from && decimals.from > 0 ? decimals.from : 2;
 
 		const kilo = Number(config.getValueByAlias('kilo'));

@@ -8,7 +8,6 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
 import type { ContentmentListItem } from '../types.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
@@ -48,7 +47,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	}
 	#value?: Array<string> = [];
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));

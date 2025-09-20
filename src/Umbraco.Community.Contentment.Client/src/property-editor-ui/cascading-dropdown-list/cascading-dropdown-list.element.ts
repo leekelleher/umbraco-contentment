@@ -17,10 +17,7 @@ import {
 import { ContentmentDataListRepository } from '../data-list/data-list.repository.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIComboboxElement, UUIComboboxEvent } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-cascading-dropdown-list')
@@ -45,7 +42,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	@property({ type: Array })
 	public value?: Array<string>;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this._apis = config.getValueByAlias<Array<string>>('apis') ?? [];

@@ -15,10 +15,7 @@ import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentListItem } from '../types.js';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 type ContentmentDataListCheckboxOption = ContentmentListItem & { checked: boolean };
 
@@ -36,7 +33,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 	}
 	#value?: Array<string> = [];
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this._checkAll = parseBoolean(config.getValueByAlias('checkAll'));

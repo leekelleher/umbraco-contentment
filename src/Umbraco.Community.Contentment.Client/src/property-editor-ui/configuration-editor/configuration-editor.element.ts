@@ -15,10 +15,7 @@ import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registr
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import '../../extensions/display-mode/display-mode-ui.element.js';
 
@@ -33,7 +30,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 	#canEdit = (item: ContentmentListItem) => this.#allowEditLookup.has(item.value);
 
-	#config?: UmbPropertyEditorConfigCollection;
+	#config?: UmbPropertyEditorUiElement['config'];
 
 	#configurationType?: string;
 
@@ -58,7 +55,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	@property({ type: Array })
 	public value?: Array<ContentmentConfigurationEditorValue>;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#config = config;

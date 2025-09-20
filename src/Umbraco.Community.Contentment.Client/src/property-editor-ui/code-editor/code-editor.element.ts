@@ -6,10 +6,7 @@ import { UmbInputEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 
 type CodeEditorLanguage = UmbCodeEditorElement['language'];
@@ -28,7 +25,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	@property()
 	public value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this._language = config.getValueByAlias<CodeEditorLanguage>('mode');

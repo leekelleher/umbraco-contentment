@@ -4,7 +4,6 @@
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbDictionaryPickerInputContext } from '@umbraco-cms/backoffice/dictionary';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbUniqueItemModel } from '@umbraco-cms/backoffice/models';
 
@@ -27,7 +26,7 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 		return selection.length > 0 ? selection.join(',') : undefined;
 	}
 
-	public config?: UmbPropertyEditorConfigCollection | undefined;
+	public config?: UmbPropertyEditorUiElement['config'];
 
 	constructor() {
 		super();

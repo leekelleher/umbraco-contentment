@@ -19,10 +19,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import type { InputType } from '@umbraco-cms/backoffice/external/uui';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-text-input')
 export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -32,7 +29,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	@property()
 	value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this._inputType = config.getValueByAlias<InputType>('inputType') ?? 'text';
 		this._placeholderText = config.getValueByAlias<string>('placeholderText');

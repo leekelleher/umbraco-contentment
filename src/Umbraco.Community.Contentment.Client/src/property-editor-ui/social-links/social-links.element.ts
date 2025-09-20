@@ -21,7 +21,6 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -48,7 +47,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	}
 	#value?: Array<ContentmentSocialLinkValue> | undefined;
 
-	set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));

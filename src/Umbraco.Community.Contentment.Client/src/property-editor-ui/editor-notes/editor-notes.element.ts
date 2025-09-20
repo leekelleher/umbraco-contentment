@@ -6,10 +6,7 @@ import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../ut
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ContentmentInfoBoxElementType } from '../../components/info-box/info-box.element.js';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -28,7 +25,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 	@property()
 	public value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#alertType = config.getValueByAlias<ContentmentInfoBoxElementType>('alertType') || 'default';

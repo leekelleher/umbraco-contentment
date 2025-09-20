@@ -17,7 +17,6 @@ import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -44,7 +43,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 	}
 	#value?: Array<ContentmentListItemValue> | undefined;
 
-	set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));

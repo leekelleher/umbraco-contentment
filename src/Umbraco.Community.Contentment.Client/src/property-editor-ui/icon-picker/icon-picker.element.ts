@@ -6,7 +6,6 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
 import type { IconSize } from '../../components/icon-picker/icon-picker.element.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-icon-picker')
@@ -20,7 +19,7 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 	@property()
 	public value?: string;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this._defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
 		this._size = config.getValueByAlias<IconSize>('size') ?? 'large';

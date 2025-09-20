@@ -77,7 +77,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	}
 	#value?: Array<string> = [];
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#config = config;

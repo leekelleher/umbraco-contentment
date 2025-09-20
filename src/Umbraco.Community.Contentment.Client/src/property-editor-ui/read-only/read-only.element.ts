@@ -4,10 +4,7 @@
 import { parseBoolean, tryHideLabel } from '../../utils/index.js';
 import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-read-only')
 export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -20,7 +17,7 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 	@property({ attribute: false })
 	public value?: unknown;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#config = JSON.stringify(config, null, 2);

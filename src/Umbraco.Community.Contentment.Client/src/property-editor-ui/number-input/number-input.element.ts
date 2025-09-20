@@ -5,10 +5,7 @@ import { css, customElement, html, ifDefined, property, state } from '@umbraco-c
 import { parseInt } from '../../utils/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-number-input')
 export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -18,7 +15,7 @@ export class ContentmentPropertyEditorUINumberInputElement extends UmbLitElement
 	@property({ type: Number })
 	value?: number;
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this._placeholderText = config.getValueByAlias<string>('placeholderText');
 		this._size = config.getValueByAlias<string>('size') ?? 's';

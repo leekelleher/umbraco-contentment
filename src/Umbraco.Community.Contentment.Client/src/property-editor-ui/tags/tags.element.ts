@@ -16,7 +16,6 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTagsInputElement } from '@umbraco-cms/backoffice/tags';
 import type { ContentmentListItem } from '../types.js';
-import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
 
@@ -25,7 +24,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 	@property({ type: Array })
 	value?: Array<string> = [];
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		// this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));

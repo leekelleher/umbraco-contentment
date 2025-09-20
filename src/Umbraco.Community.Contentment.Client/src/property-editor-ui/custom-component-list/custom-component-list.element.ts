@@ -19,10 +19,7 @@ import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
-import type {
-	UmbPropertyEditorConfigCollection,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { ContentmentPropertyEditorUITemplatedListElement } from '../templated-list/templated-list.element.js';
 
 @customElement('contentment-property-editor-ui-custom-component-list')
@@ -59,7 +56,7 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 	}
 	#value?: Array<string> = [];
 
-	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
