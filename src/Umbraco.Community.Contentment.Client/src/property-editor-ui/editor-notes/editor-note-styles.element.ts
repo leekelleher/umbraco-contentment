@@ -7,6 +7,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_PROPERTY_DATASET_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentInfoBoxElementType } from '../../components/info-box/info-box.element.js';
+import { ContentmentPropertyEditorUITemplatedListElement } from '../templated-list/templated-list.element.js';
 
 @customElement('contentment-property-editor-ui-editor-note-styles')
 export class ContentmentPropertyEditorUIEditorNoteStylesElement
@@ -18,6 +19,7 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 		'positive',
 		'warning',
 		'danger',
+		//'transparent',
 		// 'border',
 		// 'current',
 		// 'divider',
@@ -61,7 +63,7 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 
 	override render() {
 		return html`
-			<ul>
+			<ul class="row">
 				${repeat(
 					this.#items,
 					(item) => item,
@@ -87,45 +89,10 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 	}
 
 	static override styles = [
+		ContentmentPropertyEditorUITemplatedListElement.styles,
 		css`
-			ul {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-
-				list-style: none;
-				padding: 0;
-				margin: 0;
-
-				> li {
-					border-radius: var(--uui-border-radius);
-					padding: 0.5rem;
-
-					&.selected {
-						background-color: var(--uui-menu-item-background-color-active, var(--uui-color-current, #f5c1bc));
-					}
-
-					> button {
-						all: initial;
-						font: inherit;
-						color: inherit;
-
-						border-radius: calc(var(--uui-border-radius) * 2);
-						cursor: pointer;
-						display: flex;
-						width: 100%;
-
-						&:focus-visible {
-							outline: 2px solid var(--uui-color-focus);
-						}
-
-						> contentment-info-box {
-							flex: 1;
-							pointer-events: none;
-							min-width: var(--uui-size-100);
-						}
-					}
-				}
+			ul > li > button > contentment-info-box {
+				min-width: var(--uui-size-100);
 			}
 		`,
 	];
