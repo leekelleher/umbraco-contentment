@@ -53,7 +53,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "alertType", "warning" },
                     { "icon", "icon-alert" },
                     { "heading", "Umbraco Content by XPath has been deprecated" },
-                    { "message", "<p><em>Support for XPath was deprecated in Umbraco 14.</em></p><p>Please consider using the <strong>Umbraco Content</strong> data-source with the Dynamic Root feature.</p>" },
+                    { "message", "<p><em>Support for XPath was removed in Umbraco 14.</em></p><p>Please consider using the <strong>Umbraco Content</strong> data-source with the Dynamic Root feature.</p>" },
                     { "hideLabel", true },
                 },
             },
