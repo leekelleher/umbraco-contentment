@@ -133,6 +133,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			#btn-add {
 				text-align: center;
 				height: 100%;
+				min-height: 174px;
 
 				> div {
 					display: flex;
