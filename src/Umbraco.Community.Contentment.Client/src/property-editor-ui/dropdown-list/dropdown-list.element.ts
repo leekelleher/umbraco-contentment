@@ -56,6 +56,16 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	}
 
 	override render() {
+		if (!this._items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					heading="There are no items to display"></contentment-info-box>
+			`;
+		}
+
 		return html`
 			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange}>
 				<uui-combobox-list>

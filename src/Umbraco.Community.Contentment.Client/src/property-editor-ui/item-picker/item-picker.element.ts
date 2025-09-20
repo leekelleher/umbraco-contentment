@@ -154,6 +154,16 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	}
 
 	override render() {
+		if (!this._items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					heading="There are no items to display"></contentment-info-box>
+			`;
+		}
+
 		return html`${this.#renderItems()} ${this.#renderAddButton()}`;
 	}
 
@@ -169,7 +179,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	}
 
 	#renderItems() {
-		if (!this.value) return;
+		if (!this.value) return nothing;
 		return html`
 			<contentment-sortable-list
 				class="uui-ref-list"
@@ -187,7 +197,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#renderItem(value: string, index: number) {
 		const item = this.#getItemByValue(value);
-		if (!item) return;
+		if (!item) return nothing;
 		const icon = this.#getMetadata(item, 'icon') ?? this.#defaultIcon;
 		return html`
 			<uui-ref-node

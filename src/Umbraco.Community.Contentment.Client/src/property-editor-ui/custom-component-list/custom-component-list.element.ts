@@ -130,6 +130,17 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 
 	override render() {
 		if (!this._element) return html`<lee-was-here></lee-was-here>`;
+
+		if (!this._items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					heading="There are no items to display"></contentment-info-box>
+			`;
+		}
+
 		return html`
 			<ul class=${this._flexDirection} style=${ifDefined(this._listStyles)}>
 				${repeat(

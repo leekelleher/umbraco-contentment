@@ -99,6 +99,16 @@ export class ContentmentPropertyEditorUICheckboxListElement
 	}
 
 	override render() {
+		if (!this._items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					heading="There are no items to display"></contentment-info-box>
+			`;
+		}
+
 		return html`
 			${when(this._checkAll, () => this.#renderCheckAll())}
 			<ul>
