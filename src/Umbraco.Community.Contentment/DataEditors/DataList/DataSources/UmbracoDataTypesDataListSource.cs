@@ -20,7 +20,7 @@ public sealed class UmbracoDataTypesDataListSource : DataListToDataPickerSourceB
 
     public override string Name => "Umbraco Data Types";
 
-    public override string Description => "Select an Image Cropper data-type to use its defined crops to populate the data source.";
+    public override string Description => "Populate the data source with Data Types.";
 
     public override string Icon => UmbConstants.Icons.DataType;
 
