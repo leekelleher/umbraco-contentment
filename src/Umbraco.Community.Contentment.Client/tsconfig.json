@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
+		"target": "ESNext",
 		"experimentalDecorators": true,
 		"useDefineForClassFields": false,
 		"module": "ESNext",
@@ -31,5 +31,5 @@
 		},
 		"types": ["@umbraco-cms/backoffice/extension-types"]
 	},
-	"include": ["src"]
+	"include": ["src/**/*.ts"]
 }

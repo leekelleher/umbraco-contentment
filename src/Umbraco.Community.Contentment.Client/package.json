@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "tsc && vite build --watch",
 		"build": "tsc && vite build",
+		"build:api": "tsc --project tsconfig.api.json",
 		"generate:server-api": "openapi-ts --file openapi-ts.config.js"
 	},
 	"dependencies": {
