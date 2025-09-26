@@ -12,28 +12,34 @@ import {
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIRadioEvent } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-radio-button-list')
 export class ContentmentPropertyEditorUIRadioButtonListElement
-	extends UmbLitElement
+	extends UmbFormControlMixin<string | undefined, typeof UmbLitElement, undefined>(UmbLitElement)
 	implements UmbPropertyEditorUiElement
 {
-	@state()
-	private _flexDirection: 'row' | 'column' = 'column';
+	@property({ type: Boolean })
+	mandatory = false;
+
+	@property({ type: String })
+	mandatoryMessage = UMB_VALIDATION_EMPTY_LOCALIZATION_KEY;
 
 	@property()
-	public set value(value: Array<string> | string | undefined) {
-		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
+	public override set value(value: string | undefined) {
+		super.value = Array.isArray(value) === true ? value[0] : value ?? '';
 	}
-	public get value(): string | undefined {
-		return this.#value;
+	public override get value(): string | undefined {
+		return super.value;
 	}
-	#value?: string = '';
+
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
@@ -47,6 +53,9 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	@state()
 	private _defaultValue = '';
+
+	@state()
+	private _flexDirection: 'row' | 'column' = 'column';
 
 	@state()
 	private _items: Array<ContentmentListItem> = [];
@@ -63,6 +72,16 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
+	constructor() {
+		super();
+
+		this.addValidator(
+			'valueMissing',
+			() => this.mandatoryMessage ?? UMB_VALIDATION_EMPTY_LOCALIZATION_KEY,
+			() => !this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === '')
+		);
+	}
+
 	override render() {
 		if (!this._items?.length) {
 			return html`
@@ -77,7 +96,10 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		return html`
 			<uui-radio-group
 				class=${this._flexDirection}
+				.requiredMessage=${this.mandatoryMessage}
 				.value=${this.value || this._defaultValue}
+				?required=${this.mandatory}
+				?readonly=${this.readonly}
 				@change=${this.#onChange}>
 				${repeat(
 					this._items,
