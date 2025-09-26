@@ -4,6 +4,7 @@
 import { ContentmentDataListRepository } from './data-list.repository.js';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_ANCESTORS_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
@@ -11,7 +12,12 @@ import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } f
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-data-list')
-export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+export class ContentmentPropertyEditorUIDataListElement
+	extends UmbFormControlMixin<Array<string> | string | undefined, typeof UmbLitElement, undefined>(UmbLitElement)
+	implements UmbPropertyEditorUiElement
+{
+	#addedFormControl = false;
+
 	#listEditor?: ContentmentDataListEditor;
 
 	#repository = new ContentmentDataListRepository(this);
@@ -34,8 +40,14 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 	@state()
 	private _listEditor?: ContentmentConfigurationEditorValue;
 
-	@property()
-	public value?: string | string[];
+	@property({ type: Boolean })
+	mandatory = false;
+
+	@property({ type: String })
+	mandatoryMessage = UMB_VALIDATION_EMPTY_LOCALIZATION_KEY;
+
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
@@ -56,11 +68,27 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
 			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
+
+		this.addValidator(
+			'valueMissing',
+			() => this.mandatoryMessage ?? UMB_VALIDATION_EMPTY_LOCALIZATION_KEY,
+			() => !this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === '')
+		);
 	}
 
 	override async firstUpdated() {
 		await Promise.all([await this.#init().catch(() => undefined)]);
 		this._initialized = true;
+	}
+
+	protected override updated() {
+		if (this._initialized && !this.#addedFormControl) {
+			const formControl = this.shadowRoot?.querySelector('contentment-property-editor-ui');
+			if (formControl) {
+				this.addFormControlElement(formControl);
+				this.#addedFormControl = true;
+			}
+		}
 	}
 
 	async #init() {
@@ -79,6 +107,7 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 		var element = event.target;
 		if (!element || element.value === this.value) return;
 		this.value = element.value as any;
+		this.checkValidity();
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
@@ -89,8 +118,11 @@ export class ContentmentPropertyEditorUIDataListElement extends UmbLitElement im
 		return html`
 			<contentment-property-editor-ui
 				.config=${this.#listEditor.config}
+				.mandatoryMessage=${this.mandatoryMessage}
 				.propertyEditorUiAlias=${this.#listEditor.propertyEditorUiAlias}
 				.value=${this.value}
+				?mandatory=${this.mandatory}
+				?readonly=${this.readonly}
 				@change=${this.#onChange}>
 			</contentment-property-editor-ui>
 		`;
