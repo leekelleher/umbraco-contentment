@@ -93,7 +93,6 @@ export class ContentmentPropertyEditorUIDataListElement
 
 	async #init() {
 		if (!this._dataSource || !this._listEditor) return;
-
 		this.#listEditor = await this.#repository.getEditor(
 			this._dataSource,
 			this._listEditor,
@@ -114,7 +113,6 @@ export class ContentmentPropertyEditorUIDataListElement
 	override render() {
 		if (!this._initialized || !this.#listEditor) return html`<uui-loader></uui-loader>`;
 		if (!this.#listEditor.propertyEditorUiAlias) return html`<lee-was-here></lee-was-here>`;
-		//console.log('data-list', [this._entityUnique, this._propertyAlias, this._variantId]);
 		return html`
 			<contentment-property-editor-ui
 				.config=${this.#listEditor.config}
