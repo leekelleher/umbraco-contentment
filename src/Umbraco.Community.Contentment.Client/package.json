@@ -11,11 +11,13 @@
 	"dependencies": {
 		"sortablejs": "^1.15.6"
 	},
+	"peerDependencies": {
+		"@umbraco-cms/backoffice": "^16.0.0"
+	},
 	"devDependencies": {
 		"@hey-api/client-fetch": "^0.10.0",
 		"@hey-api/openapi-ts": "^0.66.6",
 		"@types/sortablejs": "^1.15.8",
-		"@umbraco-cms/backoffice": "^16.0.0",
 		"typescript": "^5.8.3",
 		"vite": "^6.3.5"
 	}
