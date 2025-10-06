@@ -93,7 +93,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique || undefined));
-		});
+		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
 			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));

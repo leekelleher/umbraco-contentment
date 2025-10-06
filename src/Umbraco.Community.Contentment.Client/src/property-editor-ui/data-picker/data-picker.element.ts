@@ -100,7 +100,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			this.observe(contentWorkspaceContext?.unique, (unique) => {
 				this._entityUnique = unique;
 			});
-		});
+		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
 			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
