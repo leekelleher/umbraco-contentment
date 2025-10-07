@@ -26,8 +26,7 @@
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"paths": {
-			"@umbraco-community/contentment": ["./src/index.ts"],
-			"@umbraco-community/backoffice/external/sortablejs": ["./src/sortablejs.ts"]
+			"@umbraco-community/contentment": ["./src/index.ts"]
 		},
 		"types": ["@umbraco-cms/backoffice/extension-types"]
 	},

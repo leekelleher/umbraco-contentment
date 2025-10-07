@@ -4,7 +4,7 @@
 import { css, customElement, html, nothing, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
-import type { SortableEvent } from '@umbraco-community/backoffice/external/sortablejs';
+import type { SortableEvent } from '../../../external/sortablejs/index.js';
 import type { StyleInfo } from '@umbraco-cms/backoffice/external/lit';
 
 @customElement('contentment-display-mode-cards')
