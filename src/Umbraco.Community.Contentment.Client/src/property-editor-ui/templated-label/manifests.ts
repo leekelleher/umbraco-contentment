@@ -51,14 +51,35 @@ const editorUi: UmbExtensionManifest = {
 		settings: {
 			properties: [
 				{
-					alias: 'component',
-					label: 'Component',
-					description: 'Select the templated component to used for the label.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ManifestPicker',
+					alias: '_notes',
+					label: '',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.Notes',
 					config: [
-						{ alias: 'extensionType', value: 'contentmentTemplatedLabelUi' },
-						{ alias: 'maxItems', value: 1 },
+						{
+							alias: 'notes',
+							value: `<details class="well">
+<summary><strong>Do you need help with your custom template?</strong></summary>
+<p>Your custom template will be used to display the label on the property from the underlying value.</p>
+<p>If you are familiar with Liquid template syntax, you can display the value using an expression: e.g. <code>{{ model.value }}</code>.</p>
+<p>If you need assistance with Liquid expression syntax, please refer to this resource: <a href="https://liquidjs.com/" target="_blank"><strong>liquidjs.com</strong></a>.</p>
+<hr>
+<p>If you would like a starting point for your custom template, here is an example.</p>
+<umb-code-block language="Liquid template" copy>&lt;details&gt;
+    &lt;summary&gt;View data&lt;/summary&gt;
+    &lt;umb-code-block language="JSON" copy&gt;{{ model.value | json }}&lt;/umb-code-block&gt;
+&lt;/details&gt;</umb-code-block>
+</details>`,
+						},
+						{ alias: 'hideLabel', value: true },
 					],
+				},
+
+				{
+					alias: 'notes',
+					label: 'Template',
+					description: 'Enter the Liquid template to be displayed for the label.',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.CodeEditor',
+					config: [{ alias: 'mode', value: 'html' }],
 				},
 				{
 					alias: 'hideLabel',

@@ -37,7 +37,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | :green_circle:      | **Number Input**    | **Done**      | |
 | :no_entry_sign:     | ~Render Macro~      | _Deprecated_  | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
 | :green_circle:      | **Social Links**    | **Done**      | |
-| :green_circle:      | **Templated Label** | **Done**      | |
+| :green_circle:      | **Templated Label** | **Done**      | Reworked to use [Liquid template language](https://shopify.github.io/liquid/). |
 | :green_circle:      | **Textbox List**    | **Done**      | |
 | :green_circle:      | **Text Input**      | **Done**      | :warning: [Unfortunately \`uui-input\` doesn't support \`datalist\` yet](https://github.com/umbraco/Umbraco.UI/issues/999). |
 

@@ -5,12 +5,10 @@ import { manifests as dataListItemUis } from './data-list-item-ui/manifests.js';
 import { manifests as dataSources } from './data-source/manifests.js';
 import { manifests as displayModes } from './display-mode/manifests.js';
 import { manifests as listEditors } from './list-editor/manifests.js';
-import { manifests as templatedLabelUis } from './templated-label-ui/manifests.js';
 
 export const manifests: Array<UmbExtensionManifest> = [
 	...dataListItemUis,
 	...dataSources,
 	...displayModes,
 	...listEditors,
-	...templatedLabelUis,
 ];

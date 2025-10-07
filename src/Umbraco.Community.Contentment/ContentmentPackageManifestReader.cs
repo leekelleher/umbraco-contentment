@@ -70,6 +70,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
                 Imports = new()
                 {
                     { Constants.Internals.ImportMapAlias, Constants.Internals.PackagePathRoot + "index.js" },
+                    { "@umbraco-community/backoffice/external/liquidjs", Constants.Internals.PackagePathRoot + "liquidjs.js" },
                     { "@umbraco-community/backoffice/external/sortablejs", Constants.Internals.PackagePathRoot + "sortablejs.js" },
                 }
             },
