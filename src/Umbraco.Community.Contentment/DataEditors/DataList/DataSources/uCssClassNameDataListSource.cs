@@ -68,7 +68,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "iconPattern",
                 Name = "Icon Pattern",
-                Description = "Class name pattern to display icon, eg 'icon icon-{0}'",
+                Description = "Class name pattern to display icon, eg 'icon-{0}'",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
