@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Dictionary;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
@@ -18,19 +17,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IContentTypeService _contentTypeService;
         private readonly IPublishedContentTypeCache _publishedContentTypeCache;
-        private readonly ILocalizedTextService _localizedTextService;
-        private readonly ICultureDictionary _cultureDictionary;
 
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
-            IPublishedContentTypeCache publishedContentTypeCache,
-            ILocalizedTextService localizedTextService,
-            ICultureDictionary cultureDictionary)
+            IPublishedContentTypeCache publishedContentTypeCache)
         {
             _contentTypeService = contentTypeService;
             _publishedContentTypeCache = publishedContentTypeCache;
-            _localizedTextService = localizedTextService;
-            _cultureDictionary = cultureDictionary;
         }
 
         public override string Name => "Umbraco Content Types";
@@ -121,7 +114,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
+                    Name = x.Name,
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
                     Description = string.Join(", ", x.AllowedTemplates?.Select(t => t.Alias) ?? Enumerable.Empty<string>()),
