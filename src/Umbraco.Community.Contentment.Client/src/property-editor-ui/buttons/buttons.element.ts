@@ -24,6 +24,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) ? value : value ? [value] : [];
+		this.#updateItems();
 	}
 	public get value(): Array<string> | undefined {
 		return this.#value;
@@ -32,9 +33,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-		// const allowClear = parseBoolean(config.getValueByAlias('allowClear'));
 		this._defaultIcon = config.getValueByAlias('defaultIcon');
-		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 		this._labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
 		this._look = config.getValueByAlias('look') ?? 'secondary';
@@ -44,6 +43,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
 		if (!this.value) {
+			const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
 	}
@@ -84,6 +84,14 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	#updateItems() {
+		if (this._items?.length) {
+			this._items.forEach((item) => {
+				item.selected = this.#value?.includes(item.value) ?? false;
+			});
+		}
 	}
 
 	override render() {
@@ -162,6 +170,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			}
 			uui-button > div {
 				display: flex;
+				align-items: center;
 				gap: 0.3rem;
 			}
 		`,
