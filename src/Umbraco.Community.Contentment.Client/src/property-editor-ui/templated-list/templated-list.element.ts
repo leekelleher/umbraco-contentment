@@ -98,8 +98,6 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	}
 
 	override render() {
-		if (!this._items?.length) return nothing;
-
 		if (!this._items?.length) {
 			return html`
 				<contentment-info-box
