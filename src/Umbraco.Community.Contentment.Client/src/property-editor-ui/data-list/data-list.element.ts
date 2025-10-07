@@ -6,7 +6,7 @@ import { customElement, html, property, state } from '@umbraco-cms/backoffice/ex
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UMB_ANCESTORS_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
+import { UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -19,6 +19,8 @@ export class ContentmentPropertyEditorUIDataListElement
 	#addedFormControl = false;
 
 	#listEditor?: ContentmentDataListEditor;
+
+	#propertyContext?: typeof UMB_PROPERTY_CONTEXT.TYPE;
 
 	#repository = new ContentmentDataListRepository(this);
 
@@ -51,20 +53,26 @@ export class ContentmentPropertyEditorUIDataListElement
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
+		this.#config = config;
 		this._dataSource = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource')?.[0];
 		this._listEditor = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('listEditor')?.[0];
 	}
+	public get config() {
+		return this.#config;
+	}
+	#config: UmbPropertyEditorUiElement['config'];
 
 	constructor() {
 		super();
 
-		this.consumeContext(UMB_ANCESTORS_ENTITY_CONTEXT, (ancestorsEntityContext) => {
-			this.observe(ancestorsEntityContext?.ancestors, (ancestors) => {
-				this._entityUnique = ancestors?.at(-1)?.unique;
+		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.unique, (unique) => {
+				this._entityUnique = unique;
 			});
-		});
+		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
+			this.#propertyContext = propertyContext;
 			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
 			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
@@ -100,6 +108,9 @@ export class ContentmentPropertyEditorUIDataListElement
 			this._propertyAlias,
 			this._variantId
 		);
+
+		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];
+		this.#propertyContext?.setConfig(combinedConfig);
 	}
 
 	#onChange(event: UmbChangeEvent & { target: UmbPropertyEditorUiElement }) {

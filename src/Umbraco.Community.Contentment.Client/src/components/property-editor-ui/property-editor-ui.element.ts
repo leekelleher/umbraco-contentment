@@ -42,6 +42,17 @@ export default class ContentmentPropertyEditorUiElement
 	@property({ type: Boolean, reflect: true })
 	readonly = false;
 
+	@property()
+	override set value(value: any | undefined) {
+		super.value = value;
+		if (this._element) {
+			this._element.value = value;
+		}
+	}
+	override get value(): any | undefined {
+		return super.value;
+	}
+
 	@state()
 	private _element?: ManifestPropertyEditorUi['ELEMENT_TYPE'];
 
