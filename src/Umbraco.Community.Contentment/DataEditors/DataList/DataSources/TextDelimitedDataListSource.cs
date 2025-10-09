@@ -31,7 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Configure text-delimited data to populate the data source.";
 
-        public string? DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{= url }";
 
         public override string Icon => "icon-fa-file-lines";
 

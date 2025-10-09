@@ -32,7 +32,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Select an enumeration from a .NET assembly as the data source.";
 
-        public string? DescriptionTemplate => "{{ enumType[1] }}";
+        public string? DescriptionTemplate => "{= enumType }";
 
         public override string Icon => "icon-indent";
 

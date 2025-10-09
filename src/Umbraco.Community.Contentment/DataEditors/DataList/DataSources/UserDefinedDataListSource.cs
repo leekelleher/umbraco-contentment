@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Manually configure the items for the data source.";
 
-        public string? DescriptionTemplate => "{{ items.length }} {{ items.length === 1 ? 'item' : 'items' }} defined.";
+        public string? DescriptionTemplate => "${ items.length } ${ items.length === 1 ? 'item' : 'items' } defined.";
 
         public override string Icon => UmbConstants.Icons.DataType;
 

@@ -128,8 +128,13 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 			key: string
 		) => {
 			const expression = model.expressions?.[key];
-			if (expression && typeof expression === 'function') {
-				return expression(item.value);
+			if (expression) {
+				if (typeof expression === 'function') {
+					return expression(item.value);
+				}
+				if (typeof expression === 'string') {
+					return expression;
+				}
 			}
 
 			return model[key] ?? item.value[key];
@@ -147,6 +152,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 					value: item.key,
 					cardStyle: getItemValue(item, model, 'cardStyle'),
 					iconStyle: getItemValue(item, model, 'iconStyle'),
+					data: item.value,
 				});
 			}
 		});

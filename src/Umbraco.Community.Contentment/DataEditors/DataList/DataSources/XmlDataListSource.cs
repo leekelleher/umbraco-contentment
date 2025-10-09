@@ -27,7 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Configure XML data to populate the data source.";
 
-        public string? DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{= url }";
 
         public override string Icon => "icon-code";
 

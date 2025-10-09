@@ -77,11 +77,15 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 		if (!item) return;
 		return html`
 			<uui-ref-node
-				name=${item.name}
-				detail=${item.description ?? ''}
 				?standalone=${this.items?.length === 1 && this.#maxItems === 1}
 				@open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(item.icon ?? this.#defaultIcon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
+				<umb-ufm-render slot="name" inline .markdown=${item.name} .value=${item.data}></umb-ufm-render>
+				${when(
+					item.description,
+					(detail) =>
+						html`<umb-ufm-render slot="detail" inline .markdown=${detail} .value=${item.data}></umb-ufm-render>`
+				)}
 				${when(
 					this.allowEdit || this.allowRemove,
 					() => html`

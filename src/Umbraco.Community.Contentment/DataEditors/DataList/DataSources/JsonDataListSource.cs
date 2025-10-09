@@ -28,7 +28,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Configure JSON data to populate the data source.";
 
-        public string? DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{= url }";
 
         public override string Icon => "icon-brackets";
 
