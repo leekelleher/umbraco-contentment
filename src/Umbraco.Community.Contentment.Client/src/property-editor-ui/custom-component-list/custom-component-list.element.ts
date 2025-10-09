@@ -49,7 +49,8 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
-		this.#value = value ?? [];
+		this.#value = Array.isArray(value) ? value : value ? [value] : [];
+		this.#updateItems();
 	}
 	public get value(): Array<string> | undefined {
 		return this.#value;
@@ -126,6 +127,14 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	#updateItems() {
+		if (this._items?.length) {
+			this._items.forEach((item) => {
+				item.selected = this.#value?.includes(item.value) ?? false;
+			});
+		}
 	}
 
 	override render() {

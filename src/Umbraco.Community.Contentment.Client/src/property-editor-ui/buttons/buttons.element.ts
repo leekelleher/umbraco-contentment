@@ -21,6 +21,24 @@ import type { UUIInterfaceLook } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-buttons')
 export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	@state()
+	private _defaultIcon?: string;
+
+	@state()
+	private _enableMultiple = false;
+
+	@state()
+	private _items: Array<ContentmentDataListOption> = [];
+
+	@state()
+	private _labelStyle: 'icon' | 'text' | 'both' = 'both';
+
+	@state()
+	private _look: UUIInterfaceLook = 'secondary';
+
+	@state()
+	private _size: 's' | 'm' | 'l' = 'm';
+
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) ? value : value ? [value] : [];
@@ -47,24 +65,6 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
 	}
-
-	@state()
-	private _defaultIcon?: string;
-
-	@state()
-	private _enableMultiple = false;
-
-	@state()
-	private _items: Array<ContentmentDataListOption> = [];
-
-	@state()
-	private _labelStyle: 'icon' | 'text' | 'both' = 'both';
-
-	@state()
-	private _look: UUIInterfaceLook = 'secondary';
-
-	@state()
-	private _size: 's' | 'm' | 'l' = 'm';
 
 	#onClick(option: ContentmentDataListOption) {
 		option.selected = !option.selected;
