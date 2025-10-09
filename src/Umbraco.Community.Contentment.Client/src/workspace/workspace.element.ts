@@ -65,7 +65,7 @@ Status of list-editors used by the Data List editor.
 | :green_circle:      | **Buttons**           | **Done**  | |
 | :green_circle:      | **Checkbox List**     | **Done**  | |
 | :green_circle:      | **Dropdown List**     | **Done**  | |
-| :green_circle:      | **Item Picker**       | **Done**  | :warning: Done, but sorting and "List type" config hasn't been implemented yet. |
+| :green_circle:      | **Item Picker**       | **Done**  | :warning: Done, but "List type" config hasn't been implemented yet. |
 | :green_circle:      | **Radio Button List** | **Done**  | |
 | :large_blue_circle: | Tags | _In progress_  | 42% done. | |
 | :green_circle:      | **Templated List**    | **Done**  | |
