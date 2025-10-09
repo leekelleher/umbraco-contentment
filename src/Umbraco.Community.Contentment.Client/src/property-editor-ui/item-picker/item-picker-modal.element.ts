@@ -56,7 +56,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 
 	override connectedCallback() {
 		super.connectedCallback();
-		this._items = this.data?.items ? this.data.items : [];
+		this._items = this.data?.items ? this.data.items.map((item) => ({ ...item, selected: false })) : [];
 	}
 
 	#debouncedFilter = debounce((query: string) => {
