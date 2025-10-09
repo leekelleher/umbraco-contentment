@@ -39,7 +39,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | :green_circle:      | **Social Links**    | **Done**      | |
 | :green_circle:      | **Templated Label** | **Done**      | Reworked to use [Liquid template language](https://shopify.github.io/liquid/). |
 | :green_circle:      | **Textbox List**    | **Done**      | |
-| :green_circle:      | **Text Input**      | **Done**      | :warning: [Unfortunately \`uui-input\` doesn't support \`datalist\` yet](https://github.com/umbraco/Umbraco.UI/issues/999). |
+| :green_circle:      | **Text Input**      | **Done**      | |
 
 ### Internal components
 
