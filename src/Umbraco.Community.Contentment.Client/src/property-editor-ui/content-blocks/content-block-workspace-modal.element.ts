@@ -257,16 +257,12 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 						</uui-tab>
 					`
 				)}
-				${repeat(
-					this._tabs,
-					(tab) => tab.id,
-					(tab) => html`
-						<uui-tab-panel ?active=${this._activeTabId === tab.id}>
-							${this.#renderTab(tab)}
-						</uui-tab-panel>
-					`
-				)}
 			</uui-tab-group>
+			${repeat(
+				this._tabs,
+				(tab) => tab.id,
+				(tab) => html`<div ?active=${this._activeTabId === tab.id}>${this.#renderTab(tab)}</div>`
+			)}
 		`;
 	}
 
@@ -351,17 +347,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 		UmbTextStyles,
 		css`
 			uui-tab-group {
-				display: flex;
-				flex-direction: column;
-				height: 100%;
-			}
-
-			uui-box {
-				margin-bottom: var(--uui-size-space-4);
-			}
-
-			uui-box:last-child {
-				margin-bottom: 0;
+				height: 60px;
 			}
 		`,
 	];
