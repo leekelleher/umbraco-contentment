@@ -3,12 +3,11 @@
 
 import type { ContentBlock, ContentBlockType } from './types.js';
 import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
-import type { UmbPropertyTypeModel } from '@umbraco-cms/backoffice/content-type';
+import type { UmbPropertyTypeModel, UmbPropertyTypeContainerModel } from '@umbraco-cms/backoffice/content-type';
 import {
 	css,
 	customElement,
 	html,
-	ifDefined,
 	nothing,
 	repeat,
 	state,
@@ -18,6 +17,7 @@ import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS } from '@umbraco-cms/backoffice/document-type';
+import { UmbObserverController } from '@umbraco-cms/backoffice/observable-api';
 
 interface ContentBlockWorkspaceModalData {
 	item: ContentBlock;
@@ -58,7 +58,16 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	private _block?: ContentBlock;
 
 	@state()
-	private _properties: Array<UmbPropertyTypeModel> = [];
+	private _tabs: Array<UmbPropertyTypeContainerModel> = [];
+
+	@state()
+	private _groups: Map<string, Array<UmbPropertyTypeContainerModel>> = new Map();
+
+	@state()
+	private _properties: Map<string | null, Array<UmbPropertyTypeModel>> = new Map();
+
+	@state()
+	private _activeTabId?: string;
 
 	@state()
 	private _values?: Array<UmbPropertyValueData>;
@@ -102,9 +111,43 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 				return;
 			}
 
-			// Get all properties including from compositions
+			// Wait for structure to be loaded
+			await this.#structureManager.whenLoaded();
+
+			// Get tabs
+			const tabs = await this.#structureManager.getRootContainers('Tab');
+			this._tabs = tabs;
+
+			// Set first tab as active
+			if (tabs.length > 0) {
+				this._activeTabId = tabs[0].id;
+			}
+
+			// Load groups and properties for each tab
+			for (const tab of tabs) {
+				// Get groups for this tab
+				const groups = await this.#structureManager.getOwnerContainers('Group', tab.id);
+				if (groups) {
+					this._groups.set(tab.id, groups);
+
+					// Get properties for each group
+					for (const group of groups) {
+						const groupProps = await this.#getPropertiesForContainer(group.id);
+						this._properties.set(group.id, groupProps);
+					}
+				}
+
+				// Get properties directly under the tab (not in any group)
+				const tabProps = await this.#getPropertiesForContainer(tab.id);
+				this._properties.set(tab.id, tabProps);
+			}
+
+			// Get root properties (not in any tab)
+			const rootProps = await this.#getPropertiesForContainer(null);
+			this._properties.set(null, rootProps);
+
+			// Get all properties to initialize values
 			const allProperties = await this.#structureManager.getContentTypeProperties();
-			this._properties = allProperties;
 
 			// Initialize property values from the block or set defaults
 			this._values = allProperties.map((property) => ({
@@ -118,6 +161,21 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			this._error = `Failed to load element type: ${error}`;
 			this._loading = false;
 		}
+	}
+
+	async #getPropertiesForContainer(containerId: string | null): Promise<Array<UmbPropertyTypeModel>> {
+		if (!this.#structureManager) return [];
+
+		return new Promise((resolve) => {
+			const obs = containerId === null 
+				? this.#structureManager!.rootPropertyStructures()
+				: this.#structureManager!.propertyStructuresOf(containerId);
+
+			const controller = new UmbObserverController(this, obs, (properties) => {
+				resolve(properties);
+				controller.destroy();
+			});
+		});
 	}
 
 	#onChange(event: Event & { target: UmbPropertyDatasetElement }) {
@@ -168,21 +226,13 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 
 		return html`
 			<umb-body-layout headline=${headline}>
-				<uui-box>
+				<umb-property-dataset .value=${this._values!} @change=${this.#onChange}>
 					${when(
-						this._properties.length > 0,
-						() => html`
-							<umb-property-dataset .value=${this._values!} @change=${this.#onChange}>
-								${repeat(
-									this._properties,
-									(property) => property.id,
-									(property) => this.#renderProperty(property)
-								)}
-							</umb-property-dataset>
-						`,
-						() => html`<p>This element type has no properties to edit.</p>`
+						this._tabs.length > 0,
+						() => this.#renderTabs(),
+						() => this.#renderRootProperties()
 					)}
-				</uui-box>
+				</umb-property-dataset>
 				<div slot="actions">
 					<uui-button label=${this.localize.term('general_cancel')} @click=${this._rejectModal}></uui-button>
 					<uui-button
@@ -192,6 +242,106 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 						@click=${this.#onSubmit}></uui-button>
 				</div>
 			</umb-body-layout>
+		`;
+	}
+
+	#renderTabs() {
+		if (!this._tabs.length) return nothing;
+
+		return html`
+			<uui-tab-group>
+				${repeat(
+					this._tabs,
+					(tab) => tab.id,
+					(tab) => html`
+						<uui-tab
+							.label=${tab.name}
+							.active=${this._activeTabId === tab.id}
+							@click=${() => (this._activeTabId = tab.id)}>
+							${tab.name}
+						</uui-tab>
+					`
+				)}
+				${repeat(
+					this._tabs,
+					(tab) => tab.id,
+					(tab) => html`
+						<uui-tab-panel ?active=${this._activeTabId === tab.id}>
+							${this.#renderTab(tab)}
+						</uui-tab-panel>
+					`
+				)}
+			</uui-tab-group>
+		`;
+	}
+
+	#renderTab(tab: UmbPropertyTypeContainerModel) {
+		const groups = this._groups.get(tab.id) || [];
+		const tabProperties = this._properties.get(tab.id) || [];
+
+		return html`
+			${when(
+				groups.length > 0,
+				() => html`
+					${repeat(
+						groups,
+						(group) => group.id,
+						(group) => this.#renderGroup(group)
+					)}
+				`
+			)}
+			${when(
+				tabProperties.length > 0,
+				() => html`
+					<uui-box>
+						${repeat(
+							tabProperties,
+							(property) => property.id,
+							(property) => this.#renderProperty(property)
+						)}
+					</uui-box>
+				`
+			)}
+			${when(
+				groups.length === 0 && tabProperties.length === 0,
+				() => html`<uui-box><p>This tab has no properties.</p></uui-box>`
+			)}
+		`;
+	}
+
+	#renderGroup(group: UmbPropertyTypeContainerModel) {
+		const properties = this._properties.get(group.id) || [];
+
+		if (properties.length === 0) return nothing;
+
+		return html`
+			<uui-box .headline=${group.name}>
+				${repeat(
+					properties,
+					(property) => property.id,
+					(property) => this.#renderProperty(property)
+				)}
+			</uui-box>
+		`;
+	}
+
+	#renderRootProperties() {
+		const properties = this._properties.get(null) || [];
+
+		return html`
+			${when(
+				properties.length > 0,
+				() => html`
+					<uui-box>
+						${repeat(
+							properties,
+							(property) => property.id,
+							(property) => this.#renderProperty(property)
+						)}
+					</uui-box>
+				`,
+				() => html`<uui-box><p>This element type has no properties to edit.</p></uui-box>`
+			)}
 		`;
 	}
 
@@ -205,12 +355,18 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	static override styles = [
 		UmbTextStyles,
 		css`
-			umb-property {
-				font-size: 14px;
+			uui-tab-group {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
 			}
 
 			uui-box {
-				padding: var(--uui-size-space-5);
+				margin-bottom: var(--uui-size-space-4);
+			}
+
+			uui-box:last-child {
+				margin-bottom: 0;
 			}
 		`,
 	];
