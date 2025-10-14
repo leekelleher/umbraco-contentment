@@ -2,15 +2,22 @@
 // Copyright © 2024 Lee Kelleher
 
 import type { ContentBlock, ContentBlockType } from './types.js';
-import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
-import type { UmbPropertyTypeModel, UmbPropertyTypeContainerModel } from '@umbraco-cms/backoffice/content-type';
-import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { UmbContentTypeStructureManager, UmbContentTypeContainerStructureHelper } from '@umbraco-cms/backoffice/content-type';
-import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
-import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS } from '@umbraco-cms/backoffice/document-type';
+import { classMap, css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentContentBlockWorkspaceContext } from './content-block-workspace.context.js';
 import { CONTENTMENT_CONTENT_BLOCK_WORKSPACE_CONTEXT } from './content-block-workspace.context-token.js';
+import {
+	UmbContentTypeStructureManager,
+	UmbContentTypeContainerStructureHelper,
+} from '@umbraco-cms/backoffice/content-type';
+import { UmbDocumentTypeDetailRepository } from '@umbraco-cms/backoffice/document-type';
+import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
+import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
+import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import type {
+	UmbContentTypeDetailModel,
+	UmbPropertyTypeContainerModel,
+	UmbPropertyTypeModel,
+} from '@umbraco-cms/backoffice/content-type';
 
 interface ContentBlockWorkspaceModalData {
 	item: ContentBlock;
@@ -88,10 +95,11 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 
 		// Observe tabs from structure helper (handles compositions)
 		this.observe(this.#tabsStructureHelper.mergedContainers, (tabs) => {
-			this._tabs = tabs;
+			this._tabs = [...tabs]?.sort((a, b) => a.sortOrder - b.sortOrder);
+
 			// Set first tab as active if we have tabs
-			if (tabs.length > 0 && !this._activeTabId) {
-				this._activeTabId = tabs[0].id;
+			if (this._tabs.length > 0) {
+				this._activeTabId = this._tabs[0].id;
 			}
 		});
 	}
@@ -121,7 +129,10 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 
 		try {
 			// Create structure manager for the element type
-			this.#structureManager = new UmbContentTypeStructureManager(this, UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS);
+			this.#structureManager = new UmbContentTypeStructureManager<UmbContentTypeDetailModel>(
+				this,
+				new UmbDocumentTypeDetailRepository(this)
+			);
 
 			// Set structure manager on tabs helper to handle compositions
 			this.#tabsStructureHelper.setStructureManager(this.#structureManager);
@@ -189,16 +200,16 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			}));
 		} else {
 			// Update values array with any new properties from compositions
-			const existingAliases = new Set(this._values.map(v => v.alias));
-			const newProperties = sortedProperties.filter(p => !existingAliases.has(p.alias));
-			
+			const existingAliases = new Set(this._values.map((v) => v.alias));
+			const newProperties = sortedProperties.filter((p) => !existingAliases.has(p.alias));
+
 			if (newProperties.length > 0) {
 				this._values = [
 					...this._values,
 					...newProperties.map((property) => ({
 						alias: property.alias,
 						value: this._block?.value[property.alias] ?? null,
-					}))
+					})),
 				];
 			}
 		}
@@ -308,7 +319,10 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			${repeat(
 				this._tabs,
 				(tab) => tab.id,
-				(tab) => html`<div ?active=${this._activeTabId === tab.id}>${this.#renderTab(tab)}</div>`
+				(tab) =>
+					html`<div class=${classMap({ 'tab-panel': true, active: this._activeTabId === tab.id })}>
+						${this.#renderTab(tab)}
+					</div>`
 			)}
 		`;
 	}
@@ -395,6 +409,18 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 		css`
 			uui-tab-group {
 				height: 60px;
+			}
+
+			uui-box {
+				margin-bottom: var(--uui-size-space-4);
+			}
+
+			.tab-panel {
+				display: none;
+
+				&.active {
+					display: block;
+				}
 			}
 		`,
 	];
