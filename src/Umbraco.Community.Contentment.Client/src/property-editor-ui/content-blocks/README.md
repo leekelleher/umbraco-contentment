@@ -24,10 +24,13 @@ Modal for selecting an element type when creating a new block:
 - Opens workspace modal after selection
 
 #### `content-block-workspace-modal.element.ts`
-Modal for creating/editing individual blocks:
-- Displays element type information
-- Provides a foundation for property editing
-- Currently shows element metadata and implementation notes
+Modal for creating/editing individual blocks with full property editing:
+- Uses `UmbContentTypeStructureManager` to load element type structure
+- Loads all properties including from element type compositions
+- Renders properties using `umb-property-layout` and `umb-property` elements
+- Manages property values through `umb-property-dataset` context
+- Handles property value changes and persistence
+- Provides loading states and error handling
 
 ### Data Structures
 
@@ -70,25 +73,23 @@ The property editor accepts the following configuration:
 
 ### Completed ✓
 - Modal structure and token registration
-- Element type selection
+- Element type selection with filtering
 - Block CRUD operations (Create, Read, Update, Delete)
 - State management and change detection
 - Configuration parsing
 - Type definitions
-
-### Simplified 
-- **Property Editing**: The workspace modal currently shows element type information but does not render individual property editors. Implementing full property editing would require:
-  - Fetching element type structure from Umbraco's content type repository
-  - Rendering properties using `umb-property-dataset` and `umb-property` components
-  - Handling property value serialization/deserialization
-  - Supporting content variations and cultures
-  - Property validation
+- **Property Editing**: Full property editing using UmbContentTypeStructureManager
+  - Loads element type structure including compositions
+  - Renders all properties with appropriate property editors
+  - Handles property value changes through property dataset
+  - Supports element type compositions (inherited properties)
+  - Loading states and error handling
 
 ### Not Implemented
-- Block sorting/reordering
+- Block sorting/reordering (drag-and-drop)
 - Preview rendering
-- Name template evaluation
-- Clipboard operations
+- Name template evaluation (currently uses simple template replacement)
+- Clipboard operations (copy/paste blocks)
 - Dev mode property action
 
 ## Usage
@@ -97,53 +98,38 @@ The property editor is registered with the manifest system and can be configured
 
 ## Future Enhancements
 
-To implement full property editing in the workspace modal:
+The core property editing functionality is now complete. Potential enhancements include:
 
-1. **Add Content Type Repository Integration**:
-   ```typescript
-   import { UMB_CONTENT_TYPE_REPOSITORY_CONTEXT } from '@umbraco-cms/backoffice/content-type';
-   ```
-
-2. **Fetch Element Structure**:
-   ```typescript
-   const repository = await this.getContext(UMB_CONTENT_TYPE_REPOSITORY_CONTEXT);
-   const { data } = await repository.requestById(elementTypeKey);
-   ```
-
-3. **Render Properties**:
-   ```typescript
-   <umb-property-dataset .value=${this._values} @change=${this.#onChange}>
-     ${repeat(properties, (prop) => html`
-       <umb-property
-         alias=${prop.alias}
-         label=${prop.label}
-         .propertyEditorUiAlias=${prop.editor.alias}
-         .config=${prop.editor.config}>
-       </umb-property>
-     `)}
-   </umb-property-dataset>
-   ```
-
-4. **Handle Value Changes**: Collect property values from the dataset and update the block's value object.
+1. **Block Sorting**: Add drag-and-drop reordering of blocks
+2. **Preview Rendering**: Implement block preview using configured view paths
+3. **Name Template**: Implement full AngularJS expression evaluation for block names
+4. **Clipboard Support**: Add copy/paste functionality for blocks
+5. **Dev Mode**: Add property action to edit raw JSON data
+6. **Validation**: Add property-level validation feedback
 
 ## Design Decisions
 
-### Why a Simplified Approach?
+### Implementation Philosophy
 
-The original v13 implementation used AngularJS and Umbraco's content resource to scaffold element types and render properties. In v16, this requires:
-- Understanding Umbraco's new repository pattern
-- Working with content type contexts and property datasets
-- Handling property value converters and validation
-- Managing workspace state correctly
+This implementation provides **complete property editing functionality** using Umbraco's standard content type and property systems:
 
-Rather than attempting to replicate this complexity immediately, this implementation:
-- Provides a working foundation
-- Uses standard Umbraco v16 patterns (modals, Lit components)
-- Clearly documents what's simplified and what would be needed for full implementation
-- Allows blocks to be created and associated with element types
-- Preserves the data structure for future enhancement
+**Key Technical Decisions:**
+- Uses `UmbContentTypeStructureManager` for type-safe element type loading
+- Leverages `umb-property-dataset` for consistent property state management
+- Implements proper composition support (inherited properties)
+- Follows Umbraco v16 patterns for modal-based editing
 
-This approach solves the immediate problem (getting Content Blocks working in v16) while providing a clear path forward for enhancement.
+**Why This Approach:**
+1. **Standards-Based**: Uses Umbraco's built-in property system
+2. **Maintainable**: Leverages framework capabilities rather than custom implementations
+3. **Composition Support**: Automatically handles element type inheritance
+4. **Future-Proof**: Built on stable Umbraco APIs
+
+This approach provides a production-ready implementation that:
+- Solves the immediate need (Content Blocks in v16)
+- Uses documented, supported APIs
+- Provides room for future enhancements
+- Maintains consistency with Umbraco's architecture
 
 ## Testing
 
@@ -154,16 +140,18 @@ To test this implementation:
 3. Add the property to a document type
 4. Create content and test:
    - Adding blocks
-   - Editing blocks (currently shows element info)
+   - Editing blocks with properties
+   - Property value persistence
    - Deleting blocks
    - Max items limit
    - Element type selection with multiple types
+   - Element type compositions (inherited properties)
 
 ## Contributing
 
 When enhancing this implementation, consider:
-- Keep the simple modal approach for basic scenarios
-- Add full property editing as an optional enhancement
-- Maintain backward compatibility with saved data
 - Follow Umbraco v16 patterns and practices
+- Maintain backward compatibility with saved data
 - Update documentation with implementation status
+- Add tests for new functionality
+- Consider performance implications of property loading
