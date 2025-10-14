@@ -287,7 +287,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 					<uui-box>
 						${repeat(
 							tabProperties,
-							(property) => property.id,
+							(property) => property.unique,
 							(property) => this.#renderProperty(property)
 						)}
 					</uui-box>
@@ -309,7 +309,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			<uui-box .headline=${group.name}>
 				${repeat(
 					properties,
-					(property) => property.id,
+					(property) => property.unique,
 					(property) => this.#renderProperty(property)
 				)}
 			</uui-box>
@@ -326,7 +326,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 					<uui-box>
 						${repeat(
 							properties,
-							(property) => property.id,
+							(property) => property.unique,
 							(property) => this.#renderProperty(property)
 						)}
 					</uui-box>
