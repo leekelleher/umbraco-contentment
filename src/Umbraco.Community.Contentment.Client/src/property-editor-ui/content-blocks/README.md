@@ -32,7 +32,21 @@ Modal for creating/editing individual blocks with full property editing:
 - Manages property values through `umb-property-dataset` context
 - Handles property value changes and persistence
 - Supports all organizational structures: root properties, tabs, and property groups
+- Provides workspace context for property editor integration
 - Provides loading states and error handling
+
+#### `content-block-workspace.context.ts`
+Workspace context implementation for content block editing:
+- Implements `UmbWorkspaceContext` interface
+- Provides workspace API for property editors
+- Tracks current block data
+- Includes discriminator for context type checking
+
+#### `content-block-workspace.context-token.ts`
+Context token for workspace context access:
+- Defines `CONTENTMENT_CONTENT_BLOCK_WORKSPACE_CONTEXT` token
+- Allows property editors to consume workspace context
+- Follows Umbraco's context token pattern
 
 ### Data Structures
 
@@ -91,6 +105,11 @@ The property editor accepts the following configuration:
   - Property groups using `uui-box` with headlines
   - Handles all organizational structures (root, tabs, groups)
   - Active tab state management
+- **Workspace Context**: Workspace context integration
+  - Implements `UmbWorkspaceContext` interface
+  - Provides workspace API for property editors
+  - Follows Umbraco's context pattern with discriminator
+  - Allows workspace-aware property editors to function correctly
 
 ### Not Implemented
 - Block sorting/reordering (drag-and-drop)
