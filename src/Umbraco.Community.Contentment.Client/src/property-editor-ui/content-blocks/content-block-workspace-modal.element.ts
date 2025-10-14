@@ -17,7 +17,6 @@ import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS } from '@umbraco-cms/backoffice/document-type';
-import { UmbObserverController } from '@umbraco-cms/backoffice/observable-api';
 
 interface ContentBlockWorkspaceModalData {
 	item: ContentBlock;
@@ -166,16 +165,12 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	async #getPropertiesForContainer(containerId: string | null): Promise<Array<UmbPropertyTypeModel>> {
 		if (!this.#structureManager) return [];
 
-		return new Promise((resolve) => {
-			const obs = containerId === null 
+		const obs =
+			containerId === null
 				? this.#structureManager!.rootPropertyStructures()
 				: this.#structureManager!.propertyStructuresOf(containerId);
 
-			const controller = new UmbObserverController(this, obs, (properties) => {
-				resolve(properties);
-				controller.destroy();
-			});
-		});
+		return this.observe(obs, (properties) => properties).asPromise();
 	}
 
 	#onChange(event: Event & { target: UmbPropertyDatasetElement }) {
