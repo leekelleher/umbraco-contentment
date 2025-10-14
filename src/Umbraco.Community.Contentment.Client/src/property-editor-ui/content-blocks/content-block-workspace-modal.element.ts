@@ -121,6 +121,11 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			// Wait for structure to be loaded
 			await this.#structureManager.whenLoaded();
 
+			// Observe content type properties (handles compositions being loaded)
+			this.observe(this.#structureManager.contentTypeProperties, (contentTypeProperties) => {
+				this.#updatePropertiesStructure(contentTypeProperties);
+			});
+
 			// Get tabs
 			const tabs = await this.#structureManager.getRootContainers('Tab');
 			this._tabs = tabs;
@@ -130,43 +135,64 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 				this._activeTabId = tabs[0].id;
 			}
 
-			// Load groups and properties for each tab
-			for (const tab of tabs) {
-				// Get groups for this tab
-				const groups = await this.#structureManager.getOwnerContainers('Group', tab.id);
-				if (groups) {
-					this._groups.set(tab.id, groups);
-
-					// Get properties for each group
-					for (const group of groups) {
-						const groupProps = await this.#getPropertiesForContainer(group.id);
-						this._properties.set(group.id, groupProps);
-					}
-				}
-
-				// Get properties directly under the tab (not in any group)
-				const tabProps = await this.#getPropertiesForContainer(tab.id);
-				this._properties.set(tab.id, tabProps);
-			}
-
-			// Get root properties (not in any tab)
-			const rootProps = await this.#getPropertiesForContainer(null);
-			this._properties.set(null, rootProps);
-
-			// Get all properties to initialize values
-			const allProperties = await this.#structureManager.getContentTypeProperties();
-
-			// Initialize property values from the block or set defaults
-			this._values = allProperties.map((property) => ({
-				alias: property.alias,
-				value: this._block?.value[property.alias] ?? null,
-			}));
-
 			this._loading = false;
 		} catch (error) {
 			console.error('Error loading element type:', error);
 			this._error = `Failed to load element type: ${error}`;
 			this._loading = false;
+		}
+	}
+
+	async #updatePropertiesStructure(allProperties: Array<UmbPropertyTypeModel>) {
+		// Sort properties by sort order
+		const sortedProperties = allProperties.sort((a, b) => a.sortOrder - b.sortOrder);
+
+		// Clear existing properties map
+		this._properties.clear();
+
+		// Load groups and properties for each tab
+		for (const tab of this._tabs) {
+			// Get groups for this tab
+			const groups = await this.#structureManager?.getOwnerContainers('Group', tab.id);
+			if (groups) {
+				this._groups.set(tab.id, groups);
+
+				// Get properties for each group
+				for (const group of groups) {
+					const groupProps = await this.#getPropertiesForContainer(group.id);
+					this._properties.set(group.id, groupProps);
+				}
+			}
+
+			// Get properties directly under the tab (not in any group)
+			const tabProps = await this.#getPropertiesForContainer(tab.id);
+			this._properties.set(tab.id, tabProps);
+		}
+
+		// Get root properties (not in any tab)
+		const rootProps = await this.#getPropertiesForContainer(null);
+		this._properties.set(null, rootProps);
+
+		// Initialize property values from the block or set defaults (only if not already initialized)
+		if (!this._values || this._values.length === 0) {
+			this._values = sortedProperties.map((property) => ({
+				alias: property.alias,
+				value: this._block?.value[property.alias] ?? null,
+			}));
+		} else {
+			// Update values array with any new properties from compositions
+			const existingAliases = new Set(this._values.map(v => v.alias));
+			const newProperties = sortedProperties.filter(p => !existingAliases.has(p.alias));
+			
+			if (newProperties.length > 0) {
+				this._values = [
+					...this._values,
+					...newProperties.map((property) => ({
+						alias: property.alias,
+						value: this._block?.value[property.alias] ?? null,
+					}))
+				];
+			}
 		}
 	}
 
