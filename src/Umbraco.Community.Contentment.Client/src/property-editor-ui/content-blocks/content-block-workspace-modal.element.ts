@@ -5,7 +5,7 @@ import type { ContentBlock, ContentBlockType } from './types.js';
 import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyTypeModel, UmbPropertyTypeContainerModel } from '@umbraco-cms/backoffice/content-type';
 import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-type';
+import { UmbContentTypeStructureManager, UmbContentTypeContainerStructureHelper } from '@umbraco-cms/backoffice/content-type';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS } from '@umbraco-cms/backoffice/document-type';
@@ -72,6 +72,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	private _error?: string;
 
 	#structureManager?: UmbContentTypeStructureManager;
+	#tabsStructureHelper = new UmbContentTypeContainerStructureHelper(this);
 	#workspaceContext?: ContentmentContentBlockWorkspaceContext;
 
 	constructor() {
@@ -80,6 +81,19 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 		// Create and provide the workspace context
 		this.#workspaceContext = new ContentmentContentBlockWorkspaceContext(this);
 		this.provideContext(CONTENTMENT_CONTENT_BLOCK_WORKSPACE_CONTEXT, this.#workspaceContext);
+
+		// Setup tabs structure helper
+		this.#tabsStructureHelper.setIsRoot(true);
+		this.#tabsStructureHelper.setContainerChildType('Tab');
+
+		// Observe tabs from structure helper (handles compositions)
+		this.observe(this.#tabsStructureHelper.mergedContainers, (tabs) => {
+			this._tabs = tabs;
+			// Set first tab as active if we have tabs
+			if (tabs.length > 0 && !this._activeTabId) {
+				this._activeTabId = tabs[0].id;
+			}
+		});
 	}
 
 	override async connectedCallback() {
@@ -109,6 +123,9 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			// Create structure manager for the element type
 			this.#structureManager = new UmbContentTypeStructureManager(this, UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS);
 
+			// Set structure manager on tabs helper to handle compositions
+			this.#tabsStructureHelper.setStructureManager(this.#structureManager);
+
 			// Load the element type structure by its key (GUID)
 			const response = await this.#structureManager.loadType(this._elementType.key);
 
@@ -125,15 +142,6 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			this.observe(this.#structureManager.contentTypeProperties, (contentTypeProperties) => {
 				this.#updatePropertiesStructure(contentTypeProperties);
 			});
-
-			// Get tabs
-			const tabs = await this.#structureManager.getRootContainers('Tab');
-			this._tabs = tabs;
-
-			// Set first tab as active
-			if (tabs.length > 0) {
-				this._activeTabId = tabs[0].id;
-			}
 
 			this._loading = false;
 		} catch (error) {
