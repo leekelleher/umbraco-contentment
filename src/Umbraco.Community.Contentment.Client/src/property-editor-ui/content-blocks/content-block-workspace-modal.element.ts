@@ -36,13 +36,13 @@ export const CONTENTMENT_CONTENT_BLOCK_WORKSPACE_MODAL = new UmbModalToken<
 
 /**
  * Modal for editing content blocks with full property support.
- * 
+ *
  * This implementation:
  * - Loads the element type structure using UmbContentTypeStructureManager
  * - Renders properties using umb-property elements
  * - Handles property value changes through property dataset
  * - Supports element type compositions
- * 
+ *
  * Note: This implementation does not include Block List settings or variants,
  * focusing on simple element editing for Content Blocks.
  */
@@ -91,10 +91,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 
 		try {
 			// Create structure manager for the element type
-			this.#structureManager = new UmbContentTypeStructureManager(
-				this,
-				UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS
-			);
+			this.#structureManager = new UmbContentTypeStructureManager(this, UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS);
 
 			// Load the element type structure by its key (GUID)
 			const response = await this.#structureManager.loadType(this._elementType.key);
@@ -199,21 +196,9 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	}
 
 	#renderProperty(property: UmbPropertyTypeModel) {
-		if (!property.alias) return nothing;
-
-		// Use property-layout for simple rendering
-		// The dataType.unique can be used to fetch data type details if needed
 		return html`
-			<umb-property-layout
-				alias=${property.alias}
-				label=${property.name}
-				description=${ifDefined(property.description ?? undefined)}>
-				<umb-property
-					slot="editor"
-					alias=${property.alias}
-					.dataTypeId=${property.dataType.unique}>
-				</umb-property>
-			</umb-property-layout>
+			<umb-property-type-based-property .ownerEntityType=${this._elementType?.key} .property=${property}>
+			</umb-property-type-based-property>
 		`;
 	}
 
