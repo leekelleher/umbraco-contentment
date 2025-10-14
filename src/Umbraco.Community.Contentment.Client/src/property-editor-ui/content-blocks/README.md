@@ -27,9 +27,11 @@ Modal for selecting an element type when creating a new block:
 Modal for creating/editing individual blocks with full property editing:
 - Uses `UmbContentTypeStructureManager` to load element type structure
 - Loads all properties including from element type compositions
-- Renders properties using `umb-property-layout` and `umb-property` elements
+- Renders tabs using `uui-tab-group` component
+- Renders property groups using `uui-box` with headlines
 - Manages property values through `umb-property-dataset` context
 - Handles property value changes and persistence
+- Supports all organizational structures: root properties, tabs, and property groups
 - Provides loading states and error handling
 
 ### Data Structures
@@ -84,6 +86,11 @@ The property editor accepts the following configuration:
   - Handles property value changes through property dataset
   - Supports element type compositions (inherited properties)
   - Loading states and error handling
+- **Tabs and Groups**: Complete tab and property group support
+  - Tab navigation using `uui-tab-group`
+  - Property groups using `uui-box` with headlines
+  - Handles all organizational structures (root, tabs, groups)
+  - Active tab state management
 
 ### Not Implemented
 - Block sorting/reordering (drag-and-drop)
@@ -136,16 +143,19 @@ This approach provides a production-ready implementation that:
 To test this implementation:
 
 1. Configure a Content Blocks data type in Umbraco
-2. Add element types to the configuration
+2. Add element types to the configuration (with tabs and/or property groups)
 3. Add the property to a document type
 4. Create content and test:
    - Adding blocks
-   - Editing blocks with properties
+   - Editing blocks with properties organized in tabs
+   - Editing blocks with properties in groups within tabs
    - Property value persistence
    - Deleting blocks
    - Max items limit
    - Element type selection with multiple types
    - Element type compositions (inherited properties)
+   - Tab navigation
+   - Property group organization
 
 ## Contributing
 
