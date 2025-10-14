@@ -27,7 +27,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | ------------------- | ------------------- | ------------- | ------- |
 | :green_circle:      | **Bytes**           | **Done**      | |
 | :green_circle:      | **Code Editor**     | **Done**      | |
-| :confounded:        | Content Blocks      | _Frustrated_  | :confounded: Burnt many hours on this, with little progress. :confounded: |
+| :green_circle:      | **Content Blocks**  | **Done**      | Simple modal-based implementation for element editing |
 | :green_circle:      | **Data List**       | **Done**      | |
 | :green_circle:      | **Data Picker**     | **Done**      | |
 | :green_circle:      | **Editor Notes**    | **Done**      | |

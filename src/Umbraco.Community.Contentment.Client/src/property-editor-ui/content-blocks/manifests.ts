@@ -14,7 +14,7 @@ const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.ContentBlocks',
 	name: '[Contentment] Content Blocks Property Editor UI',
-	element: () => import('../read-only/read-only.element.js'),
+	element: () => import('./content-blocks.element.js'),
 	meta: {
 		label: 'Content Blocks',
 		icon: 'icon-fa-server',
@@ -69,4 +69,18 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+const selectionModal: UmbExtensionManifest = {
+	type: 'modal',
+	alias: 'Umb.Contentment.Modal.ContentBlock.Selection',
+	name: '[Contentment] Content Block Selection Modal',
+	element: () => import('./content-block-selection-modal.element.js'),
+};
+
+const workspaceModal: UmbExtensionManifest = {
+	type: 'modal',
+	alias: 'Umb.Contentment.Modal.ContentBlock.Workspace',
+	name: '[Contentment] Content Block Workspace Modal',
+	element: () => import('./content-block-workspace-modal.element.js'),
+};
+
+export const manifests = [schema, editorUi, selectionModal, workspaceModal];
