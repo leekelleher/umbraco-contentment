@@ -9,6 +9,8 @@ import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_DOCUMENT_TYPE_DETAIL_REPOSITORY_ALIAS } from '@umbraco-cms/backoffice/document-type';
+import { ContentmentContentBlockWorkspaceContext } from './content-block-workspace.context.js';
+import { CONTENTMENT_CONTENT_BLOCK_WORKSPACE_CONTEXT } from './content-block-workspace.context-token.js';
 
 interface ContentBlockWorkspaceModalData {
 	item: ContentBlock;
@@ -70,6 +72,15 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 	private _error?: string;
 
 	#structureManager?: UmbContentTypeStructureManager;
+	#workspaceContext?: ContentmentContentBlockWorkspaceContext;
+
+	constructor() {
+		super();
+
+		// Create and provide the workspace context
+		this.#workspaceContext = new ContentmentContentBlockWorkspaceContext(this);
+		this.provideContext(CONTENTMENT_CONTENT_BLOCK_WORKSPACE_CONTEXT, this.#workspaceContext);
+	}
 
 	override async connectedCallback() {
 		super.connectedCallback();
@@ -78,6 +89,11 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 
 		this._elementType = this.data.elementType;
 		this._block = this.data.item;
+
+		// Set the block data on the workspace context
+		if (this.#workspaceContext) {
+			this.#workspaceContext.setData(this._block);
+		}
 
 		await this.#loadElementType();
 	}
@@ -178,6 +194,11 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 			key: this._block.key,
 			value: Object.fromEntries(this._values.map((v) => [v.alias, v.value])),
 		};
+
+		// Update the workspace context
+		if (this.#workspaceContext) {
+			this.#workspaceContext.setData(result);
+		}
 
 		this.value = result;
 		this._submitModal();
