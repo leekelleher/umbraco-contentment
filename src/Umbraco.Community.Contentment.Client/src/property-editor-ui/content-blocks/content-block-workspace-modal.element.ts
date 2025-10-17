@@ -172,7 +172,7 @@ export class ContentmentPropertyEditorUIContentBlockWorkspaceModalElement extend
 		// Load groups and properties for each tab
 		for (const tab of this._tabs) {
 			// Get groups for this tab
-			const groups = await this.#structureManager?.getOwnerContainers('Group', tab.id);
+			const groups = this.#structureManager?.getOwnerContainers('Group', tab.id);
 			if (groups) {
 				this._groups.set(tab.id, groups);
 
