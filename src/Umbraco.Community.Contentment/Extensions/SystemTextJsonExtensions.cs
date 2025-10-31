@@ -1,26 +1,27 @@
 using System.Text.Json.Nodes;
 
-namespace Umbraco.Extensions;
-
-internal static class SystemTextJsonExtensions
+namespace Umbraco.Extensions
 {
-    internal static Dictionary<string, object> ToDictionary(this JsonNode? node)
+    internal static class SystemTextJsonExtensions
     {
-        if (node is not JsonObject nodeObject)
+        internal static Dictionary<string, object> ToDictionary(this JsonNode? node)
         {
-            return new Dictionary<string, object>();
-        }
-
-        var dictionary = new Dictionary<string, object>();
-
-        foreach (var keyPair in nodeObject)
-        {
-            if (keyPair.Value is not null)
+            if (node is not JsonObject nodeObject)
             {
-                dictionary[keyPair.Key] = keyPair.Value;
+                return new Dictionary<string, object>();
             }
-        }
 
-        return dictionary;
+            var dictionary = new Dictionary<string, object>();
+
+            foreach (var keyPair in nodeObject)
+            {
+                if (keyPair.Value is not null)
+                {
+                    dictionary[keyPair.Key] = keyPair.Value;
+                }
+            }
+
+            return dictionary;
+        }
     }
 }
