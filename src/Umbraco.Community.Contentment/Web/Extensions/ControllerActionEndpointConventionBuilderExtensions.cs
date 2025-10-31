@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Routing;
+using Umbraco.Cms.Core.Services.Navigation;
 using Umbraco.Cms.Core.Web;
 
 namespace Umbraco.Extensions
@@ -29,7 +30,24 @@ namespace Umbraco.Extensions
                 var domain = DomainUtilities.SelectDomain(ctx.Domains?.GetAll(false), ctx.CleanedUmbracoUrl);
                 var content = ctx.Content?.GetById(domain?.ContentId ?? -1);
 
-                return content ?? ctx.Content?.GetAtRoot().FirstOrDefault();
+                if (content is not null)
+                {
+                    return content;
+                }
+
+                var navigationService = actionExecutingContext.HttpContext.RequestServices
+                    .GetRequiredService<IDocumentNavigationQueryService>();
+
+                navigationService.TryGetRootKeys(out var rootKeys);
+
+                var rootKey = rootKeys.FirstOrDefault();
+
+                if (rootKey == Guid.Empty)
+                {
+                    return default;
+                }
+
+                return ctx.Content?.GetById(rootKey);
             }
 
             return default;

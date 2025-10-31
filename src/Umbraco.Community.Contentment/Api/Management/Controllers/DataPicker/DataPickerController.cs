@@ -130,7 +130,7 @@ public class DataPickerController : ContentmentControllerBase
             var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(item1.GetValueAsString("key") ?? string.Empty);
             if (source1 is not null)
             {
-                var config1 = item1?["value"]?.ToDictionary<object>() as Dictionary<string, object> ?? [];
+                var config1 = item1?["value"]?.ToDictionary() ?? [];
 
                 _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
 
