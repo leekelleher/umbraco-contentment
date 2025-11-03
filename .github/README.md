@@ -56,7 +56,7 @@ Downloads are available on the [releases page](../releases).
 
 _**Please note...**_
 
-- v6.x supports **Umbraco v15.3.0** (on .NET 9.0), consider this the cutting-edge version.
+- v6.x supports **Umbraco v16.0.0** (on .NET 9.0), consider this the cutting-edge version.
 - v5.x supports **Umbraco v13.2.0** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
 - v4.x supports **Umbraco v8.17.0** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17.0** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
