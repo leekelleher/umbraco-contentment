@@ -78,6 +78,39 @@ export type ProblemDetails = {
     [key: string]: unknown | (string | null) | (string | null) | (number | null) | (string | null) | (string | null) | undefined;
 };
 
+export type GetElementTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/umbraco/management/api/v1/contentment/content-blocks/element-types';
+};
+
+export type GetElementTypesErrors = {
+    /**
+     * The resource is protected and requires an authentication token
+     */
+    401: unknown;
+    /**
+     * The authenticated user does not have access to this resource
+     */
+    403: unknown;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+};
+
+export type GetElementTypesError = GetElementTypesErrors[keyof GetElementTypesErrors];
+
+export type GetElementTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<DataListItem>;
+};
+
+export type GetElementTypesResponse = GetElementTypesResponses[keyof GetElementTypesResponses];
+
 export type PostDataListEditorData = {
     body?: DataListConfigurationRequestModel;
     path?: never;

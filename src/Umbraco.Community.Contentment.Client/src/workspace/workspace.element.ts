@@ -13,7 +13,6 @@ const UmbMarked = new Marked({ gfm: true, breaks: true });
 export class ContentmentWorkspaceElement extends UmbLitElement {
 	#emojis: { [key: string]: string } = {
 		':no_entry_sign:': '🚫',
-		':confounded:': '😖',
 		':octocat:': '🚥',
 		':green_circle:': '🟢',
 		':large_blue_circle:': '🔵',
@@ -27,7 +26,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 | ------------------- | ------------------- | ------------- | ------- |
 | :green_circle:      | **Bytes**           | **Done**      | |
 | :green_circle:      | **Code Editor**     | **Done**      | |
-| :confounded:        | Content Blocks      | _Frustrated_  | :confounded: Burnt many hours on this, with little progress. :confounded: |
+| :large_blue_circle: | Content Blocks      | **Done**      | :warning: 90% done, but "Display mode" config hasn't been implemented yet. |
 | :green_circle:      | **Data List**       | **Done**      | |
 | :green_circle:      | **Data Picker**     | **Done**      | |
 | :green_circle:      | **Editor Notes**    | **Done**      | |

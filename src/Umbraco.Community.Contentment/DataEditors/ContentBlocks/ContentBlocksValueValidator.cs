@@ -23,6 +23,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             _elementTypes = elementTypes;
         }
+
         protected override IEnumerable<ElementTypeValidationModel> GetElementTypeValidation(object? value, PropertyValidationContext validationContext)
         {
             if (value is JsonArray array && array.Any() == true)

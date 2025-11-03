@@ -53,6 +53,25 @@ export type ContentmentDataListEditor = {
 	config?: UmbPropertyEditorConfigCollection;
 };
 
+export type ContentmentContentBlockItem = ContentmentListItem & {
+	elementType: string;
+	data: Record<string, unknown>;
+};
+
+export type ContentmentContentBlockModel = {
+	key: string;
+	name: string;
+	description?: string | null;
+	icon?: string | null;
+	overlaySize?: UUIModalSidebarSize | null;
+};
+
+export type ContentmentContentBlockValue = {
+	elementType: string;
+	key: string;
+	value: Record<string, unknown>;
+};
+
 export type ContentmentSocialLinkValue = {
 	name: string;
 	network: string;

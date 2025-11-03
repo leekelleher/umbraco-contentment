@@ -19,6 +19,11 @@ export default {
 		// Content Blocks
 		labelDisplayMode: 'Display mode',
 		configureDisplayMode: 'Select and configure a display mode',
+		configureElementType: 'Select and configure an element type',
+		missingElementType: 'This content is not supported for this configuration.',
+		copyBlock: 'Copy content block',
+		copyBlocks: 'Copy all blocks',
+
 		// Data List
 		labelDataSource: 'Data source',
 		labelListEditor: 'List editor',
