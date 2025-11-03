@@ -117,21 +117,10 @@ Unacceptable behaviour towards myself (or contributors) may result in being bloc
 
 Copyright &copy; [Lee Kelleher](https://leekelleher.com).
 
-All source code is licensed under the [Mozilla Public License](../LICENSE).
+The Contentment for Umbraco package is licensed under the [MIT License](../LICENSE).
 
-<details>
-<summary><strong>A note about licensing</strong></summary>
+The source code for the project was originally released under the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) (v1 to v5). I am working towards re-licensing all of the source code to be under the [MIT license](https://opensource.org/licenses/MIT).
 
-Historically, I used the [MIT license](https://opensource.org/licenses/MIT) for my open-source projects, regretfully I no longer feel MIT reflects my spirit of encouraging open source collaboration.
-The main difference with the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) is that if you make any modifications to the source code **and** distribute those modifications, then you **must** make those changes publicly available.
-
-_More give, less take._
-
-If you do not to intend to modify the source code, then you will still have the same freedoms as when using the MIT license.
-
-For more information about the **Mozilla Public License**, please visit: <https://www.mozilla.org/en-US/MPL/2.0/FAQ/>
-
-</details>
 
 ### Acknowledgements
 

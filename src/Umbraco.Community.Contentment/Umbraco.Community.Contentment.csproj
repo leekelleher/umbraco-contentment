@@ -20,7 +20,7 @@
         <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
         <PackageId>Umbraco.Community.Contentment</PackageId>
         <PackageIcon>icon.png</PackageIcon>
-        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>umbraco umbraco-marketplace</PackageTags>
