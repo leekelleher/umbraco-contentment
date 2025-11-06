@@ -142,13 +142,14 @@ Property Editors are:
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/discussions/357).
 - ~Adds support for Umbraco 14 (.NET 8) _aka Bellissima_~.
 - ~Adds support for Umbraco 15 (.NET 9)~.
-- Adds support for Umbraco 16 (.NET 9).
+- Adds support for Umbraco 16 (.NET 9) and Umbraco 17 (.NET 10).
 - Removes support for Umbraco 13 (.NET 8).
 
 
 ## v7
 
-- _Adds support for Umbraco 17 (.NET 10)._
+- _Adds support for Umbraco 17 and 18 (.NET 10)._
+- _Removes support for Umbraco 16 (.NET 9)._
 
 
 ## Future feature (minor) releases
