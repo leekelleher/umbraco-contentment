@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -40,10 +40,19 @@
         <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
         <PackageReference Include="Umbraco.Cms.Api.Management" Version="16.0.0" />
         <PackageReference Include="Umbraco.Cms.Core" Version="16.0.0" />
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.0.0-rc1" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="17.0.0-rc1" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.0.0-rc1" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
             <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
         </ProjectReference>
