@@ -14,11 +14,11 @@ import type { UmbApi } from '@umbraco-cms/backoffice/extension-api';
 import type { UmbControllerHost, UmbControllerAlias } from '@umbraco-cms/backoffice/controller-api';
 import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentListItem } from '../types.js';
-import type { ContentmentListEditorExtentionManifestType } from '../../extensions/list-editor/list-editor.extension.js';
+//import type { ContentmentListEditorExtentionManifestType } from '../../extensions/list-editor/list-editor.extension.js';
 
 export class ContentmentDataListRepository extends UmbRepositoryBase implements UmbApi {
-	#dataSourceLookup: Record<string, ContentmentDataSourceExtentionManifestType> = {};
-	#listEditorLookup: Record<string, ContentmentListEditorExtentionManifestType> = {};
+	#clientSideDataSourceLookup: Map<string, ContentmentDataSourceExtentionManifestType> = new Map();
+	//#clientSideListEditorLookup: Map<string, ContentmentListEditorExtentionManifestType> = new Map();
 
 	constructor(host: UmbControllerHost, controllerAlias?: UmbControllerAlias) {
 		super(host, controllerAlias);
@@ -26,18 +26,18 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		this.observe(umbExtensionsRegistry.byType('contentmentDataSource'), (manifests) => {
 			manifests.forEach((manifest) => {
 				if (manifest.api && manifest.meta?.key) {
-					this.#dataSourceLookup[manifest.meta.key] = manifest;
+					this.#clientSideDataSourceLookup.set(manifest.meta.key, manifest);
 				}
 			});
 		});
 
-		this.observe(umbExtensionsRegistry.byType('contentmentListEditor'), (manifests) => {
-			manifests.forEach((manifest) => {
-				if (manifest.meta?.key) {
-					this.#listEditorLookup[manifest.meta.key] = manifest;
-				}
-			});
-		});
+		// this.observe(umbExtensionsRegistry.byType('contentmentListEditor'), (manifests) => {
+		// 	manifests.forEach((manifest) => {
+		// 		if (manifest.meta?.key) {
+		// 			this.#clientSideListEditorLookup.set(manifest.meta.key, manifest);
+		// 		}
+		// 	});
+		// });
 	}
 
 	public async getEditor(
@@ -52,10 +52,9 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		let propertyEditorUiAlias = '';
 		let config: UmbPropertyEditorConfig = [];
 
-		const dataSourceKey = dataSource.key;
-		const manifest = dataSourceKey ? this.#dataSourceLookup[dataSourceKey] : null;
-		if (manifest) {
-			const api = await createExtensionApi(this, manifest, [this, this.controllerAlias]);
+		const clientSideDataSourceManifest = this.#clientSideDataSourceLookup.get(dataSource.key);
+		if (clientSideDataSourceManifest) {
+			const api = await createExtensionApi(this, clientSideDataSourceManifest, [this, this.controllerAlias]);
 			const items = (await api?.getItems(dataSource.value)) ?? [];
 			config.push({ alias: 'items', value: items });
 
