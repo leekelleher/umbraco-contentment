@@ -328,5 +328,5 @@ export type GetEnumsDataResponses = {
 export type GetEnumsDataResponse = GetEnumsDataResponses[keyof GetEnumsDataResponses];
 
 export type ClientOptions = {
-    baseUrl: 'http://localhost:21187' | (string & {});
+    baseUrl: 'http://localhost:21185' | (string & {});
 };
