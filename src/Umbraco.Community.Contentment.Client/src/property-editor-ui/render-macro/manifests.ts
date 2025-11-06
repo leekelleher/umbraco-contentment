@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-export const schema: UmbExtensionManifest = {
+const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Render Macro',
 	alias: 'Umbraco.Community.Contentment.RenderMacro',

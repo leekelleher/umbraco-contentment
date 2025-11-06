@@ -118,6 +118,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Cms.17.x", "Umbraco.Cms.17.x\Umbraco.Cms.17.x.csproj", "{E2ACED7B-6274-07A1-D4E5-343BA12883A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{D7EC70F1-8B18-433A-B4DF-4B28D0696FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7EC70F1-8B18-433A-B4DF-4B28D0696FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7EC70F1-8B18-433A-B4DF-4B28D0696FE1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E2ACED7B-6274-07A1-D4E5-343BA12883A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2ACED7B-6274-07A1-D4E5-343BA12883A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2ACED7B-6274-07A1-D4E5-343BA12883A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2ACED7B-6274-07A1-D4E5-343BA12883A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

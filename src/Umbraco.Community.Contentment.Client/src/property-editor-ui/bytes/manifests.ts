@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
-export const schema: UmbExtensionManifest = {
+const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Bytes Property Editor Schema',
 	alias: 'Umbraco.Community.Contentment.Bytes',
