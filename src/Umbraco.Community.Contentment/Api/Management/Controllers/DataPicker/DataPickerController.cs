@@ -96,7 +96,22 @@ public class DataPickerController : ContentmentControllerBase
         return Ok(result);
     }
 
+    [Obsolete("Please call the `Search` endpoint using a POST method. This method will be removed in Contentment 8.0.")]
     [HttpGet("search", Name = "GetDataPickerSearch")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Search(
+        string id,
+        Guid dataTypeKey,
+        int pageNumber = 1,
+        int pageSize = 12,
+        string query = "",
+        string? alias = default,
+        string? variant = default)
+            => await Search(id, dataTypeKey, pageNumber, pageSize, query, alias, variant, []);
+
+    [HttpPost("search", Name = "PostDataPickerSearch")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

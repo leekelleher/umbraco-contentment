@@ -155,6 +155,8 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	async #requestItems() {
+		const body: Array<string> = this.data?.value ?? [];
+
 		const query = {
 			alias: this._propertyAlias,
 			dataTypeKey: this._dataTypeKey,
@@ -165,7 +167,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			variant: this._variantId,
 		};
 
-		const { data } = await tryExecute(this, DataPickerService.getDataPickerSearch({ client: umbHttpClient, query }));
+		const { data } = await tryExecute(this, DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body }));
 
 		this._items =
 			data?.items.map((item) => ({

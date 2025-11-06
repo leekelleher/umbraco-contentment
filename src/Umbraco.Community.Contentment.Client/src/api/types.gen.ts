@@ -178,7 +178,7 @@ export type PostDataPickerEditorResponses = {
 export type PostDataPickerEditorResponse = PostDataPickerEditorResponses[keyof PostDataPickerEditorResponses];
 
 export type GetDataPickerSearchData = {
-    body?: Array<string>;
+    body?: never;
     path?: never;
     query?: {
         id?: string;
@@ -217,6 +217,47 @@ export type GetDataPickerSearchResponses = {
 };
 
 export type GetDataPickerSearchResponse = GetDataPickerSearchResponses[keyof GetDataPickerSearchResponses];
+
+export type PostDataPickerSearchData = {
+    body?: Array<string>;
+    path?: never;
+    query?: {
+        id?: string;
+        dataTypeKey?: string;
+        pageNumber?: number;
+        pageSize?: number;
+        query?: string;
+        alias?: string;
+        variant?: string;
+    };
+    url: '/umbraco/management/api/v1/contentment/data-picker/search';
+};
+
+export type PostDataPickerSearchErrors = {
+    /**
+     * The resource is protected and requires an authentication token
+     */
+    401: unknown;
+    /**
+     * The authenticated user does not have access to this resource
+     */
+    403: unknown;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+};
+
+export type PostDataPickerSearchError = PostDataPickerSearchErrors[keyof PostDataPickerSearchErrors];
+
+export type PostDataPickerSearchResponses = {
+    /**
+     * OK
+     */
+    200: PagedModelDataListItemModel;
+};
+
+export type PostDataPickerSearchResponse = PostDataPickerSearchResponses[keyof PostDataPickerSearchResponses];
 
 export type GetAssembliesDataData = {
     body?: never;
@@ -287,5 +328,5 @@ export type GetEnumsDataResponses = {
 export type GetEnumsDataResponse = GetEnumsDataResponses[keyof GetEnumsDataResponses];
 
 export type ClientOptions = {
-    baseUrl: 'http://localhost:21185' | (string & {});
+    baseUrl: 'http://localhost:21187' | (string & {});
 };
