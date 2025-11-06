@@ -15,4 +15,24 @@ namespace Umbraco.Community.Contentment.Api.Management;
 [ContentmentVersionedApiBackOfficeRoute("/")]
 [JsonOptionsName(UmbConstants.JsonOptionsNames.BackOffice)]
 [MapToApi(Constants.Internals.ProjectAlias)]
-public abstract class ContentmentControllerBase : ManagementApiControllerBase { }
+public abstract class ContentmentControllerBase : ManagementApiControllerBase
+{
+    // Set the current content values, so that `IContentmentContentContext` can access them.
+    protected void SetCurrentContentContextValues(string? contentId = null, string? variantId = null, string? propertyAlias = null)
+    {
+        if (string.IsNullOrWhiteSpace(propertyAlias) == false)
+        {
+            HttpContext.Items.Add("contentmentContextCurrentPropertyAlias", propertyAlias);
+        }
+
+        if (string.IsNullOrWhiteSpace(contentId) == false)
+        {
+            HttpContext.Items.Add("contentmentContextCurrentContentId", contentId);
+        }
+
+        if (string.IsNullOrWhiteSpace(variantId) == false)
+        {
+            HttpContext.Items.Add("contentmentContextCurrentContentVariantId", variantId);
+        }
+    }
+}

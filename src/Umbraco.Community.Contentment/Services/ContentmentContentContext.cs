@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
@@ -35,6 +34,14 @@ namespace Umbraco.Community.Contentment.Services
         public T? GetCurrentContentId<T>(out bool isParent)
         {
             isParent = false;
+
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentId", out T? unique) == true &&
+                unique is not null)
+            {
+                return unique;
+            }
+
+            // TODO: [LK] Review this code - is it needed?
 
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.PublishedRequest?.PublishedContent is not null)

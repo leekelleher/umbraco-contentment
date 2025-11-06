@@ -189,7 +189,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (luceneQuery.Contains("{0}") == true)
                     {
                         var contentId = _contentmentContentContext.GetCurrentContentId();
-                        if (contentId.HasValue == true)
+                        if (contentId > 0)
                         {
                             var udi = _idKeyMap.GetUdiForId(contentId.Value, UmbracoObjectTypes.Document);
                             if (udi.Success == true)
@@ -200,7 +200,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         else if (_contentmentContentContext is IContentmentContentContext2 ctx2)
                         {
                             var contentKey = ctx2.GetCurrentContentId<Guid?>(out _);
-                            if (contentKey.HasValue == true)
+                            if (contentKey.HasValue == true && contentKey.Equals(Guid.Empty) == false)
                             {
                                 var udi = new GuidUdi(UmbConstants.UdiEntityType.Document, contentKey.Value);
                                 luceneQuery = string.Format(luceneQuery, udi);

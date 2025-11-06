@@ -38,6 +38,8 @@ public class DataPickerController : ContentmentControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEditor(DataPickerEditorRequestModel model)
     {
+        SetCurrentContentContextValues(model.Id, model.Variant, model.Alias);
+
         var propertyEditorUiAlias = string.Empty;
 
         var config = new Dictionary<string, object>();
@@ -125,6 +127,8 @@ public class DataPickerController : ContentmentControllerBase
         string? variant = default,
         [FromBody] string[]? values = null)
     {
+        SetCurrentContentContextValues(id, variant, alias);
+
         if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
         {
             var results = cached.Item1 is IDataPickerSource2 source2
