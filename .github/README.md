@@ -145,6 +145,6 @@ _To give you an idea of how much human developer time/effort has been put into m
 The package logo uses the [Happy](https://thenounproject.com/term/happy/375493/) (by [Nick Bluth](https://thenounproject.com/nickbluth/)) icon from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/).
 
 
-### Icons
+#### Icons
 
 The [Social Links](../docs/editors/social-links.md) editor makes use of social media icons from the Font Awesome library, (as downloaded SVG files). These are licensed under the [Font Awesome Free License](https://fontawesome.com/license/free) agreement, specifically under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).
