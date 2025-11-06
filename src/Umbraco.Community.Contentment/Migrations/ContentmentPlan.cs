@@ -28,6 +28,7 @@ namespace Umbraco.Community.Contentment.Migrations
                .To<NoopMigration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>("beta001:" + Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
             ;
         }
     }
