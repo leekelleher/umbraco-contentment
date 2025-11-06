@@ -7,19 +7,19 @@ body:
 - type: markdown
   attributes:
     value: |
-      **Note: for support questions, please use the [Umbraco Community forum](https://our.umbraco.com)**. This repository's issues are reserved for bug reports and feature requests.
+      **Note: for support questions, please use the [Umbraco Community forum](https://forum.umbraco.com/)**. This repository's issues are reserved for bug reports and feature requests.
 - type: input
   id: "contentmentVersion"
   attributes:
     label: "Which Contentment version are you using?"
-    description: "If you are unsure, let's' assume it's the latest version."
+    description: "If you are unsure, let's assume it's the latest version."
   validations:
     required: true
 - type: input
   id: "umbracoVersion"
   attributes:
-    label: "Which Umbraco version are you using? For example: 13.2.1 - don't just write v13"
-    description: "Use the help icon in the Umbraco backoffice to find the version you're using."
+    label: "Which Umbraco version are you using? Be specific: e.g. 16.3.4, (not v16)"
+    description: "Use the Umbraco logo in the backoffice to find the version you're using."
   validations:
     required: true
 - type: textarea
@@ -54,13 +54,6 @@ body:
       Describe the intended/desired outcome after you did the steps mentioned.
       
       Describe the behaviour of the bug
-- type: checkboxes
-  id: umbracoModelsBuilder
-  attributes:
-    label: Do you have Umbraco ModelsBuilder enabled?
-    description: "Select only if applicable."
-    options:
-      - label: Yes, it is enabled.
 - type: dropdown
   id: browsers
   attributes:

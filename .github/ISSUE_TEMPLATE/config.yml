@@ -4,7 +4,7 @@ contact_links:
     url: https://github.com/leekelleher/umbraco-contentment/discussions/new?category=ideas
     about: Suggest an idea for this project
   - name: Umbraco Community forum
-    url: https://our.umbraco.com/packages/backoffice-extensions/contentment/contentment-feedback/
+    url: https://forum.umbraco.com/tag/contentment
     about: "For community (free) support questions, please use the Umbraco Community forum."
   - name: "Commericial support"
     url: https://leekelleher.com/contact/
