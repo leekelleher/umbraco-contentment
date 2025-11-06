@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.Packaging;
-using Umbraco.Cms.Infrastructure.Migrations;
 
 namespace Umbraco.Community.Contentment.Migrations
 {
@@ -24,9 +23,7 @@ namespace Umbraco.Community.Contentment.Migrations
                .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
-               // TODO: [LK] Added no-op to rerun the Data Picker migration. Fix up after beta001.
-               .To<NoopMigration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>("beta001:" + Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
             ;
