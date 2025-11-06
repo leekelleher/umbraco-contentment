@@ -6,21 +6,18 @@
 
 [![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Umbraco.Community.Contentment?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
 
-> [!IMPORTANT]
-> If you are looking for **Contentment for Umbraco 15** (the new backoffice), [please see the latest progress updates](https://github.com/leekelleher/umbraco-contentment/discussions/357)!
-
 ### What is it?
 
-This is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
+Contentment is a collection of Umbraco components that I have developed for use on my own **Umbraco** implementation projects.
 
 Some components may be innovative, others may be a reimagining of existing components, property-editors, features and other community packages.
 
 #### Why should I use it?
 
-I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.
+I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.<br>
 No pressure or marketing spin from me.
 
-**Please do keep in mind that the Contentment for Umbraco package is not a business, it's a hobby project.**
+**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.**
 
 #### What's on offer?
 
@@ -38,7 +35,7 @@ Let's take a look inside...
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
-- [Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
+- ~~[Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.~~
 - [Social Links](../docs/editors/social-links.md) - an editor to manage links for social network platforms.
 - [Templated Label](../docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Textbox List](../docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
@@ -50,7 +47,7 @@ Information about the [telemetry feature](../docs/telemetry.md).
 
 #### [Releases](../releases)
 
-Downloads are available on the [releases page](../releases).
+Detailed release notes and download instructions are available on the [releases page](../releases).
 
 #### Installation
 
@@ -78,7 +75,7 @@ To [install from NuGet](https://www.nuget.org/packages/Umbraco.Community.Content
 
 Documentation for each of the components - with screenshots, use-cases and code examples - can be found in the `/docs` folder.
 
-Please note, you may find other components within Contentment that have not yet been documented.<br>
+Please note, you may find other components and utility code within Contentment that have not yet been documented.<br>
 _Let's call those "life's little surprises"._
 
 
@@ -119,7 +116,8 @@ Copyright &copy; [Lee Kelleher](https://leekelleher.com).
 
 The Contentment for Umbraco package is licensed under the [MIT License](../LICENSE).
 
-The source code for the project was originally released under the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) (v1 to v5). I am working towards re-licensing all of the source code to be under the [MIT license](https://opensource.org/licenses/MIT).
+The source code for the project was originally released under the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0) (Contentment v1 to v5).<br>
+I am working towards re-licensing all of the source code to be under the [MIT license](https://opensource.org/licenses/MIT), but this will take some time.
 
 
 ### Acknowledgements
@@ -129,7 +127,7 @@ The source code for the project was originally released under the [Mozilla Publi
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,260+ hours</b> (between 2019-03-13 to 2025-04-04)</summary>
+<summary>Current development effort: <b>~2,460+ hours</b> (between 2019-03-13 to 2025-11-06)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 
