@@ -28,7 +28,7 @@ export default class ContentmentIconPickerElement extends UmbLitElement {
 		const picked = await modal?.onSubmit().catch(() => undefined);
 		if (!picked) return;
 
-		this.value = `${picked.icon} color-${picked.color}`;
+		this.value = [picked.icon, picked.icon && picked.color ? `color-${picked.color}` : null].filter(Boolean).join(' ');
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}

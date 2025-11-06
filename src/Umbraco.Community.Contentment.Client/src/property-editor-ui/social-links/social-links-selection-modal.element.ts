@@ -60,7 +60,9 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 
 	#renderItem(item: ContentmentSocialNetworkModel) {
 		return html`
-			<uui-button look="outline" label="Change social network" @click=${() => this.#onChoose(item)}>
+			<uui-button
+				label=${this.localize.term('contentment_changeSocialNetworkTo', item.name)}
+				@click=${() => this.#onChoose(item)}>
 				<div class="inner">
 					<div class="icon" style="background-color: ${item.backgroundColor};">
 						<uui-icon name=${item.icon} style="--uui-icon-color: ${item.iconColor};"></uui-icon>
@@ -78,7 +80,6 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 				grid-template-columns: repeat(auto-fill, minmax(var(--uui-size-40), 1fr));
 				gap: var(--uui-size-layout-1);
 				margin: var(--uui-size-layout-2);
-				place-items: start;
 				justify-content: space-between;
 
 				max-width: 45vw;

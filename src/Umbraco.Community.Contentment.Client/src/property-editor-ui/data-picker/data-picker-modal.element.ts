@@ -167,7 +167,10 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			variant: this._variantId,
 		};
 
-		const { data } = await tryExecute(this, DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body }));
+		const { data } = await tryExecute(
+			this,
+			DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body })
+		);
 
 		this._items =
 			data?.items.map((item) => ({
@@ -289,7 +292,8 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					detail=${ifDefined(item.description ?? undefined)}
 					select-only
 					selectable
-					@selected=${() => this.#onSelect(item)}>
+					@selected=${() => this.#onSelect(item)}
+					@deselected=${() => this.#onSelect(item)}>
 					${when(!item.image && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
 					${when(item.image, () => html`<img src=${item.image!} alt="" />`)}
 				</uui-card-media>

@@ -74,15 +74,10 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.#updateValue({ description }, index);
 	}
 
-	#onChange(event: UmbIconPickerChangeEvent, index: number) {
+	#onChangeIcon(event: UmbIconPickerChangeEvent, index: number) {
 		const icon = event.target.value;
 		if (!icon) return;
-
-		const values = [...(this.value ?? [])];
-		values[index] = { ...values[index], icon };
-		this.value = values;
-
-		this.dispatchEvent(new UmbChangeEvent());
+		this.#updateValue({ icon }, index);
 	}
 
 	#onChangeName(event: UUIInputEvent, index: number) {
@@ -176,7 +171,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 					() => html`
 						<contentment-icon-picker
 							.value=${item.icon}
-							@change=${(event: UmbIconPickerChangeEvent) => this.#onChange(event, index)}>
+							@change=${(event: UmbIconPickerChangeEvent) => this.#onChangeIcon(event, index)}>
 						</contentment-icon-picker>
 					`
 				)}
