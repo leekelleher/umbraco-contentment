@@ -1,0 +1,137 @@
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
+
+import { parseBoolean } from '../../utils/parse-boolean.function.js';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	property,
+	repeat,
+	state,
+	unsafeHTML,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import type { ContentmentListItem } from '../types.js';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIComboboxElement } from '@umbraco-cms/backoffice/external/uui';
+
+@customElement('contentment-property-editor-ui-combobox')
+export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	@property()
+	public set value(value: Array<string> | string | undefined) {
+		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
+	}
+	public get value(): string | undefined {
+		return this.#value;
+	}
+	#value?: string = '';
+
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		if (!config) return;
+		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
+		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
+		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
+	}
+
+	@state()
+	private _items: Array<ContentmentListItem> = [];
+
+	@state()
+	private _showDescriptions = false;
+
+	@state()
+	private _showIcons = false;
+
+	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
+		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
+		this.value = event.target.value as string;
+		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	override render() {
+		if (!this._items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					heading="There are no items to display"></contentment-info-box>
+			`;
+		}
+
+		return html`
+			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange}>
+				<uui-combobox-list>
+					${repeat(
+						this._items,
+						(item) => item.value,
+						(item) => this.#renderItem(item)
+					)}
+				</uui-combobox-list>
+			</uui-combobox>
+		`;
+	}
+
+	#renderItem(item: ContentmentListItem) {
+		return html`
+			<uui-combobox-list-option
+				display-value=${this.localize.string(item.name)}
+				value=${item.value}
+				?disabled=${item.disabled}>
+				<div class="outer">
+					${when(this._showIcons && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
+					${when(
+						this._showDescriptions && item.description,
+						() => html`
+							<uui-form-layout-item>
+								<span slot="label">${this.localize.string(item.name)}</span>
+								<span slot="description">${unsafeHTML(item.description)}</span>
+							</uui-form-layout-item>
+						`,
+						() => html`<span>${this.localize.string(item.name)}</span>`
+					)}
+				</div>
+			</uui-combobox-list-option>
+		`;
+	}
+
+	static override styles = [
+		css`
+			uui-combobox {
+				width: 100%;
+			}
+
+			.outer {
+				display: flex;
+				flex-direction: row;
+				gap: 0.5rem;
+				align-items: flex-start;
+			}
+
+			uui-combobox-list-option {
+				padding: 0.5rem;
+			}
+
+			uui-form-layout-item {
+				margin-top: 3px;
+				margin-bottom: 0;
+			}
+
+			umb-icon {
+				font-size: 1.2rem;
+			}
+		`,
+	];
+}
+
+export { ContentmentPropertyEditorUIComboboxElement as element };
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui-combobox': ContentmentPropertyEditorUIComboboxElement;
+	}
+}

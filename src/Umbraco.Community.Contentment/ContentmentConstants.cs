@@ -165,6 +165,8 @@ public static class ContentmentConstants
 
             public const string CodeEditor = DataEditors.CodeEditorDataEditor.DataEditorUiAlias;
 
+            public const string Combobox = DataEditors.ComboboxDataListEditor.DataEditorUiAlias;
+
             public const string ConfigurationEditor = DataEditors.ConfigurationEditorDataEditor.DataEditorUiAlias;
 
             public const string ContentBlocks = DataEditors.ContentBlocksDataEditor.DataEditorUiAlias;

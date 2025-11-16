@@ -1,18 +1,8 @@
-// SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
 
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import {
-	css,
-	customElement,
-	html,
-	ifDefined,
-	property,
-	repeat,
-	state,
-	unsafeHTML,
-	when,
-} from '@umbraco-cms/backoffice/external/lit';
+import { customElement, html, ifDefined, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentListItem } from '../types.js';
@@ -35,19 +25,24 @@ export class ContentmentPropertyEditorUIDropdownListElement
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
-		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
-		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
+
+		const allowEmpty = parseBoolean(config.getValueByAlias('allowEmpty'));
+		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
+
+		this._options = items.map((item) => ({
+			name: this.localize.string(item.name),
+			value: item.value,
+			disabled: item.disabled ?? false,
+			selected: item.value === this.#value,
+		}));
+
+		if (allowEmpty) {
+			this._options.unshift({ name: '', value: '', selected: false });
+		}
 	}
 
 	@state()
-	private _items: Array<ContentmentListItem> = [];
-
-	@state()
-	private _showDescriptions = false;
-
-	@state()
-	private _showIcons = false;
+	private _options: Array<Option> = [];
 
 	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
 		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
@@ -56,7 +51,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	}
 
 	override render() {
-		if (!this._items?.length) {
+		if (!this._options?.length) {
 			return html`
 				<contentment-info-box
 					compact
@@ -67,68 +62,17 @@ export class ContentmentPropertyEditorUIDropdownListElement
 		}
 
 		return html`
-			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange}>
-				<uui-combobox-list>
-					${repeat(
-						this._items,
-						(item) => item.value,
-						(item) => this.#renderItem(item)
-					)}
-				</uui-combobox-list>
-			</uui-combobox>
+			<uui-select .options=${this._options} value=${ifDefined(this.value)} @change=${this.#onChange}></uui-select>
 		`;
 	}
 
-	#renderItem(item: ContentmentListItem) {
-		return html`
-			<uui-combobox-list-option
-				display-value=${this.localize.string(item.name)}
-				value=${item.value}
-				?disabled=${item.disabled}>
-				<div class="outer">
-					${when(this._showIcons && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
-					${when(
-						this._showDescriptions && item.description,
-						() => html`
-							<uui-form-layout-item>
-								<span slot="label">${this.localize.string(item.name)}</span>
-								<span slot="description">${unsafeHTML(item.description)}</span>
-							</uui-form-layout-item>
-						`,
-						() => html`<span>${this.localize.string(item.name)}</span>`
-					)}
-				</div>
-			</uui-combobox-list-option>
-		`;
-	}
-
-	static override styles = [
-		css`
-			uui-combobox {
-				width: 100%;
-			}
-
-			.outer {
-				display: flex;
-				flex-direction: row;
-				gap: 0.5rem;
-				align-items: flex-start;
-			}
-
-			uui-combobox-list-option {
-				padding: 0.5rem;
-			}
-
-			uui-form-layout-item {
-				margin-top: 3px;
-				margin-bottom: 0;
-			}
-
-			umb-icon {
-				font-size: 1.2rem;
-			}
-		`,
-	];
+	// #renderItem(item: ContentmentListItem) {
+	// 	return html`
+	// 		<option display-value=${this.localize.string(item.name)} value=${item.value} ?disabled=${item.disabled}>
+	// 			${this.localize.string(item.name)}
+	// 		</option>
+	// 	`;
+	// }
 }
 
 export { ContentmentPropertyEditorUIDropdownListElement as element };

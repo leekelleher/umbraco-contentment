@@ -34,8 +34,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     { "default", true }
                 }
             },
-            new ShowDescriptionsConfigurationField(),
-            new ShowIconsConfigurationField(),
             //new HtmlAttributesConfigurationField(_ioHelper),
         };
 

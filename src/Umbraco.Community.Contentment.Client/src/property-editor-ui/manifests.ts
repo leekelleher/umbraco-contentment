@@ -6,6 +6,7 @@ import { manifests as bytes } from './bytes/manifests.js';
 import { manifest as cascadingDropdownList } from './cascading-dropdown-list/manifest.js';
 import { manifest as checkboxList } from './checkbox-list/manifest.js';
 import { manifest as codeEditor } from './code-editor/manifest.js';
+import { manifest as combobox } from './combobox/manifest.js';
 import { manifests as configurationEditor } from './configuration-editor/manifests.js';
 import { manifests as contentBlocks } from './content-blocks/manifests.js';
 import { manifest as contentSource } from './content-source/manifest.js';
@@ -38,6 +39,7 @@ export const manifests: Array<UmbExtensionManifest> = [
 	cascadingDropdownList,
 	checkboxList,
 	codeEditor,
+	combobox,
 	...configurationEditor,
 	...contentBlocks,
 	contentSource,
