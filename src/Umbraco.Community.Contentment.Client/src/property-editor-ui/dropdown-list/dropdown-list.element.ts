@@ -29,15 +29,21 @@ export class ContentmentPropertyEditorUIDropdownListElement
 		const allowEmpty = parseBoolean(config.getValueByAlias('allowEmpty'));
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 
-		this._options = items.map((item) => ({
-			name: this.localize.string(item.name),
-			value: item.value,
-			disabled: item.disabled ?? false,
-			selected: item.value === this.#value,
-		}));
+		if (items.length) {
+			this._options = items.map((item) => ({
+				name: this.localize.string(item.name),
+				value: item.value,
+				disabled: item.disabled ?? false,
+				selected: item.value === this.#value,
+			}));
 
-		if (allowEmpty) {
-			this._options.unshift({ name: '', value: '', selected: false });
+			if (allowEmpty) {
+				this._options.unshift({ name: '', value: '', selected: false });
+			}
+
+			if (!allowEmpty && !this._options.find((option) => option.selected)) {
+				this._options[0].selected = true;
+			}
 		}
 	}
 
