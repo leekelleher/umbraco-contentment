@@ -16,7 +16,7 @@ using Umbraco.Community.Contentment.Services;
 
 namespace Umbraco.Community.Contentment.Composing
 {
-    internal sealed class ContentmentComposer : IComposer
+    public sealed class ContentmentComposer : IComposer
     {
         public void Compose(IUmbracoBuilder builder)
         {
@@ -42,7 +42,6 @@ namespace Umbraco.Community.Contentment.Composing
 
             builder
                 .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
-                // TODO: [LK:2024-12-06] Figure out if this is still needed?
                 .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
                 .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
                 .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
