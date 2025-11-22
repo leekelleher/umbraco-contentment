@@ -121,6 +121,10 @@ angular.module("umbraco").controller("Umbraco.Community.Contentment.Overlays.Dat
         function select(item, $event) {
             $event.stopPropagation();
 
+            if (item.disabled === true) {
+                return;
+            }
+
             if (vm.enableMultiple === true) {
 
                 if (vm.selection.hasOwnProperty(item.value) === false) {
