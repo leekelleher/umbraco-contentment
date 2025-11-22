@@ -24,21 +24,21 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 
 | :octocat:           | Editor              | Status        | Comment |
 | ------------------- | ------------------- | ------------- | ------- |
-| :green_circle:      | **Bytes**           | **Done**      | |
-| :green_circle:      | **Code Editor**     | **Done**      | |
-| :large_blue_circle: | Content Blocks      | **Done**      | :warning: 90% done, but "Display mode" config hasn't been implemented yet. |
-| :green_circle:      | **Data List**       | **Done**      | |
-| :green_circle:      | **Data Picker**     | **Done**      | |
-| :green_circle:      | **Editor Notes**    | **Done**      | |
-| :green_circle:      | **Icon Picker**     | **Done**      | |
-| :green_circle:      | **List Items**      | **Done**      | |
-| :green_circle:      | **Notes**           | **Done**      | |
-| :green_circle:      | **Number Input**    | **Done**      | |
-| :no_entry_sign:     | ~Render Macro~      | _Deprecated_  | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
-| :green_circle:      | **Social Links**    | **Done**      | |
-| :green_circle:      | **Templated Label** | **Done**      | Reworked to use [Liquid template language](https://shopify.github.io/liquid/). |
-| :green_circle:      | **Textbox List**    | **Done**      | |
-| :green_circle:      | **Text Input**      | **Done**      | |
+| :green_circle:  | **Bytes**           | **Done**      | |
+| :green_circle:  | **Code Editor**     | **Done**      | |
+| :green_circle:  | **Content Blocks**  | **Done**      | :warning: Done, but "Display mode" config hasn't been implemented yet. |
+| :green_circle:  | **Data List**       | **Done**      | |
+| :green_circle:  | **Data Picker**     | **Done**      | |
+| :green_circle:  | **Editor Notes**    | **Done**      | |
+| :green_circle:  | **Icon Picker**     | **Done**      | |
+| :green_circle:  | **List Items**      | **Done**      | |
+| :green_circle:  | **Notes**           | **Done**      | |
+| :green_circle:  | **Number Input**    | **Done**      | |
+| :no_entry_sign: | ~Render Macro~      | _Deprecated_  | :no_entry_sign: Macros have been deprecated in Umbraco.<br>:warning: Replaced the editor with a deprecation notice. |
+| :green_circle:  | **Social Links**    | **Done**      | |
+| :green_circle:  | **Templated Label** | **Done**      | Reworked to use [Liquid template language](https://shopify.github.io/liquid/). |
+| :green_circle:  | **Textbox List**    | **Done**      | |
+| :green_circle:  | **Text Input**      | **Done**      | |
 
 ### Internal components
 
