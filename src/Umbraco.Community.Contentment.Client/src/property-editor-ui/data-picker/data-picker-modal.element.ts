@@ -135,6 +135,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	#onPagination(event: UUIPaginationEvent) {
+		this._loading = true;
 		this._pageNumber = event.target.current;
 		this.#requestItems();
 	}
@@ -245,7 +246,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	#renderItems() {
-		if (this._loading) return html`<uui-loader></uui-loader>`;
+		if (this._loading) return html`<div id="loader"><uui-loader></uui-loader></div>`;
 		if (!this._totalPages) return this.#renderNoItems();
 		return html`
 			${when(
@@ -324,6 +325,12 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 	static override styles = [
 		css`
+			#loader {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
 			#filter {
 				width: 100%;
 				margin-bottom: var(--uui-size-space-4);
