@@ -14,7 +14,7 @@
         <Product>Umbraco.Community.Contentment</Product>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <Version>6.0.0-beta002</Version>
+        <Version>6.0.0-beta003</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
         <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
@@ -47,9 +47,9 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.0.0-rc2" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="17.0.0-rc2" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.0.0-rc2" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.0.0-rc4" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="17.0.0-rc4" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.0.0-rc4" />
     </ItemGroup>
 
     <ItemGroup>
