@@ -18,17 +18,20 @@ namespace Umbraco.Community.Contentment.Services
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IVariationContextAccessor _variationContextAccessor;
 
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
             IJsonSerializer jsonSerializer,
             IRequestAccessor requestAccessor,
-            IUmbracoContextAccessor umbracoContextAccessor)
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IVariationContextAccessor variationContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _jsonSerializer = jsonSerializer;
             _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _variationContextAccessor = variationContextAccessor;
         }
 
         public T? GetCurrentContentId<T>(out bool isParent)
@@ -92,6 +95,8 @@ namespace Umbraco.Community.Contentment.Services
         {
             isParent = false;
 
+            _variationContextAccessor.VariationContext = new VariationContext(GetCurrentVariantId());
+
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
                 if (umbracoContext.PublishedRequest?.PublishedContent != null)
@@ -117,6 +122,11 @@ namespace Umbraco.Community.Contentment.Services
             }
 
             return default;
+        }
+
+        public string? GetCurrentVariantId()
+        {
+            return _httpContextAccessor.HttpContext?.Items["contentmentContextCurrentContentVariantId"] as string;
         }
 
         private T? DeserializeAnonymousType<T>(string json, T anonymousObj) => _jsonSerializer.Deserialize<T>(json);
