@@ -27,9 +27,9 @@ jobs:
     - name: Build and pack
       run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
 
+    - name: Push to GitHub NuGet
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json
+
     - name: Push to NuGet
       if: contains(github.ref_name, '-') == false
       run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
-
-    - name: Push to GitHub NuGet
-      run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json
