@@ -139,6 +139,8 @@ Property Editors are:
 
 ## v6
 
+### [v6.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.0.0)
+
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/discussions/357).
 - ~Adds support for Umbraco 14 (.NET 8) _aka Bellissima_~.
 - ~Adds support for Umbraco 15 (.NET 9)~.
