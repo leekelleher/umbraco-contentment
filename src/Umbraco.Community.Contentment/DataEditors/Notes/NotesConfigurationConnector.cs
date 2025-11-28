@@ -6,7 +6,6 @@
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Deploy;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
@@ -17,26 +16,20 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IConfigurationEditorJsonSerializer _configurationEditorJsonSerializer;
         private readonly ILocalLinkParser _localLinkParser;
         private readonly IImageSourceParser _imageSourceParser;
-        private readonly IMacroParser _macroParser;
 
         public IEnumerable<string> PropertyEditorAliases => new[] { NotesDataEditor.DataEditorName };
 
         public NotesConfigurationConnector(
             IConfigurationEditorJsonSerializer configurationEditorJsonSerializer,
             ILocalLinkParser localLinkParser,
-            IImageSourceParser imageSourceParser,
-            IMacroParser macroParser)
+            IImageSourceParser imageSourceParser)
         {
             _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
             _localLinkParser = localLinkParser;
             _imageSourceParser = imageSourceParser;
-            _macroParser = macroParser;
         }
 
-        public object? FromArtifact(IDataType dataType, string? configuration)
-            => FromArtifact(dataType, configuration, PassThroughCache.Instance);
-
-        public object? FromArtifact(IDataType dataType, string? configuration, IContextCache contextCache)
+        public async Task<IDictionary<string, object>> FromArtifactAsync(IDataType dataType, string? configuration, IContextCache contextCache, CancellationToken cancellationToken = default)
         {
             var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
 
@@ -46,38 +39,34 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
-                notes = _localLinkParser.FromArtifact(notes, contextCache);
-                notes = _imageSourceParser.FromArtifact(notes, contextCache);
-                notes = _macroParser.FromArtifact(notes, contextCache);
+                notes = await _localLinkParser.FromArtifactAsync(notes, contextCache, cancellationToken);
+                notes = await _imageSourceParser.FromArtifactAsync(notes, contextCache, cancellationToken);
 
                 config[NotesConfigurationField.Notes] = notes ?? string.Empty;
 
                 return config;
             }
 
-            return db;
+            return db ?? new Dictionary<string, object>();
         }
 
-        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies)
-            => ToArtifact(dataType, dependencies, PassThroughCache.Instance);
-
-        public string? ToArtifact(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache)
+        public async Task<string?> ToArtifactAsync(IDataType dataType, ICollection<ArtifactDependency> dependencies, IContextCache contextCache, CancellationToken cancellationToken = default)
         {
-            if (dataType.Configuration is Dictionary<string, object> config &&
+            if (dataType.ConfigurationObject is Dictionary<string, object> config &&
                 config.TryGetValueAs(NotesConfigurationField.Notes, out string? notes) == true &&
                 string.IsNullOrWhiteSpace(notes) == false)
             {
                 var udis = new List<Udi>();
 
-                notes = _localLinkParser.ToArtifact(notes, udis, contextCache);
-                notes = _imageSourceParser.ToArtifact(notes, udis, contextCache);
-                notes = _macroParser.ToArtifact(notes, udis, contextCache);
+                notes = await _localLinkParser.ToArtifactAsync(notes, udis, contextCache, cancellationToken);
+                notes = await _imageSourceParser.ToArtifactAsync(notes, udis, contextCache, cancellationToken);
 
                 foreach (var udi in udis)
                 {
-                    var mode = udi.EntityType == UmbConstants.UdiEntityType.Macro
-                        ? ArtifactDependencyMode.Match
-                        : ArtifactDependencyMode.Exist;
+                    //var mode = udi.EntityType == UmbConstants.UdiEntityType.Macro
+                    //    ? ArtifactDependencyMode.Match
+                    //    : ArtifactDependencyMode.Exist;
+                    var mode = ArtifactDependencyMode.Exist;
 
                     dependencies.Add(new ArtifactDependency(udi, false, mode));
                 }
@@ -85,7 +74,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 config[NotesConfigurationField.Notes] = notes ?? string.Empty;
             }
 
-            return ConfigurationEditor.ToDatabase(dataType.Configuration, _configurationEditorJsonSerializer);
+            var dataTypeConfigurationEditor = dataType.Editor?.GetConfigurationEditor();
+            return dataTypeConfigurationEditor?.ToDatabase(dataType.ConfigurationData, _configurationEditorJsonSerializer);
         }
     }
 }

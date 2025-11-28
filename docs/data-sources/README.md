@@ -27,6 +27,7 @@ The following data-sources are available by default with the Contentment package
 #### Umbraco
 
 - [Examine Query](data-source--examine.md) - Populate the data source from an Examine query.
+- [Umbraco Backoffice Sections](data-source--umbraco-backoffice-sections.md) - Use the backoffice sections to populate the data source.
 - [Umbraco Content](data-source--umbraco-content.md) - Select a start node to use its children as the data source.
 - [Umbraco Content Properties](data-source--umbraco-content-properties.md) - Populate the data source using a Content Type's properties.
 - [Umbraco Content Types](data-source--umbraco-content-types.md) - Populate the data source using Content Types.

@@ -5,8 +5,8 @@
 
 using Examine;
 using Examine.Search;
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -17,12 +17,11 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ExamineDataListSource : IDataListSource, IDataPickerSource
+    public sealed class ExamineDataListSource : IContentmentDataSource, IDataPickerSource
     {
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IExamineManager _examineManager;
         private readonly IIdKeyMap _idKeyMap;
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
         private const string _defaultNameField = UmbracoExamineFieldNames.NodeNameFieldName;
@@ -66,13 +65,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentmentContentContext contentmentContentContext,
             IExamineManager examineManager,
             IIdKeyMap idKeyMap,
-            IIOHelper ioHelper,
             IShortStringHelper shortStringHelper)
         {
             _contentmentContentContext = contentmentContentContext;
             _examineManager = examineManager;
             _idKeyMap = idKeyMap;
-            _ioHelper = ioHelper;
             _shortStringHelper = shortStringHelper;
         }
 
@@ -84,19 +81,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public IEnumerable<ConfigurationField> Fields => new[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "examineIndex",
                 Name = "Examine Index",
                 Description = "Select the Examine index.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListDataListEditor.AllowEmpty, false },
+                    // NOTE: in Contentment v6, the list of Examine Indexes is static at browser load-time. [LK]
+                    // Currently unsure whether this needs to be moved to its own data-source; feels overkill.
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _examineManager.Indexes.OrderBy(x => x.Name).Select(x => new DataListItem
                         {
                             Name = x.Name.SplitPascalCasing(_shortStringHelper),
@@ -104,53 +103,53 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }) },
                 }
             },
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>Do you need help with Lucene query?</strong></summary>
 <p>If you need assistance with Lucene query syntax, please refer to this resource on <a href=""https://our.umbraco.com/documentation/reference/searching/examine/overview-explanation#power-searching-with-raw-lucene-queries"" target=""_blank""><strong>our.umbraco.com</strong></a>.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "luceneQuery",
                 Name = "Lucene query",
                 Description = "Enter your raw Lucene expression to query Examine with.<br>To make the query contextual using the content's page UDI, you can use C# standard <code>string.Format</code> syntax, e.g. <code>+propertyAlias:\"{0}\"</code>",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { CodeEditorConfigurationEditor.Mode, "text" },
-                    { CodeEditorConfigurationEditor.MinLines, 1 },
-                    { CodeEditorConfigurationEditor.MaxLines, 5 },
+                    { "mode", "text" },
+                    { "minLines", 1 },
+                    { "maxLines", 5 },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameField",
                 Name = "Name Field",
                 Description = "Enter the field name to select the name from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueField",
                 Name = "Value Field",
                 Description = "Enter the field name to select the value (key) from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconField",
                 Name = "Icon Field",
                 Description = "<em>(optional)</em> Enter the field name to select the icon from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionField",
                 Name = "Description Field",
                 Description = "<em>(optional)</em> Enter the field name to select the description from the Examine record.",
-                View =  _ioHelper.ResolveRelativeOrVirtualUrl(TextInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = TextInputDataEditor.DataEditorUiAlias,
                 Config = _examineFieldConfig
             },
         };
@@ -171,10 +170,10 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
             => Task.FromResult(GetExamineResults(config, pageSize: values.Count(), values: values)?.Items ?? []);
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
             => Task.FromResult(GetExamineResults(config, pageNumber, pageSize, query));
 
-        private PagedResult<DataListItem> GetExamineResults(
+        private PagedViewModel<DataListItem> GetExamineResults(
             Dictionary<string, object> config,
             int pageNumber = 1,
             int pageSize = 12,
@@ -190,7 +189,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     if (luceneQuery.Contains("{0}") == true)
                     {
                         var contentId = _contentmentContentContext.GetCurrentContentId();
-                        if (contentId.HasValue == true)
+                        if (contentId > 0)
                         {
                             var udi = _idKeyMap.GetUdiForId(contentId.Value, UmbracoObjectTypes.Document);
                             if (udi.Success == true)
@@ -201,7 +200,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                         else if (_contentmentContentContext is IContentmentContentContext2 ctx2)
                         {
                             var contentKey = ctx2.GetCurrentContentId<Guid?>(out _);
-                            if (contentKey.HasValue == true)
+                            if (contentKey.HasValue == true && contentKey.Equals(Guid.Empty) == false)
                             {
                                 var udi = new GuidUdi(UmbConstants.UdiEntityType.Document, contentKey.Value);
                                 luceneQuery = string.Format(luceneQuery, udi);
@@ -239,7 +238,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     if (results?.TotalItemCount > 0)
                     {
-                        return new PagedResult<DataListItem>(results.TotalItemCount, pageNumber, pageSize)
+                        return new PagedViewModel<DataListItem>()
                         {
                             Items = results.Select(x => new DataListItem
                             {
@@ -247,13 +246,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 Value = x.Values.ContainsKey(valueField) == true ? x.Values[valueField] : x.Values[_defaultValueField],
                                 Icon = x.Values.ContainsKey(iconField) == true ? x.Values[iconField] : x.Values[_defaultIconField],
                                 Description = x.Values.ContainsKey(descriptionField) == true ? x.Values[descriptionField] : null,
-                            })
+                            }),
+                            Total = results.TotalItemCount,
                         };
                     }
                 }
             }
 
-            return new PagedResult<DataListItem>(-1, pageNumber, pageSize);
+            return PagedViewModel<DataListItem>.Empty();
         }
     }
 }

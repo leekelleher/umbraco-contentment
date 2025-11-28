@@ -1,0 +1,35 @@
+name: Release Package
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+*"
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Build and pack
+      run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
+
+    - name: Push to NuGet
+      if: contains(github.ref_name, '-') == false
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+
+    - name: Push to GitHub NuGet
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json

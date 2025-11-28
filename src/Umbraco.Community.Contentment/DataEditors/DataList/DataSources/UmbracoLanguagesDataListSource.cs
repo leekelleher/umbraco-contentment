@@ -8,13 +8,13 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoLanguagesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoLanguagesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
-        private readonly ILocalizationService _localizationService;
+        private readonly ILanguageService _languageService;
 
-        public UmbracoLanguagesDataListSource(ILocalizationService localizationService)
+        public UmbracoLanguagesDataListSource(ILanguageService languageService)
         {
-            _localizationService = localizationService;
+            _languageService = languageService;
         }
 
         public override string Name => "Umbraco Languages";
@@ -25,7 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public override Dictionary<string, object>? DefaultValues => default;
 
@@ -33,8 +33,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return _localizationService
-                .GetAllLanguages()
+            return _languageService.GetAllAsync().GetAwaiter().GetResult()
                 .Select(x => new DataListItem
                 {
                     Name = x.CultureName,

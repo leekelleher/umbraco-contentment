@@ -11,6 +11,24 @@ By default, the package will display a Contentment tree item in the Settings sec
 
 If you would prefer to disable the tree dashboard completely, you can use this code snippet to disable it.
 
+##### For Umbraco v9+
+
+Configuration to disable Contentment tree dashboard.
+
+In your `appsettings.json` file, add this option inside the `"Umbraco"` section, add the following.
+
+```json
+{
+    "Umbraco": {
+        "Contentment": {
+            "DisableTree": true
+        }
+    }
+}
+```
+
+If you prefer to use a strongly-typed configuration in C# code, you can do this with the `.AddContentment(opts => { opts.DisableTree = true; })` extension method in your `Program.cs` (or `Startup.cs`) file `ConfigureServices()` method.
+
 ##### For Umbraco v8
 
 Code snippet to disable Contentment tree dashboard.
@@ -34,20 +52,3 @@ namespace Our.Umbraco.Web
 
 If you already have your own composer class, you can add the `composition.DisableContentmentTree();` line to it.
 
-##### For Umbraco v9+
-
-Configuration to disable Contentment tree dashboard.
-
-In your `appsettings.json` file, add this option inside the `"Umbraco"` section, add the following.
-
-```json
-{
-    "Umbraco": {
-        "Contentment": {
-            "DisableTree": true
-        }
-    }
-}
-```
-
-If you prefer to use a strongly-typed configuration in C# code, you can do this with the `.AddContentment(opts => { opts.DisableTree = true; })` extension method in your `Startup.cs` file `ConfigureServices()` method.

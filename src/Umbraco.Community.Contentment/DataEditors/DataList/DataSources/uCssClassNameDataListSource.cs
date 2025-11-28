@@ -5,38 +5,33 @@
 
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
 #pragma warning disable IDE1006 // Naming Styles
-    public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public class uCssClassNameDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
 #pragma warning restore IDE1006 // Naming Styles
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
-        public uCssClassNameDataListSource(
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+        public uCssClassNameDataListSource(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "uCssClassName";
 
         public override string Description => "A homage to @marcemarc's bingo-famous uCssClassNameDropdown package!";
 
-        public override string Icon => "icon-fa fa-css3";
+        public override string Icon => "icon-fa-css3";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>uCssClassName? <em>What sort of a name is that?</em></strong></summary>
 <p>Welcome to a piece of Umbraco package history.</p>
 <p>First released back in 2013 by <a href=""http://tooorangey.co.uk/"" target=""_blank"">Marc Goodson</a>, <a href=""https://our.umbraco.com/packages/backoffice-extensions/ucssclassnamedropdown/"" target=""_blank""><strong>uCssClassNameDropdown</strong></a> became one of the most popular packages for Umbraco v4.11.3.</p>
@@ -46,47 +41,48 @@ namespace Umbraco.Community.Contentment.DataEditors
 <p>Perfect for font-awesome icons or surfacing similar icon or background image choices to the editor.&rdquo;</p>
 </blockquote>
 <p>As a mark of respect to the loyal fans of the original package, I hereby offer this data source as tribute.</p>
-<p class=""text-center""><img ng-src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName""></p>
+<p style=""text-align:center;""><img src=""https://leekelleher.com/umbraco/contentment/assets/ucssclassname.png"" alt=""English Heritage Blue Plaque for uCssClassName"" loading=""lazy""></p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "cssPath",
                 Name = "PathToStylesheet",
                 Description = "Put in the relative path to the stylesheet",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "cssRegex",
                 Name = "Class Name Regex",
                 Description = "put in the regex pattern that matches the class names",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "excludeList",
                 Name = "Exclusions",
                 Description = "comma delimited list of styles to exclude",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconPattern",
                 Name = "Icon Pattern",
-                Description = "Class name pattern to display icon, eg 'icon icon-{0}'",
-                View = "textstring",
+                Description = "Class name pattern to display icon, eg 'icon-{0}'",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 
         public override Dictionary<string, object>? DefaultValues => new()
         {
+            // TODO: I need to find an alternative, since FontAwesome no longer ships with Umbraco. [LK]
             { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
             { "excludeList", "" },
             { "iconPattern", "icon-fa fa-{0}" },
         };
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {

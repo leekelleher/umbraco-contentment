@@ -3,22 +3,16 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ButtonsDataListEditor : IDataListEditor
+    public sealed class ButtonsDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
 
-        private readonly IIOHelper _ioHelper;
-
-        public ButtonsDataListEditor(IIOHelper ioHelper)
-        {
-            _ioHelper = ioHelper;
-        }
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Buttons";
 
         public string Name => "Buttons";
 
@@ -28,21 +22,21 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
-        {
-            new ConfigurationField
+        public IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon,<br><em>(for when no icon is available)</em>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                PropertyEditorUiAlias = IconPickerDataEditor.DataEditorUiAlias,
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "size",
                 Name = "Size",
                 Description = "Select the button size. By default this is set to 'medium'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -52,15 +46,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "Large", Value = "l" },
                         }
                     },
-                    { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "m" }
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "labelStyle",
                 Name = "Label style",
                 Description = "Select the style of the button's label.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -71,23 +64,44 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "both" },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
+                }
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "look",
+                Name = "Button style",
+                Description = "Select the style of the button. The fallback style is 'secondary'.",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Default", Value = "default" },
+                            new DataListItem { Name = "Outline", Value = "outline" },
+                            new DataListItem { Name = "Placeholder", Value = "placeholder" },
+                            new DataListItem { Name = "Primary", Value = "primary" },
+                            new DataListItem { Name = "Secondary", Value = "secondary" },
+                        }
+                    },
                 }
             },
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-        };
+        ];
 
         public Dictionary<string, object> DefaultValues => new()
         {
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
             { "labelStyle", "both" },
+            { "look", "secondary" },
+            { "size", "m" },
         };
 
         public Dictionary<string, object>? DefaultConfig => default;
@@ -99,6 +113,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

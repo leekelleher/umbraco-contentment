@@ -13,7 +13,7 @@ using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class PhysicalFileSystemDataSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IIOHelper _ioHelper;
@@ -41,36 +41,36 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Select paths from the physical file system as the data source.";
 
-        public string? DescriptionTemplate => "{{ path }}; {{ filter }}";
+        public string? DescriptionTemplate => "{= path }; {= filter }";
 
-        public override string Icon => "icon-folder-close";
+        public override string Icon => "icon-fa-folder-tree";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "path",
                 Name = "Folder path",
                 Description = "Enter the relative path of the folder. e.g. <code>~/css</code><br>Please note, this is relative to the web root folder, e.g. wwwroot.",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "filter",
                 Name = "Filename filter",
                 Description = "Enter a wildcard filter for the filenames. e.g. <code>*.css</code>",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "friendlyName",
                 Name = "Use friendly filenames?",
                 Description = "Enabling this option will remove the file extension and spaces-out any uppercase letters, hyphens and underscores from the item name.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 

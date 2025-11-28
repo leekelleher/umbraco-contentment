@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Umbraco.Cms.Api.Management.ViewModels.DataType;
+using Umbraco.Community.Contentment.DataEditors;
+
+namespace Umbraco.Community.Contentment.Api.Management;
+
+[ApiExplorerSettings(GroupName = "Data List")]
+[ApiVersion("1.0")]
+[ContentmentVersionedApiBackOfficeRoute("data-list")]
+public class DataListController : ContentmentControllerBase
+{
+    private readonly ConfigurationEditorUtility _utility;
+
+    public DataListController(ConfigurationEditorUtility utility)
+    {
+        _utility = utility;
+    }
+
+    [HttpPost("editor", Name = "PostDataListEditor")]
+    [MapToApiVersion("1.0")]
+    [ProducesResponseType(typeof(DataListEditorResponseModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetEditor(DataListConfigurationRequestModel model)
+    {
+        // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
+        await Task.Run(() => { });
+
+        SetCurrentContentContextValues(model.Id, model.Variant, model.Alias);
+
+        var propertyEditorUiAlias = string.Empty;
+
+        var config = new Dictionary<string, object>();
+
+        // TODO: [LK] Move all this logic to its own service.
+
+        var key1 = model.DataSource?.Key;
+        if (string.IsNullOrWhiteSpace(key1) == false)
+        {
+            var source = _utility.GetConfigurationEditor<IContentmentDataSource>(key1);
+            var sourceConfig = model.DataSource?.Value;
+            if (source is not null && sourceConfig is not null)
+            {
+                var items = source.GetItems(sourceConfig) ?? [];
+                config.Add(nameof(items), items);
+            }
+        }
+
+        var key2 = model.ListEditor?.Key;
+        if (string.IsNullOrWhiteSpace(key2) == false)
+        {
+            var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
+
+            propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
+
+            var editorConfig = model.ListEditor?.Value;
+            if (editorConfig is not null)
+            {
+                foreach (var prop in editorConfig)
+                {
+                    _ = config.TryAdd(prop.Key, prop.Value);
+                }
+            }
+
+            if (editor?.DefaultConfig != null)
+            {
+                foreach (var prop in editor.DefaultConfig)
+                {
+                    _ = config.TryAdd(prop.Key, prop.Value);
+                }
+            }
+        }
+
+        var result = new DataListEditorResponseModel
+        {
+            PropertyEditorUiAlias = propertyEditorUiAlias,
+            Config = config.Select(x => new DataTypePropertyPresentationModel { Alias = x.Key, Value = x.Value })
+        };
+
+        return Ok(result);
+    }
+}

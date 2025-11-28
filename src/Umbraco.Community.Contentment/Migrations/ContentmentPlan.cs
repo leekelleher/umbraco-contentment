@@ -1,4 +1,4 @@
-﻿/* Copyright © 2019 Lee Kelleher.
+/* Copyright © 2019 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
@@ -19,6 +19,13 @@ namespace Umbraco.Community.Contentment.Migrations
         {
             From(InitialState)
                .To<RegisterUmbracoPackageEntry>(RegisterUmbracoPackageEntry.State)
+               .To<Upgrade.V_6_0_0.AddEditorUiToDataType>(Upgrade.V_6_0_0.AddEditorUiToDataType.State)
+               .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
+               .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
             ;
         }
     }

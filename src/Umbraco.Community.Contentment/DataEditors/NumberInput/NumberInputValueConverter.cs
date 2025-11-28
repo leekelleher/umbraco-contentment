@@ -15,27 +15,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(int);
 
-        // TODO: [LK:2020-12-11] Commented out the value-type feature for the time being. Adds additional complexity that I don't currently need.
-        //public override Type GetPropertyValueType(IPublishedPropertyType propertyType)
-        //{
-        //    if (propertyType.DataType.Configuration is Dictionary<string, object> config && config.TryGetValueAs(UmbConfigurationKeys.DataValueType, out string valueType) == true)
-        //    {
-        //        switch (valueType)
-        //        {
-        //            case ValueTypes.Decimal:
-        //                return typeof(decimal);
-
-        //            case ValueTypes.Integer:
-        //                return typeof(int);
-
-        //            default:
-        //                break;
-        //        }
-        //    }
-
-        //    return base.GetPropertyValueType(propertyType);
-        //}
-
         public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             if (source == null)

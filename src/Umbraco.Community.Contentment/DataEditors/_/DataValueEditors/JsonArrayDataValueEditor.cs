@@ -7,7 +7,6 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -15,19 +14,17 @@ namespace Umbraco.Community.Contentment.DataEditors
     internal sealed class JsonArrayDataValueEditor : DataValueEditor
     {
         public JsonArrayDataValueEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer)
-            : base(localizedTextService, shortStringHelper, jsonSerializer)
+            : base(shortStringHelper, jsonSerializer)
         { }
 
         public JsonArrayDataValueEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IIOHelper ioHelper,
             DataEditorAttribute attribute)
-            : base(localizedTextService, shortStringHelper, jsonSerializer, ioHelper, attribute)
+            : base(shortStringHelper, jsonSerializer, ioHelper, attribute)
         { }
 
         public override object? ToEditor(IProperty property, string? culture = null, string? segment = null)

@@ -7,9 +7,10 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class RadioButtonListDataListEditor : IDataListEditor
+    public sealed class RadioButtonListDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "RadioButtonList";
 
         public string Name => "Radio Button List";
 
@@ -19,14 +20,34 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
             new AllowClearConfigurationField(),
+            new ()
+            {
+                Key = "orientation",
+                Name = "Orientation",
+                Description = "Select the orientation of the list. By default this is set to 'vertical' (column).",
+                PropertyEditorUiAlias = DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem { Name = "Horizontal", Value = "horizontal" },
+                            new DataListItem { Name = "Vertical", Value = "vertical" },
+                        }
+                    },
+                    { "orientation", "horizontal" },
+                }
+            },
         };
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => new()
+        {
+            { "orientation", "vertical" },
+        };
 
         public Dictionary<string, object>? DefaultConfig => default;
 
@@ -34,6 +55,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

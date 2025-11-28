@@ -1,0 +1,175 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import { parseInt } from '../../utils/parse-int.function.js';
+import type { ContentmentListItem } from '../types.js';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	property,
+	repeat,
+	state,
+	unsafeHTML,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
+import { ContentmentDataListRepository } from '../data-list/data-list.repository.js';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIComboboxElement, UUIComboboxEvent } from '@umbraco-cms/backoffice/external/uui';
+
+@customElement('contentment-property-editor-ui-cascading-dropdown-list')
+export class ContentmentPropertyEditorUICascadingDropdownListElement
+	extends UmbLitElement
+	implements UmbPropertyEditorUiElement
+{
+	#repository = new ContentmentDataListRepository(this);
+
+	@state()
+	private _apis: Array<string> = [];
+
+	@state()
+	private _loading = true;
+
+	@state()
+	private _options: Array<Array<ContentmentListItem>> = [];
+
+	@state()
+	private _promises: Array<Promise<Array<ContentmentListItem>>> = [];
+
+	@property({ type: Array })
+	public value?: Array<string>;
+
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		if (!config) return;
+
+		this._apis = config.getValueByAlias<Array<string>>('apis') ?? [];
+
+		if (!this.value?.length) {
+			this.value = [''];
+		}
+
+		if (this.value?.length && this._apis?.length) {
+			for (var i = 0; i < this.value.length; i++) {
+				var url = this._apis[i];
+
+				for (var j = 0; j < i; j++) {
+					url = url.replace(`{${j}}`, this.value[j]);
+				}
+
+				this._promises.push(this.#repository.getItemsByUrl(url));
+			}
+		}
+	}
+
+	async #onChange(event: UUIComboboxEvent & { target: UUIComboboxElement }) {
+		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
+
+		const index = parseInt(event.target.dataset.index) || 0;
+		const next = index + 1;
+		const value = event.target.value as string;
+
+		const currentValue = this.value ? this.value.slice(0, next) : [];
+		currentValue[index] = value;
+		this.value = currentValue;
+
+		this.dispatchEvent(new UmbChangeEvent());
+
+		if (this._apis.length > next) {
+			this._loading = true;
+
+			var url = this._apis[next].replace(/{(\d+)}/g, function (match, digit) {
+				return typeof currentValue[digit] != 'undefined' ? currentValue[digit] : match;
+			});
+
+			if (typeof value !== 'number' && value) {
+				this._options[next] = await this.#repository.getItemsByUrl(url);
+			} else {
+				this._options = this._options.splice(0, next);
+			}
+
+			this._loading = false;
+
+			requestAnimationFrame(() => {
+				(this.shadowRoot?.querySelector(`uui-combobox:nth-child(${next + 1})`) as HTMLElement)?.focus();
+			});
+		}
+	}
+
+	override async firstUpdated() {
+		this._options = await Promise.all(this._promises);
+		this._loading = false;
+	}
+
+	override render() {
+		if (this._loading) return html`<uui-loader></uui-loader>`;
+		return html`${repeat(
+			this._options,
+			(options, index) => html`
+				<uui-combobox data-index=${index} required value=${ifDefined(this.value?.[index])} @change=${this.#onChange}>
+					<uui-combobox-list>
+						${repeat(
+							options,
+							(option) => option.value,
+							(option) => this.#renderItem(option)
+						)}
+					</uui-combobox-list>
+				</uui-combobox>
+			`
+		)}`;
+	}
+
+	#renderItem(item: ContentmentListItem) {
+		return html`
+			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
+				<div class="outer">
+					${when(item.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
+					<uui-form-layout-item>
+						<span slot="label">${this.localize.string(item.name)}</span>
+						${when(item.description, () => html`<span slot="description">${unsafeHTML(item.description)}</span>`)}
+					</uui-form-layout-item>
+				</div>
+			</uui-combobox-list-option>
+		`;
+	}
+
+	static override styles = [
+		css`
+			:host {
+				display: flex;
+				flex-direction: column;
+				gap: var(--uui-size-2);
+			}
+
+			.outer {
+				display: flex;
+				flex-direction: row;
+				gap: 0.5rem;
+				align-items: flex-start;
+			}
+
+			uui-combobox-list-option {
+				padding-top: 5px;
+			}
+
+			uui-form-layout-item {
+				margin-top: 3px;
+				margin-bottom: 0;
+			}
+
+			umb-icon {
+				font-size: 1.2rem;
+			}
+		`,
+	];
+}
+
+export { ContentmentPropertyEditorUICascadingDropdownListElement as element };
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui-cascading-dropdown-list': ContentmentPropertyEditorUICascadingDropdownListElement;
+	}
+}

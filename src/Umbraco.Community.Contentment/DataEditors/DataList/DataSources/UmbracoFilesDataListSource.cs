@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -11,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoFilesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private static readonly Dictionary<string, string> _icons = new()
         {
@@ -19,18 +18,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             { UmbConstants.UdiEntityType.Stylesheet, "icon-brackets" },
         };
 
-        private readonly IFileService _fileService;
-        private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _textService;
+        private readonly IScriptService _scriptService;
+        private readonly IStylesheetService _stylesheetService;
 
         public UmbracoFilesDataListSource(
-            IFileService fileService,
-            IIOHelper ioHelper,
-            ILocalizedTextService textService)
+            IScriptService scriptService,
+            IStylesheetService stylesheetService)
         {
-            _fileService = fileService;
-            _ioHelper = ioHelper;
-            _textService = textService;
+            _scriptService = scriptService;
+            _stylesheetService = stylesheetService;
         }
 
         public override string Name => "Umbraco Files";
@@ -41,39 +37,39 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "fileType",
                 Name = "File type",
                 Description = "Select the Umbraco file type to use.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>()
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
                             new DataListItem
                             {
-                                Name = _textService.Localize("treeHeaders", "scripts"),
+                                Name = "#treeHeaders_scripts",
                                 Value = UmbConstants.UdiEntityType.Script
                             },
                             new DataListItem
                             {
-                                Name = _textService.Localize("treeHeaders", "stylesheets"),
+                                Name = "#treeHeaders_stylesheets",
                                 Value = UmbConstants.UdiEntityType.Stylesheet
                             }
                         }
                     },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueType",
                 Name = "Value type",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of value to reference the file.",
                 Config = new Dictionary<string, object>
                 {
@@ -81,19 +77,19 @@ namespace Umbraco.Community.Contentment.DataEditors
                         {
                             new DataListItem
                             {
-                                Name = _textService.Localize("content", "alias"),
+                                Name = "#content_alias",
                                 Value = "alias",
                                 Description = "The alias of the file's name, e.g. `styles`",
                             },
                             new DataListItem
                             {
-                                Name = _textService.Localize("general", "path"),
+                                Name = "#general_path",
                                 Value = "path",
                                 Description = "The path of the file, e.g. `/css/styles.css`",
                             }
                         }
                     },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
         };
@@ -114,11 +110,11 @@ namespace Umbraco.Community.Contentment.DataEditors
                 switch (fileType)
                 {
                     case UmbConstants.UdiEntityType.Script:
-                        return _fileService.GetScripts();
+                        return _scriptService.GetAllAsync().GetAwaiter().GetResult();
 
                     case UmbConstants.UdiEntityType.Stylesheet:
                     default:
-                        return _fileService.GetStylesheets();
+                        return _stylesheetService.GetAllAsync().GetAwaiter().GetResult();
                 }
             };
 

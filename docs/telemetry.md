@@ -35,6 +35,24 @@ For information about the data and analysis, please go to: <https://leekelleher.
 
 If you would prefer to disable the telemetry feature completely, you can use this code snippet to disable it.
 
+##### For Umbraco v9+
+
+Configuration to disable Contentment telemetry.
+
+In your `appsettings.json` file, add this option inside the `"Umbraco"` section, add the following.
+
+```json
+{
+    "Umbraco": {
+        "Contentment": {
+            "DisableTelemetry": true
+        }
+    }
+}
+```
+
+If you prefer to use a strongly-typed configuration in C# code, you can do this with the `.AddContentment(opts => { opts.DisableTelemetry = true; })` extension method in your `Program.cs` (or `Startup.cs`) file `ConfigureServices()` method.
+
 ##### For Umbraco v8
 
 Code snippet to disable Contentment telemetry.
@@ -58,20 +76,3 @@ namespace Our.Umbraco.Web
 
 If you already have your own composer class, you can add the `composition.DisableContentmentTelemetry();` line to it.
 
-##### For Umbraco v9+
-
-Configuration to disable Contentment telemetry.
-
-In your `appsettings.json` file, add this option inside the `"Umbraco"` section, add the following.
-
-```json
-{
-    "Umbraco": {
-        "Contentment": {
-            "DisableTelemetry": true
-        }
-    }
-}
-```
-
-If you prefer to use a strongly-typed configuration in C# code, you can do this with the `.AddContentment(opts => { opts.DisableTelemetry = true; })` extension method in your `Startup.cs` file `ConfigureServices()` method.

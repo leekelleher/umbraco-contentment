@@ -1,0 +1,148 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
+import { DataListService } from '../../api/index.js';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
+import type { InputType, UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+
+@customElement('contentment-property-editor-ui-textbox-list')
+export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	#inputTypes = ['color', 'email', 'number', 'password', 'tel', 'text', 'url'];
+
+	@property()
+	value?: Record<string, string>;
+
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		if (!config) return;
+		this._dataSource = config.getValueByAlias('dataSource');
+		this._defaultIcon = config.getValueByAlias<string>('defaultIcon');
+
+		const labelStyle = config.getValueByAlias('labelStyle') ?? 'both';
+		this._hideIcon = labelStyle === 'text';
+		this._hideLabel = labelStyle === 'icon';
+	}
+
+	@state()
+	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
+
+	@state()
+	private _defaultIcon?: string;
+
+	@state()
+	private _hideIcon = false;
+
+	@state()
+	private _hideLabel = false;
+
+	@state()
+	private _items: Array<ContentmentListItem> = [];
+
+	override async firstUpdated() {
+		await Promise.all([await this.#init().catch(() => undefined)]);
+	}
+
+	async #init() {
+		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
+			if (!this._dataSource) return reject();
+
+			const body = { dataSource: this._dataSource[0], listEditor: null };
+
+			const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+
+			if (!data) return reject();
+
+			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
+
+			if (!this.value && items.length > 0) {
+				this.value = Object.fromEntries(items.map((item) => [item.value, '']));
+			}
+
+			resolve(items);
+		});
+	}
+
+	#onInput(key: string, event: UUIInputEvent) {
+		this.value = { ...this.value, [key]: event.target.value as string };
+		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	override render() {
+		if (!this._items?.length) return nothing;
+		return html`
+			<div id="wrapper">
+				${repeat(
+					this._items,
+					(item) => item.value,
+					(item) => this.#renderItem(item)
+				)}
+			</div>
+		`;
+	}
+
+	#renderItem(item: ContentmentListItem) {
+		return html`
+			<div class="item">
+				<uui-label for="item-${item.value}" title=${item.value}>
+					${when(!this._hideIcon, () => html`<umb-icon .name=${item.icon || this._defaultIcon}></umb-icon>`)}
+					${when(!this._hideLabel, () => html`<span>${item.name}</span>`)}
+				</uui-label>
+				<uui-input
+					type=${this.#inputTypes.includes(item.value) ? (item.value as InputType) : 'text'}
+					id="item-${item.value}"
+					label=${item.name}
+					.value=${this.value?.[item.value] ?? ''}
+					@input=${(event: UUIInputEvent) => this.#onInput(item.value, event)}></uui-input>
+			</div>
+		`;
+	}
+
+	static override styles = [
+		css`
+			#wrapper {
+				display: flex;
+				flex-direction: column;
+				gap: 1px;
+			}
+
+			.item {
+				background-color: var(--uui-color-surface-alt);
+				display: flex;
+				align-items: center;
+				gap: var(--uui-size-6);
+				padding: var(--uui-size-3) var(--uui-size-6);
+			}
+
+			uui-label {
+				display: flex;
+				gap: 1rem;
+				flex: 0.2;
+			}
+
+			uui-label:has(umb-icon):not(:has(span)) {
+				flex: 0 0 var(--uui-size-6);
+			}
+
+			uui-label:has(span):not(:has(umb-icon)) {
+				flex: 0.1;
+			}
+
+			.item > uui-input {
+				flex: 1;
+			}
+		`,
+	];
+}
+
+export { ContentmentPropertyEditorUITextboxListElement as element };
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'contentment-property-editor-ui-textbox-list': ContentmentPropertyEditorUITextboxListElement;
+	}
+}

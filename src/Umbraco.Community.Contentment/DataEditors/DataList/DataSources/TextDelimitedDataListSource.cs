@@ -6,27 +6,23 @@
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TextDelimitedDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class TextDelimitedDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
         private readonly ILogger<TextDelimitedDataListSource> _logger;
 
         public TextDelimitedDataListSource(
             ILogger<TextDelimitedDataListSource> logger,
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+            IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Text Delimited Data";
@@ -35,69 +31,69 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Configure text-delimited data to populate the data source.";
 
-        public string? DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{= url }";
 
-        public override string Icon => "icon-fa fa-file-text-o";
+        public override string Icon => "icon-fa-file-lines";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>A note about using this data source.</strong></summary>
 <p>The text contents will be retrieved and split into lines. Each line will be split into fields by the delimiting character.</p>
 <p>The fields are then assigned by index position.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the text-delimited data source.<br>This can be either a remote URL, or local relative file path.",
-                View = "textstring"
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "delimiter",
                 Name = "Delimiter",
                 Description = "Enter the character to use as the delimiter.<br>The default delimiter is a comma, <code>,</code>.",
-                View = "textstring"
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "ignoreFirstLine",
                 Name = "Ignore the first line?",
                 Description = "Select to ignore the first line. Typically with text delimited data sources, the first line can be used for column headings.",
-                View = "boolean"
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameIndex",
                 Name = "Name Index",
                 Description = "Enter the index position of the name field from the delimited line.<br>The default index position is <code>0</code>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueIndex",
                 Name = "Value Index",
                 Description = "Enter the index position of the value (key) field from the delimited line.<br>The default index position is <code>1</code>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconIndex",
                 Name = "Icon Index",
                 Description = "<em>(optional)</em> Enter the index position of the icon field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionIndex",
                 Name = "Description Index",
                 Description = "<em>(optional)</em> Enter the index position of the description field from the delimited line. To ignore this option, set the value to <code>-1</code>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(NumberInputDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = NumberInputDataEditor.DataEditorUiAlias,
             }
         };
 

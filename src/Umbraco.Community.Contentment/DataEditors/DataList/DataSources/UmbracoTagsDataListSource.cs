@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTagsDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoTagsDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -30,14 +30,14 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "tagGroup",
                 Name = "Tag group",
                 Description = "Enter a tag group, or leave empty to use all groups.",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

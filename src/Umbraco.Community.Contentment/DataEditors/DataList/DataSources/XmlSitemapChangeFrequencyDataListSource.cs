@@ -8,7 +8,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapChangeFrequencyDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class XmlSitemapChangeFrequencyDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly string[] _options;
 
@@ -30,11 +30,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Populate the data source using XML Sitemap change frequency values.";
 
-        public override string Icon => "icon-fa fa-signal";
+        public override string Icon => "icon-fa-signal";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public override Dictionary<string, object>? DefaultValues => default;
 

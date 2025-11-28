@@ -4,9 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
@@ -15,15 +15,18 @@ namespace Umbraco.Community.Contentment.Services
     public sealed class ContentmentContentContext : IContentmentContentContext2
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
+            IJsonSerializer jsonSerializer,
             IRequestAccessor requestAccessor,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
+            _jsonSerializer = jsonSerializer;
             _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -31,6 +34,14 @@ namespace Umbraco.Community.Contentment.Services
         public T? GetCurrentContentId<T>(out bool isParent)
         {
             isParent = false;
+
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentId", out T? unique) == true &&
+                unique is not null)
+            {
+                return unique;
+            }
+
+            // TODO: [LK] Review this code - is it needed?
 
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.PublishedRequest?.PublishedContent is not null)
@@ -56,18 +67,19 @@ namespace Umbraco.Community.Contentment.Services
                 return attempt2.Result;
             }
 
+            // TODO: [LK:2024-12-06] Figure out if this is still needed?
             var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
             if (string.IsNullOrWhiteSpace(json) == false)
             {
-                var obj = JsonConvert.DeserializeAnonymousType(json, new { id = default(T), parentId = default(T) });
+                var obj = DeserializeAnonymousType(json, new { id = (object?)null, parentId = (object?)null });
                 if (obj is not null && obj.id is not null)
                 {
-                    return obj.id;
+                    return obj.id.TryConvertTo<T>().Result;
                 }
                 else if (obj is not null && obj.parentId is not null)
                 {
                     isParent = true;
-                    return obj.parentId;
+                    return obj.parentId.TryConvertTo<T>().Result;
                 }
             }
 
@@ -106,5 +118,7 @@ namespace Umbraco.Community.Contentment.Services
 
             return default;
         }
+
+        private T? DeserializeAnonymousType<T>(string json, T anonymousObj) => _jsonSerializer.Deserialize<T>(json);
     }
 }

@@ -58,12 +58,12 @@ You can extend Data Picker with your own custom data sources and display modes.
 
 #### Extending with your own custom data source
 
-For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerSource`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerSource.cs) interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerSource`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerSource.cs) interface.
 
 This interface contains two methods;
 
 1. `GetItemsAsync(config, values)`, which must return a `Task<IEnumerable<DataListItem>>` object type.
-2. `SearchAsync(config, pageNumber, pageSize, query)`, which must return a `Task<PagedResult<DataListItem>>` object type.
+2. `SearchAsync(config, pageNumber, pageSize, query)`, which must return a `Task<PagedViewModel<DataListItem>>` object type.
 
 The `DataListItem` model is made up of four `string` properties: `Name`, `Value`, `Description` _(optional)_ and `Icon` _(optional)_.
 
@@ -96,55 +96,59 @@ public class EventDataSource : IDataPickerSource
         IEnumerable<string> values
     )
     {
-        var items = new List<DataListItem>();
-
         var events = (await _eventService.GetEventsAsync()).ToList();
 
         if (events.Count == 0)
         {
-            return items;
+             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
+
+        var items = new List<DataListItem>();
 
         foreach (var eventItem in events)
         {
             items.Add(new DataListItem { Name = eventItem.Name, Value = eventItem.Id.ToString() });
         }
 
-        return items.OrderBy(x => x.Name);
+        var results = items.OrderBy(x => x.Name);
+
+        return Task.FromResult(results);
     }
 
-    public async Task<PagedResult<DataListItem>> SearchAsync(
+    public async Task<PagedViewModel<DataListItem>> SearchAsync(
         Dictionary<string, object> config,
         int pageNumber = 1,
         int pageSize = 12,
         string query = ""
     )
     {
-        var items = new List<DataListItem>();
-
         var events = await _eventService.SearchEventsAsync(query, null, null, null, null);
 
         if (!events.Events.Any())
         {
-            return new PagedResult<DataListItem>(0, pageNumber, pageSize) { Items = items };
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
 
-        foreach (var eventItem in events.Events)
+        var items = new List<DataListItem>();
+        var offset = (pageNumber - 1) * pageSize;
+
+        foreach (var eventItem in events.Events.Skip(offset).Take(pageSize))
         {
-            items.Add(
-                new DataListItem
-                {
-                    Name = eventItem.Name,
-                    Value = eventItem.Id.ToString(),
-                    Icon = "icon-movie-alt"
-                }
-            );
+            items.Add(new DataListItem
+            {
+                Name = eventItem.Name,
+                Value = eventItem.Id.ToString(),
+                Icon = "icon-movie-alt"
+            });
         }
 
-        return new PagedResult<DataListItem>(events.EventCount, pageNumber, pageSize)
+        var results = new PagedViewModel<DataListItem>
         {
-            Items = items
+            Items = items,
+            Total = pageSize > 0 ? (long)Math.Ceiling(events.EventCount / (decimal)pageSize) : 1,
         };
+
+        return Task.FromResult(results);
     }
 }
 ```
@@ -152,17 +156,17 @@ public class EventDataSource : IDataPickerSource
 
 ##### Accessing contextual content
 
-See Data List's documentation for [**Accessing contextual content**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v4.x/docs/editors/data-list.md#accessing-contextual-content).
+See Data List's documentation for [**Accessing contextual content**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/docs/editors/data-list.md#accessing-contextual-content).
 
 
 #### Providing custom values for published content models
 
-See Data List's documentation for [**Providing custom values for published content models**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v4.x/docs/editors/data-list.md#providing-custom-values-for-published-content-models).
+See Data List's documentation for [**Providing custom values for published content models**](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/docs/editors/data-list.md#providing-custom-values-for-published-content-models).
 
 
 #### Extending with your own custom display modes
 
-For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataPickerDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/master/src/Umbraco.Community.Contentment/DataEditors/DataPicker/IDataPickerDisplayMode.cs) interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentDisplayMode.cs) interface.
 
 > `// TODO: Write documentation on developing custom display modes.`
 

@@ -4,24 +4,19 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class UmbracoImageCropDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly IDataTypeService _dataTypeService;
-        private readonly IIOHelper _ioHelper;
 
-        public UmbracoImageCropDataListSource(
-            IDataTypeService dataTypeService,
-            IIOHelper ioHelper)
+        public UmbracoImageCropDataListSource(IDataTypeService dataTypeService)
         {
             _dataTypeService = dataTypeService;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "Umbraco Image Crops";
@@ -32,41 +27,25 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields
-        {
-            get
+        public override IEnumerable<ContentmentConfigurationField> Fields =>
+        [
+            new ContentmentConfigurationField
             {
-                var items = _dataTypeService
-                    .GetByEditorAlias(UmbConstants.PropertyEditors.Aliases.ImageCropper)
-                    .Select(x => new DataListItem
+                Key = "imageCropper",
+                Name = "Image Cropper",
+                Description = "Select a Data Type that uses the Image Cropper.",
+                    PropertyEditorUiAlias = DataListDataEditor.DataEditorUiAlias,
+                    Config = new Dictionary<string, object>
                     {
-                        Icon = Icon,
-                        Name = x.Name ?? x.EditorAlias,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.DataType, x.Key).ToString(),
-                    });
-
-                return new ConfigurationField[]
-                {
-                    new ConfigurationField
-                    {
-                        Key = "imageCropper",
-                        Name = "Image Cropper",
-                        Description = "Select a Data Type that uses the Image Cropper.",
-                        View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
-                        Config = new Dictionary<string, object>
-                        {
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
-                            { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, items.FirstOrDefault()?.Value ?? string.Empty }
-                        }
+                        { "dataSource", new[] { new { key = typeof(UmbracoDataTypesDataListSource).GetFullNameWithAssembly(), value = new { editorAlias = UmbConstants.PropertyEditors.Aliases.ImageCropper } } } },
+                        { "listEditor", new[] { new { key = typeof(RadioButtonListDataListEditor).GetFullNameWithAssembly(), value = new { } } } }
                     }
-                };
             }
-        }
+        ];
 
         public override Dictionary<string, object>? DefaultValues => default;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
@@ -77,7 +56,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 udi is not null)
             {
                 return _dataTypeService
-                    .GetDataType(udi.Guid)?
+                    .GetAsync(udi.Guid)?.GetAwaiter().GetResult()?
                     .ConfigurationAs<ImageCropperConfiguration>()?
                     .Crops?
                     .Select(x => new DataListItem

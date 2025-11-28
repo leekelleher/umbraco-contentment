@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Services;
@@ -12,17 +11,13 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoTemplatesDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoTemplatesDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
-        private readonly IFileService _fileService;
-        private readonly IIOHelper _ioHelper;
+        private readonly ITemplateService _templateService;
 
-        public UmbracoTemplatesDataListSource(
-            IFileService fileService,
-            IIOHelper ioHelper)
+        public UmbracoTemplatesDataListSource(ITemplateService templateService)
         {
-            _fileService = fileService;
-            _ioHelper = ioHelper;
+            _templateService = templateService;
         }
 
         public override string Name => "Umbraco Templates";
@@ -35,13 +30,13 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Small;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueType",
                 Name = "Value type",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Description = "Select the type of reference to store as the value for the template.",
                 Config = new Dictionary<string, object>
                 {
@@ -67,7 +62,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                             },
                         }
                     },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
         };
@@ -97,8 +92,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
             }
 
-            return _fileService
-                .GetTemplates()
+            return _templateService
+                .GetAllAsync().GetAwaiter().GetResult()
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {

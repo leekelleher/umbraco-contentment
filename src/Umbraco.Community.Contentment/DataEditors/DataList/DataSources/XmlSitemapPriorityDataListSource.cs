@@ -3,22 +3,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Linq;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlSitemapPriorityDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed class XmlSitemapPriorityDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         public override string Name => "XML Sitemap: Priority";
 
         public override string Description => "Populate the data source using XML Sitemap priority values.";
 
-        public override string Icon => "icon-fa fa-exclamation-circle";
+        public override string Icon => "icon-fa-circle-exclamation";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Web;
 
-        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public override Dictionary<string, object>? DefaultValues => default;
 

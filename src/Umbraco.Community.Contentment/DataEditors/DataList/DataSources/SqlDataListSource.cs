@@ -6,7 +6,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using NPoco;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Scoping;
@@ -14,11 +13,10 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IDataListSource
+    public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
         private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
-        private readonly IIOHelper _ioHelper;
         private readonly IConfiguration _configuration;
         private readonly IDbProviderFactoryCreator _dbProviderFactoryCreator;
         private readonly IScopeProvider _scopeProvider;
@@ -27,8 +25,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration,
             IDbProviderFactoryCreator dbProviderFactoryCreator,
-            IScopeProvider scopeProvider,
-            IIOHelper ioHelper)
+            IScopeProvider scopeProvider)
         {
             // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
             _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
@@ -48,7 +45,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             _configuration = configuration;
             _dbProviderFactoryCreator = dbProviderFactoryCreator;
             _scopeProvider = scopeProvider;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "SQL Data";
@@ -61,9 +57,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong><em>Important:</em> A note about your SQL query.</strong></summary>
 <p>Your SQL query should be designed to return a minimum of 2 columns, (and a maximum of 5 columns). These columns will be used to populate the List Editor items.</p>
 <p>The columns will be mapped in the following order:</p>
@@ -76,28 +72,28 @@ namespace Umbraco.Community.Contentment.DataEditors
 </ol>
 <p>If you need assistance with SQL syntax, please refer to this resource: <a href=""https://www.w3schools.com/sql/"" target=""_blank""><strong>w3schools.com/sql</strong></a>.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "query",
                 Name = "SQL query",
                 Description = "Enter your SQL query.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CodeEditorDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { CodeEditorConfigurationEditor.Mode, _codeEditorMode },
-                    { CodeEditorConfigurationEditor.MinLines, 20 },
-                    { CodeEditorConfigurationEditor.MaxLines, 40 },
+                    { "mode", _codeEditorMode },
+                    { "minLines", 20 },
+                    { "maxLines", 40 },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "connectionString",
                 Name = "Connection string",
                 Description = "Select the connection string.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DropdownListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = DropdownListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListDataListEditor.AllowEmpty, Constants.Values.False },
+                    { DropdownListDataListEditor.AllowEmpty, false },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, _connectionStrings },
                 }
             },

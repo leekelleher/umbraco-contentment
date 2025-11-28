@@ -22,3 +22,9 @@ You may find other features within Contentment that have not yet been documented
 [Documentation for each of the components](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/) - with screenshots, use-cases and code examples can be found on the GitHub repository.
 
 If Contentment or any of my Umbraco packages are of value to you and/or your business, then [**you could sponsor my open source contributions on GitHub.**](https://github.com/sponsors/leekelleher)
+
+### Contentment for Umbraco 16?
+
+An alpha version of Contentment is available for Umbraco 16 is under active development, you can install it using:
+
+<umb-market-package-toast type="dotnet" action="add package" title="Umbraco.Community.Contentment --version 6.0.0-alpha009"></umb-market-package-toast>

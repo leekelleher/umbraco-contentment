@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import { CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION } from '../../condition/property-config-flag/constants.js';
+
+export const manifest: UmbExtensionManifest = {
+	type: 'propertyAction',
+	kind: 'default',
+	alias: 'Umb.Contentment.PropertyAction.AllowClear',
+	name: '[Contentment] Allow Clear Property Action',
+	api: () => import('./allow-clear.controller.js'),
+	forPropertyEditorUis: ['Umb.Contentment.PropertyEditorUi.DataList'],
+	meta: {
+		icon: 'icon-trash',
+		label: '#buttons_clearSelection',
+	},
+	conditions: [{ alias: CONTENTMENT_PROPERTY_CONFIG_FLAG_CONDITION, propertyConfigAlias: 'allowClear' }],
+};
