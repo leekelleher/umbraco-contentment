@@ -9,10 +9,14 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class ItemPickerDataListEditor : IDataListEditor
+    public sealed class ItemPickerDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "item-picker.html";
+
+        [Obsolete("To be removed in Contentment 8.0", true)]
         internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "item-picker.overlay.html";
+
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ItemPicker";
 
         private readonly IIOHelper _ioHelper;
 
@@ -25,20 +29,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Description => "Select items from an Umbraco style overlay.";
 
-        public string Icon => "icon-fa fa-mouse-pointer";
+        public string Icon => "icon-fa-arrow-pointer";
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            // TODO: [LK:2022-10-21] Add in "Display Mode" field.
-
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "overlaySize",
                 Name = "Editor overlay size",
                 Description = "Select the size of the overlay editing panel. The default is 'small', although if the editor fields require a wider panel, do consider using 'medium' or 'large'.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(ButtonsDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -49,16 +51,14 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "small" },
-                    { "labelStyle", "text" },
-                    { "size", "m" },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "listType",
                 Name = "List type",
                 Description = "Select the style of list to be displayed in the overlay.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(RadioButtonListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
@@ -68,47 +68,47 @@ namespace Umbraco.Community.Contentment.DataEditors
                             new DataListItem { Name = "List", Value = "list", Description = "Displays as a single column menu, (with descriptions, if available)." }
                         }
                     },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "defaultIcon",
                 Name = "Default icon",
                 Description = "Select an icon to be displayed as the default icon, <em>(for when no icon is available)</em>.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl("~/umbraco/views/propertyeditors/listview/icon.prevalues.html"),
+                PropertyEditorUiAlias = IconPickerDataEditor.DataEditorUiAlias,
             },
             new EnableFilterConfigurationField
             {
-                View = "views/propertyeditors/boolean/boolean.html",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
                 Config = new Dictionary<string, object>
                 {
-                    { "default", Constants.Values.True }
+                    { "default", true }
                 },
             },
-            new MaxItemsConfigurationField(_ioHelper),
+            new MaxItemsConfigurationField(),
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "allowDuplicates",
                 Name = "Allow duplicates?",
                 Description = "Select to allow the editor to select duplicate items.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enableMultiple",
                 Name = "Multiple selection?",
                 Description = "Select to enable picking multiple items.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new DisableSortingConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key ="confirmRemoval",
                 Name = "Confirm removals?",
                 Description = "Select to enable a confirmation prompt when removing an item.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 
@@ -116,15 +116,11 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             { "listType", "list" },
             { "defaultIcon", UmbConstants.Icons.DefaultIcon },
-            { EnableFilterConfigurationField.EnableFilter, Constants.Values.True },
+            { EnableFilterConfigurationField.EnableFilter, true },
             { MaxItemsConfigurationField.MaxItems, "0" },
         };
 
-        public Dictionary<string, object> DefaultConfig => new()
-        {
-            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorOverlayViewPath) ?? string.Empty },
-            { "overlayOrderBy", string.Empty },
-        };
+        public Dictionary<string, object>? DefaultConfig => default;
 
         public bool HasMultipleValues(Dictionary<string, object>? config)
         {
@@ -133,6 +129,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Medium;
 
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

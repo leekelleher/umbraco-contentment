@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -14,13 +14,13 @@
         <Product>Umbraco.Community.Contentment</Product>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <Version>5.2.0</Version>
+        <Version>6.0.0</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
         <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
         <PackageId>Umbraco.Community.Contentment</PackageId>
         <PackageIcon>icon.png</PackageIcon>
-        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/leekelleher/umbraco-contentment</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>umbraco umbraco-marketplace</PackageTags>
@@ -40,26 +40,28 @@
         <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[13.2.0, 14)" />
-        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[13.2.0, 14)" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="16.0.0" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="16.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="17.0.0" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="17.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="node_modules\**;wwwroot\**" />
-        <Content Remove="package.json;package-lock.json" />
-        <EmbeddedResource Remove="node_modules\**;wwwroot\**" />
-        <None Remove="node_modules\**;wwwroot\**;package.json;package-lock.json" />
+        <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+        </ProjectReference>
     </ItemGroup>
 
-    <Target Name="RemoveLuceneAnalyzer" BeforeTargets="CoreCompile">
-        <ItemGroup>
-            <Analyzer Remove="@(Analyzer)" Condition="%(FileName) == 'Lucene.Net.CodeAnalysis.CSharp'" />
-        </ItemGroup>
-    </Target>
-
-    <Target Name="ContentmentPrepareAssets" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Release'">
-        <Exec Command="npm run build" />
-    </Target>
+    <ItemGroup>
+        <Compile Remove="wwwroot\**" />
+        <EmbeddedResource Remove="wwwroot\**" />
+        <None Remove="wwwroot\**" />
+    </ItemGroup>
 
 </Project>

@@ -1,11 +1,11 @@
-﻿/* Copyright © 2023 Lee Kelleher.
+/* Copyright © 2023 Lee Kelleher.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
-using Umbraco.Community.Contentment.DataEditors;
+using Umbraco.Community.Contentment.Api.Management;
 
 namespace Umbraco.Community.Contentment.Notifications
 {
@@ -15,7 +15,7 @@ namespace Umbraco.Community.Contentment.Notifications
         {
             foreach (var entity in notification.SavedEntities)
             {
-                DataPickerApiController.ClearCache(entity.Key);
+                DataPickerController.ClearCache(entity.Key);
             }
         }
 
@@ -23,7 +23,7 @@ namespace Umbraco.Community.Contentment.Notifications
         {
             foreach (var entity in notification.DeletedEntities)
             {
-                DataPickerApiController.ClearCache(entity.Key);
+                DataPickerController.ClearCache(entity.Key);
             }
         }
     }

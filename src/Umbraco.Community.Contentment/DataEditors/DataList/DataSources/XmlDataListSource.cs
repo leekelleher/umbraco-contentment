@@ -7,23 +7,18 @@ using System.Net;
 using System.Xml;
 using System.Xml.XPath;
 using Microsoft.AspNetCore.Hosting;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IContentmentListTemplateItem
+    public sealed class XmlDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IIOHelper _ioHelper;
 
-        public XmlDataListSource(
-            IWebHostEnvironment webHostEnvironment,
-            IIOHelper ioHelper)
+        public XmlDataListSource(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => "XML Data";
@@ -32,65 +27,65 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Configure XML data to populate the data source.";
 
-        public string? DescriptionTemplate => "{{ url }}";
+        public string? DescriptionTemplate => "{= url }";
 
         public override string Icon => "icon-code";
 
         public override string Group => Constants.Conventions.DataSourceGroups.Data;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "url",
                 Name = "URL",
                 Description = "Enter the URL of the XML data source.<br>This can be either a remote URL, or local relative file path.",
-                View = "textstring"
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new NotesConfigurationField(_ioHelper, @"<details class=""well well-small"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>Do you need help with XPath expressions?</strong></summary>
 <p>If you need assistance with XPath syntax, please refer to this resource: <a href=""https://developer.mozilla.org/en-US/docs/Web/XPath"" target=""_blank""><strong>MDN Web Docs</strong></a>.</p>
 </details>
-<details class=""well well-small"">
+<details class=""well"">
 <summary><strong><em>Advanced:</em> A note about XML namespaces.</strong></summary>
 <p>If your XML data source contains namespaces, these will be automatically loaded in. For default namespaces (without a prefix), these will be prefixed with ""<code>ns</code>"" followed by a number, e.g. first will be ""<code>ns1</code>"", second will be ""<code>ns2</code>"", and so forth.</p>
 </details>", true),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "itemsXPath",
                 Name = "Items XPath",
                 Description = "Enter the XPath expression to select the items from the XML data source.",
-                View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "nameXPath",
                 Name = "Name XPath",
                 Description = "Enter the XPath expression to select the name from the item.",
-                View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "valueXPath",
                 Name = "Value XPath",
                 Description = "Enter the XPath expression to select the value (key) from the item.",
-                View =  "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "iconXPath",
                 Name = "Icon XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the icon from the item.",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "descriptionXPath",
                 Name = "Description XPath",
                 Description = "<em>(optional)</em> Enter the XPath expression to select the description from the item.",
-                View = "textstring",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
         };
 

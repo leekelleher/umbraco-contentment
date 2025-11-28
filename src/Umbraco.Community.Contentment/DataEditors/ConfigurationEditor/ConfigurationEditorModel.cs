@@ -4,43 +4,33 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.ComponentModel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public sealed class ConfigurationEditorModel : IConfigurationEditorItem
     {
-        public string? Key { get; set; }
+        public required string Key { get; set; }
 
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         public string? Description { get; set; }
 
         public string? Icon { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Group { get; set; }
 
-        public IEnumerable<ConfigurationField> Fields { get; set; } = Enumerable.Empty<ConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields { get; set; } = [];
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, object>? DefaultValues { get; set; }
 
         public OverlaySize OverlaySize { get; set; } = OverlaySize.Small;
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, string>? Expressions { get; set; }
-
-        [Obsolete("Please use Expressions instead. e.g. { \"name\", \"{{ AngularJS expression }}\" }", false)]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string? NameTemplate { get; set; }
-
-        [Obsolete("Please use Expressions instead. e.g. { \"description\", \"{{ AngularJS expression }}\" }", false)]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string? DescriptionTemplate { get; set; }
     }
 }

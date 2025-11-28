@@ -1,0 +1,45 @@
+@inherits UmbracoViewPage
+@{
+    var culture = System.Globalization.CultureInfo.CurrentCulture;
+    var dir = culture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var lang = culture.TwoLetterISOLanguageName;
+
+    var counter = 0;
+}
+<!doctype html>
+<html dir="@dir" lang="@lang">
+<head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Model.Name</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@exampledev/new.css@1.1.2/new.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h2>@Model.Name</h2>
+        <nav>
+            @foreach (var item in @Umbraco.ContentAtRoot())
+            {
+                if (counter++ > 0)
+                {
+                    <span> / </span>
+                }
+                <a href="@item.Url()" class="@(item.Id == Model.Id ? "current" : null)">@item.Name</a>
+            }
+        </nav>
+        <p><a href="/umbraco/section/content/workspace/document/edit/@Model.Key" target="_self">Go to the Umbraco back-office</a></p>
+    </header>
+
+    <main role="main">
+        @RenderSection("body")
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>Contentment, Lee Kelleher &copy; 2019-@(DateTime.UtcNow.Year)</p>
+    </footer>
+</body>
+</html>

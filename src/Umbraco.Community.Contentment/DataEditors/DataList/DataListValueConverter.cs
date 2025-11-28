@@ -4,11 +4,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using System.Collections;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -16,19 +17,19 @@ namespace Umbraco.Community.Contentment.DataEditors
     public sealed class DataListValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
     {
         private readonly Type _defaultObjectType = typeof(string);
+        private readonly IJsonSerializer _jsonSerializer;
         private readonly ConfigurationEditorUtility _utility;
 
-        public DataListValueConverter(ConfigurationEditorUtility utility)
+        public DataListValueConverter(IJsonSerializer jsonSerializer, ConfigurationEditorUtility utility)
             : base()
         {
+            _jsonSerializer = jsonSerializer;
             _utility = utility;
         }
 
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(DataListDataEditor.DataEditorAlias);
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => GetPropertyValueTypeImpl(propertyType, isDeliveryApi: false);
-
-        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) => PropertyCacheLevel.Snapshot;
 
         public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
@@ -39,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                     return value;
                 }
 
-                return JsonConvert.DeserializeObject<IEnumerable<string>>(value);
+                return _jsonSerializer.Deserialize<IEnumerable<string>>(value);
             }
 
             return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
@@ -76,18 +77,18 @@ namespace Umbraco.Community.Contentment.DataEditors
             valueType = _defaultObjectType;
             converter = default;
 
-            if (propertyType.DataType.Configuration is Dictionary<string, object> configuration &&
-                configuration.TryGetValue(DataListConfigurationEditor.DataSource, out var tmp1) == true &&
-                tmp1 is JArray array1 && array1.Count > 0 && array1[0] is JObject obj1 &&
-                obj1.Value<string>("key") is string key1 &&
-                configuration.TryGetValue(DataListConfigurationEditor.ListEditor, out var tmp2) == true &&
-                tmp2 is JArray array2 && array2.Count > 0 && array2[0] is JObject obj2 &&
-                obj2.Value<string>("key") is string key2)
+            if (propertyType.DataType.ConfigurationObject is Dictionary<string, object> configuration &&
+                configuration.TryGetValue("dataSource", out var tmp1) == true &&
+                tmp1 is JsonArray array1 && array1.Count > 0 && array1[0] is JsonObject obj1 &&
+                obj1.GetValueAsString("key") is string key1 &&
+                configuration.TryGetValue("listEditor", out var tmp2) == true &&
+                tmp2 is JsonArray array2 && array2.Count > 0 && array2[0] is JsonObject obj2 &&
+                obj2.GetValueAsString("key") is string key2)
             {
                 var source = _utility.GetConfigurationEditor<IDataSourceValueConverter>(key1);
                 if (source is not null)
                 {
-                    var config = obj1["value"]?.ToObject<Dictionary<string, object>>();
+                    var config = _jsonSerializer.Deserialize<Dictionary<string, object>>(obj1["value"]?.ToString() ?? "{}");
 
                     if (isDeliveryApi && source is IDataSourceDeliveryApiValueConverter deliveryApiSource)
                     {
@@ -101,10 +102,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                     }
                 }
 
-                var editor = _utility.GetConfigurationEditor<IDataListEditor>(key2);
+                var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
                 if (editor is not null)
                 {
-                    var config = obj2["value"]?.ToObject<Dictionary<string, object>>();
+                    var config = _jsonSerializer.Deserialize<Dictionary<string, object>>(obj2["value"]?.ToString() ?? "{}");
                     hasMultipleValues = editor.HasMultipleValues(config);
                 }
             }
@@ -148,9 +149,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             // EDGE-CASE: To work around Umbraco `PublishedElementPropertyBase` not calling `ConvertSourceToIntermediate()` [LK:2021-05-25]
             // ref: https://github.com/leekelleher/umbraco-contentment/issues/111#issuecomment-847780287
-            if (inter is JArray array)
+            if (inter is JsonArray array)
             {
-                inter = array.ToObject<IEnumerable<string>>() ?? Enumerable.Empty<string>();
+                inter = array.Deserialize<IEnumerable<string>>() ?? Enumerable.Empty<string>();
             }
 
             if (inter is IEnumerable<string> items)

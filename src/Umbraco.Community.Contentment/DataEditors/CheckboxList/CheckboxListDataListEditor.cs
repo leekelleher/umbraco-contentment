@@ -7,26 +7,27 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class CheckboxListDataListEditor : IDataListEditor
+    public sealed class CheckboxListDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "CheckBoxList";
 
         public string Name => "Checkbox List";
 
         public string Description => "Select multiple values from a list of checkboxes.";
 
-        public string Icon => "icon-fa fa-check-square-o";
+        public string Icon => "icon-bulleted-list"; // "icon-fa fa-check-square-o";
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "checkAll",
                 Name = "Check all?",
                 Description = "Include a toggle button to select or deselect all the options?",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
@@ -40,6 +41,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

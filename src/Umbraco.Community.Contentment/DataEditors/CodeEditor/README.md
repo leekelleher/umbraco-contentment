@@ -1,6 +1,6 @@
-﻿## Code Editor
+## Code Editor
 
-Code Editor is a property-editor that uses Umbraco's ACE editor implementation as a input for code (as content).
+Code Editor is a property-editor that uses Umbraco's Monaco editor implementation as a input for code (as content).
 
 ### Used interally by
 

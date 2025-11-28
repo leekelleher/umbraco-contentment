@@ -9,7 +9,7 @@ using Umbraco.Cms.Core.Services;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoMemberGroupDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter
+    public sealed class UmbracoMemberGroupDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
     {
         private readonly IMemberGroupService _memberGroupService;
 
@@ -26,7 +26,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public override IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public override Dictionary<string, object>? DefaultValues => default;
 
@@ -34,8 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            return _memberGroupService
-                .GetAll()
+            return _memberGroupService.GetAllAsync().GetAwaiter().GetResult()
                 .Select(x => new DataListItem
                 {
                     Name = x.Name,

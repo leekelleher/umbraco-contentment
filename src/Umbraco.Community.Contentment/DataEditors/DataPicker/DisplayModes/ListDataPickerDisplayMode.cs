@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    internal class ListDataPickerDisplayMode : IDataPickerDisplayMode
+    internal class ListDataPickerDisplayMode : IContentmentDisplayMode
     {
         public string Name => "List";
 
@@ -17,16 +17,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string? Group => default;
 
-        public string View => Constants.Internals.EditorsPathRoot + "data-picker.html";
+        [Obsolete("To be removed in Contentment 8.0.")]
+        public string View => string.Empty;
+
+        public string PropertyEditorUiAlias => "Umb.Contentment.DisplayMode.List";
 
         public Dictionary<string, object>? DefaultValues => default;
 
-        public Dictionary<string, object> DefaultConfig => new()
-        {
-            { "displayMode", "list" },
-        };
+        public Dictionary<string, object>? DefaultConfig => default;
 
-        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public OverlaySize OverlaySize => OverlaySize.Small;
     }

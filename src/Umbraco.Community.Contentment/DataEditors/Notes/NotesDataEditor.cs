@@ -3,11 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
@@ -19,27 +17,20 @@ namespace Umbraco.Community.Contentment.DataEditors
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Notes";
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "notes.html";
         internal const string DataEditorIcon = "icon-fa fa-sticky-note-o";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Notes";
 
-        private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public NotesDataEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
-            IJsonSerializer jsonSerializer,
-            IIOHelper ioHelper)
+            IJsonSerializer jsonSerializer)
         {
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
-            _ioHelper = ioHelper;
         }
 
         public string Alias => DataEditorAlias;
-
-        public EditorType Type => EditorType.PropertyValue;
 
         public string Name => DataEditorName;
 
@@ -53,17 +44,16 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new NotesConfigurationEditor(_ioHelper);
+        public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 
         public IDataValueEditor GetValueEditor()
         {
             return new ReadOnlyDataValueEditor(
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
             {
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
 
@@ -77,14 +67,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return new ReadOnlyDataValueEditor(
-                _localizedTextService,
                 _shortStringHelper,
                 _jsonSerializer)
             {
-                Configuration = configuration,
-                HideLabel = hideLabel,
+                ConfigurationObject = configuration,
+                //HideLabel = hideLabel,
                 ValueType = ValueTypes.Integer,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                //View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
             };
         }
     }

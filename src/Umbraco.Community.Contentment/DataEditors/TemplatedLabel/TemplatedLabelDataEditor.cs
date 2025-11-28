@@ -7,39 +7,35 @@ using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
+    [DataEditor(DataEditorAlias, ValueType = ValueTypes.Json)]
     public sealed class TemplatedLabelDataEditor : IDataEditor
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "TemplatedLabel";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Templated Label";
         internal const string DataEditorViewPath = NotesDataEditor.DataEditorViewPath;
-        internal const string DataEditorIcon = "icon-fa fa-codepen";
+        internal const string DataEditorIcon = "icon-fa-codepen";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TemplatedLabel";
 
         private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
         private readonly IShortStringHelper _shortStringHelper;
         private readonly IJsonSerializer _jsonSerializer;
 
         public TemplatedLabelDataEditor(
-            ILocalizedTextService localizedTextService,
             IShortStringHelper shortStringHelper,
             IJsonSerializer jsonSerializer,
             IIOHelper ioHelper)
         {
-            _localizedTextService = localizedTextService;
             _shortStringHelper = shortStringHelper;
             _jsonSerializer = jsonSerializer;
             _ioHelper = ioHelper;
         }
 
         public string Alias => DataEditorAlias;
-
-        public EditorType Type => EditorType.PropertyValue;
 
         public string Name => DataEditorName;
 
@@ -53,36 +49,30 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-        public IConfigurationEditor GetConfigurationEditor() => new TemplatedLabelConfigurationEditor(_ioHelper);
+        // NOTE: Reuses Umbraco's `LabelConfigurationEditor`. [LK]
+        public IConfigurationEditor GetConfigurationEditor() => new LabelConfigurationEditor(_ioHelper);
 
         public IDataValueEditor GetValueEditor()
         {
-            return new DataValueEditor(
-                _localizedTextService,
-                _shortStringHelper,
-                _jsonSerializer)
-            {
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
-            };
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer) { };
         }
 
         public IDataValueEditor GetValueEditor(object? configuration)
         {
-            var hideLabel = false;
+            var valueType = ValueTypes.String;
 
-            if (configuration is Dictionary<string, object> config && config.TryGetValue(HideLabelConfigurationField.HideLabelAlias, out var obj) == true)
+            if (configuration is Dictionary<string, object> config &&
+                config.TryGetValueAs(UmbConstants.PropertyEditors.ConfigurationKeys.DataValueType, out string? str) == true &&
+                string.IsNullOrWhiteSpace(str) == false &&
+                ValueTypes.IsValue(str) == true)
             {
-                hideLabel = obj.TryConvertTo<bool>().Result;
+                valueType = str;
             }
 
-            return new DataValueEditor(
-                _localizedTextService,
-                _shortStringHelper,
-                _jsonSerializer)
+            return new DataValueEditor(_shortStringHelper, _jsonSerializer)
             {
-                Configuration = configuration,
-                HideLabel = hideLabel,
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath)
+                ConfigurationObject = configuration,
+                ValueType = valueType,
             };
         }
     }

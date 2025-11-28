@@ -3,39 +3,27 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Dictionary;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentTypesDataListSource
-        : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
         private readonly IContentTypeService _contentTypeService;
-        private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-        private readonly IIOHelper _ioHelper;
-        private readonly ILocalizedTextService _localizedTextService;
-        private readonly ICultureDictionary _cultureDictionary;
+        private readonly IPublishedContentTypeCache _publishedContentTypeCache;
 
         public UmbracoContentTypesDataListSource(
             IContentTypeService contentTypeService,
-            IUmbracoContextAccessor umbracoContextAccessor,
-            ILocalizedTextService localizedTextService,
-            ICultureDictionary cultureDictionary,
-            IIOHelper ioHelper)
+            IPublishedContentTypeCache publishedContentTypeCache)
         {
             _contentTypeService = contentTypeService;
-            _umbracoContextAccessor = umbracoContextAccessor;
-            _localizedTextService = localizedTextService;
-            _cultureDictionary = cultureDictionary;
-            _ioHelper = ioHelper;
+            _publishedContentTypeCache = publishedContentTypeCache;
         }
 
         public override string Name => "Umbraco Content Types";
@@ -46,15 +34,15 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "contentTypes",
                 Name = "Content types",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CheckboxListDataListEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = CheckboxListDataListEditor.DataEditorUiAlias,
                 Description = "Select the types to use.",
                 Config = new Dictionary<string, object>
                 {
@@ -84,8 +72,8 @@ namespace Umbraco.Community.Contentment.DataEditors
                         }
                     },
                     { Constants.Conventions.ConfigurationFieldAliases.DefaultValue, "documentTypesTemplates" },
-                    { ShowDescriptionsConfigurationField.ShowDescriptions, Constants.Values.True },
-                    { ShowIconsConfigurationField.ShowIcons, Constants.Values.True },
+                    { ShowDescriptionsConfigurationField.ShowDescriptions, true },
+                    { ShowIconsConfigurationField.ShowIcons, true },
                 }
             },
         };
@@ -94,7 +82,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var types = config.GetValueAs("contentTypes", defaultValue: default(JArray))?.ToObject<IEnumerable<string>>();
+            var types = config.GetValueAs("contentTypes", defaultValue: default(IEnumerable<string>));
 
             var isDocumentTypeWithTemplate = types?.InvariantContains("documentTypesTemplates") == true;
             var isDocumentType = types?.InvariantContains("documentTypes") == true;
@@ -126,7 +114,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .OrderBy(x => x.Name)
                 .Select(x => new DataListItem
                 {
-                    Name = _localizedTextService.UmbracoDictionaryTranslate(_cultureDictionary, x.Name),
+                    Name = x.Name,
                     Value = Udi.Create(UmbConstants.UdiEntityType.DocumentType, x.Key).ToString(),
                     Icon = x.Icon,
                     Description = string.Join(", ", x.AllowedTemplates?.Select(t => t.Alias) ?? Enumerable.Empty<string>()),
@@ -137,12 +125,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public object? ConvertValue(Type type, string value)
         {
-            if (UdiParser.TryParse(value, out GuidUdi? udi) == true &&
-                udi is not null &&
-                ContentTypeCacheHelper.TryGetAlias(udi.Guid, out var alias, _contentTypeService) == true &&
-                string.IsNullOrWhiteSpace(alias) == false)
+            if (UdiParser.TryParse(value, out GuidUdi? udi) == true && udi is not null)
             {
-                return _umbracoContextAccessor.GetRequiredUmbracoContext().Content?.GetContentType(alias);
+                return _publishedContentTypeCache.Get(PublishedItemType.Content, udi.Guid);
             }
 
             return default;

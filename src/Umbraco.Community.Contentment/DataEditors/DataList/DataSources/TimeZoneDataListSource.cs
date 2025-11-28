@@ -3,13 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TimeZoneDataListSource : IDataListSource, IDataPickerSource, IDataSourceValueConverter
+    public sealed class TimeZoneDataListSource : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter
     {
         public string Name => ".NET Time Zones (UTC)";
 
@@ -19,7 +19,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public IEnumerable<ConfigurationField> Fields => Enumerable.Empty<ConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
 
         public Dictionary<string, object>? DefaultValues => default;
 
@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var items = default(IEnumerable<DataListItem>);
 
@@ -61,15 +61,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (items?.Any() == true)
             {
                 var offset = (pageNumber - 1) * pageSize;
-                var results = new PagedResult<DataListItem>(items.Count(), pageNumber, pageSize)
+                var results = new PagedViewModel<DataListItem>
                 {
-                    Items = items.Skip(offset).Take(pageSize)
+                    Items = items.Skip(offset).Take(pageSize),
+                    Total = pageSize > 0 ? (long)Math.Ceiling(items.Count() / (decimal)pageSize) : 1,
                 };
 
                 return Task.FromResult(results);
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(-1, pageNumber, pageSize));
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
 
         private DataListItem ToDataListItem(TimeZoneInfo info)

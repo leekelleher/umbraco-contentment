@@ -1,0 +1,88 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright © 2024 Lee Kelleher
+
+import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
+import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
+
+export type ContentmentConfigurationEditorValue = {
+	key: string;
+	value: Record<string, unknown>;
+};
+
+export type ContentmentConfigurationEditorModel = {
+	key: string;
+	name: string;
+	description?: string | null;
+	icon?: string | null;
+	group?: string | null;
+	defaultValues?: Record<string, unknown> | null;
+	expressions?: Record<string, unknown> | null;
+	fields?: Array<ContentmentConfigurationEditorModelField> | null;
+	overlaySize?: UUIModalSidebarSize | null;
+	[index: string]: unknown;
+};
+
+export type ContentmentConfigurationEditorModelField = {
+	key?: string | null;
+	name?: string | null;
+	description?: string | null;
+	propertyEditorUiAlias?: string | null;
+	config?: Record<string, unknown> | null;
+};
+
+export type ContentmentListItemValue = {
+	name: string;
+	value: string;
+	icon?: string | null;
+	description?: string | null;
+};
+
+export type ContentmentListItem = ContentmentListItemValue & {
+	group?: string | null;
+	disabled?: boolean;
+	[key: string]: unknown;
+};
+
+/** @deprecated */
+export type ContentmentDataListItem = ContentmentListItem;
+
+export type ContentmentDataListOption = ContentmentListItem & { selected: boolean };
+
+export type ContentmentDataListEditor = {
+	propertyEditorUiAlias?: string | null;
+	config?: UmbPropertyEditorConfigCollection;
+};
+
+export type ContentmentContentBlockItem = ContentmentListItem & {
+	elementType: string;
+	data: Record<string, unknown>;
+};
+
+export type ContentmentContentBlockModel = {
+	key: string;
+	name: string;
+	description?: string | null;
+	icon?: string | null;
+	overlaySize?: UUIModalSidebarSize | null;
+};
+
+export type ContentmentContentBlockValue = {
+	elementType: string;
+	key: string;
+	value: Record<string, unknown>;
+};
+
+export type ContentmentSocialLinkValue = {
+	name: string;
+	network: string;
+	url: string;
+};
+
+export type ContentmentSocialNetworkModel = {
+	network: string;
+	name: string;
+	url: string;
+	icon: string;
+	backgroundColor: string;
+	iconColor: string;
+};

@@ -7,28 +7,29 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class TagsDataListEditor : IDataListEditor
+    public sealed class TagsDataListEditor : IContentmentListEditor
     {
         internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
+        internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Tags";
 
         public string Name => "Tags";
 
         public string Description => "Select items from an Umbraco Tags-like interface.";
 
-        public string Icon => "icon-fa fa-tags";
+        public string Icon => "icon-fa-tags";
 
         public string? Group => default;
 
-        public IEnumerable<ConfigurationField> Fields => new ConfigurationField[]
+        public IEnumerable<ContentmentConfigurationField> Fields => new ContentmentConfigurationField[]
         {
             new ShowIconsConfigurationField(),
             new AllowClearConfigurationField(),
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key ="confirmRemoval",
                 Name = "Confirm removals?",
                 Description = "Select to enable a confirmation prompt when removing an item.",
-                View = "boolean",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 
@@ -40,6 +41,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
+        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
         public string View => DataEditorViewPath;
+
+        public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
 }

@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Xml;
 
 namespace Umbraco.Community.Contentment.Services
 {
@@ -14,6 +13,7 @@ namespace Umbraco.Community.Contentment.Services
 
         public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
 
+        [Obsolete("To be removed in Contentment 8.0")]
         public static string ParseXPathQuery(
             this IContentmentContentContext ctx,
             string xpathExpression,
@@ -27,9 +27,10 @@ namespace Umbraco.Community.Contentment.Services
                 xpathExpression = xpathExpression.Replace("$parent", $"id({nodeContextId})");
             }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
+            return xpathExpression;
+//#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

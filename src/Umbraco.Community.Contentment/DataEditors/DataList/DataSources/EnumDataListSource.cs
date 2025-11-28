@@ -7,30 +7,23 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Strings;
-using Umbraco.Community.Contentment.Web.Controllers;
+using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IDataListSource, IDataSourceValueConverter, IContentmentListTemplateItem
+    public sealed class EnumDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IContentmentListTemplateItem
     {
         private readonly ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)> _lookup;
-        private readonly IIOHelper _ioHelper;
         private readonly IShortStringHelper _shortStringHelper;
 
-        public EnumDataListSource(
-            IShortStringHelper shortStringHelper,
-            IIOHelper ioHelper)
+        public EnumDataListSource(IShortStringHelper shortStringHelper)
         {
             _lookup = new ConcurrentDictionary<Type, (List<DataListItem>, Dictionary<string, object>)>();
 
             _shortStringHelper = shortStringHelper;
-            _ioHelper = ioHelper;
         }
 
         public override string Name => ".NET Enumeration";
@@ -39,40 +32,40 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override string Description => "Select an enumeration from a .NET assembly as the data source.";
 
-        public string? DescriptionTemplate => "{{ enumType[1] }}";
+        public string? DescriptionTemplate => "{= enumType }";
 
         public override string Icon => "icon-indent";
 
         public override string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public override OverlaySize OverlaySize => OverlaySize.Small;
+        public override OverlaySize OverlaySize => OverlaySize.Medium;
 
         public override Dictionary<string, object>? DefaultValues => default;
 
-        public override IEnumerable<ConfigurationField> Fields => new[]
+        public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "enumType",
                 Name = "Enumeration type",
                 Description = "Select the enumeration from an assembly type.",
-                View = _ioHelper.ResolveRelativeOrVirtualUrl(CascadingDropdownListDataEditor.DataEditorViewPath),
+                PropertyEditorUiAlias = CascadingDropdownListDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { CascadingDropdownListDataEditor.APIs, new[]
                         {
-                            EnumDataSourceApiController.GetAssembliesUrl,
-                            EnumDataSourceApiController.GetEnumsUrl,
+                            AssemblyEnumController.GetAssembliesUrl,
+                            AssemblyEnumController.GetEnumsUrl,
                         }
                     }
                 }
             },
-            new ConfigurationField
+            new ContentmentConfigurationField
             {
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the enumeration in alphabetical order.<br>By default, the order is defined by the enumeration itself.",
-                View = "boolean"
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             }
         };
 
@@ -139,39 +132,36 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Type? GetValueType(Dictionary<string, object>? config)
         {
-            if (config?.TryGetValueAs("enumType", out JArray? array) == true)
+            if (config?.TryGetValueAs("enumType", out List<string>? enumType) == true &&
+                enumType?.Count > 1)
             {
-                var enumType = array?.ToObject<string[]>();
-                if (enumType?.Length > 1)
+                var assembly = default(Assembly);
+                try
                 {
-                    var assembly = default(Assembly);
+                    assembly = Assembly.Load(enumType[0]);
+                }
+                catch (Exception)
+                {
+                    // Unable to load target type.
+                    // Nobody wants an exception here. Wondering if `Assembly.TryLoad()` should be a thing? [LK]
+                }
+
+                if (assembly is not null)
+                {
+                    var type = default(Type);
                     try
                     {
-                        assembly = Assembly.Load(enumType[0]);
+                        type = assembly.GetType(enumType[1]);
                     }
                     catch (Exception)
                     {
-                        // Unable to load target type.
-                        // Nobody wants an exception here. Wondering if `Assembly.TryLoad()` should be a thing? [LK]
+                        // Unable to retrieve target type.
+                        // Again, what are users going to do about an exception here? `assembly.TryGetType()` anyone? [LK]
                     }
 
-                    if (assembly is not null)
+                    if (type?.IsEnum == true)
                     {
-                        var type = default(Type);
-                        try
-                        {
-                            type = assembly.GetType(enumType[1]);
-                        }
-                        catch (Exception)
-                        {
-                            // Unable to retrieve target type.
-                            // Again, what are users going to do about an exception here? `assembly.TryGetType()` anyone? [LK]
-                        }
-
-                        if (type?.IsEnum == true)
-                        {
-                            return type;
-                        }
+                        return type;
                     }
                 }
             }
@@ -190,7 +180,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                 }
 
                 // NOTE: Can't use `Enum.TryParse` here, as it's only available with generic types in .NET 4.8.
-                try { return Enum.Parse(type, value, true); } catch { /* ¯\_(ツ)_/¯ */ }
+                try
+                { return Enum.Parse(type, value, true); }
+                catch { /* ¯\_(ツ)_/¯ */ }
             }
 
             return type.GetDefaultValue();

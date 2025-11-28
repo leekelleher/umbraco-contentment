@@ -14,7 +14,7 @@ The following property editors are available...
 - [Notes](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [List Items](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Number Input](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/number-input.md) - a numeric editor, with sizing configurations.
-- [Render Macro](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.
+- ~~[Render Macro](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.~~
 - [Social Links](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links.md) - an editor to manage links for social network platforms.
 - [Templated Label](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Textbox List](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.
@@ -28,6 +28,6 @@ If my Umbraco packages are of value to you and/or your business, then [**you cou
 
 ---
 
-Contentment is licensed under the [Mozilla Public License](https://opensource.org/licenses/MPL-2.0).
+Contentment is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 Copyright &copy; [Lee Kelleher](https://leekelleher.com).

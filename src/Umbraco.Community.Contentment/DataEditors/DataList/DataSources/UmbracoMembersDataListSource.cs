@@ -3,12 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
-using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
@@ -20,26 +17,23 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoMembersDataListSource
-        : IDataListSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
     {
-        // NOTE: Statically injected, so to preserve binary backwards-compatibility. [LK]
-        private readonly IApiElementBuilder _apiElementBuilder = StaticServiceProvider.Instance.GetRequiredService<IApiElementBuilder>();
-
+        private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IMemberTypeService _memberTypeService;
         private readonly IMemberService _memberService;
-        private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
-        private readonly IIOHelper _ioHelper;
+        private readonly IPublishedMemberCache _publishedMemberCache;
 
         public UmbracoMembersDataListSource(
+            IApiElementBuilder apiElementBuilder,
             IMemberTypeService memberTypeService,
             IMemberService memberService,
-            IPublishedSnapshotAccessor publishedSnapshotAccessor,
-            IIOHelper ioHelper)
+            IPublishedMemberCache publishedMemberCache)
         {
+            _apiElementBuilder = apiElementBuilder;
             _memberTypeService = memberTypeService;
             _memberService = memberService;
-            _publishedSnapshotAccessor = publishedSnapshotAccessor;
-            _ioHelper = ioHelper;
+            _publishedMemberCache = publishedMemberCache;
         }
 
         public string Name => "Umbraco Members";
@@ -50,46 +44,26 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ConfigurationField> Fields
+        public IEnumerable<ContentmentConfigurationField> Fields
         {
             get
             {
-                var items = _memberTypeService
-                    .GetAll()
-                    .Select(x => new DataListItem
-                    {
-                        Icon = x.Icon,
-                        Description = x.Description,
-                        Name = x.Name,
-                        Value = Udi.Create(UmbConstants.UdiEntityType.MemberType, x.Key).ToString(),
-                    })
-                    .ToList();
-
                 return new[]
                 {
-                    new ConfigurationField
+                    new ContentmentConfigurationField
                     {
                         Key = "memberType",
                         Name = "Member Type",
                         Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        View = _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorViewPath),
-                        Config = new Dictionary<string, object>
-                        {
-                            { "addButtonLabelKey", "defaultdialogs_selectMemberType" },
-                            { "enableFilter", items.Count > 5 ? Constants.Values.True : Constants.Values.False },
-                            { Constants.Conventions.ConfigurationFieldAliases.Items, items },
-                            { "listType", "list" },
-                            { Constants.Conventions.ConfigurationFieldAliases.OverlayView, _ioHelper.ResolveRelativeOrVirtualUrl(ItemPickerDataListEditor.DataEditorOverlayViewPath) ?? string.Empty },
-                            { MaxItemsConfigurationField.MaxItems, 1 },
-                        }
-                    }
+                        PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "MemberTypePicker",
+                     }
                 };
             }
         }
 
         public Dictionary<string, object>? DefaultValues => default;
 
-        public OverlaySize OverlaySize => OverlaySize.Small;
+        public OverlaySize OverlaySize => OverlaySize.Medium;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
@@ -107,7 +81,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return Task.FromResult(values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
-                    .Select(x => _memberService.GetByKey(x.Guid))
+                    .Select(x => _memberService.GetById(x.Guid))
                     .WhereNotNull()
                     .Select(ToDataListItem));
             }
@@ -115,24 +89,25 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public Task<PagedResult<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
         {
             var totalRecords = -1L;
-            var pageIndex = pageNumber - 1;
+            var skip = (pageNumber - 1) * pageSize;
             var memberType = GetMemberType(config);
-            var items = _memberService.GetAll(pageIndex, pageSize, out totalRecords, "LoginName", Direction.Ascending, memberType?.Alias, query);
+            var items = _memberService.GetAll(skip, pageSize, out totalRecords, "LoginName", Direction.Ascending, memberType?.Alias, query);
 
             if (items?.Any() == true)
             {
-                var results = new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize)
+                var results = new PagedViewModel<DataListItem>
                 {
-                    Items = items.Select(ToDataListItem)
+                    Items = items.Select(ToDataListItem),
+                    Total = pageSize > 0 ? (long)Math.Ceiling(totalRecords / (decimal)pageSize) : 1,
                 };
 
                 return Task.FromResult(results);
             }
 
-            return Task.FromResult(new PagedResult<DataListItem>(totalRecords, pageNumber, pageSize));
+            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
@@ -143,10 +118,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 udi is not null &&
                 udi.Guid.Equals(Guid.Empty) == false)
             {
-                var member = _memberService.GetByKey(udi.Guid);
+                var member = _memberService.GetById(udi.Guid);
                 if (member != null)
                 {
-                    return _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Members?.Get(member);
+                    return _publishedMemberCache.Get(member);
                 }
             }
 
@@ -160,14 +135,12 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private IMemberType? GetMemberType(Dictionary<string, object> config)
         {
-            if (config.TryGetValueAs("memberType", out JArray? array) == true &&
-               array?.Count > 0 &&
-               array[0].Value<string>() is string str &&
-               string.IsNullOrWhiteSpace(str) == false &&
-               UdiParser.TryParse(str, out GuidUdi? udi) == true &&
-               udi is not null)
+            if (config.TryGetValueAs("memberType", out string? guid) == true &&
+               string.IsNullOrWhiteSpace(guid) == false &&
+               Guid.TryParse(guid, out var key) == true &&
+               key.Equals(Guid.Empty) == false)
             {
-                return _memberTypeService.Get(udi.Guid);
+                return _memberTypeService.Get(key);
             }
 
             return default;
