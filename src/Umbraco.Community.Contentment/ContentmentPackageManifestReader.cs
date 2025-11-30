@@ -44,7 +44,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             extensions.Add(new
             {
                 type = "menuItem",
-                alias = $"{Constants.Internals.ManifestAliasPrefix}.MenuItem.{Constants.Internals.ProjectName}",
+                alias = $"{Constants.Internals.ManifestAliasPrefix}MenuItem.{Constants.Internals.ProjectName}",
                 name = Constants.Internals.ManifestNamePrefix + "Menu Item",
                 meta = new
                 {

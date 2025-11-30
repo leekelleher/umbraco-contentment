@@ -72,12 +72,14 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 			<umb-body-layout>
 				<div slot="header">
 					<h3>${this._headline}</h3>
-					<p>v${this._version}</p>
+					<p><em>v${this._version}</em></p>
 				</div>
-				<div slot="navigation"><lee-was-here></lee-was-here></div>
 				<div id="layout">
 					<div>${this.#renderSponsorship()} ${this.#renderFeatureOptions()}</div>
-					<div>${this.#renderLinks()}</div>
+					<div>
+						${this.#renderLinks()}
+						<div id="peekaboo"><lee-was-here></lee-was-here></div>
+					</div>
 				</div>
 			</umb-body-layout>
 		`;
@@ -155,26 +157,26 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 
 	#renderSponsorship() {
 		return html`
-			<uui-box headline="Sponsorship">
+			<uui-box headline="Sponsor continued development">
 				<div slot="header-actions">
 					<a href="https://github.com/sponsors/leekelleher?o=esb" target="_blank">
-						<umb-icon name="icon-github" style="font-size: var(--uui-size-6);"></umb-icon>
+						<umb-icon name="icon-github" style="font-size:var(--uui-size-6);"></umb-icon>
 					</a>
 				</div>
 
 				<div style="display:flex;">
 					<div>
 						<p>
-							Whilst Contentment is a <strong>free</strong> and <strong>open-source</strong> package, I have invested a
-							huge amount of time and effort into its product design, development and maintenance. If you enjoy using
+							While Contentment is a <strong>free</strong> and <strong>open-source</strong> package, I have invested a
+							huge amount of time and effort into its product design, development and maintenance. If you rely using
 							these powerful property-editors and want to see me continue my efforts with more quality editors,
 							<a href="https://github.com/sponsors/leekelleher?o=esb" target="_blank" rel="noopener"
-								><strong>please consider supporting my development with a GitHub sponsorship</strong>.</a
+								><strong>please consider supporting my open-source development with a GitHub sponsorship</strong>.</a
 							>
 						</p>
 						<p>
-							I'd like to say heartfelt <strong>thank you</strong> to all my existing sponsors, I appreciate your
-							support.
+							I'd like to say heartfelt <strong>thank you</strong> to all my past and present sponsors, I appreciate
+							your support.
 						</p>
 					</div>
 					<div style="flex: 0 0 auto;">
@@ -196,13 +198,8 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 				div[slot='header'] {
 					h3,
 					p {
-						margin: 0 var(--uui-size-layout-1);
+						margin: 0;
 					}
-				}
-
-				div[slot='navigation'] {
-					padding-right: var(--uui-size-layout-3);
-					padding-top: var(--uui-size-space-4);
 				}
 			}
 
@@ -216,6 +213,11 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 					flex-direction: column;
 					gap: var(--uui-size-layout-1);
 				}
+			}
+
+			#peekaboo {
+				display: flex;
+				justify-content: flex-end;
 			}
 		`,
 	];
