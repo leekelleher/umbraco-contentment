@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
-// Credit: https://lit.dev/playground/#gist=242f45fd2dbe21ecb6902f144686aae8
+// Adapted from: https://lit.dev/playground/#gist=242f45fd2dbe21ecb6902f144686aae8
 
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentSortEndEvent } from './sort-end.event.js';
 import { Sortable } from '../../external/sortablejs/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UUIBlinkAnimationValue, UUIBlinkKeyframes } from '@umbraco-cms/backoffice/external/uui';
 import type { SortableEvent } from '../../external/sortablejs/index.js';
 
 @customElement('contentment-sortable-list')
@@ -26,6 +27,7 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 			disabled: this.disabled,
 			draggable: this.itemSelector,
 			handle: this.handleSelector,
+			ghostClass: 'umb-drag-placeholder',
 			onStart: (event: SortableEvent) => {
 				before = event.item.previousSibling;
 			},
@@ -41,6 +43,7 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 	}
 
 	static override styles = [
+		UUIBlinkKeyframes,
 		css`
 			:host(.uui-ref-list) {
 				/* Copied from https://github.com/umbraco/Umbraco.UI/blob/v1.12.2/packages/uui-ref-list/lib/uui-ref-list.element.ts#L19-L29 */
@@ -55,6 +58,13 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 					right: 0;
 					border-top: 1px solid var(--uui-color-border);
 				}
+			}
+
+			::slotted(.umb-drag-placeholder) {
+				animation: ${UUIBlinkAnimationValue};
+				background-color: color-mix(in srgb, var(--uui-color-interactive-emphasis) 15%, transparent) !important;
+				border-radius: var(--uui-border-radius);
+				border: 2px solid var(--uui-color-interactive-emphasis);
 			}
 		`,
 	];
