@@ -8,6 +8,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { CONTENTMENT_ITEM_PICKER_MODAL } from './item-picker-modal.element.js';
 import type { ContentmentListItem } from '../types.js';
+import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
@@ -145,9 +146,10 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+	#onSortEnd(event: ContentmentSortEndEvent) {
+		if (event.newIndex === undefined || event.oldIndex === undefined) return;
 		const items = [...(this.value ?? [])];
-		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		items.splice(event.newIndex, 0, items.splice(event.oldIndex, 1)[0]);
 		this.value = items;
 
 		this.dispatchEvent(new UmbChangeEvent());
