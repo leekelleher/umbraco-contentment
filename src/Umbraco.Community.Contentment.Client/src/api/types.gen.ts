@@ -7,6 +7,11 @@ export type ConfigurationEditorItemRequestModel = {
     } | null;
 };
 
+export type ContentmentSettings = {
+    disableTree: boolean;
+    disableTelemetry: boolean;
+};
+
 export type DataListConfigurationRequestModel = {
     alias?: string | null;
     dataSource?: ConfigurationEditorItemRequestModel | null;
@@ -57,6 +62,12 @@ export enum EventMessageTypeModel {
     SUCCESS = 'Success',
     WARNING = 'Warning'
 }
+
+export type MetaConfigurationResponseModel = {
+    name?: string | null;
+    version?: string | null;
+    features?: ContentmentSettings | null;
+};
 
 export type NotificationHeaderModel = {
     message: string;
@@ -327,6 +338,39 @@ export type GetEnumsDataResponses = {
 
 export type GetEnumsDataResponse = GetEnumsDataResponses[keyof GetEnumsDataResponses];
 
+export type GetConfigurationData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/umbraco/management/api/v1/contentment/meta/configuration';
+};
+
+export type GetConfigurationErrors = {
+    /**
+     * The resource is protected and requires an authentication token
+     */
+    401: unknown;
+    /**
+     * The authenticated user does not have access to this resource
+     */
+    403: unknown;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+};
+
+export type GetConfigurationError = GetConfigurationErrors[keyof GetConfigurationErrors];
+
+export type GetConfigurationResponses = {
+    /**
+     * OK
+     */
+    200: MetaConfigurationResponseModel;
+};
+
+export type GetConfigurationResponse = GetConfigurationResponses[keyof GetConfigurationResponses];
+
 export type ClientOptions = {
-    baseUrl: 'http://localhost:21185' | (string & {});
+    baseUrl: 'http://localhost:21187' | (string & {});
 };

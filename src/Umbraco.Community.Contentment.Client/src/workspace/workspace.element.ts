@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
+import { tryExecute } from '@umbraco-cms/backoffice/resources';
+import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
+import { MetaService } from '../api/sdk.gen.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
@@ -46,26 +49,30 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 		},
 	];
 
-	#telemetryEnabled = false;
+	@state()
+	private _telemetryDisabled = false;
 
-	#headline?: string;
+	@state()
+	private _headline?: string;
 
-	#version = '0.0.0';
+	@state()
+	private _version?: string;
 
-	override connectedCallback(): void {
-		super.connectedCallback();
-
-		this.#headline = this.localize.term('contentment_name');
-		this.#version = '6.0.0';
-		this.#telemetryEnabled = true;
+	protected override async firstUpdated() {
+		const { data } = await tryExecute(this, MetaService.getConfiguration({ client: umbHttpClient }));
+		if (data) {
+			this._headline = data.name || 'Contentment';
+			this._version = data.version || '0.0.0';
+			this._telemetryDisabled = data.features?.disableTelemetry ?? false;
+		}
 	}
 
 	override render() {
 		return html`
 			<umb-body-layout>
 				<div slot="header">
-					<h3>${this.#headline}</h3>
-					<p>v${this.#version}</p>
+					<h3>${this._headline}</h3>
+					<p>v${this._version}</p>
 				</div>
 				<div slot="navigation"><lee-was-here></lee-was-here></div>
 				<div id="layout">
@@ -102,7 +109,11 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 			<uui-box headline="Feature options">
 				<div class="uui-text">
 					${when(
-						this.#telemetryEnabled,
+						this._telemetryDisabled,
+						() => html`
+							<h5>Telemetry</h5>
+							<p><em>The telemetry feature has been disabled.</em> 🤐</p>
+						`,
 						() => html`
 							<h5>Telemetry</h5>
 							<p>
@@ -122,10 +133,6 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 									><strong>find a code snippet</strong> on the telemetry documentation page</a
 								>.
 							</p>
-						`,
-						() => html`
-							<h5>Telemetry</h5>
-							<p><em>The telemetry feature has been disabled.</em> 🤐</p>
 						`
 					)}
 
