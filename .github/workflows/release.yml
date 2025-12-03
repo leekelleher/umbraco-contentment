@@ -22,9 +22,9 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version-file: src/Umbraco.Community.Contentment/.nvmrc
+        node-version-file: src/Umbraco.Community.Contentment.Client/.nvmrc
         cache: npm
-        cache-dependency-path: src/Umbraco.Community.Contentment/package-lock.json
+        cache-dependency-path: src/Umbraco.Community.Contentment.Client/package-lock.json
     - run: npm ci --no-audit --no-fund --prefer-offline
     - run: npm run build
 
