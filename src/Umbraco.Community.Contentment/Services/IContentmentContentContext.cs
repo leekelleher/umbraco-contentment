@@ -19,5 +19,6 @@ namespace Umbraco.Community.Contentment.Services
     public interface IContentmentContentContext2 : IContentmentContentContext
     {
         T? GetCurrentContentId<T>(out bool isParent);
+        string? GetCurrentVariantId();
     }
 }
