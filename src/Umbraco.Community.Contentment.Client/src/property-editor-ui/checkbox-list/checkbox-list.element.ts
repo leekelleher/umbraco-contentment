@@ -5,6 +5,7 @@ import {
 	css,
 	customElement,
 	html,
+	ifDefined,
 	property,
 	repeat,
 	state,
@@ -40,6 +41,9 @@ export class ContentmentPropertyEditorUICheckboxListElement
 		this._showDescriptions = parseBoolean(config.getValueByAlias('showDescriptions'));
 		this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 
+		this._listStyles = config.getValueByAlias('listStyles');
+		this._listItemStyles = config.getValueByAlias('listItemStyles');
+
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, checked: this.value?.includes(item.value) ?? false }));
 
@@ -53,6 +57,12 @@ export class ContentmentPropertyEditorUICheckboxListElement
 
 	@state()
 	private _items: Array<ContentmentDataListCheckboxOption> = [];
+
+	@state()
+	private _listStyles?: string;
+
+	@state()
+	private _listItemStyles?: string;
 
 	@state()
 	private _showDescriptions = false;
@@ -111,7 +121,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 
 		return html`
 			${when(this._checkAll, () => this.#renderCheckAll())}
-			<ul>
+			<ul style=${ifDefined(this._listStyles)}>
 				${repeat(
 					this._items,
 					(item) => item.value,
@@ -136,7 +146,7 @@ export class ContentmentPropertyEditorUICheckboxListElement
 
 	#renderItem(item: ContentmentDataListCheckboxOption) {
 		return html`
-			<li>
+			<li style=${ifDefined(this._listItemStyles)}>
 				<uui-checkbox
 					label=${item.name}
 					value=${item.value}
