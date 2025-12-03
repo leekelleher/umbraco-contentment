@@ -24,7 +24,9 @@ jobs:
       with:
         node-version-file: src/Umbraco.Community.Contentment.Client/.nvmrc
     - run: npm i
+      working-directory: src/Umbraco.Community.Contentment.Client
     - run: npm run build
+      working-directory: src/Umbraco.Community.Contentment.Client
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
