@@ -51,7 +51,6 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	private _options: Array<Option> = [];
 
 	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
-		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
 		this.value = event.target.value as string;
 		this.dispatchEvent(new UmbChangeEvent());
 	}
