@@ -33,8 +33,17 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 	@property({ type: Boolean })
 	compact: boolean = false;
 
+	/** @deprecated Use `headline` property. To be removed in Contentment 8.0. */
 	@property()
-	heading?: string;
+	public set heading(value: string | undefined) {
+		this.headline = value;
+	}
+	public get heading(): string | undefined {
+		return this.headline;
+	}
+
+	@property()
+	headline?: string;
 
 	@property()
 	icon?: string;
@@ -48,7 +57,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 	#getClasses() {
 		return classMap({
 			'uui-text': true,
-			compact: this.compact || !this.heading || (!this.message && !this._hasSlottedContent),
+			compact: this.compact || !this.headline || (!this.message && !this._hasSlottedContent),
 		});
 	}
 
@@ -74,7 +83,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 					(icon) => html`<umb-icon name=${icon} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
 				)}
 				<div>
-					${when(this.heading, (heading) => html`<h5>${heading}</h5>`)}
+					${when(this.headline, (headline) => html`<h5>${headline}</h5>`)}
 					${when(this.message, (message) => html`<div>${unsafeHTML(message)}</div>`)}
 					<slot @slotchange=${this.#onSlotChange}></slot>
 				</div>

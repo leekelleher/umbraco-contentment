@@ -81,7 +81,7 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 					<contentment-info-box
 						.type=${item}
 						.icon=${this._icon}
-						.heading=${heading}
+						.headline=${heading}
 						.message=${this._message}></contentment-info-box>
 				</button>
 			</li>

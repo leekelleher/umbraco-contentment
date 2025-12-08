@@ -59,7 +59,7 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 					compact
 					type="warning"
 					icon="icon-alert"
-					heading="There are no items to display"></contentment-info-box>
+					headline="There are no items to display"></contentment-info-box>
 			`;
 		}
 
