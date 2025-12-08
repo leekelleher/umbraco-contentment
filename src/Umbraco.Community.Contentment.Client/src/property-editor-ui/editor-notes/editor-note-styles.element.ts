@@ -14,17 +14,7 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#items: Array<ContentmentInfoBoxElementType> = [
-		'default',
-		'positive',
-		'warning',
-		'danger',
-		//'transparent',
-		// 'border',
-		// 'current',
-		// 'divider',
-		// 'selected',
-	];
+	#items: Array<ContentmentInfoBoxElementType> = ['default', 'info', 'positive', 'warning', 'danger'];
 
 	@state()
 	private _icon?: string;
@@ -91,8 +81,13 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 	static override styles = [
 		ContentmentPropertyEditorUITemplatedListElement.styles,
 		css`
-			ul > li > button > contentment-info-box {
-				min-width: var(--uui-size-100);
+			ul > li {
+				flex: initial;
+
+				> button > contentment-info-box {
+					min-width: var(--uui-size-60);
+					max-width: var(--uui-size-100);
+				}
 			}
 		`,
 	];

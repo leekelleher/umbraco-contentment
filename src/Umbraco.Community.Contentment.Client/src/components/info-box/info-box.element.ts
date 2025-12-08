@@ -14,16 +14,8 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import type { UUIInterfaceColor } from '@umbraco-cms/backoffice/external/uui';
 
-// TODO: [LK] This is a work-in-progress, likely to change in the v6-beta.
-export type ContentmentInfoBoxElementType =
-	| Exclude<UUIInterfaceColor, '' | 'invalid'>
-	| 'border'
-	| 'current'
-	| 'divider'
-	| 'selected'
-	| 'transparent';
+export type ContentmentInfoBoxElementType = 'default' | 'info' | 'positive' | 'warning' | 'danger';
 
 @customElement('contentment-info-box')
 export default class ContentmentInfoBoxElement extends UmbLitElement {
@@ -52,7 +44,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 	message?: string;
 
 	@property()
-	type?: ContentmentInfoBoxElementType = 'transparent';
+	type?: ContentmentInfoBoxElementType = 'default';
 
 	#getClasses() {
 		return classMap({
@@ -63,11 +55,8 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 
 	#getStyles() {
 		return styleMap({
-			backgroundColor: `var(--uui-color-${this.type})`,
-			color: `var(--uui-color-${this.type}-contrast)`,
-			borderColor: `var(--uui-color-${this.type}-standalone)`,
-			'--uui-color-interactive': `var(--uui-color-${this.type}-contrast)`,
-			'--uui-color-interactive-emphasis': `var(--uui-color-${this.type}-contrast)`,
+			'--lk-info-box-background': `var(--lk-info-box-background-${this.type})`,
+			'--lk-info-box-foreground': `var(--lk-info-box-foreground-${this.type})`,
 		});
 	}
 
@@ -78,10 +67,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 	override render() {
 		return html`
 			<div id="box" class=${this.#getClasses()} style=${this.#getStyles()}>
-				${when(
-					this.icon,
-					(icon) => html`<umb-icon name=${icon} style="color: var(--uui-color-${this.type}-contrast);"></umb-icon>`
-				)}
+				${when(this.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
 				<div>
 					${when(this.headline, (headline) => html`<h5>${headline}</h5>`)}
 					${when(this.message, (message) => html`<div>${unsafeHTML(message)}</div>`)}
@@ -95,19 +81,39 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 		UmbTextStyles,
 		css`
 			:host {
+				--lk-info-box-background: var(--uui-color-background);
+				--lk-info-box-foreground: var(--uui-color-text);
+
+				--lk-info-box-background-default: var(--uui-color-surface);
+				--lk-info-box-foreground-default: var(--uui-color-text);
+
+				--lk-info-box-background-info: var(--uui-color-default);
+				--lk-info-box-foreground-info: var(--uui-color-default-contrast);
+
+				--lk-info-box-background-positive: var(--uui-color-positive);
+				--lk-info-box-foreground-positive: var(--uui-color-positive-contrast);
+
+				--lk-info-box-background-warning: var(--uui-color-warning);
+				--lk-info-box-foreground-warning: var(--uui-color-warning-contrast);
+
+				--lk-info-box-background-danger: var(--uui-color-danger);
+				--lk-info-box-foreground-danger: var(--uui-color-danger-contrast);
+
 				display: block;
 			}
 
 			#box {
+				--uui-color-interactive: var(--lk-info-box-foreground);
+				--uui-color-interactive-emphasis: var(--lk-info-box-foreground);
+
 				display: flex;
 				align-items: flex-start;
 				justify-content: flex-start;
 				gap: 1rem;
 
-				background-color: var(--uui-color-surface);
-				color: var(--uui-color-text);
+				background-color: var(--lk-info-box-background);
+				color: var(--lk-info-box-foreground);
 
-				border-color: var(--uui-color-surface);
 				border-radius: calc(var(--uui-border-radius) * 2);
 
 				box-shadow: var(--uui-shadow-depth-1);
@@ -119,6 +125,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 				}
 
 				> umb-icon {
+					color: var(--lk-info-box-foreground);
 					font-size: 2.5rem;
 				}
 

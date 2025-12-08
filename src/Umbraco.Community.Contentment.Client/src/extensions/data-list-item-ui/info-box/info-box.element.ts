@@ -15,7 +15,6 @@ export class ContentmentDataListItemUiInfoBoxElement extends UmbLitElement imple
 		if (!this.item) return nothing;
 		return html`
 			<contentment-info-box
-				type="transparent"
 				.icon=${this.item.icon ?? undefined}
 				.headline=${this.item.name ?? this.item.value}
 				.message=${this.item.description ?? undefined}></contentment-info-box>
