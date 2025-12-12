@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.AspNetCore.Http;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Web;
@@ -15,10 +14,9 @@ namespace Umbraco.Community.Contentment.Services
     public sealed class ContentmentContentContext : IContentmentContentContext2
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJsonSerializer _jsonSerializer;
-        private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
+        [Obsolete("Use constructor without the `IJsonSerializer` and `IRequestAccessor` parameters. This constructor will be removed in Contentment 8.0.")]
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
             IJsonSerializer jsonSerializer,
@@ -26,8 +24,14 @@ namespace Umbraco.Community.Contentment.Services
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _jsonSerializer = jsonSerializer;
-            _requestAccessor = requestAccessor;
+            _umbracoContextAccessor = umbracoContextAccessor;
+        }
+
+        public ContentmentContentContext(
+            IHttpContextAccessor httpContextAccessor,
+            IUmbracoContextAccessor umbracoContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
@@ -41,8 +45,6 @@ namespace Umbraco.Community.Contentment.Services
                 return unique;
             }
 
-            // TODO: [LK] Review this code - is it needed?
-
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.PublishedRequest?.PublishedContent is not null)
             {
@@ -50,36 +52,6 @@ namespace Umbraco.Community.Contentment.Services
                 if (attempt.Success)
                 {
                     return attempt.Result;
-                }
-            }
-
-            // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-            var attempt1 = _requestAccessor.GetRequestValue("id")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
-            if (attempt1.Success)
-            {
-                return attempt1.Result;
-            }
-
-            var attempt2 = _requestAccessor.GetRequestValue("parentId")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
-            if (attempt2.Success)
-            {
-                isParent = true;
-                return attempt2.Result;
-            }
-
-            // TODO: [LK:2024-12-06] Figure out if this is still needed?
-            var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
-            if (string.IsNullOrWhiteSpace(json) == false)
-            {
-                var obj = DeserializeAnonymousType(json, new { id = (object?)null, parentId = (object?)null });
-                if (obj is not null && obj.id is not null)
-                {
-                    return obj.id.TryConvertTo<T>().Result;
-                }
-                else if (obj is not null && obj.parentId is not null)
-                {
-                    isParent = true;
-                    return obj.parentId.TryConvertTo<T>().Result;
                 }
             }
 
@@ -94,6 +66,7 @@ namespace Umbraco.Community.Contentment.Services
 
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
+                // Cursory check if this is being called during a published/routable request.
                 if (umbracoContext.PublishedRequest?.PublishedContent != null)
                 {
                     return umbracoContext.PublishedRequest.PublishedContent;
@@ -118,7 +91,5 @@ namespace Umbraco.Community.Contentment.Services
 
             return default;
         }
-
-        private T? DeserializeAnonymousType<T>(string json, T anonymousObj) => _jsonSerializer.Deserialize<T>(json);
     }
 }
