@@ -55,7 +55,6 @@ namespace Umbraco.Community.Contentment.Services
         {
             isParent = false;
 
-
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
                 // Cursory check if this is being called during a published/routable request.
