@@ -19,7 +19,7 @@ export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement
 
 	override render() {
 		return html`
-			<contentment-info-box type="warning" icon="icon-alert" heading="Render Macro has been deprecated">
+			<contentment-info-box type="warning" icon="icon-alert" headline="Render Macro has been deprecated">
 				<p><em>Support for Macros were deprecated in Umbraco 14. Please consider alternative functionality.</em></p>
 				${when(
 					this.#json,

@@ -53,12 +53,12 @@ Detailed release notes and download instructions are available on the [releases 
 
 _**Please note...**_
 
-- v6.x supports **Umbraco v16** (on .NET 9.0) and **Umbraco v17** (.NET 10.0), consider this the cutting-edge version.
+- v6.x supports **Umbraco v16** (on .NET 9.0) and **Umbraco v17** (.NET 10.0).
 - v5.x supports **Umbraco v13.2** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.
 - v4.x supports **Umbraco v8.17** (.NET 4.7.2), **Umbraco v10** (.NET 6.0),  **Umbraco v12** (.NET 7.0) and **Umbraco v13** (.NET 8.0), _it mostly likely works on v9 and v11 too._
 - v3.x supports **Umbraco v8.17** and **Umbraco v9.0.0**, it will work on latest Umbraco v8.x and v9.x releases.
-- v2.x supports **Umbraco v8.14**, it will still work on latest Umbraco v8.x releases.
-- v1.x supports **Umbraco v8.6.1**, it will still work on latest Umbraco v8.x releases.
+- v2.x supports **Umbraco v8.14**, it will work on latest Umbraco v8.x releases.
+- v1.x supports **Umbraco v8.6.1**, it will work on latest Umbraco v8.x releases.
 
 To understand more about which Umbraco CMS versions are actively supported by Umbraco HQ, please see [Umbraco's Long-term Support (LTS) and End-of-Life (EOL) policy](https://umbraco.com/products/knowledge-center/long-term-support-and-end-of-life/).
 
@@ -127,7 +127,7 @@ I am working towards re-licensing all of the source code to be under the [MIT li
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,460+ hours</b> (between 2019-03-13 to 2025-11-06)</summary>
+<summary>Current development effort: <b>~2,472+ hours</b> (between 2019-03-13 to 2025-11-28)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 

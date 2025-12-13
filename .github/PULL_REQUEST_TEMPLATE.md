@@ -24,10 +24,4 @@
 
 ### Checklist
 
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-
-- [ ] My code follows the coding style of this project.
-- [ ] My changes generate no new warnings.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the corresponding documentation.
 - [ ] I have read the **[CONTRIBUTING](CONTRIBUTING)** and **[CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)** documents.

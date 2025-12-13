@@ -4,7 +4,7 @@
 import { css, customElement, html, nothing, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
-import type { SortableEvent } from '../../../external/sortablejs/index.js';
+import type { ContentmentSortEndEvent } from '../../../components/sortable-list/sort-end.event.js';
 import type { StyleInfo } from '@umbraco-cms/backoffice/external/lit';
 
 @customElement('contentment-display-mode-cards')
@@ -26,9 +26,9 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		this.dispatchEvent(new CustomEvent('remove', { bubbles: true, detail: { item, index } }));
 	}
 
-	#onSort(event: CustomEvent<SortableEvent>) {
+	#onSort(event: ContentmentSortEndEvent) {
 		event.stopPropagation();
-		const { newIndex, oldIndex } = event.detail;
+		const { newIndex, oldIndex } = event;
 		this.dispatchEvent(new CustomEvent('sort', { bubbles: true, detail: { newIndex, oldIndex } }));
 	}
 

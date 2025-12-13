@@ -15,6 +15,9 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	implements UmbPropertyEditorUiElement
 {
 	@property()
+	name?: string;
+
+	@property()
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
 	}
@@ -51,7 +54,6 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	private _options: Array<Option> = [];
 
 	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
-		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
 		this.value = event.target.value as string;
 		this.dispatchEvent(new UmbChangeEvent());
 	}
@@ -63,22 +65,19 @@ export class ContentmentPropertyEditorUIDropdownListElement
 					compact
 					type="warning"
 					icon="icon-alert"
-					heading="There are no items to display"></contentment-info-box>
+					headline="There are no items to display"></contentment-info-box>
 			`;
 		}
 
 		return html`
-			<uui-select .options=${this._options} value=${ifDefined(this.value)} @change=${this.#onChange}></uui-select>
+			<uui-select
+				.label=${this.name ?? 'Dropdown List'}
+				.options=${this._options}
+				value=${ifDefined(this.value)}
+				@change=${this.#onChange}>
+			</uui-select>
 		`;
 	}
-
-	// #renderItem(item: ContentmentListItem) {
-	// 	return html`
-	// 		<option display-value=${this.localize.string(item.name)} value=${item.value} ?disabled=${item.disabled}>
-	// 			${this.localize.string(item.name)}
-	// 		</option>
-	// 	`;
-	// }
 }
 
 export { ContentmentPropertyEditorUIDropdownListElement as element };

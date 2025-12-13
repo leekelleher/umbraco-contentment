@@ -21,6 +21,7 @@ import type {
 	ContentmentSocialLinkValue,
 	ContentmentSocialNetworkModel,
 } from '../types.js';
+import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -134,9 +135,10 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		return await modal.onSubmit().catch(() => undefined);
 	}
 
-	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+	#onSortEnd(event: ContentmentSortEndEvent) {
+		if (event.newIndex === undefined || event.oldIndex === undefined) return;
 		const items = [...(this.value ?? [])];
-		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		items.splice(event.newIndex, 0, items.splice(event.oldIndex, 1)[0]);
 		this.value = items;
 
 		this.dispatchEvent(new UmbChangeEvent());

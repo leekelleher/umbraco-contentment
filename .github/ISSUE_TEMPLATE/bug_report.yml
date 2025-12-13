@@ -54,13 +54,3 @@ body:
       Describe the intended/desired outcome after you did the steps mentioned.
       
       Describe the behaviour of the bug
-- type: dropdown
-  id: browsers
-  attributes:
-    label: What browsers are you seeing the problem on?
-    multiple: true
-    options:
-      - Chrome
-      - Edge
-      - Firefox
-      - Safari

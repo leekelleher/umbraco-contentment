@@ -72,6 +72,7 @@ namespace Umbraco.Community.Contentment
                 public const string Web = nameof(Web);
             }
 
+            [Obsolete("To be removed in Contentment 8.0")]
             internal static partial class DefaultConfiguration
             {
                 [Obsolete("To be removed in Contentment 8.0")]

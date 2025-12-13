@@ -4,32 +4,24 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.AspNetCore.Http;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public sealed class ContentmentContentContext : IContentmentContentContext2
+    public sealed class ContentmentContentContext : IContentmentContentContext3
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJsonSerializer _jsonSerializer;
-        private readonly IRequestAccessor _requestAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IVariationContextAccessor _variationContextAccessor;
 
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
-            IJsonSerializer jsonSerializer,
-            IRequestAccessor requestAccessor,
             IUmbracoContextAccessor umbracoContextAccessor,
             IVariationContextAccessor variationContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _jsonSerializer = jsonSerializer;
-            _requestAccessor = requestAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
             _variationContextAccessor = variationContextAccessor;
         }
@@ -44,8 +36,6 @@ namespace Umbraco.Community.Contentment.Services
                 return unique;
             }
 
-            // TODO: [LK] Review this code - is it needed?
-
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.PublishedRequest?.PublishedContent is not null)
             {
@@ -53,36 +43,6 @@ namespace Umbraco.Community.Contentment.Services
                 if (attempt.Success)
                 {
                     return attempt.Result;
-                }
-            }
-
-            // NOTE: First we check for "id" (if on a content page), then "parentId" (if editing an element).
-            var attempt1 = _requestAccessor.GetRequestValue("id")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
-            if (attempt1.Success)
-            {
-                return attempt1.Result;
-            }
-
-            var attempt2 = _requestAccessor.GetRequestValue("parentId")?.TryConvertTo<T>() ?? Attempt.Fail<T>();
-            if (attempt2.Success)
-            {
-                isParent = true;
-                return attempt2.Result;
-            }
-
-            // TODO: [LK:2024-12-06] Figure out if this is still needed?
-            var json = _httpContextAccessor.HttpContext?.Request.GetRawBodyStringAsync().GetAwaiter().GetResult();
-            if (string.IsNullOrWhiteSpace(json) == false)
-            {
-                var obj = DeserializeAnonymousType(json, new { id = (object?)null, parentId = (object?)null });
-                if (obj is not null && obj.id is not null)
-                {
-                    return obj.id.TryConvertTo<T>().Result;
-                }
-                else if (obj is not null && obj.parentId is not null)
-                {
-                    isParent = true;
-                    return obj.parentId.TryConvertTo<T>().Result;
                 }
             }
 
@@ -95,10 +55,10 @@ namespace Umbraco.Community.Contentment.Services
         {
             isParent = false;
 
-            _variationContextAccessor.VariationContext = new VariationContext(GetCurrentVariantId());
 
             if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true)
             {
+                // Cursory check if this is being called during a published/routable request.
                 if (umbracoContext.PublishedRequest?.PublishedContent != null)
                 {
                     return umbracoContext.PublishedRequest.PublishedContent;
@@ -106,17 +66,17 @@ namespace Umbraco.Community.Contentment.Services
 
                 // NOTE: First we check for an integer ID.
                 var currentContentId = GetCurrentContentId<int?>(out isParent);
-
                 if (currentContentId.HasValue == true)
                 {
+                    SetVariationContext();
                     return umbracoContext.Content?.GetById(true, currentContentId.Value);
                 }
 
                 // NOTE: Next we check for a GUID ID.
                 var currentContentKey = GetCurrentContentId<Guid?>(out isParent);
-
                 if (currentContentKey.HasValue == true)
                 {
+                    SetVariationContext();
                     return umbracoContext.Content?.GetById(true, currentContentKey.Value);
                 }
             }
@@ -126,9 +86,22 @@ namespace Umbraco.Community.Contentment.Services
 
         public string? GetCurrentVariantId()
         {
-            return _httpContextAccessor.HttpContext?.Items["contentmentContextCurrentContentVariantId"] as string;
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentVariantId", out string? variantId) == true &&
+                string.IsNullOrWhiteSpace(variantId) == false)
+            {
+                return variantId;
+            }
+
+            return default;
         }
 
-        private T? DeserializeAnonymousType<T>(string json, T anonymousObj) => _jsonSerializer.Deserialize<T>(json);
+        private void SetVariationContext()
+        {
+            var variantId = GetCurrentVariantId();
+            if (string.IsNullOrWhiteSpace(variantId) == false && variantId != "invariant")
+            {
+                _variationContextAccessor.VariationContext = new VariationContext(variantId);
+            }
+        }
     }
 }

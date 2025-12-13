@@ -17,6 +17,7 @@ import { umbFocus, UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
 import type { ContentmentListItemValue } from '../types.js';
+import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
@@ -107,9 +108,10 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#onSortEnd(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+	#onSortEnd(event: ContentmentSortEndEvent) {
+		if (event.newIndex === undefined || event.oldIndex === undefined) return;
 		const items = [...(this.value ?? [])];
-		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
+		items.splice(event.newIndex, 0, items.splice(event.oldIndex, 1)[0]);
 		this.value = items;
 
 		this.dispatchEvent(new UmbChangeEvent());

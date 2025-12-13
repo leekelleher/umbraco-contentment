@@ -31,6 +31,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
+            new()
+            {
+                Key = "listStyles",
+                Name = "List styles",
+                Description = "<em>(optional)</em> Enter CSS rules for the list's container , e.g. <code>&lt;ul&gt;</code> element.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+            },
+            new ()
+            {
+                Key = "listItemStyles",
+                Name = "List item styles",
+                Description = "<em>(optional)</em> Enter CSS rules for each list item, e.g. <code>&lt;li&gt;</code> element.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+            },
         };
 
         public Dictionary<string, object>? DefaultValues => default;

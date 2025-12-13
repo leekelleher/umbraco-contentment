@@ -25,7 +25,7 @@ Okay, once you have discussed an idea or feature... it's hacking time!
 
 Given there are now multiple versions of Contentment that support multiple versions of Umbraco, please make note of the branching structure.
 
-- The main [`develop`](https://github.com/leekelleher/umbraco-contentment/tree/develop) branch is where the latest work happens. This defaults to the most recent version of Contentment, (at the time of writing, this is v3.x).
+- The main [`develop`](https://github.com/leekelleher/umbraco-contentment/tree/develop) branch is where the latest work happens. This defaults to the most recent version of Contentment, (at the time of writing, this is v6.x).
 - The [`dev/v1.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v1.x) branch is for Contentment **v1.4.x** patch releases, this targets Umbraco **v8.6.1**.
 - The [`dev/v2.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v2.x) branch is for Contentment **v2.2.x** patch releases, this targets Umbraco **v8.14.0**.
 - The [`dev/v3.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v3.x) branch is for Contentment **v3.4.x** patch releases, this targets both Umbraco **v8.17.0** and **v9.0.0**.

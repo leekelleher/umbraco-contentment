@@ -44,7 +44,7 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
             extensions.Add(new
             {
                 type = "menuItem",
-                alias = $"{Constants.Internals.ManifestAliasPrefix}.MenuItem.{Constants.Internals.ProjectName}",
+                alias = $"{Constants.Internals.ManifestAliasPrefix}MenuItem.{Constants.Internals.ProjectName}",
                 name = Constants.Internals.ManifestNamePrefix + "Menu Item",
                 meta = new
                 {
@@ -70,12 +70,10 @@ internal class ContentmentPackageManifestReader : IPackageManifestReader
                 Imports = new()
                 {
                     { Constants.Internals.ImportMapAlias, Constants.Internals.PackagePathRoot + "index.js" },
-                    { "@umbraco-community/backoffice/external/liquidjs", Constants.Internals.PackagePathRoot + "liquidjs.js" },
-                    { "@umbraco-community/backoffice/external/sortablejs", Constants.Internals.PackagePathRoot + "sortablejs.js" },
                 }
             },
         };
 
-        return Task.FromResult(manifest.AsEnumerableOfOne());
+        return Task.FromResult(Enumerable.Repeat(manifest, 1));
     }
 }
