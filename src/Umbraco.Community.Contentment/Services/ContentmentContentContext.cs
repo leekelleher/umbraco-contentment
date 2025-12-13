@@ -5,34 +5,25 @@
 
 using Microsoft.AspNetCore.Http;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public sealed class ContentmentContentContext : IContentmentContentContext2
+    public sealed class ContentmentContentContext : IContentmentContentContext3
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-
-        [Obsolete("Use constructor without the `IJsonSerializer` and `IRequestAccessor` parameters. This constructor will be removed in Contentment 8.0.")]
-        public ContentmentContentContext(
-            IHttpContextAccessor httpContextAccessor,
-            IJsonSerializer jsonSerializer,
-            IRequestAccessor requestAccessor,
-            IUmbracoContextAccessor umbracoContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _umbracoContextAccessor = umbracoContextAccessor;
-        }
+        private readonly IVariationContextAccessor _variationContextAccessor;
 
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
-            IUmbracoContextAccessor umbracoContextAccessor)
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IVariationContextAccessor variationContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
+            _variationContextAccessor = variationContextAccessor;
         }
 
         public T? GetCurrentContentId<T>(out bool isParent)
@@ -74,22 +65,42 @@ namespace Umbraco.Community.Contentment.Services
 
                 // NOTE: First we check for an integer ID.
                 var currentContentId = GetCurrentContentId<int?>(out isParent);
-
                 if (currentContentId.HasValue == true)
                 {
+                    SetVariationContext();
                     return umbracoContext.Content?.GetById(true, currentContentId.Value);
                 }
 
                 // NOTE: Next we check for a GUID ID.
                 var currentContentKey = GetCurrentContentId<Guid?>(out isParent);
-
                 if (currentContentKey.HasValue == true)
                 {
+                    SetVariationContext();
                     return umbracoContext.Content?.GetById(true, currentContentKey.Value);
                 }
             }
 
             return default;
+        }
+
+        public string? GetCurrentVariantId()
+        {
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentVariantId", out string? variantId) == true &&
+                string.IsNullOrWhiteSpace(variantId) == false)
+            {
+                return variantId;
+            }
+
+            return default;
+        }
+
+        private void SetVariationContext()
+        {
+            var variantId = GetCurrentVariantId();
+            if (string.IsNullOrWhiteSpace(variantId) == false && variantId != "invariant")
+            {
+                _variationContextAccessor.VariationContext = new VariationContext(variantId);
+            }
         }
     }
 }
