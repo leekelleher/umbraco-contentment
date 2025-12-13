@@ -27,18 +27,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	@property({ attribute: false })
 	public set manifest(value: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
 		this.#manifest = value;
-
-		if (value?.template) {
-			if (typeof value.template === 'function') {
-				value.template().then((result) => {
-					const templateString = typeof result === 'string' ? result : result.default;
-					this.#template = this.#engine.parse(templateString);
-					this.requestUpdate();
-				});
-			} else {
-				this.#template = this.#engine.parse(value.template);
-			}
-		}
+		this.#loadTemplate(value);
 	}
 	public get manifest(): ContentmentBlockEditorCustomViewLiquidManifestKind | undefined {
 		return this.#manifest;
@@ -92,6 +81,44 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 				this._contentElementTypeAlias = contentElementTypeAlias;
 			});
 		});
+	}
+
+	async #loadTemplate(manifest: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
+		if (!manifest) return;
+
+		let templateString: string | undefined;
+
+		// Priority 1: Loader function (dynamic import)
+		if (typeof manifest.template === 'function') {
+			try {
+				const result = await manifest.template();
+				templateString = typeof result === 'string' ? result : result.default;
+			} catch (error) {
+				console.error('[Contentment] Failed to load template via import:', error);
+			}
+		}
+		// Priority 2: Path string (fetch at runtime)
+		else if (typeof manifest.template === 'string') {
+			try {
+				const response = await fetch(manifest.template);
+				if (!response.ok) {
+					throw new Error(`HTTP ${response.status}: ${manifest.template}`);
+				}
+				templateString = await response.text();
+			} catch (error) {
+				console.error('[Contentment] Failed to fetch template:', error);
+			}
+		}
+
+		// Priority 3: Fallback to inline content
+		if (!templateString && manifest.templateContent) {
+			templateString = manifest.templateContent;
+		}
+
+		if (templateString) {
+			this.#template = this.#engine.parse(templateString);
+			this.requestUpdate();
+		}
 	}
 
 	override render() {

@@ -10,7 +10,10 @@ export interface ContentmentLiquidTemplateModule {
 export interface ContentmentBlockEditorCustomViewLiquidManifestKind extends ManifestBlockEditorCustomView {
 	type: 'blockEditorCustomView';
 	kind: 'liquid';
+	/** Path to fetch or dynamic import loader */
 	template?: string | (() => Promise<string | ContentmentLiquidTemplateModule>) | null | undefined;
+	/** Inline Liquid template markup (fallback if template fails) */
+	templateContent?: string | null | undefined;
 }
 
 declare global {
