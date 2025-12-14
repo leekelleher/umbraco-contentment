@@ -8,16 +8,28 @@ import type { Template } from '../../external/liquidjs/index.js';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
 
 export class ContentmentLiquidContext extends UmbContextBase {
+	#engine?: Liquid;
+
+	public get engine(): Liquid {
+		if (!this.#engine) {
+			this.#engine = new Liquid({ cache: true });
+		}
+		return this.#engine;
+	}
 
 	constructor(host: UmbControllerHost) {
 		super(host, CONTENTMENT_LIQUID_CONTEXT);
 	}
 
 	parse(template: string): Array<Template> {
+		return this.engine.parse(template);
 	}
 
 	async render(templates: Array<Template>, scope: object): Promise<string> {
+		return this.engine.render(templates, scope);
 	}
 }
 
 export default ContentmentLiquidContext;
+
+export { ContentmentLiquidContext as api };
