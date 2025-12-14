@@ -3,7 +3,7 @@
 
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { customElement, nothing, property, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { Liquid } from '../../external/liquidjs/index.js';
+import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { Template } from '../../external/liquidjs/index.js';
@@ -14,7 +14,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#engine = new Liquid({ cache: true });
+	#liquidContext?: ContentmentLiquidContext;
 
 	#hideLabel: boolean = false;
 
@@ -25,13 +25,20 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	@property({ attribute: false })
 	public value?: unknown;
 
+	constructor() {
+		super();
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquidContext = context;
+		});
+	}
+
 	set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 
 		const notes = config.getValueByAlias<string>('notes') ?? '';
-		this.#template = this.#engine.parse(notes);
+		this.#template = this.#liquidContext?.parse(notes);
 	}
 
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
@@ -51,8 +58,8 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	}
 
 	async #renderTemplate() {
-		if (!this.#engine || !this.#template) return null;
-		const markup = await this.#engine.render(this.#template, { model: { value: this.value } });
+		if (!this.#liquidContext || !this.#template) return null;
+		const markup = await this.#liquidContext.render(this.#template, { model: { value: this.value } });
 		return markup ? unsafeHTML(markup) : nothing;
 	}
 }

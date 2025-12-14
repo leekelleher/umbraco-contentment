@@ -2,7 +2,7 @@
 // Copyright © 2025 Lee Kelleher
 
 import { customElement, nothing, property, state, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { Liquid } from '../../external/liquidjs/index.js';
+import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
@@ -17,7 +17,7 @@ import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
 @customElement('contentment-block-editor-liquid-view')
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
-	#engine = new Liquid({ cache: true });
+	#liquidContext?: ContentmentLiquidContext;
 
 	#template?: Array<Template>;
 
@@ -76,6 +76,10 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	constructor() {
 		super();
 
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquidContext = context;
+		});
+
 		this.consumeContext(UMB_BLOCK_ENTRY_CONTEXT, (blockEntry) => {
 			this.observe(blockEntry?.contentElementTypeAlias, (contentElementTypeAlias) => {
 				this._contentElementTypeAlias = contentElementTypeAlias;
@@ -116,7 +120,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		}
 
 		if (templateString) {
-			this.#template = this.#engine.parse(templateString);
+			this.#template = this.#liquidContext?.parse(templateString);
 			this.requestUpdate();
 		}
 	}
@@ -126,7 +130,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	}
 
 	async #renderTemplate() {
-		if (!this.#engine || !this.#template) return nothing;
+		if (!this.#liquidContext || !this.#template) return nothing;
 
 		const scope = {
 			manifest: this.manifest,
@@ -145,7 +149,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 			contentElementTypeAlias: this._contentElementTypeAlias,
 		};
 
-		const markup = await this.#engine.render(this.#template, scope);
+		const markup = await this.#liquidContext.render(this.#template, scope);
 		return markup ? unsafeHTML(markup) : nothing;
 	}
 

@@ -16,7 +16,7 @@ import {
 	until,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { Liquid } from '../../external/liquidjs/index.js';
+import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { Template } from '../../external/liquidjs/index.js';
@@ -27,7 +27,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#engine = new Liquid({ cache: true });
+	#liquidContext?: ContentmentLiquidContext;
 
 	#template?: Array<Template>;
 
@@ -46,6 +46,13 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	@state()
 	private _listItemStyles?: string;
 
+	constructor() {
+		super();
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquidContext = context;
+		});
+	}
+
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
 		this.#value = Array.isArray(value) ? value : value ? [value] : [];
@@ -63,7 +70,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 
 		const template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
-		this.#template = this.#engine.parse(template);
+		this.#template = this.#liquidContext?.parse(template);
 
 		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 
@@ -143,8 +150,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	}
 
 	async #renderTemplate(item: ContentmentDataListOption) {
-		if (!this.#engine || !this.#template) return null;
-		const markup = await this.#engine.render(this.#template, { item });
+		if (!this.#liquidContext || !this.#template) return null;
+		const markup = await this.#liquidContext.render(this.#template, { item });
 		return markup ? unsafeHTML(markup) : nothing;
 	}
 
