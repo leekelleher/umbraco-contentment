@@ -16,6 +16,26 @@ import type {
 } from '@umbraco-cms/backoffice/block-custom-view';
 import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
+/**
+ * Properties from the scope object that should trigger a re-render when changed.
+ * Note: 'manifest' is excluded as it has its own setter that handles template loading.
+ * Note: 'contentElementTypeAlias' is excluded as it's observed separately via UMB_BLOCK_ENTRY_CONTEXT.
+ */
+const WATCHED_SCOPE_PROPERTIES = [
+	'config',
+	'blockType',
+	'label',
+	'icon',
+	'index',
+	'layout',
+	'content',
+	'settings',
+	'contentInvalid',
+	'settingsInvalid',
+	'unsupported',
+	'unpublished',
+] as const;
+
 @customElement('contentment-block-editor-liquid-view')
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
 	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
@@ -165,22 +185,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		super.updated(changedProperties);
 
 		// Re-render Liquid when any scope property changes
-		const scopeProperties = [
-			'config',
-			'blockType',
-			'label',
-			'icon',
-			'index',
-			'layout',
-			'content',
-			'settings',
-			'contentInvalid',
-			'settingsInvalid',
-			'unsupported',
-			'unpublished',
-		];
-
-		if (scopeProperties.some((prop) => changedProperties.has(prop))) {
+		if (WATCHED_SCOPE_PROPERTIES.some((prop) => changedProperties.has(prop))) {
 			this.#renderLiquidTemplate();
 		}
 	}
