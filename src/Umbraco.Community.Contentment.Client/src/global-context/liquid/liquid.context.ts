@@ -22,7 +22,11 @@ export class ContentmentLiquidContext extends UmbContextBase {
 	}
 
 	parse(template: string): Array<Template> {
-		return this.engine.parse(template);
+		try {
+			return this.engine.parse(template);
+		} catch (error) {
+			throw new Error(`Failed to parse Liquid template: ${(error instanceof Error) ? error.message : String(error)}`);
+		}
 	}
 
 	async render(templates: Array<Template>, scope: object): Promise<string> {
