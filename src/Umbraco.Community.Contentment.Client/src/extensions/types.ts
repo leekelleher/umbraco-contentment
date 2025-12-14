@@ -1,6 +1,7 @@
-// SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
 
+export type * from './block-editor-custom-view/index.js';
 export type * from './data-list-item-ui/index.js';
 export type * from './data-source/index.js';
 export type * from './display-mode/index.js';
