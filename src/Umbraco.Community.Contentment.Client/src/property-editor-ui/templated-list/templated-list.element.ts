@@ -29,6 +29,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 {
 	#liquidContext?: ContentmentLiquidContext;
 
+	#templateString?: string;
+
 	#template?: Array<Template>;
 
 	@state()
@@ -50,6 +52,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		super();
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
 			this.#liquidContext = context;
+			this.#parseTemplate();
 		});
 	}
 
@@ -69,8 +72,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 
-		const template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
-		this.#template = this.#liquidContext?.parse(template);
+		this.#templateString = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
+		this.#parseTemplate();
 
 		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 
@@ -83,6 +86,12 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		if (!this.value) {
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
+	}
+
+	#parseTemplate() {
+		if (!this.#liquidContext || !this.#templateString) return;
+		this.#template = this.#liquidContext.parse(this.#templateString);
+		this.requestUpdate();
 	}
 
 	#onClick(option: ContentmentDataListOption) {

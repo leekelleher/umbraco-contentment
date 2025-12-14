@@ -19,6 +19,8 @@ import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
 	#liquidContext?: ContentmentLiquidContext;
 
+	#templateString?: string;
+
 	#template?: Array<Template>;
 
 	@state()
@@ -78,6 +80,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
 			this.#liquidContext = context;
+			this.#parseTemplate();
 		});
 
 		this.consumeContext(UMB_BLOCK_ENTRY_CONTEXT, (blockEntry) => {
@@ -119,10 +122,14 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 			templateString = manifest.templateContent;
 		}
 
-		if (templateString) {
-			this.#template = this.#liquidContext?.parse(templateString);
-			this.requestUpdate();
-		}
+		this.#templateString = templateString;
+		this.#parseTemplate();
+	}
+
+	#parseTemplate() {
+		if (!this.#liquidContext || !this.#templateString) return;
+		this.#template = this.#liquidContext.parse(this.#templateString);
+		this.requestUpdate();
 	}
 
 	override render() {

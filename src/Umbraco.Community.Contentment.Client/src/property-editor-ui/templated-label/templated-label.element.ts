@@ -20,6 +20,8 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 
 	#hidePropertyGroup: boolean = false;
 
+	#templateString?: string;
+
 	#template?: Array<Template>;
 
 	@property({ attribute: false })
@@ -29,6 +31,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		super();
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
 			this.#liquidContext = context;
+			this.#parseTemplate();
 		});
 	}
 
@@ -37,8 +40,14 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 
-		const notes = config.getValueByAlias<string>('notes') ?? '';
-		this.#template = this.#liquidContext?.parse(notes);
+		this.#templateString = config.getValueByAlias<string>('notes') ?? '';
+		this.#parseTemplate();
+	}
+
+	#parseTemplate() {
+		if (!this.#liquidContext || !this.#templateString) return;
+		this.#template = this.#liquidContext.parse(this.#templateString);
+		this.requestUpdate();
 	}
 
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
