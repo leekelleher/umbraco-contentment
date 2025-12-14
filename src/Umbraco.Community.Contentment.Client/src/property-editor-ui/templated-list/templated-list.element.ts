@@ -134,6 +134,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 			this._items.forEach((item) => {
 				item.selected = this.#value?.includes(item.value) ?? false;
 			});
+			this.#renderLiquidTemplate();
 		}
 	}
 
