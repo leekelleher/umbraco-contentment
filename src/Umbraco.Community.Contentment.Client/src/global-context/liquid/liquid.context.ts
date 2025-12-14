@@ -30,7 +30,11 @@ export class ContentmentLiquidContext extends UmbContextBase {
 	}
 
 	async render(templates: Array<Template>, scope: object): Promise<string> {
-		return this.engine.render(templates, scope);
+		try {
+			return await this.engine.render(templates, scope);
+		} catch (error) {
+			throw new Error(`Liquid template rendering failed: ${error instanceof Error ? error.message : String(error)}`);
+		}
 	}
 }
 
