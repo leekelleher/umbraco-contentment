@@ -1,9 +1,9 @@
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: MIT
 // Copyright © 2024 Lee Kelleher
 
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context-token.js';
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
-import { customElement, nothing, property, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { Liquid } from '../../external/liquidjs/index.js';
+import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { Template } from '../../external/liquidjs/index.js';
@@ -14,24 +14,56 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#engine = new Liquid({ cache: true });
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
 	#hideLabel: boolean = false;
 
 	#hidePropertyGroup: boolean = false;
 
-	#template?: Array<Template>;
+	#template?: string;
+
+	#templateCompiled?: Array<Template>;
+
+	@state()
+	private _markup: unknown;
 
 	@property({ attribute: false })
-	public value?: unknown;
+	public set value(value: unknown) {
+		this.#value = value;
+		this.#renderLiquidTemplate();
+	}
+	public get value(): unknown {
+		return this.#value;
+	}
+	#value?: unknown;
+
+	constructor() {
+		super();
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
+		});
+	}
 
 	set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
+		this.#template = config.getValueByAlias<string>('notes') ?? '';
 
-		const notes = config.getValueByAlias<string>('notes') ?? '';
-		this.#template = this.#engine.parse(notes);
+		this.#parseLiquidTemplate();
+	}
+
+	#parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
+	}
+
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled) return;
+		const markup = await this.#liquid.render(this.#templateCompiled, { model: { value: this.#value } });
+		this._markup = markup ? unsafeHTML(markup) : nothing;
 	}
 
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
@@ -47,13 +79,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	}
 
 	override render() {
-		return until(this.#renderTemplate());
-	}
-
-	async #renderTemplate() {
-		if (!this.#engine || !this.#template) return null;
-		const markup = await this.#engine.render(this.#template, { model: { value: this.value } });
-		return markup ? unsafeHTML(markup) : nothing;
+		return this._markup ?? nothing;
 	}
 }
 

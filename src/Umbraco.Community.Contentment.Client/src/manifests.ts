@@ -3,6 +3,7 @@
 
 import { manifests as conditions } from './condition/manifests.js';
 import { manifests as extensions } from './extensions/manifests.js';
+import { manifests as globalContexts } from './global-context/manifests.js';
 import { manifests as icons } from './icons/manifests.js';
 import { manifests as localizations } from './localization/manifests.js';
 import { manifests as propertyActions } from './property-action/manifests.js';
@@ -15,6 +16,7 @@ import './components/index.js';
 export const manifests: Array<UmbExtensionManifest | UmbExtensionManifestKind> = [
 	...conditions,
 	...extensions,
+	...globalContexts,
 	...icons,
 	...localizations,
 	...propertyActions,

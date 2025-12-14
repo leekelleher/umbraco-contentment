@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { customElement, nothing, property, state, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { Liquid } from '../../external/liquidjs/index.js';
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context-token.js';
+import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
 import type { ContentmentBlockEditorCustomViewLiquidManifestKind } from './liquid.kind.js';
+import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { Template } from '../../external/liquidjs/index.js';
 import type { UmbBlockDataType, UmbBlockLayoutBaseModel } from '@umbraco-cms/backoffice/block';
 import type {
@@ -15,14 +16,39 @@ import type {
 } from '@umbraco-cms/backoffice/block-custom-view';
 import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
+/**
+ * Properties from the scope object that should trigger a re-render when changed.
+ * Note: 'manifest' is excluded as it has its own setter that handles template loading.
+ * Note: 'contentElementTypeAlias' is excluded as it's observed separately via UMB_BLOCK_ENTRY_CONTEXT.
+ */
+const WATCHED_SCOPE_PROPERTIES = [
+	'config',
+	'blockType',
+	'label',
+	'icon',
+	'index',
+	'layout',
+	'content',
+	'settings',
+	'contentInvalid',
+	'settingsInvalid',
+	'unsupported',
+	'unpublished',
+] as const;
+
 @customElement('contentment-block-editor-liquid-view')
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
-	#engine = new Liquid({ cache: true });
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
-	#template?: Array<Template>;
+	#template?: string;
+
+	#templateCompiled?: Array<Template>;
 
 	@state()
 	private _contentElementTypeAlias?: string;
+
+	@state()
+	private _markup: unknown;
 
 	@property({ attribute: false })
 	public set manifest(value: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
@@ -76,9 +102,15 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	constructor() {
 		super();
 
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
+		});
+
 		this.consumeContext(UMB_BLOCK_ENTRY_CONTEXT, (blockEntry) => {
 			this.observe(blockEntry?.contentElementTypeAlias, (contentElementTypeAlias) => {
 				this._contentElementTypeAlias = contentElementTypeAlias;
+				this.#renderLiquidTemplate();
 			});
 		});
 	}
@@ -86,13 +118,13 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	async #loadTemplate(manifest: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
 		if (!manifest) return;
 
-		let templateString: string | undefined;
+		let template: string | undefined;
 
 		// Priority 1: Loader function (dynamic import)
 		if (typeof manifest.template === 'function') {
 			try {
 				const result = await manifest.template();
-				templateString = typeof result === 'string' ? result : result.default;
+				template = typeof result === 'string' ? result : result.default;
 			} catch (error) {
 				console.error('[Contentment] Failed to load template via import:', error);
 			}
@@ -104,29 +136,29 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 				if (!response.ok) {
 					throw new Error(`HTTP ${response.status}: ${manifest.template}`);
 				}
-				templateString = await response.text();
+				template = await response.text();
 			} catch (error) {
 				console.error('[Contentment] Failed to fetch template:', error);
 			}
 		}
 
 		// Priority 3: Fallback to inline content
-		if (!templateString && manifest.templateContent) {
-			templateString = manifest.templateContent;
+		if (!template && manifest.templateContent) {
+			template = manifest.templateContent;
 		}
 
-		if (templateString) {
-			this.#template = this.#engine.parse(templateString);
-			this.requestUpdate();
-		}
+		this.#template = template;
+		this.#parseLiquidTemplate();
 	}
 
-	override render() {
-		return until(this.#renderTemplate());
+	#parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
 	}
 
-	async #renderTemplate() {
-		if (!this.#engine || !this.#template) return nothing;
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled) return;
 
 		const scope = {
 			manifest: this.manifest,
@@ -145,8 +177,21 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 			contentElementTypeAlias: this._contentElementTypeAlias,
 		};
 
-		const markup = await this.#engine.render(this.#template, scope);
-		return markup ? unsafeHTML(markup) : nothing;
+		const markup = await this.#liquid.render(this.#templateCompiled, scope);
+		this._markup = markup ? unsafeHTML(markup) : nothing;
+	}
+
+	protected override updated(changedProperties: PropertyValues): void {
+		super.updated(changedProperties);
+
+		// Re-render Liquid when any scope property changes
+		if (WATCHED_SCOPE_PROPERTIES.some((prop) => changedProperties.has(prop))) {
+			this.#renderLiquidTemplate();
+		}
+	}
+
+	override render() {
+		return this._markup ?? nothing;
 	}
 
 	static override readonly styles = [UmbTextStyles];
