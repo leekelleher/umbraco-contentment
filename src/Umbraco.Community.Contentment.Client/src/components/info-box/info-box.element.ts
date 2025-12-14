@@ -106,6 +106,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 				--uui-color-interactive: var(--lk-info-box-foreground);
 				--uui-color-interactive-emphasis: var(--lk-info-box-foreground);
 
+				box-sizing: border-box;
 				display: flex;
 				align-items: flex-start;
 				justify-content: flex-start;

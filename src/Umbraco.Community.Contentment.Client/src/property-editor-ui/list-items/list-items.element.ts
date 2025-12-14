@@ -235,6 +235,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 
 				padding: var(--uui-size-3) var(--uui-size-6);
 				background-color: var(--uui-color-surface-alt);
+				border-radius: var(--uui-border-radius);
 
 				&[drag-placeholder] {
 					opacity: 0.5;
