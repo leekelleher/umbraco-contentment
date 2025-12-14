@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { customElement, nothing, property, state, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/index.js';
+import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
 import type { ContentmentBlockEditorCustomViewLiquidManifestKind } from './liquid.kind.js';
+import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { Template } from '../../external/liquidjs/index.js';
 import type { UmbBlockDataType, UmbBlockLayoutBaseModel } from '@umbraco-cms/backoffice/block';
 import type {
@@ -17,7 +18,7 @@ import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
 @customElement('contentment-block-editor-liquid-view')
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
-	#liquidContext?: ContentmentLiquidContext;
+	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
 	#templateString?: string;
 
@@ -25,6 +26,9 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 
 	@state()
 	private _contentElementTypeAlias?: string;
+
+	@state()
+	private _markup: unknown;
 
 	@property({ attribute: false })
 	public set manifest(value: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
@@ -86,6 +90,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		this.consumeContext(UMB_BLOCK_ENTRY_CONTEXT, (blockEntry) => {
 			this.observe(blockEntry?.contentElementTypeAlias, (contentElementTypeAlias) => {
 				this._contentElementTypeAlias = contentElementTypeAlias;
+				this.#renderLiquid();
 			});
 		});
 	}
@@ -129,15 +134,11 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	#parseTemplate() {
 		if (!this.#liquidContext || !this.#templateString) return;
 		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.requestUpdate();
+		this.#renderLiquid();
 	}
 
-	override render() {
-		return until(this.#renderTemplate());
-	}
-
-	async #renderTemplate() {
-		if (!this.#liquidContext || !this.#template) return nothing;
+	async #renderLiquid() {
+		if (!this.#liquidContext || !this.#template) return;
 
 		const scope = {
 			manifest: this.manifest,
@@ -157,7 +158,35 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		};
 
 		const markup = await this.#liquidContext.render(this.#template, scope);
-		return markup ? unsafeHTML(markup) : nothing;
+		this._markup = markup ? unsafeHTML(markup) : nothing;
+	}
+
+	protected override updated(changedProperties: PropertyValues): void {
+		super.updated(changedProperties);
+
+		// Re-render Liquid when any scope property changes
+		const scopeProperties = [
+			'config',
+			'blockType',
+			'label',
+			'icon',
+			'index',
+			'layout',
+			'content',
+			'settings',
+			'contentInvalid',
+			'settingsInvalid',
+			'unsupported',
+			'unpublished',
+		];
+
+		if (scopeProperties.some((prop) => changedProperties.has(prop))) {
+			this.#renderLiquid();
+		}
+	}
+
+	override render() {
+		return this._markup ?? nothing;
 	}
 
 	static override readonly styles = [UmbTextStyles];

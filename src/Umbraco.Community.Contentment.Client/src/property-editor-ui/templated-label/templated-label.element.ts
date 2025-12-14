@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/index.js';
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
-import { customElement, nothing, property, unsafeHTML, until } from '@umbraco-cms/backoffice/external/lit';
-import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
+import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { Template } from '../../external/liquidjs/index.js';
@@ -14,7 +14,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#liquidContext?: ContentmentLiquidContext;
+	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
 	#hideLabel: boolean = false;
 
@@ -24,8 +24,18 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 
 	#template?: Array<Template>;
 
+	@state()
+	private _markup: unknown;
+
 	@property({ attribute: false })
-	public value?: unknown;
+	public set value(value: unknown) {
+		this.#value = value;
+		this.#renderLiquid();
+	}
+	public get value(): unknown {
+		return this.#value;
+	}
+	#value?: unknown;
 
 	constructor() {
 		super();
@@ -47,7 +57,13 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	#parseTemplate() {
 		if (!this.#liquidContext || !this.#templateString) return;
 		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.requestUpdate();
+		this.#renderLiquid();
+	}
+
+	async #renderLiquid() {
+		if (!this.#liquidContext || !this.#template) return;
+		const markup = await this.#liquidContext.render(this.#template, { model: { value: this.#value } });
+		this._markup = markup ? unsafeHTML(markup) : nothing;
 	}
 
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
@@ -63,13 +79,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	}
 
 	override render() {
-		return until(this.#renderTemplate());
-	}
-
-	async #renderTemplate() {
-		if (!this.#liquidContext || !this.#template) return null;
-		const markup = await this.#liquidContext.render(this.#template, { model: { value: this.value } });
-		return markup ? unsafeHTML(markup) : nothing;
+		return this._markup ?? nothing;
 	}
 }
 

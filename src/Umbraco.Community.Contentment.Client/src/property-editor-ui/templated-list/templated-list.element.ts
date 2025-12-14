@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/index.js';
 import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
 import {
 	classMap,
@@ -13,10 +14,8 @@ import {
 	repeat,
 	state,
 	unsafeHTML,
-	until,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { CONTENTMENT_LIQUID_CONTEXT, type ContentmentLiquidContext } from '../../global-context/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { Template } from '../../external/liquidjs/index.js';
@@ -27,7 +26,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#liquidContext?: ContentmentLiquidContext;
+	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
 	#templateString?: string;
 
@@ -47,6 +46,9 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 	@state()
 	private _listItemStyles?: string;
+
+	@state()
+	private _itemMarkups = new Map<string, unknown>();
 
 	constructor() {
 		super();
@@ -83,6 +85,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
+		this.#renderAllItems();
+
 		if (!this.value) {
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
@@ -91,7 +95,18 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	#parseTemplate() {
 		if (!this.#liquidContext || !this.#templateString) return;
 		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.requestUpdate();
+		this.#renderAllItems();
+	}
+
+	async #renderAllItems() {
+		if (!this.#liquidContext || !this.#template || !this._items?.length) return;
+
+		const newMarkups = new Map<string, unknown>();
+		for (const item of this._items) {
+			const markup = await this.#liquidContext.render(this.#template, { item });
+			newMarkups.set(item.value, markup ? unsafeHTML(markup) : nothing);
+		}
+		this._itemMarkups = newMarkups;
 	}
 
 	#onClick(option: ContentmentDataListOption) {
@@ -152,16 +167,10 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					class=${classMap({ selected: item.selected })}
 					?disabled=${item.disabled}
 					@click=${() => this.#onClick(item)}>
-					${until(this.#renderTemplate(item))}
+					${this._itemMarkups.get(item.value) ?? nothing}
 				</button>
 			</li>
 		`;
-	}
-
-	async #renderTemplate(item: ContentmentDataListOption) {
-		if (!this.#liquidContext || !this.#template) return null;
-		const markup = await this.#liquidContext.render(this.#template, { item });
-		return markup ? unsafeHTML(markup) : nothing;
 	}
 
 	static override styles = [
