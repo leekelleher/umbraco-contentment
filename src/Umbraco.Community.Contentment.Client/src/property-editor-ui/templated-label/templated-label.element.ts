@@ -14,15 +14,15 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
 	#hideLabel: boolean = false;
 
 	#hidePropertyGroup: boolean = false;
 
-	#templateString?: string;
+	#template?: string;
 
-	#template?: Array<Template>;
+	#templateCompiled?: Array<Template>;
 
 	@state()
 	private _markup: unknown;
@@ -30,7 +30,7 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	@property({ attribute: false })
 	public set value(value: unknown) {
 		this.#value = value;
-		this.#renderLiquid();
+		this.#renderLiquidTemplate();
 	}
 	public get value(): unknown {
 		return this.#value;
@@ -40,8 +40,8 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 	constructor() {
 		super();
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
-			this.#liquidContext = context;
-			this.#parseTemplate();
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
 		});
 	}
 
@@ -49,20 +49,20 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		if (!config) return;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
+		this.#template = config.getValueByAlias<string>('notes') ?? '';
 
-		this.#templateString = config.getValueByAlias<string>('notes') ?? '';
-		this.#parseTemplate();
+		this.#parseLiquidTemplate();
 	}
 
-	#parseTemplate() {
-		if (!this.#liquidContext || !this.#templateString) return;
-		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.#renderLiquid();
+	#parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
 	}
 
-	async #renderLiquid() {
-		if (!this.#liquidContext || !this.#template) return;
-		const markup = await this.#liquidContext.render(this.#template, { model: { value: this.#value } });
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled) return;
+		const markup = await this.#liquid.render(this.#templateCompiled, { model: { value: this.#value } });
 		this._markup = markup ? unsafeHTML(markup) : nothing;
 	}
 

@@ -18,11 +18,11 @@ import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
 @customElement('contentment-block-editor-liquid-view')
 export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement implements UmbBlockEditorCustomViewElement {
-	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
-	#templateString?: string;
+	#template?: string;
 
-	#template?: Array<Template>;
+	#templateCompiled?: Array<Template>;
 
 	@state()
 	private _contentElementTypeAlias?: string;
@@ -83,14 +83,14 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		super();
 
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
-			this.#liquidContext = context;
-			this.#parseTemplate();
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
 		});
 
 		this.consumeContext(UMB_BLOCK_ENTRY_CONTEXT, (blockEntry) => {
 			this.observe(blockEntry?.contentElementTypeAlias, (contentElementTypeAlias) => {
 				this._contentElementTypeAlias = contentElementTypeAlias;
-				this.#renderLiquid();
+				this.#renderLiquidTemplate();
 			});
 		});
 	}
@@ -98,13 +98,13 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 	async #loadTemplate(manifest: ContentmentBlockEditorCustomViewLiquidManifestKind | undefined) {
 		if (!manifest) return;
 
-		let templateString: string | undefined;
+		let template: string | undefined;
 
 		// Priority 1: Loader function (dynamic import)
 		if (typeof manifest.template === 'function') {
 			try {
 				const result = await manifest.template();
-				templateString = typeof result === 'string' ? result : result.default;
+				template = typeof result === 'string' ? result : result.default;
 			} catch (error) {
 				console.error('[Contentment] Failed to load template via import:', error);
 			}
@@ -116,29 +116,29 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 				if (!response.ok) {
 					throw new Error(`HTTP ${response.status}: ${manifest.template}`);
 				}
-				templateString = await response.text();
+				template = await response.text();
 			} catch (error) {
 				console.error('[Contentment] Failed to fetch template:', error);
 			}
 		}
 
 		// Priority 3: Fallback to inline content
-		if (!templateString && manifest.templateContent) {
-			templateString = manifest.templateContent;
+		if (!template && manifest.templateContent) {
+			template = manifest.templateContent;
 		}
 
-		this.#templateString = templateString;
-		this.#parseTemplate();
+		this.#template = template;
+		this.#parseLiquidTemplate();
 	}
 
-	#parseTemplate() {
-		if (!this.#liquidContext || !this.#templateString) return;
-		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.#renderLiquid();
+	#parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
 	}
 
-	async #renderLiquid() {
-		if (!this.#liquidContext || !this.#template) return;
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled) return;
 
 		const scope = {
 			manifest: this.manifest,
@@ -157,7 +157,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 			contentElementTypeAlias: this._contentElementTypeAlias,
 		};
 
-		const markup = await this.#liquidContext.render(this.#template, scope);
+		const markup = await this.#liquid.render(this.#templateCompiled, scope);
 		this._markup = markup ? unsafeHTML(markup) : nothing;
 	}
 
@@ -181,7 +181,7 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		];
 
 		if (scopeProperties.some((prop) => changedProperties.has(prop))) {
-			this.#renderLiquid();
+			this.#renderLiquidTemplate();
 		}
 	}
 

@@ -26,11 +26,11 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#liquidContext?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
-	#templateString?: string;
+	#template?: string;
 
-	#template?: Array<Template>;
+	#templateCompiled?: Array<Template>;
 
 	@state()
 	private _enableMultiple = false;
@@ -48,13 +48,13 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	private _listItemStyles?: string;
 
 	@state()
-	private _itemMarkups = new Map<string, unknown>();
+	private _markupLookup = new Map<string, unknown>();
 
 	constructor() {
 		super();
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
-			this.#liquidContext = context;
-			this.#parseTemplate();
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
 		});
 	}
 
@@ -74,8 +74,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 
-		this.#templateString = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
-		this.#parseTemplate();
+		this.#template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
+		this.#parseLiquidTemplate();
 
 		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 
@@ -85,28 +85,28 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
-		this.#renderAllItems();
+		this.#renderLiquidTemplate();
 
 		if (!this.value) {
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
 	}
 
-	#parseTemplate() {
-		if (!this.#liquidContext || !this.#templateString) return;
-		this.#template = this.#liquidContext.parse(this.#templateString);
-		this.#renderAllItems();
+	#parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
 	}
 
-	async #renderAllItems() {
-		if (!this.#liquidContext || !this.#template || !this._items?.length) return;
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled || !this._items?.length) return;
 
-		const newMarkups = new Map<string, unknown>();
 		for (const item of this._items) {
-			const markup = await this.#liquidContext.render(this.#template, { item });
-			newMarkups.set(item.value, markup ? unsafeHTML(markup) : nothing);
+			const markup = await this.#liquid.render(this.#templateCompiled, { item });
+			this._markupLookup.set(item.value, markup ? unsafeHTML(markup) : nothing);
 		}
-		this._itemMarkups = newMarkups;
+
+		this.requestUpdate('_markupLookup');
 	}
 
 	#onClick(option: ContentmentDataListOption) {
@@ -167,7 +167,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					class=${classMap({ selected: item.selected })}
 					?disabled=${item.disabled}
 					@click=${() => this.#onClick(item)}>
-					${this._itemMarkups.get(item.value) ?? nothing}
+					${this._markupLookup.get(item.value) ?? nothing}
 				</button>
 			</li>
 		`;
