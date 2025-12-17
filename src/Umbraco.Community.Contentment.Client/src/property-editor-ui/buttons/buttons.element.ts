@@ -171,7 +171,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			uui-button > div {
 				display: flex;
 				align-items: center;
-				gap: 0.3rem;
+				gap: var(--uui-size-2);
 			}
 		`,
 	];

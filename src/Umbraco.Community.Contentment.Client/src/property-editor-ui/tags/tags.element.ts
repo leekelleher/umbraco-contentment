@@ -1,259 +1,352 @@
-// SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
 
+import type { ContentmentListItem } from '../types.js';
 import {
 	css,
+	customElement,
 	html,
 	nothing,
-	customElement,
 	property,
-	query,
-	queryAll,
-	state,
 	repeat,
+	state,
+	unsafeHTML,
+	when,
 } from '@umbraco-cms/backoffice/external/lit';
+import { debounce } from '@umbraco-cms/backoffice/utils';
+import { parseBoolean } from '../../utils/parse-boolean.function.js';
+import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbTagsInputElement } from '@umbraco-cms/backoffice/tags';
-import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import type { UUIInputElement, UUIInputEvent, UUITagElement } from '@umbraco-cms/backoffice/external/uui';
+import type { UUIComboboxElement } from '@umbraco-cms/backoffice/external/uui';
 
 @customElement('contentment-property-editor-ui-tags')
 export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	//#allowDuplicates = false;
+
+	#confirmRemoval = false;
+
+	#items: Array<ContentmentListItem> = [];
+
+	#lookup: Record<string, ContentmentListItem> = {};
+
+	#showIcons = false;
+
+	@state()
+	private _loading = false;
+
+	@state()
+	private _options: Array<ContentmentListItem> = [];
+
+	@state()
+	private _query?: string;
+
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
+
 	@property({ type: Array })
-	value?: Array<string> = [];
+	public set value(value: Array<string> | string | undefined) {
+		this.#value = Array.isArray(value) ? value : value ? [value] : [];
+	}
+	public get value(): Array<string> | undefined {
+		return this.#value;
+	}
+	#value?: Array<string> = [];
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
-		// this._showIcons = parseBoolean(config.getValueByAlias('showIcons'));
-		// this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
+		//this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
+		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
+		this.#showIcons = parseBoolean(config.getValueByAlias('showIcons'));
 
-		this._items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
+		this.#items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
+
+		// populate item lookup
+		if (!this.#items) return;
+		this.#items.forEach((item) => {
+			this.#lookup[item.value] = item;
+		});
 	}
 
-	@state()
-	private _items: Array<ContentmentListItem> = [];
+	#debouncedFilter = debounce((query: string) => {
+		if (!this.#items?.length) return;
+		query = (query || '').toLocaleLowerCase();
+		this._options = query ? this.#items.filter((item) => this.#predicate(query, item)) : [];
+		this._loading = false;
+	}, 100);
 
-	@state()
-	private _matches: Array<ContentmentListItem> = [];
+	#predicate = (query: string, item: ContentmentListItem) =>
+		item.name.toLocaleLowerCase().includes(query) ||
+		item.value.toLocaleLowerCase().includes(query) ||
+		item.description?.toLocaleLowerCase().includes(query);
 
-	@state()
-	private _currentInput = '';
-
-	@query('#main-tag')
-	private _mainTag!: UUITagElement;
-
-	@query('#tag-input')
-	private _tagInput!: UUIInputElement;
-
-	@query('#input-width-tracker')
-	private _widthTracker!: HTMLElement;
-
-	@queryAll('.options')
-	private _optionCollection?: HTMLCollectionOf<HTMLInputElement>;
-
-	public override focus() {
-		this._tagInput.focus();
+	#getItemByValue(value: string): ContentmentListItem | undefined {
+		return this.#lookup[value];
 	}
 
-	#getExistingTags(query: string) {
-		this._matches = this._items.filter((tag) => tag.value.toLowerCase().includes(query.toLowerCase()));
-		//console.log('getExistingTags', query, this._matches);
+	#getMetadata<T = string>(item: ContentmentListItem, key: string): T | undefined {
+		return item[key] as T;
 	}
 
-	#onKeydown(e: KeyboardEvent) {
-		//Prevent tab away if there is a input.
-		if (e.key === 'Tab' && (this._tagInput.value as string).trim().length && !this._matches.length) {
-			e.preventDefault();
-			this.#createTag();
-			return;
+	async #onRemove(item: ContentmentListItem, index: number) {
+		if (!item || !this.value || index == -1) return;
+
+		if (this.#confirmRemoval) {
+			await umbConfirmModal(this, {
+				color: 'danger',
+				headline: this.localize.term('contentment_removeItemHeadline', [item.name]),
+				content: this.localize.term('contentment_removeItemMessage'),
+				confirmLabel: this.localize.term('contentment_removeItemButton'),
+			});
 		}
 
-		if (e.key === 'Enter') {
-			this.#createTag();
-			return;
-		}
-
-		if (e.key === 'ArrowDown' || e.key === 'Tab') {
-			e.preventDefault();
-			this._currentInput = this._optionCollection?.item(0)?.value ?? this._currentInput;
-			this._optionCollection?.item(0)?.focus();
-			return;
-		}
-
-		this.#inputError(false);
-	}
-
-	#onInput(e: UUIInputEvent) {
-		this._currentInput = e.target.value as string;
-		if (!this._currentInput || !this._currentInput.length) {
-			this._matches = [];
-		} else {
-			this.#getExistingTags(this._currentInput);
-		}
-	}
-
-	protected override updated(): void {
-		this._mainTag.style.width = `${this._widthTracker.offsetWidth - 4}px`;
-	}
-
-	#onBlur() {
-		if (this._matches.length) return;
-		else this.#createTag();
-	}
-
-	#createTag() {
-		this.#inputError(false);
-		const newTag = (this._tagInput.value as string).trim();
-		if (!newTag) return;
-
-		const tagExists = this.value?.find((tag) => tag === newTag);
-		if (tagExists) return this.#inputError(true);
-
-		this.#inputError(false);
-
-		this.value = [...(this.value ?? []), newTag];
-		this._tagInput.value = '';
-		this._currentInput = '';
+		const tmp = [...this.value];
+		tmp.splice(index, 1);
+		this.value = tmp;
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#inputError(error: boolean) {
-		if (error) {
-			this._mainTag.style.border = '1px solid var(--uui-color-danger)';
-			this._tagInput.style.color = 'var(--uui-color-danger)';
-			return;
-		}
-		this._mainTag.style.border = '';
-		this._tagInput.style.color = '';
+	#onSearch(event: CustomEvent & { target: UUIComboboxElement }) {
+		this._loading = true;
+		this._query = event.target.search;
+		this.#debouncedFilter(this._query);
 	}
 
-	#delete(tag: string) {
-		const currentItems = [...(this.value ?? [])];
-		const index = currentItems.findIndex((x) => x === tag);
+	#onSelect(event: CustomEvent & { target: UUIComboboxElement }) {
+		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
 
-		currentItems.splice(index, 1);
-		currentItems.length ? (this.value = [...currentItems]) : (this.value = []);
+		const value = event.target.value as string;
+		if (!value) return;
+
+		if (!this.value) {
+			this.value = [];
+		}
+
+		const tmp = [...this.value];
+		tmp.push(value);
+		this.value = tmp;
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	/** Dropdown */
-
-	#optionClick(index: number) {
-		this._tagInput.value = this._optionCollection?.item(index)?.value ?? '';
-		this.#createTag();
-		this.focus();
-		return;
-	}
-
-	#optionKeydown(e: KeyboardEvent, index: number) {
-		if (e.key === 'Enter' || e.key === 'Tab') {
-			e.preventDefault();
-			this._currentInput = this._optionCollection?.item(index)?.value ?? '';
-			this.#createTag();
-			this.focus();
-			return;
-		}
-
-		if (e.key === 'ArrowDown') {
-			e.preventDefault();
-			if (!this._optionCollection?.item(index + 1)) return;
-			this._optionCollection?.item(index + 1)?.focus();
-			this._currentInput = this._optionCollection?.item(index + 1)?.value ?? '';
-			return;
-		}
-
-		if (e.key === 'ArrowUp') {
-			e.preventDefault();
-			if (!this._optionCollection?.item(index - 1)) return;
-			this._optionCollection?.item(index - 1)?.focus();
-			this._currentInput = this._optionCollection?.item(index - 1)?.value ?? '';
-		}
-
-		if (e.key === 'Backspace') {
-			this.focus();
+	async #onTagKeydown(event: KeyboardEvent, item: ContentmentListItem, index: number) {
+		if (event.key === 'Backspace' || event.key === 'Delete') {
+			event.preventDefault();
+			await this.#onRemove(item, index);
 		}
 	}
-
-	/** Render */
 
 	override render() {
-		return html`
-			<div id="wrapper">
-				${this.#enteredTags()}
-				<span id="main-tag-wrapper">
-					<uui-tag id="input-width-tracker" aria-hidden="true" style="visibility:hidden;opacity:0;position:absolute;">
-						${this._currentInput}
-					</uui-tag>
-					${this.#renderAddButton()}
-				</span>
-			</div>
-		`;
+		if (!this.#items?.length) {
+			return html`
+				<contentment-info-box
+					compact
+					type="warning"
+					icon="icon-alert"
+					headline="There are no items to choose from."></contentment-info-box>
+			`;
+		}
+
+		return html`<div id="container">${this.#renderTags()}${this.#renderInput()}</div>`;
 	}
 
-	#enteredTags() {
+	#renderTags() {
+		if (!this.value?.length) return nothing;
 		return html`
-			${this.value?.map((tag) => {
-				return html`
-					<uui-tag class="tag">
-						<span>${tag}</span>
-						<uui-icon name="icon-wrong" @click=${() => this.#delete(tag)}></uui-icon>
-					</uui-tag>
-				`;
-			})}
-		`;
-	}
-
-	#renderTagOptions() {
-		if (!this._currentInput.length || !this._matches.length) return nothing;
-		const matchfilter = this._matches; //.filter((tag) => tag !== this._items.find((x) => x.value === tag.value));
-		//console.log('matchfilter', matchfilter, this._matches, this._currentInput);
-		if (!matchfilter.length) return;
-		return html`
-			<div id="matchlist">
+			<div id="tags">
 				${repeat(
-					matchfilter.slice(0, 5),
-					(tag: ContentmentListItem) => tag.value,
-					(tag: ContentmentListItem, index: number) => {
-						return html`
-							<input
-								class="options"
-								id="tag-${tag.value}"
-								type="radio"
-								name=""
-								@click=${() => this.#optionClick(index)}
-								@keydown="${(e: KeyboardEvent) => this.#optionKeydown(e, index)}"
-								value=${tag.value ?? ''} />
-							<label for="tag-${tag.value}">${tag.name}</label>
-						`;
-					}
+					this.value,
+					(value) => value,
+					(value, index) => this.#renderTag(value, index)
 				)}
 			</div>
 		`;
 	}
 
-	#renderAddButton() {
+	#renderTag(value: string, index: number) {
+		const item = this.#getItemByValue(value);
+		if (!item) return nothing;
+		const icon = this.#getMetadata(item, 'icon');
+		const name = this.localize.string(this.#getMetadata(item, 'name') ?? value);
 		return html`
-			<uui-tag look="outline" id="main-tag" @click=${this.focus} slot="trigger">
-				<input
-					id="tag-input"
-					aria-label="tag input"
-					placeholder="Enter tag"
-					.value=${this._currentInput ?? undefined}
-					@keydown=${this.#onKeydown}
-					@input=${this.#onInput}
-					@blur=${this.#onBlur} />
-				<uui-icon id="icon-add" name="icon-add"></uui-icon>
-				${this.#renderTagOptions()}
-			</uui-tag>
+			<div class="tag" tabindex="0" @keydown=${(event: KeyboardEvent) => this.#onTagKeydown(event, item, index)}>
+				${when(this.#showIcons && icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
+				<strong>${name}</strong>
+				${when(
+					!this.readonly,
+					() => html`
+						<uui-button
+							compact
+							class="action"
+							label=${this.localize.term('general_remove')}
+							tabindex="-1"
+							@click=${() => this.#onRemove(item, index)}>
+							<umb-icon name="icon-trash"></umb-icon>
+						</uui-button>
+					`
+				)}
+			</div>
 		`;
 	}
 
-	static override styles = [...UmbTagsInputElement.styles, css``];
+	#renderInput() {
+		if (this.readonly) return nothing;
+		return html`
+			<uui-combobox id="input" placeholder="Enter a tag..." @change=${this.#onSelect} @search=${this.#onSearch}>
+				${when(this._loading, () => html`<uui-loader id="loader"></uui-loader>`)}
+				${when(
+					!this._loading && !this._query,
+					() => html`<div class="info">${this.localize.term('placeholders_search')}</div>`
+				)}
+				${when(
+					!this._loading && this._query && this._options.length === 0,
+					() => html`<div class="info">${this.localize.term('general_searchNoResult')}</div>`
+				)}
+				${when(
+					!this._loading && this._options?.length,
+					() => html`
+						<uui-combobox-list>
+							${repeat(
+								this._options,
+								(option) => option.value,
+								(option) => this.#renderOption(option)
+							)}
+						</uui-combobox-list>
+					`
+				)}
+			</uui-combobox>
+		`;
+	}
+
+	#renderOption(option: ContentmentListItem) {
+		return html`
+			<uui-combobox-list-option
+				class="option"
+				display-value=${this.localize.string(option.name)}
+				value=${option.value}
+				?disabled=${option.disabled}>
+				<div class="outer">
+					${when(this.#showIcons && option.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
+					${when(
+						option.description,
+						() => html`
+							<uui-form-layout-item>
+								<span slot="label">${this.localize.string(option.name)}</span>
+								<span slot="description">${unsafeHTML(option.description)}</span>
+							</uui-form-layout-item>
+						`,
+						() => html`<span>${this.localize.string(option.name)}</span>`
+					)}
+				</div>
+			</uui-combobox-list-option>
+		`;
+	}
+
+	static override styles = [
+		css`
+			:host {
+				--uui-focus-outline-color: var(--uui-color-focus);
+				--uui-tag-border-radius: calc(var(--uui-size-4) * 2);
+			}
+
+			#container {
+				box-sizing: border-box;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: var(--uui-size-space-2);
+
+				padding: var(--uui-size-space-2);
+
+				background-color: var(--uui-input-background-color, var(--uui-color-surface));
+				border: 1px solid var(--uui-color-border);
+				border-radius: var(--uui-border-radius);
+			}
+
+			#tags {
+				display: flex;
+				gap: var(--uui-size-space-2);
+				flex-wrap: wrap;
+				border-radius: var(--uui-size-1);
+
+				&:focus {
+					outline: var(--uui-size-1) solid var(--uui-focus-outline-color);
+					outline-offset: var(--uui-size-1);
+				}
+			}
+
+			.tag {
+				--uui-border-radius: var(--uui-tag-border-radius);
+
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				padding: var(--uui-size-space-1) var(--uui-size-space-3);
+				line-height: normal;
+
+				background-color: var(--uui-color-surface-alt);
+				border-radius: var(--uui-border-radius);
+				color: var(--color-standalone);
+
+				&:focus {
+					outline: var(--uui-size-1) solid var(--uui-focus-outline-color);
+				}
+
+				strong {
+					font-size: var(--uui-type-small-size);
+					margin: 0 var(--uui-size-space-2);
+				}
+			}
+
+			.action {
+				--uui-button-height: var(--uui-size-9);
+				--uui-button-padding-left-factor: 0;
+				--uui-button-padding-right-factor: 0;
+				--uui-button-padding-top-factor: 0;
+				--uui-button-padding-bottom-factor: 0;
+
+				font-size: var(--uui-type-small-size);
+			}
+
+			#input {
+				/* HACK: 'uui-combobox' uses '--uui-size-1' for the border-radius. [LK]
+				 * https://github.com/umbraco/Umbraco.UI/blob/v1.16.0/packages/uui-combobox/lib/uui-combobox.element.ts#L420
+				 */
+				--uui-size-1: var(--uui-tag-border-radius);
+			}
+
+			#loader {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-height: var(--uui-size-layout-3);
+			}
+
+			.info {
+				padding: var(--uui-size-4);
+			}
+
+			.option {
+				padding: 0.5rem;
+
+				.outer {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					gap: 0.5rem;
+
+					uui-form-layout-item {
+						margin-top: 3px;
+						margin-bottom: 0;
+					}
+				}
+			}
+		`,
+	];
 }
 
 export default ContentmentPropertyEditorUITagsElement;
