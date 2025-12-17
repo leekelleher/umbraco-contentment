@@ -147,6 +147,11 @@ Property Editors are:
 - Adds support for Umbraco 16 (.NET 9) and Umbraco 17 (LTS, .NET 10).
 - Removes support for Umbraco 13 (.NET 8).
 
+### v6.1
+
+- [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
+- [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
+
 
 ## v7 _(June 2026)_
 
