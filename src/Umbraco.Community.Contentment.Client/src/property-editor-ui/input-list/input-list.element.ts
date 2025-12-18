@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+import { parseBoolean, parseInt } from '../../utils/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { firstValueFrom } from '@umbraco-cms/backoffice/external/rxjs';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbDataTypeDetailRepository } from '@umbraco-cms/backoffice/data-type';
+import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
@@ -32,7 +34,11 @@ type InputListValue = Array<Record<string, unknown>>;
 
 @customElement('contentment-property-editor-ui-input-list')
 export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
+	#confirmRemoval = false;
+
 	#disableSorting = false;
+
+	#maxItems = Infinity;
 
 	#repository = new UmbDataTypeDetailRepository(this);
 
@@ -58,8 +64,11 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	public set config(config: UmbPropertyEditorConfigCollectionType | undefined) {
 		if (!config) return;
 
-		const dataTypes = config.getValueByAlias<Array<string>>('dataTypes');
+		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#disableSorting = this.#maxItems === 1;
 
+		const dataTypes = config.getValueByAlias<Array<string>>('dataTypes');
 		if (dataTypes?.length) {
 			this.#loadDataTypes(dataTypes);
 		}
@@ -186,7 +195,16 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#onRemove(index: number) {
+	async #onRemove(index: number) {
+		if (this.#confirmRemoval) {
+			await umbConfirmModal(this, {
+				color: 'danger',
+				headline: this.localize.term('contentment_removeItemHeadline'),
+				content: this.localize.term('contentment_removeItemMessage'),
+				confirmLabel: this.localize.term('contentment_removeItemButton'),
+			});
+		}
+
 		const items = [...this._items];
 		items.splice(index, 1);
 		this._items = items;
@@ -214,13 +232,11 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 
 	override render() {
 		if (!this._ready) return html`<uui-loader></uui-loader>`;
-		return html`
-			${this.#renderItems()}${this.#renderAddButton()}
-			<umb-code-block language="value">${JSON.stringify(this.value, null, 2)}</umb-code-block>
-		`;
+		return html`${this.#renderItems()}${this.#renderAddButton()}`;
 	}
 
 	#renderAddButton() {
+		if (this._items.length >= this.#maxItems) return nothing;
 		return html`
 			<uui-button
 				id="btn-add"

@@ -108,6 +108,8 @@ export class ContentmentPropertyEditorUIDataListElement
 		);
 
 		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];
+
+		// TODO: [LK] Review this, as when being used in Input List, it is overwriting the property's config.
 		this.#propertyContext?.setConfig(combinedConfig);
 	}
 

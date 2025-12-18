@@ -31,7 +31,26 @@ const editorUi: UmbExtensionManifest = {
 		group: 'contentment',
 		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.InputList',
 		settings: {
-			properties: [],
+			properties: [
+				{
+					alias: 'confirmRemoval',
+					label: 'Confirm removals?',
+					description: 'Select to enable a confirmation prompt when removing an item.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'maxItems',
+					label: 'Maximum items',
+					description: "Enter the number for the maximum items allowed.<br>Use '0' for an unlimited amount.",
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.NumberInput',
+				},
+				{
+					alias: 'enableDevMode',
+					label: 'Developer mode?',
+					description: 'Enable a property action to edit the raw data for the editor value.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+			],
 		},
 	},
 };
