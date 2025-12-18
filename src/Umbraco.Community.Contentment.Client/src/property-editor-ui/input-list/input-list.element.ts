@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
