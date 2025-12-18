@@ -2,13 +2,21 @@
 // Copyright © 2025 Lee Kelleher
 
 import { css, customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
+import { firstValueFrom } from '@umbraco-cms/backoffice/external/rxjs';
 import { UmbDataTypeDetailRepository } from '@umbraco-cms/backoffice/data-type';
+import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbDataTypeDetailModel } from '@umbraco-cms/backoffice/data-type';
 import type {
+	ManifestPropertyEditorUi,
 	UmbPropertyEditorConfigCollection,
 	UmbPropertyEditorUiElement,
 } from '@umbraco-cms/backoffice/property-editor';
+
+interface InputListField {
+	dataType: UmbDataTypeDetailModel;
+	manifest: ManifestPropertyEditorUi | undefined;
+}
 
 @customElement('contentment-property-editor-ui-input-list')
 export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -18,23 +26,33 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	public value: string = '';
 
 	@state()
-	private _dataTypes: Array<UmbDataTypeDetailModel> = [];
+	private _fields: Array<InputListField> = [];
 
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		const dataTypeKeys = config.getValueByAlias<Array<string>>('dataTypes');
-		if (dataTypeKeys?.length) {
-			this.#loadDataTypes(dataTypeKeys);
+		const dataTypes = config.getValueByAlias<Array<string>>('dataTypes');
+
+		if (dataTypes?.length) {
+			this.#loadDataTypes(dataTypes);
 		}
 	}
 
-	async #loadDataTypes(keys: Array<string>) {
-		const results = await Promise.all(keys.map((key) => this.#repository.requestByUnique(key)));
+	async #loadDataTypes(uniques: Array<string>) {
+		const results = await Promise.all(
+			uniques.map(async (unique) => {
+				const { data: dataType } = await this.#repository.requestByUnique(unique);
+				if (!dataType) return null;
 
-		this._dataTypes = results
-			.map((result) => result.data)
-			.filter((data): data is UmbDataTypeDetailModel => data !== undefined);
+				const manifest = dataType.editorUiAlias
+					? ((await firstValueFrom(umbExtensionsRegistry.byTypeAndAlias('propertyEditorUi', dataType.editorUiAlias))) as ManifestPropertyEditorUi | undefined)
+					: undefined;
+
+				return { dataType, manifest };
+			})
+		);
+
+		this._fields = results.filter((r): r is InputListField => r !== null);
 	}
 
 	constructor() {
@@ -42,7 +60,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	override render() {
-		return html`<umb-code-block language="json">${JSON.stringify(this._dataTypes, null, 2)}</umb-code-block>`;
+		return html`<umb-code-block language="json">${JSON.stringify(this._fields, null, 2)}</umb-code-block>`;
 	}
 
 	static override readonly styles = [css``];
