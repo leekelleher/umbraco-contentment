@@ -5,32 +5,28 @@ import { parseBoolean, parseInt } from '../../utils/index.js';
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
 import { firstValueFrom } from '@umbraco-cms/backoffice/external/rxjs';
+import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbDataTypeDetailRepository } from '@umbraco-cms/backoffice/data-type';
-import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
 import type { UmbDataTypeDetailModel } from '@umbraco-cms/backoffice/data-type';
-import type {
-	ManifestPropertyEditorUi,
-	UmbPropertyEditorConfigCollection as UmbPropertyEditorConfigCollectionType,
-	UmbPropertyEditorUiElement,
-} from '@umbraco-cms/backoffice/property-editor';
+import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-interface InputListField {
+interface ContentmentInputListControl {
 	dataType: UmbDataTypeDetailModel;
 	manifest: ManifestPropertyEditorUi | undefined;
 }
 
-interface InputListItem {
+interface ContentmentInputListItem {
 	key: string;
 	values: Record<string, unknown>;
 	elements: Map<string, UmbPropertyEditorUiElement>;
 }
 
-type InputListValue = Array<Record<string, unknown>>;
+type ContentmentInputListValue = Array<Record<string, unknown>>;
 
 @customElement('contentment-property-editor-ui-input-list')
 export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -43,25 +39,25 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	#repository = new UmbDataTypeDetailRepository(this);
 
 	@property({ type: Array })
-	public set value(value: InputListValue | undefined) {
+	public set value(value: ContentmentInputListValue | undefined) {
 		this.#value = value ?? [];
 		this.#syncItemsWithValue();
 	}
-	public get value(): InputListValue | undefined {
+	public get value(): ContentmentInputListValue | undefined {
 		return this.#value;
 	}
-	#value: InputListValue = [];
+	#value: ContentmentInputListValue = [];
 
 	@state()
-	private _fields: Array<InputListField> = [];
+	private _controls: Array<ContentmentInputListControl> = [];
 
 	@state()
-	private _items: Array<InputListItem> = [];
+	private _items: Array<ContentmentInputListItem> = [];
 
 	@state()
 	private _ready = false;
 
-	public set config(config: UmbPropertyEditorConfigCollectionType | undefined) {
+	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this.#confirmRemoval = parseBoolean(config.getValueByAlias('confirmRemoval'));
@@ -90,7 +86,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 			})
 		);
 
-		this._fields = results.filter((r): r is InputListField => r !== null);
+		this._controls = results.filter((r): r is ContentmentInputListControl => r !== null);
 		this._ready = true;
 
 		// Initialize items from existing value
@@ -98,11 +94,11 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	async #syncItemsWithValue() {
-		if (!this._ready || this._fields.length === 0) return;
+		if (!this._ready || this._controls.length === 0) return;
 
 		// Build items from value, reusing existing item elements where possible
 		const existingItemsByKey = new Map(this._items.map((item) => [item.key, item]));
-		const newItems: Array<InputListItem> = [];
+		const newItems: Array<ContentmentInputListItem> = [];
 
 		for (let i = 0; i < this.#value.length; i++) {
 			const itemValue = this.#value[i];
@@ -125,48 +121,49 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		this._items = newItems;
 	}
 
-	async #createItem(key: string, values: Record<string, unknown>): Promise<InputListItem> {
+	async #createItem(key: string, values: Record<string, unknown>): Promise<ContentmentInputListItem> {
 		const elements = new Map<string, UmbPropertyEditorUiElement>();
 
-		for (const field of this._fields) {
-			if (!field.manifest) continue;
+		for (const control of this._controls) {
+			if (!control.manifest) continue;
 
-			const element = await createExtensionElement(field.manifest);
+			const element = await createExtensionElement(control.manifest);
 			if (!element) continue;
 
 			// Configure the element
-			element.value = values[field.dataType.unique];
-			element.config = new UmbPropertyEditorConfigCollection(field.dataType.values);
+			element.value = values[control.dataType.unique];
+			element.config = new UmbPropertyEditorConfigCollection(control.dataType.values);
 
-			// Listen for changes
-			element.addEventListener('change', () => this.#onFieldChange(key, field.dataType.unique, element.value));
+			// Listen for changes. ('property-value-change' is for backwards compatibility, to be removed in Umb v18). [LK]
+			element.addEventListener('change', () => this.#onInputChange(key, control.dataType.unique, element.value));
+			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
 			element.addEventListener('property-value-change', () =>
-				this.#onFieldChange(key, field.dataType.unique, element.value)
+				this.#onInputChange(key, control.dataType.unique, element.value)
 			);
 
-			elements.set(field.dataType.unique, element);
+			elements.set(control.dataType.unique, element);
 		}
 
 		return { key, values, elements };
 	}
 
-	#updateItemElementValues(item: InputListItem) {
-		for (const field of this._fields) {
-			const element = item.elements.get(field.dataType.unique);
+	#updateItemElementValues(item: ContentmentInputListItem) {
+		for (const control of this._controls) {
+			const element = item.elements.get(control.dataType.unique);
 			if (element) {
-				element.value = item.values[field.dataType.unique];
+				element.value = item.values[control.dataType.unique];
 			}
 		}
 	}
 
-	#onFieldChange(itemKey: string, fieldKey: string, value: unknown) {
+	#onInputChange(itemKey: string, dataTypeKey: string, value: unknown) {
 		const itemIndex = this._items.findIndex((r) => r.key === itemKey);
 		if (itemIndex === -1) return;
 
 		// Update internal state - create new objects to avoid mutation
 		const updatedItem = {
 			...this._items[itemIndex],
-			values: { ...this._items[itemIndex].values, [fieldKey]: value },
+			values: { ...this._items[itemIndex].values, [dataTypeKey]: value },
 		};
 		const newItems = [...this._items];
 		newItems[itemIndex] = updatedItem;
@@ -174,7 +171,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 
 		// Update external value
 		const newValue = [...this.#value];
-		newValue[itemIndex] = { ...newValue[itemIndex], [fieldKey]: value };
+		newValue[itemIndex] = { ...newValue[itemIndex], [dataTypeKey]: value };
 		this.#value = newValue;
 
 		this.dispatchEvent(new UmbChangeEvent());
@@ -183,7 +180,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	async #onAdd() {
 		// Create empty item value
 		const itemValue: Record<string, unknown> = {};
-		this._fields.forEach((f) => (itemValue[f.dataType.unique] = undefined));
+		this._controls.forEach((control) => (itemValue[control.dataType.unique] = undefined));
 
 		// Create new item
 		const key = `item-${this._items.length}`;
@@ -263,15 +260,16 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		`;
 	}
 
-	#renderItem(item: InputListItem, index: number) {
+	#renderItem(item: ContentmentInputListItem, index: number) {
 		return html`
 			<div class="item">
 				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
-				<div class="fields">
-					${this._fields.map((field) => {
-						const element = item.elements.get(field.dataType.unique);
-						return html`<div class="field">${element ?? html`<span>Loading...</span>`}</div>`;
-					})}
+				<div class="inputs">
+					${repeat(
+						this._controls,
+						(control) => control.dataType.unique,
+						(control) => html`${item.elements.get(control.dataType.unique) ?? html`<uui-loader></uui-loader>`}`
+					)}
 				</div>
 				<div class="actions">
 					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(index)}>
@@ -313,7 +311,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 					cursor: grab;
 				}
 
-				> .fields {
+				> .inputs {
 					flex: 1;
 					display: flex;
 					flex-direction: row;
