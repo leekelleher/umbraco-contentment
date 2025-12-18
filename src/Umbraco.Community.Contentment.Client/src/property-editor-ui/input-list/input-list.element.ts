@@ -151,8 +151,14 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		const rowIndex = this._rows.findIndex((r) => r.key === rowKey);
 		if (rowIndex === -1) return;
 
-		// Update internal state
-		this._rows[rowIndex].values[fieldKey] = value;
+		// Update internal state - create new objects to avoid mutation
+		const updatedRow = {
+			...this._rows[rowIndex],
+			values: { ...this._rows[rowIndex].values, [fieldKey]: value },
+		};
+		const newRows = [...this._rows];
+		newRows[rowIndex] = updatedRow;
+		this._rows = newRows;
 
 		// Update external value
 		const newValue = [...this.#value];
