@@ -237,7 +237,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		return html`
 			<uui-button
 				id="btn-add"
-				label=${this.localize.term('general_add')}
+				label=${this.localize.term('contentment_addItem')}
 				look="placeholder"
 				@click=${this.#onAdd}></uui-button>
 		`;
