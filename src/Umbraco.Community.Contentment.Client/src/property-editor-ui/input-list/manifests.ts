@@ -8,7 +8,14 @@ const schema: UmbExtensionManifest = {
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.InputList',
 		settings: {
-			properties: [],
+			properties: [
+				{
+					alias: 'dataTypes',
+					label: 'Data types',
+					description: 'Select the data types to use for each list item.',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DataTypePicker',
+				},
+			],
 		},
 	},
 };

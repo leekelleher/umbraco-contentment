@@ -14,6 +14,7 @@ import { manifest as customComponentList } from './custom-component-list/manifes
 import { manifest as dictionaryPicker } from './dictionary-picker/manifest.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
+import { manifest as dataTypePicker } from './data-type-picker/manifest.js';
 import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifests as editorNotes } from './editor-notes/manifests.js';
 import { manifests as iconPicker } from './icon-picker/manifests.js';
@@ -48,6 +49,7 @@ export const manifests: Array<UmbExtensionManifest> = [
 	dictionaryPicker,
 	...dataList,
 	...dataPicker,
+	dataTypePicker,
 	dropdownList,
 	...editorNotes,
 	...iconPicker,
