@@ -13,7 +13,7 @@ const schema: UmbExtensionManifest = {
 	},
 };
 
-const inputList: UmbExtensionManifest = {
+const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.InputList',
 	name: '[Contentment] Input List Property Editor UI',
@@ -29,4 +29,4 @@ const inputList: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, inputList];
+export const manifests = [schema, editorUi];
