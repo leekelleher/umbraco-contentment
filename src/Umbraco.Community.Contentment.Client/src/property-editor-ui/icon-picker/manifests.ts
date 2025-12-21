@@ -44,6 +44,12 @@ const editorUi: UmbExtensionManifest = {
 						{ alias: 'defaultValue', value: 'large' },
 					],
 				},
+				{
+					alias: 'hideClearButton',
+					label: 'Hide clear button?',
+					description: `If you wish to hide the "clear" button, you can unset the icon picker via the modal selection.`,
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
 			],
 			defaultData: [{ alias: 'size', value: 'large' }],
 		},
