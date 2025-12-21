@@ -4,10 +4,10 @@
 
 import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentSortEndEvent } from './sort-end.event.js';
-import { Sortable } from '../../external/sortablejs/index.js';
+import { Sortable } from '../../external/sortablejs.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UUIBlinkAnimationValue, UUIBlinkKeyframes } from '@umbraco-cms/backoffice/external/uui';
-import type { SortableEvent } from '../../external/sortablejs/index.js';
+import type { SortableEvent } from '../../external/sortablejs.js';
 
 @customElement('contentment-sortable-list')
 export default class ContentmentSortableListElement extends UmbLitElement {

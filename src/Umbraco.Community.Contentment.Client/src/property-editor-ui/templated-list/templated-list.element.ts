@@ -18,7 +18,7 @@ import {
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-list')

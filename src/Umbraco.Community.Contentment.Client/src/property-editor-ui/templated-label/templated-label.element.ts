@@ -6,7 +6,7 @@ import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../ut
 import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-label')

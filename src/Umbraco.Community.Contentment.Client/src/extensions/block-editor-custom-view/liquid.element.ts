@@ -8,7 +8,7 @@ import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
 import type { ContentmentBlockEditorCustomViewLiquidManifestKind } from './liquid.kind.js';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbBlockDataType, UmbBlockLayoutBaseModel } from '@umbraco-cms/backoffice/block';
 import type {
 	UmbBlockEditorCustomViewConfiguration,
