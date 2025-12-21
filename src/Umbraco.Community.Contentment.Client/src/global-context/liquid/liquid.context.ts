@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { CONTENTMENT_LIQUID_CONTEXT } from './liquid.context-token.js';
-import { Liquid } from '../../external/liquidjs/index.js';
 import { UmbContextBase } from '@umbraco-cms/backoffice/class-api';
 import type { Liquid, Template } from '../../external/liquidjs.js';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
+import { UmbContextToken } from '@umbraco-cms/backoffice/context-api';
 
 export class ContentmentLiquidContext extends UmbContextBase {
 	#engine?: Liquid;
@@ -49,3 +48,5 @@ export class ContentmentLiquidContext extends UmbContextBase {
 export default ContentmentLiquidContext;
 
 export { ContentmentLiquidContext as api };
+
+export const CONTENTMENT_LIQUID_CONTEXT = new UmbContextToken<ContentmentLiquidContext>('ContentmentLiquidContext');

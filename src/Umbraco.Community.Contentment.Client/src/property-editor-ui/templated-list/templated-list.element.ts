@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2024 Lee Kelleher
 
-import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context-token.js';
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context.js';
 import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
 import {
 	classMap,
