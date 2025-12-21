@@ -35,6 +35,9 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 
 	#maxItems = Infinity;
 
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
+
 	@property({ type: Array })
 	public set value(value: Array<ContentmentListItemValue> | undefined) {
 		this.#value = value ?? [];
@@ -151,6 +154,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 		if (!this.value || this.value.length === 0) return nothing;
 		return html`
 			<contentment-sortable-list
+				id="list"
 				item-selector=".item"
 				handle-selector=".handle"
 				?disabled=${this.#disableSorting}
@@ -166,8 +170,11 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 
 	#renderItem(item: ContentmentListItemValue, index: number) {
 		return html`
-			<div class="item">
-				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
+			<contentment-sortable-list-item
+				class="item"
+				?hideActions=${this.readonly}
+				?hideHandle=${this.#disableSorting}
+				@delete=${() => this.#onRemove(item, index)}>
 				${when(
 					!this.#hideIcon,
 					() => html`
@@ -204,12 +211,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 						`
 					)}
 				</div>
-				<div class="actions">
-					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item, index)}>
-						<uui-icon name="delete"></uui-icon>
-					</uui-button>
-				</div>
-			</div>
+			</contentment-sortable-list-item>
 		`;
 	}
 
@@ -219,7 +221,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				display: block;
 			}
 
-			contentment-sortable-list {
+			#list {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;
@@ -227,24 +229,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 			}
 
 			.item {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
-				gap: var(--uui-size-6);
-
-				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
-				border-radius: var(--uui-border-radius);
-
-				&[drag-placeholder] {
-					opacity: 0.5;
-				}
-
-				> .handle {
-					cursor: grab;
-				}
-
 				> contentment-icon-picker {
 					flex: 0 0 var(--uui-size-10);
 
@@ -254,8 +238,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				}
 
 				> .inputs {
-					flex: 1;
-
 					display: flex;
 					flex-direction: column;
 					gap: var(--uui-size-1);
@@ -269,12 +251,6 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 							flex: 1;
 						}
 					}
-				}
-
-				> .actions {
-					flex: 0 0 auto;
-					display: flex;
-					justify-content: flex-end;
 				}
 			}
 		`,
