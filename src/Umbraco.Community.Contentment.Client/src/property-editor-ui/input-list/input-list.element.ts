@@ -134,8 +134,9 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 			element.value = values[control.dataType.unique];
 			element.config = new UmbPropertyEditorConfigCollection(control.dataType.values);
 
-			// Listen for changes. ('property-value-change' is for backwards compatibility, to be removed in Umb v18). [LK]
 			element.addEventListener('change', () => this.#onInputChange(key, control.dataType.unique, element.value));
+
+			// Listen for changes. ('property-value-change' is for backwards compatibility, to be removed in Umb v18). [LK]
 			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
 			element.addEventListener('property-value-change', () =>
 				this.#onInputChange(key, control.dataType.unique, element.value)
@@ -247,6 +248,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		if (this._items.length === 0) return nothing;
 		return html`
 			<contentment-sortable-list
+				id="items"
 				item-selector=".item"
 				handle-selector=".handle"
 				?disabled=${this.#disableSorting}
@@ -273,7 +275,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				</div>
 				<div class="actions">
 					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(index)}>
-						<uui-icon name="delete"></uui-icon>
+						<uui-icon name="icon-trash"></uui-icon>
 					</uui-button>
 				</div>
 			</div>
@@ -286,7 +288,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				display: block;
 			}
 
-			contentment-sortable-list {
+			#items {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;
