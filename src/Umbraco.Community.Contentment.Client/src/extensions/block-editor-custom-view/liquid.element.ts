@@ -151,9 +151,9 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		this.#parseLiquidTemplate();
 	}
 
-	#parseLiquidTemplate() {
+	async #parseLiquidTemplate() {
 		if (!this.#liquid || !this.#template) return;
-		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#templateCompiled = await this.#liquid.parse(this.#template);
 		this.#renderLiquidTemplate();
 	}
 
