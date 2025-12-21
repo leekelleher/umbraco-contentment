@@ -1,58 +1,129 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PropertyEditors.DeliveryApi;
 using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
-namespace Umbraco.Community.Contentment.DataEditors
+namespace Umbraco.Community.Contentment.DataEditors;
+
+internal sealed class InputListValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
 {
-    internal sealed class InputListValueConverter : PropertyValueConverterBase, IDeliveryApiPropertyValueConverter
+    private readonly IDataTypeService _dataTypeService;
+    private readonly IJsonSerializer _jsonSerializer;
+    private readonly IPublishedContentTypeFactory _publishedContentTypeFactory;
+    private readonly IShortStringHelper _shortStringHelper;
+
+    public InputListValueConverter(
+        IDataTypeService dataTypeService,
+        IJsonSerializer jsonSerializer,
+        IPublishedContentTypeFactory publishedContentTypeFactory,
+        IShortStringHelper shortStringHelper)
     {
-        private readonly IJsonSerializer _jsonSerializer;
+        _dataTypeService = dataTypeService;
+        _jsonSerializer = jsonSerializer;
+        _publishedContentTypeFactory = publishedContentTypeFactory;
+        _shortStringHelper = shortStringHelper;
+    }
 
-        public InputListValueConverter(IJsonSerializer jsonSerializer)
+    public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(InputListDataEditor.DataEditorAlias);
+
+    public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<IEnumerable<object?>?>);
+
+    public override object? ConvertSourceToIntermediate(
+        IPublishedElement owner,
+        IPublishedPropertyType propertyType,
+        object? source,
+        bool preview)
+    {
+        if (source is string value)
         {
-            _jsonSerializer = jsonSerializer;
+            if (value.DetectIsJson() == false)
+            {
+                return value;
+            }
+
+            return _jsonSerializer.Deserialize<List<List<InputListValueModel>>>(value);
         }
 
-        public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.InvariantEquals(InputListDataEditor.DataEditorAlias);
+        return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
+    }
 
-        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(string);
+    public override object? ConvertIntermediateToObject(
+        IPublishedElement owner,
+        IPublishedPropertyType propertyType,
+        PropertyCacheLevel referenceCacheLevel,
+        object? inter,
+        bool preview) => ConvertIntermediateToObjectImpl(owner, propertyType, referenceCacheLevel, inter, preview, isDeliveryApi: false, expanding: false);
 
-        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
-        {
-            // TODO: Implement conversion logic
-            return base.ConvertSourceToIntermediate(owner, propertyType, source, preview);
-        }
+    public PropertyCacheLevel GetDeliveryApiPropertyCacheLevel(IPublishedPropertyType propertyType) => GetPropertyCacheLevel(propertyType);
 
-        public override object? ConvertIntermediateToObject(
-            IPublishedElement owner,
-            IPublishedPropertyType propertyType,
-            PropertyCacheLevel referenceCacheLevel,
-            object? inter,
-            bool preview)
-        {
-            // TODO: Implement conversion logic
-            return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
-        }
+    public Type GetDeliveryApiPropertyValueType(IPublishedPropertyType propertyType) => GetPropertyValueType(propertyType);
 
-        public PropertyCacheLevel GetDeliveryApiPropertyCacheLevel(IPublishedPropertyType propertyType) => GetPropertyCacheLevel(propertyType);
+    public object? ConvertIntermediateToDeliveryApiObject(
+         IPublishedElement owner,
+         IPublishedPropertyType propertyType,
+         PropertyCacheLevel referenceCacheLevel,
+         object? inter,
+         bool preview,
+         bool expanding) => ConvertIntermediateToObjectImpl(owner, propertyType, referenceCacheLevel, inter, preview, isDeliveryApi: true, expanding);
 
-        public Type GetDeliveryApiPropertyValueType(IPublishedPropertyType propertyType) => typeof(string);
-
-        public object? ConvertIntermediateToDeliveryApiObject(
+    private object? ConvertIntermediateToObjectImpl(
             IPublishedElement owner,
             IPublishedPropertyType propertyType,
             PropertyCacheLevel referenceCacheLevel,
             object? inter,
             bool preview,
+            bool isDeliveryApi,
             bool expanding)
+    {
+        if (inter is List<List<InputListValueModel>> items && items.Count > 0)
         {
-            // TODO: Implement conversion logic
-            return ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
+            var outerList = new List<List<object?>?>();
+
+            if (propertyType.ContentType is not null)
+            {
+                var dataTypeKeys = items[0]
+                    .Select(x => x.Alias)
+                    .Where(x => Guid.Empty.Equals(x) == false)
+                    .ToArray();
+
+                var task = Task.Run(async () => await _dataTypeService.GetAllAsync(dataTypeKeys));
+                var lookup = task.Result.ToDictionary(x => x.Key);
+
+                foreach (var item in items)
+                {
+                    var innerList = new List<object?>();
+
+                    foreach (var property in item)
+                    {
+                        if (lookup.TryGetValue(property.Alias, out var dataType) == true)
+                        {
+                            var publishedPropertyType = _publishedContentTypeFactory.CreatePropertyType(
+                                propertyType.ContentType, new PropertyType(_shortStringHelper, dataType, propertyType.Alias));
+
+                            var inter1 = publishedPropertyType.ConvertSourceToInter(owner, property.Value, preview);
+
+                            var obj1 = isDeliveryApi
+                                ? publishedPropertyType.ConvertInterToDeliveryApiObject(owner, referenceCacheLevel, inter1, preview, expanding)
+                                : publishedPropertyType.ConvertInterToObject(owner, referenceCacheLevel, inter1, preview);
+
+                            innerList.Add(obj1);
+                        }
+                    }
+
+                    outerList.Add(innerList);
+                }
+            }
+
+            return outerList;
         }
+
+        return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
     }
 }
