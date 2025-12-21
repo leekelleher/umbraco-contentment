@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2024 Lee Kelleher
 
-import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context-token.js';
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context.js';
 import { parseBoolean, tryHideLabel, tryMoveBeforePropertyGroup } from '../../utils/index.js';
 import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-label')
@@ -54,9 +54,9 @@ export class ContentmentPropertyEditorUITemplatedLabelElement
 		this.#parseLiquidTemplate();
 	}
 
-	#parseLiquidTemplate() {
+	async #parseLiquidTemplate() {
 		if (!this.#liquid || !this.#template) return;
-		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#templateCompiled = await this.#liquid.parse(this.#template);
 		this.#renderLiquidTemplate();
 	}
 

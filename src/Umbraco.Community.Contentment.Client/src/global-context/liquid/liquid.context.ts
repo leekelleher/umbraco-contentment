@@ -1,37 +1,44 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { CONTENTMENT_LIQUID_CONTEXT } from './liquid.context-token.js';
-import { Liquid } from '../../external/liquidjs/index.js';
 import { UmbContextBase } from '@umbraco-cms/backoffice/class-api';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Liquid, Template } from '../../external/liquidjs.js';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
+import { UmbContextToken } from '@umbraco-cms/backoffice/context-api';
 
 export class ContentmentLiquidContext extends UmbContextBase {
 	#engine?: Liquid;
 
-	public get engine(): Liquid {
+	async #getEngine(): Promise<Liquid> {
 		if (!this.#engine) {
+			const { Liquid } = await import('../../external/liquidjs.js');
 			this.#engine = new Liquid({ cache: true });
 		}
+
 		return this.#engine;
+	}
+
+	public get engine(): Promise<Liquid> {
+		return this.#getEngine();
 	}
 
 	constructor(host: UmbControllerHost) {
 		super(host, CONTENTMENT_LIQUID_CONTEXT);
 	}
 
-	parse(template: string): Array<Template> {
+	async parse(template: string): Promise<Array<Template>> {
+		const engine = await this.#getEngine();
 		try {
-			return this.engine.parse(template);
+			return engine.parse(template);
 		} catch (error) {
-			throw new Error(`Failed to parse Liquid template: ${(error instanceof Error) ? error.message : String(error)}`);
+			throw new Error(`Failed to parse Liquid template: ${error instanceof Error ? error.message : String(error)}`);
 		}
 	}
 
 	async render(templates: Array<Template>, scope: object): Promise<string> {
+		const engine = await this.#getEngine();
 		try {
-			return await this.engine.render(templates, scope);
+			return await engine.render(templates, scope);
 		} catch (error) {
 			throw new Error(`Liquid template rendering failed: ${error instanceof Error ? error.message : String(error)}`);
 		}
@@ -41,3 +48,5 @@ export class ContentmentLiquidContext extends UmbContextBase {
 export default ContentmentLiquidContext;
 
 export { ContentmentLiquidContext as api };
+
+export const CONTENTMENT_LIQUID_CONTEXT = new UmbContextToken<ContentmentLiquidContext>('ContentmentLiquidContext');

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context-token.js';
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context.js';
 import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
 import type { ContentmentBlockEditorCustomViewLiquidManifestKind } from './liquid.kind.js';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbBlockDataType, UmbBlockLayoutBaseModel } from '@umbraco-cms/backoffice/block';
 import type {
 	UmbBlockEditorCustomViewConfiguration,
@@ -151,9 +151,9 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 		this.#parseLiquidTemplate();
 	}
 
-	#parseLiquidTemplate() {
+	async #parseLiquidTemplate() {
 		if (!this.#liquid || !this.#template) return;
-		this.#templateCompiled = this.#liquid.parse(this.#template);
+		this.#templateCompiled = await this.#liquid.parse(this.#template);
 		this.#renderLiquidTemplate();
 	}
 

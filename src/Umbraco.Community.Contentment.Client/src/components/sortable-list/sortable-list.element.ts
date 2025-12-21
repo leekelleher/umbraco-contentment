@@ -2,12 +2,13 @@
 // Copyright © 2025 Lee Kelleher
 // Adapted from: https://lit.dev/playground/#gist=242f45fd2dbe21ecb6902f144686aae8
 
-import { css, customElement, html, property } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentSortEndEvent } from './sort-end.event.js';
-import { Sortable } from '../../external/sortablejs/index.js';
+import { Sortable } from '../../external/sortablejs.js';
+import { UmbDeleteEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UUIBlinkAnimationValue, UUIBlinkKeyframes } from '@umbraco-cms/backoffice/external/uui';
-import type { SortableEvent } from '../../external/sortablejs/index.js';
+import type { SortableEvent } from '../../external/sortablejs.js';
 
 @customElement('contentment-sortable-list')
 export default class ContentmentSortableListElement extends UmbLitElement {
@@ -70,8 +71,72 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 	];
 }
 
+@customElement('contentment-sortable-list-item')
+export class ContentmentSortableListItemElement extends UmbLitElement {
+	@property({ type: Boolean })
+	hideActions: boolean = false;
+
+	@property({ type: Boolean })
+	hideHandle: boolean = false;
+
+	#onRemove() {
+		this.dispatchEvent(new UmbDeleteEvent());
+	}
+
+	override render() {
+		return html`
+			${when(!this.hideHandle, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
+			<slot></slot>
+			${when(
+				!this.hideActions,
+				() => html`
+					<uui-action-bar class="actions">
+						<uui-button compact label=${this.localize.term('general_remove')} @click=${this.#onRemove}>
+							<uui-icon name="icon-trash"></uui-icon>
+						</uui-button>
+					</uui-action-bar>
+				`
+			)}
+		`;
+	}
+
+	static override styles = [
+		css`
+			:host {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: var(--uui-size-6);
+
+				padding: var(--uui-size-3) var(--uui-size-6);
+				background-color: var(--uui-color-surface-alt);
+				border-radius: var(--uui-border-radius);
+
+				&[drag-placeholder] {
+					opacity: 0.5;
+				}
+
+				> .handle {
+					cursor: grab;
+				}
+
+				> .actions {
+					flex: 0 0 auto;
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
+
+			::slotted(*) {
+				flex: 1;
+			}
+		`,
+	];
+}
+
 declare global {
 	interface HTMLElementTagNameMap {
 		'contentment-sortable-list': ContentmentSortableListElement;
+		'contentment-sortable-list-item': ContentmentSortableListItemElement;
 	}
 }

@@ -39,6 +39,9 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 
 	#networks?: Array<ContentmentSocialNetworkModel>;
 
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
+
 	@property({ type: Array })
 	public set value(value: Array<ContentmentSocialLinkValue> | undefined) {
 		this.#value = value ?? [];
@@ -178,6 +181,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 		if (!this.value || this.value.length === 0) return nothing;
 		return html`
 			<contentment-sortable-list
+				id="list"
 				item-selector=".item"
 				handle-selector=".handle"
 				?disabled=${this.#disableSorting}
@@ -194,12 +198,16 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	#renderItem(item: ContentmentSocialLinkValue, index: number) {
 		const network = this.#getNetworkByKey(item.network);
 		return html`
-			<div class="item">
-				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
+			<contentment-sortable-list-item
+				class="item"
+				?hideActions=${this.readonly}
+				?hideHandle=${this.#disableSorting}
+				@delete=${() => this.#onRemove(item, index)}>
 				${when(
 					!network,
 					() => html`
 						<uui-button
+							class="network"
 							look="placeholder"
 							label=${this.localize.term('contentment_selectSocialNetwork')}
 							@click=${() => this.#onChangeNetwork(index)}>
@@ -208,6 +216,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 					`,
 					() => html`
 						<uui-button
+							class="network"
 							look="default"
 							label=${this.localize.term('contentment_selectSocialNetwork')}
 							style="--uui-button-background-color: ${network!.backgroundColor};"
@@ -229,12 +238,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 						placeholder="Enter a URL..."
 						@change=${(e: UUIInputEvent) => this.#onChangeUrl(e, index)}></uui-input>
 				</div>
-				<div class="actions">
-					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item, index)}>
-						<uui-icon name="delete"></uui-icon>
-					</uui-button>
-				</div>
-			</div>
+			</contentment-sortable-list-item>
 		`;
 	}
 
@@ -244,7 +248,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				display: block;
 			}
 
-			contentment-sortable-list {
+			#list {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;
@@ -252,25 +256,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 			}
 
 			.item {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
-				gap: var(--uui-size-6);
-
-				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
-				border-radius: var(--uui-border-radius);
-
-				&[drag-placeholder] {
-					opacity: 0.5;
-				}
-
-				> .handle {
-					cursor: grab;
-				}
-
-				> uui-button {
+				> .network {
 					--uui-button-background-color-hover: var(--uui-button-background-color);
 
 					flex: 0 0 var(--uui-size-10);
@@ -281,17 +267,9 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				}
 
 				> .inputs {
-					flex: 1;
-
 					display: flex;
 					flex-direction: column;
 					gap: var(--uui-size-1);
-				}
-
-				> .actions {
-					flex: 0 0 auto;
-					display: flex;
-					justify-content: flex-end;
 				}
 			}
 		`,
