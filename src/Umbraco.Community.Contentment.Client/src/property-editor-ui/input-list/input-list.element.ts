@@ -2,31 +2,26 @@
 // Copyright © 2025 Lee Kelleher
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { createExtensionElement } from '@umbraco-cms/backoffice/extension-api';
-import { firstValueFrom } from '@umbraco-cms/backoffice/external/rxjs';
+import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbDataTypeDetailRepository } from '@umbraco-cms/backoffice/data-type';
-import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
-import type { UmbDataTypeDetailModel } from '@umbraco-cms/backoffice/data-type';
-import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyEditorConfig, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
-interface ContentmentInputListControl {
-	dataType: UmbDataTypeDetailModel;
-	manifest: ManifestPropertyEditorUi | undefined;
+import './input-list-property-editor.element.js';
+
+interface ContentmentInputListProperty {
+	dataTypeKey: string;
+	propertyEditorUiAlias: string;
+	propertyEditorUiConfig?: UmbPropertyEditorConfig;
 }
 
-interface ContentmentInputListItem {
-	key: string;
-	values: Record<string, unknown>;
-	elements: Map<string, UmbPropertyEditorUiElement>;
-}
+type ContentmentInputListValue = Array<Array<UmbPropertyValueData>>;
 
-type ContentmentInputListValue = Array<Record<string, unknown>>;
+type UmbPropertyDatasetElementChangeEvent = Event & { target: UmbPropertyDatasetElement };
 
 @customElement('contentment-property-editor-ui-input-list')
 export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement implements UmbPropertyEditorUiElement {
@@ -34,28 +29,20 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 
 	#disableSorting = false;
 
+	#inputs: Array<ContentmentInputListProperty> = [];
+
 	#maxItems = Infinity;
 
 	#repository = new UmbDataTypeDetailRepository(this);
 
+	@property({ type: Boolean, reflect: true })
+	readonly = false;
+
 	@property({ type: Array })
-	public set value(value: ContentmentInputListValue | undefined) {
-		this.#value = value ?? [];
-		this.#syncItemsWithValue();
-	}
-	public get value(): ContentmentInputListValue | undefined {
-		return this.#value;
-	}
-	#value: ContentmentInputListValue = [];
+	value?: ContentmentInputListValue;
 
 	@state()
-	private _controls: Array<ContentmentInputListControl> = [];
-
-	@state()
-	private _items: Array<ContentmentInputListItem> = [];
-
-	@state()
-	private _ready = false;
+	private _loading = true;
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
@@ -71,124 +58,34 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	async #loadDataTypes(uniques: Array<string>) {
-		const results = await Promise.all(
-			uniques.map(async (unique) => {
-				const { data: dataType } = await this.#repository.requestByUnique(unique);
-				if (!dataType) return null;
+		const results = (await Promise.all(
+			uniques.map(async (unique): Promise<ContentmentInputListProperty | null> => {
+				const { data } = await this.#repository.requestByUnique(unique);
+				if (!data) return null;
+				if (!data.editorUiAlias) return null;
 
-				const manifest = dataType.editorUiAlias
-					? ((await firstValueFrom(
-							umbExtensionsRegistry.byTypeAndAlias('propertyEditorUi', dataType.editorUiAlias)
-					  )) as ManifestPropertyEditorUi | undefined)
-					: undefined;
-
-				return { dataType, manifest };
+				return {
+					propertyEditorUiConfig: data.values,
+					propertyEditorUiAlias: data.editorUiAlias,
+					dataTypeKey: data.unique,
+				};
 			})
-		);
+		)) as Array<ContentmentInputListProperty | null>;
 
-		this._controls = results.filter((r): r is ContentmentInputListControl => r !== null);
-		this._ready = true;
+		this.#inputs = results.filter((control) => !!control) as Array<ContentmentInputListProperty>;
 
-		// Initialize items from existing value
-		await this.#syncItemsWithValue();
+		this._loading = false;
 	}
 
-	async #syncItemsWithValue() {
-		if (!this._ready || this._controls.length === 0) return;
-
-		// Build items from value, reusing existing item elements where possible
-		const existingItemsByKey = new Map(this._items.map((item) => [item.key, item]));
-		const newItems: Array<ContentmentInputListItem> = [];
-
-		for (let i = 0; i < this.#value.length; i++) {
-			const itemValue = this.#value[i];
-			// Use index as key for now (could use a UUID stored in value for more stability)
-			const key = `item-${i}`;
-
-			const existingItem = existingItemsByKey.get(key);
-			if (existingItem) {
-				// Update existing item's values and element values
-				existingItem.values = itemValue;
-				this.#updateItemElementValues(existingItem);
-				newItems.push(existingItem);
-			} else {
-				// Create new item
-				const item = await this.#createItem(key, itemValue);
-				newItems.push(item);
-			}
-		}
-
-		this._items = newItems;
-	}
-
-	async #createItem(key: string, values: Record<string, unknown>): Promise<ContentmentInputListItem> {
-		const elements = new Map<string, UmbPropertyEditorUiElement>();
-
-		for (const control of this._controls) {
-			if (!control.manifest) continue;
-
-			const element = await createExtensionElement(control.manifest);
-			if (!element) continue;
-
-			// Configure the element
-			element.value = values[control.dataType.unique];
-			element.config = new UmbPropertyEditorConfigCollection(control.dataType.values);
-
-			element.addEventListener('change', () => this.#onInputChange(key, control.dataType.unique, element.value));
-
-			// Listen for changes. ('property-value-change' is for backwards compatibility, to be removed in Umb v18). [LK]
-			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
-			element.addEventListener('property-value-change', () =>
-				this.#onInputChange(key, control.dataType.unique, element.value)
-			);
-
-			elements.set(control.dataType.unique, element);
-		}
-
-		return { key, values, elements };
-	}
-
-	#updateItemElementValues(item: ContentmentInputListItem) {
-		for (const control of this._controls) {
-			const element = item.elements.get(control.dataType.unique);
-			if (element) {
-				element.value = item.values[control.dataType.unique];
-			}
-		}
-	}
-
-	#onInputChange(itemKey: string, dataTypeKey: string, value: unknown) {
-		const itemIndex = this._items.findIndex((r) => r.key === itemKey);
-		if (itemIndex === -1) return;
-
-		// Update internal state - create new objects to avoid mutation
-		const updatedItem = {
-			...this._items[itemIndex],
-			values: { ...this._items[itemIndex].values, [dataTypeKey]: value },
-		};
-		const newItems = [...this._items];
-		newItems[itemIndex] = updatedItem;
-		this._items = newItems;
-
-		// Update external value
-		const newValue = [...this.#value];
-		newValue[itemIndex] = { ...newValue[itemIndex], [dataTypeKey]: value };
-		this.#value = newValue;
-
+	#onAdd() {
+		this.value = [...(this.value ?? []), []];
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	async #onAdd() {
-		// Create empty item value
-		const itemValue: Record<string, unknown> = {};
-		this._controls.forEach((control) => (itemValue[control.dataType.unique] = undefined));
-
-		// Create new item
-		const key = `item-${this._items.length}`;
-		const item = await this.#createItem(key, itemValue);
-
-		this._items = [...this._items, item];
-		this.#value = [...this.#value, itemValue];
+	#onChange(event: UmbPropertyDatasetElementChangeEvent, index: number) {
+		const value = [...(this.value ?? [])];
+		value[index] = event.target.value;
+		this.value = value;
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
@@ -203,13 +100,9 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 			});
 		}
 
-		const items = [...this._items];
-		items.splice(index, 1);
-		this._items = items;
-
-		const value = [...this.#value];
+		const value = [...(this.value ?? [])];
 		value.splice(index, 1);
-		this.#value = value;
+		this.value = value;
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
@@ -217,24 +110,20 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	#onSortEnd(event: ContentmentSortEndEvent) {
 		if (event.newIndex === undefined || event.oldIndex === undefined) return;
 
-		const items = [...this._items];
-		items.splice(event.newIndex, 0, items.splice(event.oldIndex, 1)[0]);
-		this._items = items;
-
-		const value = [...this.#value];
+		const value = [...(this.value ?? [])];
 		value.splice(event.newIndex, 0, value.splice(event.oldIndex, 1)[0]);
-		this.#value = value;
+		this.value = value;
 
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	override render() {
-		if (!this._ready) return html`<uui-loader></uui-loader>`;
+		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`${this.#renderItems()}${this.#renderAddButton()}`;
 	}
 
 	#renderAddButton() {
-		if (this._items.length >= this.#maxItems) return nothing;
+		if ((this.value?.length ?? 0) >= this.#maxItems) return;
 		return html`
 			<uui-button
 				id="btn-add"
@@ -245,40 +134,47 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	#renderItems() {
-		if (this._items.length === 0) return nothing;
+		if (!this.value || this.value?.length === 0) return;
 		return html`
 			<contentment-sortable-list
-				id="items"
+				id="list"
 				item-selector=".item"
 				handle-selector=".handle"
 				?disabled=${this.#disableSorting}
 				@sort-end=${this.#onSortEnd}>
 				${repeat(
-					this._items,
-					(item) => item.key,
-					(item, index) => this.#renderItem(item, index)
+					this.value,
+					(_, index) => index,
+					(_, index) => this.#renderItem(index)
 				)}
 			</contentment-sortable-list>
 		`;
 	}
 
-	#renderItem(item: ContentmentInputListItem, index: number) {
+	#renderItem(index: number) {
 		return html`
-			<div class="item">
-				${when(!this.#disableSorting, () => html`<div class="handle"><uui-icon name="icon-grip"></uui-icon></div>`)}
-				<div class="inputs">
+			<contentment-sortable-list-item
+				class="item"
+				?hideActions=${this.readonly}
+				?hideHandle=${this.#disableSorting}
+				@delete=${() => this.#onRemove(index)}>
+				<umb-property-dataset
+					class="inputs"
+					.value=${this.value?.[index] ?? []}
+					@change=${(event: UmbPropertyDatasetElementChangeEvent) => this.#onChange(event, index)}>
 					${repeat(
-						this._controls,
-						(control) => control.dataType.unique,
-						(control) => html`${item.elements.get(control.dataType.unique) ?? html`<uui-loader></uui-loader>`}`
+						this.#inputs,
+						(input) => input.dataTypeKey,
+						(input) => html`
+							<contentment-input-list-property-editor
+								.alias=${input.dataTypeKey}
+								.config=${input.propertyEditorUiConfig}
+								.propertyEditorUiAlias=${input.propertyEditorUiAlias}>
+							</contentment-input-list-property-editor>
+						`
 					)}
-				</div>
-				<div class="actions">
-					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(index)}>
-						<uui-icon name="icon-trash"></uui-icon>
-					</uui-button>
-				</div>
-			</div>
+				</umb-property-dataset>
+			</contentment-sortable-list-item>
 		`;
 	}
 
@@ -288,43 +184,17 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				display: block;
 			}
 
-			#items {
+			#list {
 				display: flex;
 				flex-direction: column;
 				gap: 1px;
 				margin-bottom: var(--uui-size-1);
 			}
 
-			.item {
+			.inputs {
 				display: flex;
 				flex-direction: row;
-				align-items: center;
-				gap: var(--uui-size-6);
-
-				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
-				border-radius: var(--uui-border-radius);
-
-				&[drag-placeholder] {
-					opacity: 0.5;
-				}
-
-				> .handle {
-					cursor: grab;
-				}
-
-				> .inputs {
-					flex: 1;
-					display: flex;
-					flex-direction: row;
-					gap: var(--uui-size-4);
-				}
-
-				> .actions {
-					flex: 0 0 auto;
-					display: flex;
-					justify-content: flex-end;
-				}
+				gap: var(--uui-size-4);
 			}
 		`,
 	];
