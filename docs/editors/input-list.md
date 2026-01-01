@@ -9,7 +9,7 @@ List Items is a property-editor that is configured with a one or more data-types
 
 ### How to configure the editor?
 
-In your new Data Type, selected the "[Contentment] Input List" option. You will see the following configuration fields.
+In your new Data Type, select the "[Contentment] Input List" option. You will see the following configuration fields.
 
 ![Configuration Editor for Input List](input-list--configuration-editor-01.png)
 
