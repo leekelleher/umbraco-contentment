@@ -13,7 +13,7 @@ In your new Data Type, selected the "[Contentment] Input List" option. You will 
 
 ![Configuration Editor for Input List](input-list--configuration-editor-01.png)
 
-The main fields is **Data types**, use this to select the data-types you would like to use for each item row.
+The main field is **Data types**: use this to select the data-types you would like to use for each item row.
 
 The **Confirm removals?** option will enable a confirmation prompt for when removing an item row.
 
