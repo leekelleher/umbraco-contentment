@@ -151,6 +151,7 @@ Property Editors are:
 
 - [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
 - [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
+- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
 
 
 ## v7 _(June 2026)_
