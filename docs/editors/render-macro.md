@@ -11,6 +11,9 @@ If you are not sure what a Macro is, (within the context of Umbraco), please rea
 
 ### Render Macro
 
+> [!IMPORTANT]
+> The **Render Macro** property-editor has been deprecated since Contentment v6.0.0.
+
 Umbraco Macros are typically used for functionality on frontend of a website. But what if we could render them within the CMS back-office?
 
 Render Macro is a read-only property-editor to display the HTML output from a Macro template.

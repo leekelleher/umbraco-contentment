@@ -13,13 +13,13 @@ In your new Data Type, selected the "[Contentment] List Items" option. You will 
 
 ![Configuration Editor for List Items](list-items--configuration-editor-01.png)
 
-The first two fields are **Hide icon field?** and ** Hide description field?**, these are to toggle the visibility, if you would like to streamline the editor for name and value fields only.
+The first two fields are **Hide icon field?** and **Hide description field?**, these are to toggle the visibility, if you would like to streamline the editor for name and value fields only.
 
-The **Confirm removals?** option will enable a confirmation prompt for when removing a social link item.
+The **Confirm removals?** option will enable a confirmation prompt for when removing a list item.
 
 The **Maximum items** field is used to limit the number of content blocks that the editor can have. Once the maximum is reached, the **Add** button will not be available.
 
-Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the List Items editor. Enabling this option will add a [property action](https://our.umbraco.com/Documentation/Extending/Property-Editors/Property-Actions/) called **Edit raw value**.
+Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the List Items editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
 
 When you are happy with the configuration, you can **Save** the Data Type and add it to your Document Type.
 

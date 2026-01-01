@@ -6,7 +6,7 @@
 
 Textbox List is a property-editor that uses a data-source to give you a textbox for each item in the data-source.
 
-> This property-editor has taken inspiration from the community packages, [KeyValue Editor](https://our.umbraco.com/packages/backoffice-extensions/keyvalue-editor/) by Chriztian Steinmeier and [Multilanguage Textbox](https://our.umbraco.com/packages/backoffice-extensions/multilanguage-textbox/) by Dave Woestenborghs.
+> This property-editor has taken inspiration from the community packages, [Key/Value Editor](https://marketplace.umbraco.com/package/vokseverk.keyvalueeditor) by Chriztian Steinmeier and [Multilanguage Textbox](https://marketplace.umbraco.com/package/our.umbraco.multilanguagetextbox) by Dave Woestenborghs.
 
 For information about data-sources, please see [the documentation for the Data List property-editor](data-list.md).
 

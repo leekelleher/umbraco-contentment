@@ -33,7 +33,7 @@ The **Editor overlay size** is to set the width of the overlay panel; small, med
 
 The **Maximum items** field is used to limit the number of items that can be picked. Once the maximum is reached, the **Add** button will not be available.
 
-Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Data Picker editor. Enabling this option will add a [property action](https://our.umbraco.com/Documentation/Extending/Property-Editors/Property-Actions/) called **Edit raw value**.
+Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Data Picker editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
 
 When you are happy with the configuration, you can **Save** the Data Type and add it to your Document Type.
 
