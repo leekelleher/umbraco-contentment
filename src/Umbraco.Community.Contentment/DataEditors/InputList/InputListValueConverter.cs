@@ -93,8 +93,8 @@ internal sealed class InputListValueConverter : PropertyValueConverterBase, IDel
                     .Where(x => Guid.Empty.Equals(x) == false)
                     .ToArray();
 
-                var task = Task.Run(async () => await _dataTypeService.GetAllAsync(dataTypeKeys));
-                var lookup = task.Result.ToDictionary(x => x.Key);
+                var dataTypes = _dataTypeService.GetAllAsync(dataTypeKeys).GetAwaiter().GetResult();
+                var lookup = dataTypes.ToDictionary(x => x.Key);
 
                 foreach (var item in items)
                 {
