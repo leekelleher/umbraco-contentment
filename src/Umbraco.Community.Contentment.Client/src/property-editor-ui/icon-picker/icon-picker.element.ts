@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { parseBoolean } from '../../utils/parse-boolean.function.js';
 import { css, customElement, html, property, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -10,19 +11,20 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 
 @customElement('contentment-property-editor-ui-icon-picker')
 export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
-	@state()
-	private _defaultIcon: string = '';
+	#defaultIcon: string = '';
 
-	@state()
-	private _size: IconSize = 'large';
+	#hideClearButton = false;
+
+	#size: IconSize = 'large';
 
 	@property()
 	public value?: string;
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-		this._defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
-		this._size = config.getValueByAlias<IconSize>('size') ?? 'large';
+		this.#defaultIcon = config.getValueByAlias('defaultIcon') ?? '';
+		this.#size = config.getValueByAlias<IconSize>('size') ?? 'large';
+		this.#hideClearButton = parseBoolean(config.getValueByAlias('hideClearButton'));
 	}
 
 	#onChange(event: CustomEvent & { target: ContentmentIconPickerElement }) {
@@ -39,13 +41,13 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 	override render() {
 		return html`
 			<contentment-icon-picker
-				.defaultIcon=${this._defaultIcon}
-				.size=${this._size}
+				.defaultIcon=${this.#defaultIcon}
+				.size=${this.#size}
 				.value=${this.value}
 				@change=${this.#onChange}>
 			</contentment-icon-picker>
 			${when(
-				this.value,
+				!this.#hideClearButton && this.value,
 				() =>
 					html`<uui-button compact label=${this.localize.term('general_clear')} @click=${this.#onClear}></uui-button>`
 			)}

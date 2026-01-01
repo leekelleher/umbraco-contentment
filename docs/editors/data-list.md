@@ -221,7 +221,7 @@ The `PropertyEditorUiAlias` property should set the alias of the property-editor
 
 #### Using dependency injection (IoC/DI)
 
-It is worth noting that both the `IContentmentDataSource` and `IContentmentListEditor` types support [Umbraco's approach for injecting dependencies](https://our.umbraco.com/documentation/reference/using-ioc/#injecting-dependencies). You can use any registered services, factories, helpers by adding them to the class constructor of your custom data-source/list-editor.
+It is worth noting that both the `IContentmentDataSource` and `IContentmentListEditor` types support [Umbraco's approach for injecting dependencies](https://docs.umbraco.com/umbraco-cms/reference/using-ioc#injecting-dependencies). You can use any registered services, factories, helpers by adding them to the class constructor of your custom data-source/list-editor.
 
 For an example, you can see how this is done with the [`UmbracoContentDataListSource` data-source](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/DataList/DataSources/UmbracoContentDataListSource.cs#L23-L27).
 

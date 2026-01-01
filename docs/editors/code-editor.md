@@ -44,7 +44,7 @@ Once you have added the configured Data Type to your Document Type, the Code Edi
 
 The value for the Code Editor is a `string`.
 
-Programmatically, you would access the value exactly the same as Umbraco's Textarea editor, [see Umbraco's documentation for code snippet examples](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textarea/#mvc-view-example).
+Programmatically, you would access the value exactly the same as Umbraco's Textarea editor, [see Umbraco's documentation for code snippet examples](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/textarea#mvc-view-example).
 
 If you are wanting to display the code content as a pre-formatted code snippet, I would recommend using the `<pre>` and `<code>` tags.
 
