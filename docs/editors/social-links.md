@@ -49,7 +49,7 @@ Selecting one of the available social network platforms, this will close the ove
 
 ### How to get the value?
 
-The value for the Social Links will be a [`IEnumerable<SocialLink>`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/SocialLinks/SocialLink.cs) object-type.
+The value for the Social Links will be a [`IEnumerable<SocialLink>`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/SocialLinks/SocialLink.cs) object-type.
 
 To use this in your view templates, here are some examples.
 

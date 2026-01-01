@@ -35,7 +35,7 @@ The editor will initially appear empty, by pressing the **Add item** button, a f
 
 ### How to get the value?
 
-The value for the List Items will be a [`IEnumerable<DataListItem>`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItem.cs) object-type.
+The value for the List Items will be a [`IEnumerable<DataListItem>`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItem.cs) object-type.
 
 To use this in your view templates, here are some examples.
 

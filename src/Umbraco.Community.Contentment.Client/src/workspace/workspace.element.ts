@@ -15,7 +15,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 			icon: 'icon-book',
 			name: 'Documentation',
 			description: 'How to use each of the property editors.',
-			url: 'https://github.com/leekelleher/umbraco-contentment/tree/develop/docs',
+			url: 'https://github.com/leekelleher/umbraco-contentment/tree/contrib/docs',
 		},
 		{
 			icon: 'icon-youtube',
@@ -129,7 +129,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 							<p>
 								If you would prefer to opt-out and disable the telemetry feature, you can
 								<a
-									href="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/telemetry.md#disable-telemetry-feature"
+									href="https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/telemetry.md#disable-telemetry-feature"
 									target="_blank"
 									rel="noopener"
 									><strong>find a code snippet</strong> on the telemetry documentation page</a
@@ -144,7 +144,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 					<p>
 						If you would like to remove this page and tree item from the Settings section, you can
 						<a
-							href="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/tree-dashboard.md#disable-tree-dashboard"
+							href="https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/tree-dashboard.md#disable-tree-dashboard"
 							target="_blank"
 							rel="noopener"
 							><strong>find a code snippet</strong> on the tree dashboard documentation page</a

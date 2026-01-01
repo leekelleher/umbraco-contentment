@@ -23,7 +23,7 @@ The **Display mode** is pre-configured to use the **Stack** mode, this enables a
 
 ![Configuration Editor for Content Blocks - the Stack display mode configuration](content-blocks--configuration-editor-02.png)
 
-> **Note:** You can add your own custom display modes by implementing the [`IContentBlocksDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/IContentBlocksDisplayMode.cs) interface.
+> **Note:** You can add your own custom display modes by implementing the [`IContentBlocksDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/IContentBlocksDisplayMode.cs) interface.
 > 
 > `// TODO: Write documentation on developing custom display modes.`
 
@@ -95,7 +95,7 @@ An advanced feature of Content Blocks is the ability to have a richer preview fo
 
 Once the preview feature is enabled, the content block item will render the preview using a Razor partial-view template.
 
-The default preview partial-view (that ships with Contentment), will be used. This can be found at [`"~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml). This will render similar to the default (plain) block style, with the exception that the **Name template** value is not available, the content block item's GUID (key) will be displayed instead.
+The default preview partial-view (that ships with Contentment), will be used. This can be found at [`"~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml). This will render similar to the default (plain) block style, with the exception that the **Name template** value is not available, the content block item's GUID (key) will be displayed instead.
 
 To use your own custom preview partial-views, you must use the following convention; name the partial-view the same as the Element Type alias, and place it in **the `"~/Views/Partials/Blocks/"` folder.** If you would like to re-use the same preview partial-view for multiple content block items, you can create a `"~/Views/Partials/Blocks/Default.cshtml"` template.
 

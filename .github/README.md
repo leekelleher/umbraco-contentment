@@ -1,4 +1,4 @@
-<img src="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Contentment for Umbraco
 
