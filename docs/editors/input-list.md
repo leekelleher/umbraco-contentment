@@ -30,7 +30,7 @@ When you are happy with the configuration, you can **Save** the Data Type and ad
 
 Once you have added the configured Data Type on your Document Type, the Input List editor will be displayed on the content page's property panel.
 
-The editor will initially appear empty, by pressing the **Add item** button, a fieldset for a item value will appear.
+The editor will initially appear empty, by pressing the **Add item** button, a fieldset for an item value will appear.
 
 ![Input List property-editor - displaying the item fields](input-list--property-editor-01.png)
 
