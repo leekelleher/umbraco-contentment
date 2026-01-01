@@ -90,7 +90,7 @@ internal sealed class InputListValueConverter : PropertyValueConverterBase, IDel
             {
                 var dataTypeKeys = items[0]
                     .Select(x => x.Alias)
-                    .Where(x => Guid.Empty.Equals(x) == false)
+                    .Where(x => x != Guid.Empty)
                     .ToArray();
 
                 var dataTypes = _dataTypeService.GetAllAsync(dataTypeKeys).GetAwaiter().GetResult();
