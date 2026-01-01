@@ -4,7 +4,7 @@
 
 ### Input List
 
-List Items is a property-editor that is configured with a one or more data-types to be used in a repeatable list.
+Input List is a property-editor that is configured with a one or more data-types to be used in a repeatable list.
 
 
 ### How to configure the editor?
