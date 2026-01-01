@@ -19,7 +19,7 @@ The **Confirm removals?** option will enable a confirmation prompt for when remo
 
 The **Maximum items** field is used to limit the number of content blocks that the editor can have. Once the maximum is reached, the **Add** button will not be available.
 
-Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the List Items editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
+Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Input List editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
 
 
 
