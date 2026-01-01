@@ -2,7 +2,7 @@
 
 TypeScript/Lit-based Umbraco Backoffice extension package for Contentment.
 
-- **License**: MIT / MPL-2.0
+- **License**: MIT
 - **Repository**: [GitHub](https://github.com/leekelleher/umbraco-contentment)
 - **Peer Dependency**: `@umbraco-cms/backoffice ^16.0.0`
 

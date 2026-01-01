@@ -5,10 +5,10 @@
 import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentSortEndEvent } from './sort-end.event.js';
 import { Sortable } from '../../external/sortablejs.js';
+import { UmbDeleteEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UUIBlinkAnimationValue, UUIBlinkKeyframes } from '@umbraco-cms/backoffice/external/uui';
 import type { SortableEvent } from '../../external/sortablejs.js';
-import { UmbDeleteEvent } from '@umbraco-cms/backoffice/event';
 
 @customElement('contentment-sortable-list')
 export default class ContentmentSortableListElement extends UmbLitElement {

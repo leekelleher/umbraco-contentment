@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { css, customElement, html, property, state, when } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, property, when } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type ContentmentIconPickerElement from '../../components/icon-picker/icon-picker.element.js';
