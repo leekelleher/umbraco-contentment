@@ -4,5 +4,5 @@ internal sealed class InputListValueModel
 {
     public Guid Alias { get; init; } = Guid.Empty;
 
-    public object? Value { get; init; }
+    public object? Value { get; set; }
 }
