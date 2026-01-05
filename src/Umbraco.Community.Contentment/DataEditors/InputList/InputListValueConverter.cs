@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+using System.Collections;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -132,7 +133,9 @@ internal sealed class InputListValueConverter : PropertyValueConverterBase, IDel
             _tupleTypeLookup.TryAdd(propertyType.DataType.Id, tupleType);
         }
 
-        return typeof(IEnumerable<>).MakeGenericType(tupleType);
+        var args = tupleType.GenericTypeArguments;
+        var model = Type.GetType($"Umbraco.Community.Contentment.DataEditors.InputListTuples`{Math.Min(args.Length, 8)}");
+        return model!.MakeGenericType(args);
     }
 
     private object? ConvertIntermediateToObjectImpl(
@@ -145,14 +148,17 @@ internal sealed class InputListValueConverter : PropertyValueConverterBase, IDel
             bool expanding)
     {
         if (inter is List<List<InputListValueModel>> model &&
+            propertyType.ClrType is not null &&
             _tupleTypeLookup.TryGetValue(propertyType.DataType.Id, out var tupleType) == true)
         {
-            var array = Array.CreateInstance(tupleType, model.Count);
+            var list = Activator.CreateInstance(propertyType.ClrType) as IList;
+
+            var argCount = tupleType.GenericTypeArguments.Length;
 
             for (var i = 0; i < model.Count; i++)
             {
                 var items = model[i];
-                var args = new object?[items.Count];
+                var args = new object?[argCount];
 
                 for (var j = 0; j < items.Count; j++)
                 {
@@ -169,10 +175,10 @@ internal sealed class InputListValueConverter : PropertyValueConverterBase, IDel
                 }
 
                 var tuple = Activator.CreateInstance(tupleType, args);
-                array.SetValue(tuple, i);
+                list?.Add(tuple);
             }
 
-            return array;
+            return list;
         }
 
         return base.ConvertIntermediateToObject(owner, propertyType, referenceCacheLevel, inter, preview);
