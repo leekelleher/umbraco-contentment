@@ -22,14 +22,14 @@ const schema: UmbExtensionManifest = {
 
 const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
-	alias: 'Umb.Contentment.PropertyEditorUi.InputList',
+	alias: schema.meta.defaultPropertyEditorUiAlias,
 	name: '[Contentment] Input List Property Editor UI',
 	element: () => import('./input-list.element.js'),
 	meta: {
 		label: 'Input List',
 		icon: 'icon-list',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.InputList',
+		//propertyEditorSchemaAlias: schema.alias,
 		settings: {
 			properties: [
 				{
@@ -55,4 +55,4 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+export const manifests = [editorUi];
