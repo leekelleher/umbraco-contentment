@@ -137,7 +137,7 @@ Property Editors are:
 - Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
 
 
-## v6 _(November 2026)_
+## v6 _(November 2025)_
 
 ### [v6.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.0.0)
 
@@ -151,6 +151,9 @@ Property Editors are:
 
 - [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
 - [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
+
+### v6.2
+
 - [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
 
 
