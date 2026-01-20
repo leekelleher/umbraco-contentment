@@ -66,7 +66,7 @@ export default class ContentmentPropertyEditorUiElement
 		this.addValidator(
 			'valid',
 			() => '#errors_propertyHasErrors',
-			() => true
+			() => true,
 		);
 	}
 
@@ -82,7 +82,7 @@ export default class ContentmentPropertyEditorUiElement
 						this._undefined = true;
 					}
 				},
-				'_observePropertyEditorUI'
+				'_observePropertyEditorUI',
 			);
 		}
 	}
@@ -106,12 +106,9 @@ export default class ContentmentPropertyEditorUiElement
 			this._element.mandatoryMessage = this.mandatoryMessage;
 			this._element.manifest = manifest;
 			this._element.readonly = this.readonly;
-			this._element.value = this.value;
 			this._element.name = this.name;
-
-			if (this.config) {
-				this._element.config = this.config;
-			}
+			this._element.value = this.value;
+			this._element.config = this.config;
 
 			if ('validity' in this._element) {
 				this.addFormControlElement(this._element as any);
