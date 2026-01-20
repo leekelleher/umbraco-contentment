@@ -1,10 +1,12 @@
-﻿@inherits UmbracoViewPage
+@inherits UmbracoViewPage
 @{
     var culture = System.Globalization.CultureInfo.CurrentCulture;
     var dir = culture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
     var lang = culture.TwoLetterISOLanguageName;
 
     var counter = 0;
+
+    var children = Model.Children();
 }
 <!doctype html>
 <html dir="@dir" lang="@lang">
@@ -34,6 +36,20 @@
     </header>
 
     <main role="main">
+        @if (children?.Any() == true)
+        {
+            counter = 0;
+            <nav>
+                @foreach (var item in children)
+                {
+                    if (counter++ > 0)
+                    {
+                        <span> / </span>
+                    }
+                    <a href="@item.Url()" class="@(item.Id == Model.Id ? "current" : null)">@item.Name</a>
+                }
+            </nav>
+        }
         @RenderSection("body")
         @RenderBody()
     </main>
