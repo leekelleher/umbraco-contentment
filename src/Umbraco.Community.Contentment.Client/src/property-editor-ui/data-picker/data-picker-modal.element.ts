@@ -43,18 +43,15 @@ interface ContentmentDataPickerModalValue {
 export const CONTENTMENT_DATA_PICKER_MODAL = new UmbModalToken<
 	ContentmentDataPickerModalData,
 	ContentmentDataPickerModalValue
->('Umb.Contentment.Modal.DataPicker', {
-	modal: {
-		type: 'sidebar',
-		size: 'medium',
-	},
-});
+>('Umb.Contentment.Modal.DataPicker', { modal: { type: 'sidebar', size: 'medium' } });
 
 @customElement('contentment-property-editor-ui-data-picker-modal')
 export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalBaseElement<
 	ContentmentDataPickerModalData,
 	ContentmentDataPickerModalValue
 > {
+	#selection: Map<string, ContentmentListItem> = new Map();
+
 	@state()
 	private _allowSubmit = false;
 
@@ -124,14 +121,20 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	#onSelect(item: ContentmentListItem) {
 		if (item.disabled) return;
 
-		if (this.data?.enableMultiple) {
-			item.selected = !item.selected;
-			this._itemCount = this._items.filter((x) => x.selected === true).length;
-			this._allowSubmit = this._itemCount > 0 && (this.data?.maxItems === 0 || this._itemCount <= this.data?.maxItems);
-		} else {
+		if (!this.data?.enableMultiple) {
 			this.value = { selection: [item] };
 			this._submitModal();
+			return;
 		}
+
+		if (this.#selection.has(item.value)) {
+			this.#selection.delete(item.value);
+		} else {
+			this.#selection.set(item.value, item);
+		}
+
+		this._itemCount = this.#selection.size;
+		this._allowSubmit = this._itemCount > 0 && (this.data?.maxItems === 0 || this._itemCount <= this.data?.maxItems);
 	}
 
 	#onPagination(event: UUIPaginationEvent) {
@@ -141,17 +144,8 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	#onSubmit() {
-		const selection: Array<ContentmentListItem> = [];
-
-		this._items.forEach((item) => {
-			if (item.selected) {
-				delete item.selected;
-				selection.push(item);
-			}
-		});
-
+		const selection = Array.from(this.#selection.values());
 		this.value = { selection };
-
 		this._submitModal();
 	}
 
@@ -170,7 +164,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 		const { data } = await tryExecute(
 			this,
-			DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body })
+			DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body }),
 		);
 
 		this._items =
@@ -199,7 +193,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 								label=${this.localize.term('buttons_select')}
 								?disabled=${!this._allowSubmit}
 								@click=${this.#onSubmit}></uui-button>
-						`
+						`,
 					)}
 				</div>
 			</umb-body-layout>
@@ -257,7 +251,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 						${repeat(
 							this._items,
 							(item) => item.key,
-							(item) => this.#renderItem(item)
+							(item) => this.#renderItem(item),
 						)}
 					</section>
 				`,
@@ -267,23 +261,24 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 							${repeat(
 								this._items,
 								(item) => item.key,
-								(item) => this.#renderItem(item)
+								(item) => this.#renderItem(item),
 							)}
 						</uui-ref-list>
 					</uui-box>
-				`
+				`,
 			)}
 			${when(
 				this._totalPages > 1,
 				() => html`
 					<uui-pagination current=${this._pageNumber} total=${this._totalPages} @change=${this.#onPagination}>
 					</uui-pagination>
-				`
+				`,
 			)}
 		`;
 	}
 
 	#renderItem(item: ContentmentListItem) {
+		const icon = item.icon ?? this.data?.defaultIcon ?? 'icon-document';
 		return when(
 			// HACK: [LK] Until I figure out how to render custom display modes in the modal.
 			this.data?.listType === 'cards',
@@ -293,23 +288,28 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					detail=${ifDefined(item.description ?? undefined)}
 					select-only
 					selectable
+					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
-					${when(!item.image && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
-					${when(item.image, () => html`<img src=${item.image!} alt="" />`)}
+					${when(
+						item.image,
+						(image) => html`<img src=${image!} alt="" />`,
+						() => html`<umb-icon name=${icon}></umb-icon>`,
+					)}
 				</uui-card-media>
 			`,
 			() => html`
 				<umb-ref-item
 					name=${item.name}
 					detail=${ifDefined(item.description ?? undefined)}
-					icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
+					icon=${icon}
 					select-only
 					selectable
+					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
 				</umb-ref-item>
-			`
+			`,
 		);
 	}
 
