@@ -59,8 +59,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Remove="DataEditors\InputList\**" />
         <Compile Remove="wwwroot\**" />
+        <Content Remove="DataEditors\InputList\**" />
+        <EmbeddedResource Remove="DataEditors\InputList\**" />
         <EmbeddedResource Remove="wwwroot\**" />
+        <None Remove="DataEditors\InputList\**" />
         <None Remove="wwwroot\**" />
     </ItemGroup>
 

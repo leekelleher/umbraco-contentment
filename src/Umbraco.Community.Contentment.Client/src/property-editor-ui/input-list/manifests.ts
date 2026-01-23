@@ -29,7 +29,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'Input List',
 		icon: 'icon-list',
 		group: 'contentment',
-		//propertyEditorSchemaAlias: schema.alias,
+		propertyEditorSchemaAlias: schema.alias,
 		settings: {
 			properties: [
 				{
