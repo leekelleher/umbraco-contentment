@@ -191,6 +191,9 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 			]).pipe(debounceTime(20)),
 			([layouts, contents, settings, exposes]) => {
 				if (layouts.length === 0) {
+					if (this.value === undefined) {
+						return;
+					}
 					this.#fauxValue = undefined;
 				} else {
 					this.#fauxValue = {
@@ -204,7 +207,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 
 				// If we don't have a value set from the outside or an internal value, we don't want to set the value.
 				// This is added to prevent the block list from setting an empty value on startup.
-				if (this.#lastValue === undefined && super.value === undefined) {
+				if (this.#lastValue === undefined && this.#fauxValue === undefined) {
 					return;
 				}
 
