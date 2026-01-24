@@ -59,7 +59,7 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 			<contentment-info-box
 				.type=${this.#alertType}
 				.icon=${this.#icon}
-				.heading=${this.#heading}
+				.headline=${this.#heading}
 				.message=${this.#message}></contentment-info-box>
 		`;
 	}

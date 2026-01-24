@@ -1,24 +1,21 @@
-// SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
 
+import { closest } from './dom-closest.function.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 export function tryMoveBeforePropertyGroup(element: UmbPropertyEditorUiElement): void {
 	if (element) {
-		// HACK: Members of the jury, I present to you, yet another dirty DOM hack! [LK]
+		const umbProperty = closest('umb-property', element) as HTMLElement;
+		if (!umbProperty) return;
 
-		// @ts-ignore
-		const umbProperty = element.getRootNode()?.host as HTMLElement;
+		const uuiBox = closest('uui-box', umbProperty);
+		if (!uuiBox) return;
 
-		// @ts-ignore
-		const uuiBox = umbProperty?.getRootNode()?.host?.getRootNode()?.host?.getRootNode()?.host?.parentElement as HTMLElement;
+		const umbContentWorkspaceViewEditTab = closest('umb-content-workspace-view-edit-tab', uuiBox);
+		if (!umbContentWorkspaceViewEditTab) return;
 
-		// @ts-ignore
-		const umbContentWorkspaceViewEditTab = uuiBox?.getRootNode().host as HTMLElement;
-
-		if (umbProperty && uuiBox && umbContentWorkspaceViewEditTab) {
-			umbContentWorkspaceViewEditTab.shadowRoot?.insertBefore(element, uuiBox);
-			umbProperty.style.display = 'none';
-		}
+		umbContentWorkspaceViewEditTab.shadowRoot?.insertBefore(element, uuiBox);
+		umbProperty.style.display = 'none';
 	}
 }

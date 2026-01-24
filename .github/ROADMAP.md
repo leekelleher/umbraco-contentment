@@ -137,21 +137,46 @@ Property Editors are:
 - Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
 
 
-## v6
+## v6 _(November 2025)_
 
 ### [v6.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.0.0)
 
 - [Support for the new Umbraco backoffice, aka Bellissima](https://github.com/leekelleher/umbraco-contentment/discussions/357).
 - ~Adds support for Umbraco 14 (.NET 8) _aka Bellissima_~.
 - ~Adds support for Umbraco 15 (.NET 9)~.
-- Adds support for Umbraco 16 (.NET 9) and Umbraco 17 (.NET 10).
+- Adds support for Umbraco 16 (.NET 9) and Umbraco 17 (LTS, .NET 10).
 - Removes support for Umbraco 13 (.NET 8).
 
+### v6.1
 
-## v7
+- [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
+- [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
 
-- _Adds support for Umbraco 17 and 18 (.NET 10)._
+### v6.2
+
+- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
+
+
+## v7 _(June 2026)_
+
+- _Adds support for Umbraco 18 (.NET 10)._
 - _Removes support for Umbraco 16 (.NET 9)._
+
+
+## v8 _(December 2026)_
+
+- _Adds support for Umbraco 19 (.NET 11)._
+
+
+## v9 _(June 2027)_
+
+- _Adds support for Umbraco 20 (.NET 11)._
+
+
+## v10 _(December 2027)_
+
+- _Adds support for Umbraco 21 (LTS, .NET 12)._
+- _Removes support for Umbraco 17, 18 (.NET 9), 19, 20 (.NET 11)._
 
 
 ## Future feature (minor) releases

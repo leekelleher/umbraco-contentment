@@ -5,7 +5,7 @@
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    // https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/data-sources/data-source--enum.md
+    // https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/data-sources/data-source--enum.md
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public sealed class DataListItemAttribute : Attribute
     {

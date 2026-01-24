@@ -1,12 +1,12 @@
-// SPDX-License-Identifier: MPL-2.0
-// Copyright © 2024 Lee Kelleher
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
 
+import { closest } from './dom-closest.function.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 export function tryHideLabel(element: UmbPropertyEditorUiElement): void {
 	if (element) {
-		// HACK: Distinguished guests and honourable friends, may I present the mother of old skool DOM hacks! [LK]
-		const umbPropertyLayout = element.parentElement?.parentElement;
+		const umbPropertyLayout = closest('umb-property-layout', element);
 		if (umbPropertyLayout) {
 			umbPropertyLayout.setAttribute('orientation', 'vertical');
 			const headerColumn = umbPropertyLayout.shadowRoot?.querySelector('#headerColumn') as HTMLElement;

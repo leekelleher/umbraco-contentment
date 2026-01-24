@@ -78,7 +78,8 @@ export class ContentmentPropertyEditorUIDataListElement
 		this.addValidator(
 			'valueMissing',
 			() => this.mandatoryMessage ?? UMB_VALIDATION_EMPTY_LOCALIZATION_KEY,
-			() => !this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === '')
+			() =>
+				!this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === ''),
 		);
 	}
 
@@ -104,10 +105,12 @@ export class ContentmentPropertyEditorUIDataListElement
 			this._listEditor,
 			this._entityUnique,
 			this._propertyAlias,
-			this._variantId
+			this._variantId,
 		);
 
 		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];
+
+		// TODO: [LK] Review this, as when being used in Input List, it is overwriting the property's config.
 		this.#propertyContext?.setConfig(combinedConfig);
 	}
 

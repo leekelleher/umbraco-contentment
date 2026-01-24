@@ -20,4 +20,11 @@ namespace Umbraco.Community.Contentment.Services
     {
         T? GetCurrentContentId<T>(out bool isParent);
     }
+
+    // NOTE: Added as a separate interface, so not to break binary backwards-compatibility. [LK]
+    [Obsolete("To be combined with `IContentmentContentContext`. This interface will be removed in Contentment 8.0.")]
+    public interface IContentmentContentContext3 : IContentmentContentContext2
+    {
+        string? GetCurrentVariantId();
+    }
 }

@@ -25,21 +25,21 @@ You're most likely asking yourself, _"okay, so where do the values come from?"_ 
 
 The data-source will attempt to detect the property's type and understand it's data structure. The following property-editors have built-in support...
 
-- **Textbox (aka Textstring) (and [Text Input](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/text-input.md))** - will attempt to delimit the text value by comma (CSV). Each item will be used as both Name and Value.
+- **Textbox (aka Textstring) (and [Text Input](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/text-input.md))** - will attempt to delimit the text value by comma (CSV). Each item will be used as both Name and Value.
 - **Textarea** - will attempt to delimit by a new line (i.e. `CRLF`). Each item will be used as both Name and Value.
 - **Repeatable Textstring (aka Multiple Textstring)** - the text from each item (row) is used as both Name and Value.
-- [**Data List**](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/data-list.md) - the value from the selected item(s) will be used as both the Name and Value.
-- [**List Items**](https://github.com/leekelleher/umbraco-contentment/blob/dev/develop/docs/editors/list-items.md) - this editor offers full control, it can set the Name, Value, Icon and Description. :dart:
-- [**Social Links**](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/social-links.md) - each item will use the Name, the Value will use the Network (e.g. Twitter), the Icon will prefix the Network with `"icon-"` and the Description will use the Url value.
-- [**Textbox List**](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/textbox-list.md) - the name/value from each item will be used for the Name and Value.
+- [**Data List**](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/data-list.md) - the value from the selected item(s) will be used as both the Name and Value.
+- [**List Items**](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/list-items.md) - this editor offers full control, it can set the Name, Value, Icon and Description. :dart:
+- [**Social Links**](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/social-links.md) - each item will use the Name, the Value will use the Network (e.g. Twitter), the Icon will prefix the Network with `"icon-"` and the Description will use the Url value.
+- [**Textbox List**](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/textbox-list.md) - the name/value from each item will be used for the Name and Value.
 
 **Support for other editors?**
 
-If you have a custom property-editor that you would like to add support for, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataListItemPropertyValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListItemPropertyValueConverter.cs) interface.
+If you have a custom property-editor that you would like to add support for, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IDataListItemPropertyValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/DataList/IDataListItemPropertyValueConverter.cs) interface.
 
 This interface contains two methods: `IsConverter(propertyType)` and `ConvertTo(property)`; the first is to match the converter with the property-type; the second is to do the value conversion.
 
-To see examples of this, you can either see the built-in converters, ([in the `DataList/DataListItemPropertyValueConverters` directory](https://github.com/leekelleher/umbraco-contentment/tree/develop/src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItemPropertyValueConverters)) or take a look at prototype code that I wrote to support the [Content Blocks](https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/editors/content-blocks.md) editor, see: [`ContentmentContentBlocksDataListItemPropertyValueConverter.cs`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Cms.11.x/DataSources/ContentmentContentBlocksDataListItemPropertyValueConverter.cs). _(Wow, that's a long filename!)_
+To see examples of this, you can either see the built-in converters, ([in the `DataList/DataListItemPropertyValueConverters` directory](https://github.com/leekelleher/umbraco-contentment/tree/contrib/src/Umbraco.Community.Contentment/DataEditors/DataList/DataListItemPropertyValueConverters)) or take a look at prototype code that I wrote to support the [Content Blocks](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/content-blocks.md) editor, see: [`ContentmentContentBlocksDataListItemPropertyValueConverter.cs`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Cms.11.x/DataSources/ContentmentContentBlocksDataListItemPropertyValueConverter.cs). _(Wow, that's a long filename!)_
 
 
 ##### What is the value's object-type?

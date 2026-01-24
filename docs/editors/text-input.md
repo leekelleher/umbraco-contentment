@@ -53,19 +53,19 @@ Once you have added the configured Data Type to your Document Type, the Text Inp
 
 ![Text Input property-editor](text-input--property-editor-01.png)
 
-Visually, this is similar to [Umbraco's Textbox editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textbox/#content-example).
+Visually, this is similar to [Umbraco's Textbox editor](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/textbox#content-example).
 
 
 ### How to get the value?
 
 The value for the Text Input is a `string`.
 
-Programmatically, you would access the value exactly the same as Umbraco's Textbox editor, [see Umbraco's documentation for code snippet examples](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textbox/#mvc-view-example).
+Programmatically, you would access the value exactly the same as Umbraco's Textbox editor, [see Umbraco's documentation for code snippet examples](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/textbox#mvc-view-example).
 
 
 ### Further reading
 
-- [Umbraco documentation on built-in **Textbox** property editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Textbox/)
+- [Umbraco documentation on built-in **Textbox** property editor](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/textbox)
 - [MDN Web documentation on `<input type="text">` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text)
 - [MDN Web documentation on `<datalist>`: The HTML Data List element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist)
 

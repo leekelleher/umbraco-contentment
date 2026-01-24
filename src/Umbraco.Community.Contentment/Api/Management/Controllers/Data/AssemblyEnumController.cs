@@ -67,6 +67,7 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
                     }
                 }
                 catch (FileLoadException) { /* (╯°□°）╯︵ ┻━┻ */ }
+                catch (FileNotFoundException) { /* ┌( ಠ_ಠ)┘ */ }
                 catch (TypeLoadException) { /* ¯\_(ツ)_/¯ */ }
 
                 if (hasEnums == false)

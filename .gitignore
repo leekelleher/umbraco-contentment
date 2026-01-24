@@ -22,5 +22,6 @@ src/packages/*/**
 src/Umbraco.Cms.*.x/*
 !src/Umbraco.Cms.*.x/uSync/
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
+src/*/.claude/*
 src/*/node_modules/*
 tools/*.exe

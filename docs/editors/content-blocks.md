@@ -6,7 +6,7 @@
 
 Content Blocks is a property-editor used for creating a list of structured content, with each block configurable using an element type.
 
-> If you are using Umbraco 8.7 (or above), this may sound familiar to the [Block List Editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Block-List-Editor/), and you may be asking yourself why should you use Content Blocks over the built-in Block List Editor? It's a good question, and you'll find no marketing spin from me. So if you have any doubts, then I'd recommend that you stick with Umbraco's built-in editors. Content Blocks has subtle differences, it's entirely your choice.
+> If you are using Umbraco 8.7 (or above), this may sound familiar to the [Block List Editor](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/block-editor/block-list-editor), and you may be asking yourself why should you use Content Blocks over the built-in Block List Editor? It's a good question, and you'll find no marketing spin from me. So if you have any doubts, then I'd recommend that you stick with Umbraco's built-in editors. Content Blocks has subtle differences, it's entirely your choice.
 
 > For long time fans of Umbraco v7.x, if you recall the [Stacked Content](https://our.umbraco.com/packages/backoffice-extensions/stacked-content) editor, then Content Blocks could be considered its spiritual successor.
 
@@ -23,13 +23,13 @@ The **Display mode** is pre-configured to use the **Stack** mode, this enables a
 
 ![Configuration Editor for Content Blocks - the Stack display mode configuration](content-blocks--configuration-editor-02.png)
 
-> **Note:** You can add your own custom display modes by implementing the [`IContentBlocksDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/IContentBlocksDisplayMode.cs) interface.
+> **Note:** You can add your own custom display modes by implementing the [`IContentBlocksDisplayMode`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/IContentBlocksDisplayMode.cs) interface.
 > 
 > `// TODO: Write documentation on developing custom display modes.`
 
 Next is to select and configure the **Block types**. By pressing the **Select and configure an element type** button, you will be presented with a selection of element types.
 
-> **Note:** If you have not created any element types. Please refer to [Umbraco's documentation on how to create an element type](https://our.umbraco.com/documentation/Getting-Started/Data/Defining-content/).
+> **Note:** If you have not created any element types. Please refer to [Umbraco's documentation on how to create an element type](https://docs.umbraco.com/umbraco-cms/fundamentals/data/defining-content).
 
 ![Configuration Editor for Content Blocks - list of available element types](content-blocks--configuration-editor-03.png)
 
@@ -55,7 +55,7 @@ The **Maximum items** field is used to limit the number of content blocks that t
 
 The **Disable sorting?** option will prevent the Content Blocks from being sorted.
 
-Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Content Block editor. Enabling this option will add a [property action](https://our.umbraco.com/Documentation/Extending/Property-Editors/Property-Actions/) called **Edit raw value**.
+Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Content Block editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
 
 ![Property action for Content Blocks - edit raw value](content-blocks--configuration-editor-05.png)
 
@@ -95,7 +95,7 @@ An advanced feature of Content Blocks is the ability to have a richer preview fo
 
 Once the preview feature is enabled, the content block item will render the preview using a Razor partial-view template.
 
-The default preview partial-view (that ships with Contentment), will be used. This can be found at [`"~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml). This will render similar to the default (plain) block style, with the exception that the **Name template** value is not available, the content block item's GUID (key) will be displayed instead.
+The default preview partial-view (that ships with Contentment), will be used. This can be found at [`"~/App_Plugins/Contentment/render/ContentBlockPreview.cshtml"`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/ContentBlocks/ContentBlockPreview.cshtml). This will render similar to the default (plain) block style, with the exception that the **Name template** value is not available, the content block item's GUID (key) will be displayed instead.
 
 To use your own custom preview partial-views, you must use the following convention; name the partial-view the same as the Element Type alias, and place it in **the `"~/Views/Partials/Blocks/"` folder.** If you would like to re-use the same preview partial-view for multiple content block items, you can create a `"~/Views/Partials/Blocks/Default.cshtml"` template.
 
@@ -168,7 +168,7 @@ Here's an example of strongly-typed...
 
 There are several alternative block-based editors that you could use with Umbraco v8, here are a selection...
 
-- [Umbraco's **Block List** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Block-List-Editor/) - available since Umbraco v8.7.0.
+- [Umbraco's **Block List** editor](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/block-editor/block-list-editor) - available since Umbraco v8.7.0.
 - [Umbraco's **Nested Content** editor](https://our.umbraco.com/documentation/getting-started/backoffice/property-editors/built-in-property-editors/Nested-Content/) - available since Umbraco v7.7.0, _(since superseded by the Block List editor)._
 - [**Bento** editor by KOBEN Digital](https://our.umbraco.com/packages/backoffice-extensions/bento-editor/) - compatible with Umbraco v8.6.0 (and above).
 - [**Perplex.ContentBlocks** by Perplex](https://our.umbraco.com/packages/backoffice-extensions/perplexcontentblocks/) - _(ignore my naming clash with Content Blocks, naming things is hard),_ compatible with Umbraco v8.1.0 (and above).

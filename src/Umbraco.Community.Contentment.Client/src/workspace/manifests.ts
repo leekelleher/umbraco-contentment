@@ -6,9 +6,7 @@ const workspace: UmbExtensionManifest = {
 	alias: 'Umb.Contentment.Workspace.Contentment',
 	name: '[Contentment] Workspace',
 	element: () => import('./workspace.element.js'),
-	meta: {
-		entityType: 'contentment',
-	},
+	meta: { entityType: 'contentment' },
 };
 
 export const manifests = [workspace];

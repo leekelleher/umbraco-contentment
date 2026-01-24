@@ -1,6 +1,7 @@
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: MIT
 // Copyright © 2024 Lee Kelleher
 
+import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context.js';
 import type { ContentmentListItem, ContentmentDataListOption } from '../types.js';
 import {
 	classMap,
@@ -13,13 +14,11 @@ import {
 	repeat,
 	state,
 	unsafeHTML,
-	until,
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean } from '../../utils/parse-boolean.function.js';
-import { Liquid } from '../../external/liquidjs/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { Template } from '../../external/liquidjs/index.js';
+import type { Template } from '../../external/liquidjs.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 @customElement('contentment-property-editor-ui-templated-list')
@@ -27,9 +26,11 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#engine = new Liquid({ cache: true });
+	#liquid?: typeof CONTENTMENT_LIQUID_CONTEXT.TYPE;
 
-	#template?: Array<Template>;
+	#template?: string;
+
+	#templateCompiled?: Array<Template>;
 
 	@state()
 	private _enableMultiple = false;
@@ -45,6 +46,17 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 	@state()
 	private _listItemStyles?: string;
+
+	@state()
+	private _markupLookup = new Map<string, unknown>();
+
+	constructor() {
+		super();
+		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
+			this.#liquid = context;
+			this.#parseLiquidTemplate();
+		});
+	}
 
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
@@ -62,8 +74,8 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 		this._enableMultiple = parseBoolean(config.getValueByAlias('enableMultiple'));
 
-		const template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
-		this.#template = this.#engine.parse(template);
+		this.#template = config.getValueByAlias<string>('template') ?? '{{ item.name }}';
+		this.#parseLiquidTemplate();
 
 		this._flexDirection = config.getValueByAlias('orientation') === 'horizontal' ? 'row' : 'column';
 
@@ -73,9 +85,28 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
+		this.#renderLiquidTemplate();
+
 		if (!this.value) {
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}
+	}
+
+	async #parseLiquidTemplate() {
+		if (!this.#liquid || !this.#template) return;
+		this.#templateCompiled = await this.#liquid.parse(this.#template);
+		this.#renderLiquidTemplate();
+	}
+
+	async #renderLiquidTemplate() {
+		if (!this.#liquid || !this.#templateCompiled || !this._items?.length) return;
+
+		for (const item of this._items) {
+			const markup = await this.#liquid.render(this.#templateCompiled, { item });
+			this._markupLookup.set(item.value, markup ? unsafeHTML(markup) : nothing);
+		}
+
+		this.requestUpdate('_markupLookup');
 	}
 
 	#onClick(option: ContentmentDataListOption) {
@@ -103,6 +134,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 			this._items.forEach((item) => {
 				item.selected = this.#value?.includes(item.value) ?? false;
 			});
+			this.#renderLiquidTemplate();
 		}
 	}
 
@@ -113,7 +145,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					compact
 					type="warning"
 					icon="icon-alert"
-					heading="There are no items to display"></contentment-info-box>
+					headline="There are no items to display"></contentment-info-box>
 			`;
 		}
 
@@ -136,16 +168,10 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					class=${classMap({ selected: item.selected })}
 					?disabled=${item.disabled}
 					@click=${() => this.#onClick(item)}>
-					${until(this.#renderTemplate(item))}
+					${this._markupLookup.get(item.value) ?? nothing}
 				</button>
 			</li>
 		`;
-	}
-
-	async #renderTemplate(item: ContentmentDataListOption) {
-		if (!this.#engine || !this.#template) return null;
-		const markup = await this.#engine.render(this.#template, { item });
-		return markup ? unsafeHTML(markup) : nothing;
 	}
 
 	static override styles = [
@@ -169,7 +195,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 					border-radius: calc(var(--uui-border-radius) * 2);
 
 					&.selected {
-						outline: var(--uui-size-1) solid var(--uui-color-selected);
+						outline: var(--uui-size-2) solid var(--uui-color-selected);
 					}
 
 					> button {

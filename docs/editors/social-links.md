@@ -29,7 +29,7 @@ The **Confirm removals?** option will enable a confirmation prompt for when remo
 
 The **Maximum items** field is used to limit the number of content blocks that the editor can have. Once the maximum is reached, the **Add** button will not be available.
 
-Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Social Links editor. Enabling this option will add a [property action](https://our.umbraco.com/Documentation/Extending/Property-Editors/Property-Actions/) called **Edit raw value**.
+Lastly, the **Developer mode?** option is a special feature for those who would like to have access to the raw JSON value of the Social Links editor. Enabling this option will add a [property action](https://docs.umbraco.com/umbraco-cms/customizing/property-editors/property-actions) called **Edit raw value**.
 
 When you are happy with the configuration, you can **Save** the Data Type and add it to your Document Type.
 
@@ -49,7 +49,7 @@ Selecting one of the available social network platforms, this will close the ove
 
 ### How to get the value?
 
-The value for the Social Links will be a [`IEnumerable<SocialLink>`](https://github.com/leekelleher/umbraco-contentment/blob/develop/src/Umbraco.Community.Contentment/DataEditors/SocialLinks/SocialLink.cs) object-type.
+The value for the Social Links will be a [`IEnumerable<SocialLink>`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/SocialLinks/SocialLink.cs) object-type.
 
 To use this in your view templates, here are some examples.
 

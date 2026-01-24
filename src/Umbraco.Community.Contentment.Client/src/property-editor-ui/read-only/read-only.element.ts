@@ -35,7 +35,7 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 	override render() {
 		return html`
-			<contentment-info-box type="warning" icon="icon-alert" heading="This property editor is in read-only mode.">
+			<contentment-info-box type="warning" icon="icon-alert" headline="This property editor is in read-only mode.">
 				${when(
 					this.#value,
 					() =>

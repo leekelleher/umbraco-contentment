@@ -1,4 +1,4 @@
-<img src="https://github.com/leekelleher/umbraco-contentment/blob/develop/docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
+<img src="https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/assets/img/logo.png" alt="Contentment for Umbraco logo" title="A state of Umbraco happiness." height="130" align="right">
 
 ## Contentment for Umbraco
 
@@ -127,7 +127,7 @@ I am working towards re-licensing all of the source code to be under the [MIT li
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,472+ hours</b> (between 2019-03-13 to 2025-11-28)</summary>
+<summary>Current development effort: <b>~2,534+ hours</b> (between 2019-03-13 to 2026-01-24)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 

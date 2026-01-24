@@ -45,7 +45,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		listEditor: ContentmentConfigurationEditorValue | null | undefined,
 		entityUnique?: string | null,
 		propertyAlias?: string | null,
-		variantId?: string | null
+		variantId?: string | null,
 	): Promise<ContentmentDataListEditor | undefined> {
 		if (!dataSource || !listEditor) return;
 
@@ -86,8 +86,16 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 	}
 
 	public async getItemsByUrl(url: string): Promise<ContentmentListItem[]> {
-		// NOTE: The security needs to be set for the request, otherwise it returns a 401 unauthorized error! [LK]
-		const { data } = await tryExecute(this, umbHttpClient.get({ security: [{ scheme: 'bearer', type: 'http' }], url }));
+		const { data, error } = await tryExecute(
+			this,
+			// NOTE: The security needs to be set for the request, otherwise it returns a 401 unauthorized error! [LK]
+			umbHttpClient.get({ security: [{ scheme: 'bearer', type: 'http' }], url }),
+		);
+
+		if (error) {
+			console.error('Error fetching data list items:', error);
+			return [];
+		}
 
 		return data as Array<ContentmentListItem>;
 	}

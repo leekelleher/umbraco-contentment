@@ -31,11 +31,11 @@ Once you have added the configured Data Type to your Document Type, the Number I
 
 The value for the Text Input is an `int` (integer).
 
-Programmatically, you would access the value exactly the same as Umbraco's Numeric editor, [see Umbraco's documentation for code snippet examples](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Numeric/#mvc-view-examples).
+Programmatically, you would access the value exactly the same as Umbraco's Numeric editor, [see Umbraco's documentation for code snippet examples](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/numeric#mvc-view-examples).
 
 
 ### Further reading
 
-- [Umbraco documentation on built-in **Numeric** property editor](https://our.umbraco.com/Documentation/Getting-Started/Backoffice/Property-Editors/Built-in-Property-Editors/Numeric/)
+- [Umbraco documentation on built-in **Numeric** property editor](https://docs.umbraco.com/umbraco-cms/fundamentals/backoffice/property-editors/built-in-umbraco-property-editors/numeric)
 - [MDN Web documentation on `<input type="number">` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number)
 

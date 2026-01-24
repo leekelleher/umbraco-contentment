@@ -71,10 +71,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     if (_propertyEditors.TryGet(propertyType.PropertyEditorAlias, out var propertyEditor) == true)
                                     {
                                         var convertedValue = propertyEditor.GetValueEditor()?.ToEditor(fakeProperty);
-
-                                        block.Value[propertyType.Alias] = convertedValue is not null
-                                            ? JsonSerializer.SerializeToNode(convertedValue)
-                                            : null;
+                                        block.Value[propertyType.Alias] = convertedValue;
                                     }
                                     else
                                     {
@@ -118,10 +115,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                                     };
 
                                     var convertedValue = propertyEditor.GetValueEditor(configuration)?.FromEditor(contentPropertyData, blockPropertyValue);
-
-                                    block.Value[propertyType.Alias] = convertedValue != null
-                                        ? JsonSerializer.SerializeToNode(convertedValue)
-                                        : null;
+                                    block.Value[propertyType.Alias] = convertedValue;
                                 }
                             }
                         }

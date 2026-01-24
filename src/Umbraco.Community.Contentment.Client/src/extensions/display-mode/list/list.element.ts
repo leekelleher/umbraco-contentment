@@ -5,7 +5,7 @@ import { parseInt } from '../../../utils/index.js';
 import { css, customElement, html, nothing, repeat, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
-import type { SortableEvent } from '../../../external/sortablejs/index.js';
+import type { ContentmentSortEndEvent } from '../../../components/sortable-list/sort-end.event.js';
 
 @customElement('contentment-display-mode-list')
 export class ContentmentDisplayModeListElement extends ContentmentDisplayModeElement {
@@ -35,9 +35,9 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 		this.dispatchEvent(new CustomEvent('remove', { bubbles: true, detail: { item, index } }));
 	}
 
-	#onSort(event: CustomEvent<SortableEvent>) {
+	#onSort(event: ContentmentSortEndEvent) {
 		event.stopPropagation();
-		const { newIndex, oldIndex } = event.detail;
+		const { newIndex, oldIndex } = event;
 		this.dispatchEvent(new CustomEvent('sort', { bubbles: true, detail: { newIndex, oldIndex } }));
 	}
 

@@ -89,7 +89,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 					compact
 					type="warning"
 					icon="icon-alert"
-					heading="There are no items to display"></contentment-info-box>
+					headline="There are no items to display"></contentment-info-box>
 			`;
 		}
 
