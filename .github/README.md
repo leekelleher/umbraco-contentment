@@ -32,7 +32,6 @@ Let's take a look inside...
 - [Data Picker](../docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](../docs/editors/editor-notes.md) - Similar to [Notes](../docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
-- [Input List](../docs/editors/input-list.md) - a repeatable list of multiple data-type inputs.
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
@@ -128,7 +127,7 @@ I am working towards re-licensing all of the source code to be under the [MIT li
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,472+ hours</b> (between 2019-03-13 to 2025-11-28)</summary>
+<summary>Current development effort: <b>~2,534+ hours</b> (between 2019-03-13 to 2026-01-24)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 
