@@ -14,7 +14,7 @@
         <Product>Umbraco.Community.Contentment</Product>
         <Title>Contentment for Umbraco</Title>
         <Description>Contentment, a collection of components for Umbraco.</Description>
-        <Version>6.1.0</Version>
+        <Version>6.1.1-alpha003</Version>
         <Authors>Lee Kelleher</Authors>
         <Company>Lee Kelleher</Company>
         <Copyright>$([System.DateTime]::Now.Year) © $(Company)</Copyright>
@@ -68,4 +68,20 @@
         <None Remove="wwwroot\**" />
     </ItemGroup>
 
+    <Target Name="Contentment_BuildTypes" BeforeTargets="GenerateNuspec">
+        <Exec Command="npm run build:api" WorkingDirectory="..\Umbraco.Community.Contentment.Client" />
+    </Target>
+
+    <ItemGroup>
+        <None Include="..\Umbraco.Community.Contentment.Client\dist\index.d.ts">
+            <Pack>true</Pack>
+            <PackagePath>contentFiles\any\any\vendor\Contentment\</PackagePath>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </None>
+        <None Include=".\build\Umbraco.Community.Contentment.targets">
+            <Pack>true</Pack>
+            <PackagePath>buildTransitive\</PackagePath>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 </Project>

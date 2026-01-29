@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- TODO: Just here for informational purposes. Consumers can set to false to avoid. Maybe flip so consumers need to turn on? -->
+    <Contentment_CopyTypes>true</Contentment_CopyTypes>
+
+    <_ContentmentTypesInPackage>$(MSBuildThisFileDirectory)..\contentFiles\any\any\vendor\Contentment\index.d.ts</_ContentmentTypesInPackage>
+    <_ContentmentVendorFolder>$(MSBuildProjectDirectory)\vendor\Contentment</_ContentmentVendorFolder>
+  </PropertyGroup>
+
+  <Target Name="Contentment_CopyTypesToVendorFolder"
+          AfterTargets="PrepareForBuild"
+          Condition=" Exists('$(_ContentmentTypesInPackage)') and '$(Contentment_CopyTypes)' != 'false' ">
+    <MakeDir Directories="$(_ContentmentVendorFolder)" Condition="!Exists('$(_ContentmentVendorFolder)')" />
+    <Copy SourceFiles="$(_ContentmentTypesInPackage)"
+          DestinationFolder="$(_ContentmentVendorFolder)"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>
