@@ -45,6 +45,8 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 	ContentmentItemPickerModalData,
 	ContentmentItemPickerModalValue
 > {
+	#selection: Set<string> = new Set();
+
 	@state()
 	private _allowSubmit = false;
 
@@ -73,28 +75,25 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 	#onSelect(item: ContentmentListItem) {
 		if (item.disabled) return;
 
-		if (this.data?.enableMultiple) {
-			item.selected = !item.selected;
-			this._itemCount = this._items.filter((x) => x.selected === true).length;
-			this._allowSubmit = this._itemCount > 0 && (this.data?.maxItems === 0 || this._itemCount <= this.data?.maxItems);
-		} else {
+		if (!this.data?.enableMultiple) {
 			this.value = { selection: [item.value] };
 			this._submitModal();
+			return;
 		}
+
+		if (this.#selection.has(item.value)) {
+			this.#selection.delete(item.value);
+		} else {
+			this.#selection.add(item.value);
+		}
+
+		this._itemCount = this.#selection.size;
+		this._allowSubmit = this._itemCount > 0 && (this.data?.maxItems === 0 || this._itemCount <= this.data?.maxItems);
 	}
 
 	#onSubmit() {
-		const selection: Array<string> = [];
-
-		this._items.forEach((item) => {
-			if (item.selected) {
-				delete item.selected;
-				selection.push(item.value);
-			}
-		});
-
+		const selection = Array.from(this.#selection.values());
 		this.value = { selection };
-
 		this._submitModal();
 	}
 
@@ -117,7 +116,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 								label=${this.localize.term('buttons_select')}
 								?disabled=${!this._allowSubmit}
 								@click=${this.#onSubmit}></uui-button>
-						`
+						`,
 					)}
 				</div>
 			</umb-body-layout>
@@ -177,10 +176,11 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 								icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
 								select-only
 								selectable
+								?selected=${this.#selection.has(item.value)}
 								@selected=${() => this.#onSelect(item)}
 								@deselected=${() => this.#onSelect(item)}>
 							</umb-ref-item>
-						`
+						`,
 					)}
 				</uui-ref-list>
 			</uui-box>
@@ -195,9 +195,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 			}
 
 			#filter-icon {
-				display: flex;
-				color: var(--uui-color-border);
-				height: 100%;
+				color: var(--uui-color-border-emphasis);
 				padding-left: var(--uui-size-space-2);
 			}
 
