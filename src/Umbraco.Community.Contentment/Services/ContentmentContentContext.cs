@@ -106,6 +106,7 @@ namespace Umbraco.Community.Contentment.Services
                             }
                         }
                     }
+                    return content;
                 }
             }
 
