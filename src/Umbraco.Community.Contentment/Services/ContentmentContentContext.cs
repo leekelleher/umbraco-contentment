@@ -4,7 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Security;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
@@ -15,15 +19,21 @@ namespace Umbraco.Community.Contentment.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
         private readonly IVariationContextAccessor _variationContextAccessor;
+        private readonly IIdKeyMap _idKeyMap;
+        private readonly IServiceProvider _serviceProvider;
 
         public ContentmentContentContext(
             IHttpContextAccessor httpContextAccessor,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IVariationContextAccessor variationContextAccessor)
+            IVariationContextAccessor variationContextAccessor,
+            IIdKeyMap idKeyMap,
+            IServiceProvider serviceProvider)
         {
             _httpContextAccessor = httpContextAccessor;
             _umbracoContextAccessor = umbracoContextAccessor;
             _variationContextAccessor = variationContextAccessor;
+            _idKeyMap = idKeyMap;
+            _serviceProvider = serviceProvider;
         }
 
         public T? GetCurrentContentId<T>(out bool isParent)
@@ -76,7 +86,26 @@ namespace Umbraco.Community.Contentment.Services
                 if (currentContentKey.HasValue == true)
                 {
                     SetVariationContext();
-                    return umbracoContext.Content?.GetById(true, currentContentKey.Value);
+
+                    var content = umbracoContext.Content?.GetById(true, currentContentKey.Value);
+
+                    // NOTE: Check if the content is a member.
+                    if (content is null)
+                    {
+                        var memberKeyAttempt = _idKeyMap.GetIdForKey(currentContentKey.Value, UmbracoObjectTypes.Member);
+                        if (memberKeyAttempt.Success)
+                        {
+                            using var scope = _serviceProvider.CreateScope();
+                            var memberManager = scope.ServiceProvider.GetRequiredService<IMemberManager>();
+
+                            var memberId = memberKeyAttempt.Result;
+                            var member = memberManager.FindByIdAsync(memberId.ToString()).Result;
+                            if (member is not null)
+                            {
+                                content = memberManager.AsPublishedMember(member);
+                            }
+                        }
+                    }
                 }
             }
 
