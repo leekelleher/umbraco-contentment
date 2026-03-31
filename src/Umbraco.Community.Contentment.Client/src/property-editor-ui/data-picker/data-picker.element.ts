@@ -15,6 +15,7 @@ import {
 	UMB_CONTENT_WORKSPACE_CONTEXT,
 } from '@umbraco-cms/backoffice/content';
 import { UMB_MODAL_MANAGER_CONTEXT, umbConfirmModal } from '@umbraco-cms/backoffice/modal';
+import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -54,7 +55,13 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	private _displayMode?: ContentmentConfigurationEditorValue;
 
 	@state()
+	private _entityIsNew = false;
+
+	@state()
 	private _entityUnique?: string | null;
+
+	@state()
+	private _parentEntityUnique?: string | null;
 
 	@state()
 	private _initialized = false;
@@ -97,7 +104,12 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		super();
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique));
+		}).passContextAliasMatches();
+
+		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
+			this.observe(parentEntityContext?.parent, (parent) => (this._parentEntityUnique = parent?.unique));
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
@@ -125,6 +137,8 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				dataSource: this._dataSource,
 				displayMode: this._displayMode,
 				id: this._entityUnique,
+				isNew: this._entityIsNew,
+				parentId: this._parentEntityUnique,
 				values: this.value,
 				variant: this._variantId,
 			};

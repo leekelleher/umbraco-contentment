@@ -30,7 +30,7 @@ public class DataListController : ContentmentControllerBase
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
 
-        SetCurrentContentContextValues(model.Id, model.Variant, model.Alias);
+        SetCurrentContentContextValues(model.Id, model.ParentId, model.Variant, model.Alias, model.IsNew);
 
         var propertyEditorUiAlias = string.Empty;
 

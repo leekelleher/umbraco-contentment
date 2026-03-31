@@ -7,6 +7,7 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -25,7 +26,13 @@ export class ContentmentPropertyEditorUIDataListElement
 	#repository = new ContentmentDataListRepository(this);
 
 	@state()
+	private _entityIsNew = false;
+
+	@state()
 	private _entityUnique?: string | null;
+
+	@state()
+	private _parentEntityUnique?: string | null;
 
 	@state()
 	private _propertyAlias?: string;
@@ -66,7 +73,12 @@ export class ContentmentPropertyEditorUIDataListElement
 		super();
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique));
+		}).passContextAliasMatches();
+
+		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
+			this.observe(parentEntityContext?.parent, (parent) => (this._parentEntityUnique = parent?.unique));
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
@@ -100,13 +112,15 @@ export class ContentmentPropertyEditorUIDataListElement
 
 	async #init() {
 		if (!this._dataSource || !this._listEditor) return;
-		this.#listEditor = await this.#repository.getEditor(
-			this._dataSource,
-			this._listEditor,
-			this._entityUnique,
-			this._propertyAlias,
-			this._variantId,
-		);
+		this.#listEditor = await this.#repository.__getEditorInternal({
+			dataSource: this._dataSource,
+			listEditor: this._listEditor,
+			entityIsNew: this._entityIsNew,
+			entityUnique: this._entityUnique,
+			parentEntityUnique: this._parentEntityUnique,
+			propertyAlias: this._propertyAlias,
+			variantId: this._variantId,
+		});
 
 		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];
 

@@ -21,6 +21,7 @@ import {
 	UMB_CONTENT_WORKSPACE_CONTEXT,
 	UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT,
 } from '@umbraco-cms/backoffice/content';
+import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentListItem } from '../types.js';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
@@ -59,7 +60,13 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	private _dataTypeKey?: string;
 
 	@state()
+	private _entityIsNew = false;
+
+	@state()
 	private _entityUnique?: string;
+
+	@state()
+	private _parentEntityUnique?: string | null;
 
 	@state()
 	private _itemCount = 0;
@@ -89,7 +96,12 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 		super();
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
+			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique || undefined));
+		}).passContextAliasMatches();
+
+		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
+			this.observe(parentEntityContext?.parent, (parent) => (this._parentEntityUnique = parent?.unique));
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
@@ -156,8 +168,10 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			alias: this._propertyAlias,
 			dataTypeKey: this._dataTypeKey,
 			id: this._entityUnique,
+			isNew: this._entityIsNew,
 			pageNumber: this._pageNumber,
 			pageSize: this.data?.pageSize ?? 12,
+			parentId: this._parentEntityUnique,
 			query: this._query,
 			variant: this._variantId,
 		};

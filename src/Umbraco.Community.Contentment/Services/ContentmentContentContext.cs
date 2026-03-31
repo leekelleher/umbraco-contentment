@@ -30,6 +30,14 @@ namespace Umbraco.Community.Contentment.Services
         {
             isParent = false;
 
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentIsNew", out bool? isNew) == true &&
+                isNew == true &&
+                _httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentParentId", out T? parent) == true)
+            {
+                isParent = true;
+                return parent;
+            }
+
             if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentId", out T? unique) == true &&
                 unique is not null)
             {
