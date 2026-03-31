@@ -17,7 +17,7 @@ Some components may be innovative, others may be a reimagining of existing compo
 I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.<br>
 No pressure or marketing spin from me.
 
-**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.**
+**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.** I appreciate that whilst I am an employee of Umbraco HQ, Contentment is not an official HQ package.
 
 #### What's on offer?
 
