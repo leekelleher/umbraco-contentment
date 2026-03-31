@@ -71,20 +71,21 @@ namespace Umbraco.Community.Contentment.Services
                     return umbracoContext.PublishedRequest.PublishedContent;
                 }
 
-                // NOTE: First we check for an integer ID.
-                var currentContentId = GetCurrentContentId<int?>(out isParent);
-                if (currentContentId.HasValue == true)
-                {
-                    SetVariationContext();
-                    return umbracoContext.Content?.GetById(true, currentContentId.Value);
-                }
-
-                // NOTE: Next we check for a GUID ID.
+                // NOTE: First we check for a GUID ID.
                 var currentContentKey = GetCurrentContentId<Guid?>(out isParent);
                 if (currentContentKey.HasValue == true)
                 {
                     SetVariationContext();
                     return umbracoContext.Content?.GetById(true, currentContentKey.Value);
+                }
+
+                // NOTE: Next we check for an integer ID.
+                // This is for backwards compatibility with any existing implementations of IContentmentContentContext that may be using an integer ID.
+                var currentContentId = GetCurrentContentId<int?>(out isParent);
+                if (currentContentId.HasValue == true)
+                {
+                    SetVariationContext();
+                    return umbracoContext.Content?.GetById(true, currentContentId.Value);
                 }
             }
 
