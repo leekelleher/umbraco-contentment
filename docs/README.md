@@ -46,3 +46,8 @@ Information about Contentment's [telemetry feature](../docs/telemetry.md).
 #### Tree Dashboard
 
 Information about Contentment's [tree dashboard](../docs/tree-dashboard.md).
+
+#### TypeScript
+
+Information about [referencing Contentment TypeScript types in your own implementations](../docs/typescript.md).
+

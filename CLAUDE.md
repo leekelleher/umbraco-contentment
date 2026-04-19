@@ -27,8 +27,7 @@ Run from the repo root unless noted.
 cd src/Umbraco.Community.Contentment.Client
 npm install
 npm run dev                  # tsc + vite build --watch (active development)
-npm run build                # tsc + vite build (production)
-npm run build:api            # build API types only (uses tsconfig.api.json)
+npm run build                # tsc + vite build + tsc types (production package + .d.ts)
 ```
 
 Node >= 22 (pinned in `.nvmrc`). The build writes directly into `../Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/`.

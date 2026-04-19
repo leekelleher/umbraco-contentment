@@ -30,9 +30,10 @@ Scoped to `src/Umbraco.Community.Contentment.Client/` — the TypeScript/Lit Umb
 
 ## Entry points and build
 
-- `src/index.ts` — public API re-exports (components, utilities).
+- `src/index.ts` — public API re-exports (components, utilities, aggregated types).
 - `src/manifests.ts` — aggregated extension manifests from every subtree.
 - Vite builds both as ESM with `formats: ['es']`, externalising `@umbraco/*`. Output goes to `../Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/` so it ships inside the NuGet package as a static web asset.
+- `npm run generate:types` — emits TypeScript declarations (`.d.ts` + `.d.ts.map`) into `dist/` via `tsconfig.types.json`. Also chained at the end of `npm run build`. The `dist/` output is published to GitHub Packages as `@leekelleher/umbraco-contentment` on release.
 
 ## Extension types in use
 

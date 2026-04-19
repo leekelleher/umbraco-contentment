@@ -3,4 +3,4 @@
 
 import { manifests as liquid } from './liquid/manifests.js';
 
-export const manifests = [...liquid];
+export const manifests: Array<UmbExtensionManifest> = [...liquid];
