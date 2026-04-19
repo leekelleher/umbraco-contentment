@@ -11,11 +11,11 @@ Populate the data source using Umbraco content property values
 
 ##### How to configure the editor?
 
-The editor give you two options for selecting the content node to take the property value - either by choosing a specific node using a Content Picker or by specifying an XPath query that selects the node:
+The editor gives you two options for selecting the content node to take the property value from - either by choosing a specific node using a Content Picker, or by configuring a Dynamic Root query that resolves a node relative to the current content (the same Dynamic Root mechanism used by the built-in Content Picker and Multi Node Tree Picker):
 
 ![Configuration Editor for Umbraco Content Property Values](data-source--umbraco-content-property-values.png)
 
-**Note:** If the XPath query returns more than a single node, only the first matching node will be used.
+**Note:** If the Dynamic Root query resolves to more than a single node, only the first matching node will be used.
 
 The second field is to set the property alias to populate the data source with, (from the selected content node).
 
