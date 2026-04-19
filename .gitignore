@@ -13,6 +13,7 @@ Thumbs.db
 .vs
 node_modules/
 
+.claude/*.local.*
 artifacts/
 build/__umb/*
 build/assets/
@@ -22,6 +23,5 @@ src/packages/*/**
 src/Umbraco.Cms.*.x/*
 !src/Umbraco.Cms.*.x/uSync/
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
-src/*/.claude/*
 src/*/node_modules/*
 tools/*.exe
