@@ -23,10 +23,26 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version-file: src/Umbraco.Community.Contentment.Client/.nvmrc
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@leekelleher'
     - run: npm i
       working-directory: src/Umbraco.Community.Contentment.Client
     - run: npm run build
       working-directory: src/Umbraco.Community.Contentment.Client
+
+    - name: Build TypeScript declarations
+      run: npm run build:api
+      working-directory: src/Umbraco.Community.Contentment.Client
+
+    - name: Set npm package version from tag
+      run: npm pkg set version=${{github.ref_name}}
+      working-directory: src/Umbraco.Community.Contentment.Client
+
+    - name: Push to GitHub npm
+      run: npm publish
+      working-directory: src/Umbraco.Community.Contentment.Client
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
