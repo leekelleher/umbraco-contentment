@@ -30,10 +30,6 @@ jobs:
     - run: npm run build
       working-directory: src/Umbraco.Community.Contentment.Client
 
-    - name: Build TypeScript declarations
-      run: npm run build:api
-      working-directory: src/Umbraco.Community.Contentment.Client
-
     - name: Set npm package version from tag
       run: npm pkg set version=${{github.ref_name}}
       working-directory: src/Umbraco.Community.Contentment.Client
