@@ -9,7 +9,7 @@
 Use an XPath query to select Umbraco content to use as the data source.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco Content by XPath data-source has a single option:
 

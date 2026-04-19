@@ -14,7 +14,7 @@
 Use files defined in Umbraco, such as scripts or stylesheets.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 _[TBC]_
 

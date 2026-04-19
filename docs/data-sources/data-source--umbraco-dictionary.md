@@ -9,7 +9,7 @@
 This data-source lets you use the child dictionary items from a selected parent dictionary item to populate the options of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco dictionary item data-source has the following options:
 

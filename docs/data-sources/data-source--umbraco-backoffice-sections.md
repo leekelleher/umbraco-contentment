@@ -9,7 +9,7 @@
 This data-source will use the available backoffice sections, e.g. Content, Media, etc, to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 In your new Data Type, selected the `[Contentment] Data List` option and then the `Umbraco Backoffice Sections` Data source.
 

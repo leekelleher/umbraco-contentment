@@ -9,9 +9,9 @@
 Select a start node to use its children as the data source.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
-The editor give you two options for selecting the start node - by choosing a specific node using a Content Picker:
+The data-source gives you two options for selecting the start node - by choosing a specific node using a Content Picker:
 
 ![Configuration Editor for Umbraco Content](data-source--umbraco-content--configuration-editor-01.png)
 

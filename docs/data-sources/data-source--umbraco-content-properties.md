@@ -9,9 +9,9 @@
 Populate the data source using a Content Type's properties.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
-The editor lets you select the desired Content Type to pick properties from. You can configure each Data Source with one Content Type.
+The data-source lets you select the desired Content Type to pick properties from. You can configure each Data Source with one Content Type.
 
 ![Configuration Editor for Umbraco Content Properties](data-source--umbraco-content-properties.png)
 

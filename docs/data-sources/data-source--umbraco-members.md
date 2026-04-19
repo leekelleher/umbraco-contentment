@@ -12,7 +12,7 @@ This data-source enables you to use Umbraco members to populate the items of a c
 > This data source is ideal for smaller number of members, e.g. under 50. Upwards of that, you will notice an unpleasant editor experience and rapidly diminished performance.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco members data-source has the following options:
 

@@ -11,7 +11,7 @@ A homage to @marcemarc's bingo-famous [uCssClassNameDropdown](https://our.umbrac
 This data-source enables you to select the class names from a local CSS file, to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the uCssClassName data-source has the following options:
 

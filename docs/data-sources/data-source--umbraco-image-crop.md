@@ -9,7 +9,7 @@
 This data-source lets you to use crops defined in an Umbraco Image Cropper data-type to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco image crops data-source has the following options:
 

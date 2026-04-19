@@ -9,7 +9,7 @@
 Populate the data source using Content Types.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 Select the content types that should be available in the data source. You can select between Document Types with or without templates, or Element Types.
 

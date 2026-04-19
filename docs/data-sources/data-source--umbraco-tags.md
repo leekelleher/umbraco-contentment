@@ -9,7 +9,7 @@
 This data-source uses tags that have already been defined in Umbraco content to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco Tags data-source has one option, to enter a **Tag Group** to filter the tags that are listed. If left empty, then all tags will be listed.
 

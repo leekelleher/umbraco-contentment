@@ -9,7 +9,7 @@
 This data-source enables you to enter the URL of a JSON data source, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the JSON data-source has the following options:
 
