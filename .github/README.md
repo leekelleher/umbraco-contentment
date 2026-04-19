@@ -17,7 +17,7 @@ Some components may be innovative, others may be a reimagining of existing compo
 I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.<br>
 No pressure or marketing spin from me.
 
-**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.**
+**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.** I appreciate that whilst I am an employee of Umbraco HQ, Contentment is not an official HQ package.
 
 #### What's on offer?
 
@@ -35,7 +35,6 @@ Let's take a look inside...
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
-- ~~[Render Macro](../docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.~~
 - [Social Links](../docs/editors/social-links.md) - an editor to manage links for social network platforms.
 - [Templated Label](../docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Textbox List](../docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.

@@ -9,7 +9,7 @@
 This data-source enables you to manually configure the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the User-defined List data-source has the following options:
 

@@ -9,7 +9,7 @@
 This data-source uses the Umbraco user groups (roles) to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The Umbraco User Groups data-source does not have any configuration options.
 

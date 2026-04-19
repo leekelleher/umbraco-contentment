@@ -14,7 +14,7 @@
 Populate the data source using defined view templates.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 _[TBC]_
 

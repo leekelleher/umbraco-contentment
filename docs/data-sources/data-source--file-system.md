@@ -7,7 +7,7 @@
 This data-source enables you to enter the folder path on the web-server's file system, using it to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the File System data-source has the following options:
 

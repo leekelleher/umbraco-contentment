@@ -9,7 +9,7 @@
 This data-source uses the Umbraco users to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco Users data-source has one option, to select a **User Group** (role) to filter the users that are listed. If left empty, then all users will be listed.
 

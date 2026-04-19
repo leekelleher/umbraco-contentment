@@ -23,7 +23,7 @@ This data-source lets you to select an Umbraco entity type to populate the items
 > - Member Type
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The configuration of the Umbraco entities data-source has the following options:
 

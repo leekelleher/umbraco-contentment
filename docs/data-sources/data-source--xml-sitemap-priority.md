@@ -11,7 +11,7 @@ This data-source will provide you with a list of available values for an XML Sit
 > For more information about the priority values, please visit the [Sitemaps XML format protocol page](https://sitemaps.org/protocol.html#xmlTagDefinitions).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The XML Sitemap: Priority data-source does not have any configuration options.
 

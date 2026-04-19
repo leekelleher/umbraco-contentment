@@ -9,7 +9,7 @@
 Select an enumeration from a .NET assembly as the data source.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 Select the desired enumeration, by selecting the containing .NET assembly, and then the enumeration type. You can opt to sort the values alphabetically in the data source too.
 

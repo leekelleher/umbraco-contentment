@@ -16,6 +16,16 @@ import type { UmbPropertyEditorConfig } from '@umbraco-cms/backoffice/property-e
 import type { ContentmentListItem } from '../types.js';
 //import type { ContentmentListEditorExtentionManifestType } from '../../extensions/list-editor/list-editor.extension.js';
 
+export type ContentmentDataListRepositoryGetEditorArgs = {
+	dataSource?: ContentmentConfigurationEditorValue | null;
+	listEditor?: ContentmentConfigurationEditorValue | null;
+	entityIsNew?: boolean;
+	entityUnique?: string | null;
+	parentEntityUnique?: string | null;
+	propertyAlias?: string | null;
+	variantId?: string | null;
+};
+
 export class ContentmentDataListRepository extends UmbRepositoryBase implements UmbApi {
 	#clientSideDataSourceLookup: Map<string, ContentmentDataSourceExtentionManifestType> = new Map();
 	//#clientSideListEditorLookup: Map<string, ContentmentListEditorExtentionManifestType> = new Map();
@@ -47,29 +57,37 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		propertyAlias?: string | null,
 		variantId?: string | null,
 	): Promise<ContentmentDataListEditor | undefined> {
-		if (!dataSource || !listEditor) return;
+		return this.__getEditorInternal({ dataSource, listEditor, entityUnique, propertyAlias, variantId });
+	}
+
+	public async __getEditorInternal(
+		args: ContentmentDataListRepositoryGetEditorArgs,
+	): Promise<ContentmentDataListEditor | undefined> {
+		if (!args.dataSource || !args.listEditor) return;
 
 		let propertyEditorUiAlias = '';
 		let config: UmbPropertyEditorConfig = [];
 
-		const clientSideDataSourceManifest = this.#clientSideDataSourceLookup.get(dataSource.key);
+		const clientSideDataSourceManifest = this.#clientSideDataSourceLookup.get(args.dataSource.key);
 		if (clientSideDataSourceManifest) {
 			const api = await createExtensionApi(this, clientSideDataSourceManifest, [this, this.controllerAlias]);
-			const items = (await api?.getItems(dataSource.value)) ?? [];
+			const items = (await api?.getItems(args.dataSource.value)) ?? [];
 			config.push({ alias: 'items', value: items });
 
 			// NOTE: Sets `dataSource` to null, as we don't want the server to attempt to process it.
-			dataSource = null;
+			args.dataSource = null;
 		}
 
 		// TODO: [LK] Implement the `listEditor` lookup (for client-side only registrations).
 
 		const body = {
-			alias: propertyAlias,
-			dataSource,
-			id: entityUnique,
-			listEditor,
-			variant: variantId,
+			alias: args.propertyAlias,
+			dataSource: args.dataSource,
+			id: args.entityUnique,
+			isNew: args.entityIsNew,
+			listEditor: args.listEditor,
+			parentId: args.parentEntityUnique,
+			variant: args.variantId,
 		};
 
 		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));

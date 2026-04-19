@@ -13,7 +13,7 @@ This data-source will provide you with a list of available values for an XML Sit
 > For more information about the change frequency values, please visit the [Sitemaps XML format protocol page](https://sitemaps.org/protocol.html#xmlTagDefinitions).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The XML Sitemap: Change Frequency data-source does not have any configuration options.
 

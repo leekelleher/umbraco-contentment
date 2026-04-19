@@ -10,7 +10,7 @@
 Populate the data source from an Examine query.
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 First select the Examine index containing the values you need in your Data Source. Then you need to enter the raw Lucene expression to query Examine with. To make the query contextual using the content's page UDI, you can use C# standard `string.Format` syntax, e.g. `+propertyAlias:"{0}"`
 

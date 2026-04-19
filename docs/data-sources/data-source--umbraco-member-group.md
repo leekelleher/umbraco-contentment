@@ -9,7 +9,7 @@
 This data-source enables you to use Umbraco member groups to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 The Umbraco member groups data-source does not have any configuration options. It will list all the available member groups.
 

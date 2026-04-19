@@ -9,7 +9,7 @@
 This data-source will use all the currencies available in the .NET Framework, (as installed on the web server), to populate the items of a compatible editor, e.g. [Data List](../editors/data-list.md).
 
 
-##### How to configure the editor?
+##### How to configure the data-source?
 
 In your new Data Type, selected the `[Contentment] Data List` option and then the `.NET Currencies (ISO 4217)` Data source. You will see the following configuration fields.
 

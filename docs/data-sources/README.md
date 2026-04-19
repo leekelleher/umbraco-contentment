@@ -30,6 +30,7 @@ The following data-sources are available by default with the Contentment package
 - [Umbraco Backoffice Sections](data-source--umbraco-backoffice-sections.md) - Use the backoffice sections to populate the data source.
 - [Umbraco Content](data-source--umbraco-content.md) - Select a start node to use its children as the data source.
 - [Umbraco Content Properties](data-source--umbraco-content-properties.md) - Populate the data source using a Content Type's properties.
+- [Umbraco Content Property Values](data-source--umbraco-content-property-values.md) - Populate the data source using Umbraco content property values.
 - [Umbraco Content Types](data-source--umbraco-content-types.md) - Populate the data source using Content Types.
 - [Umbraco Content by XPath](data-source--umbraco-content-xpath.md) - Use an XPath query to select Umbraco content to use as the data source.
 - [Umbraco Dictionary Items](data-source--umbraco-dictionary.md) - Select an Umbraco dictionary item to populate the data source with its child items.

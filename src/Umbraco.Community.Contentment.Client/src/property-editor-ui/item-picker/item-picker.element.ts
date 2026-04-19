@@ -191,7 +191,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 				${repeat(
 					this.value,
 					(value) => value,
-					(value, index) => this.#renderItem(value, index)
+					(value, index) => this.#renderItem(value, index),
 				)}
 			</contentment-sortable-list>
 		`;
@@ -199,7 +199,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 
 	#renderItem(value: string, index: number) {
 		const item = this.#getItemByValue(value);
-		if (!item) return nothing;
+		if (!item) return this.#renderOrphanedItem(value, index);
 		const icon = this.#getMetadata(item, 'icon') ?? this.#defaultIcon;
 		return html`
 			<uui-ref-node
@@ -211,6 +211,24 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 					<uui-button
 						label=${this.localize.term('general_remove')}
 						@click=${() => this.#onRemove(item, index)}></uui-button>
+				</uui-action-bar>
+			</uui-ref-node>
+		`;
+	}
+
+	#renderOrphanedItem(value: string, index: number) {
+		if (!value) return nothing;
+		return html`
+			<uui-ref-node
+				error
+				name="The item associated with '${value}' is no longer available."
+				detail="If you still require this item, please contact your administrator, otherwise you can remove it."
+				style="color: var(--uui-color-danger-standalone);">
+				<umb-icon slot="icon" name="icon-alert"></umb-icon>
+				<uui-action-bar slot="actions">
+					<uui-button
+						label=${this.localize.term('general_remove')}
+						@click=${() => this.#onRemove({ name: value, value }, index)}></uui-button>
 				</uui-action-bar>
 			</uui-ref-node>
 		`;

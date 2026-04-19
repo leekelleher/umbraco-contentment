@@ -18,7 +18,12 @@ namespace Umbraco.Community.Contentment.Api.Management;
 public abstract class ContentmentControllerBase : ManagementApiControllerBase
 {
     // Set the current content values, so that `IContentmentContentContext` can access them.
-    protected void SetCurrentContentContextValues(string? contentId = null, string? variantId = null, string? propertyAlias = null)
+    protected void SetCurrentContentContextValues(
+        string? contentId = null,
+        string? parentId = null,
+        string? variantId = null,
+        string? propertyAlias = null,
+        bool? isNew = false)
     {
         if (string.IsNullOrWhiteSpace(propertyAlias) == false)
         {
@@ -34,5 +39,12 @@ public abstract class ContentmentControllerBase : ManagementApiControllerBase
         {
             HttpContext.Items.Add("contentmentContextCurrentContentVariantId", variantId);
         }
+
+        if (string.IsNullOrWhiteSpace(parentId) == false)
+        {
+            HttpContext.Items.Add("contentmentContextCurrentParentId", parentId);
+        }
+
+        HttpContext.Items.Add("contentmentContextCurrentIsNew", isNew ?? false);
     }
 }

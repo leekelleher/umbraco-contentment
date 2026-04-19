@@ -37,7 +37,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	readonly #sorter = new UmbSorterController<UmbBlockListLayoutModel, UmbLitElement & { contentKey?: string }>(this, {
 		getUniqueOfElement: (element) => element.contentKey!,
 		getUniqueOfModel: (modelEntry) => modelEntry.contentKey,
-		itemSelector: 'umb-block-list-entry',
+		itemSelector: 'contentment-content-blocks-entry',
 		onChange: ({ model }) => {
 			this.#entriesContext.setLayouts(model);
 		},

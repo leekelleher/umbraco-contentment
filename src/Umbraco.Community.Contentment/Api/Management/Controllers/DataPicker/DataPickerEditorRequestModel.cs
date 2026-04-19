@@ -15,6 +15,10 @@ public sealed class DataPickerEditorRequestModel
 
     public required string Id { get; set; }
 
+    public bool? IsNew { get; set; }
+
+    public string? ParentId { get; set; }
+
     public IEnumerable<string>? Values { get; set; }
 
     public string? Variant { get; set; }
