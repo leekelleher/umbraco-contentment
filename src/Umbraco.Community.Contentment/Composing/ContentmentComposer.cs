@@ -9,7 +9,6 @@ using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Infrastructure.Manifest;
-using Umbraco.Cms.Infrastructure.Migrations.Upgrade.V_15_0_0.LocalLinks;
 using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
@@ -23,9 +22,6 @@ namespace Umbraco.Community.Contentment.Composing
         {
             builder
                 .Services
-#pragma warning disable CS0618 // Type or member is obsolete
-                    .AddSingleton<ITypedLocalLinkProcessor, LocalLinkContentBlocksProcessor>()
-#pragma warning restore CS0618 // Type or member is obsolete
                     .AddSingleton<ConfigurationEditorUtility>()
                     .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
                     .AddSingleton<IOperationIdHandler, ContentmentOperationIdHandler>()
