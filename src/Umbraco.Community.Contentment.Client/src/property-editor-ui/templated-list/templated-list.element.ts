@@ -99,10 +99,15 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	}
 
 	async #renderLiquidTemplate() {
-		if (!this.#liquid || !this.#templateCompiled || !this._items?.length) return;
+		// Capture `#liquid` locally: on navigation away, the context consumer can
+		// fire with `undefined` between awaits in the loop below, which would
+		// otherwise crash with "Cannot read properties of undefined".
+		const liquid = this.#liquid;
+
+		if (!liquid || !this.#templateCompiled || !this._items?.length) return;
 
 		for (const item of this._items) {
-			const markup = await this.#liquid.render(this.#templateCompiled, { item });
+			const markup = await liquid.render(this.#templateCompiled, { item });
 			this._markupLookup.set(item.value, markup ? unsafeHTML(markup) : nothing);
 		}
 
@@ -154,7 +159,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 				${repeat(
 					this._items,
 					(item) => item.value,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</ul>
 		`;
