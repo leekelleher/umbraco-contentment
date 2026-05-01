@@ -26,6 +26,9 @@ namespace Umbraco.Community.Contentment.Migrations
                .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
                .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
+#pragma warning disable CS0618 // Type or member is obsolete
+               .To<Upgrade.V_6_1_3.MigrateContentBlockLocalLinks>(Upgrade.V_6_1_3.MigrateContentBlockLocalLinks.State)
+#pragma warning restore CS0618 // Type or member is obsolete
             ;
         }
     }
