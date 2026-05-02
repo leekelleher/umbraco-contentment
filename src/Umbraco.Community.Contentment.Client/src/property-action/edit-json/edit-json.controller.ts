@@ -13,10 +13,10 @@ export class ContentmentPropertyActionEditJsonElement extends UmbPropertyActionB
 		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
 		if (!propertyContext) return;
 
-		const value = propertyContext.getValue();
-
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 		if (!modalManager) return;
+
+		const value = propertyContext.getValue();
 		const modal = modalManager.open(this, UMB_CODE_EDITOR_MODAL, {
 			data: {
 				headline: this.args.meta.label ?? 'Edit raw value',
