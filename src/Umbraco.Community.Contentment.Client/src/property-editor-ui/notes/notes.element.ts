@@ -8,6 +8,8 @@ import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+type ContentmentRichTextValue = string | { markup: string };
+
 @customElement('contentment-property-editor-ui-notes')
 export class ContentmentPropertyEditorUINotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
@@ -21,8 +23,8 @@ export class ContentmentPropertyEditorUINotesElement extends UmbLitElement imple
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-		const notes = config.getValueByAlias('notes');
-		this.#notes = typeof notes === 'string' ? notes : (notes as unknown as any).markup;
+		const notes = config.getValueByAlias<ContentmentRichTextValue>('notes');
+		this.#notes = typeof notes === 'string' ? notes : notes?.markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 	}
