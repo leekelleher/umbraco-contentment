@@ -8,7 +8,7 @@ Here is a _provisional_ roadmap for the Contentment for Umbraco package, to be a
 > TL;DR, `[Major].[Minor].[Patch]`, Major = breaking-change; Minor  = feature; Patch = bug-fix.
 
 
-## v1
+## v1 _(August 2020)_
 
 ### [v1.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/1.0.0)
 
@@ -48,7 +48,7 @@ Property Editors are:
 - _A bunch of (hidden) extra data-sources._ 🤫
 
 
-## v2
+## v2 _(June 2021)_
 
 ### [v2.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/2.0.0)
 
@@ -64,7 +64,7 @@ Property Editors are:
 - [Templated Label](https://github.com/leekelleher/umbraco-contentment/discussions/100)
 
 
-## v3
+## v3 _(October 2025)_
 
 ### [v3.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/3.0.0)
 
@@ -91,7 +91,7 @@ Property Editors are:
 - Data List: New data-sources for Umbraco Files and Umbraco Templates
 
 
-## v4
+## v4 _(June 2022)_
 
 ### [v4.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/4.0.0)
 
@@ -128,13 +128,17 @@ Property Editors are:
 - Data Picker: [Data List source bridge](https://github.com/leekelleher/umbraco-contentment/pull/393) _(to enable all the built-in Data List sources within Data Picker)._
 
 
-## v5
+## v5 _(May 2024)_
 
 ### [v5.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/5.0.0)
 
 - Removes support for previous Umbraco versions: Umbraco 8 (.NET Framework 4.7.2), Umbraco 9 (.NET 5), Umbraco 10 (.NET 6) and Umbraco 11 and 12 (.NET 7).
 - Supports Umbraco 13 (.NET 8) only.
 - Converts package to be a Razor Class Library, _(e.g. web assets are served from NuGet package)._
+
+### [v5.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/5.1.0)
+
+- Data List/Data Picker: Adds data-source support for Delivery API.
 
 
 ## v6 _(November 2025)_
@@ -147,7 +151,7 @@ Property Editors are:
 - Adds support for Umbraco 16 (.NET 9) and Umbraco 17 (LTS, .NET 10).
 - Removes support for Umbraco 13 (.NET 8).
 
-### v6.1
+### [v6.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.1.0)
 
 - [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
 - [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
@@ -173,7 +177,7 @@ Property Editors are:
 ## v10 _(December 2027)_
 
 - _Adds support for Umbraco 21 (LTS, .NET 12)._
-- _Removes support for Umbraco 17, 18 (.NET 9), 19, 20 (.NET 11)._
+- _Removes support for Umbraco 17, 18 (.NET 10), 19, 20 (.NET 11)._
 
 
 ## Future feature (minor) releases
