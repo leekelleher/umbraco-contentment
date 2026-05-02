@@ -176,6 +176,13 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 		);
 	}
 
+	override disconnectedCallback() {
+		super.disconnectedCallback();
+		this._element?.removeEventListener('change', this._onPropertyEditorChange as any as EventListener);
+		/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
+		this._element?.removeEventListener('property-value-change', this._onPropertyEditorChange as any as EventListener);
+	}
+
 	override render() {
 		return this._element;
 	}
