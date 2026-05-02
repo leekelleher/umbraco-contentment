@@ -44,27 +44,25 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	private _items: Array<ContentmentListItem> = [];
 
 	override async firstUpdated() {
-		await Promise.all([await this.#init().catch(() => undefined)]);
+		await this.#init().catch(() => undefined);
 	}
 
 	async #init() {
-		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
-			if (!this._dataSource) return reject();
+		if (!this._dataSource) return;
 
-			const body = { dataSource: this._dataSource[0], listEditor: null };
+		const body = { dataSource: this._dataSource[0], listEditor: null };
 
-			const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
 
-			if (!data) return reject();
+		if (!data) return;
 
-			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
+		const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
 
-			if (!this.value && items.length > 0) {
-				this.value = Object.fromEntries(items.map((item) => [item.value, '']));
-			}
+		if (!this.value && items.length > 0) {
+			this.value = Object.fromEntries(items.map((item) => [item.value, '']));
+		}
 
-			resolve(items);
-		});
+		this._items = items;
 	}
 
 	#onInput(key: string, event: UUIInputEvent) {
