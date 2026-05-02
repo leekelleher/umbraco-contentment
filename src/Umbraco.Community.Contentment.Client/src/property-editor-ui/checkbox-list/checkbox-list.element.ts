@@ -82,10 +82,11 @@ export class ContentmentPropertyEditorUICheckboxListElement
 
 		this._items.forEach((item) => {
 			if (item.checked) {
-				values?.push(item.value);
+				values.push(item.value);
 			}
 		});
 
+		this._items = [...this._items];
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
@@ -96,11 +97,12 @@ export class ContentmentPropertyEditorUICheckboxListElement
 
 		const values: Array<string> = [];
 
-		this._items.forEach((item) => {
-			item.checked = this._toggleChecked;
-			if (item.checked) {
+		this._items = this._items.map((item) => {
+			const checked = this._toggleChecked;
+			if (checked) {
 				values.push(item.value);
 			}
+			return { ...item, checked };
 		});
 
 		this.value = values;

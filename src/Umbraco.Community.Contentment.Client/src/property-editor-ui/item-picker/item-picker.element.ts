@@ -128,7 +128,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	}
 
 	async #onRemove(item: ContentmentListItem, index: number) {
-		if (!item || !this.value || index == -1) return;
+		if (!item || !this.value || index === -1) return;
 
 		if (this.#confirmRemoval) {
 			await umbConfirmModal(this, {

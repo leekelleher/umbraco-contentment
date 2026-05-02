@@ -14,6 +14,7 @@ Thumbs.db
 node_modules/
 
 .claude/*.local.*
+.github/release-notes/*.md
 artifacts/
 build/__umb/*
 build/assets/

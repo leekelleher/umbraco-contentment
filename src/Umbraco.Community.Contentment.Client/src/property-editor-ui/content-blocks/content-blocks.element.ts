@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
+import { parseBoolean, parseInt } from '../../utils/index.js';
 import { ContentmentContentBlocksManagerContext } from './content-blocks-manager.context.js';
 import { ContentmentContentBlocksEntriesContext } from './content-blocks-entries.context.js';
 import { css, customElement, html, nothing, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
@@ -30,7 +31,7 @@ import './content-blocks-entry.element.js';
 @customElement('contentment-property-editor-ui-content-blocks')
 export class ContentmentPropertyEditorUIContentBlocksElement
 	extends UmbFormControlMixin<Array<ContentmentContentBlockValue> | undefined, typeof UmbLitElement, undefined>(
-		UmbLitElement
+		UmbLitElement,
 	)
 	implements UmbPropertyEditorUiElement
 {
@@ -47,14 +48,15 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	readonly #entriesContext = new ContentmentContentBlocksEntriesContext(this);
 	readonly #validationContext = new UmbValidationContext(this);
 
+	#createButtonLabelKey = '#content_createEmpty';
+	#disableSorting = false;
+	#maxItems = Infinity;
+
 	@state()
 	private _blocks?: Array<UmbBlockTypeBaseModel>;
 
 	@state()
 	private _catalogueRouteBuilder?: UmbModalRouteBuilder;
-
-	@state()
-	private _createButtonLabelKey = '#content_createEmpty';
 
 	@state()
 	private _layouts: Array<UmbBlockLayoutBaseModel> = [];
@@ -91,7 +93,13 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	public set config(config: UmbPropertyEditorConfigCollection | undefined) {
 		if (!config) return;
 
-		this._createButtonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? '#content_createEmpty';
+		this.#createButtonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? '#content_createEmpty';
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
+
+		if (this.#disableSorting) {
+			this.#sorter.disable();
+		}
 
 		const contentBlockTypes =
 			config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('contentBlockTypes') ?? [];
@@ -118,7 +126,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	public set readonly(value) {
 		this.#readonly = value;
 
-		if (this.#readonly) {
+		if (this.#readonly || this.#disableSorting) {
 			this.#sorter.disable();
 			this.#managerContext.readOnlyState.fallbackToPermitted();
 		} else {
@@ -139,13 +147,13 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 			this,
 			umbExtensionsRegistry,
 			UMB_BLOCK_LIST_PROPERTY_EDITOR_UI_ALIAS,
-			() => (this._initialized = true)
+			() => (this._initialized = true),
 		);
 
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (context) => this.#gotPropertyContext(context));
 
 		this.consumeContext(UMB_PROPERTY_DATASET_CONTEXT, async (context) =>
-			this.#managerContext.setVariantId(context?.getVariantId())
+			this.#managerContext.setVariantId(context?.getVariantId()),
 		);
 
 		this.observe(
@@ -155,7 +163,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 				this.#sorter.setModel(layouts);
 				this.#managerContext.setLayouts(layouts);
 			},
-			null
+			null,
 		);
 
 		this.observe(this.#managerContext.blockTypes, (blockTypes) => (this._blocks = blockTypes), null);
@@ -163,7 +171,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		this.observe(
 			this.#entriesContext.catalogueRouteBuilder,
 			(routeBuilder) => (this._catalogueRouteBuilder = routeBuilder),
-			null
+			null,
 		);
 	}
 
@@ -177,7 +185,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 					this.#validationContext.autoReport();
 				}
 			},
-			'observeDataPath'
+			'observeDataPath',
 		);
 
 		this.observe(context?.alias, (alias) => this.#managerContext.setPropertyAlias(alias), 'observePropertyAlias');
@@ -215,7 +223,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 
 				context?.setValue(realValue);
 			},
-			'motherObserver'
+			'motherObserver',
 		);
 	}
 
@@ -266,18 +274,15 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 				(layout, index) => html`
 					<contentment-content-blocks-entry index=${index} .contentKey=${layout.contentKey} ${umbDestroyOnDisconnect()}>
 					</contentment-content-blocks-entry>
-				`
+				`,
 			)}
 			${this.#renderCreateButtonGroup()}
 		`;
 	}
 
 	#renderCreateButtonGroup() {
-		if (this.readonly && this._layouts.length > 0) {
-			return nothing;
-		} else {
-			return html`<uui-button-group>${this.#renderCreateButton()}</uui-button-group>`;
-		}
+		if (this.readonly || this._layouts.length >= this.#maxItems) return nothing;
+		return html`<uui-button-group>${this.#renderCreateButton()}</uui-button-group>`;
 	}
 
 	#renderCreateButton() {
@@ -292,7 +297,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		return html`
 			<uui-button
 				look="placeholder"
-				label=${this.localize.string(this._createButtonLabelKey)}
+				label=${this.localize.string(this.#createButtonLabelKey)}
 				href=${createPath ?? ''}
 				?disabled=${this.readonly}></uui-button>
 		`;

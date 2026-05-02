@@ -2,7 +2,7 @@
 // Copyright © 2025 Lee Kelleher
 
 import { CONTENTMENT_LIQUID_CONTEXT } from '../../global-context/liquid/liquid.context.js';
-import { customElement, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
+import { customElement, html, nothing, property, state, unsafeHTML } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import { UMB_BLOCK_ENTRY_CONTEXT } from '@umbraco-cms/backoffice/block';
@@ -153,7 +153,13 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 
 	async #parseLiquidTemplate() {
 		if (!this.#liquid || !this.#template) return;
-		this.#templateCompiled = await this.#liquid.parse(this.#template);
+		try {
+			this.#templateCompiled = await this.#liquid.parse(this.#template);
+		} catch (error) {
+			console.error('[Contentment] Failed to parse Liquid template:', error);
+			this._markup = this.#renderError('parse', error);
+			return;
+		}
 		this.#renderLiquidTemplate();
 	}
 
@@ -177,8 +183,25 @@ export class ContentmentBlockEditorLiquidViewElement extends UmbLitElement imple
 			contentElementTypeAlias: this._contentElementTypeAlias,
 		};
 
-		const markup = await this.#liquid.render(this.#templateCompiled, scope);
-		this._markup = markup ? unsafeHTML(markup) : nothing;
+		try {
+			const markup = await this.#liquid.render(this.#templateCompiled, scope);
+			this._markup = markup ? unsafeHTML(markup) : nothing;
+		} catch (error) {
+			console.error('[Contentment] Failed to render Liquid template:', error);
+			this._markup = this.#renderError('render', error);
+		}
+	}
+
+	#renderError(stage: 'parse' | 'render', error: unknown) {
+		const message = error instanceof Error ? error.message : String(error);
+		const escaped = message.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+		return html`
+			<contentment-info-box
+				type="warning"
+				icon="icon-alert"
+				headline="Liquid template ${stage} error"
+				message=${escaped}></contentment-info-box>
+		`;
 	}
 
 	protected override updated(changedProperties: PropertyValues): void {

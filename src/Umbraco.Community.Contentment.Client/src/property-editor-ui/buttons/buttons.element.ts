@@ -77,10 +77,11 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			}
 
 			if (item.selected) {
-				values?.push(item.value);
+				values.push(item.value);
 			}
 		});
 
+		this._items = [...this._items];
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
@@ -88,9 +89,10 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 
 	#updateItems() {
 		if (this._items?.length) {
-			this._items.forEach((item) => {
-				item.selected = this.#value?.includes(item.value) ?? false;
-			});
+			this._items = this._items.map((item) => ({
+				...item,
+				selected: this.#value?.includes(item.value) ?? false,
+			}));
 		}
 	}
 
