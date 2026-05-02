@@ -34,12 +34,6 @@ jobs:
       run: npm pkg set version=${{github.ref_name}}
       working-directory: src/Umbraco.Community.Contentment.Client
 
-    - name: Push to GitHub npm
-      run: npm publish
-      working-directory: src/Umbraco.Community.Contentment.Client
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
@@ -47,6 +41,12 @@ jobs:
 
     - name: Build and pack
       run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
+
+    - name: Push to GitHub npm
+      run: npm publish
+      working-directory: src/Umbraco.Community.Contentment.Client
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Push to GitHub NuGet
       run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json
