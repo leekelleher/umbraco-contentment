@@ -70,23 +70,19 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	private _append?: string;
 
 	override async firstUpdated() {
-		await Promise.all([await this.#init().catch(() => undefined)]);
+		await this.#init().catch(() => undefined);
 	}
 
 	async #init() {
-		this._items = await new Promise<Array<ContentmentListItem>>(async (resolve, reject) => {
-			if (!this._dataSource) return reject();
+		if (!this._dataSource) return;
 
-			const body = { dataSource: this._dataSource, listEditor: null };
+		const body = { dataSource: this._dataSource, listEditor: null };
 
-			const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
 
-			if (!data) return reject();
+		if (!data) return;
 
-			const items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
-
-			resolve(items);
-		});
+		this._items = (data.config?.find((x) => x.alias === 'items')?.value as Array<ContentmentListItem>) ?? [];
 	}
 
 	#onInput(event: InputEvent & { target: HTMLInputElement }) {
@@ -118,10 +114,10 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 						${repeat(
 							this._items,
 							(item) => item.value,
-							(item) => html`<option label=${item.name} value=${item.value}></option>`
+							(item) => html`<option label=${item.name} value=${item.value}></option>`,
 						)}
 					</datalist>
-				`
+				`,
 			)}
 		`;
 	}
