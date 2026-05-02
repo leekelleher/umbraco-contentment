@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
+import { parseBoolean, parseInt } from '../../utils/index.js';
 import { ContentmentContentBlocksManagerContext } from './content-blocks-manager.context.js';
 import { ContentmentContentBlocksEntriesContext } from './content-blocks-entries.context.js';
 import { css, customElement, html, nothing, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
@@ -47,6 +48,8 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	readonly #entriesContext = new ContentmentContentBlocksEntriesContext(this);
 	readonly #validationContext = new UmbValidationContext(this);
 
+	#maxItems = Infinity;
+
 	@state()
 	private _blocks?: Array<UmbBlockTypeBaseModel>;
 
@@ -92,6 +95,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		if (!config) return;
 
 		this._createButtonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? '#content_createEmpty';
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 
 		const contentBlockTypes =
 			config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('contentBlockTypes') ?? [];
@@ -273,11 +277,8 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	}
 
 	#renderCreateButtonGroup() {
-		if (this.readonly && this._layouts.length > 0) {
-			return nothing;
-		} else {
-			return html`<uui-button-group>${this.#renderCreateButton()}</uui-button-group>`;
-		}
+		if (this.readonly || this._layouts.length >= this.#maxItems) return nothing;
+		return html`<uui-button-group>${this.#renderCreateButton()}</uui-button-group>`;
 	}
 
 	#renderCreateButton() {
