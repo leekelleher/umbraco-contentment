@@ -50,6 +50,9 @@ export class ContentmentPropertyEditorUITemplatedListElement
 	@state()
 	private _markupLookup = new Map<string, unknown>();
 
+	@state()
+	private _parseError?: unknown;
+
 	constructor() {
 		super();
 		this.consumeContext(CONTENTMENT_LIQUID_CONTEXT, (context) => {
@@ -94,7 +97,14 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 	async #parseLiquidTemplate() {
 		if (!this.#liquid || !this.#template) return;
-		this.#templateCompiled = await this.#liquid.parse(this.#template);
+		try {
+			this.#templateCompiled = await this.#liquid.parse(this.#template);
+			this._parseError = undefined;
+		} catch (error) {
+			console.error('[Contentment] Failed to parse Liquid template:', error);
+			this._parseError = error;
+			return;
+		}
 		this.#renderLiquidTemplate();
 	}
 
@@ -107,11 +117,28 @@ export class ContentmentPropertyEditorUITemplatedListElement
 		if (!liquid || !this.#templateCompiled || !this._items?.length) return;
 
 		for (const item of this._items) {
-			const markup = await liquid.render(this.#templateCompiled, { item });
-			this._markupLookup.set(item.value, markup ? unsafeHTML(markup) : nothing);
+			try {
+				const markup = await liquid.render(this.#templateCompiled, { item });
+				this._markupLookup.set(item.value, markup ? unsafeHTML(markup) : nothing);
+			} catch (error) {
+				console.error('[Contentment] Failed to render Liquid template:', error);
+				this._markupLookup.set(item.value, this.#renderError('render', error));
+			}
 		}
 
 		this.requestUpdate('_markupLookup');
+	}
+
+	#renderError(stage: 'parse' | 'render', error: unknown) {
+		const message = error instanceof Error ? error.message : String(error);
+		const escaped = message.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+		return html`
+			<contentment-info-box
+				type="warning"
+				icon="icon-alert"
+				headline="Liquid template ${stage} error"
+				message=${escaped}></contentment-info-box>
+		`;
 	}
 
 	#onClick(option: ContentmentDataListOption) {
@@ -125,10 +152,11 @@ export class ContentmentPropertyEditorUITemplatedListElement
 			}
 
 			if (item.selected) {
-				values?.push(item.value);
+				values.push(item.value);
 			}
 		});
 
+		this._items = [...this._items];
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
@@ -136,14 +164,19 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 	#updateItems() {
 		if (this._items?.length) {
-			this._items.forEach((item) => {
-				item.selected = this.#value?.includes(item.value) ?? false;
-			});
+			this._items = this._items.map((item) => ({
+				...item,
+				selected: this.#value?.includes(item.value) ?? false,
+			}));
 			this.#renderLiquidTemplate();
 		}
 	}
 
 	override render() {
+		if (this._parseError) {
+			return this.#renderError('parse', this._parseError);
+		}
+
 		if (!this._items?.length) {
 			return html`
 				<contentment-info-box
