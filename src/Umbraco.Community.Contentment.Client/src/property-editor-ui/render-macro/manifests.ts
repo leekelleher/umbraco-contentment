@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
+/** @deprecated To be removed in Contentment 8.0. */
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Render Macro',
@@ -10,6 +11,7 @@ const schema: UmbExtensionManifest = {
 	},
 };
 
+/** @deprecated To be removed in Contentment 8.0. */
 const editorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.RenderMacro',

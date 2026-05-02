@@ -5,6 +5,7 @@ import { css, customElement, html, property, when } from '@umbraco-cms/backoffic
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+/** @deprecated To be removed in Contentment 8.0. */
 @customElement('contentment-property-editor-ui-render-macro')
 export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#json = '';
@@ -23,13 +24,12 @@ export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement
 				<p><em>Support for Macros were deprecated in Umbraco 14. Please consider alternative functionality.</em></p>
 				${when(
 					this.#json,
-					() =>
-						html`
-							<details>
-								<summary>Macro configuration</summary>
-								<umb-code-block copy>${this.#json}</umb-code-block>
-							</details>
-						`
+					() => html`
+						<details>
+							<summary>Macro configuration</summary>
+							<umb-code-block copy>${this.#json}</umb-code-block>
+						</details>
+					`,
 				)}
 			</contentment-info-box>
 		`;
