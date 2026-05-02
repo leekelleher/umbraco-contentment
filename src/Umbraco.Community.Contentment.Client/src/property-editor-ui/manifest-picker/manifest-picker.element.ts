@@ -70,7 +70,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	}
 
 	async #removeItem(item: string, index: number) {
-		if (!item || !this.value || index == -1) return;
+		if (!item || !this.value || index === -1) return;
 
 		const tmp = [...this.value];
 		tmp.splice(index, 1);
