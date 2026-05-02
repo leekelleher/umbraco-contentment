@@ -87,7 +87,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 			if (typeof value !== 'number' && value) {
 				this._options[next] = await this.#repository.getItemsByUrl(url);
 			} else {
-				this._options = this._options.splice(0, next);
+				this._options = this._options.slice(0, next);
 			}
 
 			this._loading = false;
