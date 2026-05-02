@@ -96,7 +96,7 @@ export class ContentmentPropertyEditorUIDataListElement
 	}
 
 	override async firstUpdated() {
-		await Promise.all([await this.#init().catch(() => undefined)]);
+		await this.#init().catch(() => undefined);
 		this._initialized = true;
 	}
 
