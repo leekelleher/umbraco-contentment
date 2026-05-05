@@ -14,6 +14,7 @@ import {
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import { UMB_THEME_CONTEXT } from '@umbraco-cms/backoffice/themes';
 import type { PrismEditor } from 'prism-code-editor';
 import { defaultCommands } from 'prism-code-editor/commands';
 import { indentGuides } from 'prism-code-editor/guides';
@@ -49,6 +50,9 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	@state()
 	private _loading = true;
 
+	@state()
+	private _isDark = false;
+
 	@property()
 	public value?: string;
 
@@ -62,6 +66,13 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 
 	constructor() {
 		super();
+
+		this.consumeContext(UMB_THEME_CONTEXT, (context) => {
+			this.observe(context?.theme, (themeAlias) => {
+				this._isDark = themeAlias === 'umb-dark-theme';
+			});
+		});
+
 		this.#loadEditor();
 	}
 
@@ -110,7 +121,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
-		return html`<div id="code-editor" ${ref(this.#containerRef)}></div>`;
+		return html`<div id="code-editor" data-theme=${this._isDark ? 'dark' : 'light'} ${ref(this.#containerRef)}></div>`;
 	}
 
 	static override styles = [
