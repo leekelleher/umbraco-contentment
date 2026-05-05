@@ -113,12 +113,21 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	}
 
 	async #loadGrammar(language: string) {
-		if (language === 'plain') return;
-		try {
-			await import(/* @vite-ignore */ `prism-code-editor/prism/languages/${language}`);
-		} catch (error) {
-			// Unknown grammar → fall back silently to plain text.
-			// (Spec: unknown `mode` values render as plain text, no error toast.)
+		// Static specifiers so Vite can pre-resolve and emit a chunk per grammar.
+		// Unknown languages fall through and render as plain text (per spec).
+		switch (language) {
+			case 'csharp': await import('prism-code-editor/prism/languages/csharp'); break;
+			case 'cshtml': await import('prism-code-editor/prism/languages/cshtml'); break;
+			case 'css': await import('prism-code-editor/prism/languages/css'); break;
+			case 'javascript': await import('prism-code-editor/prism/languages/javascript'); break;
+			case 'json': await import('prism-code-editor/prism/languages/json'); break;
+			case 'liquid': await import('prism-code-editor/prism/languages/liquid'); break;
+			case 'markdown': await import('prism-code-editor/prism/languages/markdown'); break;
+			case 'markup': await import('prism-code-editor/prism/languages/markup'); break;
+			case 'sql': await import('prism-code-editor/prism/languages/sql'); break;
+			case 'typescript': await import('prism-code-editor/prism/languages/typescript'); break;
+			case 'xml': await import('prism-code-editor/prism/languages/xml'); break;
+			case 'yaml': await import('prism-code-editor/prism/languages/yaml'); break;
 		}
 	}
 
@@ -140,7 +149,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		css`
 			#code-editor {
 				display: block;
-				height: 200px;
+				height: auto;
 			}
 
 			#code-editor > .prism-code-editor {
