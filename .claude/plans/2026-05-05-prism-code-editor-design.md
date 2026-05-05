@@ -88,9 +88,11 @@ to Prism language ids (most are 1:1; HTML→`markup`, Razor→`cshtml`).
   highlight, indent guides, search) — bundled with the core import. Small,
   used universally, not worth a separate chunk.
 - **Theme CSS** — both stock themes (`github-light` + `github-dark`) imported
-  as side-effect CSS on the editor host. Theme selection happens entirely in
-  CSS via `@media (prefers-color-scheme: dark)`. No JS-side theme listener,
-  no subscription to a backoffice theme context.
+  as side-effect CSS on the editor host, scoped behind a `data-theme="dark"`
+  attribute on the editor wrapper so they coexist without conflict. The
+  element subscribes to `UMB_THEME_CONTEXT` (from `@umbraco-cms/backoffice/themes`)
+  and toggles `data-theme` based on the observed theme alias. Default light
+  if the context isn't available.
 - **Unknown `mode`** — if grammar dynamic import rejects (e.g. data type
   configured manually with `mode: ruby`), the editor still mounts as plain
   text. No syntax colouring, no error toast, no warning UI.
@@ -101,11 +103,13 @@ to Prism language ids (most are 1:1; HTML→`markup`, Razor→`cshtml`).
 ContentmentPropertyEditorUICodeEditorElement (UmbLitElement)
 ├─ @state _language?: string                     // resolved from manifest config
 ├─ @state _loading = true                        // true until core import resolves
+├─ @state _isDark = false                        // observed from UMB_THEME_CONTEXT
 ├─ @property value?: string                      // bound to property context
+├─ constructor()                                 // consumeContext(UMB_THEME_CONTEXT, …)
 ├─ #loadEditor()                                 // dynamic-import core, grammar, extensions; mount editor
 ├─ #onChange(value)                              // updates this.value, dispatches UmbChangeEvent
-├─ render()                                      // <uui-loader> while loading; host <div> after
-└─ static styles                                 // host sizing only (no margin hack)
+├─ render()                                      // <uui-loader> while loading; host <div data-theme=…> after
+└─ static styles                                 // host sizing + scoped theme CSS rules
 ```
 
 The Prism editor mounts into a host `<div>` — referenced via Lit's `ref()`
@@ -115,17 +119,28 @@ directive — once the core module resolves. The element no longer:
 - carries the `_hideMargin` state,
 - ships the `&.margin { margin-left: -30px }` CSS branch.
 
+The element gains a new `consumeContext(UMB_THEME_CONTEXT, …)` subscription
+that observes the context's `theme` observable and sets `_isDark = true`
+when the alias is `umb-dark-theme`. All other aliases (including
+`umb-light-theme`, `umb-high-contrast-theme`, anything unrecognised, or the
+context being absent) fall back to light.
+
 The public element export contract (`export { ... as element }` at the bottom
 of the file, plus the `HTMLElementTagNameMap` declaration) is preserved — it's
 part of the manifest contract.
 
 ## Theme
 
-Both stock themes imported as side-effect CSS at editor-load time. The
-`@media (prefers-color-scheme: dark)` block applies the dark theme variables.
-This means the editor follows the OS / browser preference automatically; if
-Umbraco's backoffice theme switch ever diverges from the OS preference, we
-revisit then.
+Both stock themes are imported as side-effect CSS at editor-load time, with
+each theme's rules scoped behind a `[data-theme="light"]` / `[data-theme="dark"]`
+attribute selector on the editor wrapper so they don't collide. The element
+observes `UMB_THEME_CONTEXT.theme` (the active backoffice theme alias) and
+sets the wrapper's `data-theme` attribute to `dark` only when the alias is
+`umb-dark-theme`. Everything else — `umb-light-theme`, `umb-high-contrast-theme`,
+unknown aliases, no context — resolves to `light`.
+
+This is a deliberate departure from `prefers-color-scheme`: Umbraco's
+backoffice theme is independent of the user's OS dark-mode preference.
 
 ## Events
 
@@ -159,8 +174,10 @@ Success criterion in parentheses for each step.
 2. Cycle through every entry in the dropdown, type a small snippet for each
    (syntax colours match the language).
 3. Default new data type (defaults to Razor; `cshtml` grammar applied).
-4. Toggle OS-level dark mode (or DevTools `prefers-color-scheme` emulation)
-   (editor theme follows).
+4. Toggle the Umbraco backoffice theme via the current-user theme picker
+   (light → dark → high contrast)
+   (editor renders dark when the backoffice is in `umb-dark-theme`, light
+   for `umb-light-theme` and `umb-high-contrast-theme`).
 5. Search (Ctrl+F), bracket matching, autoclose pairs, line numbers,
    active-line highlight, indent guides
    (all work as expected).
@@ -184,7 +201,6 @@ Success criterion in parentheses for each step.
   step 9 of the manual checklist; we do not commit to a numeric budget.
 - **Razor grammar fidelity** — Prism's `cshtml` grammar may render
   edge-case Razor differently from Monaco. Acceptable per the brainstorm.
-- **OS dark-mode coupling** — the theme follows `prefers-color-scheme`,
-  not Umbraco's backoffice toggle. If users change the backoffice theme
-  independently of their OS preference, the editor won't follow. Listed
-  as a follow-up if it bites.
+- **High-contrast theme** — the design renders Prism's light theme when
+  the backoffice is in `umb-high-contrast-theme`. A dedicated high-contrast
+  Prism theme can be added later as a follow-up if maintainers ask for it.
