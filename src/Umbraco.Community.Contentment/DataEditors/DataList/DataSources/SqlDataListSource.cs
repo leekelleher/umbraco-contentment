@@ -15,7 +15,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed partial class SqlDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
-        private readonly string _codeEditorMode;
         private readonly IEnumerable<DataListItem> _connectionStrings;
         private readonly IConfiguration _configuration;
         private readonly IDbProviderFactoryCreator _dbProviderFactoryCreator;
@@ -27,11 +26,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             IDbProviderFactoryCreator dbProviderFactoryCreator,
             IScopeProvider scopeProvider)
         {
-            // NOTE: Umbraco doesn't ship with SqlServer mode, so we check if its been added manually, otherwise defaults to Razor.
-            _codeEditorMode = webHostEnvironment.WebPathExists("~/umbraco/lib/ace-builds/src-min-noconflict/mode-sqlserver.js") == true
-                ? "sqlserver"
-                : "razor";
-
             _connectionStrings = configuration
                 .GetSection("ConnectionStrings")
                 .GetChildren()
@@ -80,7 +74,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { "mode", _codeEditorMode },
+                    { "mode", "sql" },
                     { "minLines", 20 },
                     { "maxLines", 40 },
                 }
