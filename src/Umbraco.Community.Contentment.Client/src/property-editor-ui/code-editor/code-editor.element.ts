@@ -18,6 +18,21 @@ import type { PrismEditor } from 'prism-code-editor';
 
 import 'prism-code-editor/layout.css';
 
+const MODE_TO_PRISM: Record<string, string> = {
+	csharp: 'csharp',
+	css: 'css',
+	html: 'markup',
+	javascript: 'javascript',
+	json: 'json',
+	liquid: 'liquid',
+	markdown: 'markdown',
+	razor: 'cshtml',
+	sql: 'sql',
+	typescript: 'typescript',
+	xml: 'xml',
+	yaml: 'yaml',
+};
+
 @customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
@@ -48,8 +63,12 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			this._loading = false;
 			await this.updateComplete;
 			if (!this.#containerRef.value) return;
+
+			const language = MODE_TO_PRISM[this._mode] ?? 'plain';
+			await this.#loadGrammar(language);
+
 			this.#editor = createEditor(this.#containerRef.value, {
-				language: 'plain',
+				language,
 				value: this.value ?? '',
 			});
 			this.#editor.on('update', (value) => {
@@ -61,9 +80,19 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		}
 	}
 
+	async #loadGrammar(language: string) {
+		if (language === 'plain') return;
+		try {
+			await import(/* @vite-ignore */ `prism-code-editor/prism/languages/${language}`);
+		} catch (error) {
+			// Unknown grammar → fall back silently to plain text.
+			// (Spec: unknown `mode` values render as plain text, no error toast.)
+		}
+	}
+
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
-		return html`<div id="code-editor" data-mode=${this._mode} ${ref(this.#containerRef)}></div>`;
+		return html`<div id="code-editor" ${ref(this.#containerRef)}></div>`;
 	}
 
 	static override styles = [
