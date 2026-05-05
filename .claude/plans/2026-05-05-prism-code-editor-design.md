@@ -87,7 +87,7 @@ to Prism language ids (most are 1:1; HTML→`markup`, Razor→`cshtml`).
 - **Extensions** (line numbers, match brackets, autoclose pairs, active-line
   highlight, indent guides, search) — bundled with the core import. Small,
   used universally, not worth a separate chunk.
-- **Theme CSS** — both stock themes (`github-light` + `github-dark`) imported
+- **Theme CSS** — both stock themes (`vs-code-light` + `vs-code-dark`) imported
   as side-effect CSS on the editor host, scoped behind a `data-theme="dark"`
   attribute on the editor wrapper so they coexist without conflict. The
   element subscribes to `UMB_THEME_CONTEXT` (from `@umbraco-cms/backoffice/themes`)

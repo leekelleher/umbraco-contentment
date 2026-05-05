@@ -575,7 +575,7 @@ Import both the light and dark Prism stylesheets and scope each behind a `[data-
 ls src/Umbraco.Community.Contentment.Client/node_modules/prism-code-editor/dist/themes/
 ```
 
-Expected: a list of `.css` files. The package's `exports` map allows imports of the form `prism-code-editor/themes/<name>.css` for any of them. Pick one light theme and one dark theme — the spec calls out `github-light` + `github-dark` as the default; if those filenames are not present, substitute the closest equivalents available in the package (e.g. `github-light.css` / `github-dark.css`, or `vs-code-light.css` / `vs-code-dark.css`).
+Expected: a list of `.css` files. The package's `exports` map allows imports of the form `prism-code-editor/themes/<name>.css` for any of them. Confirm that `vs-code-light.css` and `vs-code-dark.css` are present — those are the default per the spec. If they are absent for any reason, stop and report back.
 
 - [ ] **Step 2:** Add the side-effect imports to the top of the file, alongside the existing `'prism-code-editor/layout.css'` import. Do **not** import them at the global module level if they conflict — instead, scope them via `:host` styles. The simplest approach Vite supports is plain side-effect CSS imports (which apply globally) plus selector scoping in our static styles; that's what we'll do, paired with `:host` scoping in our element styles to keep them inside the shadow DOM.
 
@@ -583,8 +583,8 @@ For Lit elements, side-effect CSS imports applied to the document head do **not*
 
 ```ts
 import { css, customElement, html, property, state, unsafeCSS } from '@umbraco-cms/backoffice/external/lit';
-import githubLight from 'prism-code-editor/themes/github-light.css?inline';
-import githubDark from 'prism-code-editor/themes/github-dark.css?inline';
+import vsCodeLight from 'prism-code-editor/themes/vs-code-light.css?inline';
+import vsCodeDark from 'prism-code-editor/themes/vs-code-dark.css?inline';
 ```
 
 (`?inline` is a Vite query that returns the CSS as a string instead of injecting it.)
@@ -605,11 +605,11 @@ static override styles = [
 		}
 
 		#code-editor[data-theme='light'] .prism-code-editor {
-			${unsafeCSS(githubLight)}
+			${unsafeCSS(vsCodeLight)}
 		}
 
 		#code-editor[data-theme='dark'] .prism-code-editor {
-			${unsafeCSS(githubDark)}
+			${unsafeCSS(vsCodeDark)}
 		}
 	`,
 ];
