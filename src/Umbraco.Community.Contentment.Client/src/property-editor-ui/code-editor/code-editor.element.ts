@@ -137,19 +137,14 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	}
 
 	static override styles = [
-		css`
-			${unsafeCSS(prismLayout)}
-		`,
-		css`
-			${unsafeCSS(prismSearch)}
-		`,
-		css`
-			${unsafeCSS(prismGuides)}
-		`,
+		unsafeCSS(prismLayout),
+		unsafeCSS(prismSearch),
+		unsafeCSS(prismGuides),
 		css`
 			#code-editor {
 				display: block;
 				height: auto;
+				margin-left: -30px;
 			}
 
 			#code-editor > .prism-code-editor {
@@ -158,11 +153,11 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			}
 
 			#code-editor[data-theme='light'] {
-				${unsafeCSS(vsCodeLight)}
+				${unsafeCSS(vsCodeLight)};
 			}
 
 			#code-editor[data-theme='dark'] {
-				${unsafeCSS(vsCodeDark)}
+				${unsafeCSS(vsCodeDark)};
 			}
 		`,
 	];
