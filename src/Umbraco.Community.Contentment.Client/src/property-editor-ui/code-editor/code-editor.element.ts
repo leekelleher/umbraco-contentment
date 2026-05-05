@@ -9,6 +9,7 @@ import {
 	property,
 	ref,
 	state,
+	unsafeCSS,
 	type Ref,
 } from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -26,6 +27,8 @@ import { searchWidget } from 'prism-code-editor/search';
 import 'prism-code-editor/layout.css';
 import 'prism-code-editor/search.css';
 import 'prism-code-editor/guides.css';
+import vsCodeLight from 'prism-code-editor/themes/vs-code-light.css?inline';
+import vsCodeDark from 'prism-code-editor/themes/vs-code-dark.css?inline';
 
 const MODE_TO_PRISM: Record<string, string> = {
 	csharp: 'csharp',
@@ -134,6 +137,14 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			#code-editor > .prism-code-editor {
 				height: 100%;
 				width: 100%;
+			}
+
+			#code-editor[data-theme='light'] {
+				${unsafeCSS(vsCodeLight)}
+			}
+
+			#code-editor[data-theme='dark'] {
+				${unsafeCSS(vsCodeDark)}
 			}
 		`,
 	];
