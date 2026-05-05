@@ -24,9 +24,9 @@ import { matchBrackets } from 'prism-code-editor/match-brackets';
 import { matchTags } from 'prism-code-editor/match-tags';
 import { searchWidget } from 'prism-code-editor/search';
 
-import 'prism-code-editor/layout.css';
-import 'prism-code-editor/search.css';
-import 'prism-code-editor/guides.css';
+import prismLayout from 'prism-code-editor/layout.css?inline';
+import prismSearch from 'prism-code-editor/search.css?inline';
+import prismGuides from 'prism-code-editor/guides.css?inline';
 import vsCodeLight from 'prism-code-editor/themes/vs-code-light.css?inline';
 import vsCodeDark from 'prism-code-editor/themes/vs-code-dark.css?inline';
 
@@ -128,6 +128,15 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	}
 
 	static override styles = [
+		css`
+			${unsafeCSS(prismLayout)}
+		`,
+		css`
+			${unsafeCSS(prismSearch)}
+		`,
+		css`
+			${unsafeCSS(prismGuides)}
+		`,
 		css`
 			#code-editor {
 				display: block;
