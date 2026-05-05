@@ -1,86 +1,81 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2023 Lee Kelleher
 
-import { classMap, css, customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
-import { UmbInputEvent } from '@umbraco-cms/backoffice/event';
-import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import {
+	createRef,
+	css,
+	customElement,
+	html,
+	property,
+	ref,
+	state,
+	type Ref,
+} from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import type { UmbCodeEditorElement } from '@umbraco-cms/backoffice/code-editor';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import type { PrismEditor } from 'prism-code-editor';
 
-type CodeEditorLanguage = UmbCodeEditorElement['language'];
+import 'prism-code-editor/layout.css';
 
 @customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
-	private _language?: CodeEditorLanguage;
+	private _mode: string = 'razor';
 
 	@state()
 	private _loading = true;
-
-	@state()
-	private _hideMargin = false;
 
 	@property()
 	public value?: string;
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-
-		this._language = config.getValueByAlias<CodeEditorLanguage>('mode');
+		this._mode = config.getValueByAlias<string>('mode') ?? 'razor';
 	}
+
+	#containerRef: Ref<HTMLDivElement> = createRef();
+	#editor?: PrismEditor;
 
 	constructor() {
 		super();
-
-		this.#loadCodeEditor();
-
-		this.consumeContext(UMB_PROPERTY_CONTEXT, (context) => {
-			this.observe(context?.appearance, (appearance) => {
-				this._hideMargin = appearance?.labelOnTop ?? false;
-			});
-		});
+		this.#loadEditor();
 	}
 
-	async #loadCodeEditor() {
+	async #loadEditor() {
 		try {
-			await import('@umbraco-cms/backoffice/code-editor');
+			const { createEditor } = await import('prism-code-editor');
 			this._loading = false;
+			await this.updateComplete;
+			if (!this.#containerRef.value) return;
+			this.#editor = createEditor(this.#containerRef.value, {
+				language: 'plain',
+				value: this.value ?? '',
+			});
+			this.#editor.on('update', (value) => {
+				this.value = value;
+				this.dispatchEvent(new UmbChangeEvent());
+			});
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
-	#onChange(event: UmbInputEvent & { target: UmbCodeEditorElement }) {
-		if (!(event instanceof UmbInputEvent)) return;
-		this.value = event.target.code;
-		this.dispatchEvent(new UmbChangeEvent());
-	}
-
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
-		return html`
-			<div id="code-editor" class=${classMap({ margin: !this._hideMargin })}>
-				<umb-code-editor language=${this._language ?? 'razor'} .code=${this.value ?? ''} @input=${this.#onChange}>
-				</umb-code-editor>
-			</div>
-		`;
+		return html`<div id="code-editor" data-mode=${this._mode} ${ref(this.#containerRef)}></div>`;
 	}
 
 	static override styles = [
 		css`
 			#code-editor {
-				display: flex;
+				display: block;
 				height: 200px;
+			}
 
-				&.margin {
-					margin-left: -30px;
-				}
-
-				> umb-code-editor {
-					width: 100%;
-				}
+			#code-editor > .prism-code-editor {
+				height: 100%;
+				width: 100%;
 			}
 		`,
 	];
