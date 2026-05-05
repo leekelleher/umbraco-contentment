@@ -17,6 +17,8 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 import type { PrismEditor } from 'prism-code-editor';
 
 import 'prism-code-editor/layout.css';
+import 'prism-code-editor/search.css';
+import 'prism-code-editor/guides.css';
 
 const MODE_TO_PRISM: Record<string, string> = {
 	csharp: 'csharp',
@@ -71,6 +73,32 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 				language,
 				value: this.value ?? '',
 			});
+
+			const [
+				{ indentGuides },
+				{ matchBrackets },
+				{ highlightBracketPairs },
+				{ matchTags },
+				{ searchWidget },
+				{ defaultCommands },
+			] = await Promise.all([
+				import('prism-code-editor/guides'),
+				import('prism-code-editor/match-brackets'),
+				import('prism-code-editor/highlight-brackets'),
+				import('prism-code-editor/match-tags'),
+				import('prism-code-editor/search'),
+				import('prism-code-editor/commands'),
+			]);
+
+			this.#editor.addExtensions(
+				indentGuides(),
+				matchBrackets(),
+				highlightBracketPairs(),
+				matchTags(),
+				searchWidget(),
+				defaultCommands(),
+			);
+
 			this.#editor.on('update', (value) => {
 				this.value = value;
 				this.dispatchEvent(new UmbChangeEvent());
