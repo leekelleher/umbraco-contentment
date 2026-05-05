@@ -22,13 +22,18 @@ export const manifest: UmbExtensionManifest = {
 						{
 							alias: 'items',
 							value: [
+								{ name: 'C#', value: 'csharp' },
 								{ name: 'CSS', value: 'css' },
 								{ name: 'HTML', value: 'html' },
 								{ name: 'JavaScript', value: 'javascript' },
 								{ name: 'JSON', value: 'json' },
+								{ name: 'Liquid', value: 'liquid' },
 								{ name: 'Markdown', value: 'markdown' },
 								{ name: 'Razor (CSHTML)', value: 'razor' },
+								{ name: 'SQL', value: 'sql' },
 								{ name: 'TypeScript', value: 'typescript' },
+								{ name: 'XML', value: 'xml' },
+								{ name: 'YAML', value: 'yaml' },
 							],
 						},
 					],
