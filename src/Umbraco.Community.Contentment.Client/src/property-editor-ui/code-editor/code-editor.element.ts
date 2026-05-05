@@ -15,6 +15,12 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { PrismEditor } from 'prism-code-editor';
+import { defaultCommands } from 'prism-code-editor/commands';
+import { indentGuides } from 'prism-code-editor/guides';
+import { highlightBracketPairs } from 'prism-code-editor/highlight-brackets';
+import { matchBrackets } from 'prism-code-editor/match-brackets';
+import { matchTags } from 'prism-code-editor/match-tags';
+import { searchWidget } from 'prism-code-editor/search';
 
 import 'prism-code-editor/layout.css';
 import 'prism-code-editor/search.css';
@@ -73,22 +79,6 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 				language,
 				value: this.value ?? '',
 			});
-
-			const [
-				{ indentGuides },
-				{ matchBrackets },
-				{ highlightBracketPairs },
-				{ matchTags },
-				{ searchWidget },
-				{ defaultCommands },
-			] = await Promise.all([
-				import('prism-code-editor/guides'),
-				import('prism-code-editor/match-brackets'),
-				import('prism-code-editor/highlight-brackets'),
-				import('prism-code-editor/match-tags'),
-				import('prism-code-editor/search'),
-				import('prism-code-editor/commands'),
-			]);
 
 			this.#editor.addExtensions(
 				indentGuides(),
