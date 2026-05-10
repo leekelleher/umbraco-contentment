@@ -160,7 +160,9 @@ Property Editors are:
 ## v7 _(June 2026)_
 
 - _Adds support for Umbraco 18 (.NET 10)._
+- _Bumps minimum Umbraco 17 support to v17.5.0._
 - _Removes support for Umbraco 16 (.NET 9)._
+- _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481)_
 - [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
 
 
