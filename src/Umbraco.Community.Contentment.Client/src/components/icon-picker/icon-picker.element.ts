@@ -58,6 +58,11 @@ export default class ContentmentIconPickerElement extends UmbLitElement {
 
 	static override readonly styles = [
 		css`
+			uui-button[compact] {
+				--uui-button-padding-left-factor: 1.5;
+				--uui-button-padding-right-factor: 1.5;
+			}
+
 			uui-button:not([compact]) {
 				font-size: var(--uui-size-layout-2);
 				height: var(--uui-size-layout-4);
