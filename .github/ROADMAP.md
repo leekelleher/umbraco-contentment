@@ -160,8 +160,10 @@ Property Editors are:
 ## v7 _(June 2026)_
 
 - _Adds support for Umbraco 18 (.NET 10)._
-- _Bumps minimum Umbraco 17 support to v17.5.0._
-- _Removes support for Umbraco 16 (.NET 9)._
+- _Removes support for Umbraco 16 (.NET 9) and 17._
+
+### v7.1
+
 - _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481)_
 - [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
 
@@ -169,17 +171,19 @@ Property Editors are:
 ## v8 _(December 2026)_
 
 - _Adds support for Umbraco 19 (.NET 11)._
+- _(Umbraco 18 support TBD)_
 
 
 ## v9 _(June 2027)_
 
 - _Adds support for Umbraco 20 (.NET 11)._
+- _(Umbraco 19 support TBD)_
 
 
 ## v10 _(December 2027)_
 
 - _Adds support for Umbraco 21 (LTS, .NET 12)._
-- _Removes support for Umbraco 17, 18 (.NET 10), 19, 20 (.NET 11)._
+- _(Umbraco 20 support TBD)_
 
 
 ## Future feature (minor) releases
