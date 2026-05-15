@@ -5,47 +5,58 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Api.Common.OpenApi;
+using Umbraco.Cms.Api.Management.OpenApi;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Infrastructure.Manifest;
-using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Community.Contentment.Services;
 
-namespace Umbraco.Community.Contentment.Composing
+namespace Umbraco.Community.Contentment.Composing;
+
+public sealed class ContentmentComposer : IComposer
 {
-    public sealed class ContentmentComposer : IComposer
+    public void Compose(IUmbracoBuilder builder)
     {
-        public void Compose(IUmbracoBuilder builder)
-        {
-            builder
-                .Services
-                    .AddSingleton<ConfigurationEditorUtility>()
-                    .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
-                    .AddSingleton<IOperationIdHandler, ContentmentOperationIdHandler>()
-                    .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
-                    .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
-                    .ConfigureOptions<ConfigureContentmentSwaggerGenOptions>()
-             ;
+        builder
+            .Services
+                .AddSingleton<ConfigurationEditorUtility>()
+                .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
+                .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
+                .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
+        ;
 
-            builder
-                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                    .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
-            ;
+        builder.AddBackOfficeOpenApiDocument(
+            Constants.Internals.ProjectAlias,
+            document => document
+            .WithTitle($"{Constants.Internals.ProjectName} Management API")
+            .WithBackOfficeAuthentication()
+            .ConfigureOpenApiOptions(options =>
+            {
+                options.AddDocumentTransformer((doc, _, _) =>
+                {
+                    doc.Info.Version = "Latest";
+                    return Task.CompletedTask;
+                });
+            }));
 
-            builder
-                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
-                    .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
-            ;
+        builder
+            .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
+        ;
 
-            builder
-                .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
-                .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
-                .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
-                .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
-            ;
-        }
+        builder
+            .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
+                .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
+        ;
+
+        builder
+            .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
+            .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
+            .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
+            .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
+        ;
     }
 }
