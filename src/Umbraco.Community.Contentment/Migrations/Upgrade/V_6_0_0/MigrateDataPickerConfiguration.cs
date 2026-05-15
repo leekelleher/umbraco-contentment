@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Migrations.Upgrade.V_6_0_0;
 
-internal sealed class MigrateDataPickerConfiguration : MigrationBase
+internal sealed class MigrateDataPickerConfiguration : AsyncMigrationBase
 {
     public const string State = "{contentment-data-picker-config}";
 
@@ -21,7 +21,7 @@ internal sealed class MigrateDataPickerConfiguration : MigrationBase
         _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
     }
 
-    protected override void Migrate()
+    protected override Task MigrateAsync()
     {
         var sql = Sql()
             .Select<DataTypeDto>()
@@ -61,6 +61,8 @@ internal sealed class MigrateDataPickerConfiguration : MigrationBase
 
             _ = Database.Update(dataTypeDto);
         }
+
+        return Task.CompletedTask;
     }
 
     public static JsonArray MigrateDisplayModeConfiguration(JsonArray displayMode)
