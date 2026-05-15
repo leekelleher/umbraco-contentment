@@ -171,7 +171,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			isNew: this._entityIsNew,
 			pageNumber: this._pageNumber,
 			pageSize: this.data?.pageSize ?? 12,
-			parentId: this._parentEntityUnique,
+			parentId: this._parentEntityUnique ?? undefined,
 			query: this._query,
 			variant: this._variantId,
 		};

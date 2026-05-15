@@ -10,5 +10,15 @@ export default defineConfig([
 		extends: ['js/recommended'],
 		languageOptions: { globals: globals.browser },
 	},
-	tseslint.configs.recommended,
+	{
+		files: ['**/*.ts'],
+		plugins: { tseslint },
+		extends: ['tseslint/recommended'],
+		rules: {
+			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+			'@typescript-eslint/no-explicit-any': 'warn',
+			'@typescript-eslint/consistent-type-imports': 'error',
+			'@typescript-eslint/no-import-type-side-effects': 'warn',
+		},
+	},
 ]);

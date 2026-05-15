@@ -12,7 +12,7 @@ import type {
 import { UmbContextToken } from '@umbraco-cms/backoffice/context-api';
 
 export class ContentmentContentBlocksManagerContext<
-	BlockLayoutType extends UmbBlockListLayoutModel = UmbBlockListLayoutModel
+	BlockLayoutType extends UmbBlockListLayoutModel = UmbBlockListLayoutModel,
 > extends UmbBlockManagerContext<UmbBlockListTypeModel, BlockLayoutType, UmbBlockListWorkspaceOriginData> {
 	readonly IS_CONTENTMENT = true;
 
@@ -20,7 +20,7 @@ export class ContentmentContentBlocksManagerContext<
 	override create(
 		_contentElementTypeKey: string,
 		_partialLayoutEntry?: Omit<BlockLayoutType, 'contentKey'> | undefined,
-		_originData?: UmbBlockWorkspaceOriginData | undefined
+		_originData?: UmbBlockWorkspaceOriginData | undefined,
 	): never {
 		throw new Error('Method not implemented.');
 	}
@@ -28,7 +28,7 @@ export class ContentmentContentBlocksManagerContext<
 	override async createWithPresets(
 		contentElementTypeKey: string,
 		partialLayoutEntry?: Omit<BlockLayoutType, 'contentKey'> | undefined,
-		_originData?: UmbBlockWorkspaceOriginData | undefined
+		_originData?: UmbBlockWorkspaceOriginData | undefined,
 	): Promise<UmbBlockDataObjectModel<BlockLayoutType> | undefined> {
 		return await super._createBlockData(contentElementTypeKey, partialLayoutEntry);
 	}
@@ -37,7 +37,7 @@ export class ContentmentContentBlocksManagerContext<
 		layoutEntry: BlockLayoutType,
 		content: UmbBlockDataModel,
 		settings: UmbBlockDataModel | undefined,
-		originData: ContentmentContentBlocksWorkspaceOriginData
+		originData: ContentmentContentBlocksWorkspaceOriginData,
 	): boolean {
 		this._layouts.appendOneAt(layoutEntry, originData.index ?? -1);
 
@@ -53,7 +53,7 @@ export const CONTENTMENT_CONTENT_BLOCKS_MANAGER_CONTEXT = new UmbContextToken<
 >(
 	'UmbBlockManagerContext',
 	undefined,
-	(context): context is ContentmentContentBlocksManagerContext => context.IS_CONTENTMENT
+	(context): context is ContentmentContentBlocksManagerContext => context.IS_CONTENTMENT,
 );
 
 export interface ContentmentContentBlocksWorkspaceOriginData extends UmbBlockWorkspaceOriginData {

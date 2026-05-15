@@ -70,7 +70,6 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 	#groupItems(items: Array<ContentmentConfigurationEditorModel> | null | undefined) {
 		if (!items) return;
 
-		// @ts-expect-error
 		const grouped = Object.groupBy(
 			items,
 			(item: ContentmentConfigurationEditorModel) => item.group ?? this.#emptyGroup

@@ -52,10 +52,10 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		}
 
 		if (this.value?.length && this._apis?.length) {
-			for (var i = 0; i < this.value.length; i++) {
-				var url = this._apis[i];
+			for (let i = 0; i < this.value.length; i++) {
+				let url = this._apis[i];
 
-				for (var j = 0; j < i; j++) {
+				for (let j = 0; j < i; j++) {
 					url = url.replace(`{${j}}`, this.value[j]);
 				}
 
@@ -80,7 +80,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		if (this._apis.length > next) {
 			this._loading = true;
 
-			var url = this._apis[next].replace(/{(\d+)}/g, function (match, digit) {
+			const url = this._apis[next].replace(/{(\d+)}/g, function (match, digit) {
 				return typeof currentValue[digit] != 'undefined' ? currentValue[digit] : match;
 			});
 
