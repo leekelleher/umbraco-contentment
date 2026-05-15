@@ -5,7 +5,6 @@
  * Copyright © 2025 Lee Kelleher.
  */
 
-#if NET10_0_OR_GREATER
 using System.ComponentModel;
 
 namespace Umbraco.Extensions;
@@ -33,4 +32,3 @@ internal static class ObjectExtensions
         return new Dictionary<string, TVal>();
     }
 }
-#endif
