@@ -2,17 +2,16 @@ import { defineConfig } from '@hey-api/openapi-ts';
 
 export default defineConfig({
 	debug: true,
-	input: 'http://localhost:29917/umbraco/swagger/contentment/swagger.json',
+	input: 'http://localhost:29918/umbraco/openapi/contentment.json',
 	output: {
 		path: 'src/api',
-		format: 'prettier',
-		lint: 'eslint',
+		postProcess: ['eslint', 'prettier'],
 	},
 	plugins: [
 		{
 			name: '@hey-api/client-fetch',
 			baseUrl: false,
-			bundle: false,
+			bundle: true,
 			exportFromIndex: false,
 			throwOnError: true,
 		},
@@ -22,7 +21,12 @@ export default defineConfig({
 		},
 		{
 			name: '@hey-api/sdk',
-			asClass: true,
+			responseStyle: 'fields',
+			operations: {
+				strategy: 'byTags',
+				container: 'class',
+				containerName: { name: '{{name}}Service', casing: 'PascalCase' },
+			},
 		},
 	],
 });
