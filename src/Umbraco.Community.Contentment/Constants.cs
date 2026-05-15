@@ -43,7 +43,7 @@ namespace Umbraco.Community.Contentment
 
             internal const string ManifestNamePrefix = $"[{ProjectName}] ";
 
-            internal const string ImportMapAlias = $"@umbraco-community/{ProjectAlias}";
+            internal const string ImportMapAlias = $"@leekelleher/umbraco-{ProjectAlias}";
 
             public const string RepositoryUrl = "https://github.com/leekelleher/umbraco-contentment";
         }
