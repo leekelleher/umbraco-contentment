@@ -1,0 +1,23 @@
+@inherits UmbracoViewPage
+@{
+    Layout = "_layout.cshtml";
+
+    var properties = Model.Properties;
+}
+
+@section body
+{
+    <h1>@Model.Name</h1>
+    @if (properties?.Any() == true)
+    {
+        <h3>@nameof(Model.Properties)</h3>
+        @foreach (var property in properties)
+        {
+            <div>
+                <h4>@property.Alias</h4>
+                <div><code>@property.PropertyType.ClrType</code></div>
+                <pre><code>@property.GetSourceValue()</code></pre>
+            </div>
+        }
+    }
+}
