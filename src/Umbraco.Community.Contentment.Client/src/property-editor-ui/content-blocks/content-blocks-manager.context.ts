@@ -16,19 +16,11 @@ export class ContentmentContentBlocksManagerContext<
 > extends UmbBlockManagerContext<UmbBlockListTypeModel, BlockLayoutType, UmbBlockListWorkspaceOriginData> {
 	readonly IS_CONTENTMENT = true;
 
-	/** @deprecated Use `createWithPresets`. */
-	override create(
-		_contentElementTypeKey: string,
-		_partialLayoutEntry?: Omit<BlockLayoutType, 'contentKey'> | undefined,
-		_originData?: UmbBlockWorkspaceOriginData | undefined,
-	): never {
-		throw new Error('Method not implemented.');
-	}
-
 	override async createWithPresets(
 		contentElementTypeKey: string,
 		partialLayoutEntry?: Omit<BlockLayoutType, 'contentKey'> | undefined,
-		_originData?: UmbBlockWorkspaceOriginData | undefined,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		_originData?: UmbBlockWorkspaceOriginData | undefined
 	): Promise<UmbBlockDataObjectModel<BlockLayoutType> | undefined> {
 		return await super._createBlockData(contentElementTypeKey, partialLayoutEntry);
 	}

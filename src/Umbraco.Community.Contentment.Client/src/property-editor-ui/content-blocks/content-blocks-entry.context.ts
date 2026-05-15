@@ -13,7 +13,7 @@ export class ContentmentContentBlocksEntryContext extends UmbBlockEntryContext<
 > {
 	readonly IS_CONTENTMENT = true;
 
-	readonly actionsVisibility = new UmbBooleanState(true).asObservable();
+	override readonly actionsVisibility = new UmbBooleanState(true).asObservable();
 	public readonly showContentEdit = new UmbBooleanState(true).asObservable();
 
 	constructor(host: UmbControllerHost) {

@@ -50,7 +50,7 @@ export default class ContentmentIconPickerElement extends UmbLitElement {
 					// so it should fall through to `defaultIcon` the same as `null`/`undefined`.
 					this.value || this.defaultIcon,
 					(icon) => html`<umb-icon name=${icon}></umb-icon>`,
-					() => html`<uui-icon name="add" style="--uui-icon-color: var(--uui-color-disabled-contrast);"></uui-icon>`
+					() => html`<uui-icon name="add" style="--uui-icon-color: var(--uui-color-disabled-contrast);"></uui-icon>`,
 				)}
 			</uui-button>
 		`;

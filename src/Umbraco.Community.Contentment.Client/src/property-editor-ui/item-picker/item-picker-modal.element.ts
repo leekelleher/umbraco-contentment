@@ -98,7 +98,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 	}
 
 	#onInput(event: UUIInputEvent) {
-		this.#debouncedFilter(event.target.value);
+		this.#debouncedFilter(event.target.value as string);
 	}
 
 	override render() {
