@@ -162,7 +162,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 				${repeat(
 					this.value,
 					(item, index) => item.value + index,
-					(item, index) => this.#renderItem(item, index)
+					(item, index) => this.#renderItem(item, index),
 				)}
 			</contentment-sortable-list>
 		`;
@@ -182,7 +182,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 							.value=${item.icon}
 							@change=${(event: UmbIconPickerChangeEvent) => this.#onChangeIcon(event, index)}>
 						</contentment-icon-picker>
-					`
+					`,
 				)}
 				<div class="inputs">
 					<div>
@@ -208,7 +208,7 @@ export class ContentmentPropertyEditorUIListItemsElement extends UmbLitElement i
 									placeholder=${this.localize.term('placeholders_enterDescription')}
 									@change=${(e: UUIInputEvent) => this.#onChangeDescription(e, index)}></uui-input>
 							</div>
-						`
+						`,
 					)}
 				</div>
 			</contentment-sortable-list-item>

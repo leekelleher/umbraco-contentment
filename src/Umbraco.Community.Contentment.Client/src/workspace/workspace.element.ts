@@ -98,7 +98,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 								<uui-ref-node .name=${item.name} .detail=${item.description} .href=${item.url} target="_blank">
 									<umb-icon slot="icon" name=${item.icon}></umb-icon>
 								</uui-ref-node>
-							`
+							`,
 						)}
 					</uui-ref-list>
 				</div>
@@ -135,7 +135,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 									><strong>find a code snippet</strong> on the telemetry documentation page</a
 								>.
 							</p>
-						`
+						`,
 					)}
 
 					<hr />

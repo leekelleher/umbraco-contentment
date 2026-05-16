@@ -32,7 +32,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 
 	@property()
 	public override set value(value: string | undefined) {
-		super.value = Array.isArray(value) === true ? value[0] : value ?? '';
+		super.value = Array.isArray(value) === true ? value[0] : (value ?? '');
 	}
 	public override get value(): string | undefined {
 		return super.value;
@@ -78,7 +78,8 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 		this.addValidator(
 			'valueMissing',
 			() => this.mandatoryMessage ?? UMB_VALIDATION_EMPTY_LOCALIZATION_KEY,
-			() => !this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === '')
+			() =>
+				!this.readonly && !!this.mandatory && (this.value === undefined || this.value === null || this.value === ''),
 		);
 	}
 
@@ -104,7 +105,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 				${repeat(
 					this._items,
 					(item) => item.value,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</uui-radio-group>
 		`;
@@ -119,7 +120,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(
 							this._showDescriptions && item.description,
-							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`
+							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`,
 						)}
 					</uui-form-layout-item>
 				</div>

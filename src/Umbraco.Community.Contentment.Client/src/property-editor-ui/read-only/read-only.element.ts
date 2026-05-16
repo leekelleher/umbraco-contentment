@@ -38,23 +38,21 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 			<contentment-info-box type="warning" icon="icon-alert" headline="This property editor is in read-only mode.">
 				${when(
 					this.#value,
-					() =>
-						html`
-							<details>
-								<summary>Value</summary>
-								<umb-code-block copy>${this.#value}</umb-code-block>
-							</details>
-						`
+					() => html`
+						<details>
+							<summary>Value</summary>
+							<umb-code-block copy>${this.#value}</umb-code-block>
+						</details>
+					`,
 				)}
 				${when(
 					this.#config,
-					() =>
-						html`
-							<details>
-								<summary>Configuration</summary>
-								<umb-code-block copy>${this.#config}</umb-code-block>
-							</details>
-						`
+					() => html`
+						<details>
+							<summary>Configuration</summary>
+							<umb-code-block copy>${this.#config}</umb-code-block>
+						</details>
+					`,
 				)}
 			</contentment-info-box>
 		`;

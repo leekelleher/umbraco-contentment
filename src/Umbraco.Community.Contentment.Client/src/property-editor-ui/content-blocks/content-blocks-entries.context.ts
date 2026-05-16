@@ -55,14 +55,14 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 					const created = await this.create(
 						value.create.contentElementTypeKey,
 						{},
-						data.originData as ContentmentContentBlocksWorkspaceOriginData
+						data.originData as ContentmentContentBlocksWorkspaceOriginData,
 					);
 					if (created) {
 						this.insert(
 							created.layout,
 							created.content,
 							created.settings,
-							data.originData as ContentmentContentBlocksWorkspaceOriginData
+							data.originData as ContentmentContentBlocksWorkspaceOriginData,
 						);
 					} else {
 						throw new Error('Failed to create block');
@@ -109,7 +109,7 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 	override async create(
 		contentElementTypeKey: string,
 		layoutEntry?: Omit<UmbBlockLayoutBaseModel, 'contentKey'> | undefined,
-		originData?: UmbBlockWorkspaceOriginData | undefined
+		originData?: UmbBlockWorkspaceOriginData | undefined,
 	): Promise<UmbBlockDataObjectModel<UmbBlockLayoutBaseModel> | undefined> {
 		await this._retrieveManager;
 		return await this._manager?.createWithPresets(contentElementTypeKey, layoutEntry, originData);
@@ -119,7 +119,7 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 		layoutEntry: UmbBlockLayoutBaseModel,
 		content: UmbBlockDataModel,
 		settings: UmbBlockDataModel | undefined,
-		originData: ContentmentContentBlocksWorkspaceOriginData
+		originData: ContentmentContentBlocksWorkspaceOriginData,
 	): Promise<boolean> {
 		await this._retrieveManager;
 		return this._manager?.insert(layoutEntry, content, settings, originData) ?? false;
@@ -127,7 +127,7 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 
 	protected override async _insertFromPropertyValue(
 		value: UmbBlockListValueModel,
-		originData: UmbBlockListWorkspaceOriginData
+		originData: UmbBlockListWorkspaceOriginData,
 	): Promise<UmbBlockListWorkspaceOriginData> {
 		const layoutEntries = value.layout[UMB_BLOCK_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS];
 		if (!layoutEntries) {
@@ -140,7 +140,7 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 				if (originData.index !== -1) {
 					originData = { ...originData, index: originData.index + 1 };
 				}
-			})
+			}),
 		);
 
 		return originData;
@@ -150,5 +150,5 @@ export class ContentmentContentBlocksEntriesContext extends UmbBlockEntriesConte
 export const CONTENTMENT_CONTENT_BLOCKS_ENTRIES_CONTEXT = new UmbContextToken<ContentmentContentBlocksEntriesContext>(
 	'UmbBlockEntriesContext',
 	undefined,
-	(context): context is ContentmentContentBlocksEntriesContext => context.IS_CONTENTMENT
+	(context): context is ContentmentContentBlocksEntriesContext => context.IS_CONTENTMENT,
 );

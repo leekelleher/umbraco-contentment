@@ -65,7 +65,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 				this.#pathAddendum.setAddendum(alias);
 				this.#propertyTypeBasedPropertyContext.setDataType({ unique: alias });
 			},
-			null
+			null,
 		);
 	}
 
@@ -75,7 +75,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 
 		if (this._element !== target) {
 			console.error(
-				"Property Editor received a Change Event who's target is not the Property Editor Element. Do not make bubble and composed change events."
+				"Property Editor received a Change Event who's target is not the Property Editor Element. Do not make bubble and composed change events.",
 			);
 			return;
 		}
@@ -97,7 +97,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 					}
 					this._gotEditorUI(manifest);
 				},
-				'_observePropertyEditorUI'
+				'_observePropertyEditorUI',
 			);
 		}
 	}
@@ -121,7 +121,10 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 			this.#configObserver?.destroy();
 			oldElement?.removeEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
 			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
-			oldElement?.removeEventListener('property-value-change', this._onPropertyEditorChange as unknown as EventListener);
+			oldElement?.removeEventListener(
+				'property-value-change',
+				this._onPropertyEditorChange as unknown as EventListener,
+			);
 			oldElement?.destroy?.();
 
 			this._element = el as ManifestPropertyEditorUi['ELEMENT_TYPE'];
@@ -131,7 +134,10 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 			if (this._element) {
 				this._element.addEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
 				/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
-				this._element.addEventListener('property-value-change', this._onPropertyEditorChange as unknown as EventListener);
+				this._element.addEventListener(
+					'property-value-change',
+					this._onPropertyEditorChange as unknown as EventListener,
+				);
 				// No need to observe mandatory or label, as we already do so and set it on the _element if present: [NL]
 				this._element.manifest = manifest;
 
@@ -142,7 +148,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 						// Set the value on the element:
 						this._element!.value = value;
 					},
-					null
+					null,
 				);
 				this.#configObserver = this.observe(
 					this.#propertyContext.config,
@@ -151,7 +157,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 							this._element!.config = config;
 						}
 					},
-					null
+					null,
 				);
 
 				this._element.readonly = this._isReadOnly;
@@ -174,7 +180,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 			umbExtensionsRegistry,
 			'propertyContext',
 			[],
-			(manifest) => manifest.forPropertyEditorUis.includes(propertyEditorUiManifest.alias)
+			(manifest) => manifest.forPropertyEditorUis.includes(propertyEditorUiManifest.alias),
 		);
 	}
 
@@ -182,7 +188,10 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 		super.disconnectedCallback();
 		this._element?.removeEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
 		/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
-		this._element?.removeEventListener('property-value-change', this._onPropertyEditorChange as unknown as EventListener);
+		this._element?.removeEventListener(
+			'property-value-change',
+			this._onPropertyEditorChange as unknown as EventListener,
+		);
 	}
 
 	override render() {

@@ -113,11 +113,11 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 						${repeat(
 							options,
 							(option) => option.value,
-							(option) => this.#renderItem(option)
+							(option) => this.#renderItem(option),
 						)}
 					</uui-combobox-list>
 				</uui-combobox>
-			`
+			`,
 		)}`;
 	}
 

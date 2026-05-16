@@ -125,7 +125,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		const getItemValue = (
 			item: ContentmentConfigurationEditorValue,
 			model: ContentmentConfigurationEditorModel,
-			key: string
+			key: string,
 		) => {
 			const expression = model.expressions?.[key];
 			if (expression) {

@@ -77,7 +77,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 				${repeat(
 					this._items,
 					(item) => item.value,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</div>
 		`;

@@ -38,7 +38,7 @@ export class ContentmentPropertyEditorUIContentBlockTypeConfigurationElement ext
 					},
 				],
 				overlaySize: 'medium',
-			})
+			}),
 		);
 
 		this.populateModelLookup();

@@ -65,7 +65,7 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 				${repeat(
 					this._items,
 					(item) => item.unique,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</uui-ref-list>
 		`;

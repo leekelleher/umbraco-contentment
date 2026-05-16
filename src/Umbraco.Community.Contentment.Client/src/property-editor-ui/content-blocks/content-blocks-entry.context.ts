@@ -30,5 +30,5 @@ export class ContentmentContentBlocksEntryContext extends UmbBlockEntryContext<
 export const CONTENTMENT_CONTENT_BLOCKS_ENTRY_CONTEXT = new UmbContextToken<ContentmentContentBlocksEntryContext>(
 	'UmbBlockEntryContext',
 	undefined,
-	(context): context is ContentmentContentBlocksEntryContext => context.IS_CONTENTMENT
+	(context): context is ContentmentContentBlocksEntryContext => context.IS_CONTENTMENT,
 );
