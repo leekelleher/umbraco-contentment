@@ -4,7 +4,6 @@
 import { createExtensionApi } from '@umbraco-cms/backoffice/extension-api';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { UmbRepositoryBase } from '@umbraco-cms/backoffice/repository';
@@ -104,18 +103,14 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 	}
 
 	public async getItemsByUrl(url: string): Promise<ContentmentListItem[]> {
-		const { data, error } = await tryExecute(
-			this,
-			// NOTE: The security needs to be set for the request, otherwise it returns a 401 unauthorized error! [LK]
-			umbHttpClient.get({ security: [{ scheme: 'bearer', type: 'http' }], url }),
-		);
+		const { data, error } = await tryExecute(this, DataListService.getItemsByUrl<ContentmentListItem>(url));
 
 		if (error) {
 			console.error('Error fetching data list items:', error);
 			return [];
 		}
 
-		return data as Array<ContentmentListItem>;
+		return data ?? [];
 	}
 }
 

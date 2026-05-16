@@ -76,6 +76,18 @@ export class DataListService {
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
 		});
 	}
+
+	/**
+	 * Fetch items from an arbitrary URL — used by data sources that point at a custom server endpoint.
+	 * The response shape is caller-determined; pass the expected item type as the generic parameter.
+	 * Note: `security` is required, otherwise the request returns 401 unauthorized.
+	 */
+	public static getItemsByUrl<T = unknown>(url: string) {
+		return umbHttpClient.get<Array<T>>({
+			security: bearerSecurity,
+			url,
+		});
+	}
 }
 
 export class DataPickerService {
@@ -126,9 +138,7 @@ export class DataService {
 		});
 	}
 
-	public static getEnumsData<ThrowOnError extends boolean = true>(
-		options?: Options<GetEnumsDataData, ThrowOnError>,
-	) {
+	public static getEnumsData<ThrowOnError extends boolean = true>(options?: Options<GetEnumsDataData, ThrowOnError>) {
 		return umbHttpClient.get<GetEnumsDataResponse, GetEnumsDataError, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data/enums',
