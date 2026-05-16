@@ -5,7 +5,7 @@ import { createExtensionApi } from '@umbraco-cms/backoffice/extension-api';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
-import { DataListService } from '../../api/sdk.gen.js';
+import { DataListService } from '../../api/index.js';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 import { UmbRepositoryBase } from '@umbraco-cms/backoffice/repository';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../../property-editor-ui/types.js';

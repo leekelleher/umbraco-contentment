@@ -2,7 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { DataPickerService } from '../../api/sdk.gen.js';
+import { DataPickerService } from '../../api/index.js';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';

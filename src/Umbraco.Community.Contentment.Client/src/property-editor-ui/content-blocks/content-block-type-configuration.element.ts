@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { ContentBlocksService } from '../../api/sdk.gen.js';
+import { ContentBlocksService } from '../../api/index.js';
 import { customElement } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';

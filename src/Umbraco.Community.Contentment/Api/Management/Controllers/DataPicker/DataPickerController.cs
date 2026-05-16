@@ -4,7 +4,6 @@
 using System.Text.Json.Nodes;
 using System.Web;
 using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
 using Umbraco.Cms.Core.Models;
@@ -14,7 +13,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
-[ApiExplorerSettings(GroupName = "Data Picker")]
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("data-picker")]
 public class DataPickerController : ContentmentControllerBase
@@ -34,8 +32,6 @@ public class DataPickerController : ContentmentControllerBase
 
     [HttpPost("editor", Name = "PostDataPickerEditor")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(DataPickerEditorResponseModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEditor(DataPickerEditorRequestModel model)
     {
         SetCurrentContentContextValues(model.Id, model.ParentId, model.Variant, model.Alias, model.IsNew);
@@ -101,8 +97,6 @@ public class DataPickerController : ContentmentControllerBase
     [Obsolete("Please call the `Search` endpoint using a POST method. This method will be removed in Contentment 8.0.")]
     [HttpGet("search", Name = "GetDataPickerSearch")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Search(
         string id,
         Guid dataTypeKey,
@@ -115,8 +109,6 @@ public class DataPickerController : ContentmentControllerBase
 
     [HttpPost("search", Name = "PostDataPickerSearch")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(PagedModel<DataListItem>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Search(
         string id,
         Guid dataTypeKey,
