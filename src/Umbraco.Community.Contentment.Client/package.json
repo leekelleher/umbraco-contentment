@@ -41,7 +41,6 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.1",
-		"@hey-api/client-fetch": "^0.10.2",
 		"@types/sortablejs": "^1.15.9",
 		"eslint": "^9.25.1",
 		"eslint-config-prettier": "^10.1.2",
