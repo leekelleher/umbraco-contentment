@@ -3,7 +3,6 @@
 
 using System.Reflection;
 using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Community.Contentment.DataEditors;
@@ -11,7 +10,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
-[ApiExplorerSettings(GroupName = "Data")]
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("data")]
 public sealed class AssemblyEnumController : ContentmentControllerBase
@@ -28,8 +26,6 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
 
     [HttpGet("assemblies", Name = "GetAssembliesData")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(IEnumerable<DataListItem>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAssemblies()
     {
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
@@ -86,8 +82,6 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
 
     [HttpGet("enums", Name = "GetEnumsData")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(IEnumerable<DataListItem>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEnums(string assembly)
     {
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯

@@ -2,14 +2,12 @@
 // Copyright © 2024 Lee Kelleher
 
 using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
 using Umbraco.Community.Contentment.DataEditors;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
-[ApiExplorerSettings(GroupName = "Data List")]
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("data-list")]
 public class DataListController : ContentmentControllerBase
@@ -23,8 +21,6 @@ public class DataListController : ContentmentControllerBase
 
     [HttpPost("editor", Name = "PostDataListEditor")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(DataListEditorResponseModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEditor(DataListConfigurationRequestModel model)
     {
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
