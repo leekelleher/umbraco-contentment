@@ -5,7 +5,6 @@ import { parseBoolean, parseInt } from '../../utils/index.js';
 import { DataPickerService } from '../../api/index.js';
 import { customElement, html, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
@@ -142,7 +141,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 			variant: this._variantId,
 		};
 
-		const { data } = await tryExecute(this, DataPickerService.postDataPickerEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataPickerService.postDataPickerEditor({ body }));
 
 		if (!data) return;
 

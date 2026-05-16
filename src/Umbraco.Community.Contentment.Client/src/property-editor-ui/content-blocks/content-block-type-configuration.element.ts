@@ -4,7 +4,6 @@
 import { ContentBlocksService } from '../../api/index.js';
 import { customElement } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { ContentmentPropertyEditorUIConfigurationEditorElement } from '../configuration-editor/configuration-editor.element.js';
 import type { ContentmentConfigurationEditorModel } from '../types.js';
 
@@ -13,7 +12,7 @@ export class ContentmentPropertyEditorUIContentBlockTypeConfigurationElement ext
 	protected override async getModels() {
 		if (this.models) return;
 
-		const { data } = await tryExecute(this, ContentBlocksService.getElementTypes({ client: umbHttpClient }));
+		const { data } = await tryExecute(this, ContentBlocksService.getElementTypes());
 		if (!data) return;
 
 		this.models = data.map(

@@ -14,7 +14,6 @@ import {
 import { debounce } from '@umbraco-cms/backoffice/utils';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { umbFocus } from '@umbraco-cms/backoffice/lit-element';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataPickerService } from '../../api/index.js';
 import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
 import {
@@ -176,10 +175,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			variant: this._variantId,
 		};
 
-		const { data } = await tryExecute(
-			this,
-			DataPickerService.postDataPickerSearch({ client: umbHttpClient, query, body }),
-		);
+		const { data } = await tryExecute(this, DataPickerService.postDataPickerSearch({ query, body }));
 
 		this._items =
 			data?.items.map((item) => ({

@@ -90,7 +90,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 			variant: args.variantId,
 		};
 
-		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));
 
 		if (data?.propertyEditorUiAlias) {
 			propertyEditorUiAlias = data.propertyEditorUiAlias;
