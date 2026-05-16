@@ -3,8 +3,7 @@
 
 import { css, customElement, html, nothing, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
-import { MetaService } from '../api/sdk.gen.js';
+import { MetaService } from '../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
@@ -59,7 +58,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 	private _version?: string;
 
 	protected override async firstUpdated() {
-		const { data } = await tryExecute(this, MetaService.getConfiguration({ client: umbHttpClient }));
+		const { data } = await tryExecute(this, MetaService.getConfiguration());
 		if (data) {
 			this._headline = data.name || 'Contentment';
 			this._version = data.version || '0.0.0';
@@ -98,7 +97,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 								<uui-ref-node .name=${item.name} .detail=${item.description} .href=${item.url} target="_blank">
 									<umb-icon slot="icon" name=${item.icon}></umb-icon>
 								</uui-ref-node>
-							`
+							`,
 						)}
 					</uui-ref-list>
 				</div>
@@ -135,7 +134,7 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 									><strong>find a code snippet</strong> on the telemetry documentation page</a
 								>.
 							</p>
-						`
+						`,
 					)}
 
 					<hr />

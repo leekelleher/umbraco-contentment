@@ -30,8 +30,7 @@
 	"scripts": {
 		"dev": "tsc && vite build --watch",
 		"build": "tsc && vite build && tsc --project tsconfig.types.json",
-		"generate:types": "tsc --project tsconfig.types.json",
-		"generate:server-api": "openapi-ts --file openapi-ts.config.js"
+		"generate:types": "tsc --project tsconfig.types.json"
 	},
 	"dependencies": {
 		"liquidjs": "^10.26.0",
@@ -42,7 +41,6 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.1",
-		"@hey-api/openapi-ts": "^0.97.0",
 		"@types/sortablejs": "^1.15.9",
 		"eslint": "^9.25.1",
 		"eslint-config-prettier": "^10.1.2",

@@ -92,7 +92,7 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 						console.error(`Failed to find manifest for Contentment Data List Item UI alias: ${this.#component}`);
 					}
 				},
-				'_observeComponent'
+				'_observeComponent',
 			);
 		}
 	}
@@ -157,7 +157,7 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 				${repeat(
 					this._items,
 					(item) => item.value,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</ul>
 		`;

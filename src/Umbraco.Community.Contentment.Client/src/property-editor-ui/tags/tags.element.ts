@@ -160,7 +160,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 				${repeat(
 					this.value,
 					(value) => value,
-					(value, index) => this.#renderTag(value, index)
+					(value, index) => this.#renderTag(value, index),
 				)}
 			</div>
 		`;
@@ -186,7 +186,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 							@click=${() => this.#onRemove(item, index)}>
 							<umb-icon name="icon-trash"></umb-icon>
 						</uui-button>
-					`
+					`,
 				)}
 			</div>
 		`;
@@ -199,11 +199,11 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 				${when(this._loading, () => html`<uui-loader id="loader"></uui-loader>`)}
 				${when(
 					!this._loading && !this._query,
-					() => html`<div class="info">${this.localize.term('placeholders_search')}</div>`
+					() => html`<div class="info">${this.localize.term('placeholders_search')}</div>`,
 				)}
 				${when(
 					!this._loading && this._query && this._options.length === 0,
-					() => html`<div class="info">${this.localize.term('general_searchNoResult')}</div>`
+					() => html`<div class="info">${this.localize.term('general_searchNoResult')}</div>`,
 				)}
 				${when(
 					!this._loading && this._options?.length,
@@ -212,10 +212,10 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 							${repeat(
 								this._options,
 								(option) => option.value,
-								(option) => this.#renderOption(option)
+								(option) => this.#renderOption(option),
 							)}
 						</uui-combobox-list>
-					`
+					`,
 				)}
 			</uui-combobox>
 		`;
@@ -238,7 +238,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 								<span slot="description">${unsafeHTML(option.description)}</span>
 							</uui-form-layout-item>
 						`,
-						() => html`<span>${this.localize.string(option.name)}</span>`
+						() => html`<span>${this.localize.string(option.name)}</span>`,
 					)}
 				</div>
 			</uui-combobox-list-option>

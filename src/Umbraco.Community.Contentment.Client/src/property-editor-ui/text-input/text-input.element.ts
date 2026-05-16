@@ -13,7 +13,6 @@ import {
 } from '@umbraco-cms/backoffice/external/lit';
 import { parseBoolean, parseInt } from '../../utils/index.js';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -78,7 +77,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 
 		const body = { dataSource: this._dataSource, listEditor: null };
 
-		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));
 
 		if (!data) return;
 

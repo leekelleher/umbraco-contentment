@@ -31,7 +31,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this._contentInvalid = hasMessages;
 				this._blockViewProps.contentInvalid = hasMessages;
 			},
-			'observeMessagesForContent'
+			'observeMessagesForContent',
 		);
 	}
 	public get contentKey(): string | undefined {
@@ -98,7 +98,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this._showContentEdit = showContentEdit;
 				this.#updateBlockViewProps({ config: { ...this._blockViewProps.config!, showContentEdit } });
 			},
-			null
+			null,
 		);
 
 		this.observe(
@@ -106,7 +106,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 			(blockType) => {
 				this.#updateBlockViewProps({ blockType });
 			},
-			null
+			null,
 		);
 
 		this.observe(this.#context.index, (index) => this.#updateBlockViewProps({ index }), null);
@@ -117,7 +117,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this.#updateBlockViewProps({ label });
 				this._label = label;
 			},
-			null
+			null,
 		);
 
 		this.observe(
@@ -126,7 +126,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this.#updateBlockViewProps({ icon });
 				this._icon = icon;
 			},
-			null
+			null,
 		);
 
 		this.observe(
@@ -135,7 +135,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this.#updateBlockViewProps({ unpublished: !exposed });
 				this._exposed = exposed;
 			},
-			null
+			null,
 		);
 
 		this.observe(
@@ -146,7 +146,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this._unsupported = unsupported;
 				this.toggleAttribute('unsupported', unsupported);
 			},
-			null
+			null,
 		);
 
 		this.observe(
@@ -154,7 +154,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 			(showActions) => {
 				this._showActions = showActions;
 			},
-			null
+			null,
 		);
 
 		// Data props:
@@ -163,7 +163,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 			(layout) => {
 				this.#updateBlockViewProps({ layout });
 			},
-			null
+			null,
 		);
 
 		this.#observeData();
@@ -174,12 +174,12 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				this._workspaceEditContentPath = path;
 				this.#updateBlockViewProps({ config: { ...this._blockViewProps.config!, editContentPath: path } });
 			},
-			null
+			null,
 		);
 		this.observe(
 			this.#context.readOnlyGuard.permitted,
 			(isReadOnly) => (this._isReadOnly = isReadOnly),
-			'umbReadOnlyObserver'
+			'umbReadOnlyObserver',
 		);
 	}
 
@@ -189,7 +189,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 			(content) => {
 				this.#updateBlockViewProps({ content });
 			},
-			null
+			null,
 		);
 	}
 
@@ -203,7 +203,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 					this.setAttribute('data-content-element-type-key', contentElementTypeKey);
 				}
 			},
-			'contentElementTypeKey'
+			'contentElementTypeKey',
 		);
 		this.observe(
 			this.#context.contentElementTypeAlias,
@@ -213,14 +213,14 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 					this.setAttribute('data-content-element-type-alias', contentElementTypeAlias);
 				}
 			},
-			'contentElementTypeAlias'
+			'contentElementTypeAlias',
 		);
 		this.observe(
 			this.#context.contentElementTypeName,
 			(contentElementTypeName) => {
 				this._contentTypeName = contentElementTypeName;
 			},
-			'contentElementTypeName'
+			'contentElementTypeName',
 		);
 	}
 
@@ -263,7 +263,7 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 				${this.#renderBuiltinBlockView()} ${this.#renderActionBar()}
 				${when(
 					!this._showContentEdit && this._contentInvalid,
-					() => html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
+					() => html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`,
 				)}
 			</div>
 		`;
@@ -286,20 +286,20 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 							name=${this._exposed === false && this._isReadOnly === false ? 'icon-add' : 'icon-edit'}></uui-icon>
 						${when(
 							this._contentInvalid,
-							() => html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
+							() => html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`,
 						)}
 					</uui-button>
-			  `
+				`
 			: this._showContentEdit === false && this._exposed === false
-			? html`
-					<uui-button
-						@click=${this.#expose}
-						label=${this.localize.term('blockEditor_createThisFor', this._contentTypeName)}
-						look="secondary">
-						<uui-icon name="icon-add"></uui-icon>
-					</uui-button>
-			  `
-			: nothing;
+				? html`
+						<uui-button
+							@click=${this.#expose}
+							label=${this.localize.term('blockEditor_createThisFor', this._contentTypeName)}
+							look="secondary">
+							<uui-icon name="icon-add"></uui-icon>
+						</uui-button>
+					`
+				: nothing;
 	}
 
 	#renderDeleteAction() {
@@ -379,7 +379,9 @@ export class ContentmentContentBlocksEntryElement extends UmbLitElement implemen
 			:host(:hover):not(:drop)::after {
 				display: block;
 				border-color: var(--uui-color-interactive-emphasis);
-				box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+				box-shadow:
+					0 0 0 1px rgba(255, 255, 255, 0.7),
+					inset 0 0 0 1px rgba(255, 255, 255, 0.7);
 			}
 
 			:host([drag-placeholder])::after {

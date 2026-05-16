@@ -36,12 +36,12 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 			this.observe(
 				await context?.propertyValueByAlias<string>('heading'),
 				(heading) => (this._heading = heading),
-				'_observeHeading'
+				'_observeHeading',
 			);
 			this.observe(
 				await context?.propertyValueByAlias('message'),
 				(message) => (this._message = (message as any)?.markup ?? message),
-				'_observeMessage'
+				'_observeMessage',
 			);
 		});
 	}
@@ -57,7 +57,7 @@ export class ContentmentPropertyEditorUIEditorNoteStylesElement
 				${repeat(
 					this.#items,
 					(item) => item,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</ul>
 		`;

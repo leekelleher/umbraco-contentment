@@ -63,7 +63,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			${repeat(
 				this.items,
 				(item) => item.value,
-				(item, index) => this.#renderItem(item, index)
+				(item, index) => this.#renderItem(item, index),
 			)}
 		`;
 	}
@@ -81,7 +81,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 				${when(
 					item.image,
 					() => html`<img src=${item.image!} alt="" />`,
-					() => html`<umb-icon name=${item.icon ?? this.#defaultIcon} style=${styleMap(iconStyle)}></umb-icon>`
+					() => html`<umb-icon name=${item.icon ?? this.#defaultIcon} style=${styleMap(iconStyle)}></umb-icon>`,
 				)}
 				${when(
 					this.allowEdit || this.allowRemove,
@@ -96,7 +96,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 										@click=${(event: Event) => this.#onEdit(event, item, index)}>
 										<uui-icon name="icon-edit"></uui-icon>
 									</uui-button>
-								`
+								`,
 							)}
 							${when(
 								this.allowRemove,
@@ -107,10 +107,10 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 										@click=${(event: Event) => this.#onRemove(event, item, index)}>
 										<uui-icon name="icon-trash"></uui-icon>
 									</uui-button>
-								`
+								`,
 							)}
 						</uui-action-bar>
-					`
+					`,
 				)}
 			</uui-card-media>
 		`;

@@ -2,7 +2,6 @@
 // Copyright © 2025 Lee Kelleher
 
 using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.DataEditors;
@@ -10,7 +9,6 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
-[ApiExplorerSettings(GroupName = "Content Blocks")]
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("content-blocks")]
 public class ContentBlocksController : ContentmentControllerBase
@@ -24,8 +22,6 @@ public class ContentBlocksController : ContentmentControllerBase
 
     [HttpGet("element-types", Name = "GetElementTypes")]
     [MapToApiVersion("1.0")]
-    [ProducesResponseType(typeof(List<DataListItem>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetElementTypes()
     {
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯

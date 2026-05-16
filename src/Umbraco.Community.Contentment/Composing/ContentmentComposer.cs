@@ -4,8 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.Extensions.DependencyInjection;
-using Umbraco.Cms.Api.Common.OpenApi;
-using Umbraco.Cms.Api.Management.OpenApi;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
@@ -27,20 +25,6 @@ public sealed class ContentmentComposer : IComposer
                 .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
                 .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
         ;
-
-        builder.AddBackOfficeOpenApiDocument(
-            Constants.Internals.ProjectAlias,
-            document => document
-            .WithTitle($"{Constants.Internals.ProjectName} Management API")
-            .WithBackOfficeAuthentication()
-            .ConfigureOpenApiOptions(options =>
-            {
-                options.AddDocumentTransformer((doc, _, _) =>
-                {
-                    doc.Info.Version = "Latest";
-                    return Task.CompletedTask;
-                });
-            }));
 
         builder
             .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()

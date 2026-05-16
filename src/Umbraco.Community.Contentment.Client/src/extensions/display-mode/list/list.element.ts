@@ -67,7 +67,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 				${repeat(
 					this.items,
 					(item) => item.value,
-					(item, index) => this.#renderItem(item, index)
+					(item, index) => this.#renderItem(item, index),
 				)}
 			</contentment-sortable-list>
 		`;
@@ -84,7 +84,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 				${when(
 					item.description,
 					(detail) =>
-						html`<umb-ufm-render slot="detail" inline .markdown=${detail} .value=${item.data}></umb-ufm-render>`
+						html`<umb-ufm-render slot="detail" inline .markdown=${detail} .value=${item.data}></umb-ufm-render>`,
 				)}
 				${when(
 					this.allowEdit || this.allowRemove,
@@ -96,7 +96,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 									<uui-button
 										label=${this.localize.term('general_edit')}
 										@click=${(event: Event) => this.#onEdit(event, item, index)}></uui-button>
-								`
+								`,
 							)}
 							${when(
 								this.allowRemove,
@@ -104,10 +104,10 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 									<uui-button
 										label=${this.localize.term('general_remove')}
 										@click=${(event: Event) => this.#onRemove(event, item, index)}></uui-button>
-								`
+								`,
 							)}
 						</uui-action-bar>
-					`
+					`,
 				)}
 			</uui-ref-node>
 		`;

@@ -8,7 +8,7 @@ const modals: Array<UmbExtensionManifest> = [
 		name: '[Contentment] Configuration Editor Selection Modal',
 		element: () => import('./configuration-editor-selection-modal.element.js'),
 	},
-  {
+	{
 		type: 'modal',
 		alias: 'Umb.Contentment.Modal.ConfigurationEditor.Workspace',
 		name: '[Contentment] Configuration Editor Workspace Modal',

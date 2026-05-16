@@ -13,7 +13,7 @@ export class ContentmentPropertyConfigFlagCondition
 {
 	constructor(
 		host: UmbControllerHost,
-		args: UmbConditionControllerArguments<ContentmentPropertyConfigFlagConditionConfig>
+		args: UmbConditionControllerArguments<ContentmentPropertyConfigFlagConditionConfig>,
 	) {
 		super(host, args);
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {

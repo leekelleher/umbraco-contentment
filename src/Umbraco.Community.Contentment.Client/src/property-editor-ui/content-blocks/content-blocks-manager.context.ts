@@ -19,8 +19,8 @@ export class ContentmentContentBlocksManagerContext<
 	override async createWithPresets(
 		contentElementTypeKey: string,
 		partialLayoutEntry?: Omit<BlockLayoutType, 'contentKey'> | undefined,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		_originData?: UmbBlockWorkspaceOriginData | undefined
+
+		_originData?: UmbBlockWorkspaceOriginData | undefined,
 	): Promise<UmbBlockDataObjectModel<BlockLayoutType> | undefined> {
 		return await super._createBlockData(contentElementTypeKey, partialLayoutEntry);
 	}

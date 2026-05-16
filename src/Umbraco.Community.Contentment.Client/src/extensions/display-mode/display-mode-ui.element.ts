@@ -80,7 +80,7 @@ export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 						this._undefined = true;
 					}
 				},
-				'_observePropertyEditorUI'
+				'_observePropertyEditorUI',
 			);
 		}
 	}
