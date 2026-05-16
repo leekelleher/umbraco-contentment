@@ -10,34 +10,42 @@
 //
 // The `client` option is accepted on every method for back-compat (callers used to pass
 // `umbHttpClient` here) but is ignored at runtime — `umbHttpClient` is always used.
+//
+// Note: `umbHttpClient.{get,post}` here uses the bundled `@hey-api/client-fetch` shipped
+// inside `@umbraco-cms/backoffice`, whose `RequestResult` unwraps the responses record
+// via `TData extends Record<string, unknown> ? TData[keyof TData] : TData`. So we pass
+// the `*Responses` / `*Errors` records (e.g. `{ 200: DataListEditorResponseModel }`) and
+// the conditional unwraps to the value. On the v6.x branch — which resolves to the older
+// external `@hey-api/client-fetch ^0.10.2` without that conditional — the singular
+// `*Response` / `*Error` types are used instead.
 
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 
 import type {
 	GetAssembliesDataData,
-	GetAssembliesDataError,
-	GetAssembliesDataResponse,
+	GetAssembliesDataErrors,
+	GetAssembliesDataResponses,
 	GetConfigurationData,
-	GetConfigurationError,
-	GetConfigurationResponse,
+	GetConfigurationErrors,
+	GetConfigurationResponses,
 	GetDataPickerSearchData,
-	GetDataPickerSearchError,
-	GetDataPickerSearchResponse,
+	GetDataPickerSearchErrors,
+	GetDataPickerSearchResponses,
 	GetElementTypesData,
-	GetElementTypesError,
-	GetElementTypesResponse,
+	GetElementTypesErrors,
+	GetElementTypesResponses,
 	GetEnumsDataData,
-	GetEnumsDataError,
-	GetEnumsDataResponse,
+	GetEnumsDataErrors,
+	GetEnumsDataResponses,
 	PostDataListEditorData,
-	PostDataListEditorError,
-	PostDataListEditorResponse,
+	PostDataListEditorErrors,
+	PostDataListEditorResponses,
 	PostDataPickerEditorData,
-	PostDataPickerEditorError,
-	PostDataPickerEditorResponse,
+	PostDataPickerEditorErrors,
+	PostDataPickerEditorResponses,
 	PostDataPickerSearchData,
-	PostDataPickerSearchError,
-	PostDataPickerSearchResponse,
+	PostDataPickerSearchErrors,
+	PostDataPickerSearchResponses,
 } from './types.js';
 
 /**
@@ -57,7 +65,7 @@ export class ContentBlocksService {
 	public static getElementTypes<ThrowOnError extends boolean = true>(
 		options?: Options<GetElementTypesData, ThrowOnError>,
 	) {
-		return umbHttpClient.get<GetElementTypesResponse, GetElementTypesError, ThrowOnError>({
+		return umbHttpClient.get<GetElementTypesResponses, GetElementTypesErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/content-blocks/element-types',
 			headers: options?.headers,
@@ -69,7 +77,7 @@ export class DataListService {
 	public static postDataListEditor<ThrowOnError extends boolean = true>(
 		options?: Options<PostDataListEditorData, ThrowOnError>,
 	) {
-		return umbHttpClient.post<PostDataListEditorResponse, PostDataListEditorError, ThrowOnError>({
+		return umbHttpClient.post<PostDataListEditorResponses, PostDataListEditorErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data-list/editor',
 			body: options?.body,
@@ -94,7 +102,7 @@ export class DataPickerService {
 	public static postDataPickerEditor<ThrowOnError extends boolean = true>(
 		options?: Options<PostDataPickerEditorData, ThrowOnError>,
 	) {
-		return umbHttpClient.post<PostDataPickerEditorResponse, PostDataPickerEditorError, ThrowOnError>({
+		return umbHttpClient.post<PostDataPickerEditorResponses, PostDataPickerEditorErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data-picker/editor',
 			body: options?.body,
@@ -106,7 +114,7 @@ export class DataPickerService {
 	public static getDataPickerSearch<ThrowOnError extends boolean = true>(
 		options?: Options<GetDataPickerSearchData, ThrowOnError>,
 	) {
-		return umbHttpClient.get<GetDataPickerSearchResponse, GetDataPickerSearchError, ThrowOnError>({
+		return umbHttpClient.get<GetDataPickerSearchResponses, GetDataPickerSearchErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data-picker/search',
 			query: options?.query,
@@ -117,7 +125,7 @@ export class DataPickerService {
 	public static postDataPickerSearch<ThrowOnError extends boolean = true>(
 		options?: Options<PostDataPickerSearchData, ThrowOnError>,
 	) {
-		return umbHttpClient.post<PostDataPickerSearchResponse, PostDataPickerSearchError, ThrowOnError>({
+		return umbHttpClient.post<PostDataPickerSearchResponses, PostDataPickerSearchErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data-picker/search',
 			body: options?.body,
@@ -131,7 +139,7 @@ export class DataService {
 	public static getAssembliesData<ThrowOnError extends boolean = true>(
 		options?: Options<GetAssembliesDataData, ThrowOnError>,
 	) {
-		return umbHttpClient.get<GetAssembliesDataResponse, GetAssembliesDataError, ThrowOnError>({
+		return umbHttpClient.get<GetAssembliesDataResponses, GetAssembliesDataErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data/assemblies',
 			headers: options?.headers,
@@ -139,7 +147,7 @@ export class DataService {
 	}
 
 	public static getEnumsData<ThrowOnError extends boolean = true>(options?: Options<GetEnumsDataData, ThrowOnError>) {
-		return umbHttpClient.get<GetEnumsDataResponse, GetEnumsDataError, ThrowOnError>({
+		return umbHttpClient.get<GetEnumsDataResponses, GetEnumsDataErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data/enums',
 			query: options?.query,
@@ -152,7 +160,7 @@ export class MetaService {
 	public static getConfiguration<ThrowOnError extends boolean = true>(
 		options?: Options<GetConfigurationData, ThrowOnError>,
 	) {
-		return umbHttpClient.get<GetConfigurationResponse, GetConfigurationError, ThrowOnError>({
+		return umbHttpClient.get<GetConfigurationResponses, GetConfigurationErrors, ThrowOnError>({
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/meta/configuration',
 			headers: options?.headers,
