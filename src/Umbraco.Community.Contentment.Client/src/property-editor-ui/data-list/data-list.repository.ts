@@ -66,7 +66,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 		if (!args.dataSource || !args.listEditor) return;
 
 		let propertyEditorUiAlias = '';
-		let config: UmbPropertyEditorConfig = [];
+		const config: UmbPropertyEditorConfig = [];
 
 		const clientSideDataSourceManifest = this.#clientSideDataSourceLookup.get(args.dataSource.key);
 		if (clientSideDataSourceManifest) {

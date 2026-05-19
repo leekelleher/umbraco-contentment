@@ -101,11 +101,11 @@ export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement
 								${repeat(
 									fields,
 									(field) => field.key,
-									(field) => this.#renderField(field)
+									(field) => this.#renderField(field),
 								)}
 							</umb-property-dataset>
 						`,
-						() => html`<p>There are no fields for this item.</p>`
+						() => html`<p>There are no fields for this item.</p>`,
 					)}
 				</uui-box>
 				<div slot="actions">

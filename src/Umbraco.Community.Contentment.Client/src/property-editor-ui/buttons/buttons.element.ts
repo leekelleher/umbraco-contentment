@@ -112,7 +112,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				${repeat(
 					this._items,
 					(item) => item.value,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</uui-button-group>
 		`;
@@ -137,7 +137,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 				<div>
 					${when(
 						this._labelStyle !== 'text',
-						() => html`<umb-icon .name=${item.icon ?? this._defaultIcon}></umb-icon>`
+						() => html`<umb-icon .name=${item.icon ?? this._defaultIcon}></umb-icon>`,
 					)}
 					${when(this._labelStyle !== 'icon', () => html`<span>${this.localize.string(item.name)}</span>`)}
 				</div>

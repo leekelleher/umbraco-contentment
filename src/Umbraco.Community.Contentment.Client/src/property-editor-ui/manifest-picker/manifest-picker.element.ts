@@ -2,19 +2,32 @@
 // Copyright © 2024 Lee Kelleher
 
 import { parseInt } from '../../utils/index.js';
-import { css, customElement, html, nothing, property, repeat, when } from '@umbraco-cms/backoffice/external/lit';
+import {
+	css,
+	customElement,
+	html,
+	ifDefined,
+	nothing,
+	property,
+	repeat,
+	when,
+} from '@umbraco-cms/backoffice/external/lit';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';
 import { UMB_ITEM_PICKER_MODAL, UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+type UmbExtensionWithOptionalMeta = UmbExtensionManifest & {
+	meta?: { label?: string; description?: string; icon?: string };
+};
+
 @customElement('contentment-property-editor-ui-manifest-picker')
 export class ContentmentPropertyEditorUIManifestPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
-	#extensions: Array<typeof umbExtensionsRegistry.MANIFEST_TYPES> = [];
+	#extensions: Array<UmbExtensionWithOptionalMeta> = [];
 
 	#extensionType?: string;
 
@@ -41,7 +54,9 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	#observeExtensions() {
 		if (!this.#extensionType) return;
 		this.observe(umbExtensionsRegistry.byType(this.#extensionType), (extensions) => {
-			this.#extensions = extensions.sort((a, b) => a.type.localeCompare(b.type) || a.alias.localeCompare(b.alias));
+			this.#extensions = (extensions as Array<UmbExtensionWithOptionalMeta>).sort(
+				(a, b) => a.type.localeCompare(b.type) || a.alias.localeCompare(b.alias),
+			);
 		});
 	}
 
@@ -53,10 +68,10 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 				items: this.#extensions
 					.filter((ext) => ext.type === this.#extensionType)
 					.map((ext) => ({
-						label: (ext as any).meta?.label ?? ext.name,
+						label: ext.meta?.label ?? ext.name,
 						value: ext.alias,
-						description: (ext as any).meta?.description,
-						icon: (ext as any).meta?.icon,
+						description: ext.meta?.description,
+						icon: ext.meta?.icon,
 					})),
 			},
 			modal: { size: 'medium' },
@@ -70,7 +85,7 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 	}
 
 	async #removeItem(item: string, index: number) {
-		if (!item || !this.value || index == -1) return;
+		if (!item || !this.value || index === -1) return;
 
 		const tmp = [...this.value];
 		tmp.splice(index, 1);
@@ -116,18 +131,19 @@ export class ContentmentPropertyEditorUIManifestPickerElement
 				${repeat(
 					this.value,
 					(alias) => alias,
-					(alias, index) => this.#renderItem(alias, index)
+					(alias, index) => this.#renderItem(alias, index),
 				)}
 			</uui-ref-list>
 		`;
 	}
 
 	#renderItem(alias: string, index: number) {
-		const ext = this.#extensions.find((ext) => ext.alias === alias) as any;
+		const ext = this.#extensions.find((ext) => ext.alias === alias);
+		if (!ext) return nothing;
 		return html`
 			<uui-ref-node
 				name=${ext.meta?.label ?? ext.name}
-				detail=${ext.meta?.description}
+				detail=${ifDefined(ext.meta?.description)}
 				?standalone=${this.#maxItems === 1}>
 				${when(ext.meta?.icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">

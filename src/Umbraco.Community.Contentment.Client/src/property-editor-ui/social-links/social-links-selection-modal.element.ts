@@ -52,7 +52,7 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 				${repeat(
 					this.data.items,
 					(item) => item.network,
-					(item) => this.#renderItem(item)
+					(item) => this.#renderItem(item),
 				)}
 			</div>
 		`;

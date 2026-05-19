@@ -49,7 +49,7 @@ export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement 
 			${when(
 				!this.#hideClearButton && this.value,
 				() =>
-					html`<uui-button compact label=${this.localize.term('general_clear')} @click=${this.#onClear}></uui-button>`
+					html`<uui-button compact label=${this.localize.term('general_clear')} @click=${this.#onClear}></uui-button>`,
 			)}
 		`;
 	}

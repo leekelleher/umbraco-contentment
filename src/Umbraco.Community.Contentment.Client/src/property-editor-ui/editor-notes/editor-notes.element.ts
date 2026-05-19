@@ -8,6 +8,8 @@ import type { ContentmentInfoBoxElementType } from '../../components/info-box/in
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+type ContentmentRichTextValue = string | { markup: string };
+
 @customElement('contentment-property-editor-ui-editor-notes')
 export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#hideLabel: boolean = false;
@@ -31,8 +33,8 @@ export class ContentmentPropertyEditorUIEditorNotesElement extends UmbLitElement
 		this.#alertType = config.getValueByAlias<ContentmentInfoBoxElementType>('alertType') || 'default';
 		this.#icon = config.getValueByAlias('icon');
 		this.#heading = config.getValueByAlias('heading');
-		const message = config.getValueByAlias('message');
-		this.#message = (message as unknown as any)?.markup ?? message;
+		const message = config.getValueByAlias<ContentmentRichTextValue>('message');
+		this.#message = typeof message === 'string' ? message : message?.markup;
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
 		this.#hidePropertyGroup = parseBoolean(config.getValueByAlias('hidePropertyGroup'));
 

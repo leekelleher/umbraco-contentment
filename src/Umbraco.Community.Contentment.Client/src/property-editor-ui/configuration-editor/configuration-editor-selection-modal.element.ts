@@ -70,10 +70,9 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 	#groupItems(items: Array<ContentmentConfigurationEditorModel> | null | undefined) {
 		if (!items) return;
 
-		// @ts-expect-error
 		const grouped = Object.groupBy(
 			items,
-			(item: ContentmentConfigurationEditorModel) => item.group ?? this.#emptyGroup
+			(item: ContentmentConfigurationEditorModel) => item.group ?? this.#emptyGroup,
 		);
 		const entries = Object.entries(grouped) as Array<[string, Array<ContentmentConfigurationEditorModel>]>;
 		this._grouped = entries.map(([alias, items]) => ({ alias, items }));
@@ -151,10 +150,10 @@ export class ContentmentPropertyEditorUIConfigurationEditorSelectionModalElement
 										icon=${ifDefined(item.icon ?? undefined)}
 										@open=${() => this.#onChoose(item)}>
 									</umb-ref-item>
-								`
+								`,
 							)}
 						</uui-ref-list>
-					`
+					`,
 				)}
 			</uui-box>
 		`;

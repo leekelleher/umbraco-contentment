@@ -95,7 +95,7 @@ export class ContentmentSortableListItemElement extends UmbLitElement {
 							<uui-icon name="icon-trash"></uui-icon>
 						</uui-button>
 					</uui-action-bar>
-				`
+				`,
 			)}
 		`;
 	}

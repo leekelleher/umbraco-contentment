@@ -45,7 +45,7 @@ export class ContentmentPropertyEditorUIContentSourceElement
 			() => html`
 				<umb-input-content-picker-document-root .data=${this.value} @change=${this.#onChange}>
 				</umb-input-content-picker-document-root>
-			`
+			`,
 		);
 	}
 

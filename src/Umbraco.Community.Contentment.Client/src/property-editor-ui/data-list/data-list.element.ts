@@ -96,7 +96,7 @@ export class ContentmentPropertyEditorUIDataListElement
 	}
 
 	override async firstUpdated() {
-		await Promise.all([await this.#init().catch(() => undefined)]);
+		await this.#init().catch(() => undefined);
 		this._initialized = true;
 	}
 
@@ -129,9 +129,9 @@ export class ContentmentPropertyEditorUIDataListElement
 	}
 
 	#onChange(event: UmbChangeEvent & { target: UmbPropertyEditorUiElement }) {
-		var element = event.target;
+		const element = event.target;
 		if (!element || element.value === this.value) return;
-		this.value = element.value as any;
+		this.value = element.value as Array<string> | string | undefined;
 		this.checkValidity();
 		this.dispatchEvent(new UmbChangeEvent());
 	}

@@ -69,7 +69,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 					propertyEditorUiAlias: data.editorUiAlias,
 					dataTypeKey: data.unique,
 				};
-			})
+			}),
 		)) as Array<ContentmentInputListProperty | null>;
 
 		this.#inputs = results.filter((control) => !!control) as Array<ContentmentInputListProperty>;
@@ -145,7 +145,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				${repeat(
 					this.value,
 					(_, index) => index,
-					(_, index) => this.#renderItem(index)
+					(_, index) => this.#renderItem(index),
 				)}
 			</contentment-sortable-list>
 		`;
@@ -171,7 +171,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 								.config=${input.propertyEditorUiConfig}
 								.propertyEditorUiAlias=${input.propertyEditorUiAlias}>
 							</contentment-input-list-property-editor>
-						`
+						`,
 					)}
 				</umb-property-dataset>
 			</contentment-sortable-list-item>

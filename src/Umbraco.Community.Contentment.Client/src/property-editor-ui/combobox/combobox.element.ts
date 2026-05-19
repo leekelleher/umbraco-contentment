@@ -23,7 +23,7 @@ import type { UUIComboboxElement } from '@umbraco-cms/backoffice/external/uui';
 export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@property()
 	public set value(value: Array<string> | string | undefined) {
-		this.#value = Array.isArray(value) === true ? value[0] : value ?? '';
+		this.#value = Array.isArray(value) === true ? value[0] : (value ?? '');
 	}
 	public get value(): string | undefined {
 		return this.#value;
@@ -69,7 +69,7 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 					${repeat(
 						this._items,
 						(item) => item.value,
-						(item) => this.#renderItem(item)
+						(item) => this.#renderItem(item),
 					)}
 				</uui-combobox-list>
 			</uui-combobox>
@@ -92,7 +92,7 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 								<span slot="description">${unsafeHTML(item.description)}</span>
 							</uui-form-layout-item>
 						`,
-						() => html`<span>${this.localize.string(item.name)}</span>`
+						() => html`<span>${this.localize.string(item.name)}</span>`,
 					)}
 				</div>
 			</uui-combobox-list-option>

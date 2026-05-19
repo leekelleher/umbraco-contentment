@@ -60,7 +60,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 					this._dataSource = dataSource;
 					this.#fetch();
 				},
-				'_observeDataSource'
+				'_observeDataSource',
 			);
 
 			this.observe(
@@ -69,7 +69,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 					this._listEditor = listEditor;
 					this.#fetch();
 				},
-				'_observeListEditor'
+				'_observeListEditor',
 			);
 		});
 	}
@@ -143,7 +143,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 							</p>
 						</details>
 					</contentment-info-box>
-				`
+				`,
 			)}
 
 			<uui-tab-group>
@@ -151,7 +151,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 					this.#tabs,
 					(tab) => tab.alias,
 					(tab) =>
-						html`<uui-tab label=${tab.label} ?active=${tab.active} @click=${() => this.#onTabChange(tab)}></uui-tab>`
+						html`<uui-tab label=${tab.label} ?active=${tab.active} @click=${() => this.#onTabChange(tab)}></uui-tab>`,
 				)}
 			</uui-tab-group>
 
@@ -162,7 +162,7 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 						.config=${this.#listEditor!.config}
 						.propertyEditorUiAlias=${this.#listEditor!.propertyEditorUiAlias!}>
 					</contentment-property-editor-ui>
-				`
+				`,
 			)}
 			${when(
 				this._activeTab === 'dataSource',
@@ -187,14 +187,14 @@ export class ContentmentPropertyEditorUIDataListPreviewElement
 									<uui-table-cell>${item.description}</uui-table-cell>
 									<uui-table-cell><uui-icon name=${item.disabled ? 'remove' : 'check'}></uui-icon></uui-table-cell>
 								</uui-table-row>
-							`
+							`,
 						)}
 					</uui-table>
-				`
+				`,
 			)}
 			${when(
 				this._activeTab === 'rawJson',
-				() => html` <umb-code-block language="JSON" copy>${JSON.stringify(this.#items, null, 2)}</umb-code-block> `
+				() => html` <umb-code-block language="JSON" copy>${JSON.stringify(this.#items, null, 2)}</umb-code-block> `,
 			)}
 		`;
 	}

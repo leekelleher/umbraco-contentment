@@ -117,7 +117,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 
 		const editorConfig = new UmbPropertyEditorConfigCollection([
 			{ alias: 'useLiveEditing', value: false },
-			{ alias: 'validationLimit', value: { min: 0, max: Infinity } },
+			{ alias: 'validationLimit', value: { min: 0, max: this.#maxItems } },
 		] as UmbPropertyEditorConfig);
 
 		this.#managerContext.setEditorConfiguration(editorConfig);
@@ -128,9 +128,13 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 
 		if (this.#readonly || this.#disableSorting) {
 			this.#sorter.disable();
-			this.#managerContext.readOnlyState.fallbackToPermitted();
 		} else {
 			this.#sorter.enable();
+		}
+
+		if (this.#readonly) {
+			this.#managerContext.readOnlyState.fallbackToPermitted();
+		} else {
 			this.#managerContext.readOnlyState.fallbackToNotPermitted();
 		}
 	}

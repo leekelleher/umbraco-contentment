@@ -55,6 +55,8 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	}
 
 	protected override firstUpdated(_changedProperties: PropertyValues): void {
+		super.firstUpdated(_changedProperties);
+
 		if (!this.#allowEmpty && this._options.length > 0 && (!this.value || this.value === '')) {
 			this.value = this._options[0].value;
 			this.dispatchEvent(new UmbChangeEvent());
@@ -62,7 +64,7 @@ export class ContentmentPropertyEditorUIDropdownListElement
 	}
 
 	@state()
-	private _options: Array<Option> = [];
+	private _options: UUISelectElement['options'] = [];
 
 	#onChange(event: CustomEvent & { target: UUISelectElement }) {
 		this.value = event.target.value as string;

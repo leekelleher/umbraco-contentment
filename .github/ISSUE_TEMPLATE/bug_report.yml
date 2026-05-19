@@ -1,6 +1,6 @@
 name: "Bug report"
 description: "File a bug report to help us improve Contentment."
-labels: ["bug-report"]
+labels: ["type/bug-report"]
 assignees:
   - leekelleher
 body:

@@ -189,7 +189,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 				${repeat(
 					this.value,
 					(item) => item.network + item.name + item.url,
-					(item, index) => this.#renderItem(item, index)
+					(item, index) => this.#renderItem(item, index),
 				)}
 			</contentment-sortable-list>
 		`;
@@ -223,7 +223,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 							@click=${() => this.#onChangeNetwork(index)}>
 							<uui-icon name=${network!.icon} style="--uui-icon-color: ${network!.iconColor};"></uui-icon>
 						</uui-button>
-					`
+					`,
 				)}
 				<div class="inputs">
 					<uui-input

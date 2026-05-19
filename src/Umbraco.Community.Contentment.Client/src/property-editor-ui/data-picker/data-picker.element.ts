@@ -123,45 +123,43 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	}
 
 	override async firstUpdated() {
-		await Promise.all([await this.#init().catch(() => undefined)]);
+		await this.#init().catch(() => undefined);
 		this._initialized = true;
 	}
 
 	async #init() {
-		this.#listEditor = await new Promise<ContentmentDataListEditor>(async (resolve, reject) => {
-			if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return reject();
+		if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return;
 
-			const body = {
-				alias: this._propertyAlias,
-				dataTypeKey: this._dataTypeKey,
-				dataSource: this._dataSource,
-				displayMode: this._displayMode,
-				id: this._entityUnique,
-				isNew: this._entityIsNew,
-				parentId: this._parentEntityUnique,
-				values: this.value,
-				variant: this._variantId,
-			};
+		const body = {
+			alias: this._propertyAlias,
+			dataTypeKey: this._dataTypeKey,
+			dataSource: this._dataSource,
+			displayMode: this._displayMode,
+			id: this._entityUnique,
+			isNew: this._entityIsNew,
+			parentId: this._parentEntityUnique,
+			values: this.value,
+			variant: this._variantId,
+		};
 
-			const { data } = await tryExecute(this, DataPickerService.postDataPickerEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataPickerService.postDataPickerEditor({ client: umbHttpClient, body }));
 
-			if (!data) return reject();
+		if (!data) return;
 
-			const listEditor = {
-				propertyEditorUiAlias: data.propertyEditorUiAlias,
-				config: new UmbPropertyEditorConfigCollection([...(data.config ?? []), ...(this.#config ?? [])]),
-			};
+		const listEditor = {
+			propertyEditorUiAlias: data.propertyEditorUiAlias,
+			config: new UmbPropertyEditorConfigCollection([...(data.config ?? []), ...(this.#config ?? [])]),
+		};
 
-			const items = listEditor.config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
-			this._items = items;
+		const items = listEditor.config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
+		this._items = items;
 
-			this.#disableSorting =
-				this.#maxItems === 1 ? true : parseBoolean(listEditor.config.getValueByAlias('disableSorting'));
+		this.#disableSorting =
+			this.#maxItems === 1 ? true : parseBoolean(listEditor.config.getValueByAlias('disableSorting'));
 
-			this.#confirmRemoval = parseBoolean(listEditor.config.getValueByAlias('confirmRemoval'));
+		this.#confirmRemoval = parseBoolean(listEditor.config.getValueByAlias('confirmRemoval'));
 
-			resolve(listEditor);
-		});
+		this.#listEditor = listEditor;
 	}
 
 	async #onAdd(event: CustomEvent<{ listType: string }>) {

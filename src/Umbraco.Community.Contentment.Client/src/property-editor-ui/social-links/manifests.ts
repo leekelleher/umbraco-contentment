@@ -49,11 +49,11 @@ const editorUi: UmbExtensionManifest = {
 										iconColor: '#000',
 									},
 									expressions: {
-										name: (item: any) => item.name,
-										description: (item: any) => item.url,
-										icon: (item: any) => item.icon.split(' ')[0],
-										cardStyle: (item: any) => ({ 'background-color': item.backgroundColor }),
-										iconStyle: (item: any) => ({ color: item.iconColor }),
+										name: (item: Record<string, string>) => item.name,
+										description: (item: Record<string, string>) => item.url,
+										icon: (item: Record<string, string>) => item.icon.split(' ')[0],
+										cardStyle: (item: Record<string, string>) => ({ 'background-color': item.backgroundColor }),
+										iconStyle: (item: Record<string, string>) => ({ color: item.iconColor }),
 									},
 									fields: [
 										{
