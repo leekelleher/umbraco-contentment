@@ -15,8 +15,8 @@ export const manifest: UmbExtensionManifest = {
 			properties: [
 				{
 					alias: 'mode',
-					label: 'Language mode',
-					description: 'Select the programming language mode. The default mode is "Razor (CSHTML)".',
+					label: 'Language',
+					description: 'Select the programming language. The default language is "Razor (CSHTML)".',
 					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
 					config: [
 						{
