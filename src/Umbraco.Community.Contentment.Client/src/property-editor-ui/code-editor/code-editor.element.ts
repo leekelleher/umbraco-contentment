@@ -30,36 +30,21 @@ import prismGuides from 'prism-code-editor/guides.css?inline';
 import vsCodeLight from 'prism-code-editor/themes/vs-code-light.css?inline';
 import vsCodeDark from 'prism-code-editor/themes/vs-code-dark.css?inline';
 
-const MODE_TO_PRISM: Record<string, string> = {
-	csharp: 'csharp',
-	css: 'css',
-	html: 'markup',
-	javascript: 'javascript',
-	json: 'json',
-	liquid: 'liquid',
-	markdown: 'markdown',
-	razor: 'cshtml',
-	sql: 'sql',
-	typescript: 'typescript',
-	xml: 'xml',
-	yaml: 'yaml',
-};
-
 // Static specifiers so Vite can pre-resolve and emit a chunk per grammar.
-// Unknown languages no-op and render as plain text (per spec).
-const GRAMMAR_LOADERS: Record<string, () => Promise<unknown>> = {
-	csharp: () => import('prism-code-editor/prism/languages/csharp'),
-	cshtml: () => import('prism-code-editor/prism/languages/cshtml'),
-	css: () => import('prism-code-editor/prism/languages/css'),
-	javascript: () => import('prism-code-editor/prism/languages/javascript'),
-	json: () => import('prism-code-editor/prism/languages/json'),
-	liquid: () => import('prism-code-editor/prism/languages/liquid'),
-	markdown: () => import('prism-code-editor/prism/languages/markdown'),
-	markup: () => import('prism-code-editor/prism/languages/markup'),
-	sql: () => import('prism-code-editor/prism/languages/sql'),
-	typescript: () => import('prism-code-editor/prism/languages/typescript'),
-	xml: () => import('prism-code-editor/prism/languages/xml'),
-	yaml: () => import('prism-code-editor/prism/languages/yaml'),
+// Unknown syntaxes no-op and render as plain text (per spec).
+const SYNTAXES: Record<string, { id: string; load: () => Promise<unknown> }> = {
+	csharp:     { id: 'csharp',     load: () => import('prism-code-editor/prism/languages/csharp') },
+	css:        { id: 'css',        load: () => import('prism-code-editor/prism/languages/css') },
+	html:       { id: 'markup',     load: () => import('prism-code-editor/prism/languages/markup') },
+	javascript: { id: 'javascript', load: () => import('prism-code-editor/prism/languages/javascript') },
+	json:       { id: 'json',       load: () => import('prism-code-editor/prism/languages/json') },
+	liquid:     { id: 'liquid',     load: () => import('prism-code-editor/prism/languages/liquid') },
+	markdown:   { id: 'markdown',   load: () => import('prism-code-editor/prism/languages/markdown') },
+	razor:      { id: 'cshtml',     load: () => import('prism-code-editor/prism/languages/cshtml') },
+	sql:        { id: 'sql',        load: () => import('prism-code-editor/prism/languages/sql') },
+	typescript: { id: 'typescript', load: () => import('prism-code-editor/prism/languages/typescript') },
+	xml:        { id: 'xml',        load: () => import('prism-code-editor/prism/languages/xml') },
+	yaml:       { id: 'yaml',       load: () => import('prism-code-editor/prism/languages/yaml') },
 };
 
 @customElement('contentment-property-editor-ui-code-editor')
@@ -104,11 +89,11 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			await this.updateComplete;
 			if (!this.#containerRef.value) return;
 
-			const language = MODE_TO_PRISM[this._mode] ?? 'plain';
-			await this.#loadGrammar(language);
+			const syntax = SYNTAXES[this._mode];
+			await syntax?.load();
 
 			this.#editor = createEditor(this.#containerRef.value, {
-				language,
+				language: syntax?.id ?? 'plain',
 				value: this.value ?? '',
 			});
 
@@ -128,10 +113,6 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		} catch (error) {
 			console.error(error);
 		}
-	}
-
-	async #loadGrammar(language: string) {
-		await GRAMMAR_LOADERS[language]?.();
 	}
 
 	override render() {
