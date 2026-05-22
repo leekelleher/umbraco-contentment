@@ -10,19 +10,19 @@ import {
 	ref,
 	state,
 	unsafeCSS,
-	type Ref,
 } from '@umbraco-cms/backoffice/external/lit';
-import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
-import { UMB_THEME_CONTEXT } from '@umbraco-cms/backoffice/themes';
-import type { PrismEditor } from 'prism-code-editor';
 import { defaultCommands } from 'prism-code-editor/commands';
-import { indentGuides } from 'prism-code-editor/guides';
 import { highlightBracketPairs } from 'prism-code-editor/highlight-brackets';
+import { indentGuides } from 'prism-code-editor/guides';
 import { matchBrackets } from 'prism-code-editor/match-brackets';
 import { matchTags } from 'prism-code-editor/match-tags';
 import { searchWidget } from 'prism-code-editor/search';
+import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
+import { UMB_THEME_CONTEXT } from '@umbraco-cms/backoffice/themes';
+import type { PrismEditor } from 'prism-code-editor';
+import type { Ref } from '@umbraco-cms/backoffice/external/lit';
+import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import prismLayout from 'prism-code-editor/layout.css?inline';
 import prismSearch from 'prism-code-editor/search.css?inline';
@@ -32,6 +32,7 @@ import vsCodeDark from 'prism-code-editor/themes/vs-code-dark.css?inline';
 
 // Static specifiers so Vite can pre-resolve and emit a chunk per grammar.
 // Unknown syntaxes no-op and render as plain text (per spec).
+// prettier-ignore
 const SYNTAXES: Record<string, { id: string; load: () => Promise<unknown> }> = {
 	csharp:     { id: 'csharp',     load: () => import('prism-code-editor/prism/languages/csharp') },
 	css:        { id: 'css',        load: () => import('prism-code-editor/prism/languages/css') },
