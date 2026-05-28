@@ -142,20 +142,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _displayModeEnglishName;
         }
 
-        private string GetDisplayName(CultureInfo culture, string displayMode)
+        private string GetDisplayName(CultureInfo culture, string displayMode) => displayMode switch
         {
-            switch (displayMode)
-            {
-                case _displayModeNativeName:
-                    return culture.NativeName;
-
-                case _displayModeBackofficeUserLanguage:
-                    return GetBackofficeUserDisplayName(culture);
-
-                default:
-                    return culture.EnglishName;
-            }
-        }
+            _displayModeNativeName => culture.NativeName,
+            _displayModeBackofficeUserLanguage => GetBackofficeUserDisplayName(culture),
+            _ => culture.EnglishName,
+        };
 
         private string GetBackofficeUserDisplayName(CultureInfo culture)
         {
