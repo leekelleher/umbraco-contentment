@@ -13,9 +13,9 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class LanguagesDataListSource : IContentmentDataSource, IDataPickerSource
     {
-        private const string _displayModeEnglishName = "englishName";
-        private const string _displayModeNativeName = "nativeName";
-        private const string _displayModeBackofficeUserLanguage = "backofficeUserLanguage";
+        private const string _labelStyleEnglishName = "english";
+        private const string _labelStyleNativeName = "native";
+        private const string _labelStyleBackofficeUserLanguage = "backoffice";
 
         private readonly IBackOfficeSecurityAccessor _backOfficeSecurityAccessor;
 
@@ -36,17 +36,32 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             new ContentmentConfigurationField
             {
-                Key = "displayMode",
-                Name = "Display mode",
-                Description = "Choose how each language name is displayed in the list.",
+                Key = "labelStyle",
+                Name = "Label style",
+                Description = "Choose how each language name is displayed.",
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
-                            new DataListItem { Name = "English name", Value = _displayModeEnglishName, Description = "e.g. \"German\", \"Japanese\"." },
-                            new DataListItem { Name = "Native name", Value = _displayModeNativeName, Description = "Each language in its own language, e.g. \"Deutsch\", \"日本語\"." },
-                            new DataListItem { Name = "Backoffice user language", Value = _displayModeBackofficeUserLanguage, Description = "Localised in the current backoffice user's language, e.g. \"allemand\", \"japonais\" for a French user." },
+                            new DataListItem
+                            {
+                                Name = "English name",
+                                Value = _labelStyleEnglishName,
+                                Description = "e.g. \"German\", \"Japanese\"."
+                            },
+                            new DataListItem
+                            {
+                                Name = "Native name",
+                                Value = _labelStyleNativeName,
+                                Description = "Each language in its own language, e.g. \"Deutsch\", \"日本語\"."
+                            },
+                            new DataListItem
+                            {
+                                Name = "Current backoffice user language",
+                                Value = _labelStyleBackofficeUserLanguage,
+                                Description = "Localized in the current backoffice user's language, e.g. \"allemand\", \"japonais\" for a French user."
+                            },
                         }
                     },
                 }
@@ -55,17 +70,17 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public Dictionary<string, object>? DefaultValues => new()
         {
-            { "displayMode", _displayModeEnglishName },
+            { "labelStyle", _labelStyleEnglishName },
         };
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
-            var displayMode = GetDisplayMode(config);
+            var labelStyle = GetLabelStyle(config);
 
             return GetCultures()
-                .Select(x => (Culture: x, Name: GetDisplayName(x, displayMode)))
+                .Select(x => (Culture: x, Name: GetDisplayName(x, labelStyle)))
                 // Sort by the server's CurrentCulture, not the backoffice user's language.
                 // Close enough for an alphabetical list; a perfect per-user sort isn't worth the extra overhead.
                 .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
@@ -76,13 +91,13 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             if (values?.Any() == true)
             {
-                var displayMode = GetDisplayMode(config);
+                var labelStyle = GetLabelStyle(config);
                 var lookup = GetCultures().ToLookup(x => x.TwoLetterISOLanguageName, StringComparer.InvariantCultureIgnoreCase);
 
                 return Task.FromResult(values
                     .Where(x => lookup.Contains(x) == true)
                     .SelectMany(x => lookup[x])
-                    .Select(x => ToDataListItem(x, GetDisplayName(x, displayMode))));
+                    .Select(x => ToDataListItem(x, GetDisplayName(x, labelStyle))));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -98,10 +113,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             else
             {
-                var displayMode = GetDisplayMode(config);
+                var labelStyle = GetLabelStyle(config);
 
                 items = GetCultures()
-                    .Select(x => (Culture: x, Name: GetDisplayName(x, displayMode)))
+                    .Select(x => (Culture: x, Name: GetDisplayName(x, labelStyle)))
                     .Where(x => x.Name.InvariantContains(query) == true
                         || x.Culture.EnglishName.InvariantContains(query) == true
                         || x.Culture.TwoLetterISOLanguageName.InvariantStartsWith(query) == true)
@@ -133,21 +148,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .Where(x => x.TwoLetterISOLanguageName.Length == 2);
         }
 
-        private static string GetDisplayMode(Dictionary<string, object>? config)
-        {
-            if (config?.TryGetValueAs("displayMode", out string? displayMode) == true &&
-                string.IsNullOrWhiteSpace(displayMode) == false)
-            {
-                return displayMode;
-            }
+        private static string GetLabelStyle(Dictionary<string, object> config)
+            => config.GetValueAsString("labelStyle", _labelStyleEnglishName) ?? _labelStyleEnglishName;
 
-            return _displayModeEnglishName;
-        }
-
-        private string GetDisplayName(CultureInfo culture, string displayMode) => displayMode switch
+        private string GetDisplayName(CultureInfo culture, string labelStyle) => labelStyle switch
         {
-            _displayModeNativeName => culture.NativeName,
-            _displayModeBackofficeUserLanguage => GetBackofficeUserDisplayName(culture),
+            _labelStyleNativeName => culture.NativeName,
+            _labelStyleBackofficeUserLanguage => GetBackofficeUserDisplayName(culture),
             _ => culture.EnglishName,
         };
 
@@ -165,7 +172,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var userCulture = CultureInfo.GetCultureInfo(userLanguage);
                 var previous = CultureInfo.CurrentUICulture;
                 // CultureInfo has no "GetDisplayName(inCulture)" API; temporarily switching
-                // CurrentUICulture is the standard .NET pattern to obtain a localised name.
+                // CurrentUICulture is the standard .NET pattern to obtain a localized name.
                 // The try/finally restores the original value. Safe here because GetItems is
                 // synchronous — no await suspension points while the culture is mutated.
                 try
