@@ -6,12 +6,24 @@
 using System.Globalization;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Security;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class LanguagesDataListSource : IContentmentDataSource, IDataPickerSource
     {
+        private const string _labelStyleEnglishName = "english";
+        private const string _labelStyleNativeName = "native";
+        private const string _labelStyleBackofficeUserLanguage = "backoffice";
+
+        private readonly IBackOfficeSecurityAccessor _backOfficeSecurityAccessor;
+
+        public LanguagesDataListSource(IBackOfficeSecurityAccessor backOfficeSecurityAccessor)
+        {
+            _backOfficeSecurityAccessor = backOfficeSecurityAccessor;
+        }
+
         public string Name => ".NET Languages (ISO 639-1)";
 
         public string Description => "All the languages available in the .NET Framework, (as installed on the web server).";
@@ -20,29 +32,72 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.DotNet;
 
-        public IEnumerable<ContentmentConfigurationField> Fields => Enumerable.Empty<ContentmentConfigurationField>();
+        public IEnumerable<ContentmentConfigurationField> Fields => new[]
+        {
+            new ContentmentConfigurationField
+            {
+                Key = "labelStyle",
+                Name = "Label style",
+                Description = "Choose how each language name is displayed.",
+                PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>
+                {
+                    { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
+                        {
+                            new DataListItem
+                            {
+                                Name = "English name",
+                                Value = _labelStyleEnglishName,
+                                Description = "e.g. \"German\", \"Japanese\"."
+                            },
+                            new DataListItem
+                            {
+                                Name = "Native name",
+                                Value = _labelStyleNativeName,
+                                Description = "Each language in its own language, e.g. \"Deutsch\", \"日本語\"."
+                            },
+                            new DataListItem
+                            {
+                                Name = "Current backoffice user language",
+                                Value = _labelStyleBackofficeUserLanguage,
+                                Description = "Localized in the current backoffice user's language, e.g. \"allemand\", \"japonais\" for a French user."
+                            },
+                        }
+                    },
+                }
+            }
+        };
 
-        public Dictionary<string, object>? DefaultValues => default;
+        public Dictionary<string, object>? DefaultValues => new()
+        {
+            { "labelStyle", _labelStyleEnglishName },
+        };
 
         public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
+            var labelStyle = GetLabelStyle(config);
+
             return GetCultures()
-                .OrderBy(x => x.EnglishName)
-                .Select(ToDataListItem);
+                .Select(x => (Culture: x, Name: GetDisplayName(x, labelStyle)))
+                // Sort by the server's CurrentCulture, not the backoffice user's language.
+                // Close enough for an alphabetical list; a perfect per-user sort isn't worth the extra overhead.
+                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
+                .Select(x => ToDataListItem(x.Culture, x.Name));
         }
 
         public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
         {
             if (values?.Any() == true)
             {
+                var labelStyle = GetLabelStyle(config);
                 var lookup = GetCultures().ToLookup(x => x.TwoLetterISOLanguageName, StringComparer.InvariantCultureIgnoreCase);
 
                 return Task.FromResult(values
                     .Where(x => lookup.Contains(x) == true)
                     .SelectMany(x => lookup[x])
-                    .Select(ToDataListItem));
+                    .Select(x => ToDataListItem(x, GetDisplayName(x, labelStyle))));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -58,10 +113,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             else
             {
+                var labelStyle = GetLabelStyle(config);
+
                 items = GetCultures()
-                    .Where(x => x.EnglishName.InvariantContains(query) == true || x.TwoLetterISOLanguageName.InvariantStartsWith(query) == true)
-                    .OrderBy(x => x.EnglishName)
-                    .Select(ToDataListItem);
+                    .Select(x => (Culture: x, Name: GetDisplayName(x, labelStyle)))
+                    .Where(x => x.Name.InvariantContains(query) == true
+                        || x.Culture.EnglishName.InvariantContains(query) == true
+                        || x.Culture.TwoLetterISOLanguageName.InvariantStartsWith(query) == true)
+                    .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
+                    .Select(x => ToDataListItem(x.Culture, x.Name));
             }
 
             if (items?.Any() == true)
@@ -88,11 +148,54 @@ namespace Umbraco.Community.Contentment.DataEditors
                 .Where(x => x.TwoLetterISOLanguageName.Length == 2);
         }
 
-        private DataListItem ToDataListItem(CultureInfo culture)
+        private static string GetLabelStyle(Dictionary<string, object> config)
+            => config.GetValueAsString("labelStyle", _labelStyleEnglishName) ?? _labelStyleEnglishName;
+
+        private string GetDisplayName(CultureInfo culture, string labelStyle) => labelStyle switch
+        {
+            _labelStyleNativeName => culture.NativeName,
+            _labelStyleBackofficeUserLanguage => GetBackofficeUserDisplayName(culture),
+            _ => culture.EnglishName,
+        };
+
+        private string GetBackofficeUserDisplayName(CultureInfo culture)
+        {
+            var userLanguage = _backOfficeSecurityAccessor.BackOfficeSecurity?.CurrentUser?.Language;
+
+            if (string.IsNullOrWhiteSpace(userLanguage) == true)
+            {
+                return culture.EnglishName;
+            }
+
+            try
+            {
+                var userCulture = CultureInfo.GetCultureInfo(userLanguage);
+                var previous = CultureInfo.CurrentUICulture;
+                // CultureInfo has no "GetDisplayName(inCulture)" API; temporarily switching
+                // CurrentUICulture is the standard .NET pattern to obtain a localized name.
+                // The try/finally restores the original value. Safe here because GetItems is
+                // synchronous — no await suspension points while the culture is mutated.
+                try
+                {
+                    CultureInfo.CurrentUICulture = userCulture;
+                    return culture.DisplayName;
+                }
+                finally
+                {
+                    CultureInfo.CurrentUICulture = previous;
+                }
+            }
+            catch (CultureNotFoundException)
+            {
+                return culture.EnglishName;
+            }
+        }
+
+        private static DataListItem ToDataListItem(CultureInfo culture, string name)
         {
             return new DataListItem
             {
-                Name = culture.EnglishName,
+                Name = name,
                 Value = culture.TwoLetterISOLanguageName,
                 Icon = "icon-fa-language",
                 Description = culture.TwoLetterISOLanguageName,
