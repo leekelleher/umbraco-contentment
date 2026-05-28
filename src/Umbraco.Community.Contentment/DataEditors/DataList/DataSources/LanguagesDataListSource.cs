@@ -66,6 +66,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return GetCultures()
                 .Select(x => (Culture: x, Name: GetDisplayName(x, displayMode)))
+                // Sort by the server's CurrentCulture, not the backoffice user's language.
+                // Close enough for an alphabetical list; a perfect per-user sort isn't worth the extra overhead.
                 .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
                 .Select(x => ToDataListItem(x.Culture, x.Name));
         }
@@ -162,6 +164,10 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var userCulture = CultureInfo.GetCultureInfo(userLanguage);
                 var previous = CultureInfo.CurrentUICulture;
+                // CultureInfo has no "GetDisplayName(inCulture)" API; temporarily switching
+                // CurrentUICulture is the standard .NET pattern to obtain a localised name.
+                // The try/finally restores the original value. Safe here because GetItems is
+                // synchronous — no await suspension points while the culture is mutated.
                 try
                 {
                     CultureInfo.CurrentUICulture = userCulture;
