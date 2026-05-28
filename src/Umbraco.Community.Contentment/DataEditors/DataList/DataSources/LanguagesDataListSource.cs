@@ -42,7 +42,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                 PropertyEditorUiAlias = RadioButtonListDataListEditor.DataEditorUiAlias,
                 Config = new Dictionary<string, object>
                 {
-                    { DropdownListDataListEditor.AllowEmpty, false },
                     { Constants.Conventions.ConfigurationFieldAliases.Items, new[]
                         {
                             new DataListItem { Name = "English name", Value = _displayModeEnglishName, Description = "e.g. \"German\", \"Japanese\"." },
