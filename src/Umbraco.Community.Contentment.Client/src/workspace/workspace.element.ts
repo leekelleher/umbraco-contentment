@@ -6,6 +6,9 @@ import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { MetaService } from '../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
+import { UMB_MODAL_MANAGER_CONTEXT } from '@umbraco-cms/backoffice/modal';
+import { UmbId } from '@umbraco-cms/backoffice/id';
+import { CONTENTMENT_ELEMENT_WORKSPACE_MODAL } from './element/element-workspace-modal.token.js';
 
 @customElement('contentment-workspace')
 export class ContentmentWorkspaceElement extends UmbLitElement {
@@ -151,7 +154,41 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 					</p>
 				</div>
 			</uui-box>
+			<!-- TODO: Remove dev harness before merge -->
+			<uui-box headline="Dev Harness (remove before merge)">
+				<uui-button
+					look="primary"
+					label="Open Element Workspace Modal (test)"
+					@click=${this.#openTestModal}>
+				</uui-button>
+			</uui-box>
 		`;
+	}
+
+	// TODO: Remove dev harness before merge
+	async #openTestModal(): Promise<void> {
+		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
+		if (!modalManager) return;
+
+		// Replace with a real element type GUID from your demo site
+		const ELEMENT_TYPE_GUID = 'REPLACE_WITH_ELEMENT_TYPE_GUID';
+
+		const modal = modalManager.open(this, CONTENTMENT_ELEMENT_WORKSPACE_MODAL, {
+			data: {
+				element: {
+					elementType: ELEMENT_TYPE_GUID,
+					key: UmbId.new(),
+					value: {},
+				},
+			},
+		});
+
+		try {
+			const result = await modal.onSubmit();
+			console.log('[Contentment dev harness] Modal submitted:', result);
+		} catch {
+			console.log('[Contentment dev harness] Modal cancelled');
+		}
 	}
 
 	#renderSponsorship() {
