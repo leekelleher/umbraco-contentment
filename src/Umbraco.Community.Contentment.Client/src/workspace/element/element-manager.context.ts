@@ -98,8 +98,11 @@ export class ContentmentElementManager
 		}
 
 		this.structure.loadType(elementType);
-		await this.structure.whenLoaded();
-		this.#loadedResolve();
+		try {
+			await this.structure.whenLoaded();
+		} finally {
+			this.#loadedResolve();
+		}
 	}
 
 	isLoaded(): Promise<void> {
@@ -142,32 +145,35 @@ export class ContentmentElementManager
 
 	async setPropertyValue<ValueType = unknown>(alias: string, value: ValueType, variantId?: UmbVariantId): Promise<void> {
 		this.initiatePropertyValueChange();
-		variantId ??= UmbVariantId.CreateInvariant();
+		try {
+			variantId ??= UmbVariantId.CreateInvariant();
 
-		const property = await this.structure.getPropertyStructureByAlias(alias);
-		if (!property) {
-			throw new Error(`Property alias "${alias}" not found.`);
+			const property = await this.structure.getPropertyStructureByAlias(alias);
+			if (!property) {
+				throw new Error(`Property alias "${alias}" not found.`);
+			}
+
+			const dataTypeItem = await this.#dataTypeItemManager.getItemByUnique(property.dataType.unique);
+			const editorAlias = dataTypeItem?.propertyEditorSchemaAlias;
+
+			if (!editorAlias) {
+				throw new Error(`Editor Alias of "${property.dataType.unique}" not found.`);
+			}
+
+			const entry = { editorAlias, ...variantId.toObject(), alias, value } as UmbElementValueModel<ValueType>;
+
+			const currentData = this.#data.getCurrent();
+			if (currentData) {
+				const values = appendToFrozenArray(
+					currentData.values ?? [],
+					entry,
+					(x) => x.alias === alias && variantId!.compare(x),
+				);
+				this.#data.updateCurrent({ values });
+			}
+		} finally {
+			this.finishPropertyValueChange();
 		}
-
-		const dataTypeItem = await this.#dataTypeItemManager.getItemByUnique(property.dataType.unique);
-		const editorAlias = dataTypeItem?.propertyEditorSchemaAlias;
-
-		if (!editorAlias) {
-			throw new Error(`Editor Alias of "${property.dataType.unique}" not found.`);
-		}
-
-		const entry = { editorAlias, ...variantId.toObject(), alias, value } as UmbElementValueModel<ValueType>;
-
-		const currentData = this.#data.getCurrent();
-		if (currentData) {
-			const values = appendToFrozenArray(
-				currentData.values ?? [],
-				entry,
-				(x) => x.alias === alias && variantId.compare(x),
-			);
-			this.#data.updateCurrent({ values });
-		}
-		this.finishPropertyValueChange();
 	}
 
 	initiatePropertyValueChange(): void {
