@@ -150,7 +150,11 @@ export class ContentmentElementManager
 		}
 
 		const dataTypeItem = await this.#dataTypeItemManager.getItemByUnique(property.dataType.unique);
-		const editorAlias = dataTypeItem?.propertyEditorSchemaAlias ?? '';
+		const editorAlias = dataTypeItem?.propertyEditorSchemaAlias;
+
+		if (!editorAlias) {
+			throw new Error(`Editor Alias of "${property.dataType.unique}" not found.`);
+		}
 
 		const entry = { editorAlias, ...variantId.toObject(), alias, value } as UmbElementValueModel<ValueType>;
 
@@ -159,7 +163,7 @@ export class ContentmentElementManager
 			const values = appendToFrozenArray(
 				currentData.values ?? [],
 				entry,
-				(x) => x.alias === alias && variantId!.compare(x),
+				(x) => x.alias === alias && variantId.compare(x),
 			);
 			this.#data.updateCurrent({ values });
 		}
