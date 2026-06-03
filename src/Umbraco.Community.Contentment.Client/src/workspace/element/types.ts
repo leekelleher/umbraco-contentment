@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import type { UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import type { UmbElementValueModel } from '@umbraco-cms/backoffice/content';
 
 /** The canonical persisted shape of a single element entry. */
 export type ContentmentElementValue = {
@@ -13,9 +13,9 @@ export type ContentmentElementValue = {
 /**
  * Internal runtime data model used by ContentmentElementManager and
  * ContentmentElementPropertyDatasetContext. Must satisfy
- * `UmbElementDetailModel` (i.e. `{ values: Array<UmbPropertyValueData> }`).
+ * `UmbElementDetailModel` (i.e. `{ values: Array<UmbElementValueModel> }`).
  */
 export type ContentmentElementDataModel = {
 	key?: string;
-	values: Array<UmbPropertyValueData>;
+	values: Array<UmbElementValueModel>;
 };
