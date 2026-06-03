@@ -4,3 +4,4 @@
 export type * from './api/index.js';
 export type * from './extensions/types.js';
 export type * from './property-editor-ui/types.js';
+export type * from './workspace/element/types.js';
