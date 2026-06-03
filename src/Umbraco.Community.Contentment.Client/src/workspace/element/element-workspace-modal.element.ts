@@ -45,8 +45,12 @@ export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement
 		return this.data?.readonly === true;
 	}
 
-	override async connectedCallback(): Promise<void> {
+	override connectedCallback(): void {
 		super.connectedCallback();
+		this.#init();
+	}
+
+	async #init(): Promise<void> {
 		if (!this.data) return;
 
 		const { elementType, key, value } = this.data.element;
