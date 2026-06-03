@@ -1,19 +1,21 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-// Side-effect: registers umb-content-workspace-view-edit-tab + descendants as custom elements
-import '@umbraco-cms/backoffice/content';
-
-import { css, customElement, html, state, when } from '@umbraco-cms/backoffice/external/lit';
-import { UmbModalBaseElement, UMB_MODAL_MANAGER_CONTEXT, UMB_DISCARD_CHANGES_MODAL } from '@umbraco-cms/backoffice/modal';
-import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
-import { UmbContentTypeContainerStructureHelper } from '@umbraco-cms/backoffice/content-type';
-import type { UmbPropertyTypeContainerMergedModel } from '@umbraco-cms/backoffice/content-type';
+import { customElement, html, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentElementManager } from './element-manager.context.js';
+import { UmbContentTypeContainerStructureHelper } from '@umbraco-cms/backoffice/content-type';
+import {
+	UmbModalBaseElement,
+	UMB_MODAL_MANAGER_CONTEXT,
+	UMB_DISCARD_CHANGES_MODAL,
+} from '@umbraco-cms/backoffice/modal';
 import type {
 	ContentmentElementWorkspaceModalData,
 	ContentmentElementWorkspaceModalValue,
 } from './element-workspace-modal.token.js';
+import type { UmbPropertyTypeContainerMergedModel } from '@umbraco-cms/backoffice/content-type';
+
+import './element-workspace-tab.element.js';
 
 @customElement('contentment-element-workspace-modal')
 export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement<
@@ -108,45 +110,45 @@ export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement
 			return html`<umb-body-layout .headline=${this._headline}><uui-loader></uui-loader></umb-body-layout>`;
 		}
 
-		const showTabStrip = this._tabs.length > 1 || (this._hasRootProperties && this._tabs.length > 0);
+		const showTabStrip = this._tabs.length > 0 || this._hasRootProperties;
 
 		return html`
-			<umb-body-layout .headline=${this._headline}>
+			<umb-body-layout main-no-padding .headline=${this._headline}>
 				<umb-icon slot="icon" .name=${this._icon}></umb-icon>
 
-				${when(
-					showTabStrip,
-					() => html`
-						<uui-tab-group slot="tabs">
-							${when(
-								this._hasRootProperties,
-								() => html`
-									<uui-tab
-										label=${this.localize.term('general_content')}
-										.active=${this._activeContainerId === null}
-										@click=${() => {
-											this._activeContainerId = null;
-										}}>
-									</uui-tab>
-								`,
-							)}
-							${this._tabs.map(
-								(tab) => html`
-									<uui-tab
-										.label=${this.localize.string(tab.name) ?? ''}
-										.active=${this._activeContainerId === tab.ids[0]}
-										@click=${() => {
-											this._activeContainerId = tab.ids[0] ?? null;
-										}}>
-									</uui-tab>
-								`,
-							)}
-						</uui-tab-group>
-					`,
-				)}
+				<umb-body-layout header-fit-height>
+					${when(
+						showTabStrip,
+						() => html`
+							<uui-tab-group slot="header">
+								${when(
+									this._hasRootProperties,
+									() => html`
+										<uui-tab
+											label=${this.localize.term('general_content')}
+											.active=${this._activeContainerId === null}
+											@click=${() => {
+												this._activeContainerId = null;
+											}}></uui-tab>
+									`,
+								)}
+								${this._tabs.map(
+									(tab) => html`
+										<uui-tab
+											.label=${this.localize.string(tab.name) ?? ''}
+											.active=${this._activeContainerId === tab.ids[0]}
+											@click=${() => {
+												this._activeContainerId = tab.ids[0] ?? null;
+											}}></uui-tab>
+									`,
+								)}
+							</uui-tab-group>
+						`,
+					)}
 
-				<umb-content-workspace-view-edit-tab .containerId=${this._activeContainerId}>
-				</umb-content-workspace-view-edit-tab>
+					<contentment-element-workspace-tab .containerId=${this._activeContainerId}>
+					</contentment-element-workspace-tab>
+				</umb-body-layout>
 
 				<div slot="actions">
 					<uui-button label=${this.localize.term('general_cancel')} @click=${this.#onCancel}></uui-button>
@@ -156,24 +158,14 @@ export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement
 							<uui-button
 								color="positive"
 								look="primary"
-								label=${this.localize.term('buttons_save')}
-								@click=${this.#onSubmit}>
-							</uui-button>
+								label=${this.localize.term('general_update')}
+								@click=${this.#onSubmit}></uui-button>
 						`,
 					)}
 				</div>
 			</umb-body-layout>
 		`;
 	}
-
-	static override styles = [
-		UmbTextStyles,
-		css`
-			umb-content-workspace-view-edit-tab {
-				padding: var(--uui-size-layout-1);
-			}
-		`,
-	];
 }
 
 export { ContentmentElementWorkspaceModalElement as element };

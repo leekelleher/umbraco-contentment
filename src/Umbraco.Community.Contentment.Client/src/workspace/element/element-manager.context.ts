@@ -1,27 +1,27 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { UmbVariantPropertyGuardManager } from '@umbraco-cms/backoffice/property';
-import type { UmbContentTypeModel } from '@umbraco-cms/backoffice/content-type';
-import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-type';
-import type { Observable } from '@umbraco-cms/backoffice/external/rxjs';
 import { appendToFrozenArray } from '@umbraco-cms/backoffice/observable-api';
-import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
-import { type UmbClassInterface, UmbControllerBase } from '@umbraco-cms/backoffice/class-api';
-import { UmbDocumentTypeDetailRepository } from '@umbraco-cms/backoffice/document-type';
-import { UmbVariantId } from '@umbraco-cms/backoffice/variant';
-import { UmbValidationController } from '@umbraco-cms/backoffice/validation';
-import {
-	UmbElementWorkspaceDataManager,
-	type UmbElementPropertyDataOwner,
-	type UmbElementValueModel,
-	UMB_CONTENT_WORKSPACE_CONTEXT,
-	type UmbContentWorkspaceContext,
-} from '@umbraco-cms/backoffice/content';
-import { UmbReadOnlyVariantGuardManager } from '@umbraco-cms/backoffice/utils';
-import { UmbDataTypeItemRepositoryManager } from '@umbraco-cms/backoffice/data-type';
-import type { ContentmentElementDataModel } from './types.js';
 import { ContentmentElementPropertyDatasetContext } from './element-property-dataset.context.js';
+import { UmbContentTypeStructureManager } from '@umbraco-cms/backoffice/content-type';
+import { UmbControllerBase } from '@umbraco-cms/backoffice/class-api';
+import { UmbDataTypeItemRepositoryManager } from '@umbraco-cms/backoffice/data-type';
+import { UmbDocumentTypeDetailRepository } from '@umbraco-cms/backoffice/document-type';
+import { UmbElementWorkspaceDataManager, UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UmbReadOnlyVariantGuardManager } from '@umbraco-cms/backoffice/utils';
+import { UmbValidationController } from '@umbraco-cms/backoffice/validation';
+import { UmbVariantId } from '@umbraco-cms/backoffice/variant';
+import { UmbVariantPropertyGuardManager } from '@umbraco-cms/backoffice/property';
+import type { ContentmentElementDataModel } from './types.js';
+import type { Observable } from '@umbraco-cms/backoffice/external/rxjs';
+import type { UmbClassInterface } from '@umbraco-cms/backoffice/class-api';
+import type { UmbContentTypeModel } from '@umbraco-cms/backoffice/content-type';
+import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
+import type {
+	UmbElementPropertyDataOwner,
+	UmbElementValueModel,
+	UmbContentWorkspaceContext,
+} from '@umbraco-cms/backoffice/content';
 
 export class ContentmentElementManager
 	extends UmbControllerBase
@@ -135,15 +135,17 @@ export class ContentmentElementManager
 	getPropertyValue<ReturnType = unknown>(alias: string, variantId?: UmbVariantId): ReturnType | undefined {
 		const currentData = this.#data.getCurrent();
 		if (currentData) {
-			const entry = currentData.values?.find(
-				(x) => x.alias === alias && (variantId ? variantId.compare(x) : true),
-			);
+			const entry = currentData.values?.find((x) => x.alias === alias && (variantId ? variantId.compare(x) : true));
 			return entry?.value as ReturnType;
 		}
 		return undefined;
 	}
 
-	async setPropertyValue<ValueType = unknown>(alias: string, value: ValueType, variantId?: UmbVariantId): Promise<void> {
+	async setPropertyValue<ValueType = unknown>(
+		alias: string,
+		value: ValueType,
+		variantId?: UmbVariantId,
+	): Promise<void> {
 		this.initiatePropertyValueChange();
 		try {
 			variantId ??= UmbVariantId.CreateInvariant();
