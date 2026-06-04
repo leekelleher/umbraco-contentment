@@ -60,7 +60,7 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return nothing;
 		return html`
-			<uui-ref-node standalone @open=${(event: Event) => this.#onEdit(event, item, index)}>
+			<uui-ref-node class="item" standalone @open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(item.icon, (icon) => html`<umb-icon slot="icon" .name=${icon}></umb-icon>`)}
 				<umb-ufm-render slot="name" inline .markdown=${item.name} .value=${item.data}></umb-ufm-render>
 				${when(
@@ -71,21 +71,29 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 				${when(
 					this.allowEdit || this.allowRemove,
 					() => html`
-						<uui-action-bar slot="actions">
+						<uui-action-bar slot="actions" class="actions">
 							${when(
 								this.allowEdit || this.canEdit(item, index),
 								() => html`
 									<uui-button
+										look="secondary"
 										label=${this.localize.term('general_edit')}
-										@click=${(event: Event) => this.#onEdit(event, item, index)}></uui-button>
+										title=${this.localize.term('general_edit')}
+										@click=${(event: Event) => this.#onEdit(event, item, index)}>
+										<uui-icon name="icon-edit"></uui-icon>
+									</uui-button>
 								`,
 							)}
 							${when(
 								this.allowRemove,
 								() => html`
 									<uui-button
+										look="secondary"
 										label=${this.localize.term('general_remove')}
-										@click=${(event: Event) => this.#onRemove(event, item, index)}></uui-button>
+										title=${this.localize.term('general_remove')}
+										@click=${(event: Event) => this.#onRemove(event, item, index)}>
+										<uui-icon name="icon-remove"></uui-icon>
+									</uui-button>
 								`,
 							)}
 						</uui-action-bar>
@@ -97,12 +105,29 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 
 	static override styles = [
 		css`
-			uui-ref-node {
-				margin-bottom: 1px;
+			#btn-add {
+				--uui-button-padding-top-factor: 1.5;
+				--uui-button-padding-bottom-factor: 1.5;
+				display: block;
 			}
 
-			#btn-add {
-				display: block;
+			.item {
+				--contentment-block-actions-opacity: 0;
+				margin-bottom: 1px;
+
+				&:hover,
+				&:focus-within {
+					--contentment-block-actions-opacity: 1;
+				}
+
+				.actions {
+					position: absolute;
+					top: var(--uui-size-2);
+					right: var(--uui-size-2);
+					opacity: var(--contentment-block-actions-opacity, 0);
+					transition: opacity 120ms;
+					z-index: 1;
+				}
 			}
 		`,
 	];
