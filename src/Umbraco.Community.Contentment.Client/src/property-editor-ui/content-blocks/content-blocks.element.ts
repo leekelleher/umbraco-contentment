@@ -38,6 +38,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 	#config?: UmbPropertyEditorConfigCollection;
 	#createButtonLabelKey = '#content_createEmpty';
 	#disableSorting = false;
+	#enableFilter = false;
 	#maxItems = Infinity;
 	#uiAlias = 'Umb.Contentment.DisplayMode.List';
 	#blockTypeConfig = new Map<string, ContentBlockTypeConfig>();
@@ -68,6 +69,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		this.#createButtonLabelKey = config.getValueByAlias('addButtonLabelKey') ?? 'content_createEmpty';
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#disableSorting = this.#maxItems === 1 ? true : parseBoolean(config.getValueByAlias('disableSorting'));
+		this.#enableFilter = parseBoolean(config.getValueByAlias('enableFilter'));
 
 		const displayModeConfig = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('displayMode');
 		this.#uiAlias = displayModeConfig?.[0]?.key ?? 'Umb.Contentment.DisplayMode.List';
@@ -148,7 +150,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 			const pickerModal = this.#modalManager?.open(this, CONTENTMENT_ITEM_PICKER_MODAL, {
 				data: {
 					items,
-					enableFilter: items.length > 6,
+					enableFilter: this.#enableFilter,
 					enableMultiple: false,
 					maxItems: 1,
 					listType: 'list',

@@ -47,12 +47,12 @@ const propertyEditorUi: Array<UmbExtensionManifest> = [
 							{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.List' },
 						],
 					},
-					// {
-					// 	alias: 'enableFilter',
-					// 	label: 'Enable filter?',
-					// 	description: 'Select to enable the search filter in the overlay selection panel.',
-					// 	propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
-					// },
+					{
+						alias: 'enableFilter',
+						label: 'Enable filter?',
+						description: 'Select to enable the search filter in the overlay selection panel.',
+						propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+					},
 					{
 						alias: 'maxItems',
 						label: 'Maximum items',
