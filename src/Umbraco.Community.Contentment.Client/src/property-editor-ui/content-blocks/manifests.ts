@@ -26,8 +26,7 @@ const propertyEditorUi: Array<UmbExtensionManifest> = [
 					{
 						alias: 'displayMode',
 						label: '#contentment_labelDisplayMode',
-						description: `<uui-tag color="danger" look="primary">Not yet implemented</uui-tag>
-Select and configure how to display the blocks in the editor.`,
+						description: 'Select and configure how the blocks are displayed in the editor.',
 						propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ConfigurationEditor',
 						config: [
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureDisplayMode' },
@@ -45,15 +44,15 @@ Select and configure how to display the blocks in the editor.`,
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureElementType' },
 							{ alias: 'enableFilter', value: true },
 							{ alias: 'enableDevMode', value: true },
-							{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.List' },
+							{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.Cards' },
 						],
 					},
-					// {
-					// 	alias: 'enableFilter',
-					// 	label: 'Enable filter?',
-					// 	description: 'Select to enable the search filter in the overlay selection panel.',
-					// 	propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
-					// },
+					{
+						alias: 'enableFilter',
+						label: 'Enable filter?',
+						description: 'Select to enable the search filter in the overlay selection panel.',
+						propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+					},
 					{
 						alias: 'maxItems',
 						label: 'Maximum items',
