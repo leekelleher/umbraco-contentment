@@ -107,13 +107,17 @@ export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement
 
 	override render() {
 		if (!this._ready) {
-			return html`<umb-body-layout .headline=${this._headline}><uui-loader></uui-loader></umb-body-layout>`;
+			return html`
+				<umb-body-layout .headline=${this.localize.string(this._headline)}>
+					<uui-loader></uui-loader>
+				</umb-body-layout>
+			`;
 		}
 
-		const showTabStrip = this._tabs.length > 0 || this._hasRootProperties;
+		const showTabStrip = this._tabs.length > 1 || this._hasRootProperties;
 
 		return html`
-			<umb-body-layout main-no-padding .headline=${this._headline}>
+			<umb-body-layout main-no-padding .headline=${this.localize.string(this._headline)}>
 				<umb-icon slot="icon" .name=${this._icon}></umb-icon>
 
 				<umb-body-layout header-fit-height>

@@ -44,7 +44,7 @@ const propertyEditorUi: Array<UmbExtensionManifest> = [
 							{ alias: 'addButtonLabelKey', value: 'contentment_configureElementType' },
 							{ alias: 'enableFilter', value: true },
 							{ alias: 'enableDevMode', value: true },
-							{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.List' },
+							{ alias: 'uiAlias', value: 'Umb.Contentment.DisplayMode.Cards' },
 						],
 					},
 					{
