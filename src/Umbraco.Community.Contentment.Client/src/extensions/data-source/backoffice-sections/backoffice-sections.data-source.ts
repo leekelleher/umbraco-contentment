@@ -5,29 +5,15 @@ import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registr
 import { UmbControllerBase } from '@umbraco-cms/backoffice/class-api';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentDataSourceApi } from '../types.js';
-import type { ContentmentDataSourceExtentionManifestType } from '../data-source.extension.js';
-import type { ManifestSection } from '@umbraco-cms/backoffice/section';
-import type { UmbControllerAlias, UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
 
 export class ContentmentUmbracoBackofficeSectionsDataSourceApi
 	extends UmbControllerBase
 	implements ContentmentDataSourceApi
 {
-	#sections?: Array<ManifestSection>;
-
-	constructor(host: UmbControllerHost, controllerAlias: UmbControllerAlias) {
-		super(host, controllerAlias);
-
-		this.observe(umbExtensionsRegistry.byType('section'), (sections) => {
-			this.#sections = sections;
-		});
-	}
-
-	manifest?: ContentmentDataSourceExtentionManifestType;
-
 	async getItems(): Promise<Array<ContentmentListItem>> {
+		const sections = await this.observe(umbExtensionsRegistry.byType('section')).asPromise();
 		return (
-			this.#sections?.map((section) => ({
+			sections.map((section) => ({
 				name: section.meta.label,
 				value: section.meta.pathname,
 			})) ?? []
