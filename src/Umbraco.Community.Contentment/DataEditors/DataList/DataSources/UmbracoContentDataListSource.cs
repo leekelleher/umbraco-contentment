@@ -14,6 +14,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Services.Navigation;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
@@ -26,6 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
+        private readonly IDocumentNavigationQueryService _documentNavigationQueryService;
         private readonly IDynamicRootService _dynamicRootService;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -36,6 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IApiContentBuilder apiContentBuilder,
             IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
+            IDocumentNavigationQueryService documentNavigationQueryService,
             IDynamicRootService dynamicRootService,
             IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor)
@@ -43,6 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _apiContentBuilder = apiContentBuilder;
             _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
+            _documentNavigationQueryService = documentNavigationQueryService;
             _dynamicRootService = dynamicRootService;
             _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
@@ -100,7 +104,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
                 var documentTypeKeys = GetDocumentTypeFilter(config);
 
-                var items = (start.Children() ?? Enumerable.Empty<IPublishedContent>())
+                var items = GetChildren(start)
                     .Where(x => IsDocumentTypeMatch(x, documentTypeKeys))
                     .Select(x => ToDataListItem(x, imageAlias));
 
@@ -147,7 +151,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 var items = string.IsNullOrWhiteSpace(query) == false
                     ? start.SearchChildren(query).Select(x => x.Content)
-                    : start.Children();
+                    : GetChildren(start);
 
                 items = items?.Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
@@ -238,6 +242,23 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return default;
+        }
+
+        private IEnumerable<IPublishedContent> GetChildren(IPublishedContent start)
+        {
+            // IPublishedContent.Children() resolves published-only outside a preview request —
+            // it re-derives preview from the request cookie, ignoring the parent's preview state.
+            // Resolve each child explicitly with preview=true so draft nodes are included.
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache &&
+                _documentNavigationQueryService.TryGetChildrenKeys(start.Key, out var childKeys) == true)
+            {
+                return childKeys
+                    .Select(key => contentCache.GetById(false, key) ?? contentCache.GetById(true, key))
+                    .WhereNotNull();
+            }
+
+            return Enumerable.Empty<IPublishedContent>();
         }
 
         private IReadOnlyList<Guid>? GetDocumentTypeFilter(Dictionary<string, object> config)
