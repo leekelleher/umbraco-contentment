@@ -67,6 +67,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ContentmentConfigurationField
             {
+                Key = "documentTypes",
+                Name = "Document type filter",
+                Description = "Select one or more document types to filter the child nodes. By default, all child nodes are returned regardless of their document type.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
+            },
+            new ContentmentConfigurationField
+            {
                 Key = "imageAlias",
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
@@ -91,7 +98,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start is not null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
-                var items = start.Children()?.Select(x => ToDataListItem(x, imageAlias)) ?? Enumerable.Empty<DataListItem>();
+                var documentTypeKeys = GetDocumentTypeFilter(config);
+
+                var items = (start.Children() ?? Enumerable.Empty<IPublishedContent>())
+                    .Where(x => IsDocumentTypeMatch(x, documentTypeKeys))
+                    .Select(x => ToDataListItem(x, imageAlias));
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
                 {
@@ -112,13 +123,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
+                var documentTypeKeys = GetDocumentTypeFilter(config);
 
-                return Task.FromResult(values
+                var content = values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x.Guid))
                     .WhereNotNull()
-                    .Select(x => ToDataListItem(x, imageAlias)));
+                    .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
+
+                return Task.FromResult(content.Select(x => ToDataListItem(x, imageAlias)));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -129,9 +143,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             var start = GetStartContent(config);
             if (start != null)
             {
+                var documentTypeKeys = GetDocumentTypeFilter(config);
+
                 var items = string.IsNullOrWhiteSpace(query) == false
                     ? start.SearchChildren(query).Select(x => x.Content)
                     : start.Children();
+
+                items = items?.Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
                 if (items?.Any() == true)
                 {
@@ -221,6 +239,32 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return default;
         }
+
+        private IReadOnlyList<Guid>? GetDocumentTypeFilter(Dictionary<string, object> config)
+        {
+            // The Document Type Picker stores its value as a comma-separated string of GUIDs.
+            // We compare them directly against IPublishedContent.ContentType.Key.
+            var value = config.GetValueAs("documentTypes", string.Empty);
+            if (string.IsNullOrWhiteSpace(value) == true)
+            {
+                return null;
+            }
+
+            var keys = new List<Guid>();
+
+            foreach (var token in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                if (Guid.TryParse(token, out var key) == true)
+                {
+                    keys.Add(key);
+                }
+            }
+
+            return keys.Count > 0 ? keys : null;
+        }
+
+        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
+            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
 
         private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = DefaultImageAlias)
         {
