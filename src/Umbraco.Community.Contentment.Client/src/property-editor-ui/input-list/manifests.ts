@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+const dataTypesEditorUi: UmbExtensionManifest = {
+	type: 'propertyEditorUi',
+	alias: 'Umb.Contentment.PropertyEditorUi.InputListColumnsConfiguration',
+	name: '[Contentment] Input List: Columns Configuration Property Editor UI',
+	element: () => import('./input-list-columns-configuration.element.js'),
+	meta: {
+		label: 'Input List Columns Configuration',
+		icon: 'icon-list',
+		group: 'contentment',
+	},
+};
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Input List Property Editor Schema',
@@ -10,10 +22,11 @@ const schema: UmbExtensionManifest = {
 		settings: {
 			properties: [
 				{
-					alias: 'dataTypes',
-					label: 'Data types',
-					description: 'Select the data types to use for each list item.',
-					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DataTypePicker',
+					alias: 'columns',
+					label: 'Columns',
+					description: 'Configure the data type for each column in the list.',
+					propertyEditorUiAlias: dataTypesEditorUi.alias,
+					config: [{ alias: 'enableDevMode', value: true }],
 				},
 			],
 		},
@@ -55,4 +68,4 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [editorUi];
+export const manifests = [schema, dataTypesEditorUi, editorUi];

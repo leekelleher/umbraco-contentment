@@ -18,6 +18,7 @@ export const manifest: UmbExtensionManifest = {
 		'Umb.Contentment.PropertyEditorUi.DataPicker',
 		'Umb.Contentment.PropertyEditorUi.EditorNotes',
 		'Umb.Contentment.PropertyEditorUi.InputList',
+		'Umb.Contentment.PropertyEditorUi.InputListColumnsConfiguration',
 		'Umb.Contentment.PropertyEditorUi.ListItems',
 		'Umb.Contentment.PropertyEditorUi.Notes',
 		'Umb.Contentment.PropertyEditorUi.ReadOnly',

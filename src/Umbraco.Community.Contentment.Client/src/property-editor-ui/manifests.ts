@@ -14,11 +14,10 @@ import { manifest as customComponentList } from './custom-component-list/manifes
 import { manifest as dictionaryPicker } from './dictionary-picker/manifest.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
-import { manifest as dataTypePicker } from './data-type-picker/manifest.js';
 import { manifest as dropdownList } from './dropdown-list/manifest.js';
 import { manifests as editorNotes } from './editor-notes/manifests.js';
 import { manifests as iconPicker } from './icon-picker/manifests.js';
-//import { manifests as inputList } from './input-list/manifests.js';
+import { manifests as inputList } from './input-list/manifests.js';
 import { manifests as itemPicker } from './item-picker/manifests.js';
 import { manifests as listItems } from './list-items/manifests.js';
 import { manifest as manifestPicker } from './manifest-picker/manifest.js';
@@ -49,11 +48,10 @@ export const manifests: Array<UmbExtensionManifest> = [
 	dictionaryPicker,
 	...dataList,
 	...dataPicker,
-	dataTypePicker,
 	dropdownList,
 	...editorNotes,
 	...iconPicker,
-	//...inputList,
+	...inputList,
 	...itemPicker,
 	...listItems,
 	manifestPicker,

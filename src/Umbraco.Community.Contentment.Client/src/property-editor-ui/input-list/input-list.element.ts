@@ -2,24 +2,43 @@
 // Copyright © 2025 Lee Kelleher
 
 import { parseBoolean, parseInt } from '../../utils/index.js';
-import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, nothing, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { umbConfirmModal } from '@umbraco-cms/backoffice/modal';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbDataTypeDetailRepository } from '@umbraco-cms/backoffice/data-type';
+import { UmbId } from '@umbraco-cms/backoffice/id';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ContentmentSortEndEvent } from '../../components/sortable-list/sort-end.event.js';
-import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
+import type { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyEditorConfig, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
 import './input-list-property-editor.element.js';
 
+type ContentmentInputListColumnConfig = {
+	key: string; // stable column id (UUID)
+	dataType: string; // data-type guid
+	label: string; // display label (config-only, not used at runtime)
+};
+
 interface ContentmentInputListProperty {
+	key: string; // column key (from config column.key)
 	dataTypeKey: string;
 	propertyEditorUiAlias: string;
 	propertyEditorUiConfig?: UmbPropertyEditorConfig;
 }
 
-type ContentmentInputListValue = Array<Array<UmbPropertyValueData>>;
+interface ContentmentInputListRow {
+	key: string;
+	values: Array<ContentmentInputListItemValue>;
+}
+
+interface ContentmentInputListItemValue {
+	dataType: string;
+	key: string;
+	value?: unknown;
+}
+
+type ContentmentInputListValue = Array<ContentmentInputListRow>;
 
 type UmbPropertyDatasetElementChangeEvent = Event & { target: UmbPropertyDatasetElement };
 
@@ -30,6 +49,8 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	#disableSorting = false;
 
 	#inputs: Array<ContentmentInputListProperty> = [];
+
+	#loadGeneration = 0;
 
 	#maxItems = Infinity;
 
@@ -51,26 +72,32 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
 		this.#disableSorting = this.#maxItems === 1;
 
-		const dataTypes = config.getValueByAlias<Array<string>>('dataTypes');
-		if (dataTypes?.length) {
-			this.#loadDataTypes(dataTypes);
+		const columns = config.getValueByAlias<Array<ContentmentInputListColumnConfig>>('columns');
+		if (columns?.length) {
+			this.#loadDataTypes(columns);
 		}
 	}
 
-	async #loadDataTypes(uniques: Array<string>) {
+	async #loadDataTypes(columns: Array<ContentmentInputListColumnConfig>) {
+		const generation = ++this.#loadGeneration;
+
 		const results = (await Promise.all(
-			uniques.map(async (unique): Promise<ContentmentInputListProperty | null> => {
-				const { data } = await this.#repository.requestByUnique(unique);
+			columns.map(async (column): Promise<ContentmentInputListProperty | null> => {
+				const { data } = await this.#repository.requestByUnique(column.dataType);
 				if (!data) return null;
 				if (!data.editorUiAlias) return null;
 
 				return {
-					propertyEditorUiConfig: data.values,
-					propertyEditorUiAlias: data.editorUiAlias,
+					key: column.key,
 					dataTypeKey: data.unique,
+					propertyEditorUiAlias: data.editorUiAlias,
+					propertyEditorUiConfig: data.values,
 				};
 			}),
 		)) as Array<ContentmentInputListProperty | null>;
+
+		// Discard stale results if config was updated while this load was in flight.
+		if (generation !== this.#loadGeneration) return;
 
 		this.#inputs = results.filter((control) => !!control) as Array<ContentmentInputListProperty>;
 
@@ -78,13 +105,37 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	#onAdd() {
-		this.value = [...(this.value ?? []), []];
+		this.value = [
+			...(this.value ?? []),
+			{
+				key: UmbId.new(),
+				values: this.#inputs.map((input) => ({ key: input.key, dataType: input.dataTypeKey, value: undefined })),
+			},
+		];
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
 	#onChange(event: UmbPropertyDatasetElementChangeEvent, index: number) {
 		const value = [...(this.value ?? [])];
-		value[index] = event.target.value;
+		const savedValues = value[index].values;
+
+		// Rebuild from current inputs (handles new/removed columns), updating each value from the dataset.
+		// umb-property-dataset emits the full dataset state on every change, so event.target.value
+		// contains all columns — use it as the authoritative source, falling back to saved values.
+		// Spread the row into a new object — the original is frozen by Lit's property binding.
+		value[index] = {
+			...value[index],
+			values: this.#inputs.map((input) => {
+				const existing = savedValues.find((item) => item.key === input.key);
+				const fromDataset = event.target.value.find((v) => v.alias === input.key);
+				return {
+					key: input.key,
+					dataType: input.dataTypeKey,
+					value: fromDataset?.value ?? existing?.value,
+				};
+			}),
+		};
+
 		this.value = value;
 
 		this.dispatchEvent(new UmbChangeEvent());
@@ -92,12 +143,16 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 
 	async #onRemove(index: number) {
 		if (this.#confirmRemoval) {
-			await umbConfirmModal(this, {
-				color: 'danger',
-				headline: this.localize.term('contentment_removeItemHeadline'),
-				content: this.localize.term('contentment_removeItemMessage'),
-				confirmLabel: this.localize.term('contentment_removeItemButton'),
-			});
+			try {
+				await umbConfirmModal(this, {
+					color: 'danger',
+					headline: this.localize.term('contentment_removeItemHeadline'),
+					content: this.localize.term('contentment_removeItemMessage'),
+					confirmLabel: this.localize.term('contentment_removeItemButton'),
+				});
+			} catch {
+				return; // user cancelled
+			}
 		}
 
 		const value = [...(this.value ?? [])];
@@ -123,7 +178,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	#renderAddButton() {
-		if ((this.value?.length ?? 0) >= this.#maxItems) return;
+		if ((this.value?.length ?? 0) >= this.#maxItems) return nothing;
 		return html`
 			<uui-button
 				id="btn-add"
@@ -134,7 +189,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	#renderItems() {
-		if (!this.value || this.value?.length === 0) return;
+		if (!this.value || this.value.length === 0) return nothing;
 		return html`
 			<contentment-sortable-list
 				id="list"
@@ -144,7 +199,7 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
-					(_, index) => index,
+					(row) => row.key,
 					(_, index) => this.#renderItem(index),
 				)}
 			</contentment-sortable-list>
@@ -152,6 +207,16 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	}
 
 	#renderItem(index: number) {
+		const savedValues = this.value?.[index]?.values ?? [];
+
+		// Merge against current inputs: add missing columns, drop orphan columns
+		const mergedValues = this.#inputs.map((input) => {
+			const existing = savedValues.find((item) => item.key === input.key);
+			return existing ?? { key: input.key, dataType: input.dataTypeKey, value: undefined };
+		});
+
+		const data = mergedValues.map((item) => ({ alias: item.key, value: item.value }));
+
 		return html`
 			<contentment-sortable-list-item
 				class="item"
@@ -160,14 +225,14 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				@delete=${() => this.#onRemove(index)}>
 				<umb-property-dataset
 					class="inputs"
-					.value=${this.value?.[index] ?? []}
+					.value=${data}
 					@change=${(event: UmbPropertyDatasetElementChangeEvent) => this.#onChange(event, index)}>
 					${repeat(
 						this.#inputs,
-						(input) => input.dataTypeKey,
+						(input) => input.key,
 						(input) => html`
 							<contentment-input-list-property-editor
-								.alias=${input.dataTypeKey}
+								.alias=${input.key}
 								.config=${input.propertyEditorUiConfig}
 								.propertyEditorUiAlias=${input.propertyEditorUiAlias}>
 							</contentment-input-list-property-editor>
@@ -195,6 +260,10 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 				display: flex;
 				flex-direction: row;
 				gap: var(--uui-size-4);
+
+				& > contentment-input-list-property-editor:last-child {
+					flex: 1;
+				}
 			}
 		`,
 	];

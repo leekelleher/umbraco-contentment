@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright © 2025 Lee Kelleher
+
 import { customElement, property, state } from '@umbraco-cms/backoffice/external/lit';
 import { createExtensionElement, UmbExtensionsApiInitializer } from '@umbraco-cms/backoffice/extension-api';
 import { umbExtensionsRegistry } from '@umbraco-cms/backoffice/extension-registry';

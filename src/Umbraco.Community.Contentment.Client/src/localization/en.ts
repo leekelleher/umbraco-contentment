@@ -42,6 +42,10 @@ export default {
 		emptySocialNetworks: 'There are no social networks to select.',
 		changeSocialNetworkTo: (label: string | null | undefined) => `Change social network to ${label || 'this'}?`,
 
+		// Input List
+		addColumn: 'Add column',
+		enterLabel: 'Enter a label...',
+
 		// Property Actions
 		editJson: 'Edit raw value',
 	},
