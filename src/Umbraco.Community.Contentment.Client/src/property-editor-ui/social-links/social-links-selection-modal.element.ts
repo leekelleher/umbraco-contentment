@@ -48,13 +48,15 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 		}
 
 		return html`
-			<div id="wrapper">
-				${repeat(
-					this.data.items,
-					(item) => item.network,
-					(item) => this.#renderItem(item),
-				)}
-			</div>
+			<uui-scroll-container id="wrapper">
+				<div id="grid">
+					${repeat(
+						this.data.items,
+						(item) => item.network,
+						(item) => this.#renderItem(item),
+					)}
+				</div>
+			</uui-scroll-container>
 		`;
 	}
 
@@ -76,6 +78,11 @@ export class ContentmentPropertyEditorUISocialLinksSelectionModalElement extends
 	static override styles = [
 		css`
 			#wrapper {
+				width: 100%;
+				max-height: 60vh;
+			}
+
+			#grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fill, minmax(var(--uui-size-40), 1fr));
 				gap: var(--uui-size-layout-1);
