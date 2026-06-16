@@ -136,6 +136,10 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 					--contentment-block-actions-opacity: 1;
 				}
 
+				uui-ref-node {
+					min-height: var(--uui-size-16);
+				}
+
 				.actions {
 					position: absolute;
 					top: var(--uui-size-2);
