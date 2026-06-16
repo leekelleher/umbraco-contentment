@@ -8,10 +8,10 @@ The following property editors are available...
 - [Data Picker](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/editor-notes.md) - Similar to [Notes](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
-- [Notes](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
+- [Input List](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/input-list.md) - an editor to manage a list of one or more data-types to be used in a repeatable list.
 - [List Items](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
+- [Notes](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/number-input.md) - a numeric editor, with sizing configurations.
-- ~~[Render Macro](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/render-macro.md) - a read-only label dynamically generated from an Umbraco Macro.~~
 - [Social Links](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/social-links.md) - an editor to manage links for social network platforms.
 - [Templated Label](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/templated-label.md) - a display label, ideal for showing data from 3rd-party systems.
 - [Textbox List](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/textbox-list.md) - a multi-textstring editor, adds a textbox for each item in a custom data source.

@@ -32,6 +32,7 @@ Let's take a look inside...
 - [Data Picker](../docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](../docs/editors/editor-notes.md) - Similar to [Notes](../docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
+- [Input List](../docs/editors/input-list.md) - an editor to manage a list of one or more data-types to be used in a repeatable list.
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.

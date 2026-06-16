@@ -68,7 +68,9 @@ Here's an example of strongly-typed...
 ```cshtml
 <ul>
      @{
-        var inputList = Model.Value<IEnumerable<IEnumerable<object>>>("inputList");
+        // The `Tuple<>` types are dependent on your configured data-types, e.g. `string`, `IPublishedContent`, etc.
+        // You will need to modify this to match your configuration.
+        var inputList = Model.Value<IEnumerable<Tuple<object, object>>>("inputList");
         foreach (var item in inputList)
         {
             <li>
