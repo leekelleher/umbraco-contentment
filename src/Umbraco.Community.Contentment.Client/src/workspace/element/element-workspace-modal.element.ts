@@ -4,11 +4,8 @@
 import { customElement, html, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentElementManager } from './element-manager.context.js';
 import { UmbContentTypeContainerStructureHelper } from '@umbraco-cms/backoffice/content-type';
-import {
-	UmbModalBaseElement,
-	UMB_MODAL_MANAGER_CONTEXT,
-	UMB_DISCARD_CHANGES_MODAL,
-} from '@umbraco-cms/backoffice/modal';
+import { UMB_MODAL_MANAGER_CONTEXT, UMB_DISCARD_CHANGES_MODAL } from '@umbraco-cms/backoffice/modal';
+import { ContentmentRoutableModalElement } from '../../components/routable-modal/routable-modal.element.js';
 import type {
 	ContentmentElementWorkspaceModalData,
 	ContentmentElementWorkspaceModalValue,
@@ -18,7 +15,7 @@ import type { UmbPropertyTypeContainerMergedModel } from '@umbraco-cms/backoffic
 import './element-workspace-tab.element.js';
 
 @customElement('contentment-element-workspace-modal')
-export class ContentmentElementWorkspaceModalElement extends UmbModalBaseElement<
+export class ContentmentElementWorkspaceModalElement extends ContentmentRoutableModalElement<
 	ContentmentElementWorkspaceModalData,
 	ContentmentElementWorkspaceModalValue
 > {
