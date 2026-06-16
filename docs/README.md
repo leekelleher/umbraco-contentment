@@ -29,6 +29,13 @@ Here is the documentation for the Contentment property-editors...
 - [Text Input](../docs/editors/text-input.md) - a textstring editor, configurable with HTML5 options.
 
 
+#### Data Sources
+
+Here is the documentation for the Contentment data-sources...
+
+- [Data Sources](../docs/data-sources/README.md) - a list of all available data-sources.
+
+
 ##### Prerequisite
 
 The configuration of all these editors will require you to have knowledge of how to create a new Data Type and Document Type in Umbraco.

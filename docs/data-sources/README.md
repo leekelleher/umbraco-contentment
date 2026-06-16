@@ -34,6 +34,7 @@ The following data-sources are available by default with the Contentment package
 - [Umbraco Content Types](data-source--umbraco-content-types.md) - Populate the data source using Content Types.
 - [Umbraco Content by XPath](data-source--umbraco-content-xpath.md) - Use an XPath query to select Umbraco content to use as the data source.
 - [Umbraco Dictionary Items](data-source--umbraco-dictionary.md) - Select an Umbraco dictionary item to populate the data source with its child items.
+- [Umbraco Elements](data-source--umbraco-elements.md) - Select an element folder to use its elements as the data source.
 - [Umbraco Entities](data-source--umbraco-entity.md) - Select an Umbraco entity type to populate the data source.
 - [Umbraco Files](data-source--umbraco-files.md) - Use files defined in Umbraco, such as scripts or stylesheets.
 - [Umbraco Image Crops](data-source--umbraco-image-crop.md) - Select an Image Cropper data-type to use its defined crops to populate the data source.
