@@ -15,7 +15,7 @@ Scoped to `src/Umbraco.Community.Contentment.Client/` — the TypeScript/Lit Umb
 
 | Folder | Purpose |
 |---|---|
-| `api/` | Auto-generated OpenAPI client (types, SDK, fetch client) |
+| `api/` | Hand-rolled Contentment Management API client — `types.ts` (DTOs + operation types), `endpoints.ts` (Service classes wrapping `umbHttpClient`), `index.ts` (re-export hub) |
 | `components/` | Shared Lit web components |
 | `condition/` | Extension `condition` implementations |
 | `extensions/` | Extension implementations (block editor views, data sources, etc.) |
@@ -69,13 +69,14 @@ The manifest alias mirrors the C# side's `Constants.Internals.DataEditorAliasPre
 - All UI elements extend `UmbLitElement` (Umbraco's Lit base class).
 - Extension registration is manifest-driven; nothing is imperatively registered.
 - External libs like Liquid are **lazy-loaded** on demand, not imported eagerly.
-- Strict TypeScript throughout (`strict: true`); the generated `api/` client provides typed server access.
+- Strict TypeScript throughout (`strict: true`); the hand-rolled `api/` client provides typed server access via `umbHttpClient`.
 
 ## Key runtime / tooling dependencies
 
 - `liquidjs` — Liquid template engine, used by `blockEditorCustomView` extensions.
 - `sortablejs` — drag-drop for sortable lists.
-- `@hey-api/openapi-ts` — generates the `src/api/` client from the server's Swagger spec. Regenerate with `npm run generate:server-api` while a host is running on `http://localhost:21187`.
+
+The `src/api/` client is hand-maintained. When the C# request/response models change, update `src/api/types.ts` to match.
 
 ## Formatting
 

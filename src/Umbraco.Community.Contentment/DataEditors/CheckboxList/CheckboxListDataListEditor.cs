@@ -31,6 +31,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ShowDescriptionsConfigurationField(),
             new ShowIconsConfigurationField(),
+            new AllowClearConfigurationField(),
             new()
             {
                 Key = "listStyles",

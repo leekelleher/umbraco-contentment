@@ -14,6 +14,7 @@ using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Services.Navigation;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Community.Contentment.Services;
 using Umbraco.Extensions;
@@ -26,6 +27,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
         private readonly IContentTypeService _contentTypeService;
+        private readonly IDocumentNavigationQueryService _documentNavigationQueryService;
         private readonly IDynamicRootService _dynamicRootService;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -36,6 +38,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IApiContentBuilder apiContentBuilder,
             IContentmentContentContext contentmentContentContext,
             IContentTypeService contentTypeService,
+            IDocumentNavigationQueryService documentNavigationQueryService,
             IDynamicRootService dynamicRootService,
             IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor)
@@ -43,6 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _apiContentBuilder = apiContentBuilder;
             _contentmentContentContext = contentmentContentContext;
             _contentTypeService = contentTypeService;
+            _documentNavigationQueryService = documentNavigationQueryService;
             _dynamicRootService = dynamicRootService;
             _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
@@ -64,6 +68,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Parent node",
                 Description = "Set a parent node to use its child nodes as the data source items.",
                 PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "documentTypes",
+                Name = "Document type filter",
+                Description = "Select one or more document types to filter the child nodes. By default, all child nodes are returned regardless of their document type.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.DocumentTypePicker",
             },
             new ContentmentConfigurationField
             {
@@ -91,7 +102,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start is not null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
-                var items = start.Children()?.Select(x => ToDataListItem(x, imageAlias)) ?? Enumerable.Empty<DataListItem>();
+                var documentTypeKeys = GetDocumentTypeFilter(config);
+
+                var items = GetChildren(start)
+                    .Where(x => IsDocumentTypeMatch(x, documentTypeKeys))
+                    .Select(x => ToDataListItem(x, imageAlias));
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
                 {
@@ -112,13 +127,16 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
+                var documentTypeKeys = GetDocumentTypeFilter(config);
 
-                return Task.FromResult(values
+                var content = values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
                     .Select(x => umbracoContext.Content.GetById(preview, x.Guid))
                     .WhereNotNull()
-                    .Select(x => ToDataListItem(x, imageAlias)));
+                    .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
+
+                return Task.FromResult(content.Select(x => ToDataListItem(x, imageAlias)));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -129,9 +147,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             var start = GetStartContent(config);
             if (start != null)
             {
+                var documentTypeKeys = GetDocumentTypeFilter(config);
+
                 var items = string.IsNullOrWhiteSpace(query) == false
                     ? start.SearchChildren(query).Select(x => x.Content)
-                    : start.Children();
+                    : GetChildren(start);
+
+                items = items?.Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
                 if (items?.Any() == true)
                 {
@@ -221,6 +243,49 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return default;
         }
+
+        private IEnumerable<IPublishedContent> GetChildren(IPublishedContent start)
+        {
+            // IPublishedContent.Children() resolves published-only outside a preview request —
+            // it re-derives preview from the request cookie, ignoring the parent's preview state.
+            // Resolve each child explicitly with preview=true so draft nodes are included.
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache &&
+                _documentNavigationQueryService.TryGetChildrenKeys(start.Key, out var childKeys) == true)
+            {
+                return childKeys
+                    .Select(key => contentCache.GetById(false, key) ?? contentCache.GetById(true, key))
+                    .WhereNotNull();
+            }
+
+            return Enumerable.Empty<IPublishedContent>();
+        }
+
+        private IReadOnlyList<Guid>? GetDocumentTypeFilter(Dictionary<string, object> config)
+        {
+            // The Document Type Picker stores its value as a comma-separated string of GUIDs.
+            // We compare them directly against IPublishedContent.ContentType.Key.
+            var value = config.GetValueAs("documentTypes", string.Empty);
+            if (string.IsNullOrWhiteSpace(value) == true)
+            {
+                return null;
+            }
+
+            var keys = new List<Guid>();
+
+            foreach (var token in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                if (Guid.TryParse(token, out var key) == true)
+                {
+                    keys.Add(key);
+                }
+            }
+
+            return keys.Count > 0 ? keys : null;
+        }
+
+        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
+            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
 
         private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = DefaultImageAlias)
         {

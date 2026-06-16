@@ -4,12 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Microsoft.Extensions.DependencyInjection;
-using Umbraco.Cms.Api.Common.OpenApi;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Infrastructure.Manifest;
-using Umbraco.Community.Contentment.Api.Management;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Community.Contentment.Services;
@@ -24,10 +22,8 @@ namespace Umbraco.Community.Contentment.Composing
                 .Services
                     .AddSingleton<ConfigurationEditorUtility>()
                     .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
-                    .AddSingleton<IOperationIdHandler, ContentmentOperationIdHandler>()
                     .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
                     .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
-                    .ConfigureOptions<ConfigureContentmentSwaggerGenOptions>()
              ;
 
             builder

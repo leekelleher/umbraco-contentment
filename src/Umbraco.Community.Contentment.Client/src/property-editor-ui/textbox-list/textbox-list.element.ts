@@ -3,7 +3,6 @@
 
 import { css, customElement, html, nothing, property, repeat, state, when } from '@umbraco-cms/backoffice/external/lit';
 import { tryExecute } from '@umbraco-cms/backoffice/resources';
-import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
@@ -52,7 +51,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 
 		const body = { dataSource: this._dataSource[0], listEditor: null };
 
-		const { data } = await tryExecute(this, DataListService.postDataListEditor({ client: umbHttpClient, body }));
+		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));
 
 		if (!data) return;
 
@@ -112,10 +111,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 				display: flex;
 				align-items: center;
 				gap: var(--uui-size-6);
-
 				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
-				border-radius: var(--uui-border-radius);
 			}
 
 			uui-label {

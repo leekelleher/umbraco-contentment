@@ -91,7 +91,7 @@ export class ContentmentSortableListItemElement extends UmbLitElement {
 				!this.hideActions,
 				() => html`
 					<uui-action-bar class="actions">
-						<uui-button compact label=${this.localize.term('general_remove')} @click=${this.#onRemove}>
+						<uui-button compact look="secondary" label=${this.localize.term('general_remove')} @click=${this.#onRemove}>
 							<uui-icon name="icon-trash"></uui-icon>
 						</uui-button>
 					</uui-action-bar>
@@ -103,14 +103,18 @@ export class ContentmentSortableListItemElement extends UmbLitElement {
 	static override styles = [
 		css`
 			:host {
+				position: relative;
+
 				display: flex;
 				flex-direction: row;
 				align-items: center;
 				gap: var(--uui-size-6);
 
-				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
+				border: 1px solid var(--uui-color-border);
 				border-radius: var(--uui-border-radius);
+
+				padding: var(--uui-size-3) var(--uui-size-6);
+				margin-bottom: 1px;
 
 				&[drag-placeholder] {
 					opacity: 0.5;
@@ -121,10 +125,23 @@ export class ContentmentSortableListItemElement extends UmbLitElement {
 				}
 
 				> .actions {
+					position: absolute;
+					top: var(--uui-size-2);
+					right: var(--uui-size-2);
+
 					flex: 0 0 auto;
 					display: flex;
 					justify-content: flex-end;
+
+					opacity: var(--sortable-item-opacity, 0);
+					transition: opacity 120ms;
 				}
+			}
+
+			:host(:hover),
+			:host(:focus-within) {
+				--sortable-item-opacity: 1;
+				border-color: var(--uui-color-border-emphasis);
 			}
 
 			::slotted(*) {

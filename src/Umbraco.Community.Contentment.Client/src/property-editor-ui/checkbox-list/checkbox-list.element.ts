@@ -27,7 +27,8 @@ export class ContentmentPropertyEditorUICheckboxListElement
 {
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
-		this.#value = value ?? [];
+		this.#value = Array.isArray(value) ? value : value ? [value] : [];
+		this.#updateItems();
 	}
 	public get value(): Array<string> | undefined {
 		return this.#value;
@@ -108,6 +109,17 @@ export class ContentmentPropertyEditorUICheckboxListElement
 		this.value = values;
 
 		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	#updateItems() {
+		if (this._items?.length) {
+			this._items = this._items.map((item) => ({
+				...item,
+				checked: this.#value?.includes(item.value) ?? false,
+			}));
+		}
+
+		this._toggleChecked = this._items.every((item) => item.checked);
 	}
 
 	override render() {
