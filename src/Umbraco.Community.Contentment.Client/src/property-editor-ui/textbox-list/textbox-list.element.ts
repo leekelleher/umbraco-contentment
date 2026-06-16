@@ -111,10 +111,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 				display: flex;
 				align-items: center;
 				gap: var(--uui-size-6);
-
 				padding: var(--uui-size-3) var(--uui-size-6);
-				background-color: var(--uui-color-surface-alt);
-				border-radius: var(--uui-border-radius);
 			}
 
 			uui-label {

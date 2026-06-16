@@ -246,13 +246,15 @@ export class ContentmentPropertyEditorUIInputListElement extends UmbLitElement i
 	static override readonly styles = [
 		css`
 			#btn-add {
+				--uui-button-padding-top-factor: 2;
+				--uui-button-padding-bottom-factor: 2;
 				display: block;
 			}
 
 			#list {
 				display: flex;
 				flex-direction: column;
-				gap: 1px;
+				gap: var(--uui-size-1);
 				margin-bottom: var(--uui-size-1);
 			}
 

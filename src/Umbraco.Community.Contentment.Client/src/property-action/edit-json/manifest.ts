@@ -21,7 +21,6 @@ export const manifest: UmbExtensionManifest = {
 		'Umb.Contentment.PropertyEditorUi.InputListColumnsConfiguration',
 		'Umb.Contentment.PropertyEditorUi.ListItems',
 		'Umb.Contentment.PropertyEditorUi.Notes',
-		'Umb.Contentment.PropertyEditorUi.RadioButtonList',
 		'Umb.Contentment.PropertyEditorUi.ReadOnly',
 		'Umb.Contentment.PropertyEditorUi.SocialLinks',
 		'Umb.Contentment.PropertyEditorUi.TemplatedLabel',

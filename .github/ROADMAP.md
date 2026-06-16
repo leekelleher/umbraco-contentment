@@ -156,6 +156,10 @@ Property Editors are:
 - [Block Editor Liquid View](https://github.com/leekelleher/umbraco-contentment/pull/506)
 - [Data List: Tags UI refresh](https://github.com/leekelleher/umbraco-contentment/pull/512)
 
+### [v6.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.2.0)
+
+- A non-breaking-change minor release. Reduces Umbraco dependency to 18, _(consumers will need to upgraded to Contentment 7)._
+
 
 ## v7 _(June 2026)_
 
