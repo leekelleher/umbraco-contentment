@@ -1,6 +1,6 @@
 {
 	"name": "@leekelleher/umbraco-contentment",
-	"version": "6.2.0",
+	"version": "6.2.1",
 	"description": "TypeScript definitions for Contentment, a collection of components for Umbraco.",
 	"author": "Lee Kelleher",
 	"license": "MIT",
