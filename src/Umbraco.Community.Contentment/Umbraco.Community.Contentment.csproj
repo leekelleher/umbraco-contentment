@@ -41,9 +41,9 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[18.0.0-rc1, 19)" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="[18.0.0-rc1, 19)" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[18.0.0-rc1, 19)" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[18.0.0-rc2, 19)" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="[18.0.0-rc2, 19)" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[18.0.0-rc2, 19)" />
     </ItemGroup>
 
     <ItemGroup>
