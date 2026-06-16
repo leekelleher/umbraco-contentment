@@ -43,7 +43,7 @@ jobs:
       run: dotnet pack src\Umbraco.Community.Contentment\Umbraco.Community.Contentment.csproj -c Release /p:Version=${{github.ref_name}}
 
     - name: Push to GitHub npm
-      run: npm publish
+      run: npm publish ${{ contains(github.ref_name, '-') && '--tag next' || '' }}
       working-directory: src/Umbraco.Community.Contentment.Client
       env:
         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -52,5 +52,4 @@ jobs:
       run: dotnet nuget push **\*.nupkg -k ${{secrets.GITHUB_TOKEN}} -s https://nuget.pkg.github.com/leekelleher/index.json
 
     - name: Push to NuGet
-      if: contains(github.ref_name, '-') == false
       run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
