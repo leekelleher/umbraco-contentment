@@ -40,8 +40,6 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 	#maxItems = Infinity;
 
-	#modalManager?: typeof UMB_MODAL_MANAGER_CONTEXT.TYPE;
-
 	#uiAlias: string = 'Umb.Contentment.DisplayMode.List';
 
 	@state()
@@ -76,14 +74,6 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		} else {
 			this.getModels();
 		}
-	}
-
-	constructor() {
-		super();
-
-		this.consumeContext(UMB_MODAL_MANAGER_CONTEXT, (modalManager) => {
-			this.#modalManager = modalManager;
-		});
 	}
 
 	protected getModels() {
@@ -178,8 +168,9 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	async #onAdd() {
-		if (!this.#modalManager) return;
+	async #insertBlockAt(index: number, _listType?: string): Promise<void> {
+		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
+		if (!modalManager) return;
 
 		if (this.models?.length === 1) {
 			const model = this.models[0];
@@ -189,7 +180,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 				value: model.defaultValues ?? {},
 			};
 
-			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
+			const modal = modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
 				data: { item, model },
 				modal: { size: model.overlaySize ?? 'medium' },
 			});
@@ -198,18 +189,23 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 			this.#setValue(data, this.value?.length ?? 0);
 		} else {
-			const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
+			const modal = modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
 				data: { items: this.models ?? [] },
 			});
 
 			const data = await modal.onSubmit().catch(() => undefined);
 
-			this.#setValue(data, this.value?.length ?? 0);
+			this.#setValue(data, index);
 		}
 	}
 
+	async #onAdd(event: CustomEvent<{ listType: string }>): Promise<void> {
+		await this.#insertBlockAt(this.value?.length ?? 0, event.detail.listType);
+	}
+
 	async #onEdit(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
-		if (!this.#modalManager || !this.#canEdit(event.detail.item)) return;
+		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
+		if (!modalManager || !this.#canEdit(event.detail.item)) return;
 
 		const model = this.#getModelByKey(event.detail.item.value);
 		if (!model?.fields?.length) return;
@@ -217,7 +213,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		const value = this.value?.[event.detail.index];
 		if (!value) return;
 
-		const modal = this.#modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
+		const modal = modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL, {
 			data: { item: value, model },
 			modal: { size: model.overlaySize ?? 'medium' },
 		});
@@ -225,6 +221,10 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		const data = await modal.onSubmit().catch(() => undefined);
 
 		this.#setValue(data, event.detail.index);
+	}
+
+	async #onInsert(event: CustomEvent<{ index: number; listType: string }>): Promise<void> {
+		await this.#insertBlockAt(event.detail.index, event.detail.listType);
 	}
 
 	async #onRemove(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
@@ -271,6 +271,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 				.uiAlias=${this.#uiAlias}
 				@add=${this.#onAdd}
 				@edit=${this.#onEdit}
+				@insert=${this.#onInsert}
 				@remove=${this.#onRemove}
 				@sort=${this.#onSort}>
 			</contentment-display-mode-ui>
