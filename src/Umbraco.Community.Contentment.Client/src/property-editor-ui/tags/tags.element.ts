@@ -291,9 +291,15 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 				background-color: var(--uui-color-surface-alt);
 				border-radius: var(--uui-border-radius);
 				color: var(--color-standalone);
+				cursor: pointer;
 
 				&:focus {
 					outline: var(--uui-size-1) solid var(--uui-focus-outline-color);
+				}
+
+				&:hover,
+				&:focus-within {
+					--tag-action-opacity: 1;
 				}
 
 				strong {
@@ -310,6 +316,9 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 				--uui-button-padding-bottom-factor: 0;
 
 				font-size: var(--uui-type-small-size);
+
+				opacity: var(--tag-action-opacity, 0);
+				transition: opacity 120ms;
 			}
 
 			#input {
