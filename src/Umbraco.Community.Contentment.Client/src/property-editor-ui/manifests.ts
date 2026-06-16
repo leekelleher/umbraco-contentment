@@ -12,7 +12,6 @@ import { manifests as contentBlocks } from './content-blocks/manifests.js';
 import { manifest as contentSource } from './content-source/manifest.js';
 import { manifest as customComponentList } from './custom-component-list/manifest.js';
 import { manifest as dictionaryPicker } from './dictionary-picker/manifest.js';
-import { manifest as elementFolderPicker } from './element-folder-picker/manifest.js';
 import { manifests as dataList } from './data-list/manifests.js';
 import { manifests as dataPicker } from './data-picker/manifests.js';
 import { manifest as dropdownList } from './dropdown-list/manifest.js';
@@ -47,7 +46,6 @@ export const manifests: Array<UmbExtensionManifest> = [
 	contentSource,
 	customComponentList,
 	dictionaryPicker,
-	elementFolderPicker,
 	...dataList,
 	...dataPicker,
 	dropdownList,

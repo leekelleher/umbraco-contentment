@@ -9,7 +9,6 @@ using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
-using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Services.Navigation;
 using Umbraco.Extensions;
@@ -23,7 +22,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IElementNavigationQueryService _elementNavigationQueryService;
         private readonly IEntityService _entityService;
-        private readonly IJsonSerializer _jsonSerializer;
         private readonly IPublishedElementCache _publishedElementCache;
 
         private const string DefaultImageAlias = "image";
@@ -33,14 +31,12 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IElementNavigationQueryService elementNavigationQueryService,
             IEntityService entityService,
-            IJsonSerializer jsonSerializer,
             IPublishedElementCache publishedElementCache)
         {
             _apiElementBuilder = apiElementBuilder;
             _contentTypeService = contentTypeService;
             _elementNavigationQueryService = elementNavigationQueryService;
             _entityService = entityService;
-            _jsonSerializer = jsonSerializer;
             _publishedElementCache = publishedElementCache;
         }
 
@@ -58,8 +54,13 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "folder",
                 Name = "Element folder",
-                Description = "Set an element folder to use its elements as the data source items.",
-                PropertyEditorUiAlias = "Umb.Contentment.PropertyEditorUi.ElementFolderPicker",
+                Description = "Set an element folder to use its elements as the data source items. Leave empty to use elements from the Element Library root.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.ElementPicker",
+                Config = new Dictionary<string, object>
+                {
+                    { "folderOnly", true },
+                    { "validationLimit", new { min = 0, max = 1 } },
+                },
             },
             new ContentmentConfigurationField
             {
@@ -90,7 +91,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public OverlaySize OverlaySize => OverlaySize.Medium;
+        public OverlaySize OverlaySize => OverlaySize.Small;
 
         public IEnumerable<DataListItem> GetItems(Dictionary<string, object> config)
         {
@@ -188,18 +189,18 @@ namespace Umbraco.Community.Contentment.DataEditors
         public object? ConvertToDeliveryApiValue(Type type, string value, bool expanding = false)
             => ConvertValue(type, value) is IPublishedElement element ? _apiElementBuilder.Build(element) : default;
 
-        private Guid? GetStartFolderKey(Dictionary<string, object> config)
+        private static Guid? GetStartFolderKey(Dictionary<string, object> config)
         {
-            // The Element Picker (with folderOnly: true) stores its value as a JSON array of bare GUIDs.
+            // Umb.PropertyEditorUi.ElementPicker (folderOnly: true) stores its value as a comma-separated
+            // string of bare GUIDs. With max: 1 there is at most one entry.
             var raw = config.GetValueAs("folder", string.Empty);
             if (string.IsNullOrWhiteSpace(raw) == true)
             {
                 return null;
             }
 
-            var keys = _jsonSerializer.Deserialize<IEnumerable<Guid>>(raw);
-            var key = keys?.FirstOrDefault();
-            return key.HasValue == true && key.Value.Equals(Guid.Empty) == false ? key : null;
+            var token = raw.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault();
+            return Guid.TryParse(token, out var key) && key.Equals(Guid.Empty) == false ? key : null;
         }
 
         private IEnumerable<IPublishedElement> GetFolderElements(Guid? folderKey, bool preview)
