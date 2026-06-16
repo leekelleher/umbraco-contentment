@@ -18,6 +18,11 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 		this.dispatchEvent(new CustomEvent('edit', { bubbles: true, detail: { item, index } }));
 	}
 
+	#onInsert(event: Event, index: number) {
+		event.stopPropagation();
+		this.dispatchEvent(new CustomEvent('insert', { bubbles: true, detail: { index, listType: 'blocks' } }));
+	}
+
 	#onRemove(event: Event, item: ContentmentListItem, index: number) {
 		event.stopPropagation();
 		this.dispatchEvent(new CustomEvent('remove', { bubbles: true, detail: { item, index } }));
@@ -47,7 +52,7 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 	#renderItems() {
 		if (!this.items?.length) return nothing;
 		return html`
-			<contentment-sortable-list item-selector="uui-ref-node" ?disabled=${!this.allowSort} @sort-end=${this.#onSort}>
+			<contentment-sortable-list item-selector=".item" ?disabled=${!this.allowSort} @sort-end=${this.#onSort}>
 				${repeat(
 					this.items,
 					(item) => item.value,
@@ -60,46 +65,57 @@ export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeE
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return nothing;
 		return html`
-			<uui-ref-node class="item" standalone @open=${(event: Event) => this.#onEdit(event, item, index)}>
-				${when(item.icon, (icon) => html`<umb-icon slot="icon" .name=${icon}></umb-icon>`)}
-				<umb-ufm-render slot="name" inline .markdown=${item.name} .value=${item.data}></umb-ufm-render>
+			<div class="item">
 				${when(
-					item.description,
-					(detail) =>
-						html`<umb-ufm-render slot="detail" inline .markdown=${detail} .value=${item.data}></umb-ufm-render>`,
-				)}
-				${when(
-					this.allowEdit || this.allowRemove,
+					this.allowAdd,
 					() => html`
-						<uui-action-bar slot="actions" class="actions">
-							${when(
-								this.allowEdit || this.canEdit(item, index),
-								() => html`
-									<uui-button
-										look="secondary"
-										label=${this.localize.term('general_edit')}
-										title=${this.localize.term('general_edit')}
-										@click=${(event: Event) => this.#onEdit(event, item, index)}>
-										<uui-icon name="icon-edit"></uui-icon>
-									</uui-button>
-								`,
-							)}
-							${when(
-								this.allowRemove,
-								() => html`
-									<uui-button
-										look="secondary"
-										label=${this.localize.term('general_remove')}
-										title=${this.localize.term('general_remove')}
-										@click=${(event: Event) => this.#onRemove(event, item, index)}>
-										<uui-icon name="icon-remove"></uui-icon>
-									</uui-button>
-								`,
-							)}
-						</uui-action-bar>
+						<uui-button-inline-create
+							label=${this.localize.term(this.addButtonLabelKey ?? 'general_choose')}
+							@click=${(event: Event) => this.#onInsert(event, index)}>
+						</uui-button-inline-create>
 					`,
 				)}
-			</uui-ref-node>
+				<uui-ref-node standalone @open=${(event: Event) => this.#onEdit(event, item, index)}>
+					${when(item.icon, (icon) => html`<umb-icon slot="icon" .name=${icon}></umb-icon>`)}
+					<umb-ufm-render slot="name" inline .markdown=${item.name} .value=${item.data}></umb-ufm-render>
+					${when(
+						item.description,
+						(detail) =>
+							html`<umb-ufm-render slot="detail" inline .markdown=${detail} .value=${item.data}></umb-ufm-render>`,
+					)}
+					${when(
+						this.allowEdit || this.allowRemove,
+						() => html`
+							<uui-action-bar slot="actions" class="actions">
+								${when(
+									this.allowEdit || this.canEdit(item, index),
+									() => html`
+										<uui-button
+											look="secondary"
+											label=${this.localize.term('general_edit')}
+											title=${this.localize.term('general_edit')}
+											@click=${(event: Event) => this.#onEdit(event, item, index)}>
+											<uui-icon name="icon-edit"></uui-icon>
+										</uui-button>
+									`,
+								)}
+								${when(
+									this.allowRemove,
+									() => html`
+										<uui-button
+											look="secondary"
+											label=${this.localize.term('general_remove')}
+											title=${this.localize.term('general_remove')}
+											@click=${(event: Event) => this.#onRemove(event, item, index)}>
+											<uui-icon name="icon-remove"></uui-icon>
+										</uui-button>
+									`,
+								)}
+							</uui-action-bar>
+						`,
+					)}
+				</uui-ref-node>
+			</div>
 		`;
 	}
 

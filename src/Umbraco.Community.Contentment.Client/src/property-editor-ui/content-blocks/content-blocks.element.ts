@@ -128,7 +128,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	async #onAdd(): Promise<void> {
+	async #insertBlockAt(index: number): Promise<void> {
 		const configuredKeys = Array.from(this.#blockTypeConfig.keys());
 		if (!configuredKeys.length) return;
 
@@ -179,11 +179,17 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		try {
 			const result = await workspaceModal?.onSubmit();
 			if (result?.element) {
-				this.#setValue([...(this.value ?? []), result.element]);
+				const items = [...(this.value ?? [])];
+				items.splice(index, 0, result.element);
+				this.#setValue(items);
 			}
 		} catch {
 			// cancelled
 		}
+	}
+
+	async #onAdd(): Promise<void> {
+		await this.#insertBlockAt(0);
 	}
 
 	async #onEdit(event: CustomEvent<{ item: ContentmentListItem; index: number }>): Promise<void> {
@@ -205,6 +211,10 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 		} catch {
 			// cancelled
 		}
+	}
+
+	async #onInsert(event: CustomEvent<{ index: number }>): Promise<void> {
+		await this.#insertBlockAt(event.detail.index);
 	}
 
 	async #onRemove(event: CustomEvent<{ item: ContentmentListItem; index: number }>): Promise<void> {
@@ -246,6 +256,7 @@ export class ContentmentPropertyEditorUIContentBlocksElement
 				.uiAlias=${this.#uiAlias}
 				@add=${this.#onAdd}
 				@edit=${this.#onEdit}
+				@insert=${this.#onInsert}
 				@remove=${this.#onRemove}
 				@sort=${this.#onSort}></contentment-display-mode-ui>
 		`;
