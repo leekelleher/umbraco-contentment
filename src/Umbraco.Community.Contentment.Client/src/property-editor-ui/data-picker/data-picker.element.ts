@@ -161,7 +161,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this.#listEditor = listEditor;
 	}
 
-	async #onAdd(event: CustomEvent<{ listType: string }>) {
+	async #insertBlockAt(index: number, listType?: string): Promise<void> {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 		if (!modalManager) return;
 
@@ -171,7 +171,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				defaultIcon: this.#defaultIcon,
 				enableMultiple: this.#maxItems !== 1,
 				hideSearch: this.#hideSearch,
-				listType: event.detail.listType ?? 'list',
+				listType: listType ?? 'list',
 				maxItems: this.#maxItems === 0 ? this.#maxItems : this.#maxItems - (this.value?.length ?? 0),
 				pageSize: this.#pageSize,
 				value: this.value ?? [],
@@ -185,7 +185,6 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		const { selection } = data;
 		if (!selection) return;
 
-		const index = this.value?.length ?? 0;
 		if (index === -1) return;
 
 		if (!this.value) {
@@ -199,6 +198,14 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this.value = this._items.map((x) => x.value);
 
 		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	async #onAdd(event: CustomEvent<{ listType: string }>): Promise<void> {
+		await this.#insertBlockAt(this.value?.length ?? 0, event.detail.listType);
+	}
+
+	async #onInsert(event: CustomEvent<{ index: number; listType: string }>): Promise<void> {
+		await this.#insertBlockAt(event.detail.index, event.detail.listType);
 	}
 
 	async #onRemove(event: CustomEvent<{ item: ContentmentListItem; index: number }>) {
@@ -244,6 +251,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 				.items=${this._items}
 				.uiAlias=${this.#listEditor.propertyEditorUiAlias}
 				@add=${this.#onAdd}
+				@insert=${this.#onInsert}
 				@remove=${this.#onRemove}
 				@sort=${this.#onSort}>
 			</contentment-display-mode-ui>
