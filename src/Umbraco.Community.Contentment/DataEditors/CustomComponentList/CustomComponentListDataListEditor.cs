@@ -62,14 +62,26 @@ public sealed class CustomComponentListDataListEditor : IContentmentListEditor
             Key = "listStyles",
             Name = "List styles",
             Description = "<em>(optional)</em> Enter CSS rules for the list's container , e.g. <code>&lt;ul&gt;</code> element.",
-            PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+            PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
+            Config = new Dictionary<string, object>
+            {
+                { "mode", "css" },
+                { "minLines", 1 },
+                { "maxLines", 5 },
+            }
         },
         new ()
         {
             Key = "listItemStyles",
             Name = "List item styles",
             Description = "<em>(optional)</em> Enter CSS rules for each list item, e.g. <code>&lt;li&gt;</code> element.",
-            PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+            PropertyEditorUiAlias = CodeEditorDataEditor.DataEditorUiAlias,
+            Config = new Dictionary<string, object>
+            {
+                { "mode", "css" },
+                { "minLines", 1 },
+                { "maxLines", 5 },
+            }
         },
     ];
 

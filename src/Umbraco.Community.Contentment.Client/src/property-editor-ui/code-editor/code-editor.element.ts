@@ -9,6 +9,7 @@ import {
 	property,
 	ref,
 	state,
+	styleMap,
 	unsafeCSS,
 } from '@umbraco-cms/backoffice/external/lit';
 import { defaultKeymap, editorCommands } from 'prism-code-editor/commands';
@@ -51,7 +52,16 @@ const SYNTAXES: Record<string, { id: string; load: () => Promise<unknown> }> = {
 @customElement('contentment-property-editor-ui-code-editor')
 export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
-	private _mode: string = 'razor';
+	private _language: string = 'razor';
+
+	@state()
+	private _fontSize: string = 'small';
+
+	@state()
+	private _lineNumbers: boolean = true;
+
+	@state()
+	private _wordWrap: boolean = false;
 
 	@state()
 	private _loading = true;
@@ -62,9 +72,15 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 	@property()
 	public value?: string;
 
+	@property({ type: Boolean, reflect: true })
+	public readonly = false;
+
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
-		this._mode = config.getValueByAlias<string>('mode') ?? 'razor';
+		this._language = config.getValueByAlias<string>('mode') ?? 'razor';
+		this._fontSize = config.getValueByAlias<string>('fontSize') ?? 'small';
+		this._lineNumbers = config.getValueByAlias<boolean>('lineNumbers') ?? true;
+		this._wordWrap = config.getValueByAlias<boolean>('wordWrap') ?? false;
 	}
 
 	#containerRef: Ref<HTMLDivElement> = createRef();
@@ -90,12 +106,15 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			await this.updateComplete;
 			if (!this.#containerRef.value) return;
 
-			const syntax = SYNTAXES[this._mode];
+			const syntax = SYNTAXES[this._language];
 			await syntax?.load();
 
 			this.#editor = createEditor(this.#containerRef.value, {
 				language: syntax?.id ?? 'plain',
 				value: this.value ?? '',
+				wordWrap: this._wordWrap,
+				lineNumbers: this._lineNumbers,
+				readOnly: this.readonly,
 			});
 
 			this.#editor.addExtensions(
@@ -116,9 +135,24 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 		}
 	}
 
+	override update(changedProperties: Map<string, unknown>) {
+		super.update(changedProperties);
+
+		if (changedProperties.has('readonly') && this.#editor) {
+			this.#editor.setOptions({ readOnly: this.readonly });
+		}
+	}
+
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
-		return html`<div id="code-editor" data-theme=${this._isDark ? 'dark' : 'light'} ${ref(this.#containerRef)}></div>`;
+		return html`
+			<div
+				id="code-editor"
+				data-line-numbers=${this._lineNumbers}
+				data-theme=${this._isDark ? 'dark' : 'light'}
+				style=${styleMap({ fontSize: this._fontSize })}
+				${ref(this.#containerRef)}></div>
+		`;
 	}
 
 	static override styles = [
@@ -129,20 +163,29 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 			#code-editor {
 				display: block;
 				height: auto;
-				margin-left: -30px;
+				margin-left: -15px;
+
+				> .prism-code-editor {
+					width: 100%;
+				}
+
+				&[data-line-numbers='true'] {
+					margin-left: -30px;
+				}
+
+				&[data-theme='light'] {
+					${unsafeCSS(vsCodeLight)};
+				}
+
+				&[data-theme='dark'] {
+					${unsafeCSS(vsCodeDark)};
+				}
 			}
 
-			#code-editor > .prism-code-editor {
-				height: 100%;
-				width: 100%;
-			}
-
-			#code-editor[data-theme='light'] {
-				${unsafeCSS(vsCodeLight)};
-			}
-
-			#code-editor[data-theme='dark'] {
-				${unsafeCSS(vsCodeDark)};
+			@container (width < 700px) {
+				#code-editor[data-line-numbers] {
+					margin-left: 0;
+				}
 			}
 		`,
 	];

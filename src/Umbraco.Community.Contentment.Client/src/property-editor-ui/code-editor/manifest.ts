@@ -38,8 +38,46 @@ export const manifest: UmbExtensionManifest = {
 						},
 					],
 				},
+				{
+					alias: 'fontSize',
+					label: 'Font size',
+					description: 'Set the font size for the code editor. The default size is "small".',
+					propertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DropdownList',
+					config: [
+						{
+							alias: 'items',
+							value: [
+								{ name: 'Extra extra small', value: 'xx-small' },
+								{ name: 'Extra small', value: 'x-small' },
+								{ name: 'Small', value: 'small' },
+								{ name: 'Medium', value: 'medium' },
+								{ name: 'Large', value: 'large' },
+								{ name: 'Extra large', value: 'x-large' },
+								{ name: 'Extra extra large', value: 'xx-large' },
+								{ name: 'Extra extra extra large', value: 'xxx-large' },
+							],
+						},
+					],
+				},
+				{
+					alias: 'lineNumbers',
+					label: 'Show line numbers',
+					description: 'Select to show line numbers in the code editor.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
+				{
+					alias: 'wordWrap',
+					label: 'Word wrapping',
+					description: 'Select to enable word wrapping in the code editor.',
+					propertyEditorUiAlias: 'Umb.PropertyEditorUi.Toggle',
+				},
 			],
-			defaultData: [{ alias: 'mode', value: 'razor' }],
+			defaultData: [
+				{ alias: 'mode', value: 'razor' },
+				{ alias: 'fontSize', value: 'small' },
+				{ alias: 'lineNumbers', value: true },
+				{ alias: 'wordWrap', value: false },
+			],
 		},
 	},
 };
