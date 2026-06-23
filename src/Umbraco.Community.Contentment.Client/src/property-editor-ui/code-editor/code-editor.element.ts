@@ -11,7 +11,7 @@ import {
 	state,
 	unsafeCSS,
 } from '@umbraco-cms/backoffice/external/lit';
-import { defaultCommands } from 'prism-code-editor/commands';
+import { defaultKeymap, editorCommands } from 'prism-code-editor/commands';
 import { highlightBracketPairs } from 'prism-code-editor/highlight-brackets';
 import { indentGuides } from 'prism-code-editor/guides';
 import { matchBrackets } from 'prism-code-editor/match-brackets';
@@ -104,7 +104,7 @@ export class ContentmentPropertyEditorUICodeEditorElement extends UmbLitElement 
 				highlightBracketPairs(),
 				matchTags(),
 				searchWidget(),
-				defaultCommands(),
+				editorCommands(defaultKeymap),
 			);
 
 			this.#editor.on('update', (value) => {
