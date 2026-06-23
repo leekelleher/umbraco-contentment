@@ -13,7 +13,7 @@
 Here is the documentation for the Contentment property-editors...
 
 - [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
-- [Code Editor](../docs/editors/code-editor.md) - a code snippet editor, _(using the ACE library that is bundled with Umbraco)._
+- [Code Editor](../docs/editors/code-editor.md) - a code snippet editor.
 - [Content Blocks](../docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
 - [Data Picker](../docs/editors/data-picker.md) - advanced picker editor to query a custom data source.

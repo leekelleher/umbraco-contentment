@@ -2,7 +2,7 @@
 The following property editors are available...
 
 - [Bytes](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
-- [Code Editor](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/code-editor.md) - a code snippet editor, _(using the ACE library that is bundled with Umbraco)._
+- [Code Editor](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/code-editor.md) - a code snippet editor.
 - [Content Blocks](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
 - [Data Picker](https://github.com/leekelleher/umbraco-contentment/blob/contrib/docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
