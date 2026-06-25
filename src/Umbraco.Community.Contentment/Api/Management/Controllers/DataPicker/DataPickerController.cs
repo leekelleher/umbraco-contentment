@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+using System.Collections.Concurrent;
 using System.Text.Json.Nodes;
 using System.Web;
 using Asp.Versioning;
@@ -20,7 +21,7 @@ public class DataPickerController : ContentmentControllerBase
     private readonly IDataTypeService _dataTypeService;
     private readonly ConfigurationEditorUtility _utility;
 
-    private static readonly Dictionary<Guid, (IDataPickerSource, Dictionary<string, object>)> _lookup = [];
+    private static readonly ConcurrentDictionary<Guid, (IDataPickerSource, Dictionary<string, object>)> _lookup = [];
 
     public DataPickerController(
         IDataTypeService dataTypeService,
@@ -161,6 +162,6 @@ public class DataPickerController : ContentmentControllerBase
     // NOTE: The internal cache is cleared from `ContentmentDataTypeNotificationHandler` [LK]
     internal static void ClearCache(Guid dataTypeKey)
     {
-        _ = _lookup.Remove(dataTypeKey);
+        _ = _lookup.TryRemove(dataTypeKey, out _);
     }
 }
