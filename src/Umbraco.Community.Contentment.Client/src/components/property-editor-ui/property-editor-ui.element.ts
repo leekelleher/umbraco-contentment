@@ -12,6 +12,8 @@ import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umb
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ManifestPropertyEditorUi, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../lee-was-here/lee-was-here.element.js';
+
 @customElement('contentment-property-editor-ui')
 export default class ContentmentPropertyEditorUiElement
 	extends UmbFormControlMixin<any | undefined, typeof UmbLitElement, undefined>(UmbLitElement)

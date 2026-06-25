@@ -21,6 +21,9 @@ import type { ContentmentSortEndEvent } from '../../components/sortable-list/sor
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/icon-picker/icon-picker.element.js';
+import '../../components/sortable-list/sortable-list.element.js';
+
 type UmbIconPickerChangeEvent = UmbChangeEvent & { target: ContentmentIconPickerElement };
 
 @customElement('contentment-property-editor-ui-list-items')

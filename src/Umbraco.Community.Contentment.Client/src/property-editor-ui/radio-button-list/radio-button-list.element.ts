@@ -19,6 +19,8 @@ import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIRadioEvent } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-radio-button-list')
 export class ContentmentPropertyEditorUIRadioButtonListElement
 	extends UmbFormControlMixin<string | undefined, typeof UmbLitElement, undefined>(UmbLitElement)

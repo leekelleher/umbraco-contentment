@@ -18,6 +18,8 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { ContentmentListItem } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/info-box/info-box.element.js';
+
 type ContentmentDataListCheckboxOption = ContentmentListItem & { checked: boolean };
 
 @customElement('contentment-property-editor-ui-checkbox-list')

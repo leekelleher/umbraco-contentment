@@ -100,6 +100,7 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 				label=${this.name ?? 'Text input'}
 				list=${ifDefined(hasItems ? 'items' : undefined)}
 				placeholder=${ifDefined(this._placeholderText)}
+				maxlength=${this._maxChars}
 				.value=${this.value ?? ''}
 				spellcheck=${this._spellcheck ? 'true' : 'false'}
 				@input=${this.#onInput} />

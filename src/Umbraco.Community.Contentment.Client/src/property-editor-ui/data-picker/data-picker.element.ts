@@ -20,6 +20,7 @@ import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor, Co
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/lee-was-here/lee-was-here.element.js';
 import '../../extensions/display-mode/display-mode-ui.element.js';
 
 @customElement('contentment-property-editor-ui-data-picker')

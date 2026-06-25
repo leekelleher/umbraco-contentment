@@ -11,6 +11,7 @@ import type { ContentmentSortEndEvent } from '../../components/sortable-list/sor
 import type { UmbPropertyDatasetElement, UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyEditorConfig, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/sortable-list/sortable-list.element.js';
 import './input-list-property-editor.element.js';
 
 interface ContentmentInputListProperty {

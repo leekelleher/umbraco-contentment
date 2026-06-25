@@ -12,6 +12,9 @@ import type { ContentmentSortEndEvent } from '../../components/sortable-list/sor
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+import '../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-property-editor-ui-item-picker')
 export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()

@@ -21,6 +21,8 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIComboboxElement } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-tags')
 export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	//#allowDuplicates = false;

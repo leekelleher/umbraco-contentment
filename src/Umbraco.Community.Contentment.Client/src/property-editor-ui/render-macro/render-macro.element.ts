@@ -5,6 +5,8 @@ import { css, customElement, html, property, when } from '@umbraco-cms/backoffic
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/info-box/info-box.element.js';
+
 /** @deprecated To be removed in Contentment 8.0. */
 @customElement('contentment-property-editor-ui-render-macro')
 export class ContentmentPropertyEditorUIRenderMacroElement extends UmbLitElement implements UmbPropertyEditorUiElement {
