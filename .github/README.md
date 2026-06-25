@@ -128,7 +128,7 @@ I am working towards re-licensing all of the source code to be under the [MIT li
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,534+ hours</b> (between 2019-03-13 to 2026-01-24)</summary>
+<summary>Current development effort: <b>~2663+ hours</b> (between 2019-03-13 to 2026-06-25)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 
