@@ -37,7 +37,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			<contentment-sortable-list
 				class="container"
 				?disabled=${!this.allowSort}
-				item-selector="uui-card-media"
+				item-selector="uui-card-block-type"
 				@sort-end=${this.#onSort}>
 				${this.#renderItems()} ${this.#renderAddButton()}
 			</contentment-sortable-list>
@@ -71,17 +71,22 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 	#renderItem(item: ContentmentListItem, index: number) {
 		if (!item) return;
 		const cardStyle = (item.cardStyle as StyleInfo | null | undefined) ?? {};
-		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? {};
+		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? undefined;
 		return html`
-			<uui-card-media
+			<uui-card-block-type
 				name=${item.name}
-				detail=${item.description ?? ''}
+				description=${item.description ?? ''}
 				style=${styleMap(cardStyle)}
 				@open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(
 					item.image,
 					() => html`<img src=${item.image!} alt="" />`,
-					() => html`<umb-icon name=${item.icon ?? this.#defaultIcon} style=${styleMap(iconStyle)}></umb-icon>`,
+					() =>
+						when(
+							iconStyle,
+							(_style) => html`<umb-icon name=${item.icon ?? this.#defaultIcon} style=${styleMap(_style)}></umb-icon>`,
+							() => html`<umb-icon name=${item.icon ?? this.#defaultIcon}></umb-icon>`,
+						),
 				)}
 				${when(
 					this.allowEdit || this.allowRemove,
@@ -112,7 +117,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 						</uui-action-bar>
 					`,
 				)}
-			</uui-card-media>
+			</uui-card-block-type>
 		`;
 	}
 
@@ -143,18 +148,14 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 					margin: 0 var(--uui-size-6);
 
 					> uui-icon {
+						display: block;
 						font-size: var(--uui-size-8);
-						margin-bottom: var(--uui-size-4);
+						margin: 0 auto var(--uui-size-4);
 					}
 				}
 			}
 
-			uui-icon {
-				display: block;
-				margin: 0 auto;
-			}
-
-			uui-card-media {
+			uui-card-block-type {
 				&[drag-placeholder] {
 					opacity: 0.2;
 				}
@@ -162,7 +163,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 				umb-icon {
 					font-size: var(--uui-size-8);
 					/* HACK: To make the icon position appear vertically centred within the top half of the card. [LK] */
-					padding-bottom: var(--uui-size-12);
+					padding-bottom: var(--uui-size-8);
 					min-height: var(--uui-size-layout-6);
 				}
 			}

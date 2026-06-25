@@ -7,7 +7,7 @@ public sealed class MetaConfigurationResponseModel
 {
     public string? Name { get; set; }
 
-    public Version? Version { get; set; }
+    public string? Version { get; set; }
 
     public ContentmentSettings? Features { get; set; }
 }

@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Migrations.Upgrade.V_6_0_0;
 
-internal sealed class MigrateContentBlocksConfiguration : MigrationBase
+internal sealed class MigrateContentBlocksConfiguration : AsyncMigrationBase
 {
     public const string State = "{contentment-content-blocks-config}";
 
@@ -21,7 +21,7 @@ internal sealed class MigrateContentBlocksConfiguration : MigrationBase
         _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
     }
 
-    protected override void Migrate()
+    protected override Task MigrateAsync()
     {
         var sql = Sql()
             .Select<DataTypeDto>()
@@ -49,5 +49,7 @@ internal sealed class MigrateContentBlocksConfiguration : MigrationBase
 
             _ = Database.Update(dataTypeDto);
         }
+
+        return Task.CompletedTask;
     }
 }

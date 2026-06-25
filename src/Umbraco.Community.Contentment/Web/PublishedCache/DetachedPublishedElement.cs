@@ -19,7 +19,9 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
         public DetachedPublishedElement(Guid key, IPublishedContentType contentType, IEnumerable<IPublishedProperty> properties)
         {
             Key = key;
+            Name = key.ToString();
             ContentType = contentType;
+            Cultures = new Dictionary<string, PublishedCultureInfo>();
             Properties = properties;
 
             _propertyLookup = properties.ToDictionary(x => x.Alias, StringComparer.OrdinalIgnoreCase);
@@ -31,11 +33,33 @@ namespace Umbraco.Community.Contentment.Web.PublishedCache
 
         public IEnumerable<IPublishedProperty> Properties { get; }
 
+        public int Id { get; }
+
+        public string Name { get; }
+
+        public int SortOrder { get; }
+
+        public int CreatorId { get; }
+
+        public DateTime CreateDate { get; }
+
+        public int WriterId { get; }
+
+        public DateTime UpdateDate { get; }
+
+        public IReadOnlyDictionary<string, PublishedCultureInfo> Cultures { get; }
+
+        public PublishedItemType ItemType => PublishedItemType.Element;
+
         public IPublishedProperty? GetProperty(string alias)
         {
             return _propertyLookup.ContainsKey(alias)
                 ? _propertyLookup[alias]
                 : default;
         }
+
+        public bool IsDraft(string? culture = null) => false;
+
+        public bool IsPublished(string? culture = null) => true;
     }
 }

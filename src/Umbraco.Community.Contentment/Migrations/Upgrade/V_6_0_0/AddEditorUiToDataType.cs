@@ -14,13 +14,13 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Migrations.Upgrade.V_6_0_0;
 
-internal sealed class AddEditorUiToDataType : MigrationBase
+internal sealed class AddEditorUiToDataType : AsyncMigrationBase
 {
     public const string State = "{contentment-editorui-datatype-schema}";
 
     public AddEditorUiToDataType(IMigrationContext context) : base(context) { }
 
-    protected override void Migrate()
+    protected override Task MigrateAsync()
     {
         var sql = Sql()
             .Select<DataTypeDto>()
@@ -59,5 +59,7 @@ internal sealed class AddEditorUiToDataType : MigrationBase
                 _ = Database.Update(dataTypeDto);
             }
         }
+
+        return Task.CompletedTask;
     }
 }

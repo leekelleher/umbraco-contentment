@@ -4,6 +4,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
@@ -25,7 +26,7 @@ public sealed class MetaConfigurationController : ContentmentControllerBase
         var model = new MetaConfigurationResponseModel
         {
             Name = Constants.Internals.ProjectName,
-            Version = ContentmentVersion.Version,
+            Version = ContentmentVersion.SemanticVersion?.ToSemanticStringWithoutBuild() ?? "0.0.0",
             Features = _settings.Value,
         };
 

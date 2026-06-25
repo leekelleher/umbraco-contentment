@@ -2,6 +2,7 @@
 // Copyright © 2024 Lee Kelleher
 
 export * from './icon-picker/icon-picker.element.js';
+export * from './routable-modal/routable-modal.element.js';
 export * from './info-box/info-box.element.js';
 export * from './lee-was-here/lee-was-here.element.js';
 export * from './property-editor-ui/property-editor-ui.element.js';

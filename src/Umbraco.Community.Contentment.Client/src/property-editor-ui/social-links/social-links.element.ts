@@ -245,6 +245,7 @@ export class ContentmentPropertyEditorUISocialLinksElement extends UmbLitElement
 	static override styles = [
 		css`
 			#btn-add {
+				--uui-button-border-radius: var(--uui-border-radius);
 				--uui-button-padding-top-factor: 2;
 				--uui-button-padding-bottom-factor: 2;
 				display: block;

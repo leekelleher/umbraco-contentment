@@ -66,11 +66,9 @@ export type ContentmentContentBlockModel = {
 	overlaySize?: UUIModalSidebarSize | null;
 };
 
-export type ContentmentContentBlockValue = {
-	elementType: string;
-	key: string;
-	value: Record<string, unknown>;
-};
+// ContentmentContentBlockValue is the persisted shape of a Content Block entry.
+// Aliased to ContentmentElementValue (the canonical element workspace type) — same shape.
+export type { ContentmentElementValue as ContentmentContentBlockValue } from '../workspace/element/types.js';
 
 export type ContentmentSocialLinkValue = {
 	name: string;

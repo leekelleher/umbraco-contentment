@@ -237,6 +237,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	static override styles = [
 		css`
 			#btn-add {
+				--uui-button-border-radius: var(--uui-border-radius);
 				display: block;
 			}
 		`,

@@ -126,7 +126,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}, 500);
 
 	#onInput(event: UUIInputEvent) {
-		this.#debouncedFilter(event.target.value);
+		this.#debouncedFilter(event.target.value as string);
 	}
 
 	#onSelect(item: ContentmentListItem) {
@@ -185,7 +185,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			})) ?? [];
 
 		this._loading = false;
-		this._totalPages = data?.total ?? 0;
+		this._totalPages = (data?.total as number) ?? 0;
 	}
 
 	override render() {

@@ -16,7 +16,8 @@ import {
 	state,
 	when,
 } from '@umbraco-cms/backoffice/external/lit';
-import { UmbModalBaseElement, UmbModalToken } from '@umbraco-cms/backoffice/modal';
+import { UmbModalToken } from '@umbraco-cms/backoffice/modal';
+import { ContentmentRoutableModalElement } from '../../components/routable-modal/routable-modal.element.js';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 import type { UmbPropertyDatasetElement } from '@umbraco-cms/backoffice/property';
 import type { UmbPropertyValueData } from '@umbraco-cms/backoffice/property';
@@ -38,7 +39,7 @@ export const CONTENTMENT_CONFIGURATION_EDITOR_WORKSPACE_MODAL = new UmbModalToke
 });
 
 @customElement('contentment-property-editor-ui-configuration-editor-workspace-modal')
-export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement extends UmbModalBaseElement<
+export class ContentmentPropertyEditorUIConfigurationEditorWorkspaceModalElement extends ContentmentRoutableModalElement<
 	ContentmentConfigurationEditorWorkspaceModalData,
 	ContentmentConfigurationEditorValue
 > {

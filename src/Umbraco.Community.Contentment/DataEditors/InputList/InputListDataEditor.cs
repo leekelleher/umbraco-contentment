@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 
 namespace Umbraco.Community.Contentment.DataEditors;
@@ -17,13 +19,22 @@ public sealed class InputListDataEditor : IDataEditor
 
     private readonly IShortStringHelper _shortStringHelper;
     private readonly IJsonSerializer _jsonSerializer;
+    private readonly IDataTypeService _dataTypeService;
+    private readonly PropertyEditorCollection _propertyEditors;
+    private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
 
     public InputListDataEditor(
         IJsonSerializer jsonSerializer,
-        IShortStringHelper shortStringHelper)
+        IShortStringHelper shortStringHelper,
+        IDataTypeService dataTypeService,
+        PropertyEditorCollection propertyEditors,
+        IDataTypeConfigurationCache dataTypeConfigurationCache)
     {
         _jsonSerializer = jsonSerializer;
         _shortStringHelper = shortStringHelper;
+        _dataTypeService = dataTypeService;
+        _propertyEditors = propertyEditors;
+        _dataTypeConfigurationCache = dataTypeConfigurationCache;
     }
 
     public string Alias => DataEditorAlias;
@@ -44,18 +55,11 @@ public sealed class InputListDataEditor : IDataEditor
 
     public IDataValueEditor GetValueEditor()
     {
-        return new DataValueEditor(_shortStringHelper, _jsonSerializer)
-        {
-            ValueType = ValueTypes.Json,
-        };
+        return new InputListDataValueEditor(_shortStringHelper, _jsonSerializer, _dataTypeService, _propertyEditors, _dataTypeConfigurationCache);
     }
 
     public IDataValueEditor GetValueEditor(object? configuration)
     {
-        return new DataValueEditor(_shortStringHelper, _jsonSerializer)
-        {
-            ConfigurationObject = configuration,
-            ValueType = ValueTypes.Json,
-        };
+        return new InputListDataValueEditor(_shortStringHelper, _jsonSerializer, _dataTypeService, _propertyEditors, _dataTypeConfigurationCache) { ConfigurationObject = configuration };
     }
 }

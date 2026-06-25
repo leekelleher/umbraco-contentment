@@ -158,18 +158,21 @@ Property Editors are:
 
 ### [v6.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.2.0)
 
-- A non-breaking-change minor release. Reduces Umbraco dependency to 18, _(consumers will need to upgraded to Contentment 7)._
+- A non-breaking-change minor release. Reduces Umbraco dependency to below 18, _(consumers will need to upgraded to Contentment 7)._
 
 
 ## v7 _(June 2026)_
 
+### [v7.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/7.0.0)
+
 - _Adds support for Umbraco 18 (.NET 10)._
 - _Removes support for Umbraco 16 (.NET 9) and 17._
+- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
+- Refactored [Code Editor](), _(to use lightweight [Prism Code Editor](https://github.com/jonpyt/prism-code-editor))._
 
 ### v7.1
 
-- _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481)_
-- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
+- _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481) for property-editors._
 
 
 ## v8 _(December 2026)_

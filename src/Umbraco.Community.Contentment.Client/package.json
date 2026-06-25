@@ -1,6 +1,6 @@
 {
 	"name": "@leekelleher/umbraco-contentment",
-	"version": "6.2.0",
+	"version": "7.0.0",
 	"description": "TypeScript definitions for Contentment, a collection of components for Umbraco.",
 	"author": "Lee Kelleher",
 	"license": "MIT",
@@ -34,10 +34,11 @@
 	},
 	"dependencies": {
 		"liquidjs": "^10.26.0",
+		"prism-code-editor": "^5.2.0",
 		"sortablejs": "^1.15.7"
 	},
 	"peerDependencies": {
-		"@umbraco-cms/backoffice": "^16.0.0"
+		"@umbraco-cms/backoffice": "^18.0.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.1",

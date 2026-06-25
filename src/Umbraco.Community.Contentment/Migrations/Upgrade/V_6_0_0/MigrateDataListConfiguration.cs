@@ -11,7 +11,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Migrations.Upgrade.V_6_0_0;
 
-internal sealed class MigrateDataListConfiguration : MigrationBase
+internal sealed class MigrateDataListConfiguration : AsyncMigrationBase
 {
     public const string State = "{contentment-data-list-config}";
 
@@ -22,7 +22,7 @@ internal sealed class MigrateDataListConfiguration : MigrationBase
         _configurationEditorJsonSerializer = configurationEditorJsonSerializer;
     }
 
-    protected override void Migrate()
+    protected override Task MigrateAsync()
     {
         var sql = Sql()
             .Select<DataTypeDto>()
@@ -50,6 +50,8 @@ internal sealed class MigrateDataListConfiguration : MigrationBase
 
             _ = Database.Update(dataTypeDto);
         }
+
+        return Task.CompletedTask;
     }
 
     public static JsonArray MigrateDataSourceConfiguration(JsonArray dataSource)

@@ -5,31 +5,28 @@
 
 using Umbraco.Cms.Core.Packaging;
 
-namespace Umbraco.Community.Contentment.Migrations
+namespace Umbraco.Community.Contentment.Migrations;
+
+internal sealed class ContentmentPlan : PackageMigrationPlan
 {
-    internal sealed class ContentmentPlan : PackageMigrationPlan
+    public override string InitialState => "{contentment-init-state}";
+
+    public ContentmentPlan()
+        : base(Constants.Internals.ProjectName)
+    { }
+
+    protected override void DefinePlan()
     {
-        public override string InitialState => "{contentment-init-state}";
-
-        public ContentmentPlan()
-            : base(Constants.Internals.ProjectName)
-        { }
-
-        protected override void DefinePlan()
-        {
-            From(InitialState)
-               .To<RegisterUmbracoPackageEntry>(RegisterUmbracoPackageEntry.State)
-               .To<Upgrade.V_6_0_0.AddEditorUiToDataType>(Upgrade.V_6_0_0.AddEditorUiToDataType.State)
-               .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
-               .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
-#pragma warning disable CS0618 // Type or member is obsolete
-               .To<Upgrade.V_6_1_3.MigrateContentBlockLocalLinks>(Upgrade.V_6_1_3.MigrateContentBlockLocalLinks.State)
-#pragma warning restore CS0618 // Type or member is obsolete
-            ;
-        }
+        From(InitialState)
+           .To<RegisterUmbracoPackageEntry>(RegisterUmbracoPackageEntry.State)
+           .To<Upgrade.V_6_0_0.AddEditorUiToDataType>(Upgrade.V_6_0_0.AddEditorUiToDataType.State)
+           .To<Upgrade.V_6_0_0.MigrateNotesConfiguration>(Upgrade.V_6_0_0.MigrateNotesConfiguration.State)
+           .To<Upgrade.V_6_0_0.MigrateEditorNotesConfiguration>(Upgrade.V_6_0_0.MigrateEditorNotesConfiguration.State)
+           .To<Upgrade.V_6_0_0.MigrateDataListConfiguration>(Upgrade.V_6_0_0.MigrateDataListConfiguration.State)
+           .To<Upgrade.V_6_0_0.MigrateDataPickerConfiguration>(Upgrade.V_6_0_0.MigrateDataPickerConfiguration.State)
+           .To<Upgrade.V_6_0_0.MigrateContentBlocksConfiguration>(Upgrade.V_6_0_0.MigrateContentBlocksConfiguration.State)
+           .To<Upgrade.V_6_0_0.MigrateCodeEditorSchema>(Upgrade.V_6_0_0.MigrateCodeEditorSchema.State)
+           .To<Upgrade.V_6_1_3.MigrateContentBlockLocalLinks>(Upgrade.V_6_1_3.MigrateContentBlockLocalLinks.State)
+        ;
     }
 }

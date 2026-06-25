@@ -26,12 +26,13 @@ Let's take a look inside...
 ##### Property Editors
 
 - [Bytes](../docs/editors/bytes.md) - a read-only label to display file sizes in relative bytes.
-- [Code Editor](../docs/editors/code-editor.md) - a code snippet editor, _(using the Monaco library that is bundled with Umbraco)._
+- [Code Editor](../docs/editors/code-editor.md) - a code snippet editor.
 - [Content Blocks](../docs/editors/content-blocks.md) - a block editor, configurable using element types.
 - [Data List](../docs/editors/data-list.md) - an editor that combines a custom data source with a custom list editor.
 - [Data Picker](../docs/editors/data-picker.md) - advanced picker editor to query a custom data source.
 - [Editor Notes](../docs/editors/editor-notes.md) - Similar to [Notes](../docs/editors/notes.md), with enhanced UI options.
 - [Icon Picker](../docs/editors/icon-picker.md) - an editor to select an icon (from the Umbraco icon library).
+- [Input List](../docs/editors/input-list.md) - an editor to manage a list of one or more data-types to be used in a repeatable list.
 - [List Items](../docs/editors/list-items.md) - an editor to manage items with a name, value, icon and description.
 - [Notes](../docs/editors/notes.md) - a read-only label to display rich-text instructional messages for content editors.
 - [Number Input](../docs/editors/number-input.md) - a numeric editor, with sizing configurations.
@@ -127,7 +128,7 @@ I am working towards re-licensing all of the source code to be under the [MIT li
 - [Lee Kelleher](https://leekelleher.com) - ([GitHub](https://github.com/leekelleher), [Mastodon](https://umbracocommunity.social/@lee))
 
 <details>
-<summary>Current development effort: <b>~2,534+ hours</b> (between 2019-03-13 to 2026-01-24)</summary>
+<summary>Current development effort: <b>~2663+ hours</b> (between 2019-03-13 to 2026-06-25)</summary>
 
 _To give you an idea of how much human developer time/effort has been put into making and maintaining this package._
 

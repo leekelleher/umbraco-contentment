@@ -12,36 +12,35 @@ using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Community.Contentment.Notifications;
 using Umbraco.Community.Contentment.Services;
 
-namespace Umbraco.Community.Contentment.Composing
+namespace Umbraco.Community.Contentment.Composing;
+
+public sealed class ContentmentComposer : IComposer
 {
-    public sealed class ContentmentComposer : IComposer
+    public void Compose(IUmbracoBuilder builder)
     {
-        public void Compose(IUmbracoBuilder builder)
-        {
-            builder
-                .Services
-                    .AddSingleton<ConfigurationEditorUtility>()
-                    .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
-                    .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
-                    .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
-             ;
+        builder
+            .Services
+                .AddSingleton<ConfigurationEditorUtility>()
+                .AddSingleton<IContentmentContentContext, ContentmentContentContext>()
+                .AddSingleton<IPackageManifestReader, ContentmentPackageManifestReader>()
+                .Configure<ContentmentSettings>(builder.Config.GetSection(Constants.Internals.ConfigurationSection))
+        ;
 
-            builder
-                .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
-                    .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
-            ;
+        builder
+            .WithCollectionBuilder<ContentmentListItemCollectionBuilder>()
+                .Add(() => builder.TypeLoader.GetTypes<IContentmentListItem>())
+        ;
 
-            builder
-                .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
-                    .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
-            ;
+        builder
+            .WithCollectionBuilder<ContentmentDataListItemPropertyValueConverterCollectionBuilder>()
+                .Add(() => builder.TypeLoader.GetTypes<IDataListItemPropertyValueConverter>())
+        ;
 
-            builder
-                .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
-                .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
-                .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
-                .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
-            ;
-        }
+        builder
+            .AddNotificationAsyncHandler<DataTypeSavedNotification, ContentmentTelemetryNotification>()
+            .AddNotificationHandler<ContentCopyingNotification, ContentBlocksPropertyEditorContentNotificationHandler>()
+            .AddNotificationHandler<DataTypeDeletedNotification, ContentmentDataTypeNotificationHandler>()
+            .AddNotificationHandler<DataTypeSavedNotification, ContentmentDataTypeNotificationHandler>()
+        ;
     }
 }

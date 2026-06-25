@@ -55,6 +55,7 @@ const editorUi: UmbExtensionManifest = {
 						{ alias: 'addButtonLabelKey', value: 'contentment_configureDataSource' },
 						{ alias: 'configurationType', value: 'contentmentDataSource' },
 						{ alias: 'maxItems', value: 1 },
+						{ alias: 'enableDevMode', value: true },
 					],
 				},
 				{
