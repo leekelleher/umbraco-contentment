@@ -367,6 +367,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 				uui-card-media {
 					min-height: 160px;
+					user-select: none;
 				}
 			}
 		`,

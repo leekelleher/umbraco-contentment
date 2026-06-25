@@ -222,8 +222,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 			<uui-ref-node
 				error
 				name="The item associated with '${value}' is no longer available."
-				detail="If you still require this item, please contact your administrator, otherwise you can remove it."
-				style="color: var(--uui-color-danger-standalone);">
+				detail="If you still require this item, please contact your administrator, otherwise you can remove it.">
 				<umb-icon slot="icon" name="icon-alert"></umb-icon>
 				<uui-action-bar slot="actions">
 					<uui-button
@@ -238,6 +237,10 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		css`
 			#btn-add {
 				display: block;
+			}
+
+			uui-ref-node[error] {
+				color: var(--uui-color-danger-standalone);
 			}
 		`,
 	];

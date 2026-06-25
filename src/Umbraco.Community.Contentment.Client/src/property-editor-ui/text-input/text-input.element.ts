@@ -85,7 +85,6 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 	}
 
 	#onInput(event: InputEvent & { target: HTMLInputElement }) {
-		// TODO: [LK] `maxChars` validation + threshold warning message.
 		this.value = event.target.value;
 		this.dispatchEvent(new UmbChangeEvent());
 	}
@@ -100,7 +99,6 @@ export class ContentmentPropertyEditorUITextInputElement extends UmbLitElement i
 				autocomplete=${this._autocomplete ? 'on' : 'off'}
 				label=${this.name ?? 'Text input'}
 				list=${ifDefined(hasItems ? 'items' : undefined)}
-				max=${this._maxChars}
 				placeholder=${ifDefined(this._placeholderText)}
 				.value=${this.value ?? ''}
 				spellcheck=${this._spellcheck ? 'true' : 'false'}
