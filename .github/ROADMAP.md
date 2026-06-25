@@ -163,6 +163,8 @@ Property Editors are:
 
 ## v7 _(June 2026)_
 
+### [v7.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/7.0.0)
+
 - _Adds support for Umbraco 18 (.NET 10)._
 - _Removes support for Umbraco 16 (.NET 9) and 17._
 - [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
