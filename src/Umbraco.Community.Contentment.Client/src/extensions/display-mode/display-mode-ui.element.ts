@@ -10,6 +10,8 @@ import type { ContentmentDisplayModeExtentionManifestType } from './display-mode
 import type { ContentmentListItem } from '../../property-editor-ui/types.js';
 import type { UmbPropertyEditorConfigCollection } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/lee-was-here/lee-was-here.element.js';
+
 @customElement('contentment-display-mode-ui')
 export default class ContentmentDisplayModeUIElement extends UmbLitElement {
 	#context = new ContentmentDisplayModeContext(this);

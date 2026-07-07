@@ -6,6 +6,8 @@ import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import { customElement, html, nothing, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 
+import '../../../components/info-box/info-box.element.js';
+
 @customElement('contentment-data-list-item-ui-info-box')
 export class ContentmentDataListItemUiInfoBoxElement extends UmbLitElement implements ContentmentDataListItemUiElement {
 	@property({ attribute: false })

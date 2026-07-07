@@ -16,6 +16,8 @@ import type {
 } from '@umbraco-cms/backoffice/block-custom-view';
 import type { UmbBlockTypeBaseModel } from '@umbraco-cms/backoffice/block-type';
 
+import '../../components/info-box/info-box.element.js';
+
 /**
  * Properties from the scope object that should trigger a re-render when changed.
  * Note: 'manifest' is excluded as it has its own setter that handles template loading.

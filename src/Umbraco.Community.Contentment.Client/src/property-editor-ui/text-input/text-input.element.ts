@@ -144,6 +144,7 @@ export class ContentmentPropertyEditorUITextInputElement
 					label=${this.name ?? 'Text input'}
 					list=${ifDefined(hasItems ? 'items' : undefined)}
 					placeholder=${ifDefined(this._placeholderText)}
+					maxlength=${this._maxChars}
 					spellcheck=${this._spellcheck ? 'true' : 'false'}
 					.value=${this.value ?? ''}
 					@input=${this.#onInput} />

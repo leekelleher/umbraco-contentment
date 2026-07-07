@@ -11,8 +11,6 @@ import { manifests as propertyEditorUis } from './property-editor-ui/manifests.j
 import { manifests as workspaces } from './workspace/manifests.js';
 import type { UmbExtensionManifestKind } from '@umbraco-cms/backoffice/extension-registry';
 
-import './components/index.js';
-
 export const manifests: Array<UmbExtensionManifest | UmbExtensionManifestKind> = [
 	...conditions,
 	...extensions,

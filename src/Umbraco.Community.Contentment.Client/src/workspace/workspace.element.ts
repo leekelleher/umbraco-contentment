@@ -7,6 +7,8 @@ import { MetaService } from '../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
+import '../components/lee-was-here/lee-was-here.element.js';
+
 @customElement('contentment-workspace')
 export class ContentmentWorkspaceElement extends UmbLitElement {
 	#links = [

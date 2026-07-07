@@ -6,6 +6,8 @@ import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentSortEndEvent } from '../../../components/sortable-list/sort-end.event.js';
 
+import '../../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-display-mode-blocks')
 export class ContentmentDisplayModeBlocksElement extends ContentmentDisplayModeElement {
 	#onAdd(event: Event) {

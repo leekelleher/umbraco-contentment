@@ -22,6 +22,9 @@ import type { ManifestBase } from '@umbraco-cms/backoffice/extension-api';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { ContentmentPropertyEditorUITemplatedListElement } from '../templated-list/templated-list.element.js';
 
+import '../../components/info-box/info-box.element.js';
+import '../../components/lee-was-here/lee-was-here.element.js';
+
 @customElement('contentment-property-editor-ui-custom-component-list')
 export default class ContentmentPropertyEditorUICustomComponentListElement
 	extends UmbLitElement
