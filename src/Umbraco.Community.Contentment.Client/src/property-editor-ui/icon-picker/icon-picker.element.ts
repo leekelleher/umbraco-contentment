@@ -9,6 +9,8 @@ import type ContentmentIconPickerElement from '../../components/icon-picker/icon
 import type { IconSize } from '../../components/icon-picker/icon-picker.element.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/icon-picker/icon-picker.element.js';
+
 @customElement('contentment-property-editor-ui-icon-picker')
 export class ContentmentPropertyEditorUIIconPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#defaultIcon: string = '';

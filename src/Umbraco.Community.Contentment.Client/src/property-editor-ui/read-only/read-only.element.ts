@@ -6,6 +6,8 @@ import { css, customElement, html, property, when } from '@umbraco-cms/backoffic
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-read-only')
 export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	#config?: string;

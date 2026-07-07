@@ -21,6 +21,8 @@ import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import type { Template } from '../../external/liquidjs.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-templated-list')
 export class ContentmentPropertyEditorUITemplatedListElement
 	extends UmbLitElement

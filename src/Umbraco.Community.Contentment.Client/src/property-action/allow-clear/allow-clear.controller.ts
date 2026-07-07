@@ -5,11 +5,11 @@ import { UmbPropertyActionBase } from '@umbraco-cms/backoffice/property-action';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { MetaPropertyActionDefaultKind } from '@umbraco-cms/backoffice/property-action';
 
-export class ContentmentPropertyActionAllowClearElement extends UmbPropertyActionBase<MetaPropertyActionDefaultKind> {
+export class ContentmentAllowClearPropertyAction extends UmbPropertyActionBase<MetaPropertyActionDefaultKind> {
 	override async execute() {
 		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
 		propertyContext?.clearValue();
 	}
 }
 
-export { ContentmentPropertyActionAllowClearElement as api };
+export { ContentmentAllowClearPropertyAction as api };

@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	build: {
 		lib: {
-			entry: ['src/index.ts', 'src/manifests.ts'],
+			entry: { index: 'src/index.ts', manifests: 'src/manifests.ts' },
 			formats: ['es'],
 		},
 		outDir: '../Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment',
@@ -12,6 +12,7 @@ export default defineConfig({
 		rollupOptions: {
 			external: [/^@umbraco/],
 			output: {
+				entryFileNames: '[name].js',
 				chunkFileNames: '[name].js',
 			},
 		},

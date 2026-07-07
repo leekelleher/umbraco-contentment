@@ -8,6 +8,8 @@ import type { ContentmentInfoBoxElementType } from '../../components/info-box/in
 import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/info-box/info-box.element.js';
+
 type ContentmentRichTextValue = string | { markup: string };
 
 @customElement('contentment-property-editor-ui-editor-notes')

@@ -10,6 +10,8 @@ import type { PropertyValues } from '@umbraco-cms/backoffice/external/lit';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUISelectElement } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-dropdown-list')
 export class ContentmentPropertyEditorUIDropdownListElement
 	extends UmbLitElement

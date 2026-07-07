@@ -12,6 +12,9 @@ import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
+import '../../components/lee-was-here/lee-was-here.element.js';
+import '../../components/property-editor-ui/property-editor-ui.element.js';
+
 @customElement('contentment-property-editor-ui-data-list')
 export class ContentmentPropertyEditorUIDataListElement
 	extends UmbFormControlMixin<Array<string> | string | undefined, typeof UmbLitElement, undefined>(UmbLitElement)

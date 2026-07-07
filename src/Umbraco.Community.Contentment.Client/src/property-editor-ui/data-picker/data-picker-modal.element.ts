@@ -25,6 +25,8 @@ import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentListItem } from '../types.js';
 import type { UUIInputEvent, UUIPaginationEvent } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+
 interface ContentmentDataPickerModalData {
 	allowDuplicates: boolean;
 	defaultIcon?: string;
@@ -367,6 +369,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 				uui-card-media {
 					min-height: 160px;
+					user-select: none;
 				}
 			}
 		`,

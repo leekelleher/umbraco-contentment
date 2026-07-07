@@ -8,7 +8,7 @@ import { UMB_NOTIFICATION_CONTEXT } from '@umbraco-cms/backoffice/notification';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { MetaPropertyActionDefaultKind } from '@umbraco-cms/backoffice/property-action';
 
-export class ContentmentPropertyActionEditJsonElement extends UmbPropertyActionBase<MetaPropertyActionDefaultKind> {
+export class ContentmentEditJsonPropertyAction extends UmbPropertyActionBase<MetaPropertyActionDefaultKind> {
 	override async execute() {
 		const propertyContext = await this.getContext(UMB_PROPERTY_CONTEXT);
 		if (!propertyContext) return;
@@ -44,4 +44,4 @@ export class ContentmentPropertyActionEditJsonElement extends UmbPropertyActionB
 	}
 }
 
-export { ContentmentPropertyActionEditJsonElement as api };
+export { ContentmentEditJsonPropertyAction as api };

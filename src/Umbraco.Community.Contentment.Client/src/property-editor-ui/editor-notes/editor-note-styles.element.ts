@@ -9,6 +9,8 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 import type { ContentmentInfoBoxElementType } from '../../components/info-box/info-box.element.js';
 import { ContentmentPropertyEditorUITemplatedListElement } from '../templated-list/templated-list.element.js';
 
+import '../../components/info-box/info-box.element.js';
+
 @customElement('contentment-property-editor-ui-editor-note-styles')
 export class ContentmentPropertyEditorUIEditorNoteStylesElement
 	extends UmbLitElement

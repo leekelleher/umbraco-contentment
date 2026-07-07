@@ -12,6 +12,9 @@ import type { ContentmentSortEndEvent } from '../../components/sortable-list/sor
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import type { UUIModalSidebarSize } from '@umbraco-cms/backoffice/external/uui';
 
+import '../../components/info-box/info-box.element.js';
+import '../../components/sortable-list/sortable-list.element.js';
+
 @customElement('contentment-property-editor-ui-item-picker')
 export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement implements UmbPropertyEditorUiElement {
 	@state()
@@ -222,8 +225,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 			<uui-ref-node
 				error
 				name="The item associated with '${value}' is no longer available."
-				detail="If you still require this item, please contact your administrator, otherwise you can remove it."
-				style="color: var(--uui-color-danger-standalone);">
+				detail="If you still require this item, please contact your administrator, otherwise you can remove it.">
 				<umb-icon slot="icon" name="icon-alert"></umb-icon>
 				<uui-action-bar slot="actions">
 					<uui-button
@@ -239,6 +241,10 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 			#btn-add {
 				--uui-button-border-radius: var(--uui-border-radius);
 				display: block;
+			}
+
+			uui-ref-node[error] {
+				color: var(--uui-color-danger-standalone);
 			}
 		`,
 	];
