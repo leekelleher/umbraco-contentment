@@ -9,7 +9,6 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
-import { UMB_DOCUMENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/document';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
@@ -82,6 +81,7 @@ export class ContentmentPropertyEditorUIDataListElement
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
 			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique));
+			this.observe(contentWorkspaceContext?.structure.ownerContentType, (contentType) => (this._contentTypeUnique = contentType?.unique));
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
@@ -92,13 +92,6 @@ export class ContentmentPropertyEditorUIDataListElement
 			this.#propertyContext = propertyContext;
 			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
 			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
-		});
-
-		this.consumeContext(UMB_DOCUMENT_WORKSPACE_CONTEXT, (documentWorkspaceContext) => {
-			this.observe(
-				documentWorkspaceContext?.contentTypeUnique,
-				(contentTypeUnique) => (this._contentTypeUnique = contentTypeUnique),
-			);
 		});
 
 		this.addValidator(
