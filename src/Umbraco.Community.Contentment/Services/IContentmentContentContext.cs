@@ -11,7 +11,10 @@ namespace Umbraco.Community.Contentment.Services
     {
         int? GetCurrentContentId(out bool isParent);
 
+        Guid? GetCurrentContentTypeKey();
+
         IPublishedContent? GetCurrentContent(out bool isParent);
+
     }
 
     // NOTE: Added as a separate interface, so not to break binary backwards-compatibility. [LK]
@@ -26,5 +29,11 @@ namespace Umbraco.Community.Contentment.Services
     public interface IContentmentContentContext3 : IContentmentContentContext2
     {
         string? GetCurrentVariantId();
+    }
+
+    public interface IContentmentContentContext4
+    : IContentmentContentContext3
+    {
+        Guid? GetCurrentContentTypeKey();
     }
 }

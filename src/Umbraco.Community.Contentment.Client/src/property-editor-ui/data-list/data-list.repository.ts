@@ -23,6 +23,7 @@ export type ContentmentDataListRepositoryGetEditorArgs = {
 	parentEntityUnique?: string | null;
 	propertyAlias?: string | null;
 	variantId?: string | null;
+	contentTypeUnique?: string | null;
 };
 
 export class ContentmentDataListRepository extends UmbRepositoryBase implements UmbApi {
@@ -87,6 +88,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 			listEditor: args.listEditor,
 			parentId: args.parentEntityUnique,
 			variant: args.variantId,
+			contentTypeKey: args.contentTypeUnique,
 		};
 
 		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));

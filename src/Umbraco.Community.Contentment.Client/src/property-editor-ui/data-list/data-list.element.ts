@@ -9,6 +9,7 @@ import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import { UMB_DOCUMENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/document';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 
@@ -52,6 +53,9 @@ export class ContentmentPropertyEditorUIDataListElement
 	@state()
 	private _listEditor?: ContentmentConfigurationEditorValue;
 
+	@state()
+    private _contentTypeUnique?: string | null;
+
 	@property({ type: Boolean })
 	mandatory = false;
 
@@ -90,6 +94,13 @@ export class ContentmentPropertyEditorUIDataListElement
 			this.observe(propertyContext?.variantId, (variantId) => (this._variantId = variantId?.toString() || 'invariant'));
 		});
 
+		this.consumeContext(UMB_DOCUMENT_WORKSPACE_CONTEXT, (documentWorkspaceContext) => {
+			this.observe(
+				documentWorkspaceContext?.contentTypeUnique,
+				(contentTypeUnique) => (this._contentTypeUnique = contentTypeUnique),
+			);
+		});
+
 		this.addValidator(
 			'valueMissing',
 			() => this.mandatoryMessage ?? UMB_VALIDATION_EMPTY_LOCALIZATION_KEY,
@@ -123,6 +134,7 @@ export class ContentmentPropertyEditorUIDataListElement
 			parentEntityUnique: this._parentEntityUnique,
 			propertyAlias: this._propertyAlias,
 			variantId: this._variantId,
+			contentTypeUnique: this._contentTypeUnique,
 		});
 
 		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];

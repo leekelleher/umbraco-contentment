@@ -10,7 +10,7 @@ namespace Umbraco.Community.Contentment.Services
     public static class ContentmentContentContextExtensions
     {
         public static int? GetCurrentContentId(this IContentmentContentContext ctx) => ctx.GetCurrentContentId(out _);
-
+        public static Guid? GetCurrentContentTypeKey(this IContentmentContentContext ctx) => ctx.GetCurrentContentTypeKey();
         public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
 
         [Obsolete("To be removed in Contentment 8.0")]

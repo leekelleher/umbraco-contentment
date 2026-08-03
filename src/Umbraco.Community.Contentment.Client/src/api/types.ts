@@ -136,6 +136,7 @@ export type PostDataListEditorData = {
 	body?: DataListConfigurationRequestModel;
 	path?: never;
 	query?: never;
+	contentTypeKey?: string | null;
 	url: '/umbraco/management/api/v1/contentment/data-list/editor';
 };
 export type PostDataListEditorErrors = ApiErrorStatuses;

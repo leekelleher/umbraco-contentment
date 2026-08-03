@@ -21,7 +21,8 @@ public abstract class ContentmentControllerBase : ManagementApiControllerBase
         string? parentId = null,
         string? variantId = null,
         string? propertyAlias = null,
-        bool? isNew = false)
+        bool? isNew = false,
+        string? contentTypeKey = null)
     {
         if (string.IsNullOrWhiteSpace(propertyAlias) == false)
         {
@@ -41,6 +42,13 @@ public abstract class ContentmentControllerBase : ManagementApiControllerBase
         if (string.IsNullOrWhiteSpace(parentId) == false)
         {
             HttpContext.Items.Add("contentmentContextCurrentParentId", parentId);
+        }
+
+        if (string.IsNullOrWhiteSpace(contentTypeKey) == false)
+        {
+            HttpContext.Items.Add(
+                "contentmentContextCurrentContentTypeKey",
+                contentTypeKey);
         }
 
         HttpContext.Items.Add("contentmentContextCurrentIsNew", isNew ?? false);

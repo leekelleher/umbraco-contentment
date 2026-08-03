@@ -18,4 +18,6 @@ public sealed class DataListConfigurationRequestModel
     public ConfigurationEditorItemRequestModel? ListEditor { get; set; }
 
     public string? Variant { get; set; }
+
+    public string? ContentTypeKey { get; set; }
 }
