@@ -300,6 +300,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					detail=${ifDefined(item.description ?? undefined)}
 					select-only
 					selectable
+					?disabled=${item.disabled}
 					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
@@ -316,7 +317,9 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					detail=${ifDefined(item.description ?? undefined)}
 					icon=${icon}
 					select-only
-					selectable
+					?disabled=${item.disabled}
+					?readonly=${item.disabled}
+					?selectable=${!item.disabled}
 					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
