@@ -139,19 +139,20 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content != null)
             {
-                var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
                 var documentTypeKeys = GetDocumentTypeFilter(config);
                 var culture = GetCurrentCulture();
 
-                // NOTE: This intentionally does not apply `FilterUnpublished` — this method renders
-                // values that have already been saved, and a node published at pick-time may since
-                // have been unpublished. Filtering it out here would silently drop its UDI from the
-                // saved value on the next add/remove/sort in the Data Picker.
+                // Renders already-saved values, so no `FilterUnpublished` here — a node published
+                // at pick-time may since have been unpublished, and filtering it out would silently
+                // drop its UDI from the saved value on the next add/remove/sort in the Data Picker.
+                //
+                // Resolve the published instance first (same fallback as `GetChildren`), else
+                // `ToDataListItem`'s `IsPublished` check would always see the draft.
                 var content = values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
-                    .Select(x => umbracoContext.Content.GetById(preview, x.Guid))
+                    .Select(x => umbracoContext.Content.GetById(false, x.Guid) ?? umbracoContext.Content.GetById(true, x.Guid))
                     .WhereNotNull()
                     .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
