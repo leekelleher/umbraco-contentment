@@ -291,15 +291,17 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 	#renderItem(item: ContentmentListItem) {
 		const icon = item.icon ?? this.data?.defaultIcon ?? 'icon-document';
+		const description = this.localize.string(item.description) || undefined;
 		return when(
 			// HACK: [LK] Until I figure out how to render custom display modes in the modal.
 			this.data?.listType === 'cards',
 			() => html`
 				<uui-card-media
 					name=${item.name}
-					detail=${ifDefined(item.description ?? undefined)}
+					detail=${ifDefined(description)}
 					select-only
 					selectable
+					?disabled=${item.disabled}
 					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
@@ -313,10 +315,12 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 			() => html`
 				<umb-ref-item
 					name=${item.name}
-					detail=${ifDefined(item.description ?? undefined)}
+					detail=${ifDefined(description)}
 					icon=${icon}
 					select-only
-					selectable
+					?disabled=${item.disabled}
+					?readonly=${item.disabled}
+					?selectable=${!item.disabled}
 					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>
