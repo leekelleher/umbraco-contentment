@@ -375,7 +375,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // `Url()` returns `Constants.Routing.Unroutable` ("#") for unpublished content,
                 // so use the publish state as the description instead.
                 Description = isPublished == false
-                    ? "Unpublished"
+                    ? "(#content_unpublished)"
                     : content.TemplateId > 0 ? content.Url() : string.Empty,
                 Icon = content.ContentType.GetIcon(_contentTypeService),
                 Properties = new Dictionary<string, object>
