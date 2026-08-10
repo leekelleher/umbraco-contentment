@@ -83,17 +83,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ContentmentConfigurationField
             {
-                Key = "showUnpublished",
-                Name = "Show unpublished?",
-                Description = "Select to include child nodes that have not been published.<br>By default, only published nodes are returned.",
-                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
-            },
-            new ContentmentConfigurationField
-            {
                 Key = "imageAlias",
                 Name = "Image alias",
                 Description = $"When using the Cards display mode, you can set a thumbnail image by enter the property alias of the media picker. The default alias is '{DefaultImageAlias}'.",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "showUnpublished",
+                Name = "Show unpublished?",
+                Description = "Select to include child nodes that have not been published.<br>By default, only published nodes are returned.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
             },
             new ContentmentConfigurationField
             {
