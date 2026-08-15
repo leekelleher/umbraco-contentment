@@ -13,13 +13,14 @@ Thumbs.db
 .vs
 node_modules/
 
-.claude/*.local.*
+.claude/
 .github/release-notes/*.md
 artifacts/
 build/__umb/*
 build/assets/
 build/build-push-nuget.ps1
 build/build-push-umb.ps1
+CLAUDE.md
 src/packages/*/**
 src/Umbraco.Cms.*.x/*
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
