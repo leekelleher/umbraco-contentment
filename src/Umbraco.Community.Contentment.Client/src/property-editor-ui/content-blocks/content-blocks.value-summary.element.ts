@@ -6,7 +6,7 @@ import { UmbValueSummaryElementBase } from '@umbraco-cms/backoffice/value-summar
 import type { ContentmentContentBlockValue } from '../types.js';
 
 @customElement('contentment-property-editor-ui-content-blocks-value-summary')
-export class ContentmentPropertyEditorUIContentBlocksValueSummaryElement extends UmbValueSummaryElementBase<
+class ContentmentPropertyEditorUIContentBlocksValueSummaryElement extends UmbValueSummaryElementBase<
 	Array<ContentmentContentBlockValue> | undefined
 > {
 	override render() {

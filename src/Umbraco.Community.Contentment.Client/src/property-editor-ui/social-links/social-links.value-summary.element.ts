@@ -6,7 +6,7 @@ import { UmbValueSummaryElementBase } from '@umbraco-cms/backoffice/value-summar
 import type { ContentmentSocialLinkValue } from '../types.js';
 
 @customElement('contentment-property-editor-ui-social-links-value-summary')
-export class ContentmentPropertyEditorUISocialLinksValueSummaryElement extends UmbValueSummaryElementBase<
+class ContentmentPropertyEditorUISocialLinksValueSummaryElement extends UmbValueSummaryElementBase<
 	Array<ContentmentSocialLinkValue> | undefined
 > {
 	override render() {

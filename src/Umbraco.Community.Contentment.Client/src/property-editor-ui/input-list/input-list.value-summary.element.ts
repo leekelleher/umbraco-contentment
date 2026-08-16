@@ -5,7 +5,7 @@ import { customElement, html, when } from '@umbraco-cms/backoffice/external/lit'
 import { UmbValueSummaryElementBase } from '@umbraco-cms/backoffice/value-summary';
 
 @customElement('contentment-property-editor-ui-input-list-value-summary')
-export class ContentmentPropertyEditorUIInputListValueSummaryElement extends UmbValueSummaryElementBase<
+class ContentmentPropertyEditorUIInputListValueSummaryElement extends UmbValueSummaryElementBase<
 	Array<unknown> | undefined
 > {
 	override render() {
