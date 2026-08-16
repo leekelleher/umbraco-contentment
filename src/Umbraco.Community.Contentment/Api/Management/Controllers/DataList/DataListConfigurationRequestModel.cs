@@ -15,9 +15,9 @@ public sealed class DataListConfigurationRequestModel
 
     public bool? IsNew { get; set; }
 
-    public string? ParentId { get; set; }
-
     public ConfigurationEditorItemRequestModel? ListEditor { get; set; }
+
+    public string? ParentId { get; set; }
 
     public string? Variant { get; set; }
 }
