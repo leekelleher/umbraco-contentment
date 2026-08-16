@@ -18,12 +18,12 @@ import type { ContentmentListItem } from '../types.js';
 export type ContentmentDataListRepositoryGetEditorArgs = {
 	dataSource?: ContentmentConfigurationEditorValue | null;
 	listEditor?: ContentmentConfigurationEditorValue | null;
+	contentTypeUnique?: string | null;
 	entityIsNew?: boolean;
 	entityUnique?: string | null;
 	parentEntityUnique?: string | null;
 	propertyAlias?: string | null;
 	variantId?: string | null;
-	contentTypeUnique?: string | null;
 };
 
 export class ContentmentDataListRepository extends UmbRepositoryBase implements UmbApi {

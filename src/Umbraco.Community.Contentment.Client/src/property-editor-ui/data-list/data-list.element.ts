@@ -125,12 +125,12 @@ export class ContentmentPropertyEditorUIDataListElement
 		this.#listEditor = await this.#repository.__getEditorInternal({
 			dataSource: this._dataSource,
 			listEditor: this._listEditor,
+			contentTypeUnique: this._contentTypeUnique,
 			entityIsNew: this._entityIsNew,
 			entityUnique: this._entityUnique,
 			parentEntityUnique: this._parentEntityUnique,
 			propertyAlias: this._propertyAlias,
 			variantId: this._variantId,
-			contentTypeUnique: this._contentTypeUnique,
 		});
 
 		const combinedConfig = [...(this.#listEditor?.config ?? []), ...(this.config ?? [])];
