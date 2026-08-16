@@ -18,6 +18,7 @@ import type { ContentmentListItem } from '../types.js';
 export type ContentmentDataListRepositoryGetEditorArgs = {
 	dataSource?: ContentmentConfigurationEditorValue | null;
 	listEditor?: ContentmentConfigurationEditorValue | null;
+	contentTypeUnique?: string | null;
 	entityIsNew?: boolean;
 	entityUnique?: string | null;
 	parentEntityUnique?: string | null;
@@ -81,6 +82,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 
 		const body = {
 			alias: args.propertyAlias,
+			contentTypeKey: args.contentTypeUnique,
 			dataSource: args.dataSource,
 			id: args.entityUnique,
 			isNew: args.entityIsNew,

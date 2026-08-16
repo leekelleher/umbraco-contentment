@@ -7,6 +7,8 @@ public sealed class DataListConfigurationRequestModel
 {
     public string? Alias { get; set; }
 
+    public Guid? ContentTypeKey { get; set; }
+
     public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
     public string? Id { get; set; }

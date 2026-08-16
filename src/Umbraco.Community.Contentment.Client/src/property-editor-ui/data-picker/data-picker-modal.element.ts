@@ -93,12 +93,19 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	@state()
 	private _variantId?: string;
 
+	@state()
+	private _contentTypeUnique?: string | null;
+
 	constructor() {
 		super();
 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
 			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique || undefined));
+			this.observe(
+				contentWorkspaceContext?.structure.ownerContentTypeObservablePart((x) => x?.unique),
+				(unique) => (this._contentTypeUnique = unique),
+			);
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
@@ -167,6 +174,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 		const query = {
 			alias: this._propertyAlias,
+			contentTypeKey: this._contentTypeUnique ?? undefined,
 			dataTypeKey: this._dataTypeKey,
 			id: this._entityUnique,
 			isNew: this._entityIsNew,

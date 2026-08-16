@@ -7,6 +7,8 @@ public sealed class DataPickerEditorRequestModel
 {
     public string? Alias { get; set; }
 
+    public Guid? ContentTypeKey { get; set; }
+
     public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
     public Guid DataTypeKey { get; set; }

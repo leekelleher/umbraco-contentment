@@ -52,6 +52,9 @@ export class ContentmentPropertyEditorUIDataListElement
 	@state()
 	private _listEditor?: ContentmentConfigurationEditorValue;
 
+	@state()
+	private _contentTypeUnique?: string | null;
+
 	@property({ type: Boolean })
 	mandatory = false;
 
@@ -78,6 +81,10 @@ export class ContentmentPropertyEditorUIDataListElement
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
 			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique));
+			this.observe(
+				contentWorkspaceContext?.structure.ownerContentTypeObservablePart((x) => x?.unique),
+				(unique) => (this._contentTypeUnique = unique),
+			);
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
@@ -118,6 +125,7 @@ export class ContentmentPropertyEditorUIDataListElement
 		this.#listEditor = await this.#repository.__getEditorInternal({
 			dataSource: this._dataSource,
 			listEditor: this._listEditor,
+			contentTypeUnique: this._contentTypeUnique,
 			entityIsNew: this._entityIsNew,
 			entityUnique: this._entityUnique,
 			parentEntityUnique: this._parentEntityUnique,

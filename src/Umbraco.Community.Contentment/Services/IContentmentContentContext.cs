@@ -27,4 +27,15 @@ namespace Umbraco.Community.Contentment.Services
     {
         string? GetCurrentVariantId();
     }
+
+    // NOTE: Added as a separate interface, so not to break binary backwards-compatibility. [EW]
+    [Obsolete("To be combined with `IContentmentContentContext`. This interface will be removed in Contentment 8.0.")]
+    public interface IContentmentContentContext4 : IContentmentContentContext3
+    {
+        /// <summary>
+        /// Gets the content type key of the current content, e.g. a document type, media type or member type.
+        /// </summary>
+        /// <returns>The content type key, or <see langword="null"/> if it could not be resolved.</returns>
+        public Guid? GetCurrentContentTypeKey();
+    }
 }
