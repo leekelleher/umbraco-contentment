@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, nothing, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentSortEndEvent } from '../../../components/sortable-list/sort-end.event.js';
@@ -47,7 +47,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 	}
 
 	#renderAddButton() {
-		if (!this.allowAdd) return nothing;
+		if (!this.allowAdd) return;
 		const label = this.localize.term(this.addButtonLabelKey ?? 'general_choose');
 		return html`
 			<uui-button id="btn-add" label=${label} look="placeholder" @click=${this.#onAdd}>

@@ -115,7 +115,7 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 				background-color: var(--lk-info-box-background);
 				color: var(--lk-info-box-foreground);
 
-				border-radius: calc(var(--uui-border-radius) * 2);
+				border-radius: var(--uui-border-radius);
 
 				box-shadow: var(--uui-shadow-depth-1);
 

@@ -19,7 +19,7 @@ export class ContentmentDataListItemUiInfoBoxElement extends UmbLitElement imple
 			<contentment-info-box
 				.icon=${this.item.icon ?? undefined}
 				.headline=${this.item.name ?? this.item.value}
-				.message=${this.item.description ?? undefined}></contentment-info-box>
+				.message=${this.localize.string(this.item.description ?? '') || undefined}></contentment-info-box>
 		`;
 	}
 }

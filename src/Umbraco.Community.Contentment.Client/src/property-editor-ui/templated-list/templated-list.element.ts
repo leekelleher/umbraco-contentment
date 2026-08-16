@@ -232,7 +232,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 
 				> li {
 					flex: 1;
-					border-radius: calc(var(--uui-border-radius) * 2);
+					border-radius: var(--uui-border-radius);
 
 					&.selected {
 						outline: var(--uui-size-2) solid var(--uui-color-selected);
@@ -243,7 +243,7 @@ export class ContentmentPropertyEditorUITemplatedListElement
 						font: inherit;
 						color: inherit;
 
-						border-radius: calc(var(--uui-border-radius) * 2);
+						border-radius: var(--uui-border-radius);
 						cursor: pointer;
 						display: flex;
 						width: 100%;
