@@ -160,16 +160,31 @@ Property Editors are:
 
 - A non-breaking-change minor release. Reduces Umbraco dependency to 18, _(consumers will need to upgraded to Contentment 7)._
 
+### [v6.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.3.0)
+
+- Data List/Data Picker: Umbraco Content data-source: added ["Properties"](https://github.com/leekelleher/umbraco-contentment/pull/561) and ["Show unpublished?"](https://github.com/leekelleher/umbraco-contentment/pull/560) configuration options.
+- `IContentmentContentContext`: [adds `GetCurrentContentTypeKey()` method](https://github.com/leekelleher/umbraco-contentment/pull/563).
+
 
 ## v7 _(June 2026)_
 
 - _Adds support for Umbraco 18 (.NET 10)._
 - _Removes support for Umbraco 16 (.NET 9) and 17._
 
-### v7.1
+### [v7.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/7.0.0)
+
+- Code Editor: [refactored from Umbraco's Monaco to Prism Code Editor library](https://github.com/leekelleher/umbraco-contentment/pull/556)
+- Data List: [Umbraco Backoffice Colors](https://github.com/leekelleher/umbraco-contentment/commit/853b57672d3e9a36702266448de251f6026935ee) data-source.
+- Data List: [Umbraco Elements](https://github.com/leekelleher/umbraco-contentment/pull/555) data source.
+- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
+
+### [v7.1](https://github.com/leekelleher/umbraco-contentment/releases/tag/7.1.0)
+
+- _Same as [v6.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.3.0), an aligned minor release._
+
+### v7.2
 
 - _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481)_
-- [Input List](https://github.com/leekelleher/umbraco-contentment/pull/513)
 
 
 ## v8 _(December 2026)_
