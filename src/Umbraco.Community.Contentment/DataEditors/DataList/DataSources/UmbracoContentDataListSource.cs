@@ -4,7 +4,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 using Examine;
-using Examine.Search;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
@@ -373,11 +372,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             return new DataListItem
             {
                 Name = content.Name,
-                // `Url()` returns `Constants.Routing.Unroutable` ("#") for unpublished content,
-                // so use the publish state as the description instead.
-                Description = isPublished == false
-                    ? "(#content_unpublished)"
-                    : content.TemplateId > 0 ? content.Url() : string.Empty,
+                // `Url()` returns "#" for unpublished content, so use the publish state as the description.
+                Description = isPublished == false ? "(#content_unpublished)" : content.TemplateId > 0 ? content.Url() : string.Empty,
                 Icon = content.ContentType.GetIcon(_contentTypeService),
                 Properties = new Dictionary<string, object>
                 {
