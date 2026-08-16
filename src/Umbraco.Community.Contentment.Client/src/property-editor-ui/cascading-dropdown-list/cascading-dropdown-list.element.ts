@@ -128,7 +128,10 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 					${when(item.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
 					<uui-form-layout-item>
 						<span slot="label">${this.localize.string(item.name)}</span>
-						${when(item.description, () => html`<span slot="description">${unsafeHTML(item.description)}</span>`)}
+						${when(
+							item.description,
+							() => html`<span slot="description">${unsafeHTML(this.localize.string(item.description))}</span>`,
+						)}
 					</uui-form-layout-item>
 				</div>
 			</uui-combobox-list-option>

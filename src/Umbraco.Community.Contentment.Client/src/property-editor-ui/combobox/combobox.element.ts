@@ -91,7 +91,7 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 						() => html`
 							<uui-form-layout-item>
 								<span slot="label">${this.localize.string(item.name)}</span>
-								<span slot="description">${unsafeHTML(item.description)}</span>
+								<span slot="description">${unsafeHTML(this.localize.string(item.description))}</span>
 							</uui-form-layout-item>
 						`,
 						() => html`<span>${this.localize.string(item.name)}</span>`,

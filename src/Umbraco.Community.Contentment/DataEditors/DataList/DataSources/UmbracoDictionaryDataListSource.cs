@@ -3,8 +3,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Globalization;
+using Microsoft.Extensions.Options;
+using Umbraco.Cms.Core.Configuration.Models;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 
@@ -12,11 +15,18 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoDictionaryDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource
     {
+        private readonly IBackOfficeSecurityAccessor _backOfficeSecurityAccessor;
         private readonly IDictionaryItemService _dictionaryItemService;
+        private readonly GlobalSettings _globalSettings;
 
-        public UmbracoDictionaryDataListSource(IDictionaryItemService dictionaryItemService)
+        public UmbracoDictionaryDataListSource(
+            IBackOfficeSecurityAccessor backOfficeSecurityAccessor,
+            IDictionaryItemService dictionaryItemService,
+            IOptions<GlobalSettings> globalSettings)
         {
+            _backOfficeSecurityAccessor = backOfficeSecurityAccessor;
             _dictionaryItemService = dictionaryItemService;
+            _globalSettings = globalSettings.Value;
         }
 
         public override string Name => "Umbraco Dictionary Items";
@@ -56,14 +66,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 var parent = _dictionaryItemService.GetAsync(key).GetAwaiter().GetResult();
                 if (parent is not null)
                 {
-                    var cultureName = CultureInfo.CurrentCulture.Name;
+                    var userLanguage = _backOfficeSecurityAccessor.BackOfficeSecurity?.CurrentUser?.Language;
+                    var cultureName = string.IsNullOrWhiteSpace(userLanguage) == false
+                        ? userLanguage
+                        : _globalSettings.DefaultUILanguage;
+                    var languageName = cultureName.Split('-')[0];
 
                     return _dictionaryItemService
                         .GetChildrenAsync(parent.Key).GetAwaiter().GetResult()
                         .OrderBy(x => x.ItemKey)
                         .Select(x => new DataListItem
                         {
-                            Name = x.Translations.FirstOrDefault(t => t.LanguageIsoCode.InvariantEquals(cultureName) == true)?.Value ?? x.ItemKey,
+                            Name = GetTranslatedValue(x, cultureName, languageName) ?? x.ItemKey,
                             Value = x.ItemKey,
                             Icon = Icon,
                             Description = x.ItemKey
@@ -72,6 +86,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
 
             return Enumerable.Empty<DataListItem>();
+        }
+
+        private static string? GetTranslatedValue(IDictionaryItem item, string cultureName, string languageName)
+        {
+            var translations = item.Translations
+                .Where(x => string.IsNullOrWhiteSpace(x.Value) == false)
+                .ToList();
+
+            return translations.FirstOrDefault(x => x.LanguageIsoCode.InvariantEquals(cultureName) == true)?.Value
+                ?? translations.FirstOrDefault(x => x.LanguageIsoCode.Split('-')[0].InvariantEquals(languageName) == true)?.Value
+                ?? translations.FirstOrDefault()?.Value;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Umbraco.Community.Contentment.Api.Management;
 
 public sealed class DataListEditorResponseModel
 {
-    public string? PropertyEditorUiAlias { get; set; }
-
     public IEnumerable<DataTypePropertyPresentationModel>? Config { get; set; }
+
+    public string? PropertyEditorUiAlias { get; set; }
 }

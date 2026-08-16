@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public sealed class ContentmentContentContext : IContentmentContentContext3
+    public sealed class ContentmentContentContext : IContentmentContentContext4
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
@@ -101,6 +101,17 @@ namespace Umbraco.Community.Contentment.Services
             }
 
             return default;
+        }
+
+        public Guid? GetCurrentContentTypeKey()
+        {
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentTypeKey", out Guid? contentTypeKey) == true &&
+                contentTypeKey.HasValue == true)
+            {
+                return contentTypeKey;
+            }
+
+            return GetCurrentContent(out _)?.ContentType.Key;
         }
 
         private void SetVariationContext()

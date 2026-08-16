@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
+using Examine;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
@@ -29,8 +30,12 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IDocumentNavigationQueryService _documentNavigationQueryService;
         private readonly IDynamicRootService _dynamicRootService;
+        private readonly IExamineManager _examineManager;
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+
+        private static readonly string[] _reservedPropertyKeys = ["description", "disabled", "group", "icon", "name", "value"];
+        private static readonly string[] _systemFieldAliases = ["contentTypeAlias", "createDate", "id", "key", "published", "sortOrder", "updateDate", "url"];
 
         private const string DefaultImageAlias = "image";
 
@@ -40,6 +45,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IDocumentNavigationQueryService documentNavigationQueryService,
             IDynamicRootService dynamicRootService,
+            IExamineManager examineManager,
             IJsonSerializer jsonSerializer,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
@@ -48,6 +54,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentTypeService = contentTypeService;
             _documentNavigationQueryService = documentNavigationQueryService;
             _dynamicRootService = dynamicRootService;
+            _examineManager = examineManager;
             _jsonSerializer = jsonSerializer;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
@@ -85,6 +92,20 @@ namespace Umbraco.Community.Contentment.DataEditors
             },
             new ContentmentConfigurationField
             {
+                Key = "properties",
+                Name = "Properties",
+                Description = $"Add property aliases to populate each item's raw property values.<br>Supports the system fields: {string.Join(", ", _systemFieldAliases)}.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.MultipleTextString",
+            },
+            new ContentmentConfigurationField
+            {
+                Key = "showUnpublished",
+                Name = "Show unpublished?",
+                Description = "Select to include child nodes that have not been published.<br>By default, only published nodes are returned.",
+                PropertyEditorUiAlias = "Umb.PropertyEditorUi.Toggle",
+            },
+            new ContentmentConfigurationField
+            {
                 Key = "sortAlphabetically",
                 Name = "Sort alphabetically?",
                 Description = "Select to sort the content items in alphabetical order.<br>By default, the order is defined by the Umbraco content sort order.",
@@ -102,11 +123,14 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start is not null)
             {
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
+                var properties = GetPropertyAliases(config);
                 var documentTypeKeys = GetDocumentTypeFilter(config);
+                var showUnpublished = GetShowUnpublished(config);
+                var culture = GetCurrentCulture();
 
-                var items = GetChildren(start)
+                var items = FilterUnpublished(GetChildren(start), showUnpublished, culture)
                     .Where(x => IsDocumentTypeMatch(x, documentTypeKeys))
-                    .Select(x => ToDataListItem(x, imageAlias));
+                    .Select(x => ToDataListItem(x, imageAlias, properties, culture));
 
                 if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
                 {
@@ -125,18 +149,25 @@ namespace Umbraco.Community.Contentment.DataEditors
                 _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content != null)
             {
-                var preview = true;
                 var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
+                var properties = GetPropertyAliases(config);
                 var documentTypeKeys = GetDocumentTypeFilter(config);
+                var culture = GetCurrentCulture();
 
+                // Renders already-saved values, so no `FilterUnpublished` here — a node published
+                // at pick-time may since have been unpublished, and filtering it out would silently
+                // drop its UDI from the saved value on the next add/remove/sort in the Data Picker.
+                //
+                // Resolve the published instance first (same fallback as `GetChildren`), else
+                // `ToDataListItem`'s `IsPublished` check would always see the draft.
                 var content = values
                     .Select(x => UdiParser.TryParse(x, out GuidUdi? udi) == true ? udi : null)
                     .WhereNotNull()
-                    .Select(x => umbracoContext.Content.GetById(preview, x.Guid))
+                    .Select(x => umbracoContext.Content.GetById(false, x.Guid) ?? umbracoContext.Content.GetById(true, x.Guid))
                     .WhereNotNull()
                     .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
-                return Task.FromResult(content.Select(x => ToDataListItem(x, imageAlias)));
+                return Task.FromResult(content.Select(x => ToDataListItem(x, imageAlias, properties, culture)));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
@@ -148,16 +179,22 @@ namespace Umbraco.Community.Contentment.DataEditors
             if (start != null)
             {
                 var documentTypeKeys = GetDocumentTypeFilter(config);
+                var showUnpublished = GetShowUnpublished(config);
+                var culture = GetCurrentCulture();
 
-                var items = string.IsNullOrWhiteSpace(query) == false
-                    ? start.SearchChildren(query).Select(x => x.Content)
-                    : GetChildren(start);
+                var items = string.IsNullOrWhiteSpace(query) == true
+                    ? GetChildren(start)
+                    : showUnpublished == true
+                        ? SearchChildrenIncludingUnpublished(start, query)
+                        : start.SearchChildren(query).Select(x => x.Content);
 
-                items = items?.Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
+                items = FilterUnpublished(items, showUnpublished, culture)
+                    .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
 
-                if (items?.Any() == true)
+                if (items.Any() == true)
                 {
                     var imageAlias = config.GetValueAs("imageAlias", DefaultImageAlias) ?? DefaultImageAlias;
+                    var properties = GetPropertyAliases(config);
                     var offset = (pageNumber - 1) * pageSize;
 
                     if (config.TryGetValueAs("sortAlphabetically", out bool sortAlphabetically) == true && sortAlphabetically == true)
@@ -167,7 +204,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     var results = new PagedViewModel<DataListItem>
                     {
-                        Items = items.Skip(offset).Take(pageSize).Select(x => ToDataListItem(x, imageAlias)),
+                        Items = items.Skip(offset).Take(pageSize).Select(x => ToDataListItem(x, imageAlias, properties, culture)),
                         Total = pageSize > 0 ? (long)Math.Ceiling(items.Count() / (decimal)pageSize) : 1,
                     };
 
@@ -261,6 +298,52 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<IPublishedContent>();
         }
 
+        private IEnumerable<IPublishedContent> SearchChildrenIncludingUnpublished(IPublishedContent start, string query)
+        {
+            // The ExternalIndex only contains published content, and `IPublishedContent.SearchChildren()`
+            // maps its results through the non-preview `GetById` overload, so draft nodes are dropped
+            // either way. Query the InternalIndex directly and resolve each result with an explicit
+            // preview fallback, the same way `GetChildren` does.
+            if (_examineManager.TryGetIndex(UmbConstants.UmbracoIndexes.InternalIndexName, out var index) == true &&
+                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+                umbracoContext.Content is IPublishedContentCache contentCache)
+            {
+                var results = index
+                    .Searcher
+                    .CreateQuery()
+                    .Field("parentID", start.Id)
+                    .And()
+                    .ManagedQuery(query)
+                    .Execute();
+
+                return results
+                    .Select(x => int.TryParse(x.Id, out var id) == true ? id : 0)
+                    .Where(x => x > 0)
+                    .Select(x => contentCache.GetById(false, x) ?? contentCache.GetById(true, x))
+                    .WhereNotNull();
+            }
+
+            return Enumerable.Empty<IPublishedContent>();
+        }
+
+        private string? GetCurrentCulture()
+        {
+            if (_contentmentContentContext is not IContentmentContentContext3 contentContext3)
+            {
+                return default;
+            }
+
+            var variantId = contentContext3.GetCurrentVariantId();
+            if (string.IsNullOrWhiteSpace(variantId) == true || variantId == "invariant")
+            {
+                return default;
+            }
+
+            // `UmbVariantId.toString()` appends an optional "_{segment}" suffix.
+            var index = variantId.IndexOf('_');
+            return index > 0 ? variantId[..index] : variantId;
+        }
+
         private IReadOnlyList<Guid>? GetDocumentTypeFilter(Dictionary<string, object> config)
         {
             // The Document Type Picker stores its value as a comma-separated string of GUIDs.
@@ -284,23 +367,74 @@ namespace Umbraco.Community.Contentment.DataEditors
             return keys.Count > 0 ? keys : null;
         }
 
-        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
-            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
-
-        private DataListItem ToDataListItem(IPublishedContent content, string imageAlias = DefaultImageAlias)
+        private DataListItem ToDataListItem(IPublishedContent content, string imageAlias, List<string> properties, string? culture)
         {
+            var isPublished = content.IsPublished(culture);
+
+            var values = new Dictionary<string, object>
+            {
+                { DefaultImageAlias, content.Value<IPublishedContent>(imageAlias)?.Url() ?? string.Empty },
+            };
+
+            foreach (var alias in properties)
+            {
+                if (_reservedPropertyKeys.InvariantContains(alias) == true)
+                {
+                    continue;
+                }
+
+                var value = GetPropertyOrSystemFieldValue(content, alias, isPublished, culture);
+                if (value is not null)
+                {
+                    values[alias] = value;
+                }
+            }
+
             return new DataListItem
             {
                 Name = content.Name,
-                Description = content.TemplateId > 0 ? content.Url() : string.Empty,
-                Disabled = content.IsPublished() == false,
+                // `Url()` returns "#" for unpublished content, so use the publish state as the description.
+                Description = isPublished == false ? "(#content_unpublished)" : content.TemplateId > 0 ? content.Url() : string.Empty,
                 Icon = content.ContentType.GetIcon(_contentTypeService),
-                Properties = new Dictionary<string, object>
-                {
-                    { DefaultImageAlias, content.Value<IPublishedContent>(imageAlias)?.Url() ?? string.Empty },
-                },
+                Properties = values,
                 Value = content.GetUdi().ToString(),
             };
         }
+
+        private static IEnumerable<IPublishedContent> FilterUnpublished(IEnumerable<IPublishedContent> items, bool showUnpublished, string? culture)
+            => showUnpublished == true
+                ? items
+                : items.Where(x => x.IsPublished(culture) == true);
+
+        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
+            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
+
+        private static List<string> GetPropertyAliases(Dictionary<string, object> config)
+            => config.GetValueAs("properties", new List<string>()) ?? new List<string>();
+
+        private static object? GetPropertyOrSystemFieldValue(IPublishedContent content, string alias, bool isPublished, string? culture)
+        {
+            if (alias.InvariantEquals("contentTypeAlias") == true)
+            { return content.ContentType.Alias; }
+            if (alias.InvariantEquals("createDate") == true)
+            { return content.CreateDate; }
+            if (alias.InvariantEquals("id") == true)
+            { return content.Id; }
+            if (alias.InvariantEquals("key") == true)
+            { return content.Key; }
+            if (alias.InvariantEquals("published") == true)
+            { return isPublished; }
+            if (alias.InvariantEquals("sortOrder") == true)
+            { return content.SortOrder; }
+            if (alias.InvariantEquals("updateDate") == true)
+            { return content.UpdateDate; }
+            if (alias.InvariantEquals("url") == true)
+            { return content.TemplateId > 0 ? content.Url() : string.Empty; }
+
+            return content.Value<object>(alias, culture);
+        }
+
+        private static bool GetShowUnpublished(Dictionary<string, object> config)
+            => config.TryGetValueAs("showUnpublished", out bool showUnpublished) == true && showUnpublished == true;
     }
 }

@@ -122,7 +122,7 @@ export class ContentmentPropertyEditorUIRadioButtonListElement
 						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(
 							this._showDescriptions && item.description,
-							() => html`<span slot="description">${unsafeHTML(item.description)}</span>`,
+							() => html`<span slot="description">${unsafeHTML(this.localize.string(item.description))}</span>`,
 						)}
 					</uui-form-layout-item>
 				</div>

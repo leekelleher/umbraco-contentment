@@ -174,7 +174,7 @@ export class ContentmentPropertyEditorUIItemPickerModalElement extends UmbModalB
 						(item) => html`
 							<umb-ref-item
 								name=${item.name}
-								detail=${ifDefined(item.description ?? undefined)}
+								detail=${ifDefined(this.localize.string(item.description) || undefined)}
 								icon=${ifDefined(item.icon ?? this.data?.defaultIcon ?? 'icon-document')}
 								select-only
 								selectable
