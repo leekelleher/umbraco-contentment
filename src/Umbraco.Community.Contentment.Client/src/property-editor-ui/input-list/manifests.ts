@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
+const CONTENTMENT_INPUT_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.InputList';
+
 const dataTypesEditorUi: UmbExtensionManifest = {
 	type: 'propertyEditorUi',
 	alias: 'Umb.Contentment.PropertyEditorUi.InputListColumnsConfiguration',
@@ -16,7 +18,7 @@ const dataTypesEditorUi: UmbExtensionManifest = {
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Input List Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.InputList',
+	alias: CONTENTMENT_INPUT_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.InputList',
 		settings: {
@@ -68,4 +70,13 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, dataTypesEditorUi, editorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.InputList',
+	name: '[Contentment] Input List Property Editor Value Summary',
+	forValueType: CONTENTMENT_INPUT_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./input-list.value-summary.element.js'),
+};
+
+export const manifests = [schema, dataTypesEditorUi, editorUi, valueSummary];
