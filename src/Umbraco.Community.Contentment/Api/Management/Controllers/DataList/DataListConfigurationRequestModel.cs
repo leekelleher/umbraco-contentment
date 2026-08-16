@@ -7,6 +7,8 @@ public sealed class DataListConfigurationRequestModel
 {
     public string? Alias { get; set; }
 
+    public Guid? ContentTypeKey { get; set; }
+
     public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
     public string? Id { get; set; }
@@ -18,6 +20,4 @@ public sealed class DataListConfigurationRequestModel
     public ConfigurationEditorItemRequestModel? ListEditor { get; set; }
 
     public string? Variant { get; set; }
-
-    public string? ContentTypeKey { get; set; }
 }

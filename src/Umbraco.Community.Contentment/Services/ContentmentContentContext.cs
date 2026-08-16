@@ -105,14 +105,13 @@ namespace Umbraco.Community.Contentment.Services
 
         public Guid? GetCurrentContentTypeKey()
         {
-            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs(
-                    "contentmentContextCurrentContentTypeKey",
-                    out Guid? contentTypeKey) == true)
+            if (_httpContextAccessor.HttpContext?.Items.TryGetValueAs("contentmentContextCurrentContentTypeKey", out Guid? contentTypeKey) == true &&
+                contentTypeKey.HasValue == true)
             {
                 return contentTypeKey;
             }
 
-            return null;
+            return GetCurrentContent(out _)?.ContentType.Key;
         }
 
         private void SetVariationContext()

@@ -82,13 +82,13 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 
 		const body = {
 			alias: args.propertyAlias,
+			contentTypeKey: args.contentTypeUnique,
 			dataSource: args.dataSource,
 			id: args.entityUnique,
 			isNew: args.entityIsNew,
 			listEditor: args.listEditor,
 			parentId: args.parentEntityUnique,
 			variant: args.variantId,
-			contentTypeKey: args.contentTypeUnique,
 		};
 
 		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));

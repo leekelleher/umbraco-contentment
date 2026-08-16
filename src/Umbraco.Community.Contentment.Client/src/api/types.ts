@@ -21,6 +21,7 @@ export type ContentmentSettings = {
 
 export type DataListConfigurationRequestModel = {
 	alias?: string | null;
+	contentTypeKey?: string | null;
 	dataSource?: ConfigurationEditorItemRequestModel | null;
 	id?: string | null;
 	isNew?: boolean | null;
@@ -46,6 +47,7 @@ export type DataListItem = {
 
 export type DataPickerEditorRequestModel = {
 	alias?: string | null;
+	contentTypeKey?: string | null;
 	dataSource?: ConfigurationEditorItemRequestModel | null;
 	dataTypeKey: string;
 	displayMode?: ConfigurationEditorItemRequestModel | null;
@@ -136,7 +138,6 @@ export type PostDataListEditorData = {
 	body?: DataListConfigurationRequestModel;
 	path?: never;
 	query?: never;
-	contentTypeKey?: string | null;
 	url: '/umbraco/management/api/v1/contentment/data-list/editor';
 };
 export type PostDataListEditorErrors = ApiErrorStatuses;
@@ -190,6 +191,7 @@ export type PostDataPickerSearchData = {
 		variant?: string;
 		parentId?: string;
 		isNew?: boolean;
+		contentTypeKey?: string;
 	};
 	url: '/umbraco/management/api/v1/contentment/data-picker/search';
 };

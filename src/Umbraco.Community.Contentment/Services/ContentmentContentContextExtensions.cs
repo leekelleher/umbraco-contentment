@@ -10,8 +10,10 @@ namespace Umbraco.Community.Contentment.Services
     public static class ContentmentContentContextExtensions
     {
         public static int? GetCurrentContentId(this IContentmentContentContext ctx) => ctx.GetCurrentContentId(out _);
-        public static Guid? GetCurrentContentTypeKey(this IContentmentContentContext ctx) => (ctx as IContentmentContentContext4)?.GetCurrentContentTypeKey();
         public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
+
+        public static Guid? GetCurrentContentTypeKey(this IContentmentContentContext ctx)
+            => (ctx as IContentmentContentContext4)?.GetCurrentContentTypeKey();
 
         [Obsolete("To be removed in Contentment 8.0")]
         public static string ParseXPathQuery(
@@ -27,10 +29,10 @@ namespace Umbraco.Community.Contentment.Services
                 xpathExpression = xpathExpression.Replace("$parent", $"id({nodeContextId})");
             }
 
-//#pragma warning disable CS0618 // Type or member is obsolete
-//            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
+            //#pragma warning disable CS0618 // Type or member is obsolete
+            //            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
             return xpathExpression;
-//#pragma warning restore CS0618 // Type or member is obsolete
+            //#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
