@@ -326,14 +326,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<IPublishedContent>();
         }
 
-        private static bool GetShowUnpublished(Dictionary<string, object> config)
-            => config.TryGetValueAs("showUnpublished", out bool showUnpublished) == true && showUnpublished == true;
-
-        private static IEnumerable<IPublishedContent> FilterUnpublished(IEnumerable<IPublishedContent> items, bool showUnpublished, string? culture)
-            => showUnpublished == true
-                ? items
-                : items.Where(x => x.IsPublished(culture) == true);
-
         private string? GetCurrentCulture()
         {
             if (_contentmentContentContext is not IContentmentContentContext3 contentContext3)
@@ -375,12 +367,6 @@ namespace Umbraco.Community.Contentment.DataEditors
             return keys.Count > 0 ? keys : null;
         }
 
-        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
-            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
-
-        private static List<string> GetPropertyAliases(Dictionary<string, object> config)
-            => config.GetValueAs("properties", new List<string>()) ?? new List<string>();
-
         private DataListItem ToDataListItem(IPublishedContent content, string imageAlias, List<string> properties, string? culture)
         {
             var isPublished = content.IsPublished(culture);
@@ -415,18 +401,40 @@ namespace Umbraco.Community.Contentment.DataEditors
             };
         }
 
+        private static IEnumerable<IPublishedContent> FilterUnpublished(IEnumerable<IPublishedContent> items, bool showUnpublished, string? culture)
+            => showUnpublished == true
+                ? items
+                : items.Where(x => x.IsPublished(culture) == true);
+
+        private static bool IsDocumentTypeMatch(IPublishedContent content, IReadOnlyList<Guid>? documentTypeKeys)
+            => documentTypeKeys is null || documentTypeKeys.Contains(content.ContentType.Key) == true;
+
+        private static List<string> GetPropertyAliases(Dictionary<string, object> config)
+            => config.GetValueAs("properties", new List<string>()) ?? new List<string>();
+
         private static object? GetPropertyOrSystemFieldValue(IPublishedContent content, string alias, bool isPublished, string? culture)
         {
-            if (alias.InvariantEquals("contentTypeAlias") == true) { return content.ContentType.Alias; }
-            if (alias.InvariantEquals("createDate") == true) { return content.CreateDate; }
-            if (alias.InvariantEquals("id") == true) { return content.Id; }
-            if (alias.InvariantEquals("key") == true) { return content.Key; }
-            if (alias.InvariantEquals("published") == true) { return isPublished; }
-            if (alias.InvariantEquals("sortOrder") == true) { return content.SortOrder; }
-            if (alias.InvariantEquals("updateDate") == true) { return content.UpdateDate; }
-            if (alias.InvariantEquals("url") == true) { return content.TemplateId > 0 ? content.Url() : string.Empty; }
+            if (alias.InvariantEquals("contentTypeAlias") == true)
+            { return content.ContentType.Alias; }
+            if (alias.InvariantEquals("createDate") == true)
+            { return content.CreateDate; }
+            if (alias.InvariantEquals("id") == true)
+            { return content.Id; }
+            if (alias.InvariantEquals("key") == true)
+            { return content.Key; }
+            if (alias.InvariantEquals("published") == true)
+            { return isPublished; }
+            if (alias.InvariantEquals("sortOrder") == true)
+            { return content.SortOrder; }
+            if (alias.InvariantEquals("updateDate") == true)
+            { return content.UpdateDate; }
+            if (alias.InvariantEquals("url") == true)
+            { return content.TemplateId > 0 ? content.Url() : string.Empty; }
 
             return content.Value<object>(alias, culture);
         }
+
+        private static bool GetShowUnpublished(Dictionary<string, object> config)
+            => config.TryGetValueAs("showUnpublished", out bool showUnpublished) == true && showUnpublished == true;
     }
 }
