@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+const CONTENTMENT_BYTES_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.Bytes';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Bytes Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.Bytes',
+	alias: CONTENTMENT_BYTES_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.Bytes',
 	},
@@ -19,7 +21,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'Bytes',
 		icon: 'icon-binarycode',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.Bytes',
+		propertyEditorSchemaAlias: CONTENTMENT_BYTES_PROPERTY_EDITOR_SCHEMA_ALIAS,
 		settings: {
 			properties: [
 				{
@@ -68,4 +70,13 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.Bytes',
+	name: '[Contentment] Bytes Property Editor Value Summary',
+	forValueType: CONTENTMENT_BYTES_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./bytes.value-summary.element.js'),
+};
+
+export const manifests = [schema, editorUi, valueSummary];
