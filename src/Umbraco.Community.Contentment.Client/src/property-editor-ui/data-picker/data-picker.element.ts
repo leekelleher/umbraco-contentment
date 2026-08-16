@@ -75,6 +75,9 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	@state()
 	private _variantId?: string;
 
+	@state()
+	private _contentTypeUnique?: string | null;
+
 	@property({ type: Array })
 	public set value(value: Array<string> | string | undefined) {
 		this.#value = Array.isArray(value) ? value : value ? [value] : [];
@@ -106,6 +109,10 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this.consumeContext(UMB_CONTENT_WORKSPACE_CONTEXT, (contentWorkspaceContext) => {
 			this.observe(contentWorkspaceContext?.isNew, (isNew) => (this._entityIsNew = isNew ?? false));
 			this.observe(contentWorkspaceContext?.unique, (unique) => (this._entityUnique = unique));
+			this.observe(
+				contentWorkspaceContext?.structure.ownerContentTypeObservablePart((x) => x?.unique),
+				(unique) => (this._contentTypeUnique = unique),
+			);
 		}).passContextAliasMatches();
 
 		this.consumeContext(UMB_PARENT_ENTITY_CONTEXT, (parentEntityContext) => {
@@ -132,6 +139,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 		const body = {
 			alias: this._propertyAlias,
+			contentTypeKey: this._contentTypeUnique,
 			dataTypeKey: this._dataTypeKey,
 			dataSource: this._dataSource,
 			displayMode: this._displayMode,

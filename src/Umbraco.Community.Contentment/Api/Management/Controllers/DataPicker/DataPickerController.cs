@@ -35,7 +35,7 @@ public class DataPickerController : ContentmentControllerBase
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> GetEditor(DataPickerEditorRequestModel model)
     {
-        SetCurrentContentContextValues(model.Id, model.ParentId, model.Variant, model.Alias, model.IsNew);
+        SetCurrentContentContextValues(model.Id, model.ParentId, model.Variant, model.Alias, model.IsNew, model.ContentTypeKey);
 
         var propertyEditorUiAlias = string.Empty;
 
@@ -106,7 +106,7 @@ public class DataPickerController : ContentmentControllerBase
         string query = "",
         string? alias = default,
         string? variant = default)
-            => await Search(id, dataTypeKey, pageNumber, pageSize, query, alias, variant, null, false, []);
+            => await Search(id, dataTypeKey, pageNumber, pageSize, query, alias, variant, null, false, null, []);
 
     [HttpPost("search", Name = "PostDataPickerSearch")]
     [MapToApiVersion("1.0")]
@@ -120,9 +120,10 @@ public class DataPickerController : ContentmentControllerBase
         string? variant = default,
         string? parentId = default,
         bool? isNew = false,
+        Guid? contentTypeKey = default,
         [FromBody] string[]? values = null)
     {
-        SetCurrentContentContextValues(id, parentId, variant, alias, isNew);
+        SetCurrentContentContextValues(id, parentId, variant, alias, isNew, contentTypeKey);
 
         if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
         {
