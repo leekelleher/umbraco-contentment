@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+const CONTENTMENT_TEXTBOX_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.TextboxList';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Textbox List Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.TextboxList',
+	alias: CONTENTMENT_TEXTBOX_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.TextboxList',
 	},
@@ -19,7 +21,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'Textbox List',
 		icon: 'icon-thumbnail-list',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.TextboxList',
+		propertyEditorSchemaAlias: CONTENTMENT_TEXTBOX_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS,
 		settings: {
 			properties: [
 				{
@@ -73,4 +75,13 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.TextboxList',
+	name: '[Contentment] Textbox List Property Editor Value Summary',
+	forValueType: CONTENTMENT_TEXTBOX_LIST_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./textbox-list.value-summary.element.js'),
+};
+
+export const manifests = [schema, editorUi, valueSummary];
