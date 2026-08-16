@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+const CONTENTMENT_DATA_PICKER_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.DataPicker';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Data Picker Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.DataPicker',
+	alias: CONTENTMENT_DATA_PICKER_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.DataPicker',
 	},
@@ -19,7 +21,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'Data Picker',
 		icon: 'icon-fa-arrow-pointer',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.DataPicker',
+		propertyEditorSchemaAlias: CONTENTMENT_DATA_PICKER_PROPERTY_EDITOR_SCHEMA_ALIAS,
 		settings: {
 			properties: [
 				{
@@ -98,4 +100,13 @@ const modal: UmbExtensionManifest = {
 	element: () => import('./data-picker-modal.element.js'),
 };
 
-export const manifests = [schema, editorUi, modal];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.DataPicker',
+	name: '[Contentment] Data Picker Property Editor Value Summary',
+	forValueType: CONTENTMENT_DATA_PICKER_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./data-picker.value-summary.element.js'),
+};
+
+export const manifests = [schema, editorUi, modal, valueSummary];
