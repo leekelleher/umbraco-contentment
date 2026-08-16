@@ -237,7 +237,7 @@ export class ContentmentPropertyEditorUITagsElement extends UmbLitElement implem
 						() => html`
 							<uui-form-layout-item>
 								<span slot="label">${this.localize.string(option.name)}</span>
-								<span slot="description">${unsafeHTML(this.localize.string(option.description))}</span>
+								<span slot="description">${unsafeHTML(this.localize.string(option.description ?? ''))}</span>
 							</uui-form-layout-item>
 						`,
 						() => html`<span>${this.localize.string(option.name)}</span>`,

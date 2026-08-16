@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-import { css, customElement, html, ifDefined, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
+import { css, customElement, html, repeat, styleMap, when } from '@umbraco-cms/backoffice/external/lit';
 import { ContentmentDisplayModeElement } from '../display-mode-base.element.js';
 import type { ContentmentListItem } from '../../../property-editor-ui/types.js';
 import type { ContentmentSortEndEvent } from '../../../components/sortable-list/sort-end.event.js';

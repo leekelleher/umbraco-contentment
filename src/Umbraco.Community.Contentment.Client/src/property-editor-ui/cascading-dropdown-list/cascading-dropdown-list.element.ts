@@ -130,7 +130,7 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 						<span slot="label">${this.localize.string(item.name)}</span>
 						${when(
 							item.description,
-							() => html`<span slot="description">${unsafeHTML(this.localize.string(item.description))}</span>`,
+							(description) => html`<span slot="description">${unsafeHTML(this.localize.string(description))}</span>`,
 						)}
 					</uui-form-layout-item>
 				</div>

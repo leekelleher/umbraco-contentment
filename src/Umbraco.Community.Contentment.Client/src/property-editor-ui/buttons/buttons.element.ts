@@ -127,7 +127,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 			medium: this._size === 'm',
 			large: this._size === 'l',
 		};
-		const description = this.localize.string(item.description) || undefined;
+		const description = this.localize.string(item.description ?? '') || undefined;
 		const label = this._labelStyle === 'icon' ? [item.name, description].join(', ') : description;
 		return html`
 			<uui-button

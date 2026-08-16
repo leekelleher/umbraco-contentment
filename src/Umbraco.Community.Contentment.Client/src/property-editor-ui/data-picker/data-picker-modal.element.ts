@@ -299,7 +299,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 
 	#renderItem(item: ContentmentListItem) {
 		const icon = item.icon ?? this.data?.defaultIcon ?? 'icon-document';
-		const description = this.localize.string(item.description) || undefined;
+		const description = this.localize.string(item.description ?? '') || undefined;
 		return when(
 			// HACK: [LK] Until I figure out how to render custom display modes in the modal.
 			this.data?.listType === 'cards',
