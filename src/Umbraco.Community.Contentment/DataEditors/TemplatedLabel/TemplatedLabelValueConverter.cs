@@ -44,7 +44,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return _defaultObjectType;
         }
 
-        public override object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
+        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
         {
             var valueType = GetPropertyValueType(propertyType);
             return source.TryConvertTo(valueType).ResultOr(valueType.GetDefaultValue())

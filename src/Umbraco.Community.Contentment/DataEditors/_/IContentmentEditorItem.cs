@@ -11,12 +11,12 @@ namespace Umbraco.Community.Contentment.DataEditors
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IContentmentEditorItem : IContentmentListItem
     {
-        public Dictionary<string, object>? DefaultValues { get; }
+        Dictionary<string, object>? DefaultValues { get; }
 
-        public IEnumerable<ContentmentConfigurationField> Fields { get; }
+        IEnumerable<ContentmentConfigurationField> Fields { get; }
 
-        public string? Group { get; }
+        string? Group { get; }
 
-        public OverlaySize OverlaySize { get; }
+        OverlaySize OverlaySize { get; }
     }
 }

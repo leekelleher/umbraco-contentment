@@ -49,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 var items = str.DetectIsJson() == true
                     ? _jsonSerializer.Deserialize<IEnumerable<string>>(str)
-                    : str.AsEnumerableOfOne();
+                    : Enumerable.Repeat(str, 1);
 
                 if (items?.Any() == true)
                 {

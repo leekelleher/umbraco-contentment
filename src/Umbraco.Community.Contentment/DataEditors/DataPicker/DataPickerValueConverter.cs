@@ -130,7 +130,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // ref: https://github.com/leekelleher/umbraco-contentment/issues/226#issue-1266583794
                 if (hasMultipleValues == true)
                 {
-                    inter = value.AsEnumerableOfOne();
+                    inter = Enumerable.Repeat(value, 1);
                 }
                 else
                 {

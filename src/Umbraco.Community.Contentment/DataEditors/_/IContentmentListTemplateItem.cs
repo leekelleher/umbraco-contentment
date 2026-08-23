@@ -10,8 +10,8 @@ namespace Umbraco.Community.Contentment.DataEditors
     [EditorBrowsable(EditorBrowsableState.Advanced)]
     public interface IContentmentListTemplateItem : IContentmentListItem
     {
-        public string? NameTemplate { get; }
+        string? NameTemplate { get; }
 
-        public string? DescriptionTemplate { get; }
+        string? DescriptionTemplate { get; }
     }
 }
