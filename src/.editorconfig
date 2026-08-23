@@ -1,5 +1,5 @@
 # This .editorconfig has been taken from Umbraco CMS, licensed under MIT.
-# https://raw.githubusercontent.com/umbraco/Umbraco-CMS/v15/dev/.editorconfig
+# https://raw.githubusercontent.com/umbraco/Umbraco-CMS/v19/dev/.editorconfig
 
 # Version: 1.6.2 (Using https://semver.org/)
 # Updated: 2020-11-02
@@ -74,18 +74,6 @@ trim_trailing_whitespace = true
 trim_trailing_whitespace = false
 
 ##########################################
-# File Header (Uncomment to support file headers)
-# https://docs.microsoft.com/visualstudio/ide/reference/add-file-header
-##########################################
-
-# [*.{cs,csx,cake,vb,vbx}]
-file_header_template = Copyright (c) Umbraco.\nSee LICENSE for more details.
-
-# SA1636: File header copyright text should match
-# Justification: .editorconfig supports file headers. If this is changed to a value other than "none", a stylecop.json file will need to added to the project.
-# dotnet_diagnostic.SA1636.severity = none
-
-##########################################
 # .NET Language Conventions
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions
 ##########################################
@@ -105,7 +93,7 @@ dotnet_style_predefined_type_for_locals_parameters_members = true:warning
 dotnet_style_predefined_type_for_member_access = true:warning
 # Modifier preferences
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions#normalize-modifiers
-dotnet_style_require_accessibility_modifiers = always:warning
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:warning
 csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:warning
 visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:warning
 dotnet_style_readonly_field = true:warning
@@ -139,6 +127,10 @@ dotnet_code_quality_unused_parameters = all:warning
 dotnet_style_operator_placement_when_wrapping = end_of_line
 # https://github.com/dotnet/roslyn/pull/40070
 dotnet_style_prefer_simplified_interpolation = true:warning
+# File header preferences
+file_header_template = Copyright (c) Umbraco.\nSee LICENSE for more details.
+dotnet_diagnostic.SA1633.severity = none # Suppressed until we decide to enforce it
+dotnet_diagnostic.SA1636.severity = none # Suppressed since we are using StyleCop
 
 # C# Code Style Settings
 # https://docs.microsoft.com/visualstudio/ide/editorconfig-language-conventions#c-code-style-settings

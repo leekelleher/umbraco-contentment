@@ -53,6 +53,7 @@ Detailed release notes and download instructions are available on the [releases 
 
 _**Please note...**_
 
+- v8.x supports **Umbraco v19** (.NET 11.0).
 - v7.x supports **Umbraco v18** (.NET 10.0).
 - v6.x supports **Umbraco v16** (on .NET 9.0) and **Umbraco v17** (.NET 10.0).
 - v5.x supports **Umbraco v13.2** (on .NET 8.0), it will work on the latest Umbraco v13.x releases.

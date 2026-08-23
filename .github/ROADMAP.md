@@ -191,6 +191,9 @@ Property Editors are:
 - _Adds support for Umbraco 19 (.NET 11)._
 - _(Umbraco 18 support TBD)_
 
+### [v8.0](https://github.com/leekelleher/umbraco-contentment/releases/tag/8.0.0)
+
+- ???
 
 ## v9 _(June 2027)_
 
