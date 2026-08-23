@@ -10,8 +10,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class ButtonsDataListEditor : IContentmentListEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "buttons.html";
-
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Buttons";
 
         public string Name => "Buttons";
@@ -112,9 +110,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public OverlaySize OverlaySize => OverlaySize.Small;
-
-        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
-        public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;
     }

@@ -7,7 +7,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class ContentPickerDataEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "content-source.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ContentSource";
     }
 }

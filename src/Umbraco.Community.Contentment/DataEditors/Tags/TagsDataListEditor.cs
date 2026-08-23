@@ -9,7 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TagsDataListEditor : IContentmentListEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "tags.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "Tags";
 
         public string Name => "Tags";
@@ -40,9 +39,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public bool HasMultipleValues(Dictionary<string, object>? config) => true;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
-
-        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
-        public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;
     }

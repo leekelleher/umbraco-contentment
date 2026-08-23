@@ -9,7 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class RadioButtonListDataListEditor : IContentmentListEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "radio-button-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "RadioButtonList";
 
         public string Name => "Radio Button List";
@@ -54,9 +53,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public bool HasMultipleValues(Dictionary<string, object>? config) => false;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
-
-        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
-        public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;
     }

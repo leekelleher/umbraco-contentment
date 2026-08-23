@@ -7,8 +7,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class DictionaryPickerDataEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "dictionary-picker.html";
-
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "DictionaryPicker";
     }
 }

@@ -16,8 +16,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "SocialLinks";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Social Links";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "social-links.html";
-        internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "social-links.overlay.html";
         internal const string DataEditorIcon = "icon-molecular-network";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "SocialLinks";
 

@@ -9,7 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class CheckboxListDataListEditor : IContentmentListEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "checkbox-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "CheckBoxList";
 
         public string Name => "Checkbox List";
@@ -67,9 +66,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         public bool HasMultipleValues(Dictionary<string, object>? config) => true;
 
         public OverlaySize OverlaySize => OverlaySize.Small;
-
-        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
-        public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;
     }

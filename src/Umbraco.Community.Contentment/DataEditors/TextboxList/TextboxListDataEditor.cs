@@ -14,7 +14,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "TextboxList";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Textbox List";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "textbox-list.html";
         internal const string DataEditorIcon = "icon-thumbnail-list";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TextboxList";
 

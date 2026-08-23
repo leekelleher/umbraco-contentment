@@ -123,7 +123,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 			this.#valueObserver?.destroy();
 			this.#configObserver?.destroy();
 			oldElement?.removeEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
-			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
+			/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 21. [LK] */
 			oldElement?.removeEventListener(
 				'property-value-change',
 				this._onPropertyEditorChange as unknown as EventListener,
@@ -136,7 +136,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 
 			if (this._element) {
 				this._element.addEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
-				/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
+				/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 21. [LK] */
 				this._element.addEventListener(
 					'property-value-change',
 					this._onPropertyEditorChange as unknown as EventListener,
@@ -190,7 +190,7 @@ export class ContentmentInputListPropertyEditorElement extends UmbLitElement {
 	override disconnectedCallback() {
 		super.disconnectedCallback();
 		this._element?.removeEventListener('change', this._onPropertyEditorChange as unknown as EventListener);
-		/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 18. [LK] */
+		/** @deprecated The `UmbPropertyValueChangeEvent` has been deprecated, and will be removed in Umbraco 21. [LK] */
 		this._element?.removeEventListener(
 			'property-value-change',
 			this._onPropertyEditorChange as unknown as EventListener,

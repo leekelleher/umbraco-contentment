@@ -44,7 +44,7 @@ public class DataPickerController : ContentmentDataSourceControllerBase
     {
         SetCurrentContentContextValues(model.Id, model.ParentId, model.Variant, model.Alias, model.IsNew, model.ContentTypeKey);
 
-        var propertyEditorUiAlias = string.Empty;
+        var propertyEditorUiAlias = model.DisplayMode?.Key;
 
         var config = new Dictionary<string, object>();
 
@@ -76,31 +76,6 @@ public class DataPickerController : ContentmentDataSourceControllerBase
             config.Add(nameof(items), items);
         }
 
-        var key2 = model.DisplayMode?.Key;
-        if (string.IsNullOrWhiteSpace(key2) == false)
-        {
-            var editor = _utility.GetConfigurationEditor<IContentmentDisplayMode>(key2);
-
-            propertyEditorUiAlias = editor?.PropertyEditorUiAlias ?? key2;
-
-            var editorConfig = model.DisplayMode?.Value;
-            if (editorConfig is not null)
-            {
-                foreach (var prop in editorConfig)
-                {
-                    _ = config.TryAdd(prop.Key, prop.Value);
-                }
-            }
-
-            if (editor?.DefaultConfig != null)
-            {
-                foreach (var prop in editor.DefaultConfig)
-                {
-                    _ = config.TryAdd(prop.Key, prop.Value);
-                }
-            }
-        }
-
         var result = new DataListEditorResponseModel
         {
             PropertyEditorUiAlias = propertyEditorUiAlias,
@@ -109,19 +84,6 @@ public class DataPickerController : ContentmentDataSourceControllerBase
 
         return Ok(result);
     }
-
-    [Obsolete("Please call the `Search` endpoint using a POST method. This method will be removed in Contentment 8.0.")]
-    [HttpGet("search", Name = "GetDataPickerSearch")]
-    [MapToApiVersion("1.0")]
-    public async Task<IActionResult> Search(
-        string id,
-        Guid dataTypeKey,
-        int pageNumber = 1,
-        int pageSize = 12,
-        string query = "",
-        string? alias = default,
-        string? variant = default)
-            => await Search(id, dataTypeKey, pageNumber, pageSize, query, alias, variant, null, false, null, []);
 
     [HttpPost("search", Name = "PostDataPickerSearch")]
     [MapToApiVersion("1.0")]
@@ -142,9 +104,7 @@ public class DataPickerController : ContentmentDataSourceControllerBase
 
         if (await GetDataSourceAsync(dataTypeKey) is (IDataPickerSource source, Dictionary<string, object> config))
         {
-            var results = source is IDataPickerSource2 source2
-                ? await source2.SearchAsync(config, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
-                : await source.SearchAsync(config, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+            var results = await source.SearchAsync(config, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? []);
 
             return Ok(results);
         }

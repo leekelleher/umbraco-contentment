@@ -17,7 +17,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "TemplatedLabel";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Templated Label";
-        internal const string DataEditorViewPath = NotesDataEditor.DataEditorViewPath;
         internal const string DataEditorIcon = "icon-fa-codepen";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TemplatedLabel";
 

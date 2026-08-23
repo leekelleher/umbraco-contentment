@@ -9,7 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "CodeEditor";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Code Editor";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "code-editor.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "CodeEditor";
         internal const string DataEditorIcon = "icon-fa fa-code";
     }

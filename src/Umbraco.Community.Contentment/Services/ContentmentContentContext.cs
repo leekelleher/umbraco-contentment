@@ -10,7 +10,7 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.Services
 {
-    public sealed class ContentmentContentContext : IContentmentContentContext4
+    public sealed class ContentmentContentContext : IContentmentContentContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;

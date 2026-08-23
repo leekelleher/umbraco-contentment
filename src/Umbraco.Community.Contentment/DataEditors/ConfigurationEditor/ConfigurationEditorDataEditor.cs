@@ -9,9 +9,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "ConfigurationEditor";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Configuration Editor";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.html";
-        internal const string DataEditorInlineViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.inline.html";
-        internal const string DataEditorOverlayViewPath = Constants.Internals.EditorsPathRoot + "configuration-editor.overlay.html";
         internal const string DataEditorIcon = UmbConstants.Icons.Package;
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "ConfigurationEditor";
     }

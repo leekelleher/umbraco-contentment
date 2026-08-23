@@ -15,7 +15,6 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         internal const string DataEditorAlias = Constants.Internals.DataEditorAliasPrefix + "IconPicker";
         internal const string DataEditorName = Constants.Internals.DataEditorNamePrefix + "Icon Picker";
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "icon-picker.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "IconPicker";
         internal const string DataEditorIcon = "icon-palette";
 

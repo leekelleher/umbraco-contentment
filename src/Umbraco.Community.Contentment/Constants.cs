@@ -21,23 +21,11 @@ namespace Umbraco.Community.Contentment
 
             internal const string DataEditorUiAliasPrefix = ManifestAliasPrefix + "PropertyEditorUi.";
 
-            [Obsolete("To be removed in Contentment 8.0")]
-            internal const string EditorsPathRoot = $"{PackagePathRoot}editors/";
-
             internal const string PackagePathRoot = $"{UmbConstants.SystemDirectories.AppPlugins}/{ProjectName}/";
 
             internal const string PluginControllerName = ProjectName;
 
-            [Obsolete("To be removed in Contentment 8.0")]
-            internal const string BackOfficePathRoot = $"{PackagePathRoot}backoffice/{TreeAlias}/";
-
-            [Obsolete("To be removed in Contentment 8.0")]
-            internal const string TreeAlias = ProjectAlias;
-
             internal const string ConfigurationSection = $"{nameof(Umbraco)}:{nameof(Contentment)}";
-
-            [Obsolete("To be removed in Contentment 8.0")]
-            internal const string EmptyEditorViewPath = $"{EditorsPathRoot}_empty.html";
 
             internal const string ManifestAliasPrefix = $"Umb.{ProjectName}.";
 
@@ -70,37 +58,6 @@ namespace Umbraco.Community.Contentment
                 public const string Umbraco = nameof(Umbraco);
 
                 public const string Web = nameof(Web);
-            }
-
-            [Obsolete("To be removed in Contentment 8.0")]
-            internal static partial class DefaultConfiguration
-            {
-                [Obsolete("To be removed in Contentment 8.0")]
-                public static readonly object RichTextEditor = new
-                {
-                    maxImageSize = 500,
-                    mode = "classic",
-                    stylesheets = false,
-                    toolbar = new[]
-                    {
-                        "ace",
-                        "undo",
-                        "redo",
-                        "cut",
-                        "styleselect",
-                        "removeformat",
-                        "bold",
-                        "italic",
-                        "alignleft",
-                        "aligncenter",
-                        "alignright",
-                        "bullist",
-                        "numlist",
-                        "link",
-                        "umbmediapicker",
-                        "umbembeddialog"
-                    },
-                };
             }
 
             internal static partial class PropertyGroups

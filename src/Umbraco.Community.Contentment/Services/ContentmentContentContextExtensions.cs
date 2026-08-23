@@ -9,37 +9,19 @@ namespace Umbraco.Community.Contentment.Services
 {
     public static class ContentmentContentContextExtensions
     {
-        public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx) => ctx.GetCurrentContent(out _);
+        public static IPublishedContent? GetCurrentContent(this IContentmentContentContext ctx)
+            => ctx.GetCurrentContent(out _);
 
-        public static int? GetCurrentContentId(this IContentmentContentContext ctx) => ctx.GetCurrentContentId(out _);
+        public static int? GetCurrentContentId(this IContentmentContentContext ctx)
+            => ctx.GetCurrentContentId(out _);
 
         public static string? GetCurrentContentId<T>(this IContentmentContentContext ctx)
-            => (ctx as IContentmentContentContext2)?.GetCurrentContentId<T>();
+            => ctx.GetCurrentContentId<T>();
 
         public static Guid? GetCurrentContentTypeKey(this IContentmentContentContext ctx)
-            => (ctx as IContentmentContentContext4)?.GetCurrentContentTypeKey();
+            => ctx.GetCurrentContentTypeKey();
 
         public static string? GetCurrentVariantId(this IContentmentContentContext ctx)
-            => (ctx as IContentmentContentContext3)?.GetCurrentVariantId();
-
-        [Obsolete("To be removed in Contentment 8.0")]
-        public static string ParseXPathQuery(
-            this IContentmentContentContext ctx,
-            string xpathExpression,
-            Func<int, IEnumerable<string>> getPath,
-            Func<int, bool> publishedContentExists)
-        {
-            var nodeContextId = ctx.GetCurrentContentId(out var isParent);
-
-            if (isParent == true && string.IsNullOrWhiteSpace(xpathExpression) == false)
-            {
-                xpathExpression = xpathExpression.Replace("$parent", $"id({nodeContextId})");
-            }
-
-            //#pragma warning disable CS0618 // Type or member is obsolete
-            //            return UmbracoXPathPathSyntaxParser.ParseXPathQuery(xpathExpression, nodeContextId, getPath, publishedContentExists);
-            return xpathExpression;
-            //#pragma warning restore CS0618 // Type or member is obsolete
-        }
+            => ctx.GetCurrentVariantId();
     }
 }

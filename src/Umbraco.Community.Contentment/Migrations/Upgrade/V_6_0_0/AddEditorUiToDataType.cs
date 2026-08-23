@@ -46,7 +46,6 @@ internal sealed class AddEditorUiToDataType : AsyncMigrationBase
                 ContentmentConstants.PropertyEditors.Aliases.ListItems => ContentmentConstants.PropertyEditors.UiAliases.ListItems,
                 ContentmentConstants.PropertyEditors.Aliases.Notes => ContentmentConstants.PropertyEditors.UiAliases.Notes,
                 ContentmentConstants.PropertyEditors.Aliases.NumberInput => ContentmentConstants.PropertyEditors.UiAliases.NumberInput,
-                ContentmentConstants.PropertyEditors.Aliases.RenderMacro => Constants.Internals.DataEditorUiAliasPrefix + "RenderMacro",
                 ContentmentConstants.PropertyEditors.Aliases.SocialLinks => ContentmentConstants.PropertyEditors.UiAliases.SocialLinks,
                 ContentmentConstants.PropertyEditors.Aliases.TemplatedLabel => ContentmentConstants.PropertyEditors.UiAliases.TemplatedLabel,
                 ContentmentConstants.PropertyEditors.Aliases.TextboxList => ContentmentConstants.PropertyEditors.UiAliases.TextboxList,

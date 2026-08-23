@@ -170,7 +170,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         public Task<IEnumerable<DataListItem>> GetItemsAsync(Dictionary<string, object> config, IEnumerable<string> values)
             => Task.FromResult(GetExamineResults(config, pageSize: values.Count(), values: values)?.Items ?? []);
 
-        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "")
+        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "", IEnumerable<string>? values = null)
             => Task.FromResult(GetExamineResults(config, pageNumber, pageSize, query));
 
         private PagedViewModel<DataListItem> GetExamineResults(
@@ -197,9 +197,9 @@ namespace Umbraco.Community.Contentment.DataEditors
                                 luceneQuery = string.Format(luceneQuery, udi.Result);
                             }
                         }
-                        else if (_contentmentContentContext is IContentmentContentContext2 ctx2)
+                        else
                         {
-                            var contentKey = ctx2.GetCurrentContentId<Guid?>(out _);
+                            var contentKey = _contentmentContentContext.GetCurrentContentId<Guid?>(out _);
                             if (contentKey.HasValue == true && contentKey.Equals(Guid.Empty) == false)
                             {
                                 var udi = new GuidUdi(UmbConstants.UdiEntityType.Document, contentKey.Value);

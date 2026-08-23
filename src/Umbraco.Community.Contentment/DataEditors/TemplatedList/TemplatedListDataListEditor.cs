@@ -10,7 +10,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class TemplatedListDataListEditor : IContentmentListEditor
     {
-        internal const string DataEditorViewPath = Constants.Internals.EditorsPathRoot + "templated-list.html";
         internal const string DataEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "TemplatedList";
 
         public string Name => "Templated List";
@@ -117,9 +116,6 @@ namespace Umbraco.Community.Contentment.DataEditors
         }
 
         public OverlaySize OverlaySize => OverlaySize.Large;
-
-        [Obsolete("To be removed in Contentment 8.0. Migrate to use `PropertyEditorUiAlias`.")]
-        public string View => DataEditorViewPath;
 
         public string PropertyEditorUiAlias => DataEditorUiAlias;
     }
