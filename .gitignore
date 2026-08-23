@@ -25,4 +25,4 @@ src/packages/*/**
 src/Umbraco.Cms.*.x/*
 src/Umbraco.Community.Contentment/wwwroot/App_Plugins/Contentment/*
 src/*/node_modules/*
-tools/*.exe
+tools/*
