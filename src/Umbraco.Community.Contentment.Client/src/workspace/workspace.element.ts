@@ -7,6 +7,7 @@ import { MetaService } from '../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
+import './game.element.js';
 import '../components/lee-was-here/lee-was-here.element.js';
 
 @customElement('contentment-workspace')
@@ -80,10 +81,14 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 				</div>
 				<div id="layout">
 					<div>${this.#renderSponsorship()} ${this.#renderFeatureOptions()}</div>
-					<div>${this.#renderLinks()}</div>
+					<div>${this.#renderGame()} ${this.#renderLinks()}</div>
 				</div>
 			</umb-body-layout>
 		`;
+	}
+
+	#renderGame() {
+		return html`<contentment-game></contentment-game>`;
 	}
 
 	#renderLinks() {
