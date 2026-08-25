@@ -5,154 +5,115 @@ import { css, customElement, html, nothing, repeat, state } from '@umbraco-cms/b
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbTextStyles } from '@umbraco-cms/backoffice/style';
 
+import icons from '../icons/icons.js';
 import '../components/info-box/info-box.element.js';
 
-const ROWS = 7;
-const COLS = 7;
-const MINES = 8;
+const COLS = 4;
+const PAIRS = 8;
+const FLIP_BACK_DELAY = 800;
 
-type ContentmentGameCell = {
-	mine: boolean;
-	adjacent: number;
-	state: ContentmentGameCellState;
-};
+const CARD_BACK = 'icon-umbraco';
+const ICON_POOL = icons.map((icon) => icon.name).filter((name) => name !== CARD_BACK);
 
-type ContentmentGameCellState = 'covered' | 'flagged' | 'revealed';
+type ContentmentGameCard = { icon: string; state: ContentmentGameCardState };
 
-type ContentmentGameStatus = 'idle' | 'playing' | 'won' | 'lost';
+type ContentmentGameCardState = 'down' | 'up' | 'matched';
+
+type ContentmentGameStatus = 'playing' | 'won';
 
 @customElement('contentment-game')
 export default class ContentmentGameElement extends UmbLitElement {
 	@state()
-	private _cells: Array<ContentmentGameCell> = [];
+	private _cards: Array<ContentmentGameCard> = [];
 
 	@state()
-	private _status: ContentmentGameStatus = 'idle';
+	private _status: ContentmentGameStatus = 'playing';
+
+	@state()
+	private _moves = 0;
+
+	@state()
+	private _locked = false;
+
+	#timer?: ReturnType<typeof setTimeout>;
 
 	constructor() {
 		super();
 		this.#reset();
 	}
 
+	override disconnectedCallback() {
+		super.disconnectedCallback();
+		clearTimeout(this.#timer);
+	}
+
 	#reset() {
-		this._cells = Array.from({ length: ROWS * COLS }, () => ({ mine: false, adjacent: 0, state: 'covered' }));
-		this._status = 'idle';
-	}
+		clearTimeout(this.#timer);
 
-	#neighbours(index: number) {
-		const row = Math.floor(index / COLS);
-		const col = index % COLS;
-		const result: Array<number> = [];
-
-		for (let r = row - 1; r <= row + 1; r++) {
-			for (let c = col - 1; c <= col + 1; c++) {
-				if (r === row && c === col) continue;
-				if (r < 0 || r >= ROWS || c < 0 || c >= COLS) continue;
-				result.push(r * COLS + c);
-			}
-		}
-
-		return result;
-	}
-
-	#seed(safeIndex: number) {
-		const excluded = new Set([safeIndex, ...this.#neighbours(safeIndex)]);
-		const candidates = this._cells.map((_, index) => index).filter((index) => !excluded.has(index));
-
-		for (let i = candidates.length - 1; i > 0; i--) {
+		const pool = [...ICON_POOL];
+		for (let i = pool.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			[candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+			[pool[i], pool[j]] = [pool[j], pool[i]];
 		}
 
-		const mines = new Set(candidates.slice(0, MINES));
+		const cards = [...pool.slice(0, PAIRS), ...pool.slice(0, PAIRS)].map(
+			(icon): ContentmentGameCard => ({ icon, state: 'down' }),
+		);
 
-		this._cells = this._cells.map((cell, index) => ({
-			...cell,
-			mine: mines.has(index),
-		}));
+		for (let i = cards.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[cards[i], cards[j]] = [cards[j], cards[i]];
+		}
 
-		this._cells = this._cells.map((cell, index) => ({
-			...cell,
-			adjacent: this.#neighbours(index).filter((n) => this._cells[n].mine).length,
-		}));
+		this._cards = cards;
+		this._status = 'playing';
+		this._moves = 0;
+		this._locked = false;
 	}
 
-	#flood(startIndex: number) {
-		const stack = [startIndex];
-		const cells = [...this._cells];
+	#flip(index: number) {
+		if (this._locked || this._status === 'won') return;
 
-		while (stack.length) {
-			const index = stack.pop()!;
-			const cell = cells[index];
-			if (cell.state === 'revealed' || cell.mine) continue;
+		const card = this._cards[index];
+		if (card.state !== 'down') return;
 
-			cells[index] = { ...cell, state: 'revealed' };
+		this._cards = this._cards.map((c, i) => (i === index ? { ...c, state: 'up' } : c));
 
-			if (cell.adjacent === 0) {
-				for (const n of this.#neighbours(index)) {
-					if (cells[n].state === 'covered') stack.push(n);
-				}
-			}
+		const up = this._cards.filter((c) => c.state === 'up');
+		if (up.length === 2) {
+			this._moves++;
+			this.#resolve();
+		}
+	}
+
+	#resolve() {
+		const up = this._cards.filter((c) => c.state === 'up');
+		const [first, second] = up;
+
+		if (first.icon === second.icon) {
+			this._cards = this._cards.map((c) => (c.state === 'up' ? { ...c, state: 'matched' } : c));
+			this.#checkWin();
+			return;
 		}
 
-		this._cells = cells;
+		this._locked = true;
+		this.#timer = setTimeout(() => this.#flipBack(), FLIP_BACK_DELAY);
+	}
+
+	#flipBack() {
+		this._cards = this._cards.map((c) => (c.state === 'up' ? { ...c, state: 'down' } : c));
+		this._locked = false;
 	}
 
 	#checkWin() {
-		const revealed = this._cells.filter((cell) => cell.state === 'revealed').length;
-		if (revealed === ROWS * COLS - MINES) {
+		if (this._cards.every((c) => c.state === 'matched')) {
 			this._status = 'won';
 		}
 	}
 
-	#lose() {
-		this._cells = this._cells.map((cell) => (cell.mine ? { ...cell, state: 'revealed' } : cell));
-		this._status = 'lost';
-	}
-
-	#dig(index: number) {
-		if (this._status === 'won' || this._status === 'lost') return;
-
-		const cell = this._cells[index];
-		if (cell.state !== 'covered') return;
-
-		if (this._status === 'idle') {
-			this.#seed(index);
-			this._status = 'playing';
-		}
-
-		if (this._cells[index].mine) {
-			this.#lose();
-			return;
-		}
-
-		this.#flood(index);
-		this.#checkWin();
-	}
-
-	#toggleFlag(index: number) {
-		if (this._status === 'won' || this._status === 'lost') return;
-
-		const cell = this._cells[index];
-		if (cell.state === 'revealed') return;
-
-		const flagged = this._cells.filter((c) => c.state === 'flagged').length;
-		if (cell.state === 'covered' && flagged >= MINES) return;
-
-		this._cells = this._cells.map((c, i) =>
-			i === index ? { ...c, state: c.state === 'flagged' ? 'covered' : 'flagged' } : c,
-		);
-	}
-
 	#onGridClick(event: Event & { target: HTMLElement }) {
 		const index = event.target.closest<HTMLElement>('[data-index]')?.dataset.index;
-		if (index) this.#dig(Number(index));
-	}
-
-	#onGridContextMenu(event: MouseEvent & { target: HTMLElement }) {
-		event.preventDefault();
-		const index = event.target.closest<HTMLElement>('[data-index]')?.dataset.index;
-		if (index) this.#toggleFlag(Number(index));
+		if (index) this.#flip(Number(index));
 	}
 
 	#onReset() {
@@ -160,13 +121,10 @@ export default class ContentmentGameElement extends UmbLitElement {
 	}
 
 	override render() {
-		const flagged = this._cells.filter((cell) => cell.state === 'flagged').length;
-		const remaining = MINES - flagged;
-
 		return html`
-			<uui-box headline="Minesweeper">
+			<uui-box headline="Icon match">
 				<div slot="header-actions">
-					<span id="remaining"><umb-icon name="icon-flag-alt"></umb-icon> ${remaining}</span>
+					<span id="moves"><umb-icon name="icon-playing-cards"></umb-icon> ${this._moves}</span>
 					<uui-button compact label="New game" title="New game" @click=${this.#onReset}>
 						<umb-icon name="icon-refresh"></umb-icon>
 					</uui-button>
@@ -175,17 +133,11 @@ export default class ContentmentGameElement extends UmbLitElement {
 				<div id="board">
 					${this.#renderEndState()}
 
-					<div
-						id="grid"
-						class=${this._status === 'idle' ? 'idle' : ''}
-						role="presentation"
-						aria-hidden="true"
-						@click=${this.#onGridClick}
-						@contextmenu=${this.#onGridContextMenu}>
+					<div id="grid" role="presentation" aria-hidden="true" @click=${this.#onGridClick}>
 						${repeat(
-							this._cells,
-							(_cell, index) => index,
-							(cell, index) => this.#renderCell(cell, index),
+							this._cards,
+							(_card, index) => index,
+							(card, index) => this.#renderCard(card, index),
 						)}
 					</div>
 				</div>
@@ -194,37 +146,19 @@ export default class ContentmentGameElement extends UmbLitElement {
 	}
 
 	#renderEndState() {
-		if (this._status === 'won') {
-			return html`
-				<contentment-info-box compact type="positive" icon="icon-trophy" headline="You win!">
-					<uui-button color="positive" look="secondary" label="Play again" @click=${this.#onReset}></uui-button>
-				</contentment-info-box>
-			`;
-		}
-
-		if (this._status === 'lost') {
-			return html`
-				<contentment-info-box compact type="danger" icon="icon-bomb" headline="Boom! Game over.">
-					<uui-button color="danger" look="secondary" label="Play again" @click=${this.#onReset}></uui-button>
-				</contentment-info-box>
-			`;
-		}
-
-		return nothing;
-	}
-
-	#renderCell(cell: ContentmentGameCell, index: number) {
-		if (cell.state === 'revealed') {
-			return html`
-				<div class="cell revealed" data-index=${index} data-adjacent=${cell.adjacent}>
-					${cell.mine ? html`<umb-icon name="icon-bomb"></umb-icon>` : cell.adjacent || nothing}
-				</div>
-			`;
-		}
+		if (this._status !== 'won') return nothing;
 
 		return html`
-			<div class="cell" data-index=${index}>
-				${cell.state === 'flagged' ? html`<umb-icon name="icon-flag-alt"></umb-icon>` : nothing}
+			<contentment-info-box compact type="positive" icon="icon-trophy" headline="Matched in ${this._moves} moves!">
+				<uui-button color="positive" look="secondary" label="Play again" @click=${this.#onReset}></uui-button>
+			</contentment-info-box>
+		`;
+	}
+
+	#renderCard(card: ContentmentGameCard, index: number) {
+		return html`
+			<div class="cell ${card.state}" data-index=${index}>
+				<umb-icon name=${card.state === 'down' ? CARD_BACK : card.icon}></umb-icon>
 			</div>
 		`;
 	}
@@ -245,7 +179,7 @@ export default class ContentmentGameElement extends UmbLitElement {
 					font-size: var(--uui-size-6);
 				}
 
-				#remaining {
+				#moves {
 					display: flex;
 					gap: var(--uui-size-2);
 				}
@@ -284,50 +218,28 @@ export default class ContentmentGameElement extends UmbLitElement {
 				border: 1px solid var(--uui-color-divider);
 				border-right-color: var(--uui-color-border-standalone);
 				border-bottom-color: var(--uui-color-border-standalone);
-				color: var(--uui-color-selected);
 				cursor: pointer;
-
-				font-size: var(--uui-size-5);
-				font-weight: bold;
-				user-select: none;
-
-				&.revealed {
-					background-color: var(--uui-color-surface);
-					border-color: var(--uui-color-divider);
-					cursor: default;
-
-					umb-icon {
-						color: var(--uui-color-danger-standalone);
-					}
-				}
-
-				&[data-adjacent='1'] {
-					color: var(--uui-palette-malibu-dark);
-				}
-				&[data-adjacent='2'] {
-					color: var(--uui-palette-forest-green);
-				}
-				&[data-adjacent='3'] {
-					color: var(--uui-palette-maroon-flush);
-				}
-				&[data-adjacent='4'] {
-					color: var(--uui-palette-violet-blue);
-				}
-				&[data-adjacent='5'] {
-					color: var(--uui-palette-cocoa-brown);
-				}
-				&[data-adjacent='6'] {
-					color: var(--uui-palette-jungle-green);
-				}
-				&[data-adjacent='7'] {
-					color: var(--uui-palette-space-cadet);
-				}
-				&[data-adjacent='8'] {
-					color: var(--uui-palette-mine-grey);
-				}
 
 				umb-icon {
 					font-size: var(--uui-size-6);
+					color: var(--uui-color-border-emphasis);
+				}
+
+				&.up,
+				&.matched {
+					background-color: var(--uui-color-surface);
+
+					umb-icon {
+						color: var(--uui-color-selected);
+					}
+				}
+
+				&.matched {
+					cursor: default;
+
+					umb-icon {
+						color: var(--uui-color-positive-standalone);
+					}
 				}
 			}
 		`,
