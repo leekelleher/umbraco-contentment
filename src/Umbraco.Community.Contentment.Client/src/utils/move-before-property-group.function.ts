@@ -6,12 +6,15 @@ import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/propert
 
 export function tryMoveBeforePropertyGroup(element: UmbPropertyEditorUiElement): void {
 	if (element) {
+		// Find the `umb-property` hosting this editor, so it can be hidden once its content is moved out.
 		const umbProperty = closest('umb-property', element) as HTMLElement;
 		if (!umbProperty) return;
 
+		// Find the group's `uui-box`, so the element can be moved above it, and hidden later if it ends up empty.
 		const uuiBox = closest('uui-box', umbProperty) as HTMLElement;
 		if (!uuiBox) return;
 
+		// Find the tab hosting the box, so we can reach its shadow root and insert the element into it.
 		const umbContentWorkspaceViewEditTab = closest('umb-content-workspace-view-edit-tab', uuiBox);
 		if (!umbContentWorkspaceViewEditTab) return;
 
