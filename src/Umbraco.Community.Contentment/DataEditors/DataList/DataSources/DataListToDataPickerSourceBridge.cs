@@ -33,7 +33,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             if (items?.Any() == true)
             {
-                return Task.FromResult(items.Where(x => values.Contains(x.Value) == true));
+                var lookup = items.ToLookup(x => x.Value);
+                return Task.FromResult(values.Where(x => lookup.Contains(x) == true).SelectMany(x => lookup[x]));
             }
 
             return Task.FromResult(Enumerable.Empty<DataListItem>());
