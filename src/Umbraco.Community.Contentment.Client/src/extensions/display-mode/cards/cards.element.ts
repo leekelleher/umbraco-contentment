@@ -64,7 +64,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		return html`
 			${repeat(
 				this.items,
-				(item) => item.value,
+				(item, index) => `${index}_${item.value}`,
 				(item, index) => this.#renderItem(item, index),
 			)}
 		`;
