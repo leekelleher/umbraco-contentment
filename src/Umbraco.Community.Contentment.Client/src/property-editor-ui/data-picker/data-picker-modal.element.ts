@@ -54,6 +54,8 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 > {
 	#selection: Map<string, ContentmentListItem> = new Map();
 
+	#pickedValues: Set<string> = new Set();
+
 	@state()
 	private _allowSubmit = false;
 
@@ -123,6 +125,9 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 	}
 
 	override async firstUpdated() {
+		if (!this.data?.allowDuplicates) {
+			this.#pickedValues = new Set(this.data?.value ?? []);
+		}
 		this.#requestItems();
 	}
 
@@ -192,6 +197,7 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 				...item,
 				name: item.name ?? item.value ?? '',
 				value: item.value ?? '',
+				disabled: item.disabled || this.#pickedValues.has(item.value ?? ''),
 			})) ?? [];
 
 		this._loading = false;
@@ -308,8 +314,8 @@ export class ContentmentPropertyEditorUIDataPickerModalElement extends UmbModalB
 					name=${item.name}
 					detail=${ifDefined(description)}
 					select-only
-					selectable
 					?disabled=${item.disabled}
+					?selectable=${!item.disabled}
 					?selected=${this.#selection.has(item.value)}
 					@selected=${() => this.#onSelect(item)}
 					@deselected=${() => this.#onSelect(item)}>

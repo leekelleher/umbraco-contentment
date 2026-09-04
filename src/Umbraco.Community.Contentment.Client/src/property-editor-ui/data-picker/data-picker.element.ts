@@ -95,7 +95,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		this._dataSource = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('dataSource')?.[0];
 		this._displayMode = config.getValueByAlias<Array<ContentmentConfigurationEditorValue>>('displayMode')?.[0];
 
-		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates') ?? true);
+		this.#allowDuplicates = parseBoolean(config.getValueByAlias('allowDuplicates'));
 		this.#defaultIcon = config.getValueByAlias<string>('defaultIcon');
 		this.#hideSearch = parseBoolean(config.getValueByAlias('hideSearch') ?? false);
 		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;

@@ -86,7 +86,6 @@ const editorUi: UmbExtensionManifest = {
 			defaultData: [
 				{ alias: 'overlaySize', value: 'medium' },
 				{ alias: 'pageSize', value: 12 },
-				{ alias: 'allowDuplicates', value: true },
 			],
 		},
 	},
