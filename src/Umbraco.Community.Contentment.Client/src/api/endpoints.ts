@@ -10,6 +10,9 @@
 //
 // The `client` option is accepted on every method for back-compat (callers used to pass
 // `umbHttpClient` here) but is ignored at runtime — `umbHttpClient` is always used.
+// The `meta` option is likewise accepted-but-ignored: `umbHttpClient` has no equivalent concept
+// to forward it to. `throwOnError` IS forwarded — it's a genuine per-request option on the
+// underlying client.
 
 import { umbHttpClient } from '@umbraco-cms/backoffice/http-client';
 
@@ -61,6 +64,7 @@ export class ContentBlocksService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/content-blocks/element-types',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -74,6 +78,7 @@ export class DataListService {
 			url: '/umbraco/management/api/v1/contentment/data-list/editor',
 			body: options?.body,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -99,6 +104,7 @@ export class DataPickerService {
 			url: '/umbraco/management/api/v1/contentment/data-picker/editor',
 			body: options?.body,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -111,6 +117,7 @@ export class DataPickerService {
 			url: '/umbraco/management/api/v1/contentment/data-picker/search',
 			query: options?.query,
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -123,6 +130,7 @@ export class DataPickerService {
 			body: options?.body,
 			query: options?.query,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -135,6 +143,7 @@ export class DataService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data/assemblies',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -144,6 +153,7 @@ export class DataService {
 			url: '/umbraco/management/api/v1/contentment/data/enums',
 			query: options?.query,
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -156,6 +166,7 @@ export class MetaService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/meta/configuration',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
