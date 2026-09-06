@@ -14,8 +14,6 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 	#hideLabel: boolean = false;
 
-	#value?: string;
-
 	@property({ attribute: false })
 	public value?: unknown;
 
@@ -24,7 +22,6 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 
 		this.#config = JSON.stringify(config, null, 2);
 		this.#hideLabel = parseBoolean(config.getValueByAlias('hideLabel'));
-		this.#value = JSON.stringify(this.value, null, 2);
 	}
 
 	override connectedCallback() {
@@ -36,14 +33,15 @@ export class ContentmentPropertyEditorUIReadOnlyElement extends UmbLitElement im
 	}
 
 	override render() {
+		const value = this.value !== undefined ? JSON.stringify(this.value, null, 2) : undefined;
 		return html`
 			<contentment-info-box type="warning" icon="icon-alert" headline="This property editor is in read-only mode.">
 				${when(
-					this.#value,
+					value,
 					() => html`
 						<details>
 							<summary>Value</summary>
-							<umb-code-block copy>${this.#value}</umb-code-block>
+							<umb-code-block copy>${value}</umb-code-block>
 						</details>
 					`,
 				)}
