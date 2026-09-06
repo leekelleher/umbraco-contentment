@@ -169,6 +169,19 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
+	// TODO: [LK] Review if this could be combined with `#setValue()`.
+	#insertValueAt(value: ContentmentConfigurationEditorValue | undefined, index: number) {
+		if (!value || index === -1) return;
+
+		const tmp = this.value ? [...this.value] : [];
+		tmp.splice(index, 0, value);
+		this.value = tmp;
+
+		this.#populateItems();
+
+		this.dispatchEvent(new UmbChangeEvent());
+	}
+
 	async #insertBlockAt(index: number, _listType?: string): Promise<void> {
 		const modalManager = await this.getContext(UMB_MODAL_MANAGER_CONTEXT);
 		if (!modalManager) return;
@@ -188,7 +201,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 			const data = await modal.onSubmit().catch(() => undefined);
 
-			this.#setValue(data, this.value?.length ?? 0);
+			this.#insertValueAt(data, index);
 		} else {
 			const modal = modalManager.open(this, CONTENTMENT_CONFIGURATION_EDITOR_SELECTION_MODAL, {
 				data: { items: this.models ?? [] },
@@ -196,7 +209,7 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 
 			const data = await modal.onSubmit().catch(() => undefined);
 
-			this.#setValue(data, index);
+			this.#insertValueAt(data, index);
 		}
 	}
 
