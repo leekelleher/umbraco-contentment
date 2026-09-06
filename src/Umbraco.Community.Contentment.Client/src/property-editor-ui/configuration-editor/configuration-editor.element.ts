@@ -260,7 +260,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	#onSort(event: CustomEvent<{ newIndex: number; oldIndex: number }>) {
+	#onSort(event: CustomEvent<{ newIndex?: number; oldIndex?: number }>) {
+		if (event.detail.newIndex === undefined || event.detail.oldIndex === undefined) return;
 		const items = [...(this.value ?? [])];
 		items.splice(event.detail.newIndex, 0, items.splice(event.detail.oldIndex, 1)[0]);
 		this.value = items;
