@@ -25,7 +25,11 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	#initialized = false;
+
 	#repository = new ContentmentDataListRepository(this);
+
+	#value?: Array<string>;
 
 	@state()
 	private _apis: Array<string> = [];
@@ -36,32 +40,53 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	@state()
 	private _options: Array<Array<ContentmentListItem>> = [];
 
-	@state()
-	private _promises: Array<Promise<Array<ContentmentListItem>>> = [];
-
 	@property({ type: Array })
-	public value?: Array<string>;
+	public set value(value: Array<string> | undefined) {
+		this.#value = value;
+		// `config` and `value` are delivered by two independent observable pipelines and can arrive in either order.
+		// Keep trying until both are present, so if `value` arrives after `config` then it isn't dropped. [LK]
+		if (!this.#initialized) {
+			this.#tryLoad();
+		}
+	}
+	public get value(): Array<string> | undefined {
+		return this.#value;
+	}
 
 	public set config(config: UmbPropertyEditorUiElement['config']) {
 		if (!config) return;
 
 		this._apis = config.getValueByAlias<Array<string>>('apis') ?? [];
 
+		this.#tryLoad();
+	}
+
+	async #tryLoad() {
+		if (this.#initialized) return;
+
 		if (!this.value?.length) {
 			this.value = [''];
+			return;
 		}
 
-		if (this.value?.length && this._apis?.length) {
-			for (let i = 0; i < this.value.length; i++) {
-				let url = this._apis[i];
+		if (!this._apis?.length) return;
 
-				for (let j = 0; j < i; j++) {
-					url = url.replace(`{${j}}`, this.value[j]);
-				}
+		this.#initialized = true;
 
-				this._promises.push(this.#repository.getItemsByUrl(url));
+		const promises: Array<Promise<Array<ContentmentListItem>>> = [];
+
+		for (let i = 0; i < this.value.length; i++) {
+			let url = this._apis[i];
+
+			for (let j = 0; j < i; j++) {
+				url = url.replace(`{${j}}`, this.value[j]);
 			}
+
+			promises.push(this.#repository.getItemsByUrl(url));
 		}
+
+		this._options = await Promise.all(promises);
+		this._loading = false;
 	}
 
 	async #onChange(event: UUIComboboxEvent & { target: UUIComboboxElement }) {
@@ -96,11 +121,6 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 				(this.shadowRoot?.querySelector(`uui-combobox:nth-child(${next + 1})`) as HTMLElement)?.focus();
 			});
 		}
-	}
-
-	override async firstUpdated() {
-		this._options = await Promise.all(this._promises);
-		this._loading = false;
 	}
 
 	override render() {
