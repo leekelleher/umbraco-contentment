@@ -12,6 +12,8 @@ import type { SortableEvent } from '../../external/sortablejs.js';
 
 @customElement('contentment-sortable-list')
 export default class ContentmentSortableListElement extends UmbLitElement {
+	#sortable?: Sortable;
+
 	@property({ type: Boolean })
 	disabled: boolean = false;
 
@@ -23,7 +25,7 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 
 	protected override firstUpdated() {
 		let before: ChildNode | null;
-		Sortable.create(this, {
+		this.#sortable = Sortable.create(this, {
 			animation: 150,
 			disabled: this.disabled,
 			draggable: this.itemSelector,
@@ -37,6 +39,26 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 				this.dispatchEvent(new ContentmentSortEndEvent(event.newIndex, event.oldIndex));
 			},
 		});
+	}
+
+	protected override updated(changedProperties: Map<string, unknown>) {
+		if (!this.#sortable) return;
+
+		if (changedProperties.has('disabled')) {
+			this.#sortable.option('disabled', this.disabled);
+		}
+		if (changedProperties.has('itemSelector')) {
+			this.#sortable.option('draggable', this.itemSelector);
+		}
+		if (changedProperties.has('handleSelector')) {
+			this.#sortable.option('handle', this.handleSelector);
+		}
+	}
+
+	override disconnectedCallback() {
+		super.disconnectedCallback();
+		this.#sortable?.destroy();
+		this.#sortable = undefined;
 	}
 
 	override render() {
