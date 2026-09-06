@@ -44,22 +44,20 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public string Group => Constants.Conventions.DataSourceGroups.Umbraco;
 
-        public IEnumerable<ContentmentConfigurationField> Fields
+        public IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            get
+            new ContentmentConfigurationField
             {
-                return new[]
+                Key = "memberType",
+                Name = "Member Type",
+                Description = "Select a member type to filter the members by. If left empty, all members will be used.",
+                PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "MemberTypePicker",
+                Config = new Dictionary<string, object>
                 {
-                    new ContentmentConfigurationField
-                    {
-                        Key = "memberType",
-                        Name = "Member Type",
-                        Description = "Select a member type to filter the members by. If left empty, all members will be used.",
-                        PropertyEditorUiAlias = Constants.Internals.DataEditorUiAliasPrefix + "MemberTypePicker",
-                     }
-                };
+                    { MaxItemsConfigurationField.MaxItems, 1 }
+                }
             }
-        }
+        };
 
         public Dictionary<string, object>? DefaultValues => default;
 
