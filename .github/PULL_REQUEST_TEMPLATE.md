@@ -13,7 +13,7 @@
 
 ### Types of changes
 
-<!-- What types of changes does your code introduce? Put an `x` in all the boxes that apply:
+<!-- What types of changes does your code introduce? Put an `x` in all the boxes that apply, delete the rest:
      Please do not upgrade any NuGet dependencies.
      Please do not modify any licensing information, e.g. do not update the copyright year. -->
 
@@ -24,4 +24,4 @@
 
 ### Checklist
 
-- [ ] I have read the **[CONTRIBUTING](CONTRIBUTING)** and **[CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)** documents.
+- [ ] I have read the **[https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CONTRIBUTING.md](CONTRIBUTING.md)** and **[https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** documents.

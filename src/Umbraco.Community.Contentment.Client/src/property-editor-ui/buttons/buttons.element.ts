@@ -62,7 +62,7 @@ export class ContentmentPropertyEditorUIButtonsElement extends UmbLitElement imp
 		const items = config.getValueByAlias<Array<ContentmentListItem>>('items') ?? [];
 		this._items = items.map((item) => ({ ...item, selected: this.value?.includes(item.value) ?? false }));
 
-		if (!this.value) {
+		if (!this.value?.length) {
 			const defaultValue = config.getValueByAlias('defaultValue') ?? [];
 			this.value = this._enableMultiple && Array.isArray(defaultValue) ? defaultValue : [defaultValue];
 		}

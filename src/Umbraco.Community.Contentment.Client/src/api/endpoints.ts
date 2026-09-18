@@ -89,6 +89,7 @@ export class ContentBlocksService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/content-blocks/element-types',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -102,6 +103,7 @@ export class DataListService {
 			url: '/umbraco/management/api/v1/contentment/data-list/editor',
 			body: options?.body,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -127,6 +129,7 @@ export class DataPickerService {
 			url: '/umbraco/management/api/v1/contentment/data-picker/editor',
 			body: options?.body,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -139,6 +142,7 @@ export class DataPickerService {
 			url: '/umbraco/management/api/v1/contentment/data-picker/search',
 			query: options?.query,
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -151,6 +155,7 @@ export class DataPickerService {
 			body: options?.body,
 			query: options?.query,
 			headers: { 'Content-Type': 'application/json', ...options?.headers },
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -163,6 +168,7 @@ export class DataService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/data/assemblies',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 
@@ -174,6 +180,7 @@ export class DataService {
 			url: '/umbraco/management/api/v1/contentment/data/enums',
 			query: options?.query,
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }
@@ -186,6 +193,7 @@ export class MetaService {
 			security: bearerSecurity,
 			url: '/umbraco/management/api/v1/contentment/meta/configuration',
 			headers: options?.headers,
+			throwOnError: options?.throwOnError,
 		});
 	}
 }

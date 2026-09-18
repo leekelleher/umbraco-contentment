@@ -20,16 +20,52 @@ export default class ContentmentPropertyEditorUiElement
 	implements UmbPropertyEditorUiElement
 {
 	@property({ attribute: false })
-	config: UmbPropertyEditorUiElement['config'];
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		this.#config = config;
+		if (this._element) {
+			this._element.config = config;
+		}
+	}
+	public get config(): UmbPropertyEditorUiElement['config'] {
+		return this.#config;
+	}
+	#config: UmbPropertyEditorUiElement['config'];
 
 	@property({ type: Boolean })
-	mandatory = false;
+	public set mandatory(mandatory: boolean) {
+		this.#mandatory = mandatory;
+		if (this._element) {
+			this._element.mandatory = mandatory;
+		}
+	}
+	public get mandatory(): boolean {
+		return this.#mandatory;
+	}
+	#mandatory = false;
 
 	@property({ type: String })
-	mandatoryMessage = UMB_VALIDATION_EMPTY_LOCALIZATION_KEY;
+	public set mandatoryMessage(mandatoryMessage: string) {
+		this.#mandatoryMessage = mandatoryMessage;
+		if (this._element) {
+			this._element.mandatoryMessage = mandatoryMessage;
+		}
+	}
+	public get mandatoryMessage(): string {
+		return this.#mandatoryMessage;
+	}
+	#mandatoryMessage: string = UMB_VALIDATION_EMPTY_LOCALIZATION_KEY;
 
 	@property()
-	name?: string;
+	public set name(name: string | undefined) {
+		this.#name = name;
+		if (this._element) {
+			this._element.name = name;
+		}
+	}
+	public get name(): string | undefined {
+		return this.#name;
+	}
+	#name?: string;
 
 	@property({ type: String, attribute: 'property-editor-ui-alias' })
 	public set propertyEditorUiAlias(value: string | undefined) {
@@ -42,7 +78,16 @@ export default class ContentmentPropertyEditorUiElement
 	#propertyEditorUiAlias?: string;
 
 	@property({ type: Boolean, reflect: true })
-	readonly = false;
+	public set readonly(readonly: boolean) {
+		this.#readonly = readonly;
+		if (this._element) {
+			this._element.readonly = readonly;
+		}
+	}
+	public get readonly(): boolean {
+		return this.#readonly;
+	}
+	#readonly = false;
 
 	@property()
 	override set value(value: any | undefined) {

@@ -68,7 +68,7 @@ export class ContentmentDisplayModeListElement extends ContentmentDisplayModeEle
 				@sort-end=${this.#onSort}>
 				${repeat(
 					this.items,
-					(item) => item.value,
+					(item, index) => `${index}_${item.value}`,
 					(item, index) => this.#renderItem(item, index),
 				)}
 			</contentment-sortable-list>
