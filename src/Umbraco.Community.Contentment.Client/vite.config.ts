@@ -13,7 +13,7 @@ export default defineConfig({
 			external: [/^@umbraco/],
 			output: {
 				entryFileNames: '[name].js',
-				chunkFileNames: '[name].js',
+				chunkFileNames: '[name]-[hash].js',
 			},
 		},
 	},

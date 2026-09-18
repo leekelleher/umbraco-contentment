@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { parseInt } from '../../utils/index.js';
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbDictionaryPickerInputContext } from '@umbraco-cms/backoffice/dictionary';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
@@ -12,6 +13,8 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	#maxItems = Infinity;
+
 	#pickerContext = new UmbDictionaryPickerInputContext(this);
 
 	@state()
@@ -26,7 +29,12 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 		return selection.length > 0 ? selection.join(',') : undefined;
 	}
 
-	public config?: UmbPropertyEditorUiElement['config'];
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		if (!config) return;
+
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#pickerContext.max = this.#maxItems;
+	}
 
 	constructor() {
 		super();
@@ -35,11 +43,11 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 		this.observe(this.#pickerContext.selectedItems, (selectedItems) => (this._items = selectedItems), '_observerItems');
 	}
 
-	#openPicker() {
+	#onAdd() {
 		this.#pickerContext?.openPicker();
 	}
 
-	#removeItem(item: UmbUniqueItemModel) {
+	#onRemove(item: UmbUniqueItemModel) {
 		this.#pickerContext?.requestRemoveItem(item.unique);
 	}
 
@@ -48,13 +56,13 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 	}
 
 	#renderAddButton() {
-		if (this.value) return;
+		if (this.value && this.value.length >= this.#maxItems) return;
 		return html`
 			<uui-button
 				id="btn-add"
 				label=${this.localize.term('general_choose')}
 				look="placeholder"
-				@click=${this.#openPicker}></uui-button>
+				@click=${this.#onAdd}></uui-button>
 		`;
 	}
 
@@ -77,7 +85,7 @@ export class ContentmentPropertyEditorUIDictionaryPickerElement
 			<uui-ref-node name=${item.name} id=${item.unique} ?standalone=${this._items?.length === 1}>
 				<umb-icon slot="icon" name="icon-book-alt"></umb-icon>
 				<uui-action-bar slot="actions">
-					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#removeItem(item)}></uui-button>
+					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item)}></uui-button>
 				</uui-action-bar>
 			</uui-ref-node>
 		`;

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+const CONTENTMENT_LIST_ITEMS_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.ListItems';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] List Items Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.ListItems',
+	alias: CONTENTMENT_LIST_ITEMS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ListItems',
 	},
@@ -19,7 +21,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'List Items',
 		icon: 'icon-fa-table-list',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ListItems',
+		propertyEditorSchemaAlias: CONTENTMENT_LIST_ITEMS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 		settings: {
 			properties: [
 				{
@@ -58,4 +60,13 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [schema, editorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.ListItems',
+	name: '[Contentment] List Items Property Editor Value Summary',
+	forValueType: CONTENTMENT_LIST_ITEMS_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./list-items.value-summary.element.js'),
+};
+
+export const manifests = [schema, editorUi, valueSummary];

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+const CONTENTMENT_CONTENT_BLOCKS_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.ContentBlocks';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Content Blocks Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.ContentBlocks',
+	alias: CONTENTMENT_CONTENT_BLOCKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.ContentBlocks',
 	},
@@ -20,7 +22,7 @@ const propertyEditorUi: Array<UmbExtensionManifest> = [
 			label: 'Content Blocks',
 			icon: 'icon-fa-server',
 			group: 'contentment',
-			propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.ContentBlocks',
+			propertyEditorSchemaAlias: CONTENTMENT_CONTENT_BLOCKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 			settings: {
 				properties: [
 					{
@@ -88,4 +90,13 @@ const propertyEditorUi: Array<UmbExtensionManifest> = [
 	},
 ];
 
-export const manifests = [schema, ...propertyEditorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.ContentBlocks',
+	name: '[Contentment] Content Blocks Property Editor Value Summary',
+	forValueType: CONTENTMENT_CONTENT_BLOCKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./content-blocks.value-summary.element.js'),
+};
+
+export const manifests = [schema, ...propertyEditorUi, valueSummary];

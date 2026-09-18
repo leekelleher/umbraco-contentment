@@ -8,10 +8,12 @@ const modal: UmbExtensionManifest = {
 	element: () => import('./social-links-selection-modal.element.js'),
 };
 
+const CONTENTMENT_SOCIAL_LINKS_PROPERTY_EDITOR_SCHEMA_ALIAS = 'Umbraco.Community.Contentment.SocialLinks';
+
 const schema: UmbExtensionManifest = {
 	type: 'propertyEditorSchema',
 	name: '[Contentment] Social Links Property Editor Schema',
-	alias: 'Umbraco.Community.Contentment.SocialLinks',
+	alias: CONTENTMENT_SOCIAL_LINKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 	meta: {
 		defaultPropertyEditorUiAlias: 'Umb.Contentment.PropertyEditorUi.SocialLinks',
 	},
@@ -26,7 +28,7 @@ const editorUi: UmbExtensionManifest = {
 		label: 'Social Links',
 		icon: 'icon-molecular-network',
 		group: 'contentment',
-		propertyEditorSchemaAlias: 'Umbraco.Community.Contentment.SocialLinks',
+		propertyEditorSchemaAlias: CONTENTMENT_SOCIAL_LINKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
 		settings: {
 			properties: [
 				{
@@ -222,4 +224,13 @@ const editorUi: UmbExtensionManifest = {
 	},
 };
 
-export const manifests = [modal, schema, editorUi];
+const valueSummary: UmbExtensionManifest = {
+	type: 'valueSummary',
+	kind: 'default',
+	alias: 'Umb.Contentment.ValueSummary.PropertyEditor.SocialLinks',
+	name: '[Contentment] Social Links Property Editor Value Summary',
+	forValueType: CONTENTMENT_SOCIAL_LINKS_PROPERTY_EDITOR_SCHEMA_ALIAS,
+	element: () => import('./social-links.value-summary.element.js'),
+};
+
+export const manifests = [modal, schema, editorUi, valueSummary];

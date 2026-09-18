@@ -193,7 +193,7 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 				@sort-end=${this.#onSortEnd}>
 				${repeat(
 					this.value,
-					(value) => value,
+					(value, index) => `${index}_${value}`,
 					(value, index) => this.#renderItem(value, index),
 				)}
 			</contentment-sortable-list>

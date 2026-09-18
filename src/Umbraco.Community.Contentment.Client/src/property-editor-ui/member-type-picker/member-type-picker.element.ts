@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+import { parseInt } from '../../utils/index.js';
 import { css, customElement, html, property, repeat, state } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbMemberTypePickerInputContext } from '@umbraco-cms/backoffice/member-type';
@@ -12,6 +13,8 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 	extends UmbLitElement
 	implements UmbPropertyEditorUiElement
 {
+	#maxItems = Infinity;
+
 	#pickerContext = new UmbMemberTypePickerInputContext(this);
 
 	@state()
@@ -26,7 +29,12 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 		return selection.length > 0 ? selection.join(',') : undefined;
 	}
 
-	public config?: UmbPropertyEditorUiElement['config'];
+	public set config(config: UmbPropertyEditorUiElement['config']) {
+		if (!config) return;
+
+		this.#maxItems = parseInt(config.getValueByAlias('maxItems')) || Infinity;
+		this.#pickerContext.max = this.#maxItems;
+	}
 
 	constructor() {
 		super();
@@ -35,13 +43,13 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 		this.observe(this.#pickerContext.selectedItems, (selectedItems) => (this._items = selectedItems), '_observerItems');
 	}
 
-	#openPicker() {
+	#onAdd() {
 		this.#pickerContext?.openPicker({
 			hideTreeRoot: true,
 		});
 	}
 
-	#removeItem(item: UmbUniqueItemModel) {
+	#onRemove(item: UmbUniqueItemModel) {
 		this.#pickerContext?.requestRemoveItem(item.unique);
 	}
 
@@ -50,13 +58,13 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 	}
 
 	#renderAddButton() {
-		if (this.value) return;
+		if (this.value && this.value.length >= this.#maxItems) return;
 		return html`
 			<uui-button
 				id="btn-add"
+				label=${this.localize.term('general_choose')}
 				look="placeholder"
-				@click=${this.#openPicker}
-				label=${this.localize.term('general_choose')}></uui-button>
+				@click=${this.#onAdd}></uui-button>
 		`;
 	}
 
@@ -79,7 +87,7 @@ export class ContentmentPropertyEditorUIMemberTypePickerElement
 			<uui-ref-node name=${item.name} id=${item.unique}>
 				<umb-icon slot="icon" name="icon-user"></umb-icon>
 				<uui-action-bar slot="actions">
-					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#removeItem(item)}></uui-button>
+					<uui-button label=${this.localize.term('general_remove')} @click=${() => this.#onRemove(item)}></uui-button>
 				</uui-action-bar>
 			</uui-ref-node>
 		`;

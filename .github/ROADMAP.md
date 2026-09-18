@@ -182,10 +182,9 @@ Property Editors are:
 
 - _Same as [v6.3](https://github.com/leekelleher/umbraco-contentment/releases/tag/6.3.0), an aligned minor release._
 
-### v7.2
+### [v7.2](https://github.com/leekelleher/umbraco-contentment/releases/tag/7.2.0)
 
-- _Explore the new [`valueSummary` extension](https://github.com/umbraco/Umbraco-CMS/pull/22481)_
-
+- Implemented [Property Editor Value Summaries](https://docs.umbraco.com/umbraco-cms/extend-your-project/backoffice-extensions/property-editors/property-editor-value-summary) for all complex Contentment property-editors.
 
 ## v8 _(December 2026)_
 
