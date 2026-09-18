@@ -94,4 +94,6 @@ Icon Picker is available as a macro parameter-editor by default. It will automat
 
 ### Further reading
 
-For a list of available icons in Umbraco, [Nic Bell's UCreate project has a page for them](https://nicbell.github.io/ucreate/icons.html).
+For a list of available icons in Umbraco:
+- [Umbraco Icons in Storybook](https://apidocs.umbraco.com/v18/ui/?path=/docs/umb-icons--docs)
+- [Nic Bell's UCreate project has a page for icons before Umbraco 14](https://nicbell.github.io/ucreate/icons.html).
