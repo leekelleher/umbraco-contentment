@@ -36,9 +36,9 @@ namespace Umbraco.Community.Contentment.DataEditors
   ""selected"": ""true|false"",
 }</code></pre>
 <p>If you are familiar with Liquid template syntax, you can display the values using an expression: e.g. <code>{{ item.name }}</code>.</p>
-<p>If you need assistance with Liquid template syntax, please refer to this resource: <a href=""https://liquidjs.com/"" target=""_blank""><strong>liquidjs.com</strong></a>.</p>
+<p>For assistance with Liquid template syntax, please refer to this resource: <a href=""https://liquidjs.com/"" target=""_blank""><strong>liquidjs.com</strong></a>.</p>
 <hr>
-<p>If you would like a starting point for your custom template, here is an example.</p>
+<p>As a starting point for your custom template, here is an example.</p>
 <umb-code-block language=""Liquid template"" copy>&lt;contentment-info-box
   type=""transparent""
   icon=""{{ item.icon }}""

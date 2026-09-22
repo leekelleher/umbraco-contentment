@@ -79,22 +79,20 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 	}
 
 	#renderItem(item: ContentmentListItem) {
+		const name = this.localize.string(item.name);
 		return html`
-			<uui-combobox-list-option
-				display-value=${this.localize.string(item.name)}
-				value=${item.value}
-				?disabled=${item.disabled}>
+			<uui-combobox-list-option display-value=${name} value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
 					${when(this._showIcons && item.icon, (_icon) => html`<umb-icon name=${_icon}></umb-icon>`)}
 					${when(
 						this._showDescriptions && item.description,
 						() => html`
 							<uui-form-layout-item>
-								<span slot="label">${this.localize.string(item.name)}</span>
+								<span slot="label">${name}</span>
 								<span slot="description">${unsafeHTML(this.localize.string(item.description ?? ''))}</span>
 							</uui-form-layout-item>
 						`,
-						() => html`<span>${this.localize.string(item.name)}</span>`,
+						() => html`<span>${name}</span>`,
 					)}
 				</div>
 			</uui-combobox-list-option>

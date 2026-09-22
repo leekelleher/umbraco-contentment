@@ -76,8 +76,8 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? undefined;
 		return html`
 			<uui-card-block-type
-				name=${item.name}
-				description=${item.description ?? ''}
+				name=${this.localize.string(item.name)}
+				description=${this.localize.string(item.description ?? '')}
 				style=${styleMap(cardStyle)}
 				@open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(
