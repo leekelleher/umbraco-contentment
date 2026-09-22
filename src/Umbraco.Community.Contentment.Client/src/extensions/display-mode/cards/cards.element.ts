@@ -75,9 +75,9 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		const cardStyle = (item.cardStyle as StyleInfo | null | undefined) ?? {};
 		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? {};
 		return html`
-			<uui-card-media
-				name=${item.name}
-				detail=${ifDefined(this.localize.string(item.description) || undefined)}
+			<uui-card-block-type
+				name=${this.localize.string(item.name)}
+				description=${this.localize.string(item.description ?? '')}
 				style=${styleMap(cardStyle)}
 				@open=${(event: Event) => this.#onEdit(event, item, index)}>
 				${when(
@@ -114,7 +114,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 						</uui-action-bar>
 					`,
 				)}
-			</uui-card-media>
+			</uui-card-block-type>
 		`;
 	}
 

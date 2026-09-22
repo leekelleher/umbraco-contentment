@@ -81,8 +81,8 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 		return this.#lookup[value];
 	}
 
-	#getMetadata(item: ContentmentListItem, key: string): string | unknown | undefined {
-		return item[key];
+	#getMetadata(item: ContentmentListItem, key: string): string | undefined {
+		return item[key] as string | undefined;
 	}
 
 	#populateItemLookup() {
@@ -203,11 +203,13 @@ export class ContentmentPropertyEditorUIItemPickerElement extends UmbLitElement 
 	#renderItem(value: string, index: number) {
 		const item = this.#getItemByValue(value);
 		if (!item) return this.#renderOrphanedItem(value, index);
+		const name = this.#getMetadata(item, 'name');
+		const description = this.#getMetadata(item, 'description') ?? '';
 		const icon = this.#getMetadata(item, 'icon') ?? this.#defaultIcon;
 		return html`
 			<uui-ref-node
-				name=${this.#getMetadata(item, 'name') ?? value}
-				detail=${this.#getMetadata(item, 'description') ?? ''}
+				name=${name ?? value}
+				detail=${this.localize.string(description)}
 				?standalone=${this.#maxItems === 1}>
 				${when(icon, (_icon) => html`<umb-icon slot="icon" name=${_icon}></umb-icon>`)}
 				<uui-action-bar slot="actions">
