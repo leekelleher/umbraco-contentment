@@ -14,6 +14,7 @@ export const manifest: UmbExtensionManifest = {
 		'Umb.Contentment.PropertyEditorUi.CodeEditor',
 		'Umb.Contentment.PropertyEditorUi.ContentBlocks',
 		'Umb.Contentment.PropertyEditorUi.ContentBlockTypeConfiguration',
+		'Umb.Contentment.PropertyEditorUi.ContentSource',
 		'Umb.Contentment.PropertyEditorUi.DataList',
 		'Umb.Contentment.PropertyEditorUi.DataPicker',
 		'Umb.Contentment.PropertyEditorUi.EditorNotes',
