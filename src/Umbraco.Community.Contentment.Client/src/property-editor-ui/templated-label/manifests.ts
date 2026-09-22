@@ -61,9 +61,9 @@ const editorUi: UmbExtensionManifest = {
 <summary><strong>Do you need help with your custom template?</strong></summary>
 <p>Your custom template will be used to display the label on the property from the underlying value.</p>
 <p>If you are familiar with Liquid template syntax, you can display the value using an expression: e.g. <code>{{ model.value }}</code>.</p>
-<p>If you need assistance with Liquid expression syntax, please refer to this resource: <a href="https://liquidjs.com/" target="_blank"><strong>liquidjs.com</strong></a>.</p>
+<p>For assistance with Liquid expression syntax, please refer to this resource: <a href="https://liquidjs.com/" target="_blank"><strong>liquidjs.com</strong></a>.</p>
 <hr>
-<p>If you would like a starting point for your custom template, here is an example.</p>
+<p>As a starting point for your custom template, here is an example:</p>
 <umb-code-block language="Liquid template" copy>&lt;details&gt;
     &lt;summary&gt;View data&lt;/summary&gt;
     &lt;umb-code-block language="JSON" copy&gt;{{ model.value | json }}&lt;/umb-code-block&gt;
