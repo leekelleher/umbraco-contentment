@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
-// NOTE: Uses Newtonsoft.Json for JsonPath support. [LK]
+// NOTE: Uses Newtonsoft.Json for JsonPath support; System.Text.Json has no JSONPath query engine. [LK]
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class JsonDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
@@ -38,12 +38,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new NotesConfigurationField($@"<details class=""well"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong>Do you need help with JSONPath expressions?</strong></summary>
 <p>This data-source uses Newtonsoft's Json.NET library, with this we are limited to extracting only the 'value' from any key/value-pairs.</p>
 <p>If you need assistance with JSONPath syntax, please refer to this resource: <a href=""https://goessner.net/articles/JsonPath/"" target=""_blank""><strong>goessner.net/articles/JsonPath</strong></a>.</p>
-<hr>
-<p><em>If you are a developer and have ideas on how to extract the <code>key</code> (name) from the items, please do let me know on <a href=""{Constants.Internals.RepositoryUrl}/issues/40"" target=""_blank""><strong>GitHub issue: #40</strong></a>.</em></p>
 </details>", true),
             new ContentmentConfigurationField
             {
@@ -131,10 +129,6 @@ namespace Umbraco.Community.Contentment.DataEditors
                     // The JSONPath '{itemsJsonPath}' did not match any items in the JSON.
                     return Enumerable.Empty<DataListItem>();
                 }
-
-                // TODO: [UP-FOR-GRABS] How would you get the string-value from a "key"?
-                // This project https://github.com/s3u/JSONPath supports "~" to retrieve keys. However this is not in the original jsonpath-specs.
-                // We could implement something similar, which checks the JsonPaths for a ~, and the we'll code-extract the keys. However this is a somewhat shady solution.
 
                 var nameJsonPath = config.GetValueAs("nameJsonPath", string.Empty) ?? string.Empty;
                 var valueJsonPath = config.GetValueAs("valueJsonPath", string.Empty) ?? string.Empty;
