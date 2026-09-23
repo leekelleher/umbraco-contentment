@@ -3,10 +3,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Net;
-using System.Text;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -17,10 +17,21 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public JsonDataListSource(IWebHostEnvironment webHostEnvironment)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        [ActivatorUtilitiesConstructor]
+        public JsonDataListSource(
+            IWebHostEnvironment webHostEnvironment,
+            IHttpClientFactory httpClientFactory)
         {
             _webHostEnvironment = webHostEnvironment;
+            _httpClientFactory = httpClientFactory;
         }
+
+        [Obsolete("To be removed in Contentment 8.0")]
+        public JsonDataListSource(IWebHostEnvironment webHostEnvironment)
+            : this(webHostEnvironment, StaticServiceProvider.Instance.GetRequiredService<IHttpClientFactory>())
+        { }
 
         public override string Name => "JSON Data";
 
@@ -184,15 +195,15 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 try
                 {
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-                    // TODO: [UP-FOR-GRABS] Can someone convert this code to use .NET Core `HttpClient` please?
-                    using (var client = new WebClient() { Encoding = Encoding.UTF8 })
-                    {
-                        content = client.DownloadString(url);
-                    }
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
+                    using var client = _httpClientFactory.CreateClient();
+                    using var request = new HttpRequestMessage(HttpMethod.Get, url);
+                    using var response = client.Send(request);
+
+                    response.EnsureSuccessStatusCode();
+
+                    content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 }
-                catch (WebException)
+                catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
                 {
                     // Unable to fetch remote data from URL: '{url}'.
                 }
