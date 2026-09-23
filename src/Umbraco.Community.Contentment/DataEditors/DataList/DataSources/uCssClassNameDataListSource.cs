@@ -5,6 +5,8 @@
 
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -16,10 +18,21 @@ namespace Umbraco.Community.Contentment.DataEditors
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public uCssClassNameDataListSource(IWebHostEnvironment webHostEnvironment)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        [ActivatorUtilitiesConstructor]
+        public uCssClassNameDataListSource(
+            IWebHostEnvironment webHostEnvironment,
+            IHttpClientFactory httpClientFactory)
         {
             _webHostEnvironment = webHostEnvironment;
+            _httpClientFactory = httpClientFactory;
         }
+
+        [Obsolete("To be removed in Contentment 8.0")]
+        public uCssClassNameDataListSource(IWebHostEnvironment webHostEnvironment)
+            : this(webHostEnvironment, StaticServiceProvider.Instance.GetRequiredService<IHttpClientFactory>())
+        { }
 
         public override string Name => "uCssClassName";
 
@@ -47,7 +60,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 Key = "cssPath",
                 Name = "PathToStylesheet",
-                Description = "Put in the relative path to the stylesheet",
+                Description = "Put in the relative path or URL to the stylesheet",
                 PropertyEditorUiAlias = "Umb.PropertyEditorUi.TextBox",
             },
             new ContentmentConfigurationField
@@ -75,11 +88,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override Dictionary<string, object>? DefaultValues => new()
         {
-            // TODO: I need to find an alternative, since FontAwesome no longer ships with Umbraco. [LK]
-            { "cssPath", "~/umbraco/lib/font-awesome/css/font-awesome.min.css" },
+            { "cssPath", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" },
             { "cssRegex", "\\.fa-([^:]*?):before" },
             { "excludeList", "" },
-            { "iconPattern", "icon-fa fa-{0}" },
+            { "iconPattern", "" },
         };
 
         public override OverlaySize OverlaySize => OverlaySize.Medium;
@@ -122,6 +134,26 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private string? GetCssFileContents(string cssPath)
         {
+            if (cssPath.InvariantStartsWith("http") == true)
+            {
+                try
+                {
+                    using var client = _httpClientFactory.CreateClient();
+                    using var request = new HttpRequestMessage(HttpMethod.Get, cssPath);
+                    using var response = client.Send(request);
+
+                    response.EnsureSuccessStatusCode();
+
+                    return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                }
+                catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+                {
+                    // Unable to fetch remote data from URL: '{cssPath}'.
+                }
+
+                return default;
+            }
+
             var file = _webHostEnvironment.WebRootFileProvider.GetFileInfo(cssPath.TrimStart("~/"));
 
             if (file.Exists == true)
