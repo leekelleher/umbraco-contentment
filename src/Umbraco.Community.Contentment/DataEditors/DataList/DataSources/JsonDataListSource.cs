@@ -10,7 +10,10 @@ using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
-// NOTE: Uses Newtonsoft.Json for JsonPath support; System.Text.Json has no JSONPath query engine. [LK]
+// NOTE: Uses Newtonsoft.Json for JsonPath support; System.Text.Json has no JSONPath query engine.
+// Newtonsoft.Json is a transitive dependency via Umbraco.Cms.Infrastructure -> Serilog.Formatting.Compact.Reader.
+// If Umbraco ever drops that dependency, then I'll deprecate this data-source rather than add a direct dependency
+// on Newtonsoft.Json (or any other JSONPath library) package reference. [LK]
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class JsonDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IContentmentListTemplateItem
