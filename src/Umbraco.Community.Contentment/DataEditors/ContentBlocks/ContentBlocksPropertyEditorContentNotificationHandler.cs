@@ -5,6 +5,7 @@
 
 using System.Text.Json;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
@@ -12,6 +13,13 @@ namespace Umbraco.Community.Contentment.DataEditors
     // TODO: [LK:2024-12-06] Figure out if this is still needed?
     internal sealed class ContentBlocksPropertyEditorContentNotificationHandler : ComplexPropertyEditorContentNotificationHandler
     {
+        private readonly IJsonSerializer _jsonSerializer;
+
+        public ContentBlocksPropertyEditorContentNotificationHandler(IJsonSerializer jsonSerializer) : base()
+        {
+            _jsonSerializer = jsonSerializer;
+        }
+
         protected override string EditorAlias => ContentBlocksDataEditor.DataEditorAlias;
 
         protected override string FormatPropertyValue(string rawJson, bool onlyMissingKeys)
@@ -26,7 +34,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return rawJson;
             }
 
-            var blocks = JsonSerializer.Deserialize<IEnumerable<ContentBlock>>(rawJson) ?? Enumerable.Empty<ContentBlock>();
+            var blocks = _jsonSerializer.Deserialize<IEnumerable<ContentBlock>>(rawJson) ?? Enumerable.Empty<ContentBlock>();
 
             foreach (var block in blocks)
             {
@@ -41,7 +49,7 @@ namespace Umbraco.Community.Contentment.DataEditors
                 // https://github.com/umbraco/Umbraco-CMS/blob/v10/contrib/src/Umbraco.Infrastructure/PropertyEditors/NestedContentPropertyHandler.cs
             }
 
-            return JsonSerializer.Serialize(blocks);
+            return _jsonSerializer.Serialize(blocks);
         }
     }
 }
