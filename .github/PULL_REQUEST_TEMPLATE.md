@@ -24,4 +24,4 @@
 
 ### Checklist
 
-- [ ] I have read the **[https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CONTRIBUTING.md](CONTRIBUTING.md)** and **[https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** documents.
+- [ ] I have read the **[CONTRIBUTING.md](https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CONTRIBUTING.md)** and **[CODE_OF_CONDUCT.md](https://github.com/leekelleher/umbraco-contentment/blob/contrib/.github/CODE_OF_CONDUCT.md)** documents.

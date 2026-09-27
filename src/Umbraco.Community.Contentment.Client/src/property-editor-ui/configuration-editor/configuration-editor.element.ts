@@ -154,14 +154,18 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 	}
 
 	#setValue(value: ContentmentConfigurationEditorValue | undefined, index: number) {
+		this.#applyValueAt(value, index, false);
+	}
+
+	#applyValueAt(value: ContentmentConfigurationEditorValue | undefined, index: number, insert: boolean) {
 		if (!value || index === -1) return;
 
-		if (!this.value) {
-			this.value = [];
+		const tmp = this.value ? [...this.value] : [];
+		if (insert) {
+			tmp.splice(index, 0, value);
+		} else {
+			tmp[index] = value;
 		}
-
-		const tmp = [...this.value];
-		tmp[index] = value;
 		this.value = tmp;
 
 		this.#populateItems();
@@ -169,17 +173,8 @@ export class ContentmentPropertyEditorUIConfigurationEditorElement
 		this.dispatchEvent(new UmbChangeEvent());
 	}
 
-	// TODO: [LK] Review if this could be combined with `#setValue()`.
 	#insertValueAt(value: ContentmentConfigurationEditorValue | undefined, index: number) {
-		if (!value || index === -1) return;
-
-		const tmp = this.value ? [...this.value] : [];
-		tmp.splice(index, 0, value);
-		this.value = tmp;
-
-		this.#populateItems();
-
-		this.dispatchEvent(new UmbChangeEvent());
+		this.#applyValueAt(value, index, true);
 	}
 
 	async #insertBlockAt(index: number, _listType?: string): Promise<void> {

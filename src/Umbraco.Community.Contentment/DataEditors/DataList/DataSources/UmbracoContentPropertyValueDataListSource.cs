@@ -65,6 +65,10 @@ namespace Umbraco.Community.Contentment.DataEditors
                 Name = "Content node",
                 Description = "Set the content node to take the property value from.",
                 PropertyEditorUiAlias = ContentPickerDataEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>()
+                {
+                    { EnableDevModeConfigurationField.EnableDevMode, true },
+                }
             },
             new ContentmentConfigurationField
             {

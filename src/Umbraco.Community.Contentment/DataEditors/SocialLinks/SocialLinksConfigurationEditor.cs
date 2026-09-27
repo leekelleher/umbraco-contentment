@@ -11,12 +11,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 {
     internal sealed class SocialLinksConfigurationEditor : ConfigurationEditor
     {
-        // TODO: [LK:2024-12-08] Check if `FromConfigurationEditor` is still being called/used by the backoffice.
         public override IDictionary<string, object> FromConfigurationEditor(IDictionary<string, object> configuration)
         {
             if (configuration.TryGetValueAs("networks", out JsonArray? networks) == true && networks?.Count > 0)
             {
-                foreach (JsonObject network in networks)
+                foreach (JsonObject? network in networks)
                 {
                     var networkValue = network?.GetValueAs("value", default(JsonObject));
                     if (networkValue?.ContainsKey("icon") == true)
