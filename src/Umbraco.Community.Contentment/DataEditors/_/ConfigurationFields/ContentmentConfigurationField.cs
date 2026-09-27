@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2024 Lee Kelleher
 
+using System.Text.Json.Serialization;
+
 namespace Umbraco.Cms.Core.PropertyEditors;
 
 public class ContentmentConfigurationField
@@ -16,6 +18,7 @@ public class ContentmentConfigurationField
 
     public string? PropertyEditorUiAlias { get; set; }
 
+    [JsonConverter(typeof(ContentmentConfigurationFieldConfigJsonConverter))]
     public IDictionary<string, object>? Config { get; set; }
 
     [Obsolete("To be removed in Contentment 8.0")]

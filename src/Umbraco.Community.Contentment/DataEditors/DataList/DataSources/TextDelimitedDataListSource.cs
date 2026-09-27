@@ -3,9 +3,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using System.Net;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Extensions;
 
@@ -17,13 +18,25 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private readonly ILogger<TextDelimitedDataListSource> _logger;
 
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        [ActivatorUtilitiesConstructor]
         public TextDelimitedDataListSource(
             ILogger<TextDelimitedDataListSource> logger,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _httpClientFactory = httpClientFactory;
         }
+
+        [Obsolete("To be removed in Contentment 8.0")]
+        public TextDelimitedDataListSource(
+            ILogger<TextDelimitedDataListSource> logger,
+            IWebHostEnvironment webHostEnvironment)
+            : this(logger, webHostEnvironment, StaticServiceProvider.Instance.GetRequiredService<IHttpClientFactory>())
+        { }
 
         public override string Name => "Text Delimited Data";
 
@@ -185,14 +198,17 @@ namespace Umbraco.Community.Contentment.DataEditors
             {
                 try
                 {
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-                    using (var client = new WebClient())
-                    {
-                        return client.DownloadString(url).Split('\r', '\n');
-                    }
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
+                    using var client = _httpClientFactory.CreateClient();
+                    using var request = new HttpRequestMessage(HttpMethod.Get, url);
+                    using var response = client.Send(request);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    return content.Split('\r', '\n');
                 }
-                catch (WebException ex)
+                catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
                 {
                     _logger.LogError(ex, "Unable to fetch remote data.");
                 }

@@ -27,22 +27,11 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public override IEnumerable<ContentmentConfigurationField> Fields => new[]
         {
-            new ContentmentConfigurationField
-            {
-                Key = "items",
-                Name = "Options",
-                Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
-                PropertyEditorUiAlias = ListItemsDataEditor.DataEditorUiAlias,
-                Config = new Dictionary<string, object>()
-                {
-                    { "confirmRemoval", true },
-                    { EnableDevModeConfigurationField.EnableDevMode, true },
-                    { MaxItemsConfigurationField.MaxItems, 0 },
-                    { NotesConfigurationField.Notes, @"<details class=""well"">
+            new NotesConfigurationField(@"<details class=""well"">
 <summary><strong><em>Advanced:</em> Paste in the raw JSON?</strong></summary>
-<p>If you have copied the raw JSON from the Data List preview panel, <button class=""btn-reset"" ng-click=""vm.edit()""><strong>you can paste it in here</strong></button>.</p>
+<p>If you have copied the raw JSON from the Data List preview panel, use the <strong>Edit raw value</strong> property action to paste it in.</p>
 <p>The JSON format must be an array of the Data List item structure.<br />For example...</p>
-<umb-code-snippet language=""'JSON'"">[
+<umb-code-block language=""JSON"" copy>[
   {
     ""name"": ""Ready"",
     ""value"": ""value1"",
@@ -59,8 +48,19 @@ namespace Umbraco.Community.Contentment.DataEditors
     ""icon"": ""icon-stop-alt color-green"",
     ""description"": ""Three to get ready. Now go, cat, go.""
   }
-]</umb-code-snippet>
-</details>" },
+]</umb-code-block>
+</details>", true),
+            new ContentmentConfigurationField
+            {
+                Key = "items",
+                Name = "Options",
+                Description = "Configure the option items for the data list.<br><br>Please try to avoid using duplicate values, as this may cause adverse issues with list editors.",
+                PropertyEditorUiAlias = ListItemsDataEditor.DataEditorUiAlias,
+                Config = new Dictionary<string, object>()
+                {
+                    { "confirmRemoval", true },
+                    { EnableDevModeConfigurationField.EnableDevMode, true },
+                    { MaxItemsConfigurationField.MaxItems, 0 },
                 },
             }
         };
