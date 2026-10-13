@@ -40,6 +40,9 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	@state()
 	private _options: Array<Array<ContentmentListItem>> = [];
 
+	@state()
+	private _search: Array<string> = [];
+
 	@property({ type: Array })
 	public set value(value: Array<string> | undefined) {
 		this.#value = value;
@@ -102,6 +105,8 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 
 		this.dispatchEvent(new UmbChangeEvent());
 
+		this._search = this._search.slice(0, index);
+
 		if (this._apis.length > next) {
 			this._loading = true;
 
@@ -123,15 +128,36 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 		}
 	}
 
+	#onSearch(event: UUIComboboxEvent & { target: UUIComboboxElement }) {
+		const index = parseInt(event.target.dataset.index) || 0;
+		const search = [...this._search];
+		search[index] = event.target.search.toLowerCase();
+		this._search = search;
+	}
+
+	#filterOptions(options: Array<ContentmentListItem>, index: number) {
+		const search = this._search[index];
+		if (!search) return options;
+		return options.filter(
+			(option) =>
+				this.localize.string(option.name).toLowerCase().includes(search) || option.value.toLowerCase().includes(search),
+		);
+	}
+
 	override render() {
 		if (this._loading) return html`<uui-loader></uui-loader>`;
 		return html`${repeat(
 			this._options,
 			(options, index) => html`
-				<uui-combobox data-index=${index} required value=${ifDefined(this.value?.[index])} @change=${this.#onChange}>
+				<uui-combobox
+					data-index=${index}
+					required
+					value=${ifDefined(this.value?.[index])}
+					@change=${this.#onChange}
+					@search=${this.#onSearch}>
 					<uui-combobox-list>
 						${repeat(
-							options,
+							this.#filterOptions(options, index),
 							(option) => option.value,
 							(option) => this.#renderItem(option),
 						)}
