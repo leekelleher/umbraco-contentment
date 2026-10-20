@@ -108,9 +108,13 @@ namespace Umbraco.Community.Contentment.DataEditors
                 return Enumerable.Empty<DataListItem>();
             }
 
-            var path = url.InvariantStartsWith("http") == false
-                ? _webHostEnvironment.MapPathWebRoot(url)
-                : url;
+            string? path = url;
+
+            if (url.IsHttpUrl() == false && _webHostEnvironment.TryMapPathWebRoot(url, out path) == false)
+            {
+                // Local paths must be inside the web root.
+                return Enumerable.Empty<DataListItem>();
+            }
 
             var doc = default(XPathDocument);
 
