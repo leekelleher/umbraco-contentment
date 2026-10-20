@@ -168,12 +168,13 @@ export class ContentmentPropertyEditorUICascadingDropdownListElement
 	}
 
 	#renderItem(item: ContentmentListItem) {
+		const name = this.localize.string(item.name);
 		return html`
-			<uui-combobox-list-option display-value=${item.name} value=${item.value} ?disabled=${item.disabled}>
+			<uui-combobox-list-option display-value=${name} value=${item.value} ?disabled=${item.disabled}>
 				<div class="outer">
 					${when(item.icon, (icon) => html`<umb-icon name=${icon}></umb-icon>`)}
 					<uui-form-layout-item>
-						<span slot="label">${this.localize.string(item.name)}</span>
+						<span slot="label">${name}</span>
 						${when(
 							item.description,
 							(description) => html`<span slot="description">${unsafeHTML(this.localize.string(description))}</span>`,
