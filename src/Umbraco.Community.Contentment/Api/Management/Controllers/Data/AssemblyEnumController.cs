@@ -31,6 +31,61 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
         // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
         await Task.Run(() => { });
 
+        var options = GetAssemblyNames();
+
+        var result = options.Select(x => new DataListItem { Name = x, Value = x });
+
+        return Ok(result);
+    }
+
+    [HttpGet("enums", Name = "GetEnumsData")]
+    [MapToApiVersion("1.0")]
+    public async Task<IActionResult> GetEnums(string assembly)
+    {
+        // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
+        await Task.Run(() => { });
+
+        // NOTE: Only assemblies that are offered by the `GetAssemblies` endpoint can be loaded.
+        if (string.IsNullOrWhiteSpace(assembly) == true || GetAssemblyNames().Contains(assembly) == false)
+        {
+            return BadRequest("Unable to find the assembly.");
+        }
+
+        var options = new SortedDictionary<string, DataListItem>();
+
+        Type[] types;
+
+        try
+        {
+            types = Assembly.Load(assembly).GetTypes();
+        }
+        catch (Exception ex) when (ex is FileLoadException or FileNotFoundException or BadImageFormatException or ReflectionTypeLoadException)
+        {
+            return BadRequest("Unable to load the assembly.");
+        }
+
+        foreach (var type in types)
+        {
+            if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
+            {
+                continue;
+            }
+
+            options.Add(type.FullName, new DataListItem
+            {
+                Name = type.Name.SplitPascalCasing(_shortStringHelper),
+                Value = type.FullName,
+                Description = type.FullName,
+            });
+        }
+
+        var result = options.Values;
+
+        return Ok(result);
+    }
+
+    private static SortedSet<string> GetAssemblyNames()
+    {
         var options = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -75,39 +130,6 @@ public sealed class AssemblyEnumController : ContentmentControllerBase
             }
         }
 
-        var result = options.Select(x => new DataListItem { Name = x, Value = x });
-
-        return Ok(result);
-    }
-
-    [HttpGet("enums", Name = "GetEnumsData")]
-    [MapToApiVersion("1.0")]
-    public async Task<IActionResult> GetEnums(string assembly)
-    {
-        // NOTE: A placeholder async task, until I get async working throughout the codebase. ¯\_(ツ)_/¯
-        await Task.Run(() => { });
-
-        var options = new SortedDictionary<string, DataListItem>();
-
-        var types = Assembly.Load(assembly).GetTypes();
-
-        foreach (var type in types)
-        {
-            if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
-            {
-                continue;
-            }
-
-            options.Add(type.FullName, new DataListItem
-            {
-                Name = type.Name.SplitPascalCasing(_shortStringHelper),
-                Value = type.FullName,
-                Description = type.FullName,
-            });
-        }
-
-        var result = options.Values;
-
-        return Ok(result);
+        return options;
     }
 }
