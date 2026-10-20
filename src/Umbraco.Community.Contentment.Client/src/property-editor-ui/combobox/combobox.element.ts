@@ -48,10 +48,26 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 	@state()
 	private _showIcons = false;
 
+	@state()
+	private _search = '';
+
 	#onChange(event: CustomEvent & { target: UUIComboboxElement }) {
 		if (event.target.nodeName !== 'UUI-COMBOBOX') return;
 		this.value = event.target.value as string;
 		this.dispatchEvent(new UmbChangeEvent());
+	}
+
+	#onSearch(event: CustomEvent & { target: UUIComboboxElement }) {
+		this._search = event.target.search.toLowerCase();
+	}
+
+	#filterItems() {
+		if (!this._search) return this._items;
+		return this._items.filter(
+			(item) =>
+				this.localize.string(item.name).toLowerCase().includes(this._search) ||
+				item.value.toLowerCase().includes(this._search),
+		);
 	}
 
 	override render() {
@@ -66,10 +82,10 @@ export class ContentmentPropertyEditorUIComboboxElement extends UmbLitElement im
 		}
 
 		return html`
-			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange}>
+			<uui-combobox value=${ifDefined(this.value)} @change=${this.#onChange} @search=${this.#onSearch}>
 				<uui-combobox-list>
 					${repeat(
-						this._items,
+						this.#filterItems(),
 						(item) => item.value,
 						(item) => this.#renderItem(item),
 					)}
