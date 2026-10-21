@@ -19,6 +19,7 @@ export type ContentmentDataListRepositoryGetEditorArgs = {
 	dataSource?: ContentmentConfigurationEditorValue | null;
 	listEditor?: ContentmentConfigurationEditorValue | null;
 	contentTypeUnique?: string | null;
+	dataTypeKey?: string | null;
 	entityIsNew?: boolean;
 	entityUnique?: string | null;
 	parentEntityUnique?: string | null;
@@ -84,6 +85,7 @@ export class ContentmentDataListRepository extends UmbRepositoryBase implements 
 			alias: args.propertyAlias,
 			contentTypeKey: args.contentTypeUnique,
 			dataSource: args.dataSource,
+			dataTypeKey: args.dataTypeKey,
 			id: args.entityUnique,
 			isNew: args.entityIsNew,
 			listEditor: args.listEditor,

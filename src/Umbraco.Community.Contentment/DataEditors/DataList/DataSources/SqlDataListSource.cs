@@ -121,6 +121,11 @@ namespace Umbraco.Community.Contentment.DataEditors
             using (var scope = _scopeProvider.CreateScope())
             {
                 var database = GetDatabase(connectionStringName) ?? scope.Database;
+
+                // NOTE: The transaction (and the scope) are never completed, so the query is always rolled back.
+                // This is to ensure that the data source can only read data, it can't persist any changes.
+                using var transaction = database.GetTransaction();
+
                 var results = database.Fetch<dynamic>(query);
 
                 foreach (PocoExpando result in results)
@@ -149,8 +154,6 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                     yield return item;
                 }
-
-                _ = scope.Complete();
             }
         }
 

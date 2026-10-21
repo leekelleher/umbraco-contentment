@@ -90,11 +90,18 @@ namespace Umbraco.Community.Contentment.DataEditors
                 ? path.EnsureEndsWith("/")
                 : "~/";
 
-            var fileFilter = string.IsNullOrWhiteSpace(filter) == false
+            // NOTE: The filter is a filename wildcard only, so it can't contain path separators.
+            var fileFilter = string.IsNullOrWhiteSpace(filter) == false && filter.IndexOfAny(['/', '\\']) < 0
                 ? filter
                 : "*.*";
 
-            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, _webHostEnvironment.MapPathWebRoot(virtualRoot), _hostingEnvironment.ToAbsolute(virtualRoot));
+            // NOTE: The path must be inside the web root.
+            if (_webHostEnvironment.TryMapPathWebRoot(virtualRoot, out var rootPath) == false)
+            {
+                return Enumerable.Empty<DataListItem>();
+            }
+
+            var fs = new PhysicalFileSystem(_ioHelper, _hostingEnvironment, _logger, rootPath, _hostingEnvironment.ToAbsolute(virtualRoot));
 
             var files = fs.GetFiles(".", fileFilter);
 

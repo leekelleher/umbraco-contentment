@@ -20,12 +20,6 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 			url: 'https://github.com/leekelleher/umbraco-contentment/tree/contrib/docs',
 		},
 		{
-			icon: 'icon-youtube',
-			name: '#contentment_dashboard_links_video_label',
-			description: '#contentment_dashboard_links_video_description',
-			url: 'https://www.youtube.com/playlist?list=PL8grlRt7-8oVULPYJpqido5QItRsJBt3M',
-		},
-		{
 			icon: 'icon-chat',
 			name: '#contentment_dashboard_links_support_label',
 			description: '#contentment_dashboard_links_support_description',
@@ -42,12 +36,6 @@ export class ContentmentWorkspaceElement extends UmbLitElement {
 			name: '#contentment_dashboard_links_issues_label',
 			description: '#contentment_dashboard_links_issues_description',
 			url: 'https://github.com/leekelleher/umbraco-contentment/issues/new/choose',
-		},
-		{
-			icon: 'icon-vcard',
-			name: '#contentment_dashboard_links_license_label',
-			description: '#contentment_dashboard_links_license_description',
-			url: 'https://opensource.org/licenses/MIT',
 		},
 	];
 

@@ -11,6 +11,9 @@ public sealed class DataListConfigurationRequestModel
 
     public ConfigurationEditorItemRequestModel? DataSource { get; set; }
 
+    // When set, the configuration is read from the saved Data Type, (the `DataSource` and `ListEditor` are ignored).
+    public Guid? DataTypeKey { get; set; }
+
     public string? Id { get; set; }
 
     public bool? IsNew { get; set; }
