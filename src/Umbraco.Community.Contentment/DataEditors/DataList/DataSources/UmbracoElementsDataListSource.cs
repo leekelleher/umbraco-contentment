@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright © 2025 Lee Kelleher
 
-using Microsoft.IdentityModel.Abstractions;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
@@ -192,37 +191,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private static Guid? GetStartFolderKey(Dictionary<string, object> config)
         {
-            // Seems like the Umb.PropertyEditorUi.ElementPicker (folderOnly: true) has been using
-            // different storage formats over time. This supports:
-            // * List<string> where each string is a GUID
-            // * string, comma-separated string with GUIDs
-
-            if (!config.TryGetValue("folder", out object? storedObject))
-            {
-                return null;
-            }
-            
-            if (storedObject is List<string> guids)
-            {
-                if (Guid.TryParse(guids.First(), out Guid selectedFolderKey))
-                {
-                    return selectedFolderKey;
-                }
-            }
-
-            if (storedObject is string guidString)
-            {
-                if (string.IsNullOrEmpty(guidString))
-                {
-                    return null;
-                }
-
-                var token = guidString.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault();
-                return Guid.TryParse(token, out var key) && key.Equals(Guid.Empty) == false ? key : null;
-            }
-
-            return null;
-
+            // Umb.PropertyEditorUi.ElementPicker (folderOnly: true) stores its value as a GUID string array.
+            // With max: 1 there is at most one entry.
+            var keys = config.GetValueAs("folder", new List<string>());
+            return Guid.TryParse(keys?.FirstOrDefault(), out var key) && key.Equals(Guid.Empty) == false ? key : null;
         }
 
         private IEnumerable<IPublishedElement> GetFolderElements(Guid? folderKey, bool preview)
