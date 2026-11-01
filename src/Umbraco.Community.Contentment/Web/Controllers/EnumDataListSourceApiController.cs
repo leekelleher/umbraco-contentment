@@ -31,6 +31,48 @@ namespace Umbraco.Community.Contentment.Web.Controllers
         [HttpGet]
         public IEnumerable<DataListItem> GetAssemblies()
         {
+            var options = GetAssemblyNames();
+
+            return options.Select(x => new DataListItem { Name = x, Value = x });
+        }
+
+        [HttpGet]
+        public IActionResult GetEnums(string assembly)
+        {
+            // NOTE: Only assemblies that are offered by the `GetAssemblies` endpoint can be loaded.
+            if (string.IsNullOrWhiteSpace(assembly) == true || GetAssemblyNames().Contains(assembly) == false)
+            {
+                return BadRequest("Unable to find the assembly.");
+            }
+
+            var options = new SortedDictionary<string, DataListItem>();
+
+            Type[] types;
+
+            try
+            {
+                types = Assembly.Load(assembly).GetTypes();
+            }
+            catch (Exception ex) when (ex is FileLoadException or FileNotFoundException or BadImageFormatException or ReflectionTypeLoadException)
+            {
+                return BadRequest("Unable to load the assembly.");
+            }
+
+            foreach (var type in types)
+            {
+                if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
+                {
+                    continue;
+                }
+
+                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(_shortStringHelper), Value = type.FullName });
+            }
+
+            return Ok(options.Values);
+        }
+
+        private static SortedSet<string> GetAssemblyNames()
+        {
             var options = new SortedSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -74,27 +116,7 @@ namespace Umbraco.Community.Contentment.Web.Controllers
                 }
             }
 
-            return options.Select(x => new DataListItem { Name = x, Value = x });
-        }
-
-        [HttpGet]
-        public IEnumerable<DataListItem> GetEnums(string assembly)
-        {
-            var options = new SortedDictionary<string, DataListItem>();
-
-            var types = Assembly.Load(assembly).GetTypes();
-
-            foreach (var type in types)
-            {
-                if (type.IsEnum == false || string.IsNullOrWhiteSpace(type.FullName) == true)
-                {
-                    continue;
-                }
-
-                options.Add(type.FullName, new DataListItem { Name = type.Name.SplitPascalCasing(_shortStringHelper), Value = type.FullName });
-            }
-
-            return options.Values;
+            return options;
         }
     }
 }
