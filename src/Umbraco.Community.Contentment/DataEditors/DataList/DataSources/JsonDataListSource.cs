@@ -191,7 +191,7 @@ namespace Umbraco.Community.Contentment.DataEditors
         {
             var content = string.Empty;
 
-            if (url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase) == true)
+            if (url.IsHttpUrl() == true)
             {
                 try
                 {
@@ -210,9 +210,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             }
             else
             {
-                // assume local file
-                var path = _webHostEnvironment.MapPathWebRoot(url);
-                if (File.Exists(path) == true)
+                // assume local file (inside the web root)
+                if (_webHostEnvironment.TryMapPathWebRoot(url, out var path) == true && File.Exists(path) == true)
                 {
                     content = File.ReadAllText(path);
                 }
