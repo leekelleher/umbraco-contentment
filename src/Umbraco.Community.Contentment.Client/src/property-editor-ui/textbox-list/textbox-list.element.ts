@@ -6,6 +6,7 @@ import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { DataListService } from '../../api/index.js';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
+import { UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import type { InputType, UUIInputEvent } from '@umbraco-cms/backoffice/external/uui';
 import type { UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
@@ -31,6 +32,9 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	private _dataSource?: Array<ContentmentConfigurationEditorValue>;
 
 	@state()
+	private _dataTypeKey?: string | null;
+
+	@state()
 	private _defaultIcon?: string;
 
 	@state()
@@ -42,6 +46,14 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	@state()
 	private _items: Array<ContentmentListItem> = [];
 
+	constructor() {
+		super();
+
+		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
+			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
+		});
+	}
+
 	override async firstUpdated() {
 		await this.#init().catch(() => undefined);
 	}
@@ -49,7 +61,7 @@ export class ContentmentPropertyEditorUITextboxListElement extends UmbLitElement
 	async #init() {
 		if (!this._dataSource) return;
 
-		const body = { dataSource: this._dataSource[0], listEditor: null };
+		const body = { dataSource: this._dataSource[0], dataTypeKey: this._dataTypeKey, listEditor: null };
 
 		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));
 

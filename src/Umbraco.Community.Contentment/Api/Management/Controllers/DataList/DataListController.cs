@@ -2,20 +2,33 @@
 // Copyright © 2024 Lee Kelleher
 
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
+using Umbraco.Cms.Core.Serialization;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.DataEditors;
 
 namespace Umbraco.Community.Contentment.Api.Management;
 
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("data-list")]
-public class DataListController : ContentmentControllerBase
+public class DataListController : ContentmentDataSourceControllerBase
 {
+    private readonly IDataTypeService _dataTypeService;
+    private readonly IJsonSerializer _jsonSerializer;
     private readonly ConfigurationEditorUtility _utility;
 
-    public DataListController(ConfigurationEditorUtility utility)
+    public DataListController(
+        IAuthorizationService authorizationService,
+        IDataTypeService dataTypeService,
+        IJsonSerializer jsonSerializer,
+        ConfigurationEditorUtility utility)
+        : base(authorizationService)
     {
+        _dataTypeService = dataTypeService;
+        _jsonSerializer = jsonSerializer;
         _utility = utility;
     }
 
@@ -32,13 +45,19 @@ public class DataListController : ContentmentControllerBase
 
         var config = new Dictionary<string, object>();
 
+        var (error, dataSourceItem, listEditorItem) = await GetConfigurationAsync(model);
+        if (error is not null)
+        {
+            return error;
+        }
+
         // TODO: [LK] Move all this logic to its own service.
 
-        var key1 = model.DataSource?.Key;
+        var key1 = dataSourceItem?.Key;
         if (string.IsNullOrWhiteSpace(key1) == false)
         {
             var source = _utility.GetConfigurationEditor<IContentmentDataSource>(key1);
-            var sourceConfig = model.DataSource?.Value;
+            var sourceConfig = dataSourceItem?.Value;
             if (source is not null && sourceConfig is not null)
             {
                 var items = source.GetItems(sourceConfig) ?? [];
@@ -46,14 +65,14 @@ public class DataListController : ContentmentControllerBase
             }
         }
 
-        var key2 = model.ListEditor?.Key;
+        var key2 = listEditorItem?.Key;
         if (string.IsNullOrWhiteSpace(key2) == false)
         {
             var editor = _utility.GetConfigurationEditor<IContentmentListEditor>(key2);
 
             propertyEditorUiAlias = editor?.PropertyEditorUiAlias;
 
-            var editorConfig = model.ListEditor?.Value;
+            var editorConfig = listEditorItem?.Value;
             if (editorConfig is not null)
             {
                 foreach (var prop in editorConfig)
@@ -78,5 +97,24 @@ public class DataListController : ContentmentControllerBase
         };
 
         return Ok(result);
+    }
+
+    private async Task<(IActionResult? Error, ConfigurationEditorItemRequestModel? DataSource, ConfigurationEditorItemRequestModel? ListEditor)> GetConfigurationAsync(DataListConfigurationRequestModel model)
+    {
+        if (model.DataTypeKey.HasValue == false || model.DataTypeKey.Value == Guid.Empty)
+        {
+            // NOTE: The configuration is supplied in the request, (i.e. the Data Type preview).
+            return await CanSupplyConfigurationAsync() == true
+                ? (null, model.DataSource, model.ListEditor)
+                : (StatusCode(StatusCodes.Status403Forbidden), null, null);
+        }
+
+        // NOTE: The configuration is read from the saved Data Type, anything supplied in the request is ignored.
+        if (await _dataTypeService.GetAsync(model.DataTypeKey.Value) is not { } dataType)
+        {
+            return (NotFound($"Unable to locate the data type: '{model.DataTypeKey}'"), null, null);
+        }
+
+        return (null, GetConfigurationEditorItem(_jsonSerializer, dataType, "dataSource"), GetConfigurationEditorItem(_jsonSerializer, dataType, "listEditor"));
     }
 }

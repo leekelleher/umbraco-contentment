@@ -191,16 +191,10 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private static Guid? GetStartFolderKey(Dictionary<string, object> config)
         {
-            // Umb.PropertyEditorUi.ElementPicker (folderOnly: true) stores its value as a comma-separated
-            // string of bare GUIDs. With max: 1 there is at most one entry.
-            var raw = config.GetValueAs("folder", string.Empty);
-            if (string.IsNullOrWhiteSpace(raw) == true)
-            {
-                return null;
-            }
-
-            var token = raw.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault();
-            return Guid.TryParse(token, out var key) && key.Equals(Guid.Empty) == false ? key : null;
+            // Umb.PropertyEditorUi.ElementPicker (folderOnly: true) stores its value as a GUID string array.
+            // With max: 1 there is at most one entry.
+            var keys = config.GetValueAs("folder", new List<string>());
+            return Guid.TryParse(keys?.FirstOrDefault(), out var key) && key.Equals(Guid.Empty) == false ? key : null;
         }
 
         private IEnumerable<IPublishedElement> GetFolderElements(Guid? folderKey, bool preview)

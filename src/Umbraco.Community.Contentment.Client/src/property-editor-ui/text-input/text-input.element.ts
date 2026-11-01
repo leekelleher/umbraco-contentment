@@ -17,6 +17,7 @@ import { tryExecute } from '@umbraco-cms/backoffice/resources';
 import { DataListService } from '../../api/index.js';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
+import { UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import type { ContentmentConfigurationEditorValue, ContentmentListItem } from '../types.js';
 import type { InputType } from '@umbraco-cms/backoffice/external/uui';
@@ -58,6 +59,9 @@ export class ContentmentPropertyEditorUITextInputElement
 	private _dataSource?: ContentmentConfigurationEditorValue;
 
 	@state()
+	private _dataTypeKey?: string | null;
+
+	@state()
 	private _inputType: InputType = 'text';
 
 	@state()
@@ -81,6 +85,14 @@ export class ContentmentPropertyEditorUITextInputElement
 	@state()
 	private _append?: string;
 
+	constructor() {
+		super();
+
+		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
+			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
+		});
+	}
+
 	override async firstUpdated() {
 		await this.#init().catch(() => undefined);
 	}
@@ -90,7 +102,7 @@ export class ContentmentPropertyEditorUITextInputElement
 
 		if (!this._dataSource) return;
 
-		const body = { dataSource: this._dataSource, listEditor: null };
+		const body = { dataSource: this._dataSource, dataTypeKey: this._dataTypeKey, listEditor: null };
 
 		const { data } = await tryExecute(this, DataListService.postDataListEditor({ body }));
 
@@ -144,7 +156,7 @@ export class ContentmentPropertyEditorUITextInputElement
 					label=${this.name ?? 'Text input'}
 					list=${ifDefined(hasItems ? 'items' : undefined)}
 					placeholder=${ifDefined(this._placeholderText)}
-					maxlength=${this._maxChars}
+					maxlength=${ifDefined(this._maxChars)}
 					spellcheck=${this._spellcheck ? 'true' : 'false'}
 					.value=${this.value ?? ''}
 					@input=${this.#onInput} />

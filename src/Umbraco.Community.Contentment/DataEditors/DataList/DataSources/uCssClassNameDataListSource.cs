@@ -134,7 +134,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         private string? GetCssFileContents(string cssPath)
         {
-            if (cssPath.InvariantStartsWith("http") == true)
+            if (cssPath.IsHttpUrl() == true)
             {
                 try
                 {

@@ -23,6 +23,7 @@ export type DataListConfigurationRequestModel = {
 	alias?: string | null;
 	contentTypeKey?: string | null;
 	dataSource?: ConfigurationEditorItemRequestModel | null;
+	dataTypeKey?: string | null;
 	id?: string | null;
 	isNew?: boolean | null;
 	parentId?: string | null;

@@ -39,7 +39,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			<contentment-sortable-list
 				class="container"
 				?disabled=${!this.allowSort}
-				item-selector="uui-card-block-type"
+				item-selector=".item"
 				@sort-end=${this.#onSort}>
 				${this.#renderItems()} ${this.#renderAddButton()}
 			</contentment-sortable-list>
@@ -76,6 +76,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 		const iconStyle = (item.iconStyle as StyleInfo | null | undefined) ?? undefined;
 		return html`
 			<uui-card-block-type
+				class="item"
 				name=${this.localize.string(item.name)}
 				description=${this.localize.string(item.description ?? '')}
 				style=${styleMap(cardStyle)}
@@ -156,6 +157,7 @@ export class ContentmentDisplayModeCardsElement extends ContentmentDisplayModeEl
 			}
 
 			uui-card-block-type {
+			.item {
 				&[drag-placeholder] {
 					opacity: 0.2;
 				}

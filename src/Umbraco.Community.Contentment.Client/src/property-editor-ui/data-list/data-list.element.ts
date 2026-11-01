@@ -6,7 +6,7 @@ import { customElement, html, property, state } from '@umbraco-cms/backoffice/ex
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UMB_CONTENT_WORKSPACE_CONTEXT } from '@umbraco-cms/backoffice/content';
+import { UMB_CONTENT_WORKSPACE_CONTEXT, UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
 import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
@@ -27,6 +27,9 @@ export class ContentmentPropertyEditorUIDataListElement
 	#propertyContext?: typeof UMB_PROPERTY_CONTEXT.TYPE;
 
 	#repository = new ContentmentDataListRepository(this);
+
+	@state()
+	private _dataTypeKey?: string | null;
 
 	@state()
 	private _entityIsNew = false;
@@ -91,6 +94,10 @@ export class ContentmentPropertyEditorUIDataListElement
 			this.observe(parentEntityContext?.parent, (parent) => (this._parentEntityUnique = parent?.unique));
 		}).passContextAliasMatches();
 
+		this.consumeContext(UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT, (context) => {
+			this.observe(context?.dataType, (dataType) => (this._dataTypeKey = dataType?.unique));
+		});
+
 		this.consumeContext(UMB_PROPERTY_CONTEXT, (propertyContext) => {
 			this.#propertyContext = propertyContext;
 			this.observe(propertyContext?.alias, (alias) => (this._propertyAlias = alias));
@@ -126,6 +133,7 @@ export class ContentmentPropertyEditorUIDataListElement
 			dataSource: this._dataSource,
 			listEditor: this._listEditor,
 			contentTypeUnique: this._contentTypeUnique,
+			dataTypeKey: this._dataTypeKey,
 			entityIsNew: this._entityIsNew,
 			entityUnique: this._entityUnique,
 			parentEntityUnique: this._parentEntityUnique,

@@ -2,12 +2,14 @@
 // Copyright © 2024 Lee Kelleher
 
 using System.Collections.Concurrent;
-using System.Text.Json.Nodes;
 using System.Web;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Api.Management.ViewModels.DataType;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Community.Contentment.DataEditors;
 using Umbraco.Extensions;
@@ -16,18 +18,23 @@ namespace Umbraco.Community.Contentment.Api.Management;
 
 [ApiVersion("1.0")]
 [ContentmentVersionedApiBackOfficeRoute("data-picker")]
-public class DataPickerController : ContentmentControllerBase
+public class DataPickerController : ContentmentDataSourceControllerBase
 {
     private readonly IDataTypeService _dataTypeService;
+    private readonly IJsonSerializer _jsonSerializer;
     private readonly ConfigurationEditorUtility _utility;
 
     private static readonly ConcurrentDictionary<Guid, (IDataPickerSource, Dictionary<string, object>)> _lookup = [];
 
     public DataPickerController(
+        IAuthorizationService authorizationService,
         IDataTypeService dataTypeService,
+        IJsonSerializer jsonSerializer,
         ConfigurationEditorUtility utility)
+        : base(authorizationService)
     {
         _dataTypeService = dataTypeService;
+        _jsonSerializer = jsonSerializer;
         _utility = utility;
     }
 
@@ -43,22 +50,30 @@ public class DataPickerController : ContentmentControllerBase
 
         // TODO: [LK] Move all this logic to its own service.
 
-        if (_lookup.TryGetValue(model.DataTypeKey, out var cached) == true)
+        // NOTE: The configuration is read from the saved Data Type, anything supplied in the request is ignored.
+        var resolved = await GetDataSourceAsync(model.DataTypeKey);
+
+        if (resolved is null && model.DataSource?.Key is string key1 && string.IsNullOrWhiteSpace(key1) == false)
         {
-            var items = await cached.Item1.GetItemsAsync(cached.Item2, model.Values ?? []) ?? [];
-            config.Add(nameof(items), items);
-        }
-        else if (model.DataSource?.Key is string key1 && string.IsNullOrWhiteSpace(key1) == false)
-        {
+            // NOTE: The configuration is supplied in the request, so it is only permitted for those who can edit Data Types.
+            // It is never cached, as it hasn't been saved against the Data Type.
+            if (await CanSupplyConfigurationAsync() == false)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden);
+            }
+
             var source = _utility.GetConfigurationEditor<IDataPickerSource>(key1);
             var sourceConfig = model.DataSource?.Value;
             if (source is not null && sourceConfig is not null)
             {
-                _ = _lookup.TryAdd(model.DataTypeKey, (source, sourceConfig));
-
-                var items = await source.GetItemsAsync(sourceConfig, model.Values ?? []) ?? [];
-                config.Add(nameof(items), items);
+                resolved = (source, sourceConfig);
             }
+        }
+
+        if (resolved is not null)
+        {
+            var items = await resolved.Value.Item1.GetItemsAsync(resolved.Value.Item2, model.Values ?? []) ?? [];
+            config.Add(nameof(items), items);
         }
 
         var key2 = model.DisplayMode?.Key;
@@ -125,39 +140,39 @@ public class DataPickerController : ContentmentControllerBase
     {
         SetCurrentContentContextValues(id, parentId, variant, alias, isNew, contentTypeKey);
 
-        if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
+        if (await GetDataSourceAsync(dataTypeKey) is (IDataPickerSource source, Dictionary<string, object> config))
         {
-            var results = cached.Item1 is IDataPickerSource2 source2
-                ? await source2.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
-                : await cached.Item1.SearchAsync(cached.Item2, pageNumber, pageSize, HttpUtility.UrlDecode(query));
+            var results = source is IDataPickerSource2 source2
+                ? await source2.SearchAsync(config, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
+                : await source.SearchAsync(config, pageNumber, pageSize, HttpUtility.UrlDecode(query));
 
             return Ok(results);
         }
 
-        if (await _dataTypeService.GetAsync(dataTypeKey) is IDataType dataType &&
-            dataType?.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
-            dataType.ConfigurationData is Dictionary<string, object> dataTypeConfig &&
-            dataTypeConfig.TryGetValue("dataSource", out var tmp1) == true &&
-            tmp1 is JsonArray array1 &&
-            array1.Count > 0 &&
-            array1[0] is JsonObject item1)
+        return NotFound($"Unable to locate data source for data type: '{dataTypeKey}'");
+    }
+
+    // Gets the data source (and its configuration) from the saved Data Type, (cached after the first lookup).
+    private async Task<(IDataPickerSource, Dictionary<string, object>)?> GetDataSourceAsync(Guid dataTypeKey)
+    {
+        if (_lookup.TryGetValue(dataTypeKey, out var cached) == true)
         {
-            var source1 = _utility.GetConfigurationEditor<IDataPickerSource>(item1.GetValueAsString("key") ?? string.Empty);
-            if (source1 is not null)
-            {
-                var config1 = item1?["value"]?.ToDictionary<object>() as Dictionary<string, object> ?? [];
-
-                _ = _lookup.TryAdd(dataTypeKey, (source1, config1));
-
-                var results = source1 is IDataPickerSource2 source2
-                    ? await source2.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query), values ?? [])
-                    : await source1.SearchAsync(config1, pageNumber, pageSize, HttpUtility.UrlDecode(query));
-
-                return Ok(results);
-            }
+            return cached;
         }
 
-        return NotFound($"Unable to locate data source for data type: '{dataTypeKey}'");
+        if (await _dataTypeService.GetAsync(dataTypeKey) is IDataType dataType &&
+            dataType.EditorAlias.InvariantEquals(DataPickerDataEditor.DataEditorAlias) == true &&
+            GetConfigurationEditorItem(_jsonSerializer, dataType, "dataSource") is { } item &&
+            _utility.GetConfigurationEditor<IDataPickerSource>(item.Key ?? string.Empty) is { } source)
+        {
+            var config = item.Value ?? [];
+
+            _ = _lookup.TryAdd(dataTypeKey, (source, config));
+
+            return (source, config);
+        }
+
+        return null;
     }
 
     // NOTE: The internal cache is cleared from `ContentmentDataTypeNotificationHandler` [LK]

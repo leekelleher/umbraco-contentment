@@ -16,6 +16,7 @@ namespace Umbraco.Community.Contentment.Api.Management;
 public abstract class ContentmentControllerBase : ManagementApiControllerBase
 {
     // Set the current content values, so that `IContentmentContentContext` can access them.
+    [Obsolete("Please inherit from `ContentmentDataSourceControllerBase` instead. This method will be removed in Contentment 8.0.")]
     protected void SetCurrentContentContextValues(
         string? contentId = null,
         string? parentId = null,
@@ -23,32 +24,5 @@ public abstract class ContentmentControllerBase : ManagementApiControllerBase
         string? propertyAlias = null,
         bool? isNew = false,
         Guid? contentTypeKey = null)
-    {
-        if (string.IsNullOrWhiteSpace(propertyAlias) == false)
-        {
-            HttpContext.Items.Add("contentmentContextCurrentPropertyAlias", propertyAlias);
-        }
-
-        if (string.IsNullOrWhiteSpace(contentId) == false)
-        {
-            HttpContext.Items.Add("contentmentContextCurrentContentId", contentId);
-        }
-
-        if (string.IsNullOrWhiteSpace(variantId) == false)
-        {
-            HttpContext.Items.Add("contentmentContextCurrentContentVariantId", variantId);
-        }
-
-        if (string.IsNullOrWhiteSpace(parentId) == false)
-        {
-            HttpContext.Items.Add("contentmentContextCurrentParentId", parentId);
-        }
-
-        if (contentTypeKey.HasValue == true && contentTypeKey.Value != Guid.Empty)
-        {
-            HttpContext.Items.Add("contentmentContextCurrentContentTypeKey", contentTypeKey.Value);
-        }
-
-        HttpContext.Items.Add("contentmentContextCurrentIsNew", isNew ?? false);
-    }
+        => ContentmentDataSourceControllerBase.SetHttpContextItems(HttpContext, contentId, parentId, variantId, propertyAlias, isNew, contentTypeKey);
 }
