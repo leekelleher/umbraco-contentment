@@ -21,6 +21,7 @@ Security fixes are released for the latest version of each major release line th
 
 | Contentment | Umbraco |
 | ----------- | ------- |
+| 8.x         | 19      |
 | 7.x         | 18      |
 | 6.x         | 16, 17  |
 | 5.x         | 13      |

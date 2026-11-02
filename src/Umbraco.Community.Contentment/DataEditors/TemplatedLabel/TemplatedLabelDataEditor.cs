@@ -46,7 +46,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDictionary<string, object>? DefaultConfiguration => default;
 
-        public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
+        public bool ArePropertyValuesEquivalent(object? editedValue, object? publishedValue) => Equals(editedValue, publishedValue);
 
         // NOTE: Reuses Umbraco's `LabelConfigurationEditor`. [LK]
         public IConfigurationEditor GetConfigurationEditor() => new LabelConfigurationEditor(_ioHelper);

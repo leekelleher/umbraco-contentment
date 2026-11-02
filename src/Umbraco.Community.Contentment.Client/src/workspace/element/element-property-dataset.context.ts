@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2025 Lee Kelleher
 
-import { of } from '@umbraco-cms/backoffice/external/rxjs';
 import { UmbElementPropertyDatasetContext } from '@umbraco-cms/backoffice/content';
 import type { ContentmentElementDataModel } from './types.js';
 import type { ContentmentElementManager } from './element-manager.context.js';
@@ -16,9 +15,6 @@ export class ContentmentElementPropertyDatasetContext
 {
 	// Shown in the property dataset header (the element type name)
 	readonly name = this._dataOwner.structure.ownerContentTypeObservablePart((x) => x?.name);
-	// Invariant-only: culture and segment are always null
-	readonly culture = of<string | null>(null);
-	readonly segment = of<string | null>(null);
 
 	constructor(host: UmbControllerHost, manager: ContentmentElementManager, variantId?: UmbVariantId) {
 		super(host, manager, variantId);

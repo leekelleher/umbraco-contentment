@@ -40,7 +40,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
         public IDictionary<string, object> DefaultConfiguration => new Dictionary<string, object>();
 
-        public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
+        public bool ArePropertyValuesEquivalent(object? editedValue, object? publishedValue) => Equals(editedValue, publishedValue);
 
         public IConfigurationEditor GetConfigurationEditor() => new ConfigurationEditor();
 

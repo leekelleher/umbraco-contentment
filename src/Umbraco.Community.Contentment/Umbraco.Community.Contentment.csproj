@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFrameworks>net10.0</TargetFrameworks>
+        <TargetFrameworks>net11.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -41,16 +41,22 @@
         <None Include="..\..\build\readme-nuget-main.md" Pack="true" PackagePath="README.md" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[18.0.0, 19)" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="[18.0.0, 19)" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[18.0.0, 19)" />
+    <ItemGroup Condition="'$(TargetFramework)' == 'net11.0'">
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[19.0.0-beta1, 20)" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="[19.0.0-beta1, 20)" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[19.0.0-beta1, 20)" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
             <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
         </ProjectReference>
+    </ItemGroup>
+
+    <!-- Umbraco 19 moved Examine into Umbraco.Cms.Search.Provider.Examine; these data sources are excluded until ported. -->
+    <ItemGroup>
+        <Compile Remove="DataEditors\DataList\DataSources\ExamineDataListSource.cs" />
+        <Compile Remove="DataEditors\DataList\DataSources\UmbracoContentDataListSource.cs" />
     </ItemGroup>
 
     <ItemGroup>
