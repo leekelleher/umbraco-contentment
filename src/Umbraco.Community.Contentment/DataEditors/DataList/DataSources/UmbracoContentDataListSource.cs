@@ -3,7 +3,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-using Examine;
 using Umbraco.Cms.Api.Common.ViewModels.Pagination;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.DeliveryApi;
@@ -13,6 +12,9 @@ using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Search;
+using Umbraco.Cms.Core.Search.Querying;
+using Umbraco.Cms.Core.Search.Querying.Filtering;
 using Umbraco.Cms.Core.Serialization;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Services.Navigation;
@@ -30,14 +32,15 @@ namespace Umbraco.Community.Contentment.DataEditors
         private readonly IContentTypeService _contentTypeService;
         private readonly IDocumentNavigationQueryService _documentNavigationQueryService;
         private readonly IDynamicRootService _dynamicRootService;
-        private readonly IExamineManager _examineManager;
         private readonly IJsonSerializer _jsonSerializer;
+        private readonly ISearcherResolver _searcherResolver;
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
         private static readonly string[] _reservedPropertyKeys = ["description", "disabled", "group", "icon", "name", "value"];
         private static readonly string[] _systemFieldAliases = ["contentTypeAlias", "createDate", "id", "key", "published", "sortOrder", "updateDate", "url"];
 
         private const string DefaultImageAlias = "image";
+        private const int MaxSearchResults = 500;
 
         public UmbracoContentDataListSource(
             IApiContentBuilder apiContentBuilder,
@@ -45,8 +48,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             IContentTypeService contentTypeService,
             IDocumentNavigationQueryService documentNavigationQueryService,
             IDynamicRootService dynamicRootService,
-            IExamineManager examineManager,
             IJsonSerializer jsonSerializer,
+            ISearcherResolver searcherResolver,
             IUmbracoContextAccessor umbracoContextAccessor)
         {
             _apiContentBuilder = apiContentBuilder;
@@ -54,8 +57,8 @@ namespace Umbraco.Community.Contentment.DataEditors
             _contentTypeService = contentTypeService;
             _documentNavigationQueryService = documentNavigationQueryService;
             _dynamicRootService = dynamicRootService;
-            _examineManager = examineManager;
             _jsonSerializer = jsonSerializer;
+            _searcherResolver = searcherResolver;
             _umbracoContextAccessor = umbracoContextAccessor;
         }
 
@@ -173,7 +176,7 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Task.FromResult(Enumerable.Empty<DataListItem>());
         }
 
-        public Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "", IEnumerable<string>? values = null)
+        public async Task<PagedViewModel<DataListItem>> SearchAsync(Dictionary<string, object> config, int pageNumber = 1, int pageSize = 12, string query = "", IEnumerable<string>? values = null)
         {
             var start = GetStartContent(config);
             if (start != null)
@@ -184,9 +187,7 @@ namespace Umbraco.Community.Contentment.DataEditors
 
                 var items = string.IsNullOrWhiteSpace(query) == true
                     ? GetChildren(start)
-                    : showUnpublished == true
-                        ? SearchChildrenIncludingUnpublished(start, query)
-                        : start.SearchChildren(query).Select(x => x.Content);
+                    : await SearchChildrenAsync(start, query, showUnpublished, culture);
 
                 items = FilterUnpublished(items, showUnpublished, culture)
                     .Where(x => IsDocumentTypeMatch(x, documentTypeKeys));
@@ -202,17 +203,15 @@ namespace Umbraco.Community.Contentment.DataEditors
                         items = items.OrderBy(x => x.Name, StringComparer.InvariantCultureIgnoreCase);
                     }
 
-                    var results = new PagedViewModel<DataListItem>
+                    return new PagedViewModel<DataListItem>
                     {
                         Items = items.Skip(offset).Take(pageSize).Select(x => ToDataListItem(x, imageAlias, properties, culture)),
                         Total = pageSize > 0 ? (long)Math.Ceiling(items.Count() / (decimal)pageSize) : 1,
                     };
-
-                    return Task.FromResult(results);
                 }
             }
 
-            return Task.FromResult(PagedViewModel<DataListItem>.Empty());
+            return PagedViewModel<DataListItem>.Empty();
         }
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
@@ -298,28 +297,35 @@ namespace Umbraco.Community.Contentment.DataEditors
             return Enumerable.Empty<IPublishedContent>();
         }
 
-        private IEnumerable<IPublishedContent> SearchChildrenIncludingUnpublished(IPublishedContent start, string query)
+        private async Task<IEnumerable<IPublishedContent>> SearchChildrenAsync(IPublishedContent start, string query, bool showUnpublished, string? culture)
         {
-            // The ExternalIndex only contains published content, and `IPublishedContent.SearchChildren()`
-            // maps its results through the non-preview `GetById` overload, so draft nodes are dropped
-            // either way. Query the InternalIndex directly and resolve each result with an explicit
-            // preview fallback, the same way `GetChildren` does.
-            if (_examineManager.TryGetIndex(UmbConstants.UmbracoIndexes.InternalIndexName, out var index) == true &&
-                _umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
+            // The published index only contains published content, so use the draft index when unpublished
+            // content is shown, and resolve each result with an explicit preview fallback, as `GetChildren` does.
+            var indexAlias = showUnpublished == true
+                ? UmbConstants.Search.IndexAliases.DraftContent
+                : UmbConstants.Search.IndexAliases.PublishedContent;
+
+            var searcher = _searcherResolver.GetSearcher(indexAlias);
+            if (searcher is null)
+            {
+                // No search provider is installed, fall back to filtering the children by name.
+                return GetChildren(start).Where(x => x.Name.Contains(query, StringComparison.OrdinalIgnoreCase) == true);
+            }
+
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext) == true &&
                 umbracoContext.Content is IPublishedContentCache contentCache)
             {
-                var results = index
-                    .Searcher
-                    .CreateQuery()
-                    .Field("parentID", start.Id)
-                    .And()
-                    .ManagedQuery(query)
-                    .Execute();
+                var results = await searcher.SearchAsync(
+                    indexAlias,
+                    query,
+                    filters: [new KeywordFilter(UmbConstants.Search.FieldNames.ParentId, [start.Key.ToString("D")], false)],
+                    culture: culture,
+                    accessContext: AccessContext.BypassProtection(),
+                    take: MaxSearchResults);
 
                 return results
-                    .Select(x => int.TryParse(x.Id, out var id) == true ? id : 0)
-                    .Where(x => x > 0)
-                    .Select(x => contentCache.GetById(false, x) ?? contentCache.GetById(true, x))
+                    .Documents
+                    .Select(x => contentCache.GetById(false, x.Id) ?? contentCache.GetById(true, x.Id))
                     .WhereNotNull();
             }
 

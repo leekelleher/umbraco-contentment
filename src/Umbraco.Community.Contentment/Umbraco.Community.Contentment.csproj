@@ -56,7 +56,6 @@
     <!-- Umbraco 19 moved Examine into Umbraco.Cms.Search.Provider.Examine; these data sources are excluded until ported. -->
     <ItemGroup>
         <Compile Remove="DataEditors\DataList\DataSources\ExamineDataListSource.cs" />
-        <Compile Remove="DataEditors\DataList\DataSources\UmbracoContentDataListSource.cs" />
     </ItemGroup>
 
     <ItemGroup>
