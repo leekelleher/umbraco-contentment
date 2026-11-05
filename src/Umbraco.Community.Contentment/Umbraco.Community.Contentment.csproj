@@ -45,17 +45,14 @@
         <PackageReference Include="Umbraco.Cms.Api.Management" Version="[19.0.0-beta1, 20)" />
         <PackageReference Include="Umbraco.Cms.Core" Version="[19.0.0-beta1, 20)" />
         <PackageReference Include="Umbraco.Cms.Web.Website" Version="[19.0.0-beta1, 20)" />
+        <!-- Compile-time only, for the optional Examine data source; PrivateAssets keeps Examine from being a dependency of this package. -->
+        <PackageReference Include="Examine.Core" Version="[4.0.1, 5)" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Umbraco.Community.Contentment.Client\Umbraco.Community.Contentment.Client.esproj">
             <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
         </ProjectReference>
-    </ItemGroup>
-
-    <!-- Umbraco 19 moved Examine into Umbraco.Cms.Search.Provider.Examine; these data sources are excluded until ported. -->
-    <ItemGroup>
-        <Compile Remove="DataEditors\DataList\DataSources\ExamineDataListSource.cs" />
     </ItemGroup>
 
     <ItemGroup>

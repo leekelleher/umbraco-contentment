@@ -23,5 +23,18 @@ namespace Umbraco.Community.Contentment.Services
 
         public static string? GetCurrentVariantId(this IContentmentContentContext ctx)
             => ctx.GetCurrentVariantId();
+
+        public static string? GetCurrentCulture(this IContentmentContentContext ctx)
+        {
+            var variantId = ctx.GetCurrentVariantId();
+            if (string.IsNullOrWhiteSpace(variantId) == true || variantId == "invariant")
+            {
+                return default;
+            }
+
+            // `UmbVariantId.toString()` appends an optional "_{segment}" suffix.
+            var index = variantId.IndexOf('_');
+            return index > 0 ? variantId[..index] : variantId;
+        }
     }
 }
