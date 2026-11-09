@@ -15,7 +15,7 @@ public sealed class DataPickerEditorRequestModel
 
     public ConfigurationEditorItemRequestModel? DisplayMode { get; set; }
 
-    public required string Id { get; set; }
+    public string? Id { get; set; }
 
     public bool? IsNew { get; set; }
 

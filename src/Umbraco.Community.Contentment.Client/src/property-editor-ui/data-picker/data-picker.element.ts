@@ -135,7 +135,7 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 	}
 
 	async #init() {
-		if (!this._entityUnique || !this._dataTypeKey || !this._dataSource || !this._displayMode) return;
+		if (!this._dataTypeKey || !this._dataSource || !this._displayMode) return;
 
 		const body = {
 			alias: this._propertyAlias,
