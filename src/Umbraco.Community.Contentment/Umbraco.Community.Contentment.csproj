@@ -42,9 +42,9 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net11.0'">
-        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[19.0.0-beta1, 20)" />
-        <PackageReference Include="Umbraco.Cms.Core" Version="[19.0.0-beta1, 20)" />
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[19.0.0-beta1, 20)" />
+        <PackageReference Include="Umbraco.Cms.Api.Management" Version="[19.0.0-rc1, 20)" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="[19.0.0-rc1, 20)" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="[19.0.0-rc1, 20)" />
         <!-- Compile-time only, for the optional Examine data source; PrivateAssets keeps Examine from being a dependency of this package. -->
         <PackageReference Include="Examine.Core" Version="[4.0.1, 5)" PrivateAssets="all" />
     </ItemGroup>

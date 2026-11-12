@@ -449,7 +449,9 @@
                 },
                 "forProviderName": {
                     "description": "The provider name that this provider is for.",
-                    "examples": "'Umbraco.Github'",
+                    "examples": [
+                        "Umbraco.Github"
+                    ],
                     "type": "string"
                 },
                 "js": {
@@ -2283,6 +2285,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -2315,7 +2324,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -2466,6 +2475,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -2497,7 +2513,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -2648,6 +2664,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -2679,7 +2702,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -2831,6 +2854,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -2862,7 +2892,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3013,6 +3043,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3044,7 +3081,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3195,6 +3232,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3226,7 +3270,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3377,6 +3421,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3408,7 +3459,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3559,6 +3610,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3590,7 +3648,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3741,6 +3799,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3772,7 +3837,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3923,6 +3988,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -3954,7 +4026,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -3971,6 +4043,44 @@
                 "alias",
                 "forEntityTypes",
                 "kind",
+                "meta",
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ManifestEntityActionGroup": {
+            "description": "A group of entity actions. Entity actions reference it through `group`.",
+            "properties": {
+                "alias": {
+                    "description": "The alias of the extension, ensure it is unique",
+                    "type": "string"
+                },
+                "kind": {
+                    "description": "The kind of the extension, used to group extensions together",
+                    "examples": [
+                        "button"
+                    ]
+                },
+                "meta": {
+                    "$ref": "#/definitions/MetaActionGroup"
+                },
+                "name": {
+                    "description": "The friendly name of the extension",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "entityActionGroup",
+                    "description": "The type of extension such as dashboard etc...",
+                    "type": "string"
+                },
+                "weight": {
+                    "description": "Extensions such as dashboards are ordered by weight with higher numbers being first in the list",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "alias",
                 "meta",
                 "name",
                 "type"
@@ -4105,6 +4215,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -4136,7 +4253,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -4287,6 +4404,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -4318,7 +4442,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -4469,6 +4593,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -4500,7 +4631,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -4651,6 +4782,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -4682,7 +4820,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -4833,6 +4971,13 @@
                     },
                     "type": "array"
                 },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.EntityActionGroup.Structure"
+                    ],
+                    "type": "string"
+                },
                 "js": {
                     "description": "The file location of the javascript file to load",
                     "type": "string"
@@ -4864,7 +5009,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -8499,7 +8644,9 @@
                 },
                 "forProviderName": {
                     "description": "The provider names that this provider is for.",
-                    "examples": "'Umbraco.GoogleAuthenticator'",
+                    "examples": [
+                        "Umbraco.GoogleAuthenticator"
+                    ],
                     "type": "string"
                 },
                 "js": {
@@ -11988,7 +12135,20 @@
                         }
                     ],
                     "description": "Define which workspace actions this menu item should be shown for.",
-                    "examples": "[['Umb.WorkspaceAction.Document.Save', 'Umb.WorkspaceAction.Document.SaveAndPublish'], \"Umb.WorkspaceAction.Document.Save\"]"
+                    "examples": [
+                        [
+                            "Umb.WorkspaceAction.Document.Save",
+                            "Umb.WorkspaceAction.Document.SaveAndPublish"
+                        ],
+                        "Umb.WorkspaceAction.Document.Save"
+                    ]
+                },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.WorkspaceActionMenuItemGroup.Publishing"
+                    ],
+                    "type": "string"
                 },
                 "js": {
                     "description": "The file location of the javascript file to load",
@@ -12022,7 +12182,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -12179,7 +12339,20 @@
                         }
                     ],
                     "description": "Define which workspace actions this menu item should be shown for.",
-                    "examples": "[['Umb.WorkspaceAction.Document.Save', 'Umb.WorkspaceAction.Document.SaveAndPublish'], \"Umb.WorkspaceAction.Document.Save\"]"
+                    "examples": [
+                        [
+                            "Umb.WorkspaceAction.Document.Save",
+                            "Umb.WorkspaceAction.Document.SaveAndPublish"
+                        ],
+                        "Umb.WorkspaceAction.Document.Save"
+                    ]
+                },
+                "group": {
+                    "description": "The alias of the action group this action belongs to. The actions of a group render together, ordered by their\nown weight, and the group's weight orders the group in the menu. Actions without a registered group render last.",
+                    "examples": [
+                        "Umb.WorkspaceActionMenuItemGroup.Publishing"
+                    ],
+                    "type": "string"
                 },
                 "js": {
                     "description": "The file location of the javascript file to load",
@@ -12212,7 +12385,7 @@
                     "description": "Define one or more extension aliases that this extension should overwrite."
                 },
                 "separatorBefore": {
-                    "description": "Renders a separator above this action, unless it is the first action in the list.\nThe separator belongs to this action, so it is not rendered when the action is not.",
+                    "description": "Renders a separator above this action inside its group. The first action of a group needs none, as a separator\nalready sits between groups.\nThe separator belongs to this action, so it is not rendered when the action is not.",
                     "type": "boolean"
                 },
                 "type": {
@@ -12229,6 +12402,44 @@
                 "alias",
                 "forWorkspaceActions",
                 "kind",
+                "meta",
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ManifestWorkspaceActionMenuItemGroup": {
+            "description": "A group of workspace action menu items. Workspace action menu items reference it through `group`.",
+            "properties": {
+                "alias": {
+                    "description": "The alias of the extension, ensure it is unique",
+                    "type": "string"
+                },
+                "kind": {
+                    "description": "The kind of the extension, used to group extensions together",
+                    "examples": [
+                        "button"
+                    ]
+                },
+                "meta": {
+                    "$ref": "#/definitions/MetaActionGroup"
+                },
+                "name": {
+                    "description": "The friendly name of the extension",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "workspaceActionMenuItemGroup",
+                    "description": "The type of extension such as dashboard etc...",
+                    "type": "string"
+                },
+                "weight": {
+                    "description": "Extensions such as dashboards are ordered by weight with higher numbers being first in the list",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "alias",
                 "meta",
                 "name",
                 "type"
@@ -14338,6 +14549,23 @@
             ],
             "type": "object"
         },
+        "MetaActionGroup": {
+            "description": "The metadata of an action group.",
+            "properties": {
+                "label": {
+                    "description": "The accessible name of the group, read by assistive technology. Plain text or a localization key.",
+                    "examples": [
+                        "#actionGroups_publishing",
+                        "Publishing"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "label"
+            ],
+            "type": "object"
+        },
         "MetaAuditLogAction": {
             "type": "object"
         },
@@ -14370,12 +14598,12 @@
                             "type": "boolean"
                         },
                         "popupFeatures": {
-                            "default": "'width=600,height=600,menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'",
+                            "default": "width=600,height=600,menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,toolbar=no",
                             "description": "The features of the popup that is opened when the user logs in.",
                             "type": "string"
                         },
                         "popupTarget": {
-                            "default": "'umbracoAuthPopup'",
+                            "default": "umbracoAuthPopup",
                             "description": "The target of the popup that is opened when the user logs in.",
                             "type": "string"
                         }
@@ -14386,7 +14614,7 @@
                     "description": "The default view of the provider that is shown to the user.\nIf no element is provided, then the button will be rendered as a button using these options.",
                     "properties": {
                         "color": {
-                            "default": "'secondary'",
+                            "default": "secondary",
                             "description": "The color of the provider that is shown to the user.",
                             "enum": [
                                 "",
@@ -14399,13 +14627,21 @@
                             "type": "string"
                         },
                         "icon": {
-                            "default": "'icon-cloud'",
+                            "default": "icon-cloud",
                             "description": "The icon of the provider that is shown to the user.",
-                            "examples": "['icon-cloud', 'icon-github', 'icon-google', 'icon-facebook', 'icon-twitter', 'icon-x', 'icon-microsoft']",
+                            "examples": [
+                                "icon-cloud",
+                                "icon-github",
+                                "icon-google",
+                                "icon-facebook",
+                                "icon-twitter",
+                                "icon-x",
+                                "icon-microsoft"
+                            ],
                             "type": "string"
                         },
                         "look": {
-                            "default": "'default'",
+                            "default": "default",
                             "description": "The look of the provider that is shown to the user.",
                             "enum": [
                                 "",
@@ -14593,7 +14829,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "detailRepositoryAlias": {
                     "description": "Alias of the detail repository used to load the content item.",
@@ -14648,7 +14884,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "detailRepositoryAlias": {
                     "type": "string"
@@ -14689,7 +14925,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "configurationRepositoryAlias": {
                     "description": "Alias of the configuration repository used by the modal to read unpublish behaviour configuration.",
@@ -14747,7 +14983,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "icon": {
                     "description": "An icon to represent the action to be performed",
@@ -14776,7 +15012,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "icon": {
                     "description": "An icon to represent the action to be performed",
@@ -14805,7 +15041,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "confirm": {
                     "properties": {
@@ -14853,7 +15089,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "duplicateRepositoryAlias": {
                     "type": "string"
@@ -14897,7 +15133,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "folderRepositoryAlias": {
                     "type": "string"
@@ -14930,7 +15166,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "foldersOnly": {
                     "type": "boolean"
@@ -14978,7 +15214,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "icon": {
                     "description": "An icon to represent the action to be performed",
@@ -15007,7 +15243,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "icon": {
                     "description": "An icon to represent the action to be performed",
@@ -15047,7 +15283,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "icon": {
                     "description": "An icon to represent the action to be performed",
@@ -15409,7 +15645,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "description": {
                     "description": "A description of the action to be performed",
@@ -15446,7 +15682,7 @@
             "properties": {
                 "additionalOptions": {
                     "description": "The action requires additional input from the user.\nA dialog will prompt the user for more information or to make a choice.",
-                    "type": "{boolean}"
+                    "type": "boolean"
                 },
                 "description": {
                     "description": "A description of the action to be performed",
@@ -15821,7 +16057,7 @@
                     "properties": {
                         "enabled": {
                             "description": "Whether the property editor UI is enabled for use with data sources.",
-                            "type": "{boolean}"
+                            "type": "boolean"
                         },
                         "forDataSourceTypes": {
                             "description": "A list of allowed property editor data source kinds that can be used with this property editor UI.\nIf not specified, any data sources can be used.",
@@ -16725,7 +16961,12 @@
                 },
                 "allOf": {
                     "description": "The user groups that the current user must be a member of to pass the condition.",
-                    "examples": "[['guid1', 'guid2']]",
+                    "examples": [
+                        [
+                            "guid1",
+                            "guid2"
+                        ]
+                    ],
                     "items": {
                         "type": "string"
                     },
@@ -16733,12 +16974,19 @@
                 },
                 "match": {
                     "description": "The user group that the current user must be a member of to pass the condition.",
-                    "examples": "['guid1']",
+                    "examples": [
+                        "guid1"
+                    ],
                     "type": "string"
                 },
                 "noneOf": {
                     "description": "The user group(s) that the current user must not be a member of to pass the condition.",
-                    "examples": "[['guid1', 'guid2']]",
+                    "examples": [
+                        [
+                            "guid1",
+                            "guid2"
+                        ]
+                    ],
                     "items": {
                         "type": "string"
                     },
@@ -16746,7 +16994,12 @@
                 },
                 "oneOf": {
                     "description": "The user group(s) that the current user must be a member of to pass the condition.",
-                    "examples": "[['guid1', 'guid2']]",
+                    "examples": [
+                        [
+                            "guid1",
+                            "guid2"
+                        ]
+                    ],
                     "items": {
                         "type": "string"
                     },
@@ -17166,6 +17419,9 @@
                         "$ref": "#/definitions/ManifestBase"
                     },
                     {
+                        "$ref": "#/definitions/ManifestEntityActionGroup"
+                    },
+                    {
                         "$ref": "#/definitions/ManifestEntityActionDeleteKind"
                     },
                     {
@@ -17239,6 +17495,9 @@
                     },
                     {
                         "$ref": "#/definitions/ManifestWorkspaceRoutableKind"
+                    },
+                    {
+                        "$ref": "#/definitions/ManifestWorkspaceActionMenuItemGroup"
                     },
                     {
                         "$ref": "#/definitions/ManifestWorkspaceContext"
