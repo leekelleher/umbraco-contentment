@@ -13,6 +13,7 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Search;
+using Umbraco.Cms.Core.Search.Indexing;
 using Umbraco.Cms.Core.Search.Querying;
 using Umbraco.Cms.Core.Search.Querying.Filtering;
 using Umbraco.Cms.Core.Serialization;
@@ -25,7 +26,7 @@ using Umbraco.Extensions;
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoContentDataListSource
-        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter, IDataSourceValueIndexer
     {
         private readonly IApiContentBuilder _apiContentBuilder;
         private readonly IContentmentContentContext _contentmentContentContext;
@@ -213,6 +214,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return PagedViewModel<DataListItem>.Empty();
         }
+
+        public IndexValue? GetIndexValue(Dictionary<string, object>? config, string value) => UdiIndexValue.Create(value);
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 

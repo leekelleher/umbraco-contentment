@@ -7,13 +7,14 @@ using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.Entities;
 using Umbraco.Cms.Core.PropertyEditors;
+using Umbraco.Cms.Core.Search.Indexing;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
-    public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter
+    public sealed class UmbracoEntityDataListSource : DataListToDataPickerSourceBridge, IContentmentDataSource, IDataSourceValueConverter, IDataSourceValueIndexer
     {
         internal static Dictionary<string, UmbracoObjectTypes> SupportedEntityTypes = new()
         {
@@ -110,6 +111,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return Enumerable.Empty<DataListItem>();
         }
+
+        public IndexValue? GetIndexValue(Dictionary<string, object>? config, string value) => UdiIndexValue.Create(value);
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IEntitySlim);
 

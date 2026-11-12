@@ -11,13 +11,14 @@ using Umbraco.Cms.Core.Models.DeliveryApi;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Cms.Core.Search.Indexing;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
 
 namespace Umbraco.Community.Contentment.DataEditors
 {
     public sealed class UmbracoMembersDataListSource
-        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter
+        : IContentmentDataSource, IDataPickerSource, IDataSourceValueConverter, IDataSourceDeliveryApiValueConverter, IDataSourceValueIndexer
     {
         private readonly IApiElementBuilder _apiElementBuilder;
         private readonly IMemberTypeService _memberTypeService;
@@ -107,6 +108,8 @@ namespace Umbraco.Community.Contentment.DataEditors
 
             return Task.FromResult(PagedViewModel<DataListItem>.Empty());
         }
+
+        public IndexValue? GetIndexValue(Dictionary<string, object>? config, string value) => UdiIndexValue.Create(value);
 
         public Type? GetValueType(Dictionary<string, object>? config) => typeof(IPublishedContent);
 
