@@ -69,7 +69,7 @@ You can extend Data List with your own custom data sources and list editors.
 
 #### Extending with your own custom data source
 
-For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentDataSource`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentDataSource.cs) interface.
+For creating your own custom data source, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentDataSource`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentDataSource.cs) interface.
 
 This interface contains one method called `GetItems(config)`, which must return a `IEnumerable<DataListItem>` object type.
 
@@ -161,7 +161,7 @@ public class BlogCategoriesDataSource : IContentmentDataSource
 
 As explained in the [*How to get the value?*](#how-to-get-the-value) section, the values from your data source will be either `string` or `IEnumerable<string>` by default.
 
-If you need something more than this, your custom data source should implement the [`Umbraco.Community.Contentment.DataEditors.IDataSourceValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/DataSources/IDataSourceValueConverter.cs) interface instead of `IContentmentDataSource`. This interface inherits from `IContentmentDataSource`, but also specifies two new methods that your data source will have to implement - that is the `GetValueType` and `ConvertValue` methods.
+If you need something more than this, your custom data source should implement the [`Umbraco.Community.Contentment.DataEditors.IDataSourceValueConverter`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/_/DataSources/IDataSourceValueConverter.cs) interface instead of `IContentmentDataSource`. This interface inherits from `IContentmentDataSource`, but also specifies two new methods that your data source will have to implement - that is the `GetValueType` and `ConvertValue` methods.
 
 With this interface, the `TimeZoneDataSource` class from before could now look like:
 
@@ -213,7 +213,7 @@ This ensures that you'll get the value as `IEnumerable<TimeZoneInfo>` instead of
 
 #### Extending with your own custom list editor
 
-For creating your own custom list editor, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentListEditor`](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentListEditor.cs) interface.
+For creating your own custom list editor, you will need to create a new C# class that implements the [`Umbraco.Community.Contentment.DataEditors.IContentmentListEditor`](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/_/IContentmentListEditor.cs) interface.
 
 This interface contains two properties, `PropertyEditorUiAlias` and `DefaultConfig` _(optional)_, and one method `HasMultipleValues(config)` returning a boolean value for whether the list editor can select multiple or single values.
 
@@ -223,7 +223,7 @@ The `PropertyEditorUiAlias` property should set the alias of the property-editor
 
 It is worth noting that both the `IContentmentDataSource` and `IContentmentListEditor` types support [Umbraco's approach for injecting dependencies](https://docs.umbraco.com/umbraco-cms/reference/using-ioc#injecting-dependencies). You can use any registered services, factories, helpers by adding them to the class constructor of your custom data-source/list-editor.
 
-For an example, you can see how this is done with the [`UmbracoContentDataListSource` data-source](https://github.com/leekelleher/umbraco-contentment/blob/dev/v6.x/src/Umbraco.Community.Contentment/DataEditors/DataList/DataSources/UmbracoContentDataListSource.cs#L23-L27).
+For an example, you can see how this is done with the [`UmbracoContentDataListSource` data-source](https://github.com/leekelleher/umbraco-contentment/blob/contrib/src/Umbraco.Community.Contentment/DataEditors/DataList/DataSources/UmbracoContentDataListSource.cs#L23-L27).
 
 
 ### How to get the value?
