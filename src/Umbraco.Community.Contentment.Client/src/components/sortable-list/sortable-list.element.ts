@@ -24,6 +24,9 @@ export default class ContentmentSortableListElement extends UmbLitElement {
 	itemSelector?: string;
 
 	protected override firstUpdated() {
+		// Prevents the native `dragstart` from bubbling to an ancestor sorter, (e.g. `UmbSorterController`).
+		this.addEventListener('dragstart', (event) => event.stopPropagation());
+
 		let before: ChildNode | null;
 		this.#sortable = Sortable.create(this, {
 			animation: 150,

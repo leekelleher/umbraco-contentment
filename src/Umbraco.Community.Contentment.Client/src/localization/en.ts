@@ -29,6 +29,7 @@ export default {
 		labelListEditor: 'List editor',
 		configureDataSource: 'Select and configure a data source',
 		configureListEditor: 'Select and configure a list editor',
+		noItemsToDisplay: 'There are no items to display.',
 
 		// Checkbox List
 		checkboxListCheckAll: 'Check all',

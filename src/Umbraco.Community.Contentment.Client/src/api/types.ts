@@ -52,7 +52,7 @@ export type DataPickerEditorRequestModel = {
 	dataSource?: ConfigurationEditorItemRequestModel | null;
 	dataTypeKey: string;
 	displayMode?: ConfigurationEditorItemRequestModel | null;
-	id: string;
+	id?: string | null;
 	isNew?: boolean | null;
 	parentId?: string | null;
 	values?: Array<string> | null;

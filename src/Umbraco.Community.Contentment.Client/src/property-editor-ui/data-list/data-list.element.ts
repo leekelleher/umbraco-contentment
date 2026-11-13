@@ -6,7 +6,10 @@ import { customElement, html, property, state } from '@umbraco-cms/backoffice/ex
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import { UmbFormControlMixin, UMB_VALIDATION_EMPTY_LOCALIZATION_KEY } from '@umbraco-cms/backoffice/validation';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
-import { UMB_CONTENT_WORKSPACE_CONTEXT, UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/content';
+import {
+	UMB_CONTENT_WORKSPACE_CONTEXT,
+	UMB_PROPERTY_TYPE_BASED_PROPERTY_CONTEXT,
+} from '@umbraco-cms/backoffice/content';
 import { UMB_PARENT_ENTITY_CONTEXT } from '@umbraco-cms/backoffice/entity';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
 import type { ContentmentConfigurationEditorValue, ContentmentDataListEditor } from '../types.js';
@@ -24,9 +27,13 @@ export class ContentmentPropertyEditorUIDataListElement
 
 	#listEditor?: ContentmentDataListEditor;
 
+	#parentWaitTimer?: ReturnType<typeof setTimeout>;
+
 	#propertyContext?: typeof UMB_PROPERTY_CONTEXT.TYPE;
 
 	#repository = new ContentmentDataListRepository(this);
+
+	#requested = false;
 
 	@state()
 	private _dataTypeKey?: string | null;
@@ -39,6 +46,9 @@ export class ContentmentPropertyEditorUIDataListElement
 
 	@state()
 	private _parentEntityUnique?: string | null;
+
+	@state()
+	private _parentUnavailable = false;
 
 	@state()
 	private _propertyAlias?: string;
@@ -112,12 +122,29 @@ export class ContentmentPropertyEditorUIDataListElement
 		);
 	}
 
-	override async firstUpdated() {
-		await this.#init().catch(() => undefined);
-		this._initialized = true;
+	override firstUpdated() {
+		// The parent entity is populated asynchronously for a new (unsaved) entity.
+		// Give up waiting when the context is absent (the probe rejects), or when a parent is never set (safety timeout).
+		this.getContext(UMB_PARENT_ENTITY_CONTEXT, { passContextAliasMatches: true }).catch(
+			() => (this._parentUnavailable = true),
+		);
+		this.#parentWaitTimer = setTimeout(() => (this._parentUnavailable = true), 2000);
+	}
+
+	override disconnectedCallback() {
+		super.disconnectedCallback();
+		clearTimeout(this.#parentWaitTimer);
 	}
 
 	protected override updated() {
+		if (!this.#requested && this.#isReady()) {
+			this.#requested = true;
+			clearTimeout(this.#parentWaitTimer);
+			this.#init()
+				.catch(() => undefined)
+				.then(() => (this._initialized = true));
+		}
+
 		if (this._initialized && !this.#addedFormControl) {
 			const formControl = this.shadowRoot?.querySelector('contentment-property-editor-ui');
 			if (formControl) {
@@ -125,6 +152,10 @@ export class ContentmentPropertyEditorUIDataListElement
 				this.#addedFormControl = true;
 			}
 		}
+	}
+
+	#isReady() {
+		return !this._entityIsNew || this._parentEntityUnique !== undefined || this._parentUnavailable;
 	}
 
 	async #init() {
