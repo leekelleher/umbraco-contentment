@@ -132,9 +132,10 @@ export default class ContentmentInfoBoxElement extends UmbLitElement {
 
 				&.compact {
 					align-items: center;
+					gap: 0.5rem;
 
 					> umb-icon {
-						font-size: 2rem;
+						font-size: 1.2rem;
 					}
 				}
 			}
