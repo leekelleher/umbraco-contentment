@@ -88,7 +88,7 @@ public class DataPickerController : ContentmentDataSourceControllerBase
     [HttpPost("search", Name = "PostDataPickerSearch")]
     [MapToApiVersion("1.0")]
     public async Task<IActionResult> Search(
-        string id,
+        string? id,
         Guid dataTypeKey,
         int pageNumber = 1,
         int pageSize = 12,

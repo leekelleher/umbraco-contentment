@@ -4,7 +4,8 @@
 
 > contentment /kənˈtɛntm(ə)nt/ - a state of happiness and satisfaction
 
-[![Mozilla Public License](https://img.shields.io/badge/MPL--2.0-orange?label=license)](https://opensource.org/licenses/MPL-2) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Umbraco.Community.Contentment?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment)
+[![MIT License](https://img.shields.io/badge/MIT-orange?label=license)](https://opensource.org/licenses/MIT) [![Latest version](https://img.shields.io/nuget/v/Umbraco.Community.Contentment?label=version)](https://marketplace.umbraco.com/package/umbraco.community.contentment) [![NuGet download count](https://img.shields.io/nuget/dt/Umbraco.Community.Contentment?label=downloads)](https://www.nuget.org/packages/Umbraco.Community.Contentment) [![GitHub Sponsors](https://img.shields.io/github/sponsors/leekelleher)](https://github.com/sponsors/leekelleher)
+
 
 ### What is it?
 
@@ -17,7 +18,7 @@ Some components may be innovative, others may be a reimagining of existing compo
 I'm sharing my code with the world. It is your choice (and responsibility) whether you would like to use it.<br>
 No pressure or marketing spin from me.
 
-**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's a hobby project.** I appreciate that whilst I am an employee of Umbraco HQ, Contentment is not an official HQ package.
+**Please do keep in mind that the _Contentment for Umbraco_ package is not a business, it's an unpaid hobby project.** I appreciate that whilst I am an employee of Umbraco HQ, Contentment is not an official HQ supported package.
 
 #### What's on offer?
 

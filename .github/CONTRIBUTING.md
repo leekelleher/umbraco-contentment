@@ -32,4 +32,5 @@ Given there are now multiple versions of Contentment that support multiple versi
 - The [`dev/v4.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v4.x) branch is for Contentment **v4.6.x** releases, this targets Umbraco **v8.17.0**, **v9.5.0**, **v10.0.0**, **v11.0.0**, **v12.0.0** and **v13.0.0**.
 - The [`dev/v5.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v5.x) branch is for Contentment **v5.x** releases, this will target Umbraco **v13.2.0** only.
 - The [`dev/v6.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v6.x) branch is for Contentment **v6.x** (current) releases, this targets both Umbraco **v16.0.0** and **v17.0.0**.
-- The `dev/v7.x` branch will be for Contentment **v7.x** (future) releases, this will most likely target Umbraco **v17.0.0+**.
+- The [`dev/v7.x`](https://github.com/leekelleher/umbraco-contentment/tree/dev/v7.x) branch is for Contentment **v7.x** releases, this targets Umbraco **v18.0.0**.
+- The `dev/v8.x` branch will be for Contentment **v8.x** (future) releases, this targets Umbraco **v19.0.0** (currently in beta).
