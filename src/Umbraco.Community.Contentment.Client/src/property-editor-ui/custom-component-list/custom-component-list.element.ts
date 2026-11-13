@@ -149,9 +149,8 @@ export default class ContentmentPropertyEditorUICustomComponentListElement
 			return html`
 				<contentment-info-box
 					compact
-					type="warning"
 					icon="icon-alert"
-					headline="There are no items to display"></contentment-info-box>
+					headline=${this.localize.term('contentment_noItemsToDisplay')}></contentment-info-box>
 			`;
 		}
 
