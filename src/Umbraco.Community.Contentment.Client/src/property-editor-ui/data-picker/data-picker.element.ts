@@ -45,6 +45,10 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 	#pageSize = 12;
 
+	#parentWaitTimer?: ReturnType<typeof setTimeout>;
+
+	#requested = false;
+
 	@state()
 	private _dataSource?: ContentmentConfigurationEditorValue;
 
@@ -62,6 +66,9 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 
 	@state()
 	private _parentEntityUnique?: string | null;
+
+	@state()
+	private _parentUnavailable = false;
 
 	@state()
 	private _initialized = false;
@@ -129,9 +136,32 @@ export class ContentmentPropertyEditorUIDataPickerElement extends UmbLitElement 
 		});
 	}
 
-	override async firstUpdated() {
-		await this.#init().catch(() => undefined);
-		this._initialized = true;
+	override firstUpdated() {
+		// The parent entity is populated asynchronously for a new (unsaved) entity.
+		// Give up waiting when the context is absent (the probe rejects), or when a parent is never set (safety timeout).
+		this.getContext(UMB_PARENT_ENTITY_CONTEXT, { passContextAliasMatches: true }).catch(
+			() => (this._parentUnavailable = true),
+		);
+		this.#parentWaitTimer = setTimeout(() => (this._parentUnavailable = true), 2000);
+	}
+
+	override disconnectedCallback() {
+		super.disconnectedCallback();
+		clearTimeout(this.#parentWaitTimer);
+	}
+
+	protected override updated() {
+		if (!this.#requested && this.#isReady()) {
+			this.#requested = true;
+			clearTimeout(this.#parentWaitTimer);
+			this.#init()
+				.catch(() => undefined)
+				.then(() => (this._initialized = true));
+		}
+	}
+
+	#isReady() {
+		return !this._entityIsNew || this._parentEntityUnique !== undefined || this._parentUnavailable;
 	}
 
 	async #init() {
